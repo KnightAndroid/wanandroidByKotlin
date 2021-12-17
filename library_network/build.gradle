@@ -1,0 +1,25 @@
+//library-network配置文件
+import com.knight.wanandroid.buildsrc.*
+apply from:'../base_config.gradle'
+
+android {
+    buildTypes {
+        release {
+            minifyEnabled true //开启混淆
+            consumerProguardFiles 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    api Dependencies.GitHub.OkHttp
+    api Dependencies.GitHub.OkHttpInterceptorLogging
+    api Dependencies.GitHub.Retrofit
+    api Dependencies.GitHub.RetrofitConverterGson
+
+    implementation Dependencies.JetPack.HiltCore
+    kapt Dependencies.JetPack.HiltApt
+    kapt Dependencies.JetPack.HiltAndroidx
+
+}

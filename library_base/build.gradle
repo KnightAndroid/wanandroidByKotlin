@@ -1,0 +1,49 @@
+//library_base 配置文件
+import com.knight.wanandroid.buildsrc.*
+apply from:'../base_config.gradle'
+apply plugin: 'dagger.hilt.android.plugin'
+android {
+    buildFeatures {
+        viewBinding = true
+    }
+    resourcePrefix "base_"
+    buildTypes {
+        release {
+            minifyEnabled true //开启混淆
+            consumerProguardFiles 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    api project(path:':library_network')
+    api project(path:':library_util')
+
+    api Dependencies.Androidx.CoreKts
+    api Dependencies.Androidx.AppCompat
+    api Dependencies.Androidx.ConstraintLayout
+    api Dependencies.Androidx.ActivityKtx
+    api Dependencies.Androidx.FragmentKtx
+    api Dependencies.Android.Material
+    api Dependencies.Androidx.MultiDex
+
+    api Dependencies.Kotlin.Kotlin
+    api Dependencies.Kotlin.CoroutinesCore
+    api Dependencies.Kotlin.CoroutinesAndroid
+
+    api Dependencies.JetPack.ViewModel
+    api Dependencies.JetPack.ViewModelSavedState
+    api Dependencies.JetPack.LiveData
+    api Dependencies.JetPack.Lifecycle
+    api Dependencies.JetPack.HiltCore
+    kapt Dependencies.JetPack.HiltApt
+    kapt Dependencies.JetPack.HiltAndroidx
+    kapt Dependencies.JetPack.LifecycleCompilerAPT
+    //阿里路由  https://github.com/alibaba/ARouter
+    api Dependencies.GitHub.ARoute
+
+    kapt Dependencies.GitHub.ARouteCompiler
+    api Dependencies.GitHub.AutoService
+    kapt Dependencies.GitHub.AutoServiceAnnotations
+}

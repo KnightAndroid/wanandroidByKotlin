@@ -1,0 +1,66 @@
+//App壳配置文件
+import com.knight.wanandroid.buildsrc.*
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'com.alibaba.arouter'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'dagger.hilt.android.plugin'
+
+
+android {
+    compileSdkVersion ProjectBuilddencies.compileSdkVersion
+    buildToolsVersion ProjectBuilddencies.buildToolsVersion
+
+    defaultConfig {
+        applicationId ProjectBuilddencies.applicationId
+        minSdkVersion ProjectBuilddencies.minSdkVersion
+        targetSdkVersion ProjectBuilddencies.targetSdkVersion
+        versionCode ProjectBuilddencies.versionCode
+        versionName ProjectBuilddencies.versionName
+        multiDexEnabled true
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        ndk {
+            // 设置支持的SO库架构
+            abiFilters 'armeabi-v7a', 'arm64-v8a'
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    // 自定义打包apk的文件名
+    android.applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            if (outputFileName != null && outputFileName.endsWith('.apk')) {
+                outputFileName = "${ProjectBuilddencies.applicationId}" +
+                        "_${ProjectBuilddencies.versionCode}" +
+                        "(${ProjectBuilddencies.versionName})" +
+                        "_${variant.buildType.name}" +
+                        ".apk"
+            }
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+
+}
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    api project(path: ':library_base')
+    implementation Dependencies.JetPack.HiltCore
+    kapt Dependencies.JetPack.HiltApt
+    kapt Dependencies.JetPack.HiltAndroidx
+}

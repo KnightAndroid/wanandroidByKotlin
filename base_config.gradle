@@ -1,0 +1,59 @@
+//********* Base lib 模块的公共脚本配置 **********
+import com.knight.wanandroid.buildsrc.*
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'dagger.hilt.android.plugin'
+apply plugin: 'kotlin-parcelize'
+
+android {
+    compileSdkVersion ProjectBuilddencies.compileSdkVersion
+    buildToolsVersion ProjectBuilddencies.buildToolsVersion
+    defaultConfig {
+        minSdkVersion ProjectBuilddencies.minSdkVersion
+        targetSdkVersion ProjectBuilddencies.targetSdkVersion
+        versionCode ProjectBuilddencies.versionCode
+        versionName ProjectBuilddencies.versionName
+        consumerProguardFiles "consumer-rules.pro"
+        ndk {
+            // 设置支持的SO库架构
+            //abiFilters 'armeabi-v7a', 'arm64-v8a'
+            abiFilters 'armeabi-v7a', 'arm64-v8a'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+
+    buildTypes {
+        debug {
+            buildConfigField "String","TYPE","\"${ProjectBuilddencies.Variants.DEVELOP}\""
+            minifyEnabled false
+            consumerProguardFiles 'proguard-rules.pro'
+        }
+        release {
+            buildConfigField "String","TYPE","\"${ProjectBuilddencies.Variants.RELEASE}\""
+            minifyEnabled true
+            consumerProguardFiles 'proguard-rules.pro'
+        }
+        master {
+            buildConfigField "String","TYPE","\"${ProjectBuilddencies.Variants.MASTER}\""
+            minifyEnabled true
+            consumerProguardFiles 'proguard-rules.pro'
+        }
+
+    }
+
+
+}
+
+kapt {
+    arguments {
+        arg("AROUTER_MODULE_NAME", project.getName())
+    }
+}
