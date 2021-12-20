@@ -1,6 +1,7 @@
-package com.knight.kotlin.library_util
+package com.knight.kotlin.library_base.util
 
 import org.greenrobot.eventbus.EventBus
+
 
 /**
  * Author:Knight

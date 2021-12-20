@@ -1,4 +1,4 @@
-package com.knight.kotlin.library_util.network
+package com.knight.kotlin.library_base.network
 
 import android.net.ConnectivityManager
 import android.net.Network
@@ -28,12 +28,11 @@ class NetworkCallbackImpl : ConnectivityManager.NetworkCallback() {
      */
     var changeCall:NetworkStateChangeListener? = null
 
-    override fun onAvaliable(network: Network) {
+    override fun onAvailable(network: Network) {
         super.onAvailable(network)
         isConnected = true
         changeCall?.networkConnectChange(isConnected)
     }
-
     override fun onCapabilitiesChanged(network: Network, networkCapabilities: NetworkCapabilities) {
         super.onCapabilitiesChanged(network, networkCapabilities)
         if (networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)) {

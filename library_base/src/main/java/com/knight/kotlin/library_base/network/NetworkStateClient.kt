@@ -1,13 +1,11 @@
-package com.knight.kotlin.library_util.network
+package com.knight.kotlin.library_base.network
 
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.net.NetworkRequest
 import androidx.annotation.RequiresPermission
-import com.knight.kotlin.library_common.provider.AppBridge
-import com.knight.kotlin.library_common.provider.ApplicationProvider
-
+import com.knight.kotlin.library_base.BaseApp
 /**
  * Author:Knight
  * Time:2021/12/16 11:04
@@ -25,7 +23,7 @@ object NetworkStateClient {
     @RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE)
     fun register() {
         val build = NetworkRequest.Builder().build()
-        val cm = ApplicationProvider.getInstance()?.getApplication()?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val cm = BaseApp.context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         cm.registerNetworkCallback(build, mNetworkCallback)
     }
 

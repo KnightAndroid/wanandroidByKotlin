@@ -10,31 +10,22 @@ import com.knight.kotlin.library_util.toast.callback.ToastStyleInterface
  * Time:2021/12/17 13:52
  * Description:LocationToastStyle
  */
-class LocationToastStyle : ToastStyleInterface<View?> {
-    private var mStyle: ToastStyleInterface<*>? = null
+class LocationToastStyle constructor( style: ToastStyleInterface<*>,
+                                      gravity: Int,
+                                      xOffset: Int = 0,
+                                      yOffset: Int = 0,
+                                      horizontalMargin: Float = 0f,
+                                      verticalMargin: Float = 0f) : ToastStyleInterface<View?> {
+    private val mStyle:ToastStyleInterface<*> = style
 
-    private var mGravity = 0
-    private var mXOffset = 0
-    private var mYOffset = 0
-    private var mHorizontalMargin = 0f
-    private var mVerticalMargin = 0f
-    fun LocationToastStyle(
-        style: ToastStyleInterface<*>?,
-        gravity: Int,
-        xOffset: Int = 0,
-        yOffset: Int = 0,
-        horizontalMargin: Float = 0f,
-        verticalMargin: Float = 0f
-    ) {
-        mStyle = style
-        mGravity = gravity
-        mXOffset = xOffset
-        mYOffset = yOffset
-        mHorizontalMargin = horizontalMargin
-        mVerticalMargin = verticalMargin
-    }
+    private val mGravity = gravity
+    private val mXOffset = xOffset
+    private val mYOffset = yOffset
+    private val mHorizontalMargin = horizontalMargin
+    private val mVerticalMargin = verticalMargin
+
     override fun createView(context: Context): View? {
-        return mStyle?.createView(context)
+        return mStyle.createView(context)
     }
 
     override fun getGravity(): Int {

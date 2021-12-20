@@ -1,4 +1,4 @@
-package com.knight.kotlin.library_util.annotation
+package com.knight.kotlin.library_base.annotation
 
 /**
  * Author:Knight

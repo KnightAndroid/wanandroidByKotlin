@@ -107,7 +107,7 @@ class ActivityToast constructor(activity: Activity) : ToastInterface{
         return mView
     }
 
-    override fun setDuriation(duration: Int) {
+    override fun setDuration(duration: Int) {
         mDuration = duration
     }
 

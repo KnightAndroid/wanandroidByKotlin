@@ -43,13 +43,13 @@ interface ToastInterface {
     /**
      * 获取布局
      */
-    fun getView():View
+    fun getView():View?
 
 
     /**
      * 设置显示时长
      */
-    fun setDuriation(duration : Int)
+    fun setDuration(duration : Int)
 
     /**
      * 获取显示时长

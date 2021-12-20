@@ -10,11 +10,14 @@ android {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation Dependencies.JetPack.HiltCore
-    implementation Dependencies.GitHub.EventBus
+
 
     kapt Dependencies.JetPack.HiltApt
     kapt Dependencies.JetPack.HiltAndroidx
-    kapt Dependencies.GitHub.EventBusAPT
 
-    implementation project(':library_common')
+    kapt Dependencies.GitHub.AutoServiceAnnotations
+
+    kapt Dependencies.GitHub.ARouteCompiler
+    api project(':library_common')
+    api project(path: ':library_base')
 }

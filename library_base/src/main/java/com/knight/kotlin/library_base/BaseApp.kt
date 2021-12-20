@@ -3,8 +3,9 @@ package com.knight.kotlin.library_base
 import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
-import com.knight.kotlin.library_base.app.ActivityLifecycleCallbacksImpl
+import android.util.Log
 import com.knight.kotlin.library_base.app.LoadModuleProxy
+import com.knight.kotlin.library_base.util.ActivityManagerUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
@@ -48,7 +49,7 @@ open class BaseApp : Application() {
         super.onCreate()
 
         //全局监听Activity 生命周期
-        registerActivityLifecycleCallbacks(ActivityLifecycleCallbacksImpl())
+        registerActivityLifecycleCallbacks(ActivityManagerUtils.getInstance())
         mLoadModuleProxy.onCreate(this)
 
         //策略初始化第三方依赖
@@ -63,8 +64,6 @@ open class BaseApp : Application() {
     private fun initDepends() {
         //开启一个Default Coroutine 进行初始化不会立即使用的第三方
         mCoroutineScope.launch { Dispatchers.Default }
-
-
         //前台初始化
         val allTimeMillis = measureTimeMillis {
             val depends = mLoadModuleProxy.initFrontTask()

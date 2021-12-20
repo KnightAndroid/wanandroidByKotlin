@@ -26,10 +26,33 @@ android {
         }
     }
 
+    //签名配置
+    signingConfigs {
+        debug{
+
+        }
+
+        release {
+            storeFile file('../wanandroid.jks')//密钥文件路径
+            storePassword "wanandroid"//密钥文件密码
+            keyAlias "wanandroid"//key别名
+            keyPassword "wanandroid"//key密码
+        }
+
+    }
+
     buildTypes {
         release {
-            minifyEnabled false
+            //代码混淆开关
+            minifyEnabled true
+            //移除无用资源
+            shrinkResources true
+            //压缩对齐开关
+            zipAlignEnabled true
+            //混淆规则文件
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            //签名信息配置
+            signingConfig signingConfigs.release
         }
     }
     // 自定义打包apk的文件名
@@ -59,7 +82,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    api project(path: ':library_base')
+    api project(path:':library_util')
     implementation Dependencies.JetPack.HiltCore
     kapt Dependencies.JetPack.HiltApt
     kapt Dependencies.JetPack.HiltAndroidx

@@ -17,9 +17,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    api project(path:':library_network')
-    api project(path:':library_util')
-
+//    api project(path:':library_network')
     api Dependencies.Androidx.CoreKts
     api Dependencies.Androidx.AppCompat
     api Dependencies.Androidx.ConstraintLayout
@@ -42,8 +40,10 @@ dependencies {
     kapt Dependencies.JetPack.LifecycleCompilerAPT
     //阿里路由  https://github.com/alibaba/ARouter
     api Dependencies.GitHub.ARoute
-
+    api Dependencies.GitHub.EventBus
+    kapt Dependencies.GitHub.EventBusAPT
     kapt Dependencies.GitHub.ARouteCompiler
+
     api Dependencies.GitHub.AutoService
     kapt Dependencies.GitHub.AutoServiceAnnotations
 }

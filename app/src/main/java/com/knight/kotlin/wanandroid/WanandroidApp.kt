@@ -1,6 +1,7 @@
 package com.knight.kotlin.wanandroid
 
 import android.app.Application
+import com.knight.kotlin.library_base.BaseApp
 import dagger.hilt.android.HiltAndroidApp
 
 /**
@@ -9,5 +10,5 @@ import dagger.hilt.android.HiltAndroidApp
  *Description:WanandroidApp
  */
 @HiltAndroidApp
-class WanandroidApp :Application() {
+class WanandroidApp :BaseApp() {
 }
