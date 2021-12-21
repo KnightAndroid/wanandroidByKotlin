@@ -1,0 +1,8 @@
+<!--启动页背景-->
+<resources>
+    <style name="welcomeAppSplash" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@drawable/welcome_splash_bg</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+</resources>

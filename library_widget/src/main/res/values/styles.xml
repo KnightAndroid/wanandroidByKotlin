@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="AnimLogoView">
+        <attr name="logoName" format="string" />
+        <attr name="autoPlay" format="boolean" />
+        <attr name="offsetAnimDuration" format="integer" />
+        <attr name="gradientAnimDuration" format="integer" />
+        <attr name="gradientColor" format="color" />
+        <attr name="textSize" format="dimension" />
+        <attr name="textColor" format="color" />
+        <attr name="verticalOffset" format="dimension" />
+        <attr name="textPadding" format="dimension" />
+        <attr name="showGradient" format="boolean" />
+    </declare-styleable>
+</resources>

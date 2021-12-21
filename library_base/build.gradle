@@ -1,6 +1,6 @@
 //library_base 配置文件
 import com.knight.wanandroid.buildsrc.*
-apply from:'../base_config.gradle'
+apply from:'../base_library.gradle'
 apply plugin: 'dagger.hilt.android.plugin'
 android {
     buildFeatures {
@@ -17,7 +17,6 @@ android {
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
-//    api project(path:':library_network')
     api Dependencies.Androidx.CoreKts
     api Dependencies.Androidx.AppCompat
     api Dependencies.Androidx.ConstraintLayout
@@ -39,10 +38,12 @@ dependencies {
     kapt Dependencies.JetPack.HiltAndroidx
     kapt Dependencies.JetPack.LifecycleCompilerAPT
     //阿里路由  https://github.com/alibaba/ARouter
+
     api Dependencies.GitHub.ARoute
     api Dependencies.GitHub.EventBus
     kapt Dependencies.GitHub.EventBusAPT
     kapt Dependencies.GitHub.ARouteCompiler
+    api Dependencies.GitHub.AutoSize
 
     api Dependencies.GitHub.AutoService
     kapt Dependencies.GitHub.AutoServiceAnnotations

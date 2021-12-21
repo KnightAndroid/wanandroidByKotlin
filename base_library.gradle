@@ -1,4 +1,4 @@
-//********* Base lib 模块的公共脚本配置 **********
+//********* Base library 模块的公共脚本配置 **********
 import com.knight.wanandroid.buildsrc.*
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'

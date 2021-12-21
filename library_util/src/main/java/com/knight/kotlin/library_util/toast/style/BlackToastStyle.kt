@@ -21,6 +21,7 @@ open class BlackToastStyle : ToastStyleInterface<TextView> {
         val textView = TextView(context)
         textView.id = android.R.id.message
         textView.gravity = getTextGravity()
+        textView.setTextColor(getTextColor())
         textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, getTextSize(context))
         val horizontalPadding = getHorizontalPadding(context)
         val verticalPadding = getVerticalPadding(context)
@@ -58,8 +59,8 @@ open class BlackToastStyle : ToastStyleInterface<TextView> {
     }
 
 
-    open fun getTextColor(context: Context?): Int {
-        return -0x11000001
+    open fun getTextColor(): Int {
+        return 0XEEFFFFFF.toInt()
     }
 
 
@@ -90,7 +91,7 @@ open class BlackToastStyle : ToastStyleInterface<TextView> {
     protected open fun getBackgroundDrawable(context:Context): Drawable {
         val drawable = GradientDrawable()
         // 设置颜色
-        drawable.setColor(-0X78000000)
+        drawable.setColor(0X88000000.toInt())
         drawable.cornerRadius = (TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10f, context.resources.displayMetrics))
         return drawable
     }

@@ -1,0 +1,23 @@
+//library_base 配置文件
+import com.knight.wanandroid.buildsrc.*
+apply from:'../base_library.gradle'
+apply plugin: 'dagger.hilt.android.plugin'
+android {
+    buildFeatures {
+        viewBinding = true
+    }
+    buildTypes {
+        release {
+            minifyEnabled true //开启混淆
+            consumerProguardFiles 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation Dependencies.JetPack.HiltCore
+    kapt Dependencies.JetPack.HiltApt
+    kapt Dependencies.JetPack.HiltAndroidx
+
+}

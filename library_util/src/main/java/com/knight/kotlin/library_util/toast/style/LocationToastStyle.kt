@@ -10,13 +10,13 @@ import com.knight.kotlin.library_util.toast.callback.ToastStyleInterface
  * Time:2021/12/17 13:52
  * Description:LocationToastStyle
  */
-class LocationToastStyle constructor( style: ToastStyleInterface<*>,
+class LocationToastStyle constructor( style: ToastStyleInterface<*>?,
                                       gravity: Int,
                                       xOffset: Int = 0,
                                       yOffset: Int = 0,
                                       horizontalMargin: Float = 0f,
                                       verticalMargin: Float = 0f) : ToastStyleInterface<View?> {
-    private val mStyle:ToastStyleInterface<*> = style
+    private val mStyle:ToastStyleInterface<*>? = style
 
     private val mGravity = gravity
     private val mXOffset = xOffset
@@ -25,7 +25,7 @@ class LocationToastStyle constructor( style: ToastStyleInterface<*>,
     private val mVerticalMargin = verticalMargin
 
     override fun createView(context: Context): View? {
-        return mStyle.createView(context)
+        return mStyle?.createView(context)
     }
 
     override fun getGravity(): Int {

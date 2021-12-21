@@ -53,7 +53,7 @@ class ToastStrategy : Handler(Looper.getMainLooper()),ToastStrategyInterface {
      * Toast 对象
      *
      */
-    private lateinit var mToastReference:WeakReference<ToastInterface>
+    private var mToastReference:WeakReference<ToastInterface>?=null
 
     /**
      * Toast样式
@@ -111,7 +111,7 @@ class ToastStrategy : Handler(Looper.getMainLooper()),ToastStrategyInterface {
     override fun handleMessage(msg: Message) {
         var toast: ToastInterface? = null
         if (mToastReference != null) {
-            toast = mToastReference.get()
+            toast = mToastReference?.get()
         }
 
         when (msg.what) {

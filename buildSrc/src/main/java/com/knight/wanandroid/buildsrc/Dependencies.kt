@@ -59,6 +59,7 @@ object Dependencies {
        const val MMKV = "1.2.9"                            // 腾讯 MMKV 替代SP
        const val AutoService = "1.0"                       // 自动生成SPI暴露服务文件
        const val EventBus = "3.3.1"                        // 事件总线
+       const val AutoSize = "1.2.1"                        // 屏幕适配
     }
     /**
      * AndroidX相关依赖
@@ -151,6 +152,7 @@ object Dependencies {
         const val OkHttpInterceptorLogging = "com.squareup.okhttp3:logging-interceptor:${Version.OkHttpInterceptorLogging}"
         const val EventBus = "org.greenrobot:eventbus:${Version.EventBus}"
         const val EventBusAPT = "org.greenrobot:eventbus-annotation-processor:${Version.EventBus}"
+        const val AutoSize = "me.jessyan:autosize:${Version.AutoSize}"
     }
 
 

@@ -1,5 +1,5 @@
 //*****library_util 配置文件********************
-apply from : '../base_config.gradle'
+apply from : '../base_library.gradle'
 import com.knight.wanandroid.buildsrc.*
 android {
     buildFeatures {
@@ -9,15 +9,13 @@ android {
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
+    api project(':library_common')
+    api project(path: ':library_base')
     implementation Dependencies.JetPack.HiltCore
-
-
     kapt Dependencies.JetPack.HiltApt
     kapt Dependencies.JetPack.HiltAndroidx
 
     kapt Dependencies.GitHub.AutoServiceAnnotations
-
     kapt Dependencies.GitHub.ARouteCompiler
-    api project(':library_common')
-    api project(path: ':library_base')
+
 }

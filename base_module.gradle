@@ -1,0 +1,114 @@
+//********* Base module 模块的公共脚本配置 **********
+import com.knight.wanandroid.buildsrc.*
+
+if (ProjectBuilddencies.isAppMode) {
+    apply plugin: 'com.android.application'
+} else {
+    apply plugin: 'com.android.library'
+}
+
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'dagger.hilt.android.plugin'
+apply plugin: 'kotlin-parcelize'
+
+android {
+    compileSdkVersion ProjectBuilddencies.compileSdkVersion
+    buildToolsVersion ProjectBuilddencies.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion ProjectBuilddencies.minSdkVersion
+        targetSdkVersion ProjectBuilddencies.targetSdkVersion
+        versionCode ProjectBuilddencies.versionCode
+        versionName ProjectBuilddencies.versionName
+        testInstrumentationRunner Dependencies.Androidx.AndroidJUnitRunner
+
+        ndk {
+            // 设置支持的SO库架构
+            //abiFilters 'armeabi', 'x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a'
+            abiFilters 'armeabi-v7a', 'arm64-v8a'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+
+    buildFeatures {
+        viewBinding = true
+    }
+
+    sourceSets {
+        main {
+            if(ProjectBuilddencies.isAppMode){
+                manifest.srcFile 'src/main/manifest/AndroidManifest.xml'
+            } else {
+                manifest.srcFile 'src/main/AndroidManifest.xml'
+            }
+
+            res.srcDirs =
+                    [
+                            'src/main/res/layouts/activitys',
+                            'src/main/res/layouts/fragments',
+                            'src/main/res/layouts/adapters',
+                            'src/main/res/layouts/items',
+                            'src/main/res/layouts/dialogs',
+                            'src/main/res/layouts',
+                            'src/main/res'
+
+                    ]
+            assets.srcDirs = ['src/main/assets', 'src/main/assets/']
+
+
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+
+    buildTypes {
+        debug {
+            buildConfigField "String","TYPE","\"${ProjectBuilddencies.Variants.DEVELOP}\""
+            minifyEnabled false
+            consumerProguardFiles 'proguard-rules.pro'
+        }
+        release {
+            buildConfigField "String","TYPE","\"${ProjectBuilddencies.Variants.RELEASE}\""
+            minifyEnabled true
+            consumerProguardFiles 'proguard-rules.pro'
+        }
+        master {
+            buildConfigField "String","TYPE","\"${ProjectBuilddencies.Variants.MASTER}\""
+            minifyEnabled true
+            consumerProguardFiles 'proguard-rules.pro'
+        }
+
+    }
+}
+kapt {
+    arguments {
+        arg("AROUTER_MODULE_NAME", project.name)
+        arg("eventBusIndex", "${ProjectBuilddencies.applicationId}.eventbus.index.${project.name}EventIndex")
+    }
+}
+
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    api project(path:':library_util')
+    api project(path:':library_network')
+    api project(path:':library_widget')
+    testImplementation Dependencies.Android.Junit
+    androidTestImplementation Dependencies.Androidx.TestExtJunit
+    androidTestImplementation Dependencies.Androidx.TestEspresso
+    implementation Dependencies.JetPack.HiltCore
+
+    kapt Dependencies.GitHub.ARouteCompiler
+    kapt Dependencies.GitHub.EventBusAPT
+    kapt Dependencies.GitHub.AutoServiceAnnotations
+    kapt Dependencies.JetPack.HiltApt
+    kapt Dependencies.JetPack.HiltAndroidx
+    kapt Dependencies.JetPack.LifecycleCompilerAPT
+}

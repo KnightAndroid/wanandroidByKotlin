@@ -11,10 +11,10 @@ import com.knight.kotlin.library_util.toast.callback.ToastStyleInterface
  * Time:2021/12/17 13:58
  * Description:ViewToastStyle
  */
-class ViewToastStyle constructor(id:Int,style :ToastStyleInterface<*>) : ToastStyleInterface<View> {
+class ViewToastStyle constructor(id:Int,style :ToastStyleInterface<*>?) : ToastStyleInterface<View> {
 
     private val mLayoutId:Int = id
-    private val mStyle :ToastStyleInterface<*> = style
+    private val mStyle :ToastStyleInterface<*>? = style
 
 
     override fun createView(context: Context): View {
@@ -36,7 +36,7 @@ class ViewToastStyle constructor(id:Int,style :ToastStyleInterface<*>) : ToastSt
     }
 
     override fun getYOffset(): Int {
-        return mStyle?.getYOffset()
+        return mStyle?.getYOffset()!!
     }
 
     override fun getHorizontalMargin(): Float {

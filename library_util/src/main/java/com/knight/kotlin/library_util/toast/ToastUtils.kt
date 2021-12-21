@@ -30,13 +30,13 @@ object ToastUtils {
      *
      * Toast处理策略
      */
-    private lateinit var sToastStrategy: ToastStrategyInterface
+    private var sToastStrategy: ToastStrategyInterface?=null
 
     /**
      *
      * Toast样式
      */
-    private lateinit var sToastStyle: ToastStyleInterface<*>
+    private var sToastStyle: ToastStyleInterface<*>?=null
 
     /**
      *
@@ -55,10 +55,10 @@ object ToastUtils {
      * @param application       应用的上下文
      */
     fun init(application:Application) {
-
+        init(application, sToastStyle)
     }
 
-    fun init(application: Application,style:ToastStyleInterface<*>) {
+    fun init(application: Application,style:ToastStyleInterface<*>?) {
         sApplication = application
 
         // 初始化 Toast 显示处理器
@@ -136,7 +136,7 @@ object ToastUtils {
         if (sToastInterceptor != null && sToastInterceptor.intercept(text)) {
             return
         }
-        sToastStrategy.showToast(text)
+        sToastStrategy?.showToast(text)
     }
 
     fun debugShow(text: CharSequence?) {
@@ -150,7 +150,7 @@ object ToastUtils {
      * 取消吐司的显示
      */
     fun cancel() {
-        sToastStrategy.cancelToast()
+        sToastStrategy?.cancelToast()
     }
 
     /**
@@ -173,7 +173,7 @@ object ToastUtils {
         horizontalMargin: Float,
         verticalMargin: Float
     ) {
-        sToastStrategy.bindStyle(
+        sToastStrategy?.bindStyle(
             LocationToastStyle(
                 sToastStyle,
                 gravity,
@@ -204,7 +204,7 @@ object ToastUtils {
      */
     fun setStyle(style: ToastStyleInterface<*>) {
         sToastStyle = style
-        sToastStrategy.bindStyle(style)
+        sToastStrategy?.bindStyle(style)
     }
 
     fun getStyle(): ToastStyleInterface<*>? {
@@ -216,7 +216,7 @@ object ToastUtils {
      */
     fun setStrategy(strategy: ToastStrategyInterface) {
         sToastStrategy = strategy
-        sToastStrategy.registerStrategy(sApplication)
+        sToastStrategy?.registerStrategy(sApplication)
     }
 
     fun getStrategy(): ToastStrategyInterface? {

@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
 import com.alibaba.android.arouter.launcher.ARouter
+import com.knight.kotlin.library_base.R
 import com.knight.kotlin.library_base.annotation.EventBusRegister
 import com.knight.kotlin.library_base.view.BaseView
 import com.knight.kotlin.library_base.vm.BaseViewModel
@@ -35,6 +36,7 @@ abstract class BaseActivity<VB : ViewBinding,VM : BaseViewModel> : AppCompatActi
 
     override fun onCreate(savedInstanceState:Bundle?) {
         super.onCreate(savedInstanceState)
+        setTheme(getActivityTheme())
         setContentView(mBinding.root)
         //处理保存的状态
         mStatusHelper?.onRestoreInstanceStatus(savedInstanceState)
@@ -42,7 +44,10 @@ abstract class BaseActivity<VB : ViewBinding,VM : BaseViewModel> : AppCompatActi
         ARouter.getInstance().inject(this)
         //注册EventBus
         if (javaClass.isAnnotationPresent(EventBusRegister::class.java)) EventBusUtils.register(this)
-
+        mBinding.initView()
+        initNetworkListener()
+        initObserver()
+        initRequestData()
     }
 
 
@@ -63,6 +68,22 @@ abstract class BaseActivity<VB : ViewBinding,VM : BaseViewModel> : AppCompatActi
      */
     override fun networkTypeChange(type:Int) {
 
+    }
+
+    /**
+     * 网络连接状态更改回调
+     * @param isConnected Boolean 是否已连接
+     * @return Unit
+     *
+     */
+    override fun networkConnectChange(isConnected:Boolean) {
+
+
+    }
+
+
+    open fun getActivityTheme():Int {
+        return R.style.base_AppTheme
     }
 
 

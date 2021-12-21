@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+    <item>
+        <shape>
+
+            <solid
+                android:color="@android:color/white"
+                ></solid>
+
+        </shape>
+    </item>
+
+    <item android:top="20dp"
+        >
+          <bitmap android:src="@drawable/welcome_splash_top_ic" android:gravity="center|top" ></bitmap>
+    </item>
+
+    <item android:bottom="30dp">
+        <bitmap android:src="@drawable/welcome_splash_bottom_ic" android:gravity="center|bottom"></bitmap>
+
+
+    </item>
+</layer-list>

@@ -12,14 +12,14 @@ import android.util.TypedValue
  * Description:WhiteToastStyle
  */
 class WhiteToastStyle : BlackToastStyle() {
-    override fun getTextColor(context: Context?): Int {
-        return -0x45000000
+    override fun getTextColor(): Int {
+        return 0XBB000000.toInt()
     }
 
     override fun getBackgroundDrawable(context: Context): Drawable {
         val drawable = GradientDrawable()
         // 设置颜色
-        drawable.setColor(-0x151516)
+        drawable.setColor(0XFFEAEAEA.toInt())
         // 设置圆角
         drawable.cornerRadius =
             TypedValue.applyDimension(
