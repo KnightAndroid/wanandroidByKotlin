@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--首页-->
+    <item
+        android:id="@+id/homeFragment"
+        android:icon="@drawable/main_bottom_main_selector"
+        android:title="@string/main_home" />
+
+    <!--广场-->
+    <item
+        android:id="@+id/squareFragment"
+        android:icon="@drawable/main_bottom_square_selector"
+        android:title="@string/main_square" />
+
+    <!--项目-->
+    <item
+        android:id="@+id/projectFragment"
+        android:icon="@drawable/main_bottom_project_selector"
+        android:title="@string/main_project" />
+
+
+    <!--导航-->
+    <item
+        android:id="@+id/navigateFragment"
+        android:icon="@drawable/main_bottom_navigate_selector"
+        android:title="@string/main_navigate" />
+
+    <!--我的-->
+    <item
+        android:id="@+id/mineFragment"
+        android:icon="@drawable/main_bottom_mine_selector"
+        android:title="@string/main_mine" />
+</menu>

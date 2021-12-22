@@ -1,0 +1,46 @@
+package com.knight.kotlin.library_network.log.handler
+
+import com.knight.kotlin.library_network.log.L
+import com.knight.kotlin.library_network.log.LoggerPrinter
+import com.knight.kotlin.library_network.log.bean.JSONConfig
+import com.knight.kotlin.library_network.log.extension.formatJSON
+import com.knight.kotlin.library_network.log.extension.parseMap
+import com.knight.kotlin.library_network.log.formatter.Formatter
+import com.knight.kotlin.library_network.log.parser.Parser
+import com.knight.kotlin.library_network.log.utils.toJavaClass
+import org.json.JSONObject
+
+
+/**
+ * Author:Knight
+ * Time:2021/12/22 10:41
+ * Description:MapHandler
+ */
+class MapHandler:BaseHandler(), Parser<Map<*, *>> {
+
+    override fun handle(obj: Any, jsonConfig: JSONConfig): Boolean {
+
+        if (obj is Map<*,*>) {
+
+            jsonConfig.printers.map {
+                val s = L.getMethodNames(it.formatter)
+                it.printLog(jsonConfig.logLevel,jsonConfig.tag ,String.format(s, parseString(obj,it.formatter)))
+            }
+            return true
+        }
+
+        return false
+    }
+
+    override fun parseString(map: Map<*, *>,formatter: Formatter): String {
+
+        var msg = map.toJavaClass() + LoggerPrinter.BR + formatter.spliter()
+
+        return msg + JSONObject().parseMap(map)
+            .formatJSON()
+            .let {
+                it.replace("\n", "\n${formatter.spliter()}")
+            }
+    }
+
+}

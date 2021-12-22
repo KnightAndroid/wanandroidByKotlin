@@ -2,16 +2,12 @@ package com.knight.kotlin.module_welcome.activity
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
-import android.os.Bundle
-import android.view.View
 import androidx.activity.viewModels
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.alibaba.android.arouter.launcher.ARouter
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.ktx.observeLiveData
 import com.knight.kotlin.library_base.route.RouteActivity
-import com.knight.kotlin.library_base.vm.EmptyViewModel
-import com.knight.kotlin.library_util.LogUtils
-import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_welcome.R
 import com.knight.kotlin.module_welcome.databinding.WelcomeActivityBinding
 import com.knight.kotlin.module_welcome.entity.AppThemeBean
@@ -27,6 +23,8 @@ class WelcomeActivity : BaseActivity<WelcomeActivityBinding, WelcomeVm>() {
         logoAnim.addOffsetAnimListener(object : AnimatorListenerAdapter() {
             override fun onAnimationEnd(animation: Animator) {
                 super.onAnimationEnd(animation)
+                ARouter.getInstance().build(RouteActivity.Main.MainActivity).navigation()
+                finish()
             }
         })
         logoAnim.startAnimation()
@@ -51,7 +49,7 @@ class WelcomeActivity : BaseActivity<WelcomeActivityBinding, WelcomeVm>() {
 
 
     private fun setAppThemeData(data:AppThemeBean) {
-        toast(data.themeColor)
+
     }
 
     override fun getActivityTheme(): Int {

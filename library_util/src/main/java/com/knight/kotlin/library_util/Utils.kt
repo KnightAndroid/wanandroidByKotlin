@@ -16,7 +16,7 @@ import com.knight.kotlin.library_util.toast.ToastUtils
  * @param msg String 文本
  * @param duration Int 时间
  */
-fun toast(msg:String,uration: Int = Toast.LENGTH_SHORT) {
+fun toast(msg:String,duration: Int = Toast.LENGTH_SHORT) {
     ToastUtils.show(msg)
 }
 

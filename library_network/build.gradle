@@ -17,7 +17,6 @@ dependencies {
     api Dependencies.GitHub.OkHttpInterceptorLogging
     api Dependencies.GitHub.Retrofit
     api Dependencies.GitHub.RetrofitConverterGson
-
     implementation Dependencies.JetPack.HiltCore
     kapt Dependencies.JetPack.HiltApt
     kapt Dependencies.JetPack.HiltAndroidx

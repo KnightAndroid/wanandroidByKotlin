@@ -31,10 +31,12 @@ class WelcomeVm @Inject constructor(private val mRepo:WelcomeRepo) :BaseViewMode
      *
      */
     fun getAppTheme() {
+
        viewModelScope.launch(Dispatchers.IO) {
            mRepo.getAppTheme()
                .catch { toast(it.message ?: "") }
-               .collect { themeData.postValue(it) }
+               .collect {
+                   themeData.postValue(it) }
        }
     }
 }

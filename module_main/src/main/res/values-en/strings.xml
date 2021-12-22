@@ -1,0 +1,8 @@
+<resources>
+    <string name="main_app_name">module_main</string>
+    <string name="main_home">Home</string>
+    <string name="main_square">Square</string>
+    <string name="main_project">Project</string>
+    <string name="main_navigate">Navigate</string>
+    <string name="main_mine">Mine</string>
+</resources>

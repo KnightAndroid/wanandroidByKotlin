@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.annotation.Nullable
 import com.knight.kotlin.library_network.BuildConfig
 import com.knight.kotlin.library_network.config.BaseUrlConfig
+import com.knight.kotlin.library_network.log.LoggingInterceptor
 import com.knight.kotlin.library_network.util.ReplaceUrlCallFactory
 import dagger.Module
 import dagger.Provides
@@ -38,8 +39,18 @@ class ClientConfig {
     @Provides
     fun okHttpClientConfConfig():OkHttpClient {
         //拦截日志
-        val level = if (BuildConfig.TYPE != "MASTER") HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
-        val loggingInterceptor = HttpLoggingInterceptor().setLevel(level)
+       // val level = if (BuildConfig.TYPE != "MASTER") HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
+       // val loggingInterceptor = HttpLoggingInterceptor().setLevel(level)
+
+
+        //设置拦截器
+        val loggingInterceptor = LoggingInterceptor.Builder()
+            .loggable(BuildConfig.TYPE != "MASTER")
+            .request()
+            .requestTag("Request")
+            .response()
+            .responseTag("Response")
+            .build()
 
         return OkHttpClient.Builder()
             .connectTimeout(15L * 1000L, TimeUnit.MILLISECONDS)

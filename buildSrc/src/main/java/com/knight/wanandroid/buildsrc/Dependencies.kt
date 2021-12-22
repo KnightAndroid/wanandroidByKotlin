@@ -60,6 +60,7 @@ object Dependencies {
        const val AutoService = "1.0"                       // 自动生成SPI暴露服务文件
        const val EventBus = "3.3.1"                        // 事件总线
        const val AutoSize = "1.2.1"                        // 屏幕适配
+       const val BottomNavigation = "2.0.4"                // 底部导航栏
     }
     /**
      * AndroidX相关依赖
@@ -139,20 +140,30 @@ object Dependencies {
      * @since 14/12/21 19:07 PM
      */
     object GitHub {
+        //阿里ARouter https://github.com/alibaba/ARouter
         const val ARoute = "com.alibaba:arouter-api:${Version.ARoute}"
         const val ARouteCompiler = "com.alibaba:arouter-compiler:${Version.ARouteCompiler}"
+        //google https://github.com/google/auto
         const val AutoService = "com.google.auto.service:auto-service:${Version.AutoService}"
         const val AutoServiceAnnotations =
             "com.google.auto.service:auto-service-annotations:${Version.AutoService}"
+        //okhttp https://github.com/square/okhttp
         const val OkHttp = "com.squareup.okhttp3:okhttp:${Version.OkHttp}"
+        //retrofit https://github.com/square/retrofit
         const val Retrofit = "com.squareup.retrofit2:retrofit:${Version.Retrofit}"
+
         const val RetrofitConverterGson =
             "com.squareup.retrofit2:converter-gson:${Version.RetrofitConverterGson}"
+        //Gson https://github.com/google/gson
         const val Gson = "com.google.code.gson:gson:${Version.Gson}"
         const val OkHttpInterceptorLogging = "com.squareup.okhttp3:logging-interceptor:${Version.OkHttpInterceptorLogging}"
+        //EventBus https://github.com/greenrobot/EventBus
         const val EventBus = "org.greenrobot:eventbus:${Version.EventBus}"
         const val EventBusAPT = "org.greenrobot:eventbus-annotation-processor:${Version.EventBus}"
+        //屏幕适配 https://github.com/JessYanCoding/AndroidAutoSize
         const val AutoSize = "me.jessyan:autosize:${Version.AutoSize}"
+        //底部导航栏 https://github.com/ittianyu/BottomNavigationViewEx
+        const val bottomNavigate = "com.github.ittianyu:BottomNavigationViewEx:${Version.BottomNavigation}"
     }
 
 
