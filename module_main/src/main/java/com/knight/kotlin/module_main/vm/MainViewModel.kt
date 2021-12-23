@@ -18,7 +18,11 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(private val mRepository:MainRepository):BaseViewModel() {
 
     val fragments:List<Fragment> = listOf(
-        ARouter.getInstance().build(RouteFragment.Home.HomeFragment) as Fragment
+        ARouter.getInstance().build(RouteFragment.Home.HomeFragment).navigation()  as Fragment,
+        ARouter.getInstance().build(RouteFragment.Square.SquareFragment).navigation()  as Fragment,
+        ARouter.getInstance().build(RouteFragment.Project.ProjectFragment).navigation()  as Fragment,
+        ARouter.getInstance().build(RouteFragment.Navigate.NavigateFragment).navigation()  as Fragment,
+        ARouter.getInstance().build(RouteFragment.Mine.MineFragment).navigation()  as Fragment
     )
 
 }

@@ -19,14 +19,14 @@ class HomeFragment :BaseFragment<HomeFragmentBinding,EmptyViewModel>(){
 
     override val mViewModel: EmptyViewModel by viewModels()
     override fun HomeFragmentBinding.initView() {
-        TODO("Not yet implemented")
+
     }
 
     override fun initObserver() {
-        TODO("Not yet implemented")
+
     }
 
     override fun initRequestData() {
-        TODO("Not yet implemented")
+
     }
 }

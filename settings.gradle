@@ -1,17 +1,3 @@
-//pluginManagement {
-//    repositories {
-//        gradlePluginPortal()
-//        google()
-//        mavenCentral()
-//    }
-//}
-//dependencyResolutionManagement {
-//    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
-//    repositories {
-//        google()
-//        mavenCentral()
-//    }
-//}
 rootProject.name = "wanandroid"
 include ':app'
 include ':library_base'
@@ -22,3 +8,7 @@ include ':module_welcome'
 include ':library_widget'
 include ':module_main'
 include ':module_home'
+include ':module_square'
+include ':module_project'
+include ':module_navigate'
+include ':module_mine'

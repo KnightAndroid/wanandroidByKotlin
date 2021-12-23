@@ -5,6 +5,7 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.module_main.databinding.MainActivityBinding
+import com.knight.kotlin.module_main.utils.ViewSetUtils
 import com.knight.kotlin.module_main.vm.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -21,7 +22,19 @@ class MainActivity : BaseActivity<MainActivityBinding,MainViewModel>() {
 
 
     override fun MainActivityBinding.initView() {
-
+        ViewSetUtils.setIsUserInputEnable(this@MainActivity,mainViewpager,mViewModel.fragments,false)
+        btnNav.run {
+            setOnNavigationItemSelectedListener {
+                when(it.itemId) {
+                    R.id.homeFragment -> mainViewpager.setCurrentItem(0,false)
+                    R.id.squareFragment -> mainViewpager.setCurrentItem(1,false)
+                    R.id.projectFragment -> mainViewpager.setCurrentItem(2,false)
+                    R.id.navigateFragment -> mainViewpager.setCurrentItem(3,false)
+                    R.id.mineFragment -> mainViewpager.setCurrentItem(4,false)
+                }
+                true
+            }
+        }
     }
 
     override fun initObserver() {}

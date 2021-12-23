@@ -9,7 +9,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    api project(':library_common')
+    api project(path: ':library_common')
     api project(path: ':library_base')
     implementation Dependencies.JetPack.HiltCore
     kapt Dependencies.JetPack.HiltApt

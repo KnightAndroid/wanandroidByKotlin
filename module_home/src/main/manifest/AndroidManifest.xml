@@ -35,7 +35,7 @@
 
 
         <activity
-            android:name=".HomeActivity"
+            android:name=".activity.HomeActivity"
             android:theme="@style/home_Theme.Wanandroid">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

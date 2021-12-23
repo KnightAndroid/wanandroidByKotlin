@@ -1,0 +1,5 @@
+apply from: '../base_module.gradle'
+android {
+    resourcePrefix "project_"
+}
+

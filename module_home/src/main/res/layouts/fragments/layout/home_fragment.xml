@@ -12,6 +12,6 @@
         app:layout_constraintRight_toRightOf="parent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="ssssss"/>
+        android:text="这是首页"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
