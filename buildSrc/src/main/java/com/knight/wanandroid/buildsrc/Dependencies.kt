@@ -56,7 +56,7 @@ object Dependencies {
        const val Retrofit = "2.9.0"                        // Retrofit
        const val RetrofitConverterGson = "2.9.0"           // Retrofit Gson 转换器
        const val Gson = "2.8.7"                            // Gson
-       const val MMKV = "1.2.9"                            // 腾讯 MMKV 替代SP
+       const val MMKV = "1.2.11"                            // 腾讯 MMKV 替代SP
        const val AutoService = "1.0"                       // 自动生成SPI暴露服务文件
        const val EventBus = "3.3.1"                        // 事件总线
        const val AutoSize = "1.2.1"                        // 屏幕适配
@@ -164,6 +164,8 @@ object Dependencies {
         const val AutoSize = "me.jessyan:autosize:${Version.AutoSize}"
         //底部导航栏 https://github.com/ittianyu/BottomNavigationViewEx
         const val bottomNavigate = "com.github.ittianyu:BottomNavigationViewEx:${Version.BottomNavigation}"
+        //MMKV https://github.com/Tencent/MMKV
+        const val MMKV = "com.tencent:mmkv:${Version.MMKV}"
     }
 
 

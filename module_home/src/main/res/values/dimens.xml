@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+     <dimen name="home_login_size">16sp</dimen>
+     <dimen name="home_bar_search_size">12sp</dimen>
+
+</resources>

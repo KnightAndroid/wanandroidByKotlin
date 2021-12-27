@@ -1,0 +1,5 @@
+<resources>
+    <string name="home_app_name">module_home</string>
+    <string name="home_tv_login">Login</string>
+    <string name="home_hint_search">Please enter keyword search</string>
+</resources>

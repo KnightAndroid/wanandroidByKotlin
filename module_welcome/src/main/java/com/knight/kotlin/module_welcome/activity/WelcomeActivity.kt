@@ -6,6 +6,7 @@ import androidx.activity.viewModels
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.knight.kotlin.library_base.activity.BaseActivity
+import com.knight.kotlin.library_base.config.Appconfig
 import com.knight.kotlin.library_base.ktx.observeLiveData
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.module_welcome.R
@@ -49,7 +50,7 @@ class WelcomeActivity : BaseActivity<WelcomeActivityBinding, WelcomeVm>() {
 
 
     private fun setAppThemeData(data:AppThemeBean) {
-
+       Appconfig.appThemeColor = data.themeColor
     }
 
     override fun getActivityTheme(): Int {

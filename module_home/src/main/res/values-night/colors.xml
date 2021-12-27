@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <color name="home_toolbar_color">#303030</color>
+    <color name="home_login_tv_color">#D3D3D3</color>
+    <color name="home_bar_search">#333333</color>
+    <color name="home_bar_hint">#999999</color>
 </resources>

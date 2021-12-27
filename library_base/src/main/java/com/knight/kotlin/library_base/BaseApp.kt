@@ -3,9 +3,9 @@ package com.knight.kotlin.library_base
 import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
-import android.util.Log
 import com.knight.kotlin.library_base.app.LoadModuleProxy
 import com.knight.kotlin.library_base.util.ActivityManagerUtils
+import com.knight.kotlin.library_base.util.CacheUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
@@ -41,6 +41,8 @@ open class BaseApp : Application() {
         super.attachBaseContext(base)
         context = base
         application = this
+        //初始化MMKV
+        CacheUtils.init(base)
         mLoadModuleProxy.onAttachBaseContext(base)
     }
 

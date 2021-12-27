@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.knight.kotlin.library_widget.CompatToolBar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/home_toolbar_color"
+    android:theme="@style/ThemeOverlay.AppCompat.DayNight.ActionBar"
+    app:layout_scrollFlags="scroll|enterAlways"
+    app:popupTheme="@style/ThemeOverlay.AppCompat.DayNight">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.knight.kotlin.library_widget.MarqueeTextView
+            android:id="@+id/home_tv_loginname"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/base_dimen_6"
+            android:ellipsize="marquee"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:gravity="center"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
+            android:text="@string/home_tv_login"
+            android:textColor="@color/home_login_tv_color"
+            tools:ignore="SpUsage" />
+
+        <RelativeLayout
+            android:id="@+id/home_rl_search"
+            android:layout_width="wrap_content"
+            android:layout_height="38dp"
+            android:layout_marginLeft="@dimen/base_dimen_10"
+            android:layout_marginRight="@dimen/base_dimen_6"
+            android:layout_toLeftOf="@+id/home_iv_everyday"
+            android:layout_toRightOf="@id/home_tv_loginname"
+            android:background="@drawable/base_bg_filtrate_shape">
+
+
+            <ImageView
+                android:id="@+id/home_iv_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/base_dimen_4"
+                android:background="@drawable/base_icon_search_edittext" />
+
+            <TextView
+                android:id="@+id/home_et_search"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/base_dimen_5"
+                android:layout_marginLeft="@dimen/base_dimen_5"
+                android:layout_toRightOf="@id/home_iv_search"
+                android:gravity="center_vertical"
+                android:hint="@string/home_hint_search"
+                android:imeOptions="actionSearch"
+                android:singleLine="true"
+                android:textColor="@color/home_bar_search"
+                android:textColorHint="@color/home_bar_hint"
+                android:textCursorDrawable="@drawable/base_textcursorcolor"
+                android:textSize="@dimen/home_bar_search_size"
+
+                />
+
+            <ImageView
+                android:id="@+id/home_scan_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/base_dimen_10"
+                android:background="@drawable/home_icon_scan" />
+
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/home_iv_everyday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/base_dimen_6"
+            android:layout_marginRight="@dimen/base_dimen_6"
+            android:layout_toLeftOf="@+id/home_iv_add"
+            android:background="@drawable/home_icon_everyday" />
+
+        <ImageView
+            android:id="@+id/home_iv_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/base_dimen_6"
+            android:background="@drawable/home_icon_add" />
+
+    </RelativeLayout>
+
+
+</com.knight.kotlin.library_widget.CompatToolBar>

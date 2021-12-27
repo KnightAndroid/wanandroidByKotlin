@@ -6,14 +6,14 @@ import androidx.viewbinding.ViewBinding
 import com.alibaba.android.arouter.launcher.ARouter
 import com.knight.kotlin.library_base.R
 import com.knight.kotlin.library_base.annotation.EventBusRegister
-import com.knight.kotlin.library_base.view.BaseView
-import com.knight.kotlin.library_base.vm.BaseViewModel
-import com.knight.kotlin.library_base.util.BindingReflex
-import com.knight.kotlin.library_base.util.EventBusUtils
-
 import com.knight.kotlin.library_base.network.AutoRegisterNetListener
 import com.knight.kotlin.library_base.network.NetworkStateChangeListener
+import com.knight.kotlin.library_base.util.BindingReflex
+import com.knight.kotlin.library_base.util.EventBusUtils
+import com.knight.kotlin.library_base.util.StatusBarUtils
 import com.knight.kotlin.library_base.util.ViewRecreateHelper
+import com.knight.kotlin.library_base.view.BaseView
+import com.knight.kotlin.library_base.vm.BaseViewModel
 
 /**
  * Author:Knight
@@ -37,6 +37,7 @@ abstract class BaseActivity<VB : ViewBinding,VM : BaseViewModel> : AppCompatActi
     override fun onCreate(savedInstanceState:Bundle?) {
         super.onCreate(savedInstanceState)
         setTheme(getActivityTheme())
+        StatusBarUtils.transparentStatusBar(this)
         setContentView(mBinding.root)
         //处理保存的状态
         mStatusHelper?.onRestoreInstanceStatus(savedInstanceState)
