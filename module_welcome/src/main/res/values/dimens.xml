@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="welcome_privacy_margin_left">30dp</dimen>
+    <dimen name="welcome_privacy_margin_right">30dp</dimen>
+    <dimen name="welcome_privacy_title">18dp</dimen>
+    <dimen name="welcome_privacy_title_margin_top">15dp</dimen>
+    <dimen name="welcome_privacy_content_margin_top">15dp</dimen>
+    <dimen name="welcome_privacy_content_textsize">16sp</dimen>
+    <dimen name="welcome_privacy_content_space">4dp</dimen>
+    <dimen name="welcome_privacy_content_margin_left">16dp</dimen>
+    <dimen name="welcome_privacy_content_margin_right">16dp</dimen>
+    <dimen name="welcome_privacy_tip_top">20dp</dimen>
+    <dimen name="welcome_privacy_tip_text_size">16sp</dimen>
+    <dimen name="welcome_privacy_tip_margin_left">16dp</dimen>
+    <dimen name="welcome_privacy_tip_margin_right">16dp</dimen>
+    <dimen name="welcome_privacy_confim_margin_left">16dp</dimen>
+    <dimen name="welcome_privacy_confim_margin_right">16dp</dimen>
+    <dimen name="welcome_privacy_confim_padding_top">15dp</dimen>
+    <dimen name="welcome_privacy_confim_padding_bottom">15dp</dimen>
+    <dimen name="welcome_privacy_confim_margin_top">10dp</dimen>
+    <dimen name="welcome_privacy_disagree_margin_left">16dp</dimen>
+    <dimen name="welcome_privacy_disagree_margin_right">16dp</dimen>
+    <dimen name="welcome_privacy_disagree_padding_top">15dp</dimen>
+    <dimen name="welcome_privacy_disagree_padding_bottom">15dp</dimen>
+</resources>

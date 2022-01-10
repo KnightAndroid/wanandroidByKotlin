@@ -9,9 +9,11 @@ import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.config.Appconfig
 import com.knight.kotlin.library_base.ktx.observeLiveData
 import com.knight.kotlin.library_base.route.RouteActivity
+import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.module_welcome.R
 import com.knight.kotlin.module_welcome.databinding.WelcomeActivityBinding
 import com.knight.kotlin.module_welcome.entity.AppThemeBean
+import com.knight.kotlin.module_welcome.fragment.WelcomePrivacyAgreeFragment
 import com.knight.kotlin.module_welcome.vm.WelcomeVm
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -24,8 +26,12 @@ class WelcomeActivity : BaseActivity<WelcomeActivityBinding, WelcomeVm>() {
         logoAnim.addOffsetAnimListener(object : AnimatorListenerAdapter() {
             override fun onAnimationEnd(animation: Animator) {
                 super.onAnimationEnd(animation)
-                ARouter.getInstance().build(RouteActivity.Main.MainActivity).navigation()
-                finish()
+                if (CacheUtils.getAgreeStatus()) {
+                    ARouter.getInstance().build(RouteActivity.Main.MainActivity).navigation()
+                    finish()
+                } else {
+                    WelcomePrivacyAgreeFragment().show(supportFragmentManager,"dialog_privacy")
+                }
             }
         })
         logoAnim.startAnimation()

@@ -1,0 +1,13 @@
+import com.knight.wanandroid.buildsrc.Dependencies
+
+apply from: '../base_module.gradle'
+android {
+    resourcePrefix "web_"
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation Dependencies.GitHub.AgentWeb
+    implementation Dependencies.GitHub.SketchPhoto
+}
+

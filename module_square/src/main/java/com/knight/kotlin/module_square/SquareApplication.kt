@@ -12,6 +12,7 @@ import com.knight.kotlin.library_base.app.ApplicationLifecycle
  */
 @AutoService(ApplicationLifecycle::class)
 class SquareApplication : ApplicationLifecycle {
+
     override fun onAttachBaseContext(context: Context) {
 
     }
@@ -21,11 +22,9 @@ class SquareApplication : ApplicationLifecycle {
     }
 
     override fun onTerminate(application: Application) {
-
     }
+    override fun initSafeTask():MutableList<() -> String> = mutableListOf()
 
-    override fun initFrontTask(): MutableList<() -> String> = mutableListOf()
-
-    override fun initByBackTask() {
+    override fun initDangerousTask() {
     }
 }

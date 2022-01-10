@@ -47,6 +47,8 @@ object Dependencies {
        //DI框架-Hilt
        const val Hilt = "2.37"
        const val HiltAndroidx = "1.0.0"
+       //数据库Room
+       const val RoomVersion = "2.3.0"
 
        //GitHub相关--------------------------------------------------
        const val ARoute = "1.5.2"                          // 阿里路由
@@ -56,11 +58,14 @@ object Dependencies {
        const val Retrofit = "2.9.0"                        // Retrofit
        const val RetrofitConverterGson = "2.9.0"           // Retrofit Gson 转换器
        const val Gson = "2.8.7"                            // Gson
-       const val MMKV = "1.2.11"                            // 腾讯 MMKV 替代SP
+       const val MMKV = "1.2.11"                           // 腾讯 MMKV 替代SP
        const val AutoService = "1.0"                       // 自动生成SPI暴露服务文件
        const val EventBus = "3.3.1"                        // 事件总线
        const val AutoSize = "1.2.1"                        // 屏幕适配
        const val BottomNavigation = "2.0.4"                // 底部导航栏
+       const val MagicIndicator = "1.7.0"                  // 指示器
+       const val Agent = "v5.0.0-alpha.1-androidx"         // Android WebView
+       const val Sketch = "2.7.1"                          // 预览大图
     }
     /**
      * AndroidX相关依赖
@@ -131,6 +136,9 @@ object Dependencies {
         const val HiltCore = "com.google.dagger:hilt-android:${Version.Hilt}"
         const val HiltApt = "com.google.dagger:hilt-compiler:${Version.Hilt}"
         const val HiltAndroidx = "androidx.hilt:hilt-compiler:${Version.HiltAndroidx}"
+        const val RoomTime = "androidx.room:room-runtime:${Version.RoomVersion}"
+        const val RoomCompiler = "androidx.room:room-compiler:${Version.RoomVersion}"
+        const val RoomKtx = "androidx.room:room-ktx:${Version.RoomVersion}"
     }
 
     /**
@@ -166,6 +174,12 @@ object Dependencies {
         const val bottomNavigate = "com.github.ittianyu:BottomNavigationViewEx:${Version.BottomNavigation}"
         //MMKV https://github.com/Tencent/MMKV
         const val MMKV = "com.tencent:mmkv:${Version.MMKV}"
+        //滑动切换
+        const val MagicIndicator = "com.github.hackware1993:MagicIndicator:${Version.MagicIndicator}"
+        //网页加载库
+        const val AgentWeb = "com.github.Justson.AgentWeb:agentweb-core:${Version.Agent}"
+        //预览大图插件
+        const val SketchPhoto = "io.github.panpf.sketch:sketch:${Version.Sketch}"
     }
 
 

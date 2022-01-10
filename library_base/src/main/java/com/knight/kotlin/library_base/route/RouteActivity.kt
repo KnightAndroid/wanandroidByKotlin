@@ -24,4 +24,18 @@ object RouteActivity {
         private const val WECLOME = "/module_welcome"
         const val WeclmeActivity = "$WECLOME/WelcomeActivity"
     }
+
+
+    /**
+     * H5网页模块
+     */
+    object Web {
+        private const val WEB = "/module_web"
+        const val WebPager = "$WEB/WebPagerActivity"
+        const val WebArticlePager = "$WEB/WebArticleActivity"
+        const val WebPreviewPhotoPager = "$WEB/WebPreviewActivity"
+    }
+
+
+
 }

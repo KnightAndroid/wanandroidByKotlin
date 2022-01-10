@@ -8,15 +8,15 @@ apply plugin: 'dagger.hilt.android.plugin'
 
 
 android {
-    compileSdkVersion ProjectBuilddencies.compileSdkVersion
-    buildToolsVersion ProjectBuilddencies.buildToolsVersion
+    compileSdkVersion ProjectBuildDencies.compileSdkVersion
+    buildToolsVersion ProjectBuildDencies.buildToolsVersion
 
     defaultConfig {
-        applicationId ProjectBuilddencies.applicationId
-        minSdkVersion ProjectBuilddencies.minSdkVersion
-        targetSdkVersion ProjectBuilddencies.targetSdkVersion
-        versionCode ProjectBuilddencies.versionCode
-        versionName ProjectBuilddencies.versionName
+        applicationId ProjectBuildDencies.applicationId
+        minSdkVersion ProjectBuildDencies.minSdkVersion
+        targetSdkVersion ProjectBuildDencies.targetSdkVersion
+        versionCode ProjectBuildDencies.versionCode
+        versionName ProjectBuildDencies.versionName
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -59,9 +59,9 @@ android {
     android.applicationVariants.all { variant ->
         variant.outputs.all { output ->
             if (outputFileName != null && outputFileName.endsWith('.apk')) {
-                outputFileName = "${ProjectBuilddencies.applicationId}" +
-                        "_${ProjectBuilddencies.versionCode}" +
-                        "(${ProjectBuilddencies.versionName})" +
+                outputFileName = "${ProjectBuildDencies.applicationId}" +
+                        "_${ProjectBuildDencies.versionCode}" +
+                        "(${ProjectBuildDencies.versionName})" +
                         "_${variant.buildType.name}" +
                         ".apk"
             }
@@ -89,6 +89,7 @@ dependencies {
     implementation project(path:":module_navigate")
     implementation project(path:":module_project")
     implementation project(path:":module_square")
+    implementation project(path:":module_web")
     implementation Dependencies.JetPack.HiltCore
     kapt Dependencies.JetPack.HiltApt
     kapt Dependencies.JetPack.HiltAndroidx

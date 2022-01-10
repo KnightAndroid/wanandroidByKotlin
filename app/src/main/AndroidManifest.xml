@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.knight.kotlin.wanandroid">
 
     <application
@@ -32,6 +33,14 @@
         <meta-data
             android:name="design_height_in_dp"
             android:value="100000" />
+
+
+<!--        &lt;!&ndash; 会使屏幕适配框架失效 让ContentProvider失效&ndash;&gt;-->
+<!--        <provider-->
+<!--            android:name="me.jessyan.autosize.InitProvider"-->
+<!--            android:authorities="${applicationId}.InitProvider"-->
+<!--            tools:node="remove"-->
+<!--            />-->
     </application>
 
 </manifest>

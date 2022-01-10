@@ -1,12 +1,26 @@
 package com.knight.kotlin.module_home.fragment
 
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.google.common.reflect.TypeToken
 import com.knight.kotlin.library_base.fragment.BaseFragment
+import com.knight.kotlin.library_base.ktx.observeLiveData
 import com.knight.kotlin.library_base.route.RouteFragment
-import com.knight.kotlin.library_base.vm.EmptyViewModel
+import com.knight.kotlin.library_base.util.CacheUtils
+import com.knight.kotlin.library_base.util.GsonUtils
+import com.knight.kotlin.library_database.entity.PushDateEntity
+import com.knight.kotlin.library_util.DateUtils
+import com.knight.kotlin.library_util.JsonUtils.getJson
+import com.knight.kotlin.library_util.ViewInitUtils
+import com.knight.kotlin.library_util.bindViewPager2
+import com.knight.kotlin.module_home.constants.HomeConstants
 import com.knight.kotlin.module_home.databinding.HomeFragmentBinding
+import com.knight.kotlin.module_home.entity.EveryDayPushArticlesBean
+import com.knight.kotlin.module_home.vm.HomeVm
 import dagger.hilt.android.AndroidEntryPoint
+import java.lang.reflect.Type
+
 
 /**
  * Author:Knight
@@ -15,18 +29,100 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 @AndroidEntryPoint
 @Route(path = RouteFragment.Home.HomeFragment)
-class HomeFragment :BaseFragment<HomeFragmentBinding,EmptyViewModel>(){
+class HomeFragment : BaseFragment<HomeFragmentBinding, HomeVm>() {
 
-    override val mViewModel: EmptyViewModel by viewModels()
+
+    /**
+     *
+     * 首页Fragment
+     */
+    private var mFragments = mutableListOf<Fragment>()
+    /**
+     * 知识标签
+     */
+    private var knowledgeLabelList = mutableListOf<String>()
+    /**
+     *
+     * 获取推送文章
+     */
+    private lateinit var mEveryDayPushData: EveryDayPushArticlesBean
+    override val mViewModel: HomeVm by viewModels()
     override fun HomeFragmentBinding.initView() {
+        initMagicIndicator()
 
     }
 
+    /**
+     *
+     * 订阅LiveData
+     */
     override fun initObserver() {
-
+        observeLiveData(mViewModel.everyDayPushArticles, ::setEveryDayPushArticle)
+        observeLiveData(mViewModel.articles, ::processPushArticle)
     }
 
     override fun initRequestData() {
+        mViewModel.getEveryDayPushArticle()
+    }
+
+    override fun setThemeColor(isDarkMode: Boolean) {
+
+    }
+
+    /**
+     * 获取推送文章具体数据
+     */
+    private fun setEveryDayPushArticle(data: EveryDayPushArticlesBean) {
+        mEveryDayPushData = data
+        if (data.pushStatus && DateUtils.isToday(data.time)) {
+            mViewModel.queryPushDate()
+        }
+
+    }
+
+
+    private fun processPushArticle(datas: List<PushDateEntity>) {
+        if (datas != null && datas.isNotEmpty()) {
+            var pushDateEntity = datas[0]
+            if (pushDateEntity.time == mEveryDayPushData.time) {
+                pushDateEntity.time = mEveryDayPushData.time
+                mViewModel.updatePushArticlesDate(pushDateEntity)
+                //TODO 展示弹窗
+            }
+        } else {
+            val pushTempDateEntity = PushDateEntity()
+            pushTempDateEntity.time = mEveryDayPushData.time
+            mViewModel.insertPushArticlesDate(pushTempDateEntity)
+            //TODO 展示弹窗
+        }
+    }
+
+    /**
+     * 初始化指示器
+     */
+    private fun initMagicIndicator() {
+        knowledgeLabelList = CacheUtils.getDataInfo(
+            "knowledgeLabel",
+            object : TypeToken<List<String>>() {}.type
+        )
+        if (knowledgeLabelList.isNullOrEmpty()) {
+            val type: Type = object : TypeToken<List<String>>() {}.type
+            val jsonData = getJson(requireActivity(), "searchkeywords.json")
+            knowledgeLabelList = GsonUtils.getList(jsonData, type)
+        }
+        mFragments.clear()
+        for (i in knowledgeLabelList.indices) {
+            if (i == 0) {
+                mFragments.add(HomeRecommendFragment())
+            } else {
+                mFragments.add(HomeArticleFragment())
+            }
+        }
+
+        ViewInitUtils.setViewPager2Init(requireActivity(),mBinding.viewPager,mFragments,false)
+        mBinding.magicIndicator.bindViewPager2(mBinding.viewPager,knowledgeLabelList) {
+            HomeConstants.ARTICLE_TYPE = knowledgeLabelList[it]
+        }
 
     }
 }

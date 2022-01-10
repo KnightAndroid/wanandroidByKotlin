@@ -5,10 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.viewbinding.ViewBinding
 import com.alibaba.android.arouter.launcher.ARouter
 import com.knight.kotlin.library_base.annotation.EventBusRegister
 import com.knight.kotlin.library_base.util.BindingReflex
+import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_base.util.EventBusUtils
 import com.knight.kotlin.library_base.util.ViewRecreateHelper
 import com.knight.kotlin.library_base.view.BaseView
@@ -28,6 +30,11 @@ abstract class BaseFragment<VB: ViewBinding,VM:BaseViewModel>:Fragment(),BaseVie
      */
     private var _binding:VB? = null
 
+    /**
+     *
+     * 是否第一次加载
+     */
+    private var isFirst:Boolean = true
 
     protected val mBinding get() = _binding!!
     protected abstract val mViewModel:VM
@@ -38,7 +45,29 @@ abstract class BaseFragment<VB: ViewBinding,VM:BaseViewModel>:Fragment(),BaseVie
      */
     private var mStatusHelper:FragmentStatusHelper? = null
 
+    /**
+     *
+     * 颜色值
+     */
+    protected var themeColor:Int?=null
 
+    /**
+     * 是否暗黑模式
+     */
+    protected var isDarkMode:Boolean = false
+
+    /**
+     * 懒加载
+     */
+    protected open fun lazyLoadData() {
+        initRequestData()
+    }
+
+    /**
+     * 主题色设置
+     *
+     */
+    protected abstract fun setThemeColor(isDarkMode:Boolean)
     override fun onCreateView(
         inflater:LayoutInflater,
         container: ViewGroup?,
@@ -57,9 +86,14 @@ abstract class BaseFragment<VB: ViewBinding,VM:BaseViewModel>:Fragment(),BaseVie
         ARouter.getInstance().inject(this)
         //注册EventBus
         if (javaClass.isAnnotationPresent(EventBusRegister::class.java)) EventBusUtils.register(this)
+        isDarkMode = CacheUtils.getNormalDark()
+        initThemeColor()
+        setThemeColor(isDarkMode)
         mBinding.initView()
+        onVisible()
         initObserver()
-        initRequestData()
+
+
     }
 
 
@@ -78,6 +112,15 @@ abstract class BaseFragment<VB: ViewBinding,VM:BaseViewModel>:Fragment(),BaseVie
     }
 
     /**
+     * 获取主题颜色
+     *
+     */
+    protected fun initThemeColor() {
+        themeColor = CacheUtils.getThemeColor()
+    }
+
+
+    /**
      * - fragment状态保存帮助类
      * - 暂时没有其他需要保存的 -- 空继承
      *
@@ -85,6 +128,21 @@ abstract class BaseFragment<VB: ViewBinding,VM:BaseViewModel>:Fragment(),BaseVie
     private class FragmentStatusHelper(savedInstanceState:Bundle? = null) :
             ViewRecreateHelper(savedInstanceState)
 
+
+    override fun onResume() {
+        super.onResume()
+        onVisible()
+    }
+    /**
+     *
+     * 是否需要懒加载
+     */
+    private fun onVisible() {
+        if (lifecycle.currentState == Lifecycle.State.STARTED && isFirst) {
+            lazyLoadData()
+            isFirst = false
+        }
+    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

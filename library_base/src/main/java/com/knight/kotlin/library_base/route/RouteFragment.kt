@@ -14,6 +14,8 @@ object RouteFragment {
     object Home {
         private const val HOME = "/module_home"
         const val HomeFragment = "$HOME/HomeFragment"
+        const val RecommendFragment = "$HOME/RecommendFragment"
+        const val HomeArticleFragment = "$HOME/ArticleFragment"
     }
 
     /**

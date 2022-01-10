@@ -19,5 +19,6 @@ dependencies {
     implementation Dependencies.JetPack.HiltCore
     kapt Dependencies.JetPack.HiltApt
     kapt Dependencies.JetPack.HiltAndroidx
+    implementation project(path: ':library_common')
 
 }

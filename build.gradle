@@ -9,10 +9,10 @@ buildscript {
     }
 
     dependencies {
-        classpath ProjectPlugindencies.AndroidToolsPlugin
-        classpath ProjectPlugindencies.KotlinPlugin
-        classpath ProjectPlugindencies.ARouterRegister
-        classpath ProjectPlugindencies.HiltPlugin
+        classpath ProjectPluginDencies.AndroidToolsPlugin
+        classpath ProjectPluginDencies.KotlinPlugin
+        classpath ProjectPluginDencies.ARouterRegister
+        classpath ProjectPluginDencies.HiltPlugin
         classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.30'
 
     }

@@ -2,7 +2,7 @@ package com.knight.kotlin.library_base.app
 
 import android.app.Application
 import android.content.Context
-import java.util.*
+import java.util.ServiceLoader
 
 /**
  * Author:Knight
@@ -52,18 +52,28 @@ class LoadModuleProxy : ApplicationLifecycle{
      * @return MutableList<() -> String> 初始化方法集合
      *
      */
-    override fun initFrontTask(): MutableList<() -> String> {
+//    override fun initFrontTask(): MutableList<() -> String> {
+//        val list:MutableList<() -> String> = mutableListOf()
+//        mLoader.forEach { list.addAll(it.initFrontTask()) }
+//        return list
+//    }
+//
+//    /**
+//     * 不需要立即初始化的放在这里进行后台初始化
+//     */
+//    override fun initByBackTask() {
+//        mLoader.forEach { it.initByBackTask() }
+//
+//    }
+
+    override fun initSafeTask():MutableList<() -> String> {
         val list:MutableList<() -> String> = mutableListOf()
-        mLoader.forEach { list.addAll(it.initFrontTask()) }
+        mLoader.forEach { list.addAll(it.initSafeTask()) }
         return list
     }
 
-    /**
-     * 不需要立即初始化的放在这里进行后台初始化
-     */
-    override fun initByBackTask() {
-        mLoader.forEach { it.initByBackTask() }
-
+    override fun initDangerousTask() {
+        mLoader.forEach { it.initDangerousTask() }
     }
 
 }

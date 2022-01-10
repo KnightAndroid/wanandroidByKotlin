@@ -1,0 +1,9 @@
+{
+  "errorCode": 0,
+  "data": {
+    "gray" : false,
+    "themeColor": "#55aff4",
+    "forceTheme": false
+  },
+  "errorMsg": ""
+}

@@ -1,7 +1,7 @@
 //********* Base module 模块的公共脚本配置 **********
 import com.knight.wanandroid.buildsrc.*
 
-if (ProjectBuilddencies.isAppMode) {
+if (ProjectBuildDencies.isAppMode) {
     apply plugin: 'com.android.application'
 } else {
     apply plugin: 'com.android.library'
@@ -13,14 +13,14 @@ apply plugin: 'dagger.hilt.android.plugin'
 apply plugin: 'kotlin-parcelize'
 
 android {
-    compileSdkVersion ProjectBuilddencies.compileSdkVersion
-    buildToolsVersion ProjectBuilddencies.buildToolsVersion
+    compileSdkVersion ProjectBuildDencies.compileSdkVersion
+    buildToolsVersion ProjectBuildDencies.buildToolsVersion
 
     defaultConfig {
-        minSdkVersion ProjectBuilddencies.minSdkVersion
-        targetSdkVersion ProjectBuilddencies.targetSdkVersion
-        versionCode ProjectBuilddencies.versionCode
-        versionName ProjectBuilddencies.versionName
+        minSdkVersion ProjectBuildDencies.minSdkVersion
+        targetSdkVersion ProjectBuildDencies.targetSdkVersion
+        versionCode ProjectBuildDencies.versionCode
+        versionName ProjectBuildDencies.versionName
         testInstrumentationRunner Dependencies.Androidx.AndroidJUnitRunner
 
         ndk {
@@ -44,7 +44,7 @@ android {
 
     sourceSets {
         main {
-            if(ProjectBuilddencies.isAppMode){
+            if(ProjectBuildDencies.isAppMode){
                 manifest.srcFile 'src/main/manifest/AndroidManifest.xml'
             } else {
                 manifest.srcFile 'src/main/AndroidManifest.xml'
@@ -70,17 +70,17 @@ android {
 
     buildTypes {
         debug {
-            buildConfigField "String","TYPE","\"${ProjectBuilddencies.Variants.DEVELOP}\""
+            buildConfigField "String","TYPE","\"${ProjectBuildDencies.Variants.DEVELOP}\""
             minifyEnabled false
             consumerProguardFiles 'proguard-rules.pro'
         }
         release {
-            buildConfigField "String","TYPE","\"${ProjectBuilddencies.Variants.RELEASE}\""
+            buildConfigField "String","TYPE","\"${ProjectBuildDencies.Variants.RELEASE}\""
             minifyEnabled true
             consumerProguardFiles 'proguard-rules.pro'
         }
         master {
-            buildConfigField "String","TYPE","\"${ProjectBuilddencies.Variants.MASTER}\""
+            buildConfigField "String","TYPE","\"${ProjectBuildDencies.Variants.MASTER}\""
             minifyEnabled true
             consumerProguardFiles 'proguard-rules.pro'
         }
@@ -90,7 +90,7 @@ android {
 kapt {
     arguments {
         arg("AROUTER_MODULE_NAME", project.name)
-        arg("eventBusIndex", "${ProjectBuilddencies.applicationId}.eventbus.index.${project.name}EventIndex")
+        arg("eventBusIndex", "${ProjectBuildDencies.applicationId}.eventbus.index.${project.name}EventIndex")
     }
 }
 

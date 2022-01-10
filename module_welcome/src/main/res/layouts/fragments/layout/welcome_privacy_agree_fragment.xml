@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/welcome_privacy_margin_left"
+        android:layout_marginRight="@dimen/welcome_privacy_margin_right"
+        android:background="@drawable/welcome_top_white_round"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/welcome_privacy_title_margin_top"
+            android:text="@string/welcome_privacy_title"
+            android:textColor="@color/welcome_privacy_title"
+            android:textSize="@dimen/welcome_privacy_title"
+            android:textStyle="bold" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/welcome_privacy_content_margin_left"
+            android:layout_marginTop="@dimen/welcome_privacy_content_margin_top"
+            android:layout_marginRight="@dimen/welcome_privacy_margin_right"
+            android:lineSpacingExtra="@dimen/welcome_privacy_content_space"
+            android:text="@string/welcome_privacy_content"
+            android:textColor="@color/welcome_privacy_content"
+            android:textSize="@dimen/welcome_privacy_content_textsize" />
+
+        <TextView
+            android:id="@+id/app_privacy_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/welcome_privacy_tip_margin_left"
+            android:layout_marginTop="@dimen/welcome_privacy_tip_top"
+            android:layout_marginRight="@dimen/welcome_privacy_tip_margin_right"
+            android:text="@string/welcome_privacy_tip"
+            android:textColor="@color/welcome_privacy_tip"
+            android:textSize="@dimen/welcome_privacy_tip_text_size" />
+
+        <TextView
+            android:id="@+id/tv_confim_privacy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/welcome_privacy_confim_margin_left"
+            android:layout_marginTop="@dimen/welcome_privacy_confim_margin_top"
+            android:layout_marginRight="@dimen/welcome_privacy_confim_margin_right"
+            android:background="@drawable/welcome_privacy_agree_confim"
+            android:gravity="center"
+            android:paddingTop="@dimen/welcome_privacy_confim_margin_top"
+            android:paddingBottom="@dimen/welcome_privacy_confim_padding_bottom"
+            android:text="@string/welcome_agree_privacy"
+            android:textColor="@android:color/white"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_disagree_privacy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/welcome_privacy_disagree_margin_left"
+            android:layout_marginRight="@dimen/welcome_privacy_disagree_margin_right"
+            android:gravity="center"
+            android:paddingTop="@dimen/welcome_privacy_disagree_padding_top"
+            android:paddingBottom="@dimen/welcome_privacy_disagree_padding_bottom"
+            android:text="@string/welcome_disagree_privacy"
+            android:textColor="@color/welcome_privacy_disagree" />
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>

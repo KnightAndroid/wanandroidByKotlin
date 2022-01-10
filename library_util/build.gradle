@@ -11,11 +11,14 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     api project(path: ':library_common')
     api project(path: ':library_base')
+    api project(path: ':library_database')
     implementation Dependencies.JetPack.HiltCore
     kapt Dependencies.JetPack.HiltApt
     kapt Dependencies.JetPack.HiltAndroidx
 
     kapt Dependencies.GitHub.AutoServiceAnnotations
     kapt Dependencies.GitHub.ARouteCompiler
+
+    api Dependencies.GitHub.MagicIndicator
 
 }

@@ -21,8 +21,9 @@ class ProjectApplication : ApplicationLifecycle {
     override fun onTerminate(application: Application) {
     }
 
-    override fun initFrontTask(): MutableList<() -> String> = mutableListOf()
+    override fun initSafeTask(): MutableList<() -> String> = mutableListOf()
 
-    override fun initByBackTask() {
+    override fun initDangerousTask() {
+
     }
 }

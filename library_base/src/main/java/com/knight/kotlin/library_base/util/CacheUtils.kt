@@ -63,8 +63,8 @@ object CacheUtils {
      *
      * @return
      */
-    fun getAgreeStatus(): Boolean? {
-        return mmkv?.decodeBool(CacheKey.AGREEMENT, false)
+    fun getAgreeStatus(): Boolean {
+        return mmkv?.decodeBool(CacheKey.AGREEMENT, false)!!
     }
 
     /**

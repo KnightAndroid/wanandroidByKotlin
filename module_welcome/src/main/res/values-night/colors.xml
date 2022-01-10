@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+      <color name="welcome_privacy_title">#D3D3D3</color>
+      <color name="welcome_privacy_content">#D3D3D3</color>
+      <color name="welcome_privacy_tip">#D3D3D3</color>
+</resources>

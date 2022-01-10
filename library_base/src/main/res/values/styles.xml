@@ -9,4 +9,27 @@
         <item name="windowNoTitle">true</item>
         <item name="android:windowAnimationStyle">@android:style/Animation.Toast</item>
     </style>
+
+    <!-- 确定按钮样式-->
+    <style name="base_positiveBtnStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textColor">#55aff4</item>
+    </style>
+
+    <!--取消按钮样式-->
+    <style name="base_negativeBtnStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textColor">#999999</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <!-- base 弹窗 -->
+    <style name="base_dialog_anim" parent="@android:style/Animation.Dialog">
+         <item name="android:windowEnterAnimation">@anim/base_bottom_show_anim</item>
+         <item name="android:windowExitAnimation">@anim/base_bottom_hide_anim</item>
+    </style>
+
+
+
+
+
+
 </resources>

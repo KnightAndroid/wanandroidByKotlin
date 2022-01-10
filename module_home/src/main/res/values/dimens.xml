@@ -2,5 +2,7 @@
 <resources>
      <dimen name="home_login_size">16sp</dimen>
      <dimen name="home_bar_search_size">12sp</dimen>
-
+     <dimen name="home_magic_height">50dp</dimen>
+     <dimen name="home_magicindicator_marginright">6dp</dimen>
+     <dimen name="home_label_margin_right">8dp</dimen>
 </resources>

@@ -26,12 +26,13 @@ class CommonApplication: ApplicationLifecycle {
 
     }
 
-    override fun initFrontTask(): MutableList<() -> String> {
+    override fun initSafeTask(): MutableList<() -> String> {
         val list = mutableListOf<() -> String>()
         return list
     }
 
-    override fun initByBackTask() {
+    override fun initDangerousTask() {
 
     }
+
 }

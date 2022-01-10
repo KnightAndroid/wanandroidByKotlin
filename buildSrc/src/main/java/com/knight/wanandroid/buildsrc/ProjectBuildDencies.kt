@@ -3,9 +3,9 @@ package com.knight.wanandroid.buildsrc
 /**
  *Author:Knight
  *Time:2021/12/14 15:37
- *Description:ProjectBuilddencies
+ *Description:ProjectBuildDencies
  */
-object ProjectBuilddencies {
+object ProjectBuildDencies {
     const val compileSdkVersion = 30
     const val buildToolsVersion = "30.0.1"
     const val applicationId = "com.knight.kotlin.wanandroid"

@@ -4,8 +4,8 @@ import androidx.activity.viewModels
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.route.RouteActivity
+import com.knight.kotlin.library_util.ViewInitUtils
 import com.knight.kotlin.module_main.databinding.MainActivityBinding
-import com.knight.kotlin.module_main.utils.ViewSetUtils
 import com.knight.kotlin.module_main.vm.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -22,7 +22,7 @@ class MainActivity : BaseActivity<MainActivityBinding,MainViewModel>() {
 
 
     override fun MainActivityBinding.initView() {
-        ViewSetUtils.setIsUserInputEnable(this@MainActivity,mainViewpager,mViewModel.fragments,false)
+        ViewInitUtils.setViewPager2Init(this@MainActivity,mainViewpager,mViewModel.fragments,false)
         btnNav.run {
             setOnNavigationItemSelectedListener {
                 when(it.itemId) {

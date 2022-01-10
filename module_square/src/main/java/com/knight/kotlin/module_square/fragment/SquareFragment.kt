@@ -5,6 +5,7 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.knight.kotlin.library_base.route.RouteFragment
 import com.knight.kotlin.library_base.vm.EmptyViewModel
+import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_square.databinding.SquareFragmentBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -18,7 +19,6 @@ import dagger.hilt.android.AndroidEntryPoint
 class SquareFragment:BaseFragment<SquareFragmentBinding, EmptyViewModel>() {
     override val mViewModel: EmptyViewModel by viewModels()
     override fun SquareFragmentBinding.initView() {
-
     }
 
     override fun initObserver() {
@@ -26,6 +26,9 @@ class SquareFragment:BaseFragment<SquareFragmentBinding, EmptyViewModel>() {
     }
 
     override fun initRequestData() {
+        toast("这是广场页")
+    }
 
+    override fun setThemeColor(isDarkMode: Boolean) {
     }
 }

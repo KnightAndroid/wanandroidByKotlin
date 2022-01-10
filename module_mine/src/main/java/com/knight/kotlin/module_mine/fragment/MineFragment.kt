@@ -25,4 +25,8 @@ class MineFragment: BaseFragment<MineFragmentBinding, EmptyViewModel>() {
 
     override fun initRequestData() {
     }
+
+    override fun setThemeColor(isDarkMode: Boolean) {
+
+    }
 }

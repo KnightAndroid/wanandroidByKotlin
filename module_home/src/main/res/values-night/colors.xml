@@ -4,4 +4,5 @@
     <color name="home_login_tv_color">#D3D3D3</color>
     <color name="home_bar_search">#333333</color>
     <color name="home_bar_hint">#999999</color>
+    <color name="home_magicindicator">#303030</color>
 </resources>

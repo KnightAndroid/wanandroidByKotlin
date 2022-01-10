@@ -6,10 +6,9 @@ import android.content.Context
 import com.knight.kotlin.library_base.app.LoadModuleProxy
 import com.knight.kotlin.library_base.util.ActivityManagerUtils
 import com.knight.kotlin.library_base.util.CacheUtils
-import kotlinx.coroutines.Dispatchers
+import com.knight.kotlin.library_base.util.HookUtils
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
-import kotlinx.coroutines.launch
 import kotlin.system.measureTimeMillis
 
 /**
@@ -20,63 +19,99 @@ import kotlin.system.measureTimeMillis
 open class BaseApp : Application() {
 
     /**
+     *
+     * 是否同意了隐私政策
+     */
+    private var userAgree = false
+    /**
      * 协程
      */
-    private val mCoroutineScope by lazy(mode = LazyThreadSafetyMode.NONE) { MainScope()}
+    private val mCoroutineScope by lazy(mode = LazyThreadSafetyMode.NONE) { MainScope() }
 
-    private val mLoadModuleProxy by lazy(mode = LazyThreadSafetyMode.NONE) {LoadModuleProxy()}
-
-
+    private val mLoadModuleProxy by lazy(mode = LazyThreadSafetyMode.NONE) { LoadModuleProxy() }
 
     companion object {
         @SuppressLint("StaticFieldLeak")
-        lateinit var context:Context
+        lateinit var context: Context
 
         @SuppressLint("StaticFieldLeak")
-        lateinit var application:BaseApp
+        lateinit var application: BaseApp
     }
 
 
     override fun attachBaseContext(base: Context) {
-        super.attachBaseContext(base)
         context = base
         application = this
         //初始化MMKV
         CacheUtils.init(base)
+        userAgree = CacheUtils.getAgreeStatus()
+        if (!userAgree) {
+           try {
+                HookUtils.attachContext()
+            }catch (e:Exception){
+                e.printStackTrace()
+            }
+        }
         mLoadModuleProxy.onAttachBaseContext(base)
+        super.attachBaseContext(base)
     }
 
 
     override fun onCreate() {
         super.onCreate()
-
         //全局监听Activity 生命周期
         registerActivityLifecycleCallbacks(ActivityManagerUtils.getInstance())
         mLoadModuleProxy.onCreate(this)
+        //策略初始化安全第三方依赖
+        initSafeSdk()
 
-        //策略初始化第三方依赖
-        initDepends()
+    }
+
+
+//    /**
+//     *
+//     * 初始化第三方依赖
+//     */
+//    private fun initDepends() {
+//        //开启一个Default Coroutine 进行初始化不会立即使用的第三方
+//        mCoroutineScope.launch (Dispatchers.Default) {
+//            mLoadModuleProxy.initByBackTask()
+//        }
+//        //前台初始化
+//        val allTimeMillis = measureTimeMillis {
+//            val depends = mLoadModuleProxy.initFrontTask()
+//            var dependInfo:String
+//            depends.forEach {
+//                val dependTimeMillis = measureTimeMillis { dependInfo = it() }
+//            }
+//        }
+//        //这里可以统计初始化所需要时间
+//    }
+
+    /**
+     * 初始化安全任务
+     */
+    private fun initSafeSdk() {
+
+        val allTimeMillis = measureTimeMillis {
+            val depends = mLoadModuleProxy.initSafeTask()
+            var dependInfo: String
+            depends.forEach {
+                val dependTimeMillis = measureTimeMillis { dependInfo = it() }
+            }
+        }
     }
 
 
     /**
      *
-     * 初始化第三方依赖
+     *
      */
-    private fun initDepends() {
-        //开启一个Default Coroutine 进行初始化不会立即使用的第三方
-        mCoroutineScope.launch { Dispatchers.Default }
-        //前台初始化
-        val allTimeMillis = measureTimeMillis {
-            val depends = mLoadModuleProxy.initFrontTask()
-            var dependInfo:String
-            depends.forEach {
-                val dependTimeMillis = measureTimeMillis { dependInfo = it() }
-            }
-        }
-        //这里可以统计初始化所需要时间
+    fun initDangrousSdk() {
+        //初始化Provider
+        HookUtils.initProvider(this)
+        mLoadModuleProxy.initDangerousTask()
     }
-
 
     override fun onTerminate() {
         super.onTerminate()

@@ -31,16 +31,19 @@ interface ApplicationLifecycle {
      */
     fun onTerminate(application:Application)
 
-    /**
-     *
-     * 主线程前台初始化
-     * @return MutableList<() -> String> 初始化方法集合
-     */
-    fun initFrontTask():MutableList<() -> String>
 
     /**
      *
-     * 不需要立即初始化 后台初始化
+     * 初始化安全类Task
      */
-    fun initByBackTask()
+    fun initSafeTask():MutableList<()->String>
+
+
+    /**
+     *
+     * 初始化危险Task
+     */
+    fun initDangerousTask()
+
+
 }

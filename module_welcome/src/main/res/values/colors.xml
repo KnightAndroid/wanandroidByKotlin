@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+      <color name="welcome_privacy_title">#333333</color>
+      <color name="welcome_privacy_content">#333333</color>
+      <color name="welcome_privacy_tip">#333333</color>
+      <color name="welcome_privacy_disagree">#999999</color>
 </resources>

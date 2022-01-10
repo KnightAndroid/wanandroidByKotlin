@@ -29,17 +29,9 @@ class MainApplication : ApplicationLifecycle{
      * @param application Application
      */
     override fun onTerminate(application: Application) {}
+    override fun initSafeTask(): MutableList<() -> String> = mutableListOf()
 
-    /**
-     * 主线程前台初始化
-     * @return MutableList<() -> String> 初始化方法集合
-     */
-    override fun initFrontTask(): MutableList<() -> String> = mutableListOf()
-    /**
-     * 不需要立即初始化的放在这里进行后台初始化
-     */
-    override fun initByBackTask() {
+    override fun initDangerousTask() {
     }
-
 
 }

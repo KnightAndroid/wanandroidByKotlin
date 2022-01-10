@@ -10,9 +10,10 @@ import android.content.res.Resources
  * 尺寸单位换算扩展鼠性
  */
 
-fun Int.dp2px():Float{
-    return (0.5f + this * Resources.getSystem().displayMetrics.density)
+fun Int.dp2px():Int{
+    return (0.5f + this * Resources.getSystem().displayMetrics.density).toInt()
 }
+
 
 fun Context.dp2px(dpValue: Float): Int {
     val scale = resources.displayMetrics.density

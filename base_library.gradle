@@ -7,13 +7,13 @@ apply plugin: 'dagger.hilt.android.plugin'
 apply plugin: 'kotlin-parcelize'
 
 android {
-    compileSdkVersion ProjectBuilddencies.compileSdkVersion
-    buildToolsVersion ProjectBuilddencies.buildToolsVersion
+    compileSdkVersion ProjectBuildDencies.compileSdkVersion
+    buildToolsVersion ProjectBuildDencies.buildToolsVersion
     defaultConfig {
-        minSdkVersion ProjectBuilddencies.minSdkVersion
-        targetSdkVersion ProjectBuilddencies.targetSdkVersion
-        versionCode ProjectBuilddencies.versionCode
-        versionName ProjectBuilddencies.versionName
+        minSdkVersion ProjectBuildDencies.minSdkVersion
+        targetSdkVersion ProjectBuildDencies.targetSdkVersion
+        versionCode ProjectBuildDencies.versionCode
+        versionName ProjectBuildDencies.versionName
         consumerProguardFiles "consumer-rules.pro"
         ndk {
             // 设置支持的SO库架构
@@ -32,17 +32,17 @@ android {
 
     buildTypes {
         debug {
-            buildConfigField "String","TYPE","\"${ProjectBuilddencies.Variants.DEVELOP}\""
+            buildConfigField "String","TYPE","\"${ProjectBuildDencies.Variants.DEVELOP}\""
             minifyEnabled false
             consumerProguardFiles 'proguard-rules.pro'
         }
         release {
-            buildConfigField "String","TYPE","\"${ProjectBuilddencies.Variants.RELEASE}\""
+            buildConfigField "String","TYPE","\"${ProjectBuildDencies.Variants.RELEASE}\""
             minifyEnabled true
             consumerProguardFiles 'proguard-rules.pro'
         }
         master {
-            buildConfigField "String","TYPE","\"${ProjectBuilddencies.Variants.MASTER}\""
+            buildConfigField "String","TYPE","\"${ProjectBuildDencies.Variants.MASTER}\""
             minifyEnabled true
             consumerProguardFiles 'proguard-rules.pro'
         }

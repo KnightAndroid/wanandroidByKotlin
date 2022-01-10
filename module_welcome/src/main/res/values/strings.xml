@@ -1,3 +1,13 @@
 <resources>
-    <string name="app_name">module_welcome</string>
+    <string name="welcome_app_name">module_welcome</string>
+    <string name="welcome_privacy_title">用户协议与隐私政策</string>
+    <string name="welcome_privacy_content">亲爱的用户，欢迎来到wanandroid，
+        我们深知个人信息对您的重要性，我们将按照法律法规的规定，保护您的个人信息及隐私安全。\n
+        1、为了你能安全的使用wanandroid，我们会想你收集设备信息；\n
+        2、未经你的同意，我们不会从第三方获取墩号共享或对外提供你的信息；\n
+        3、你可以访问、更正、删除你的个人信息，我们也将提供注销，投诉方式；\n
+        4、如果您同意请点击下面的按钮以接收我们的服务。</string>
+    <string name="welcome_privacy_tip">你可以阅读完整版《用户协议》和《隐私政策》来了解详细信息</string>
+    <string name="welcome_agree_privacy">同意</string>
+    <string name="welcome_disagree_privacy">不同意退出</string>
 </resources>

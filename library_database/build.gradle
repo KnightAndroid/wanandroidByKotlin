@@ -1,0 +1,24 @@
+//*****library_util 配置文件********************
+apply from : '../base_library.gradle'
+import com.knight.wanandroid.buildsrc.*
+android {
+    buildFeatures {
+        viewBinding = true
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation Dependencies.JetPack.HiltCore
+
+    api Dependencies.JetPack.RoomTime
+    api Dependencies.JetPack.RoomKtx
+    kapt Dependencies.JetPack.RoomCompiler
+    kapt Dependencies.JetPack.HiltApt
+    kapt Dependencies.JetPack.HiltAndroidx
+    kapt Dependencies.GitHub.AutoServiceAnnotations
+    kapt Dependencies.GitHub.ARouteCompiler
+    //依赖Base
+    implementation project(path: ':library_base')
+
+}
