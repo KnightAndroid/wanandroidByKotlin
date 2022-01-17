@@ -3,12 +3,7 @@ import com.knight.wanandroid.buildsrc.*
 apply from:'../base_library.gradle'
 
 android {
-    buildTypes {
-        release {
-            minifyEnabled true //开启混淆
-            consumerProguardFiles 'proguard-rules.pro'
-        }
-    }
+
 }
 
 dependencies {

@@ -11,6 +11,7 @@ import android.view.Gravity
 import android.view.KeyEvent
 import androidx.annotation.NonNull
 import androidx.annotation.Nullable
+import androidx.fragment.app.viewModels
 import com.alibaba.android.arouter.launcher.ARouter
 import com.knight.kotlin.library_base.BaseApp
 import com.knight.kotlin.library_base.fragment.BaseDialogFragment
@@ -18,6 +19,7 @@ import com.knight.kotlin.library_base.ktx.setOnClick
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.util.ActivityManagerUtils
 import com.knight.kotlin.library_base.util.CacheUtils
+import com.knight.kotlin.library_base.vm.EmptyViewModel
 import com.knight.kotlin.library_util.TextClickUtils
 import com.knight.kotlin.library_util.TextClickUtils.OnClickToWebListener
 import com.knight.kotlin.library_util.ViewInitUtils
@@ -30,34 +32,10 @@ import kotlin.system.exitProcess
  * Time:2021/12/30 16:22
  * Description:WelcomePrivacyAgreeFragment
  */
-class WelcomePrivacyAgreeFragment : BaseDialogFragment<WelcomePrivacyAgreeFragmentBinding>() {
+class WelcomePrivacyAgreeFragment : BaseDialogFragment<WelcomePrivacyAgreeFragmentBinding,EmptyViewModel>() {
+
+    override val mViewModel: EmptyViewModel by viewModels()
     private lateinit var spannable: SpannableStringBuilder
-
-    @SuppressLint("NewApi")
-    override fun initView() {
-        spannable = SpannableStringBuilder(mBinding.appPrivacyTip.text.toString())
-        mBinding.appPrivacyTip.movementMethod = LinkMovementMethod.getInstance()
-        spannable.setSpan(TextClickUtils().setOnClickWebListener(object : OnClickToWebListener {
-            override fun goWeb() {
-                ARouter.getInstance().build(RouteActivity.Web.WebPager)
-                    .withString("webUrl", "file:android_asset/wanandroid_useragree.html")
-                    .withString("webTitle", "用户协议")
-            }
-        }), 8, 14, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-        spannable.setSpan(TextClickUtils().setOnClickWebListener(object : OnClickToWebListener {
-            override fun goWeb() {
-                ARouter.getInstance().build(RouteActivity.Web.WebPager)
-                    .withString("webUrl", "file:android_asset/wanandroid_userprivacy.html")
-                    .withString("webTitle", "隐私政策")
-            }
-
-        }), 15, 21, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-        mBinding.appPrivacyTip.text = spannable
-        ViewInitUtils.avoidHintColor(mBinding.appPrivacyTip)
-        setOnClick(mBinding.tvConfimPrivacy,::goAgreeToMain)
-        setOnClick(mBinding.tvDisagreePrivacy,::disAgreeExitApp)
-
-    }
 
     @NonNull
     override fun onCreateDialog(@Nullable savedInstanceState: Bundle?): Dialog {
@@ -93,6 +71,40 @@ class WelcomePrivacyAgreeFragment : BaseDialogFragment<WelcomePrivacyAgreeFragme
         exitProcess(0)
     }
 
+    @SuppressLint("NewApi")
+    override fun WelcomePrivacyAgreeFragmentBinding.initView() {
+        spannable = SpannableStringBuilder(mBinding.appPrivacyTip.text.toString())
+        mBinding.appPrivacyTip.movementMethod = LinkMovementMethod.getInstance()
+        spannable.setSpan(TextClickUtils().setOnClickWebListener(object : OnClickToWebListener {
+            override fun goWeb() {
+                ARouter.getInstance().build(RouteActivity.Web.WebPager)
+                    .withString("webUrl", "file:android_asset/wanandroid_useragree.html")
+                    .withString("webTitle", "用户协议")
+                    .navigation()
+            }
+        }), 8, 14, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        spannable.setSpan(TextClickUtils().setOnClickWebListener(object : OnClickToWebListener {
+            override fun goWeb() {
+                ARouter.getInstance().build(RouteActivity.Web.WebPager)
+                    .withString("webUrl", "file:android_asset/wanandroid_userprivacy.html")
+                    .withString("webTitle", "隐私政策")
+                    .navigation()
+            }
+
+        }), 15, 21, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        mBinding.appPrivacyTip.text = spannable
+        ViewInitUtils.avoidHintColor(mBinding.appPrivacyTip)
+        setOnClick(mBinding.tvConfimPrivacy,::goAgreeToMain)
+        setOnClick(mBinding.tvDisagreePrivacy,::disAgreeExitApp)
+    }
+
+    override fun initObserver() {
+
+    }
+
+    override fun initRequestData() {
+
+    }
 
 
 }

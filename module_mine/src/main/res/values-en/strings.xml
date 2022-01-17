@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mine_app_name">module_mine</string>
+    <string name="mine_please_login">Please Login</string>
+    <string name="mine_gradle_flag">Gradle -</string>
+    <string name="mine_tv_rank">Rank -</string>
+    <string name="mine_me_points">Points</string>
+</resources>

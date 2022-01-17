@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_found_new_version">Found New Version</string>
+    <string name="common_update_now">Update</string>
+    <string name="common_download_wait">Downloading updates...</string>
+</resources>

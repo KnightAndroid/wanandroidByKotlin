@@ -4,11 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.viewbinding.ViewBinding
 import com.alibaba.android.arouter.launcher.ARouter
 import com.knight.kotlin.library_base.annotation.EventBusRegister
+import com.knight.kotlin.library_base.ktx.ClickAction
 import com.knight.kotlin.library_base.util.BindingReflex
 import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_base.util.EventBusUtils
@@ -22,7 +24,7 @@ import com.knight.kotlin.library_base.vm.BaseViewModel
  * Description:BaseFragment
  * Fragment 基类
  */
-abstract class BaseFragment<VB: ViewBinding,VM:BaseViewModel>:Fragment(),BaseView<VB> {
+abstract class BaseFragment<VB: ViewBinding,VM:BaseViewModel>:Fragment(),BaseView<VB>,ClickAction {
 
     /**
      * 私有的ViewBinding
@@ -46,7 +48,6 @@ abstract class BaseFragment<VB: ViewBinding,VM:BaseViewModel>:Fragment(),BaseVie
     private var mStatusHelper:FragmentStatusHelper? = null
 
     /**
-     *
      * 颜色值
      */
     protected var themeColor:Int?=null
@@ -96,7 +97,12 @@ abstract class BaseFragment<VB: ViewBinding,VM:BaseViewModel>:Fragment(),BaseVie
 
     }
 
-
+    /**
+     * 根据资源 id 获取一个 View 对象
+     */
+    override fun <V : View?> findViewById(@IdRes id: Int): V? {
+        return mBinding.root.findViewById(id)
+    }
     override fun isRecreate():Boolean = mStatusHelper?.isRecreate ?: false
 
 

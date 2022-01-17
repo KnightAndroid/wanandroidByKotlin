@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="common_app_update_time_color">#999999</color>
+    <color name="common_app_update_content_color">#999999</color>
+    <color name="common_download_title_color">#333333</color>
+    <color name="common_download_rate_color">#333333</color>
+    <color name="common_download_speed_color">#333333</color>
+</resources>

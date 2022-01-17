@@ -1,3 +1,10 @@
 <resources>
-    <string name="app_name">module_web</string>
+    <string name="web_app_name">module_web</string>
+    <string name="web_copy_url">复制网址</string>
+    <string name="web_tv_refresh">刷新</string>
+    <string name="web_tv_open_browser">在浏览器打开</string>
+    <string name="web_success_copyurl">已成功复制网址</string>
+    <string name="web_share_article">分享</string>
+    <string name="web_collect_article">收藏</string>
+    <string name="web_share_article_url">%1$s分享【%2$s】：%3$s</string>
 </resources>

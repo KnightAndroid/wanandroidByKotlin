@@ -6,6 +6,7 @@ import androidx.viewbinding.ViewBinding
 import com.alibaba.android.arouter.launcher.ARouter
 import com.knight.kotlin.library_base.R
 import com.knight.kotlin.library_base.annotation.EventBusRegister
+import com.knight.kotlin.library_base.ktx.ClickAction
 import com.knight.kotlin.library_base.network.AutoRegisterNetListener
 import com.knight.kotlin.library_base.network.NetworkStateChangeListener
 import com.knight.kotlin.library_base.util.BindingReflex
@@ -20,7 +21,7 @@ import com.knight.kotlin.library_base.vm.BaseViewModel
  * Time:2021/12/15 16:06
  * Description:BaseActivity
  */
-abstract class BaseActivity<VB : ViewBinding,VM : BaseViewModel> : AppCompatActivity(),BaseView<VB>,NetworkStateChangeListener {
+abstract class BaseActivity<VB : ViewBinding,VM : BaseViewModel> : AppCompatActivity(),BaseView<VB>,NetworkStateChangeListener,ClickAction {
 
     protected val mBinding :VB by lazy( mode = LazyThreadSafetyMode.NONE ) {
         BindingReflex.reflexViewBinding(javaClass,layoutInflater)

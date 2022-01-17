@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="mine_icon_message_margin_top">30dp</dimen>
+    <dimen name="mine_icon_message_margin_right">26dp</dimen>
+    <dimen name="mine_rl_user_head_height">65dp</dimen>
+    <dimen name="mine_rl_user_head_width">65dp</dimen>
+    <dimen name="mine_rl_user_head_margin_top">60dp</dimen>
+    <dimen name="mine_iv_head_height">65dp</dimen>
+    <dimen name="mine_iv_head_width">65dp</dimen>
+    <dimen name="mine_tv_userabbr_textsize">16sp</dimen>
+    <dimen name="mine_tv_username_margin_top">10dp</dimen>
+    <dimen name="mine_tv_username_textsize">16sp</dimen>
+    <dimen name="mine_ll_rank_margin_top">10dp</dimen>
+    <dimen name="mine_tv_level_textsize">14sp</dimen>
+    <dimen name="mine_tv_rank_textsize">14sp</dimen>
+    <dimen name="mine_tv_rank_margin_left">10dp</dimen>
+    <dimen name="mine_cv_margin_left">20dp</dimen>
+    <dimen name="mine_cv_margin_top">20dp</dimen>
+    <dimen name="mine_cv_margin_right">20dp</dimen>
+    <dimen name="mine_cv_corner_radius">6dp</dimen>
+    <dimen name="mine_ll_point_padding_left">16dp</dimen>
+    <dimen name="mine_ll_point_padding_right">16dp</dimen>
+    <dimen name="mine_rl_point_margin_top">20dp</dimen>
+    <dimen name="mine_rl_point_margin_bottom">20dp</dimen>
+    <dimen name="mine_tv_point_flag">18sp</dimen>
+    <dimen name="mine_tv_points_margin_right">2dp</dimen>
+</resources>

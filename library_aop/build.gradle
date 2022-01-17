@@ -1,0 +1,16 @@
+//library-network配置文件
+import com.knight.wanandroid.buildsrc.*
+apply from:'../base_library.gradle'
+apply plugin: 'android-aspectjx'
+
+
+dependencies {
+    //implementation Dependencies.GitHub.aspectJ
+    implementation project(path: ':library_base')
+    implementation project(path: ':library_common')
+
+    kapt Dependencies.GitHub.ARouteCompiler
+    implementation Dependencies.JetPack.HiltCore
+    kapt Dependencies.JetPack.HiltApt
+    kapt Dependencies.JetPack.HiltAndroidx
+}

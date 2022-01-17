@@ -7,5 +7,7 @@
             android:name=".provider.AppContentProvider"
             android:exported="false"
             android:multiprocess="true"/>
+
+
     </application>
 </manifest>

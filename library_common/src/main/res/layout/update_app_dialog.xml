@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/rl_update_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/common_update_margin_left"
+        android:layout_marginRight="@dimen/common_update_margin_right"
+        >
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/common_update_margin_top"
+            android:orientation="vertical"
+            android:background="@drawable/common_updateapp_bottomround"
+            android:paddingBottom="@dimen/common_update_bottom">
+
+
+            <TextView
+                android:id="@+id/tv_appupdate_titlename"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/common_update_title_top"
+                android:text="@string/common_found_new_version"
+                android:textColor="@color/base_color_theme"
+                android:textSize="@dimen/common_update_title_name_textsize"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/tv_appupdate_version"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/common_update_version_margin_left"
+                android:layout_marginTop="@dimen/common_update_version_margin_top"
+                android:text="v1.0.1"
+                android:textColor="@color/base_color_theme"
+                android:textSize="@dimen/common_update_version_textsize"
+                android:textStyle="bold"/>
+
+
+           <TextView
+               android:id="@+id/tv_appupdate_time"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginLeft="@dimen/common_update_time_margin_left"
+               android:text="2020-08-09"
+               android:textColor="@color/common_app_update_time_color"
+               android:textSize="@dimen/common_update_time_textsize"/>
+
+
+            <TextView
+                android:id="@+id/tv_appupdate_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/common_update_content_margin_left"
+                android:layout_marginTop="@dimen/common_update_content_margin_top"
+                android:lineSpacingExtra="@dimen/common_update_content_extra"
+                android:text="1.新增dfdf\n2.新增积分\n3.sdsdsdsd"
+                android:textColor="@color/common_app_update_content_color"
+                android:textSize="@dimen/common_update_content_textsize"/>
+
+
+            
+            <TextView
+                android:id="@+id/tv_confim_update"
+                android:layout_width="@dimen/common_update_confim_tv_width"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/common_update_confim_tv_margin_left"
+                android:layout_marginTop="@dimen/common_update_confim_tv_margin_top"
+                android:layout_marginRight="@dimen/common_update_confim_tv_margin_right"
+                android:gravity="center"
+                android:paddingTop="@dimen/common_update_confim_tv_padding_top"
+                android:paddingBottom="@dimen/common_update_confim_tv_padding_bottom"
+                android:text="@string/common_update_now"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/iv_update_top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/common_updatedialog_top"/>
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/iv_appupdate_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rl_update_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/common_update_close_iv_top"
+        android:background="@drawable/common_icon_circleclose"/>
+
+
+
+
+
+
+
+</RelativeLayout>

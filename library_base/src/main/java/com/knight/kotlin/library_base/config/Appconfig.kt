@@ -10,7 +10,11 @@ object Appconfig {
 
      /**
       * 是否变灰
-      *
+      */
+     var gray = false
+
+     /**
+      * APP主题颜色
       */
      var appThemeColor = "#55aff4"
 }

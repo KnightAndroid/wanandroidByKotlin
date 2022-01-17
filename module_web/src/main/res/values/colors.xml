@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <color name="web_copy_color">#333333</color>
+    <color name="web_refresh_color">#333333</color>
+    <color name="web_open_browser_color">#333333</color>
+    <color name="web_share_article_color">#333333</color>
+    <color name="web_collect_article_color">#333333</color>
 </resources>

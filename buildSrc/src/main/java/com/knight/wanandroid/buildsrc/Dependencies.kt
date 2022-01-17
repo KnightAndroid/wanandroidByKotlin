@@ -66,6 +66,9 @@ object Dependencies {
        const val MagicIndicator = "1.7.0"                  // 指示器
        const val Agent = "v5.0.0-alpha.1-androidx"         // Android WebView
        const val Sketch = "2.7.1"                          // 预览大图
+
+       //其他相关------------------------------------------------------
+       const val Aspectj = "1.9.7"                         // aop相关
     }
     /**
      * AndroidX相关依赖
@@ -174,12 +177,15 @@ object Dependencies {
         const val bottomNavigate = "com.github.ittianyu:BottomNavigationViewEx:${Version.BottomNavigation}"
         //MMKV https://github.com/Tencent/MMKV
         const val MMKV = "com.tencent:mmkv:${Version.MMKV}"
-        //滑动切换
+        //滑动切换 https://github.com/hackware1993/MagicIndicator
         const val MagicIndicator = "com.github.hackware1993:MagicIndicator:${Version.MagicIndicator}"
-        //网页加载库
+        //网页加载库 https://github.com/Justson/AgentWeb
         const val AgentWeb = "com.github.Justson.AgentWeb:agentweb-core:${Version.Agent}"
-        //预览大图插件
+        //预览大图插件 https://github.com/panpf/sketch
         const val SketchPhoto = "io.github.panpf.sketch:sketch:${Version.Sketch}"
+        //aop
+        const val aspectJ = "org.aspectj:aspectjrt:${Version.Aspectj}"
+
     }
 
 

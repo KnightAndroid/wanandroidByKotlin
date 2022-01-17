@@ -10,6 +10,7 @@ import com.knight.kotlin.library_base.config.Appconfig
 import com.knight.kotlin.library_base.ktx.observeLiveData
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.util.CacheUtils
+import com.knight.kotlin.library_base.util.ColorUtils
 import com.knight.kotlin.module_welcome.R
 import com.knight.kotlin.module_welcome.databinding.WelcomeActivityBinding
 import com.knight.kotlin.module_welcome.entity.AppThemeBean
@@ -57,6 +58,10 @@ class WelcomeActivity : BaseActivity<WelcomeActivityBinding, WelcomeVm>() {
 
     private fun setAppThemeData(data:AppThemeBean) {
        Appconfig.appThemeColor = data.themeColor
+       if (data.forceTheme) {
+           CacheUtils.setThemeColor(ColorUtils.convertToColorInt(Appconfig.appThemeColor))
+       }
+       Appconfig.gray = data.gray
     }
 
     override fun getActivityTheme(): Int {

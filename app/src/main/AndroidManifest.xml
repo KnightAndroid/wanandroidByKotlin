@@ -33,7 +33,15 @@
         <meta-data
             android:name="design_height_in_dp"
             android:value="100000" />
-
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.knight.kotlin.wanandroid.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
 
 <!--        &lt;!&ndash; 会使屏幕适配框架失效 让ContentProvider失效&ndash;&gt;-->
 <!--        <provider-->

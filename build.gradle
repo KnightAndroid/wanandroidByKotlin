@@ -13,6 +13,7 @@ buildscript {
         classpath ProjectPluginDencies.KotlinPlugin
         classpath ProjectPluginDencies.ARouterRegister
         classpath ProjectPluginDencies.HiltPlugin
+        classpath ProjectPluginDencies.AspectJxPlugin
         classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.30'
 
     }

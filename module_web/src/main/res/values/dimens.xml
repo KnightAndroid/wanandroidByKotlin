@@ -2,4 +2,18 @@
 <resources>
     <dimen name="web_close_margin_left">16dp</dimen>
     <dimen name="web_close_margin_top">40dp</dimen>
+    <dimen name="web_top_round_left_radius">10dp</dimen>
+    <dimen name="web_top_round_right_radius">10dp</dimen>
+    <dimen name="web_tv_copy_height">45dp</dimen>
+    <dimen name="web_tv_copy_textsize">16sp</dimen>
+    <dimen name="web_tv_refresh_height">45dp</dimen>
+    <dimen name="web_tv_refresh_textsize">16sp</dimen>
+    <dimen name="web_tv_open_browser">45dp</dimen>
+    <dimen name="web_tv_open_browser_textsize">16sp</dimen>
+    <dimen name="web_tv_share_article_height">45dp</dimen>
+    <dimen name="web_tv_share_article_textsize">16sp</dimen>
+    <dimen name="web_tv_collect_article_height">45dp</dimen>
+    <dimen name="web_tv_collect_article_textsize">16sp</dimen>
+
+
 </resources>

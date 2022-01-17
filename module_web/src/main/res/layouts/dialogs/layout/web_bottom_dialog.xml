@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/web_pop_top_round"
+        android:orientation="vertical">
+        
+        <TextView
+            android:id="@+id/web_tv_copy_url"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/web_tv_copy_height"
+            android:gravity="center"
+            android:text="@string/web_copy_url"
+            android:background="?attr/selectableItemBackground"
+            android:textColor="@color/web_copy_color"
+            android:textSize="@dimen/web_tv_copy_textsize"
+            />
+
+       <View
+           android:layout_width="match_parent"
+           android:layout_height="@dimen/base_line_height"
+           android:background="@color/base_line_color"/>
+
+        <TextView
+            android:id="@+id/web_tv_refresh_url"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/web_tv_refresh_height"
+            android:gravity="center"
+            android:text="@string/web_tv_refresh"
+            android:background="?attr/selectableItemBackground"
+            android:textColor="@color/web_refresh_color"
+            android:textSize="@dimen/web_tv_refresh_textsize"/>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/base_line_height"
+            android:background="@color/base_line_color"/>
+        
+        <TextView
+            android:id="@+id/web_tv_open_browser"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/web_tv_open_browser"
+            android:gravity="center"
+            android:background="?attr/selectableItemBackground"
+            android:text="@string/web_tv_open_browser"
+            android:textSize="@dimen/web_tv_open_browser_textsize"
+            android:textColor="@color/web_open_browser_color"/>
+
+    </LinearLayout>
+</RelativeLayout>

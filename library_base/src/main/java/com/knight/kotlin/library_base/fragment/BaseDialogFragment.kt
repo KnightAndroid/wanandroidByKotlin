@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import androidx.annotation.IdRes
 import androidx.annotation.NonNull
 import androidx.annotation.Nullable
 import androidx.fragment.app.DialogFragment
@@ -15,7 +16,11 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.viewbinding.ViewBinding
 import com.knight.kotlin.library_base.R
+import com.knight.kotlin.library_base.ktx.ClickAction
 import com.knight.kotlin.library_base.util.BindingReflex
+import com.knight.kotlin.library_base.util.ViewRecreateHelper
+import com.knight.kotlin.library_base.view.BaseView
+import com.knight.kotlin.library_base.vm.BaseViewModel
 import java.lang.reflect.Field
 
 
@@ -24,18 +29,44 @@ import java.lang.reflect.Field
  * Time:2021/12/30 11:09
  * Description:BaseDialogFragment
  */
-abstract class BaseDialogFragment<VB: ViewBinding> : DialogFragment() {
+abstract class BaseDialogFragment<VB: ViewBinding,VM: BaseViewModel> : DialogFragment(),
+    BaseView<VB>,ClickAction {
 
     /**
      * 私有的ViewBinding
-     *
      */
     private var _binding:VB? = null
     protected val mBinding get() = _binding!!
 
-    protected abstract fun initView()
+    protected abstract val mViewModel:VM
+
+    /**
+     * fragment状态保存工具类
+     *
+     */
+    private var mStatusHelper: FragmentStatusHelper? = null
+
+    /**
+     * - fragment状态保存帮助类
+     * - 暂时没有其他需要保存的 -- 空继承
+     *
+     */
+    private class FragmentStatusHelper(savedInstanceState:Bundle? = null) :
+        ViewRecreateHelper(savedInstanceState)
+
+    override fun isRecreate():Boolean = mStatusHelper?.isRecreate ?: false
 
 
+
+    override fun onSaveInstanceState(outState:Bundle) {
+        if (mStatusHelper == null) {
+            //仅当触发重建需要保存状态时创建对象
+            mStatusHelper = FragmentStatusHelper(outState)
+        } else {
+            mStatusHelper?.onSaveInstanceState(outState)
+        }
+        super.onSaveInstanceState(outState)
+    }
     /**
      *
      * 方向
@@ -55,7 +86,8 @@ abstract class BaseDialogFragment<VB: ViewBinding> : DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initView()
+        mBinding.initView()
+        initObserver()
     }
 
     @NonNull
@@ -66,6 +98,13 @@ abstract class BaseDialogFragment<VB: ViewBinding> : DialogFragment() {
         dialog.window?.setWindowAnimations(R.style.base_dialog_anim)
         getGravity()
         return dialog
+    }
+
+    /**
+     * 根据资源 id 获取一个 View 对象
+     */
+    override fun <V : View?> findViewById(@IdRes id: Int): V? {
+        return mBinding.root.findViewById(id)
     }
 
     override fun onStart() {
@@ -103,6 +142,12 @@ abstract class BaseDialogFragment<VB: ViewBinding> : DialogFragment() {
         ft.add(this, tag)
         ft.commitAllowingStateLoss()
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
 
 
 }

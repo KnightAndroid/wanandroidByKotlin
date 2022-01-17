@@ -49,7 +49,6 @@ android {
 
     }
 
-
 }
 
 kapt {
@@ -57,3 +56,4 @@ kapt {
         arg("AROUTER_MODULE_NAME", project.getName())
     }
 }
+

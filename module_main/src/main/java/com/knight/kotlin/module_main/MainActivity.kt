@@ -15,11 +15,9 @@ class MainActivity : BaseActivity<MainActivityBinding,MainViewModel>() {
 
 
     /**
-     *
      * MainActivity的ViewModel 通过Hilt自动注入
      */
     override val mViewModel:MainViewModel by viewModels()
-
 
     override fun MainActivityBinding.initView() {
         ViewInitUtils.setViewPager2Init(this@MainActivity,mainViewpager,mViewModel.fragments,false)

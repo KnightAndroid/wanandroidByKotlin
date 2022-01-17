@@ -3,18 +3,15 @@ import com.knight.wanandroid.buildsrc.*
 apply from:'../base_library.gradle'
 
 android {
-    buildTypes {
-        release {
-            minifyEnabled true //开启混淆
-            consumerProguardFiles 'proguard-rules.pro'
-        }
+    buildFeatures {
+        viewBinding = true
     }
+
 }
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    api project(path: ':library_base')
-
+    implementation project(path: ':library_base')
     implementation Dependencies.JetPack.HiltCore
     kapt Dependencies.JetPack.HiltApt
     kapt Dependencies.JetPack.HiltAndroidx

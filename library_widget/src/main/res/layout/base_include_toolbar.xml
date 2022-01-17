@@ -11,6 +11,7 @@
     
     
     <ImageView
+        android:id="@+id/base_iv_back"
         android:layout_width="@dimen/widget_compat_toolbar_width"
         android:layout_height="@dimen/widget_compat_toolbar_height"
         android:layout_marginLeft="@dimen/widget_compat_toolbar_left"

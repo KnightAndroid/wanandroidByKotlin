@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="web_copy_color">#D3D3D3</color>
+    <color name="web_refresh_color">#D3D3D3</color>
+    <color name="web_open_browser_color">#D3D3D3</color>
+    <color name="web_share_article_color">#D3D3D3</color>
+    <color name="web_collect_article_color">#D3D3D3</color>
+</resources>

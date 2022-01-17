@@ -7,12 +7,7 @@ android {
         viewBinding = true
     }
     resourcePrefix "base_"
-    buildTypes {
-        release {
-            minifyEnabled true //开启混淆
-            consumerProguardFiles 'proguard-rules.pro'
-        }
-    }
+
 }
 
 dependencies {

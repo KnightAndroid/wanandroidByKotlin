@@ -29,4 +29,5 @@ class HomeArticleFragment:BaseFragment<HomeArticleFragmentBinding,EmptyViewModel
 
     override fun initRequestData() {
     }
+
 }

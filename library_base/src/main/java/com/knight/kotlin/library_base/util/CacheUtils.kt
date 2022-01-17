@@ -143,7 +143,7 @@ object CacheUtils {
      * @return
      */
     fun getThemeColor(): Int {
-        return mmkv?.decodeInt(CacheKey.THEMECOLOR, ColorUtils.convertToColorInt("55aff4"))!!
+        return mmkv?.decodeInt(CacheKey.THEMECOLOR, ColorUtils.convertToColorInt("55aff4")) ?: ColorUtils.convertToColorInt("55aff4")
     }
 
     /**

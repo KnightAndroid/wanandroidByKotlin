@@ -24,7 +24,7 @@ class TextClickUtils :ClickableSpan() {
         return this
     }
     override fun onClick(widget: View) {
-        TODO("Not yet implemented")
+        mOnClickToWebListener?.goWeb()
     }
 
     override fun updateDrawState(ds: TextPaint) {

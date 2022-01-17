@@ -6,12 +6,7 @@ android {
     buildFeatures {
         viewBinding = true
     }
-    buildTypes {
-        release {
-            minifyEnabled true //开启混淆
-            consumerProguardFiles 'proguard-rules.pro'
-        }
-    }
+
 }
 
 dependencies {
@@ -19,6 +14,8 @@ dependencies {
     implementation Dependencies.JetPack.HiltCore
     kapt Dependencies.JetPack.HiltApt
     kapt Dependencies.JetPack.HiltAndroidx
+    implementation project(path: ':library_base')
     implementation project(path: ':library_common')
+
 
 }

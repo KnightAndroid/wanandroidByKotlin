@@ -100,6 +100,7 @@ dependencies {
     api project(path:':library_util')
     api project(path:':library_network')
     api project(path:':library_widget')
+    api project(path:':library_aop')
     testImplementation Dependencies.Android.Junit
     androidTestImplementation Dependencies.Androidx.TestExtJunit
     androidTestImplementation Dependencies.Androidx.TestEspresso

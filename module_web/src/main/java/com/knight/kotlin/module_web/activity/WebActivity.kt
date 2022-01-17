@@ -2,23 +2,29 @@ package com.knight.kotlin.module_web.activity
 
 import android.graphics.Bitmap
 import android.os.Build
+import android.text.Html
 import android.view.KeyEvent
+import android.view.View
 import android.webkit.WebResourceRequest
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.widget.LinearLayout
 import androidx.activity.viewModels
+import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.just.agentweb.AgentWeb
 import com.just.agentweb.DefaultWebClient
 import com.just.agentweb.WebChromeClient
 import com.just.agentweb.WebViewClient
+import com.knight.kotlin.library_aop.clickintercept.SingleClick
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_base.vm.EmptyViewModel
 import com.knight.kotlin.module_web.R
 import com.knight.kotlin.module_web.databinding.WebActivityBinding
+import com.knight.kotlin.module_web.dialog.WebBottomFragment
+import com.knight.kotlin.module_web.utils.ViewBindUtils
 import com.knight.kotlin.module_web.widget.WebLayout
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -28,10 +34,12 @@ import dagger.hilt.android.AndroidEntryPoint
 class WebActivity : BaseActivity<WebActivityBinding,EmptyViewModel>() {
     override val mViewModel: EmptyViewModel by viewModels()
 
-   // @Autowired(name = "webUrl")
+    @JvmField
+    @Autowired(name = "webUrl")
     var webUrl:String = ""
 
-   // @Autowired(name = "webTitle")
+    @JvmField
+    @Autowired(name = "webTitle")
     var webTitle:String = ""
 
     private lateinit var mAgentWeb:AgentWeb
@@ -53,6 +61,7 @@ class WebActivity : BaseActivity<WebActivityBinding,EmptyViewModel>() {
     }
 
     override fun WebActivityBinding.initView() {
+        mBinding.includeWebToolbar.baseIvRight.visibility = View.VISIBLE
         mAgentWeb = AgentWeb.with(this@WebActivity)
               .setAgentWebParent(mBinding.webLl,LinearLayout.LayoutParams(-1,-1))
             .useDefaultIndicator(CacheUtils.getThemeColor(),2)
@@ -69,9 +78,14 @@ class WebActivity : BaseActivity<WebActivityBinding,EmptyViewModel>() {
             .go(webUrl)
 
         mWebView = mAgentWeb.webCreator.webView
-
-
-
+        initWebView(mWebView)
+        ViewBindUtils.previewWebViewPhoto(mWebView)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            mBinding.includeWebToolbar.baseTvTitle.text = Html.fromHtml(webTitle,Html.FROM_HTML_MODE_LEGACY)
+        } else {
+            mBinding.includeWebToolbar.baseTvTitle.text = Html.fromHtml(webTitle)
+        }
+        setOnClickListener(mBinding.includeWebToolbar.baseIvBack,mBinding.includeWebToolbar.baseIvRight)
     }
 
     /**
@@ -79,6 +93,7 @@ class WebActivity : BaseActivity<WebActivityBinding,EmptyViewModel>() {
      * 初始化webView
      *
      */
+
     private fun initWebView(webView:WebView) {
         val settings = webView.settings
         webView.overScrollMode = WebView.OVER_SCROLL_NEVER
@@ -99,6 +114,18 @@ class WebActivity : BaseActivity<WebActivityBinding,EmptyViewModel>() {
 
     override fun initRequestData() {
 
+    }
+
+    @SingleClick
+    override fun onClick(v: View) {
+        when(v) {
+            mBinding.includeWebToolbar.baseIvBack -> {
+               finish()
+            }
+            mBinding.includeWebToolbar.baseIvRight -> {
+                WebBottomFragment.newInstance(webUrl,mWebView).show(supportFragmentManager,"dialog_webnormal")
+            }
+        }
     }
 
     override fun onPause() {

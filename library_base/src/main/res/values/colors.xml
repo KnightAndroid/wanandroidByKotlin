@@ -2,4 +2,5 @@
 <resources>
     <color name="base_color_theme">#55aff4</color>
     <color name="base_filtrate_color">#1f767680</color>
+    <color name="base_line_color">#dddddd</color>
 </resources>

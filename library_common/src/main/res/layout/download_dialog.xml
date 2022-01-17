@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/common_download_margin_left"
+        android:layout_marginRight="@dimen/common_download_margin_right"
+        android:background="@drawable/base_round"
+        android:paddingBottom="@dimen/common_download_padding_bottom">
+
+        <TextView
+            android:id="@+id/tv_download_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/common_download_title_margin_left"
+            android:layout_marginTop="@dimen/common_download_title_margin_top"
+            android:text="@string/common_download_wait"
+            android:textColor="@color/common_download_title_color"
+            android:textSize="@dimen/common_download_title_text_size"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_download_rate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/common_download_rate_margin_top"
+            android:layout_marginRight="@dimen/common_download_rate_margin_right"
+            android:text="0%"
+            android:textColor="@color/common_download_rate_color"
+            android:textSize="@dimen/common_download_rate_textsize"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ProgressBar
+            android:id="@+id/pb_download"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/common_download_pb_margin_left"
+            android:layout_marginTop="@dimen/common_download_pb_margin_top"
+            android:layout_marginRight="@dimen/common_download_pb_margin_right"
+            android:max="100"
+            android:progress="0"
+            android:progressDrawable="@drawable/common_download_progress"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_download_title" />
+
+        <TextView
+            android:id="@+id/tv_speed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/common_download_speed_margin_top"
+            android:layout_marginRight="@dimen/common_download_speed_margin_right"
+            android:text="0B/10MB"
+            android:textColor="@color/common_download_speed_color"
+            android:textSize="@dimen/common_download_speed_textsize"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/pb_download" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

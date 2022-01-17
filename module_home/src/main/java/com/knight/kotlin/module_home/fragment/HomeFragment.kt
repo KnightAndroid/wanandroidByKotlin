@@ -9,9 +9,12 @@ import com.knight.kotlin.library_base.ktx.observeLiveData
 import com.knight.kotlin.library_base.route.RouteFragment
 import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_base.util.GsonUtils
+import com.knight.kotlin.library_common.entity.AppUpdateBean
+import com.knight.kotlin.library_common.fragment.UpdateAppDialogFragment
 import com.knight.kotlin.library_database.entity.PushDateEntity
 import com.knight.kotlin.library_util.DateUtils
 import com.knight.kotlin.library_util.JsonUtils.getJson
+import com.knight.kotlin.library_util.SystemUtils
 import com.knight.kotlin.library_util.ViewInitUtils
 import com.knight.kotlin.library_util.bindViewPager2
 import com.knight.kotlin.module_home.constants.HomeConstants
@@ -59,10 +62,12 @@ class HomeFragment : BaseFragment<HomeFragmentBinding, HomeVm>() {
     override fun initObserver() {
         observeLiveData(mViewModel.everyDayPushArticles, ::setEveryDayPushArticle)
         observeLiveData(mViewModel.articles, ::processPushArticle)
+        observeLiveData(mViewModel.appUpdateMessage,::checkAppMessage)
     }
 
     override fun initRequestData() {
         mViewModel.getEveryDayPushArticle()
+        mViewModel.checkAppUpdateMessage()
     }
 
     override fun setThemeColor(isDarkMode: Boolean) {
@@ -75,12 +80,13 @@ class HomeFragment : BaseFragment<HomeFragmentBinding, HomeVm>() {
     private fun setEveryDayPushArticle(data: EveryDayPushArticlesBean) {
         mEveryDayPushData = data
         if (data.pushStatus && DateUtils.isToday(data.time)) {
+            //查询本地推送文章时间 进行判断
             mViewModel.queryPushDate()
         }
 
     }
 
-
+    //处理是否进行弹窗
     private fun processPushArticle(datas: List<PushDateEntity>) {
         if (datas != null && datas.isNotEmpty()) {
             var pushDateEntity = datas[0]
@@ -94,6 +100,21 @@ class HomeFragment : BaseFragment<HomeFragmentBinding, HomeVm>() {
             pushTempDateEntity.time = mEveryDayPushData.time
             mViewModel.insertPushArticlesDate(pushTempDateEntity)
             //TODO 展示弹窗
+        }
+    }
+
+    /**
+     *
+     * 检查APP更新
+     */
+    private fun checkAppMessage(data: AppUpdateBean) {
+        //如果本地安装包大于远端 证明本地安装的说测试包 无需更新
+        if (activity?.let { SystemUtils.getAppVersionCode(it) }!! < data.versionCode ) {
+            if (data.versionName != activity?.let { SystemUtils.getAppVersionName(it) }) {
+                UpdateAppDialogFragment.newInstance(data).showAllowingStateLoss(
+                    parentFragmentManager, "dialog_update")
+
+            }
         }
     }
 

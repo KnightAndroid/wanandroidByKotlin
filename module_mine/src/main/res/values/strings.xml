@@ -1,3 +1,7 @@
 <resources>
     <string name="mine_app_name">module_mine</string>
+    <string name="mine_please_login">请登录</string>
+    <string name="mine_gradle_flag">等级 -</string>
+    <string name="mine_tv_rank">排名第 -</string>
+    <string name="mine_me_points">我的积分</string>
 </resources>

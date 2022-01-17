@@ -20,7 +20,7 @@
         android:id="@+id/web_photo_close_iv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/base_icon_circleclose"
+        android:background="@drawable/common_icon_circleclose"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginLeft="@dimen/web_close_margin_left"
