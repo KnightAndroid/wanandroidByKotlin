@@ -1,7 +1,10 @@
 package com.knight.kotlin.library_network.client
 
-import android.util.Log
 import androidx.annotation.Nullable
+import com.franmontiel.persistentcookiejar.PersistentCookieJar
+import com.franmontiel.persistentcookiejar.cache.SetCookieCache
+import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor
+import com.knight.kotlin.library_base.BaseApp
 import com.knight.kotlin.library_network.BuildConfig
 import com.knight.kotlin.library_network.config.BaseUrlConfig
 import com.knight.kotlin.library_network.log.LoggingInterceptor
@@ -14,7 +17,6 @@ import okhttp3.HttpUrl
 import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
@@ -57,6 +59,7 @@ class ClientConfig {
             .readTimeout(20L * 1000L,TimeUnit.MILLISECONDS)
             .addInterceptor(loggingInterceptor)
             .retryOnConnectionFailure(true)
+            .cookieJar(PersistentCookieJar(SetCookieCache(),SharedPrefsCookiePersistor(BaseApp.application)))
             .build()
     }
 

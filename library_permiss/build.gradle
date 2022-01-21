@@ -1,0 +1,14 @@
+//library-aop配置文件
+import com.knight.wanandroid.buildsrc.*
+apply from:'../base_library.gradle'
+
+dependencies {
+    implementation Dependencies.JetPack.HiltCore
+    //依赖Util
+    implementation project(path: ':library_util')
+    implementation project(path: ':library_base')
+    kapt Dependencies.JetPack.HiltApt
+    kapt Dependencies.JetPack.HiltAndroidx
+    kapt Dependencies.GitHub.AutoServiceAnnotations
+    kapt Dependencies.GitHub.ARouteCompiler
+}

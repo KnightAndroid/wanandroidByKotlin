@@ -30,4 +30,7 @@
     <dimen name="base_dimen_120">120dp</dimen>
     <dimen name="base_dimen_150">150dp</dimen>
     <dimen name="base_line_height">0.5dp</dimen>
+
+    <dimen name="base_error_layout_drawable_padding">20dp</dimen>
+    <dimen name="base_tv_error_data_textsize">20dp</dimen>
 </resources>

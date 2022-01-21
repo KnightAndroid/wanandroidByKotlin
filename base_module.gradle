@@ -97,10 +97,14 @@ kapt {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    api project(path:':library_util')
-    api project(path:':library_network')
-    api project(path:':library_widget')
-    api project(path:':library_aop')
+    api project(path: ':library_util')
+    api project(path: ':library_network')
+    api project(path: ':library_widget')
+    api project(path: ':library_aop')
+    api project(path: ':library_common')
+    api project(path: ':library_base')
+    api project(path: ':library_database')
+    api project(path: ':library_permiss')
     testImplementation Dependencies.Android.Junit
     androidTestImplementation Dependencies.Androidx.TestExtJunit
     androidTestImplementation Dependencies.Androidx.TestEspresso

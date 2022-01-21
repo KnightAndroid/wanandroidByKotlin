@@ -4,4 +4,10 @@
     <string name="mine_gradle_flag">等级 -</string>
     <string name="mine_tv_rank">排名第 -</string>
     <string name="mine_me_points">我的积分</string>
+    <string name="mine_me_collect">我的收藏</string>
+    <string name="mine_me_share_articles">我的分享</string>
+    <string name="mine_me_history_records">阅读历史</string>
+    <string name="mine_me_system_setting">设置</string>
+    <string name="mine_gradle">等级&#160;</string>
+    <string name="mine_rank">排名&#160;</string>
 </resources>

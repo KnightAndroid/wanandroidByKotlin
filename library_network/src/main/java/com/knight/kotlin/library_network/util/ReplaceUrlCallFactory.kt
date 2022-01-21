@@ -24,14 +24,13 @@ abstract class ReplaceUrlCallFactory(@NonNull delegate: Call.Factory) :
          */
 
         val baseUrlName: String? = request.header(BASE_URL_NAME)
-        Log.d("222",baseUrlName.toString())
         if (baseUrlName != null) {
             val newHttpUrl = getNewUrl(baseUrlName, request)
             if (newHttpUrl != null) {
                 val newRequest: Request = request.newBuilder().url(newHttpUrl).build()
                 return delegate.newCall(newRequest)
             } else {
-                Log.w("wanandroid-->>Request", "getNewUrl() return null when baseUrlName==$baseUrlName")
+                Log.e("wanandroid-->>Request", "getNewUrl() return null when baseUrlName==$baseUrlName")
             }
         }
         return delegate.newCall(request)

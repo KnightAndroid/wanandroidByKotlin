@@ -34,9 +34,14 @@ class WelcomeVm @Inject constructor(private val mRepo:WelcomeRepo) :BaseViewMode
 
        viewModelScope.launch(Dispatchers.IO) {
            mRepo.getAppTheme()
-               .catch { toast(it.message ?: "") }
+               .catch {
+                   toast(it.message ?: "")
+                   requestSuccessFlag.postValue(false)
+               }
                .collect {
-                   themeData.postValue(it) }
+                   themeData.postValue(it)
+
+               }
        }
     }
 }

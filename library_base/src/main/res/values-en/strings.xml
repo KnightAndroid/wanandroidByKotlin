@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="base_app_name">wanandroid</string>
+    <string name="base_error_data">An error occurred. Please click Retry</string>
 </resources>

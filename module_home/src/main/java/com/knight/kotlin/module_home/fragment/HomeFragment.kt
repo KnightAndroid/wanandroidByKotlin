@@ -1,9 +1,11 @@
 package com.knight.kotlin.module_home.fragment
 
+import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.google.common.reflect.TypeToken
+import com.knight.kotlin.library_aop.clickintercept.SingleClick
 import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.knight.kotlin.library_base.ktx.observeLiveData
 import com.knight.kotlin.library_base.route.RouteFragment
@@ -12,6 +14,9 @@ import com.knight.kotlin.library_base.util.GsonUtils
 import com.knight.kotlin.library_common.entity.AppUpdateBean
 import com.knight.kotlin.library_common.fragment.UpdateAppDialogFragment
 import com.knight.kotlin.library_database.entity.PushDateEntity
+import com.knight.kotlin.library_permiss.XXPermissions
+import com.knight.kotlin.library_permiss.listener.OnPermissionCallback
+import com.knight.kotlin.library_permiss.permissions.Permission
 import com.knight.kotlin.library_util.DateUtils
 import com.knight.kotlin.library_util.JsonUtils.getJson
 import com.knight.kotlin.library_util.SystemUtils
@@ -52,6 +57,7 @@ class HomeFragment : BaseFragment<HomeFragmentBinding, HomeVm>() {
     override val mViewModel: HomeVm by viewModels()
     override fun HomeFragmentBinding.initView() {
         initMagicIndicator()
+        setOnClickListener(mBinding.homeIncludeToolbar.homeScanIcon)
 
     }
 
@@ -146,4 +152,20 @@ class HomeFragment : BaseFragment<HomeFragmentBinding, HomeVm>() {
         }
 
     }
+    @SingleClick
+    override fun onClick(v: View) {
+        when (v) {
+           mBinding.homeIncludeToolbar.homeScanIcon->{
+               XXPermissions.with(this@HomeFragment)
+                   ?.permission(Permission.CAMERA)
+                   ?.request(object :OnPermissionCallback{
+                       override fun onGranted(permissions: List<String>, all: Boolean) {
+                           if (all) {
+                           }
+                       }
+                   })
+           }
+        }
+    }
+
 }

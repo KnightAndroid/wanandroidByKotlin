@@ -66,6 +66,8 @@ object Dependencies {
        const val MagicIndicator = "1.7.0"                  // 指示器
        const val Agent = "v5.0.0-alpha.1-androidx"         // Android WebView
        const val Sketch = "2.7.1"                          // 预览大图
+       const val LoadSir = "1.3.8"                         // 全局视图加载
+       const val Cookie = "v1.0.0"                         //Cookie管理
 
        //其他相关------------------------------------------------------
        const val Aspectj = "1.9.7"                         // aop相关
@@ -185,6 +187,10 @@ object Dependencies {
         const val SketchPhoto = "io.github.panpf.sketch:sketch:${Version.Sketch}"
         //aop
         const val aspectJ = "org.aspectj:aspectjrt:${Version.Aspectj}"
+        //全局加载视图 https://github.com/KingJA/LoadSir
+        const val LoadSir = "com.kingja.loadsir:loadsir:${Version.LoadSir}"
+        //Cookie管理框架 https://github.com/franmontiel/PersistentCookieJar
+        const val Cookie = "com.github.franmontiel:PersistentCookieJar:${Version.Cookie}"
 
     }
 

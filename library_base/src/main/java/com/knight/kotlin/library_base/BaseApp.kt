@@ -3,13 +3,20 @@ package com.knight.kotlin.library_base
 import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
+import com.kingja.loadsir.core.LoadSir
 import com.knight.kotlin.library_base.app.LoadModuleProxy
+import com.knight.kotlin.library_base.config.CacheKey
+import com.knight.kotlin.library_base.entity.UserInfoEntity
+import com.knight.kotlin.library_base.loadsir.EmptyCallBack
+import com.knight.kotlin.library_base.loadsir.ErrorCallBack
+import com.knight.kotlin.library_base.loadsir.LoadCallBack
 import com.knight.kotlin.library_base.util.ActivityManagerUtils
 import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_base.util.HookUtils
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
 import kotlin.system.measureTimeMillis
+
 
 /**
  * Author:Knight
@@ -23,6 +30,7 @@ open class BaseApp : Application() {
      * 是否同意了隐私政策
      */
     private var userAgree = false
+
     /**
      * 协程
      */
@@ -36,6 +44,12 @@ open class BaseApp : Application() {
 
         @SuppressLint("StaticFieldLeak")
         lateinit var application: BaseApp
+
+        /**
+         * 用户信息
+         */
+        @SuppressLint("StaticFieldLeak")
+        var user: UserInfoEntity? = null
     }
 
 
@@ -46,9 +60,9 @@ open class BaseApp : Application() {
         CacheUtils.init(base)
         userAgree = CacheUtils.getAgreeStatus()
         if (!userAgree) {
-           try {
+            try {
                 HookUtils.attachContext()
-            }catch (e:Exception){
+            } catch (e: Exception) {
                 e.printStackTrace()
             }
         }
@@ -62,6 +76,7 @@ open class BaseApp : Application() {
         //全局监听Activity 生命周期
         registerActivityLifecycleCallbacks(ActivityManagerUtils.getInstance())
         mLoadModuleProxy.onCreate(this)
+        initUser()
         //策略初始化安全第三方依赖
         initSafeSdk()
 
@@ -92,7 +107,7 @@ open class BaseApp : Application() {
      * 初始化安全任务
      */
     private fun initSafeSdk() {
-
+        initLoadSir()
         val allTimeMillis = measureTimeMillis {
             val depends = mLoadModuleProxy.initSafeTask()
             var dependInfo: String
@@ -102,9 +117,30 @@ open class BaseApp : Application() {
         }
     }
 
-
     /**
      *
+     * 初始化用户信息
+     */
+    private fun initUser(): UserInfoEntity? {
+        user = CacheUtils.getDataInfo(CacheKey.USER, UserInfoEntity::class.java)
+        return user
+    }
+
+
+    /**
+     * 初始化状态页
+     */
+    private fun initLoadSir() {
+       LoadSir.beginBuilder()
+           .addCallback(ErrorCallBack())
+           .addCallback(LoadCallBack())
+           .addCallback(EmptyCallBack())
+           .setDefaultCallback(LoadCallBack::class.java)
+           .commit()
+    }
+
+    /**
+     * 初始化危险sdk
      *
      */
     fun initDangrousSdk() {

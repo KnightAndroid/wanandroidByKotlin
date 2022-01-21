@@ -39,3 +39,6 @@
 -keepclassmembers class * implements androidx.viewbinding.ViewBinding{
     *;
 }
+# 加载视图混淆
+-dontwarn com.kingja.loadsir.**
+-keep class com.kingja.loadsir.** {*;}

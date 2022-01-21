@@ -1,12 +1,19 @@
 package com.knight.kotlin.library_base.activity
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
 import com.alibaba.android.arouter.launcher.ARouter
+import com.kingja.loadsir.callback.Callback
+import com.kingja.loadsir.core.LoadService
+import com.kingja.loadsir.core.LoadSir
 import com.knight.kotlin.library_base.R
 import com.knight.kotlin.library_base.annotation.EventBusRegister
 import com.knight.kotlin.library_base.ktx.ClickAction
+import com.knight.kotlin.library_base.loadsir.EmptyCallBack
+import com.knight.kotlin.library_base.loadsir.ErrorCallBack
+import com.knight.kotlin.library_base.loadsir.LoadCallBack
 import com.knight.kotlin.library_base.network.AutoRegisterNetListener
 import com.knight.kotlin.library_base.network.NetworkStateChangeListener
 import com.knight.kotlin.library_base.util.BindingReflex
@@ -33,6 +40,13 @@ abstract class BaseActivity<VB : ViewBinding,VM : BaseViewModel> : AppCompatActi
      * activity页面重建帮助类
      */
     private var mStatusHelper:ActivityRecreateHelper? = null
+
+    /**
+     *
+     * 全局加载视图
+     */
+    private lateinit var mLoadService: LoadService<Any>
+
 
 
     override fun onCreate(savedInstanceState:Bundle?) {
@@ -81,6 +95,53 @@ abstract class BaseActivity<VB : ViewBinding,VM : BaseViewModel> : AppCompatActi
     override fun networkConnectChange(isConnected:Boolean) {
 
 
+    }
+
+
+    /**
+     *
+     * 默认加载
+     */
+    protected fun requestLoading(view: View) {
+        if (!::mLoadService.isLateinit) {
+            mLoadService = LoadSir.getDefault().register(view, Callback.OnReloadListener {
+                mLoadService.showCallback(LoadCallBack::class.java)
+                initRequestData()
+            })
+        }
+
+        mLoadService.showCallback(LoadCallBack::class.java)
+
+    }
+
+    /**
+     *
+     * 成功回调
+     */
+    protected fun requestSuccess() {
+        if (::mLoadService.isInitialized) {
+            mLoadService.showSuccess()
+        }
+    }
+
+
+    /**
+     * 请求失败的回调
+     */
+    protected fun requestFailure() {
+        if (::mLoadService.isInitialized) {
+            mLoadService.showCallback(ErrorCallBack::class.java)
+        }
+    }
+
+
+    /**
+     * 空数据请求的回调
+     */
+    protected fun requestEmptyData() {
+        if (::mLoadService.isInitialized) {
+            mLoadService.showCallback(EmptyCallBack::class.java)
+        }
     }
 
 

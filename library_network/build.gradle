@@ -8,11 +8,14 @@ android {
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation project(path: ':library_base')
     api Dependencies.GitHub.OkHttp
     api Dependencies.GitHub.OkHttpInterceptorLogging
     api Dependencies.GitHub.Retrofit
     api Dependencies.GitHub.RetrofitConverterGson
+    implementation Dependencies.GitHub.Cookie
     implementation Dependencies.JetPack.HiltCore
+
     kapt Dependencies.JetPack.HiltApt
     kapt Dependencies.JetPack.HiltAndroidx
 

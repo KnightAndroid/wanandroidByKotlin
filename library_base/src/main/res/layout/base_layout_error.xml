@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
+
+    <TextView
+        android:id="@+id/tv_error_data"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawablePadding="@dimen/base_error_layout_drawable_padding"
+        android:drawableTop="@drawable/base_iv_error_data"
+        android:text="@string/base_error_data"
+        android:gravity="center"/>
+
+
+</LinearLayout>

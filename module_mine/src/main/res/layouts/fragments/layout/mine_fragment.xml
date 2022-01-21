@@ -3,9 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.knight.kotlin.module_mine.fragment.MineFragment"
+    android:id="@+id/mine_sl"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context="com.knight.kotlin.module_mine.fragment.MineFragment">
 
 
 
@@ -115,12 +116,11 @@
 
                 <!--我的积分-->
                 <RelativeLayout
+                    android:id="@+id/mine_rl_point"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/mine_rl_point_margin_top"
                     android:layout_marginBottom="@dimen/mine_rl_point_margin_bottom">
-
-
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -131,6 +131,7 @@
 
 
                     <TextView
+                        android:id="@+id/mine_tv_points"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
@@ -149,6 +150,104 @@
                         android:background="@drawable/mine_iv_arrow"/>
 
                 </RelativeLayout>
+
+                <!--我的收藏-->
+                <RelativeLayout
+                    android:id="@+id/mine_rl_collect"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/mine_rl_collect_margin_top"
+                    android:layout_marginBottom="@dimen/mine_rl_collect_margin_bottom">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/mine_me_collect"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/mine_tv_collect_textsize"/>
+
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:background="@drawable/mine_iv_arrow"/>
+
+
+                </RelativeLayout>
+
+                <!--我的分享-->
+                <RelativeLayout
+                    android:id="@+id/mine_rl_share"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/mine_rl_share_margin_top"
+                    android:layout_marginBottom="@dimen/mine_rl_share_margin_bottom">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/mine_me_share_articles"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/mine_tv_share_article_textsize"/>
+
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:background="@drawable/mine_iv_arrow"/>
+
+                </RelativeLayout>
+
+                <!--阅读历史-->
+                <RelativeLayout
+                    android:id="@+id/mine_rl_history_record"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/mine_rl_history_records_margin_top"
+                    android:layout_marginBottom="@dimen/mine_rl_history_records_margin_bottom">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/mine_me_history_records"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/mine_tv_history_record_textsize"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:background="@drawable/mine_iv_arrow"/>
+
+                </RelativeLayout>
+
+
+                <!--系统设置-->
+                <RelativeLayout
+                    android:id="@+id/rl_mine_setup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/mine_rl_system_set_margin_top"
+                    android:layout_marginBottom="@dimen/mine_rl_system_set_margin_bottom"
+                    >
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/mine_me_system_setting"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/mine_tv_system_setting_textsize"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:background="@drawable/mine_iv_arrow"/>
+                </RelativeLayout>
+
 
 
 

@@ -11,7 +11,6 @@ import com.knight.kotlin.library_base.ktx.observeLiveData
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_base.util.ColorUtils
-import com.knight.kotlin.module_welcome.R
 import com.knight.kotlin.module_welcome.databinding.WelcomeActivityBinding
 import com.knight.kotlin.module_welcome.entity.AppThemeBean
 import com.knight.kotlin.module_welcome.fragment.WelcomePrivacyAgreeFragment
@@ -64,7 +63,4 @@ class WelcomeActivity : BaseActivity<WelcomeActivityBinding, WelcomeVm>() {
        Appconfig.gray = data.gray
     }
 
-    override fun getActivityTheme(): Int {
-        return R.style.welcomeAppSplash
-    }
 }

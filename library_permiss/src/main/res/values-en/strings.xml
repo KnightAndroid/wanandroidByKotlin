@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="permission_hint">Authorization prompt</string>
+    <string name="permission_message">Permission is required to use this feature</string>
+    <string name="permission_granted">Grant</string>
+    <string name="permission_denied">Cancel</string>
+    <string name="permission_alert">Authorization reminder</string>
+    <string name="permission_fail_one">Authorization failed, please grant permission correctly</string>
+    <string name="permission_fail_two">Failed to obtain permission. Please grant permission manually</string>
+    <string name="permission_fail_three">Failed to obtain permission, please grant %s manually</string>
+    <string name="permission_fail_four">Background positioning permission is not granted. Please select "always allow"</string>
+    <string name="permission_goto">Go to authorization</string>
+    <string name="permission_calendar">Calendar permissions</string>
+    <string name="permission_camera">Camera permissions</string>
+    <string name="permisssion_contacts">Address book permissions</string>
+    <string name="permission_location">Location permissions</string>
+    <string name="permission_location_background">Background positioning permission</string>
+    <string name="permission_bluetooth">Nearby device permissions</string>"
+    <string name="permission_microphone">Microphone permissions</string>
+    <string name="permission_phone">Telephone authority</string>
+    <string name="permission_call_log">Call record permission</string>
+    <string name="permission_sensors">Body sensor permissions</string>
+    <string name="permission_activity_recognition">Fitness exercise authority</string>
+    <string name="permission_sms">SMS permission</string>
+    <string name="permission_storage">Storage permissions</string>
+    <string name="permission_install">Install app permissions</string>
+    <string name="permission_notification">Notification bar permissions</string>
+    <string name="permission_window">Suspended window permission</string>
+    <string name="permission_setting">System setting permissions</string>
+    <string name="permission_task">View usage permissions</string>
+</resources>

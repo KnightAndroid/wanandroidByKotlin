@@ -14,7 +14,7 @@
 
         <meta-data
             android:name="android.max_aspect"
-            android:value="2.2" />
+            android:value="2.4" />
 
         <!-- 允许绘制到华为刘海屏机型的刘海区域 -->
         <meta-data
