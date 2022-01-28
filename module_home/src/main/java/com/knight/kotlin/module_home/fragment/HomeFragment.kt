@@ -161,6 +161,7 @@ class HomeFragment : BaseFragment<HomeFragmentBinding, HomeVm>() {
                    ?.request(object :OnPermissionCallback{
                        override fun onGranted(permissions: List<String>, all: Boolean) {
                            if (all) {
+                               //请求权限授权完成
                            }
                        }
                    })

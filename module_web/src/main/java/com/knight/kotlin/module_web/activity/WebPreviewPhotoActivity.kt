@@ -29,7 +29,7 @@ class WebPreviewPhotoActivity:BaseActivity<WebPreviewphotoActivityBinding,EmptyV
         webPreviewIv.isZoomEnabled = true
         webPreviewIv.displayImage(photoUri)
         webPhotoCloseIv.setOnClickListener {
-            finish();
+            finish()
             overridePendingTransition(R.anim.web_fade_out_anim, R.anim.web_fade_in_anim);
         }
     }

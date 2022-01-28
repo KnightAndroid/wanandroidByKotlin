@@ -77,7 +77,7 @@ class UpdateAppDialogFragment: BaseDialogFragment<UpdateAppDialogBinding,EmptyVi
         mBinding.tvConfimUpdate.setOnClickListener {
             dismiss()
             DownLoadDialogFragment.newInstance(mAppUpdateBean?.downLoadLink).showAllowingStateLoss(
-                parentFragmentManager,"dialog_downlaod")
+                parentFragmentManager,"dialog_download")
         }
     }
 
