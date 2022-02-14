@@ -9,20 +9,25 @@ import androidx.viewpager2.widget.ViewPager2
  * Description:CardTransformer
  */
 class CardTransformer:ViewPager2.PageTransformer {
-    /**
-     * 动画类型 =》层叠
-     */
-    private val ANIM_TYPE_STACK = 1
 
-    /**
-     * 动画类型 =》缩放
-     */
-    private val ANIM_TYPE_SCALE = 2
+    companion object {
+        /**
+         * 动画类型 =》层叠
+         */
+         val ANIM_TYPE_STACK = 1
 
-    /**
-     * 动画类型 =》风车
-     */
-    private val ANIM_TYPE_WINDMILL = 3
+        /**
+         * 动画类型 =》缩放
+         */
+        val ANIM_TYPE_SCALE = 2
+
+        /**
+         * 动画类型 =》风车
+         */
+        val ANIM_TYPE_WINDMILL = 3
+    }
+
+
 
     /**
      * 动画类型

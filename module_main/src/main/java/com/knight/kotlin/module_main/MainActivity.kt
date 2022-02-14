@@ -20,7 +20,10 @@ class MainActivity : BaseActivity<MainActivityBinding,MainViewModel>() {
     override val mViewModel:MainViewModel by viewModels()
 
     override fun MainActivityBinding.initView() {
-        ViewInitUtils.setViewPager2Init(this@MainActivity,mainViewpager,mViewModel.fragments,false)
+        ViewInitUtils.setViewPager2Init(this@MainActivity,mainViewpager,mViewModel.fragments,
+            isOffscreenPageLimit = true,
+            isUserInputEnabled = false
+        )
         btnNav.run {
             setOnNavigationItemSelectedListener {
                 when(it.itemId) {

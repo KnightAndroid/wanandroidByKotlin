@@ -15,9 +15,9 @@ object Dependencies {
      */
     object Version {
        //AndroidX----------------------------------------------
-       const val AppCompat = "1.2.0"
+       const val AppCompat = "1.3.0"
        //核心依赖
-       const val CoreKtx = "1.3.1"
+       const val CoreKtx = "1.7.0"
        //约束布局
        const val ConstraintLayout = "2.0.1"
        //单元测试
@@ -44,11 +44,18 @@ object Dependencies {
        //JetPack--------------------------------------------------
        //Lifecycle相关（ViewModel & LiveData & Lifecycle）
        const val Lifecycle = "2.3.1"
+       const val LifecycleExtension = "2.2.0"
        //DI框架-Hilt
        const val Hilt = "2.37"
        const val HiltAndroidx = "1.0.0"
        //数据库Room
        const val RoomVersion = "2.3.0"
+       //camerax
+       const val CameraxVersion = "1.0.2"
+       //cameraView
+       const val CameraViewVersion = "1.0.0-alpha26"
+       //zxing
+       const val ZingVersion = "3.4.1"
 
        //GitHub相关--------------------------------------------------
        const val ARoute = "1.5.2"                          // 阿里路由
@@ -67,7 +74,8 @@ object Dependencies {
        const val Agent = "v5.0.0-alpha.1-androidx"         // Android WebView
        const val Sketch = "2.7.1"                          // 预览大图
        const val LoadSir = "1.3.8"                         // 全局视图加载
-       const val Cookie = "v1.0.0"                         //Cookie管理
+       const val Cookie = "v1.0.0"                         // Cookie管理
+       const val Glide = "4.11.0"                          // Glide图像版本
 
        //其他相关------------------------------------------------------
        const val Aspectj = "1.9.7"                         // aop相关
@@ -136,6 +144,12 @@ object Dependencies {
             "androidx.lifecycle:lifecycle-viewmodel-savedstate:${Version.Lifecycle}"
         const val LiveData = "androidx.lifecycle:lifecycle-livedata-ktx:${Version.Lifecycle}"
         const val Lifecycle = "androidx.lifecycle:lifecycle-runtime-ktx:${Version.Lifecycle}"
+        const val LifecycleExtensions = "androidx.lifecycle:lifecycle-extensions:${Version.LifecycleExtension}"
+        const val CameraCore = "androidx.camera:camera-core:${Version.CameraxVersion}"
+        const val CameraCamera2 = "androidx.camera:camera-camera2:${Version.CameraxVersion}"
+        const val CameraLifecycle = "androidx.camera:camera-lifecycle:${Version.CameraxVersion}"
+        const val CameraView = "androidx.camera:camera-view:${Version.CameraViewVersion}"
+        const val Zxing = "com.google.zxing:core:${Version.ZingVersion}"
         const val LifecycleCompilerAPT =
             "androidx.lifecycle:lifecycle-compiler:${Version.Lifecycle}"
         const val HiltCore = "com.google.dagger:hilt-android:${Version.Hilt}"
@@ -191,7 +205,8 @@ object Dependencies {
         const val LoadSir = "com.kingja.loadsir:loadsir:${Version.LoadSir}"
         //Cookie管理框架 https://github.com/franmontiel/PersistentCookieJar
         const val Cookie = "com.github.franmontiel:PersistentCookieJar:${Version.Cookie}"
-
+        //图像加载库 https://github.com/bumptech/glide
+        const val Glide = "com.github.bumptech.glide:glide:${Version.Glide}"
     }
 
 

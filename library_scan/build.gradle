@@ -5,23 +5,20 @@ android {
     buildFeatures {
         viewBinding = true
     }
-
 }
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation project(path: ':library_common')
+//    implementation project(path: ':library_common')
     implementation project(path: ':library_base')
-    implementation project(path: ':library_database')
     implementation Dependencies.JetPack.HiltCore
-    implementation Dependencies.GitHub.Glide
-
     kapt Dependencies.JetPack.HiltApt
     kapt Dependencies.JetPack.HiltAndroidx
-
     kapt Dependencies.GitHub.AutoServiceAnnotations
-    kapt Dependencies.GitHub.ARouteCompiler
 
-    api Dependencies.GitHub.MagicIndicator
-
+    implementation Dependencies.JetPack.CameraCore
+    implementation Dependencies.JetPack.CameraCamera2
+    implementation Dependencies.JetPack.CameraLifecycle
+    implementation Dependencies.JetPack.CameraView
+    implementation Dependencies.JetPack.Zxing
 }

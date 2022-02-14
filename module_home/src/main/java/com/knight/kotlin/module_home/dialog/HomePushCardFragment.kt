@@ -1,0 +1,59 @@
+package com.knight.kotlin.module_home.dialog
+
+import android.os.Bundle
+import androidx.fragment.app.viewModels
+import com.knight.kotlin.library_base.fragment.BaseFragment
+import com.knight.kotlin.library_base.vm.EmptyViewModel
+import com.knight.kotlin.library_database.entity.EveryDayPushEntity
+import com.knight.kotlin.library_util.image.ImageLoader
+import com.knight.kotlin.module_home.databinding.HomePushcardDialogBinding
+
+/**
+ * Author:Knight
+ * Time:2022/2/10 14:39
+ * Description:HomePushCardFragment
+ */
+class HomePushCardFragment:BaseFragment<HomePushcardDialogBinding,EmptyViewModel>() {
+    override val mViewModel: EmptyViewModel by viewModels()
+
+    private var mEveryDayPushEntity:EveryDayPushEntity?=null
+    companion object {
+        fun newInstance(mEveryDayPushEntity:EveryDayPushEntity):HomePushCardFragment {
+            val mHomePushCardFragment:HomePushCardFragment = HomePushCardFragment()
+            val args = Bundle()
+            args.putParcelable("mEveryDayPushEntity",mEveryDayPushEntity)
+            mHomePushCardFragment.arguments = args
+            return mHomePushCardFragment
+        }
+    }
+
+    override fun setThemeColor(isDarkMode: Boolean) {
+
+    }
+
+    override fun HomePushcardDialogBinding.initView() {
+        mEveryDayPushEntity = arguments?.getParcelable("mEveryDayPushEntity")
+        mEveryDayPushEntity?.let {
+            //设置图像
+            ImageLoader.loadStringPhoto(requireActivity(),it.articlePicture,homeIvEverydayPushpicture)
+            //设置作者
+            homeTvArticleAuthor.text = it.author
+            //标题
+            homeTvArticleTitle.text = it.articleTitle
+            //描述
+            homeTvArticleDesc.text = it.articledesc
+        }
+
+
+
+    }
+
+    override fun initObserver() {
+
+    }
+
+    override fun initRequestData() {
+
+    }
+
+}

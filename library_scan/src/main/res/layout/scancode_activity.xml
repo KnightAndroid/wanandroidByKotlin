@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scan_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.camera.view.PreviewView
+        android:id="@+id/scan_preview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <ImageView
+        android:id="@+id/scan_iv_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/base_icon_circleclose"
+        android:layout_marginTop="@dimen/scan_iv_close_margin_top"
+        android:layout_marginLeft="@dimen/scan_iv_close_margin_left"/>
+
+    <ImageView
+        android:id="@+id/scan_iv_flash"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/scan_icon_closeflash"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="@dimen/scan_iv_flash_margin_top"
+        android:layout_marginRight="@dimen/scan_iv_flash_margin_right"/>
+
+</RelativeLayout>

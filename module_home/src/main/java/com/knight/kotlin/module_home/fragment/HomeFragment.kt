@@ -1,5 +1,7 @@
 package com.knight.kotlin.module_home.fragment
 
+import android.app.Activity
+import android.content.Intent
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -17,13 +19,18 @@ import com.knight.kotlin.library_database.entity.PushDateEntity
 import com.knight.kotlin.library_permiss.XXPermissions
 import com.knight.kotlin.library_permiss.listener.OnPermissionCallback
 import com.knight.kotlin.library_permiss.permissions.Permission
+import com.knight.kotlin.library_scan.activity.ScanCodeActivity
+import com.knight.kotlin.library_scan.annoation.ScanStyle
+import com.knight.kotlin.library_scan.decode.ScanCodeConfig
 import com.knight.kotlin.library_util.DateUtils
 import com.knight.kotlin.library_util.JsonUtils.getJson
 import com.knight.kotlin.library_util.SystemUtils
 import com.knight.kotlin.library_util.ViewInitUtils
 import com.knight.kotlin.library_util.bindViewPager2
+import com.knight.kotlin.library_util.toast.ToastUtils
 import com.knight.kotlin.module_home.constants.HomeConstants
 import com.knight.kotlin.module_home.databinding.HomeFragmentBinding
+import com.knight.kotlin.module_home.dialog.HomePushArticleFragment
 import com.knight.kotlin.module_home.entity.EveryDayPushArticlesBean
 import com.knight.kotlin.module_home.vm.HomeVm
 import dagger.hilt.android.AndroidEntryPoint
@@ -57,7 +64,9 @@ class HomeFragment : BaseFragment<HomeFragmentBinding, HomeVm>() {
     override val mViewModel: HomeVm by viewModels()
     override fun HomeFragmentBinding.initView() {
         initMagicIndicator()
-        setOnClickListener(mBinding.homeIncludeToolbar.homeScanIcon)
+        setOnClickListener(mBinding.homeIncludeToolbar.homeScanIcon,
+            mBinding.homeIncludeToolbar.homeIvEveryday,
+            mBinding.homeIncludeToolbar.homeIvAdd)
 
     }
 
@@ -99,13 +108,13 @@ class HomeFragment : BaseFragment<HomeFragmentBinding, HomeVm>() {
             if (pushDateEntity.time == mEveryDayPushData.time) {
                 pushDateEntity.time = mEveryDayPushData.time
                 mViewModel.updatePushArticlesDate(pushDateEntity)
-                //TODO 展示弹窗
+                HomePushArticleFragment.newInstance(mEveryDayPushData.datas).showAllowingStateLoss(parentFragmentManager,"dialog_everydaypush")
             }
         } else {
             val pushTempDateEntity = PushDateEntity()
             pushTempDateEntity.time = mEveryDayPushData.time
             mViewModel.insertPushArticlesDate(pushTempDateEntity)
-            //TODO 展示弹窗
+            HomePushArticleFragment.newInstance(mEveryDayPushData.datas).showAllowingStateLoss(parentFragmentManager,"dialog_everydaypush")
         }
     }
 
@@ -146,7 +155,10 @@ class HomeFragment : BaseFragment<HomeFragmentBinding, HomeVm>() {
             }
         }
 
-        ViewInitUtils.setViewPager2Init(requireActivity(),mBinding.viewPager,mFragments,false)
+        ViewInitUtils.setViewPager2Init(requireActivity(),mBinding.viewPager,mFragments,
+            isOffscreenPageLimit = true,
+            isUserInputEnabled = false
+        )
         mBinding.magicIndicator.bindViewPager2(mBinding.viewPager,knowledgeLabelList) {
             HomeConstants.ARTICLE_TYPE = knowledgeLabelList[it]
         }
@@ -161,12 +173,43 @@ class HomeFragment : BaseFragment<HomeFragmentBinding, HomeVm>() {
                    ?.request(object :OnPermissionCallback{
                        override fun onGranted(permissions: List<String>, all: Boolean) {
                            if (all) {
-                               //请求权限授权完成
+
+                               ScanCodeConfig.Builder()
+                                   .setFragment(this@HomeFragment)
+                                   .setActivity(activity)
+                                   .setPlayAudio(true)
+                                   .setStyle(ScanStyle.FULL_SCREEN)
+                                   .build().start(ScanCodeActivity::class.java)
                            }
                        }
                    })
            }
+           mBinding.homeIncludeToolbar.homeIvEveryday->{
+               HomePushArticleFragment.newInstance(mEveryDayPushData.datas).showAllowingStateLoss(parentFragmentManager,"dialog_everydaypush")
+           }
+
+           mBinding.homeIncludeToolbar.homeIvAdd->{
+               TODO("发布文章界面")
+           }
+
+
+
         }
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        //接收扫码结果
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == ScanCodeConfig.QUESTCODE && data != null) {
+                val extras = data.extras
+                if (extras != null) {
+                    val result = extras.getString(ScanCodeConfig.CODE_KEY)
+                    ToastUtils.show(result)
+                }
+            }
+        }
+    }
+
 
 }

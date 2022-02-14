@@ -5,4 +5,8 @@
      <color name="home_bar_search">#333333</color>
      <color name="home_bar_hint">#999999</color>
      <color name="home_magicindicator">#ffffff</color>
+     <color name="home_everypush_author">#29000000</color>
+     <color name="home_everypush_bottom_message">#ffffff</color>
+     <color name="home_push_article_title">#333333</color>
+     <color name="home_push_article_desc">#999999</color>
 </resources>

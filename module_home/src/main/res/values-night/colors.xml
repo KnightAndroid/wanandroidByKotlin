@@ -5,4 +5,7 @@
     <color name="home_bar_search">#333333</color>
     <color name="home_bar_hint">#999999</color>
     <color name="home_magicindicator">#303030</color>
+    <color name="home_everypush_bottom_message">#303030</color>
+    <color name="home_push_article_title">#D3D3D3</color>
+    <color name="home_push_article_desc">#666666</color>
 </resources>

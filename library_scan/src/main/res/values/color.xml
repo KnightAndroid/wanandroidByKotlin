@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="scan_colorPrimary">#6200EE</color>
+    <color name="scan_colorPrimaryDark">#3700B3</color>
+    <color name="scan_colorAccent">#03DAC5</color>
+    <color name="scan_qqscan">#68b6fc</color>
+    <color name="scan_black_tran30">#4D000000</color>
+</resources>

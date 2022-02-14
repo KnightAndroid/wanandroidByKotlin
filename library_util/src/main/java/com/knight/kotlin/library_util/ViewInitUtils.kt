@@ -20,10 +20,13 @@ import androidx.viewpager2.widget.ViewPager2
  */
 object ViewInitUtils {
 
-    fun setViewPager2Init(activity: FragmentActivity, viewPager2: ViewPager2, fragments:List<Fragment>, isUserInputEnabled:Boolean) {
+    fun setViewPager2Init(activity: FragmentActivity, viewPager2: ViewPager2, fragments:List<Fragment>, isOffscreenPageLimit:Boolean,isUserInputEnabled:Boolean) {
         viewPager2.isUserInputEnabled = isUserInputEnabled
-        //下面方法能解决fragment切换白屏问题
-        viewPager2.offscreenPageLimit = fragments.size
+        if (isOffscreenPageLimit) {
+            //下面方法能解决fragment切换白屏问题
+            viewPager2.offscreenPageLimit = fragments.size
+        }
+
         viewPager2.adapter = object : FragmentStateAdapter(activity) {
             @NonNull
             override fun createFragment(position: Int): Fragment {

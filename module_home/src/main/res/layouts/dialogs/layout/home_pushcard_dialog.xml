@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/home_push_article_cv_height"
+    app:cardBackgroundColor="@android:color/transparent"
+    app:cardCornerRadius="@dimen/home_push_article_cv_radius">
+
+
+
+    <ImageView
+        android:id="@+id/home_iv_everyday_pushpicture"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"/>
+
+    <TextView
+        android:id="@+id/home_tv_article_author"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/home_everypush_author"
+        android:text="鸿洋"
+        android:textSize="@dimen/home_tv_push_article_author_textsize"
+        android:textStyle="bold"
+        android:textColor="@android:color/white"
+        android:padding="@dimen/home_tv_push_article_author_padding"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@color/home_everypush_bottom_message"
+        android:orientation="vertical">
+
+
+
+        <TextView
+            android:id="@+id/home_tv_article_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/home_tv_article_title_margin_left"
+            android:layout_marginTop="@dimen/home_tv_article_title_margin_top"
+            android:text="这是标题，这是标题"
+            android:textColor="@color/home_push_article_title"
+            android:textSize="@dimen/home_tv_article_title_textsize"/>
+
+
+        <TextView
+            android:id="@+id/home_tv_article_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/home_tv_article_desc_margin_left"
+            android:layout_marginTop="@dimen/home_tv_article_desc_margin_top"
+            android:layout_marginBottom="@dimen/home_tv_article_desc_margin_bottom"
+            android:text="这是副标题"
+            android:textSize="@dimen/home_tv_article_desc_textsize"
+            />
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
