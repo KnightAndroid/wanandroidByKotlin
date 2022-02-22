@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <RelativeLayout
+            android:id="@+id/home_rl_message"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/home_rl_message_height"
+            android:visibility="gone"
+            android:background="@color/home_rl_message"
+            >
+
+            <ImageView
+                android:id="@+id/home_iv_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/home_iv_message_margin_left"
+                android:background="@drawable/home_icon_message"/>
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignRight="@+id/home_iv_message"
+                android:layout_marginTop="@dimen/home_red_round_margin_top"
+                android:background="@drawable/base_red_round"/>
+
+
+            <TextView
+                android:id="@+id/home_tv_unread_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/home_tv_unread_message_margin_left"
+                android:layout_toRightOf="@id/home_iv_message"
+                android:textColor="@color/home_tv_unread_message"
+                android:textSize="@dimen/home_tv_unread_message_text_size"/>
+
+           
+
+            
+        </RelativeLayout>
+        
+        <com.yanzhenjie.recyclerview.SwipeRecyclerView
+            android:id="@+id/home_top_article_rv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/home_top_article_rv"/>
+        
+        <com.youth.banner.Banner
+            android:id="@+id/home_banner"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/home_banner_height"
+            android:layout_marginTop="@dimen/home_banner_margin_top"/>
+
+
+        <com.yanzhenjie.recyclerview.SwipeRecyclerView
+            android:id="@+id/home_rv_official_account"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/home_rv_official_account"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/home_rv_bottom_line_height"
+            android:background="@color/home_rv_official_bottom_view"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -76,7 +76,10 @@ object Dependencies {
        const val LoadSir = "1.3.8"                         // 全局视图加载
        const val Cookie = "v1.0.0"                         // Cookie管理
        const val Glide = "4.11.0"                          // Glide图像版本
-
+       const val SmartRefresh = "2.0.3"                    // 智能刷新库
+       const val BaseAdapter = "3.0.4"                     // Base适配器
+       const val RecycleviewVersion = "1.3.2"              // recycleview
+       const val BannerVersion = "2.2.2"                   // Banner
        //其他相关------------------------------------------------------
        const val Aspectj = "1.9.7"                         // aop相关
     }
@@ -207,6 +210,20 @@ object Dependencies {
         const val Cookie = "com.github.franmontiel:PersistentCookieJar:${Version.Cookie}"
         //图像加载库 https://github.com/bumptech/glide
         const val Glide = "com.github.bumptech.glide:glide:${Version.Glide}"
+        //智能刷新库 核心依赖 https://github.com/scwang90/SmartRefreshLayout
+        const val SmartKernel = "com.scwang.smart:refresh-layout-kernel:${Version.SmartRefresh}"
+        //智能刷新库 经典刷新头
+        const val SmartHeader = "com.scwang.smart:refresh-header-classics:${Version.SmartRefresh}"
+        //智能刷新库 经典加载
+        const val SmartFooter = "com.scwang.smart:refresh-footer-classics:${Version.SmartRefresh}"
+        //智能刷新库 二级刷新头
+        const val SmartHeaderTwoLevel = "com.scwang.smart:refresh-header-two-level:${Version.SmartRefresh}"
+        //BaseAdapter https://github.com/CymChad/BaseRecyclerViewAdapterHelper
+        const val BaseAdapterHelper = "com.github.CymChad:BaseRecyclerViewAdapterHelper:${Version.BaseAdapter}"
+        //SwipeRecycleview https://github.com/yanzhenjie/SwipeRecyclerView
+        const val SwipeRecyclerView = "com.yanzhenjie.recyclerview:x:${Version.RecycleviewVersion}"
+        //Banner https://github.com/youth5201314/banner
+        const val Banner = "io.github.youth5201314:banner:${Version.BannerVersion}"
     }
 
 

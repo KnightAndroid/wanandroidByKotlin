@@ -2,6 +2,7 @@
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cv_article"
     android:layout_width="match_parent"
     android:layout_height="@dimen/home_push_article_cv_height"
     app:cardBackgroundColor="@android:color/transparent"

@@ -1,11 +1,53 @@
 package com.knight.kotlin.module_home.fragment
 
+import android.view.LayoutInflater
+import android.view.View
+import android.widget.LinearLayout
+import android.widget.RelativeLayout
+import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.alibaba.android.arouter.launcher.ARouter
+import com.google.common.reflect.TypeToken
+import com.knight.kotlin.library_aop.loginintercept.LoginCheck
+import com.knight.kotlin.library_base.entity.WebDataEntity
 import com.knight.kotlin.library_base.fragment.BaseFragment
+import com.knight.kotlin.library_base.ktx.observeLiveData
+import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.route.RouteFragment
-import com.knight.kotlin.library_base.vm.EmptyViewModel
+import com.knight.kotlin.library_base.util.CacheUtils
+import com.knight.kotlin.library_base.util.ColorUtils
+import com.knight.kotlin.library_base.util.GsonUtils
+import com.knight.kotlin.library_util.JsonUtils
+import com.knight.kotlin.library_util.SystemUtils
+import com.knight.kotlin.library_util.image.ImageLoader
+import com.knight.kotlin.library_util.toast.ToastUtils
+import com.knight.kotlin.library_widget.ktx.init
+import com.knight.kotlin.library_widget.ktx.setItemChildClickListener
+import com.knight.kotlin.library_widget.ktx.setItemClickListener
+import com.knight.kotlin.module_home.R
+import com.knight.kotlin.module_home.adapter.HomeArticleAdapter
+import com.knight.kotlin.module_home.adapter.OpenSourceAdapter
+import com.knight.kotlin.module_home.adapter.TopArticleAdapter
 import com.knight.kotlin.module_home.databinding.HomeRecommendFragmentBinding
+import com.knight.kotlin.module_home.entity.BannerBean
+import com.knight.kotlin.module_home.entity.HomeArticleListBean
+import com.knight.kotlin.module_home.entity.OpenSourceBean
+import com.knight.kotlin.module_home.entity.TopArticleBean
+import com.knight.kotlin.module_home.vm.HomeRecommendVm
+import com.scwang.smart.refresh.layout.api.RefreshHeader
+import com.scwang.smart.refresh.layout.api.RefreshLayout
+import com.scwang.smart.refresh.layout.constant.RefreshState
+import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener
+import com.scwang.smart.refresh.layout.listener.OnRefreshListener
+import com.scwang.smart.refresh.layout.simple.SimpleMultiListener
+import com.yanzhenjie.recyclerview.SwipeRecyclerView
+import com.youth.banner.Banner
+import com.youth.banner.adapter.BannerImageAdapter
+import com.youth.banner.holder.BannerImageHolder
+import com.youth.banner.indicator.CircleIndicator
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -15,19 +57,378 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 @AndroidEntryPoint
 @Route(path = RouteFragment.Home.RecommendFragment)
-class HomeRecommendFragment:BaseFragment<HomeRecommendFragmentBinding,EmptyViewModel>() {
+class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRecommendVm>(),
+    OnRefreshListener, OnLoadMoreListener {
 
-    override val mViewModel: EmptyViewModel by viewModels()
+    override val mViewModel: HomeRecommendVm by viewModels()
+
+    //开源库适配器
+    private val mOpenSourceAdapter: OpenSourceAdapter by lazy { OpenSourceAdapter(arrayListOf()) }
+
+    //置顶文章适配器
+    private val mTopArticleAdapter: TopArticleAdapter by lazy { TopArticleAdapter(arrayListOf()) }
+
+    //推荐文章适配器
+    private val mHomeArticleAdapter: HomeArticleAdapter by lazy { HomeArticleAdapter(arrayListOf()) }
+
+    //头部View
+    private val recommendHeadView: View by lazy {
+        LayoutInflater.from(requireActivity()).inflate(R.layout.home_recommend_head, null)
+    }
+
+    //信息布局
+    private lateinit var home_rl_message: RelativeLayout
+
+    //未读消息
+    private lateinit var home_tv_unread_message: TextView
+
+    //头部的尾部
+    private val topArticleFootView: View by lazy {
+        LayoutInflater.from(requireActivity()).inflate(R.layout.home_toparticle_foot, null)
+    }
+
+    //Banner布局
+    private lateinit var mBanner: Banner<BannerBean, BannerImageAdapter<BannerBean>>
+
+    //首页文章数据请求页码
+    private var currentPage = 0
+
+    //选择收藏/取消收藏的Item项
+    private var selectItem = -1
+
+    //是否打开了二楼
+    private var openTwoLevel = false
+
+
+    //头部view中的recycleview
+    private lateinit var home_top_article_rv: SwipeRecyclerView
+
     override fun setThemeColor(isDarkMode: Boolean) {
     }
 
     override fun HomeRecommendFragmentBinding.initView() {
+        bindHeadView()
+        initArticleListener()
+        initTwoLevel()
+        homeIconFab.backgroundTintList =
+            ColorUtils.createColorStateList(CacheUtils.getThemeColor(), CacheUtils.getThemeColor())
+        homeRecommendArticleBody.init(
+            LinearLayoutManager(requireActivity()),
+            mHomeArticleAdapter,
+            true
+        )
+        homeTwoLevelHeader.setEnablePullToCloseTwoLevel(false)
+        recommendRefreshLayout.setEnableLoadMore(true)
+        recommendRefreshLayout.setOnLoadMoreListener(this@HomeRecommendFragment)
+//        recommendRefreshLayout.setOnRefreshListener(this@HomeRecommendFragment)
+        recommendRefreshLayout.setOnMultiListener(object : SimpleMultiListener() {
+            override fun onHeaderMoving(
+                header: RefreshHeader?,
+                isDragging: Boolean,
+                percent: Float,
+                offset: Int,
+                headerHeight: Int,
+                maxDragHeight: Int
+            ) {
+            }
+
+            override fun onRefresh(refreshLayout: RefreshLayout) {
+                initRequestData()
+            }
+
+            override fun onStateChanged(
+                refreshLayout: RefreshLayout,
+                oldState: RefreshState,
+                newState: RefreshState
+            ) {
+                when (oldState) {
+                    RefreshState.TwoLevel -> {
+                        homeTwoLevelContent.animate().alpha(0f).setDuration(0)
+                    }
+                    RefreshState.TwoLevelReleased -> {
+                        openTwoLevel = true
+                        homeIconFab.setImageDrawable(
+                            ContextCompat.getDrawable(
+                                requireActivity(),
+                                R.drawable.base_icon_bottom
+                            )
+                        )
+                    }
+                    RefreshState.TwoLevelFinish -> {
+                        openTwoLevel = false
+                        homeIconFab.setImageDrawable(
+                            ContextCompat.getDrawable(
+                                requireActivity(),
+                                R.drawable.base_icon_up
+                            )
+                        )
+                    }
+                }
+            }
+        })
+
+        homeTwoLevelHeader.setOnTwoLevelListener {
+            homeTwoLevelContent.animate().alpha(1f).duration = 1000
+            true
+        }
+
+        homeIconFab.setOnClickListener {
+            if (openTwoLevel) {
+                homeTwoLevelHeader.finishTwoLevel()
+            } else {
+                homeRecommendArticleBody.smoothScrollToPosition(0)
+            }
+        }
+    }
+
+
+    override fun initRequestData() {
+        currentPage = 0
+        mViewModel.getTopArticle()
+        mViewModel.getBanner()
     }
 
     override fun initObserver() {
+        observeLiveData(mViewModel.topArticles, ::setTopArticle)
+        observeLiveData(mViewModel.articleList, ::setArticles)
+        observeLiveData(mViewModel.bannerList, ::setBanner)
+        observeLiveData(mViewModel.collectArticle, ::collectSucess)
+        observeLiveData(mViewModel.unCollectArticle, ::unCollectSuccess)
     }
 
-    override fun initRequestData() {
+
+    /**
+     * 初始化置顶适配器
+     * 点击事件
+     */
+    private fun initTopAdapter() {
 
     }
+
+    /**
+     *
+     * 绑定头部布局
+     */
+    private fun bindHeadView() {
+        home_rl_message = recommendHeadView.findViewById(R.id.home_rl_message)
+        home_tv_unread_message = recommendHeadView.findViewById(R.id.home_tv_unread_message)
+        home_top_article_rv = recommendHeadView.findViewById(R.id.home_top_article_rv)
+        mBanner = recommendHeadView.findViewById(R.id.home_banner)
+        home_rl_message.setOnClickListener {
+            TODO("跳转到消息界面")
+        }
+        home_top_article_rv.init(LinearLayoutManager(requireActivity()), mTopArticleAdapter)
+        topArticleFootView.findViewById<LinearLayout>(R.id.home_ll_seemorearticles)
+            .setOnClickListener {
+                //展开收缩逻辑
+            }
+
+    }
+
+    /**
+     *
+     * 初始化二楼
+     */
+    private fun initTwoLevel() {
+        mBinding.secondOpenframeRv.init(LinearLayoutManager(requireActivity()), mOpenSourceAdapter)
+        //初始化标签
+        val type = object : TypeToken<List<OpenSourceBean>>() {}.type
+        val jsonData: String = JsonUtils.getJson(requireActivity(), "opensourceproject.json")
+        val mDataList: MutableList<OpenSourceBean> = GsonUtils.getList(jsonData, type)
+        mOpenSourceAdapter.setNewInstance(mDataList)
+
+        mOpenSourceAdapter.run {
+            //子view点击事件
+            addChildClickViewIds(
+                R.id.home_opensource_abroadlink,
+                R.id.home_opensource_internallink,
+                R.id.home_iv_abroadcopy,
+                R.id.home_iv_internalcopy
+            )
+            setItemChildClickListener { adapter, view, position ->
+                when (view.id) {
+                    R.id.home_opensource_abroadlink -> {
+                        ARouter.getInstance().build(RouteActivity.Web.WebPager)
+                            .withString("webUrl", mOpenSourceAdapter.data[position].abroadlink)
+                            .withString("webTitle", mOpenSourceAdapter.data[position].name)
+                            .navigation()
+                    }
+
+                    R.id.home_opensource_internallink -> {
+                        ARouter.getInstance().build(RouteActivity.Web.WebPager)
+                            .withString("webUrl", mOpenSourceAdapter.data[position].internallink)
+                            .withString("webTitle", mOpenSourceAdapter.data[position].name)
+                            .navigation()
+                    }
+
+                    R.id.home_iv_abroadcopy -> {
+                        SystemUtils.copyContent(
+                            requireActivity(),
+                            mOpenSourceAdapter.data[position].abroadlink
+                        )
+                        ToastUtils.show(R.string.base_success_copylink)
+                    }
+                    else -> {
+                        SystemUtils.copyContent(
+                            requireActivity(),
+                            mOpenSourceAdapter.data[position].internallink
+                        )
+                        ToastUtils.show(R.string.base_success_copylink)
+                    }
+
+                }
+                //Item点击事件
+                setItemClickListener { adapter, view, position ->
+                    //跳到webview
+                    ARouter.getInstance().build(RouteActivity.Web.WebPager)
+                        .withString("webUrl", mOpenSourceAdapter.data[position].abroadlink)
+                        .withString("webTitle", mOpenSourceAdapter.data[position].name)
+                        .navigation()
+
+                }
+
+
+            }
+        }
+
+
+    }
+
+    /**
+     * 获取置顶文章数据
+     */
+    private fun setTopArticle(data: MutableList<TopArticleBean>) {
+        mTopArticleAdapter.setNewInstance(data)
+        if (data.size > 3) {
+            mTopArticleAdapter.setShowOnlyThree(true)
+        } else {
+            mTopArticleAdapter.setShowOnlyThree(false)
+        }
+
+        if (home_top_article_rv.footerCount == 0 && data.size > 3) {
+            home_top_article_rv.addFooterView(topArticleFootView)
+        }
+
+        if (mBinding.homeRecommendArticleBody.headerCount == 0) {
+            mBinding.homeRecommendArticleBody.addHeaderView(recommendHeadView)
+        }
+    }
+
+
+    private fun initArticleListener() {
+        mHomeArticleAdapter.run {
+            setItemClickListener { adapter, view, position ->
+                val mWebDataEntity = WebDataEntity(
+                    mHomeArticleAdapter.data[position - 1].link,
+                    mHomeArticleAdapter.data[position - 1].title,
+                    mHomeArticleAdapter.data[position - 1].id,
+                    mHomeArticleAdapter.data[position - 1].collect,
+                    mHomeArticleAdapter.data[position - 1].envelopePic ?: "",
+                    mHomeArticleAdapter.data[position - 1].desc ?: "",
+                    mHomeArticleAdapter.data[position - 1].chapterName ?: "",
+                    mHomeArticleAdapter.data[position - 1].author
+                        ?: mHomeArticleAdapter.data[position - 1].shareUser ?: ""
+                )
+                ARouter.getInstance().build(RouteActivity.Web.WebArticlePager)
+                    .withParcelable("webDataEntity", mWebDataEntity).navigation()
+            }
+            addChildClickViewIds(R.id.home_icon_collect)
+            setItemChildClickListener { adapter, view, position ->
+                when (view.id) {
+                    R.id.home_icon_collect -> {
+                        selectItem = position - 1
+                        collectOrunCollect(
+                            mHomeArticleAdapter.data[position - 1].collect,
+                            mHomeArticleAdapter.data[position - 1].id
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+
+    /**
+     *
+     * 设置广告数据
+     */
+    private fun setBanner(data: MutableList<BannerBean>) {
+        mBanner.setAdapter(object : BannerImageAdapter<BannerBean>(data) {
+            override fun onBindView(
+                holder: BannerImageHolder, data: BannerBean, position: Int, size: Int
+            ) {
+                ImageLoader.loadStringPhoto(
+                    this@HomeRecommendFragment,
+                    data.imagePath,
+                    holder.imageView
+                )
+            }
+
+        }).addBannerLifecycleObserver(this).indicator = CircleIndicator(activity)
+
+
+        //请求首页文章
+        mViewModel.getHomeArticle(currentPage)
+    }
+
+    /**
+     *
+     * 获取首页文章列表数据
+     */
+    private fun setArticles(data: HomeArticleListBean) {
+        currentPage = data.curPage
+        mBinding.recommendRefreshLayout.finishLoadMore()
+        mBinding.recommendRefreshLayout.finishRefresh()
+        if (currentPage > 1) {
+            mHomeArticleAdapter.addData(data.datas)
+        } else {
+            mHomeArticleAdapter.setNewInstance(data.datas)
+            if (mBinding.homeRecommendArticleBody.headerCount == 0) {
+                mBinding.homeRecommendArticleBody.addHeaderView(recommendHeadView)
+            }
+        }
+        if (data.datas.size == 0) {
+            mBinding.recommendRefreshLayout.setEnableLoadMore(false)
+        }
+    }
+
+    override fun onRefresh(refreshLayout: RefreshLayout) {
+        initRequestData()
+    }
+
+    override fun onLoadMore(refreshLayout: RefreshLayout) {
+        TODO("Not yet implemented")
+    }
+
+
+    @LoginCheck
+    private fun collectOrunCollect(collect: Boolean, articleId: Int) {
+        if (collect) {
+            mViewModel.unCollectArticle(articleId)
+        } else {
+            mViewModel.collectArticle(articleId)
+        }
+    }
+
+    /**
+     *
+     * 收藏成功
+     */
+    private fun collectSucess(data: Boolean) {
+        mHomeArticleAdapter.data[selectItem].collect = true
+        mHomeArticleAdapter.notifyItemChanged(selectItem)
+
+    }
+
+    /**
+     *
+     * 取消收藏
+     */
+    private fun unCollectSuccess(data: Boolean) {
+        mHomeArticleAdapter.data[selectItem].collect = false
+        mHomeArticleAdapter.notifyItemChanged(selectItem)
+
+    }
+
+
 }

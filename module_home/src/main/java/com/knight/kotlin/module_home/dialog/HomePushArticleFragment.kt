@@ -2,8 +2,10 @@ package com.knight.kotlin.module_home.dialog
 
 import android.os.Bundle
 import android.view.Gravity
+import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.knight.kotlin.library_aop.clickintercept.SingleClick
 import com.knight.kotlin.library_base.fragment.BaseDialogFragment
 import com.knight.kotlin.library_base.vm.EmptyViewModel
 import com.knight.kotlin.library_database.entity.EveryDayPushEntity
@@ -38,6 +40,7 @@ class HomePushArticleFragment : BaseDialogFragment<HomePusharticleDialogBinding,
     override fun HomePusharticleDialogBinding.initView() {
         mEveryDayPushEntities = arguments?.getParcelableArrayList("articles")
         initViewPager()
+        setOnClickListener(homePushArticleClose)
     }
 
 
@@ -71,5 +74,14 @@ class HomePushArticleFragment : BaseDialogFragment<HomePusharticleDialogBinding,
 
     override fun initRequestData() {
 
+    }
+
+    @SingleClick
+    override fun onClick(v: View) {
+        when(v) {
+            mBinding.homePushArticleClose -> {
+                dismiss()
+            }
+        }
     }
 }

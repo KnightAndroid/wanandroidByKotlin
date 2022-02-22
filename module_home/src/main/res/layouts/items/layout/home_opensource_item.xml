@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.knight.kotlin.module_home.adapter.OpenSourceAdapter"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/home_opensource_margin_top"
+    android:layout_marginLeft="@dimen/home_opensource_margin_left"
+    android:layout_marginRight="@dimen/home_opensource_margin_right"
+    android:layout_marginBottom="@dimen/home_opensource_margin_bottom"
+    app:cardCornerRadius="@dimen/home_opensource_cv_radius"
+    android:foreground="?android:attr/selectableItemBackground"
+    >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/home_opensource_cl_margin_bottom">
+
+        <TextView
+            android:id="@+id/home_opensource_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="@dimen/home_opensource_title_margin_top"
+            android:layout_marginLeft="@dimen/home_opensource_title_margin_left"
+            android:paddingRight="@dimen/home_opensource_title_padding_right"
+            tools:text="23232"
+            android:textColor="@color/base_color_theme"
+            android:textSize="@dimen/home_opensource_title_text_size"/>
+
+        <TextView
+            android:id="@+id/home_opensource_abroadlink_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="@id/home_opensource_title"
+            app:layout_constraintTop_toBottomOf="@id/home_opensource_title"
+            android:text="Github链接"
+            android:textColor="@color/home_opensource_abroadlink_label"
+            android:layout_marginTop="@dimen/home_opensource_abroad_label_margin_top"
+            android:textSize="@dimen/home_opensource_abroad_label_text_size"/>
+
+
+        <TextView
+            android:id="@+id/home_opensource_abroadlink"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toRightOf="@id/home_opensource_abroadlink_label"
+            app:layout_constraintTop_toBottomOf="@id/home_opensource_title"
+            tools:text="Github链接"
+            android:textColor="@color/base_color_theme"
+            android:layout_marginLeft="@dimen/home_opensource_abroad_margin_left"
+            android:layout_marginTop="@dimen/home_opensource_abroad_label_margin_top"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:maxEms="8"
+            android:textSize="@dimen/home_opensource_abroadlink_text_size"/>
+
+        <ImageView
+            android:id="@+id/home_iv_abroadcopy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/base_icon_copy"
+            app:layout_constraintLeft_toRightOf="@id/home_opensource_abroadlink"
+            app:layout_constraintTop_toTopOf="@id/home_opensource_abroadlink"
+            app:layout_constraintBottom_toBottomOf="@id/home_opensource_abroadlink"/>
+
+
+        <TextView
+            android:id="@+id/home_opensource_internallink_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="@id/home_opensource_title"
+            app:layout_constraintTop_toBottomOf="@id/home_opensource_abroadlink"
+            android:text="@string/home_opensource_internallink"
+            android:textColor="@color/home_opensource_internallink_label"
+            android:layout_marginTop="@dimen/home_opensource_internallink_label_margin_top"
+            android:textSize="@dimen/home_opensource_internallink_label_text_size"
+            />
+        <TextView
+            android:id="@+id/home_opensource_internallink"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toRightOf="@id/home_opensource_internallink_label"
+            app:layout_constraintTop_toBottomOf="@id/home_opensource_abroadlink_label"
+            android:text="@string/home_opensource_abroadlink"
+            android:textColor="@color/base_color_theme"
+            android:layout_marginLeft="@dimen/home_opensource_internallink_margin_left"
+            android:layout_marginTop="@dimen/home_opensource_internallink_margin_top"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:maxEms="8"
+            android:textSize="@dimen/home_opensource_internallink_text_size"
+            />
+
+        <ImageView
+            android:id="@+id/home_iv_internalcopy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/base_icon_copy"
+            app:layout_constraintLeft_toRightOf="@id/home_opensource_internallink"
+            app:layout_constraintTop_toTopOf="@id/home_opensource_internallink"
+            app:layout_constraintBottom_toBottomOf="@id/home_opensource_internallink"/>
+
+        <TextView
+            android:id="@+id/home_opensource_desc"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/home_opensource_internallink"
+            android:textSize="@dimen/home_opensource_desc_text_size"
+            android:layout_marginTop="@dimen/home_opensource_desc_margin_top"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:text="这是一个开源库这是一个开源库这是一个开源库这是一个开源库这是一个开源库"
+            android:layout_marginLeft="@dimen/home_opensource_desc_margin_left"
+            android:layout_marginRight="@dimen/home_opensource_desc_margin_right"
+            android:textColor="@color/home_opensource_desc"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

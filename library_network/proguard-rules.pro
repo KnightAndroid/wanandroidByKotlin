@@ -24,3 +24,4 @@
 -keep class retrofit2.** { *; }
 -keepattributes Signature
 -keepattributes Exceptions
+-keep class com.knight.kotlin.library_network.bean.BaseResponse{*;}

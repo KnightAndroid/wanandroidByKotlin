@@ -33,4 +33,12 @@
 
     <dimen name="base_error_layout_drawable_padding">20dp</dimen>
     <dimen name="base_tv_error_data_textsize">20dp</dimen>
+    <dimen name="base_red_round_width">10dp</dimen>
+    <dimen name="base_red_round_height">10dp</dimen>
+
+    <dimen name="base_new_flag_top_padding">2dp</dimen>
+    <dimen name="base_new_flag_bottom_padding">2dp</dimen>
+    <dimen name="base_new_flag_right_padding">4dp</dimen>
+    <dimen name="base_new_flag_left_padding">4dp</dimen>
+
 </resources>

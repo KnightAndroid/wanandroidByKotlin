@@ -13,7 +13,7 @@ data class WebDataEntity (
       val webUrl:String,
       val title:String,
       val articleId:Int,
-      val isCollect:Boolean,
+      var isCollect:Boolean,
       val envelopePic:String,
       val articledesc:String,
       val chapterName:String,

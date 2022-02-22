@@ -4,6 +4,8 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
 import android.widget.ImageView
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 
 /**
  * Author:Knight
@@ -30,6 +32,28 @@ class ImageLoader {
         }
 
         /**
+         *
+         * 加载项目内的资源文件
+         * @param mFragment Fragment
+         * @param resourceId 资源路径
+         * @param imageView
+         */
+        fun loadLocalPhoto(mFragment: Fragment, resourceId: Int?, imageView: ImageView) {
+            mImageLoaderProxy.loadLocalPhoto(mFragment, resourceId, imageView)
+        }
+
+        /**
+         *
+         * 加载项目内的资源文件
+         * @param mActivity FragmentActivity
+         * @param resourceId 资源路径
+         * @param imageView
+         */
+        fun loadLocalPhoto(mActivity: FragmentActivity, resourceId: Int?, imageView: ImageView) {
+            mImageLoaderProxy.loadLocalPhoto(mActivity, resourceId, imageView)
+        }
+
+        /**
          * 通过uri加载到ImageView
          *
          * @param context
@@ -38,6 +62,28 @@ class ImageLoader {
          */
         fun loadUriPhoto(context: Context, uri: Uri, imageView: ImageView) {
             mImageLoaderProxy.loadUriPhoto(context, uri, imageView)
+        }
+
+        /**
+         * 通过uri加载到ImageView
+         *
+         * @param Fragment
+         * @param uri
+         * @param imageView
+         */
+        fun loadUriPhoto(mFragment: Fragment, uri: Uri, imageView: ImageView) {
+            mImageLoaderProxy.loadUriPhoto(mFragment, uri, imageView)
+        }
+
+        /**
+         * 通过uri加载到ImageView
+         *
+         * @param FragmentActivity
+         * @param uri
+         * @param imageView
+         */
+        fun loadUriPhoto(mActivity: FragmentActivity, uri: Uri, imageView: ImageView) {
+            mImageLoaderProxy.loadUriPhoto(mActivity, uri, imageView)
         }
 
         /**
@@ -52,6 +98,29 @@ class ImageLoader {
         }
 
         /**
+         *
+         * 通过String方式加载图片到ImageView
+         * @param mFragment
+         * @param uri
+         * @param imageView
+         */
+        fun loadStringPhoto(mFragment: Fragment, uri: String, imageView: ImageView) {
+            mImageLoaderProxy.loadStringPhoto(mFragment, uri, imageView)
+        }
+
+
+        /**
+         *
+         * 通过String方式加载图片到ImageView
+         * @param mActivity
+         * @param uri
+         * @param imageView
+         */
+        fun loadStringPhoto(mActivity: FragmentActivity, uri: String, imageView: ImageView) {
+            mImageLoaderProxy.loadStringPhoto(mActivity, uri, imageView)
+        }
+
+        /**
          * 加载String方式的圆形图片
          * @param context
          * @param uri
@@ -59,6 +128,26 @@ class ImageLoader {
          */
         fun loadCirCleStringPhoto(context: Context, uri: String, imageView: ImageView) {
             mImageLoaderProxy.loadCirCleStringPhoto(context, uri, imageView)
+        }
+
+        /**
+         * 加载String方式的圆形图片
+         * @param mFragment
+         * @param uri
+         * @param imageView
+         */
+        fun loadCirCleStringPhoto(mFragment: Fragment, uri: String, imageView: ImageView) {
+            mImageLoaderProxy.loadCirCleStringPhoto(mFragment, uri, imageView)
+        }
+
+        /**
+         * 加载String方式的圆形图片
+         * @param mActivity
+         * @param uri
+         * @param imageView
+         */
+        fun loadCirCleStringPhoto(mActivity: FragmentActivity, uri: String, imageView: ImageView) {
+            mImageLoaderProxy.loadCirCleStringPhoto(mActivity, uri, imageView)
         }
 
         /**
@@ -73,6 +162,28 @@ class ImageLoader {
         }
 
         /**
+         *
+         * 加载Int方式圆形图片
+         * @param mFragment
+         * @param resourceId
+         * @param imageView
+         */
+        fun loadCircleIntLocalPhoto(mFragment: Fragment, resourceId: Int?, imageView: ImageView) {
+            mImageLoaderProxy.loadCircleIntLocalPhoto(mFragment, resourceId, imageView)
+        }
+
+        /**
+         *
+         * 加载Int方式圆形图片
+         * @param mActivity
+         * @param resourceId
+         * @param imageView
+         */
+        fun loadCircleIntLocalPhoto(mActivity: FragmentActivity, resourceId: Int?, imageView: ImageView) {
+            mImageLoaderProxy.loadCircleIntLocalPhoto(mActivity, resourceId, imageView)
+        }
+
+        /**
          * 通过gif转为bitmap加载到imageView
          *
          * @param context
@@ -81,6 +192,27 @@ class ImageLoader {
          */
         fun loadGifAsBitmap(context: Context, gifUri: Uri, imageView: ImageView) {
             mImageLoaderProxy.loadGifAsBitmap(context, gifUri, imageView)
+        }
+        /**
+         * 通过gif转为bitmap加载到imageView
+         *
+         * @param mActivity
+         * @param gifUri
+         * @param imageView
+         */
+        fun loadGifAsBitmap(mActivity: FragmentActivity, gifUri: Uri, imageView: ImageView) {
+            mImageLoaderProxy.loadGifAsBitmap(mActivity, gifUri, imageView)
+        }
+
+        /**
+         * 通过gif转为bitmap加载到imageView
+         *
+         * @param mFragment
+         * @param gifUri
+         * @param imageView
+         */
+        fun loadGifAsBitmap(mFragment: Fragment, gifUri: Uri, imageView: ImageView) {
+            mImageLoaderProxy.loadGifAsBitmap(mFragment, gifUri, imageView)
         }
 
         /**
@@ -92,6 +224,28 @@ class ImageLoader {
          */
         fun loadGif(context: Context, resourceId: Int?, imageView: ImageView) {
             mImageLoaderProxy.loadGif(context, resourceId, imageView)
+        }
+
+        /**
+         * 通过Uri方式加载gif
+         *
+         * @param mFragment
+         * @param resourceId
+         * @param imageView
+         */
+        fun loadGif(mFragment: Fragment, resourceId: Int?, imageView: ImageView) {
+            mImageLoaderProxy.loadGif(mFragment, resourceId, imageView)
+        }
+
+        /**
+         * 通过Uri方式加载gif
+         *
+         * @param context
+         * @param resourceId
+         * @param imageView
+         */
+        fun loadGif(mActivity: FragmentActivity, resourceId: Int?, imageView: ImageView) {
+            mImageLoaderProxy.loadGif(mActivity, resourceId, imageView)
         }
 
         /**
@@ -107,6 +261,36 @@ class ImageLoader {
         @Throws(Exception::class)
         fun getCacheBitmap(context: Context, uri: Uri, width: Int, height: Int): Bitmap? {
             return mImageLoaderProxy.getCacheBitmap(context, uri, width, height)
+        }
+
+        /**
+         * 获取图片加载框架中的缓存bitmap
+         *
+         * @param mActivity
+         * @param uri
+         * @param width
+         * @param height
+         * @return
+         * @throws Exception
+         */
+        @Throws(Exception::class)
+        fun getCacheBitmap(mActivity: FragmentActivity, uri: Uri, width: Int, height: Int): Bitmap? {
+            return mImageLoaderProxy.getCacheBitmap(mActivity, uri, width, height)
+        }
+
+        /**
+         * 获取图片加载框架中的缓存bitmap
+         *
+         * @param mFragment
+         * @param uri
+         * @param width
+         * @param height
+         * @return
+         * @throws Exception
+         */
+        @Throws(Exception::class)
+        fun getCacheBitmap(mFragment: Fragment, uri: Uri, width: Int, height: Int): Bitmap? {
+            return mImageLoaderProxy.getCacheBitmap(mFragment, uri, width, height)
         }
     }
 }

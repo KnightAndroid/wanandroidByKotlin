@@ -2,4 +2,5 @@
 <resources>
     <string name="base_app_name">wanandroid</string>
     <string name="base_error_data">出错了,请重新点击重试</string>
+    <string name="base_success_copylink">已成功复制链接</string>
 </resources>

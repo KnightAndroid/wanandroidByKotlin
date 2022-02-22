@@ -796,7 +796,7 @@ object JsonUtils {
      * 根据json文件读取json
      * @return
      */
-    fun getJson(context: Context, fileName: String?): String? {
+    fun getJson(context: Context, fileName: String?): String {
         val stringBuilder = StringBuilder()
         try {
             val assetManager: AssetManager = context.getAssets()

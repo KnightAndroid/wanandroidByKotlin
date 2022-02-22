@@ -16,6 +16,8 @@ dependencies {
     kapt Dependencies.JetPack.HiltAndroidx
     implementation project(path: ':library_base')
     implementation project(path: ':library_common')
+    api Dependencies.GitHub.SwipeRecyclerView
+    api Dependencies.GitHub.BaseAdapterHelper
 
 
 }

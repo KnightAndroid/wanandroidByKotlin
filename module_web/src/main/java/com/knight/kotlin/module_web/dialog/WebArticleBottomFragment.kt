@@ -56,15 +56,17 @@ class WebArticleBottomFragment constructor(
         this.articleId = articleId
         this.collect = collect
     }
-
-    fun newInstance(
-        url: String,
-        title: String,
-        articleId: Int,
-        collect: Boolean
-    ): WebArticleBottomFragment {
-        return WebArticleBottomFragment(url, title, articleId, collect)
+    companion object {
+        fun newInstance(
+            url: String,
+            title: String,
+            articleId: Int,
+            collect: Boolean
+        ): WebArticleBottomFragment {
+            return WebArticleBottomFragment(url, title, articleId, collect)
+        }
     }
+
 
 
     override fun getGravity() = Gravity.BOTTOM

@@ -9,4 +9,22 @@
      <color name="home_everypush_bottom_message">#ffffff</color>
      <color name="home_push_article_title">#333333</color>
      <color name="home_push_article_desc">#999999</color>
+     <color name="home_opensource_abroadlink_label">#333333</color>
+     <color name="home_opensource_internallink_label">#333333</color>
+     <color name="home_opensource_desc">#333333</color>
+     <color name="home_top_article_title">#333333</color>
+     <color name="home_top_article_label">#D35B5A</color>
+     <color name="home_top_article_author">#999999</color>
+     <color name="home_rl_message">#ffffff</color>
+     <color name="home_tv_unread_message">#333333</color>
+     <color name="home_top_article_rv">#ffffff</color>
+     <color name="home_rv_official_account">#ffffff</color>
+     <color name="home_rv_official_bottom_view">#EFF2F5</color>
+     <color name="home_bg_item_article">#ffffff</color>
+     <color name="home_article_author_color">#999999</color>
+     <color name="home_tv_article_superchaptername_color">#999999</color>
+     <color name="home_tv_article_title_color">#333333</color>
+     <color name="home_tv_articledesc_color">#999999</color>
+     <color name="home_item_article_bottom_color">#EFF2F5</color>
+     <color name="home_item_article_data_color">#999999</color>
 </resources>

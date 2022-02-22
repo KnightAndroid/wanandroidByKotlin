@@ -5,6 +5,7 @@
     <application>
         <activity android:name=".activity.WebActivity" />
         <activity android:name=".activity.WebPreviewPhotoActivity"/>
+        <activity android:name=".activity.WebArticleActivity"/>
 
     </application>
 

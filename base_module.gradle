@@ -116,4 +116,12 @@ dependencies {
     kapt Dependencies.JetPack.HiltApt
     kapt Dependencies.JetPack.HiltAndroidx
     kapt Dependencies.JetPack.LifecycleCompilerAPT
+
+    implementation Dependencies.GitHub.SmartKernel
+    implementation Dependencies.GitHub.SmartHeader
+    implementation Dependencies.GitHub.SmartFooter
+    implementation Dependencies.GitHub.SmartHeaderTwoLevel
+
+
+
 }

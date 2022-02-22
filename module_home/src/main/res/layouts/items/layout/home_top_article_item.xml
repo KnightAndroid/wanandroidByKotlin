@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.knight.kotlin.module_home.adapter.TopArticleAdapter"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:foreground="?android:attr/selectableItemBackground">
+
+
+    <com.knight.kotlin.library_widget.AlignTextView
+        android:id="@+id/home_tv_top_article_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/home_top_article_title_margin_top"
+        android:layout_marginLeft="@dimen/home_top_article_title_margin_left"
+        android:layout_marginRight="@dimen/home_top_article_title_margin_right"
+        tools:text="大小厂都问源码，到底有多难大小厂都问源码"
+        android:textColor="@color/home_top_article_title"
+        android:textSize="@dimen/home_top_article_title_text_size"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+
+    <TextView
+        android:id="@+id/home_topticky_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/home_top_article_label"
+        android:text="@string/home_top_sticky"
+        app:layout_constraintLeft_toLeftOf="@id/home_tv_top_article_title"
+        app:layout_constraintTop_toBottomOf="@id/home_tv_top_article_title"/>
+
+    <TextView
+        android:id="@+id/tv_top_article_author"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/home_top_article_title_margin_right"
+        tools:text="sdsdsdssd"
+        android:textColor="@color/home_top_article_author"
+        android:textSize="@dimen/home_top_article_author_text_size"
+        app:layout_constraintLeft_toRightOf="@id/home_topticky_type"
+        app:layout_constraintTop_toBottomOf="@id/home_tv_top_article_title"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

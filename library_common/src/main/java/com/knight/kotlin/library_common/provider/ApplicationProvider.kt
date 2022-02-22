@@ -17,7 +17,7 @@ class ApplicationProvider constructor(app: Application?) {
 
     companion object {
         private var instance: ApplicationProvider? = null
-        fun init(app: Application?) {
+        fun init(app: Application) {
             if (instance == null) {
                 instance = ApplicationProvider(app)
             }

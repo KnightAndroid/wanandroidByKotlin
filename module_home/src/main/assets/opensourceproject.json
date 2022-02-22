@@ -1,0 +1,104 @@
+[
+  {
+    "name" : "ARouter",
+    "desc" : " 一个用于帮助 Android App 进行组件化改造的框架 —— 支持模块间的路由、通信、解耦",
+    "abroadlink" : "https://github.com/alibaba/ARouter",
+    "internallink": "https://hub.fastgit.org/alibaba/ARouter"
+  },
+  {
+    "name" : "AndroidAutoSize",
+    "desc" : "A low-cost Android screen adaptation solution (今日头条屏幕适配方案终极版，一个极低成本的 Android 屏幕适配方案)",
+    "abroadlink" : "https://github.com/JessYanCoding/AndroidAutoSize",
+    "internallink": "https://hub.fastgit.org/JessYanCoding/AndroidAutoSize"
+  },
+  {
+    "name" : "LoadSir",
+    "desc" : "LoadSir是一个高效易用，低碳环保，扩展性良好的加载反馈页管理框架，在加载网络或其他数据时候，根据需求切换状态页面",
+    "abroadlink" : "https://github.com/KingJA/LoadSir",
+    "internallink": "https://hub.fastgit.org/KingJA/LoadSir"
+  },
+  {
+    "name" : "SmartRefreshLayout",
+    "desc" : "Android智能下拉刷新框架-SmartRefreshLayout",
+    "abroadlink" : "https://github.com/scwang90/SmartRefreshLayout",
+    "internallink": "https://hub.fastgit.org/scwang90/SmartRefreshLayout"
+  },
+  {
+    "name" : "MagicIndicator",
+    "desc" : "一个强大、可定制、易扩展的 ViewPager 指示器框架。是ViewPagerIndicator、TabLayout、PagerSlidingTabStrip的最佳替代品。支持角标",
+    "abroadlink" : "https://github.com/hackware1993/MagicIndicator",
+    "internallink": "https://hub.fastgit.org/hackware1993/MagicIndicator"
+  },
+  {
+    "name" : "FlexboxLayout",
+    "desc" : "一个强盗的聪明的排版库、UI布局",
+    "abroadlink" : "https://github.com/google/flexbox-layout",
+    "internallink": "https://hub.fastgit.org/google/flexbox-layout"
+  },
+  {
+    "name" : "EasyHttp",
+    "desc" : "Android 网络请求框架，简单易用，so easy",
+    "abroadlink" : "https://github.com/getActivity/EasyHttp",
+    "internallink": "https://hub.fastgit.org/getActivity/EasyHttp"
+  },
+  {
+    "name" : "okhttp",
+    "desc" : "一个处理网络请求的开源项目,是安卓端最火热的轻量级框架",
+    "abroadlink" : "https://github.com/square/okhttp",
+    "internallink": "https://hub.fastgit.org/square/okhttp"
+  },
+  {
+    "name" : "PersistentCookieJar",
+    "desc" : "A persistent CookieJar implementation for OkHttp 3 based on SharedPreferences.（一个自动实现用户信息cookie持久化）",
+    "abroadlink" : "https://github.com/franmontiel/PersistentCookieJar",
+    "internallink": "https://hub.fastgit.org/franmontiel/PersistentCookieJar"
+  },
+  {
+    "name" : "XXPermissions",
+    "desc" : "一个简单易用的Android 权限请求框架",
+    "abroadlink" : "https://github.com/getActivity/XXPermissions",
+    "internallink": "https://hub.fastgit.org/getActivity/XXPermissions"
+  },
+  {
+    "name" : "glide",
+    "desc" : "An image loading and caching library for Android focused on smooth scrolling（一个强大的图像加载库）",
+    "abroadlink" : "https://github.com/bumptech/glide",
+    "internallink": "https://hub.fastgit.org/bumptech/glide"
+  },
+  {
+    "name" : "MMKV",
+    "desc" : "MMKV 是基于 mmap 内存映射的 key-value 组件，底层序列化/反序列化使用 protobuf 实现，性能高，稳定性强",
+    "abroadlink" : "https://github.com/Tencent/MMKV",
+    "internallink": "https://hub.fastgit.org/Tencent/MMKV"
+  },
+  {
+    "name" : "eventbus",
+    "desc" : "Event bus for Android and Java that simplifies communication between Activities, Fragments, Threads, Services, etc. Less code, better quality.（一个Android事件发布/订阅轻量级框架,功能:通过解耦发布者和订阅者简化Android事件传递）",
+    "abroadlink" : "https://github.com/greenrobot/EventBus",
+    "internallink": "https://hub.fastgit.org/greenrobot/EventBus"
+  },
+  {
+    "name" : "BaseRecyclerViewAdapterHelper",
+    "desc" : "一个强大并且灵活的RecyclerViewAdapter",
+    "abroadlink" : "https://github.com/CymChad/BaseRecyclerViewAdapterHelper",
+    "internallink": "https://hub.fastgit.org/CymChad/BaseRecyclerViewAdapterHelper"
+  },
+  {
+    "name" : "SwipeRecyclerView",
+    "desc" : "本库是基于RecyclerView的封装，提供了Item侧滑菜单、Item滑动删除、Item长按拖拽、添加HeaderView/FooterView、加载更多、Item点击监听等基本功能。",
+    "abroadlink" : "https://github.com/yanzhenjie/SwipeRecyclerView",
+    "internallink": "https://hub.fastgit.org/yanzhenjie/SwipeRecyclerView"
+  },
+  {
+    "name" : "AgentWeb",
+    "desc" : "AgentWeb is a powerful library based on Android WebView.（AgentWeb 是一个基于的 Android WebView ，极度容易使用以及功能强大的库）",
+    "abroadlink" : "https://github.com/Justson/AgentWeb",
+    "internallink": "https://hub.fastgit.org/Justson/AgentWeb"
+  },
+  {
+    "name" : "LeakCanary",
+    "desc" : "A memory leak detection library for Android.",
+    "abroadlink" : "https://github.com/square/leakcanary",
+    "internallink": "https://hub.fastgit.org/square/leakcanary"
+  }
+]

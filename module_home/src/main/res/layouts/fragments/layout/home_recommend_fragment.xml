@@ -7,16 +7,77 @@
 
 
 
-    <TextView
-        android:id="@+id/tv_recommend"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:text="这是推荐页"
-        />
+    <FrameLayout
+        android:id="@+id/fl_recommend_root"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/fl_test"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.scwang.smart.refresh.layout.SmartRefreshLayout
+                android:id="@+id/recommend_refreshLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+                <com.scwang.smart.refresh.header.TwoLevelHeader
+                    android:id="@+id/home_twoLevelHeader"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+                    <LinearLayout
+                        android:id="@+id/home_twoLevel_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:alpha="0"
+                        android:orientation="vertical">
+
+                        <com.yanzhenjie.recyclerview.SwipeRecyclerView
+                            android:id="@+id/second_openframe_rv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/home_second_level_margin_bottom" />
+
+
+                    </LinearLayout>
+
+                    <com.scwang.smart.refresh.header.ClassicsHeader
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                </com.scwang.smart.refresh.header.TwoLevelHeader>
+
+
+                <com.yanzhenjie.recyclerview.SwipeRecyclerView
+                    android:id="@+id/home_recommend_article_body"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <com.scwang.smart.refresh.footer.ClassicsFooter
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </com.scwang.smart.refresh.layout.SmartRefreshLayout>
+
+
+
+        </RelativeLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/home_icon_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="bottom|end"
+            android:layout_marginRight="@dimen/home_icon_fab_margin_right"
+            android:layout_marginBottom="@dimen/home_icon_fab_margin_bottom"
+            android:src="@drawable/base_icon_up"/>
+
+    </FrameLayout>
 
 
 

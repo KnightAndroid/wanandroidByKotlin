@@ -8,4 +8,5 @@
     <string name="web_share_article">Share</string>
     <string name="web_collect_article">Collect</string>
     <string name="web_share_article_url">%1$s share【%2$s】：%3$s</string>
+    <string name="web_success_collect">Success collect</string>
 </resources>

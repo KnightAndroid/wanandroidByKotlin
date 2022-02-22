@@ -1,9 +1,9 @@
 package com.knight.kotlin.module_home.repo
 
 import com.knight.kotlin.library_base.repository.BaseRepository
+import com.knight.kotlin.library_common.entity.AppUpdateBean
 import com.knight.kotlin.library_network.model.responseCodeExceptionHandler
 import com.knight.kotlin.module_home.api.HomeApiService
-import com.knight.kotlin.library_common.entity.AppUpdateBean
 import com.knight.kotlin.module_home.entity.EveryDayPushArticlesBean
 import javax.inject.Inject
 
@@ -36,6 +36,9 @@ class HomeRepo @Inject constructor() : BaseRepository() {
             emit(data)
         }
     }
+
+
+
 
 
 

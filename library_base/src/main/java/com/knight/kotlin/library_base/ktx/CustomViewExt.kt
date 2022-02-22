@@ -2,6 +2,7 @@ package com.knight.kotlin.library_base.ktx
 
 import android.view.View
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import com.kingja.loadsir.core.LoadService
 import com.kingja.loadsir.core.LoadSir
 import com.knight.kotlin.library_base.R
@@ -37,4 +38,18 @@ fun LoadService<*>.setErrorText(message:String) {
         //错误信息
         view.findViewById<TextView>(R.id.tv_error_data).text = message
     }
+}
+
+
+//绑定普通的Recycelview
+fun RecyclerView.init(
+    layoutManager:RecyclerView.LayoutManager,
+    bindAdapter:RecyclerView.Adapter<*>,
+    isScroll:Boolean = true
+): RecyclerView{
+    setLayoutManager(layoutManager)
+    setHasFixedSize(true)
+    adapter = bindAdapter
+    isNestedScrollingEnabled = isScroll
+    return this
 }

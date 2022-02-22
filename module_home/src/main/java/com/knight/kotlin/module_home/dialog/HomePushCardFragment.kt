@@ -1,8 +1,12 @@
 package com.knight.kotlin.module_home.dialog
 
 import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.viewModels
+import com.alibaba.android.arouter.launcher.ARouter
+import com.knight.kotlin.library_aop.clickintercept.SingleClick
 import com.knight.kotlin.library_base.fragment.BaseFragment
+import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.vm.EmptyViewModel
 import com.knight.kotlin.library_database.entity.EveryDayPushEntity
 import com.knight.kotlin.library_util.image.ImageLoader
@@ -43,8 +47,7 @@ class HomePushCardFragment:BaseFragment<HomePushcardDialogBinding,EmptyViewModel
             //描述
             homeTvArticleDesc.text = it.articledesc
         }
-
-
+        setOnClickListener(cvArticle)
 
     }
 
@@ -54,6 +57,19 @@ class HomePushCardFragment:BaseFragment<HomePushcardDialogBinding,EmptyViewModel
 
     override fun initRequestData() {
 
+    }
+
+    @SingleClick
+    override fun onClick(v: View) {
+        when(v) {
+            mBinding.cvArticle -> {
+                ARouter.getInstance().build(RouteActivity.Web.WebPager)
+                    .withString("webUrl",mEveryDayPushEntity?.articleLink)
+                    .withString("webTitle",mEveryDayPushEntity?.articleTitle)
+                    .navigation()
+            }
+
+        }
     }
 
 }

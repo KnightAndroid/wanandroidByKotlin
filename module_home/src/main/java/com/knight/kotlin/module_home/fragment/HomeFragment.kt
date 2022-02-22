@@ -48,7 +48,6 @@ class HomeFragment : BaseFragment<HomeFragmentBinding, HomeVm>() {
 
 
     /**
-     *
      * 首页Fragment
      */
     private var mFragments = mutableListOf<Fragment>()
@@ -57,7 +56,6 @@ class HomeFragment : BaseFragment<HomeFragmentBinding, HomeVm>() {
      */
     private var knowledgeLabelList = mutableListOf<String>()
     /**
-     *
      * 获取推送文章
      */
     private lateinit var mEveryDayPushData: EveryDayPushArticlesBean
@@ -124,7 +122,7 @@ class HomeFragment : BaseFragment<HomeFragmentBinding, HomeVm>() {
      */
     private fun checkAppMessage(data: AppUpdateBean) {
         //如果本地安装包大于远端 证明本地安装的说测试包 无需更新
-        if (activity?.let { SystemUtils.getAppVersionCode(it) }!! < data.versionCode ) {
+        if (SystemUtils.getAppVersionCode(requireActivity())  < data.versionCode ) {
             if (data.versionName != activity?.let { SystemUtils.getAppVersionName(it) }) {
                 UpdateAppDialogFragment.newInstance(data).showAllowingStateLoss(
                     parentFragmentManager, "dialog_update")
@@ -173,7 +171,6 @@ class HomeFragment : BaseFragment<HomeFragmentBinding, HomeVm>() {
                    ?.request(object :OnPermissionCallback{
                        override fun onGranted(permissions: List<String>, all: Boolean) {
                            if (all) {
-
                                ScanCodeConfig.Builder()
                                    .setFragment(this@HomeFragment)
                                    .setActivity(activity)

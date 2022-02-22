@@ -7,4 +7,5 @@
     <string name="web_share_article">分享</string>
     <string name="web_collect_article">收藏</string>
     <string name="web_share_article_url">%1$s分享【%2$s】：%3$s</string>
+    <string name="web_success_collect">收藏成功</string>
 </resources>

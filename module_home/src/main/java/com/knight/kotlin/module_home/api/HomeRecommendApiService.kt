@@ -1,0 +1,57 @@
+package com.knight.kotlin.module_home.api
+
+import com.knight.kotlin.library_network.bean.BaseResponse
+import com.knight.kotlin.module_home.entity.BannerBean
+import com.knight.kotlin.module_home.entity.HomeArticleListBean
+import com.knight.kotlin.module_home.entity.TopArticleBean
+import retrofit2.http.GET
+import retrofit2.http.POST
+import retrofit2.http.Path
+
+/**
+ * Author:Knight
+ * Time:2022/2/18 10:15
+ * Description:HomeRecommendApiService
+ */
+interface HomeRecommendApiService {
+
+
+    /**
+     *
+     * 获取置顶文章
+     */
+    @GET("article/top/json")
+    suspend fun getTopArticle(): BaseResponse<MutableList<TopArticleBean>>
+
+
+    /**
+     * 获取广告数据
+     */
+    @GET("banner/json")
+    suspend fun getBanner():BaseResponse<MutableList<BannerBean>>
+
+
+    /**
+     * 获取首页文章数据
+     */
+    @GET("article/list/{page}/json?page_size=10")
+    suspend fun getHomeArticle(@Path("page") page:Int):BaseResponse<HomeArticleListBean>
+
+
+    /**
+     *
+     * 收藏文章
+     */
+    @POST("lg/collect/{collectArticleId}/json")
+    suspend fun collectArticle(@Path("collectArticleId") collectArticleId:Int):BaseResponse<Any>
+
+
+    /**
+     *
+     * 取消收藏
+     */
+    @POST("lg/uncollect_originId/{uncollectArticleId}/json")
+    suspend fun unCollectArticle(@Path("unCollectArticleId") unCollectArticleId:Int):BaseResponse<Any>
+
+
+}
