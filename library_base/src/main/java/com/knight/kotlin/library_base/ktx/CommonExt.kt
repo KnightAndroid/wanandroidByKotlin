@@ -1,6 +1,7 @@
 package com.knight.kotlin.library_base.ktx
 
 import android.view.View
+import kotlin.reflect.KClass
 
 /**
  * Author:Knight
@@ -34,3 +35,19 @@ inline fun setOnClick(view: View?, crossinline action: () -> Unit) {
         action.invoke()
     }
 }
+
+/**
+ * 扩展函数 捕获多个异常
+ *
+ *
+ */
+fun (()->Unit).catch(vararg exceptions: KClass<out Throwable>, catchBlock:(Throwable)->Unit) {
+    try {
+        this()
+    }catch (e:Throwable) {
+        if(e::class in exceptions) catchBlock(e) else throw e
+    }
+}
+
+
+
