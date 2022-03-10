@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.HomeArticlesTabActivity">
+
+
+    <ImageView
+        android:id="@+id/home_iv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/home_article_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <com.yanzhenjie.recyclerview.SwipeRecyclerView
+        android:id="@+id/home_rv_toparticles"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="@dimen/home_rv_toparticles_margin_left"
+        android:layout_marginBottom="@dimen/home_rv_toparticles_margin_bottom"/>
+
+    <ImageView
+        android:id="@+id/home_iv_circle_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/home_iv_circle_close_margin_left"
+        android:layout_marginTop="@dimen/home_iv_circle_close_margin_top"
+        android:background="@drawable/home_icon_blurclose"/>
+
+
+
+
+
+
+
+</RelativeLayout>

@@ -32,6 +32,23 @@ class HomeRecommendVm @Inject constructor(private val mRepo: HomeRecommendRepo) 
     val collectArticle = MutableLiveData<Boolean>()
     //是否取消收藏成功
     val unCollectArticle = MutableLiveData<Boolean>()
+    //获取未读消息
+    val unReadMessageNumber = MutableLiveData<Int>()
+
+
+    /**
+     *
+     * 获取未读消息
+     */
+    fun getUnreadMessage() {
+        viewModelScope.launch(Dispatchers.IO) {
+            mRepo.getUnreadMessage()
+                .catch { toast(it.message?:"") }
+                .collect {
+                    unReadMessageNumber.postValue(it)
+                }
+        }
+    }
     /**
      * 获取指置顶文章
      */

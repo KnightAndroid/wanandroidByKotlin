@@ -1,5 +1,6 @@
 package com.knight.kotlin.module_home.fragment
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
@@ -12,14 +13,17 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.google.common.reflect.TypeToken
 import com.knight.kotlin.library_aop.loginintercept.LoginCheck
-import com.knight.kotlin.library_base.entity.WebDataEntity
 import com.knight.kotlin.library_base.fragment.BaseFragment
+import com.knight.kotlin.library_base.ktx.getUser
 import com.knight.kotlin.library_base.ktx.observeLiveData
+import com.knight.kotlin.library_base.ktx.setOnClick
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.route.RouteFragment
+import com.knight.kotlin.library_base.util.ArouteUtils
 import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_base.util.ColorUtils
 import com.knight.kotlin.library_base.util.GsonUtils
+import com.knight.kotlin.library_util.BlurBuilderUtils
 import com.knight.kotlin.library_util.JsonUtils
 import com.knight.kotlin.library_util.SystemUtils
 import com.knight.kotlin.library_util.image.ImageLoader
@@ -28,6 +32,7 @@ import com.knight.kotlin.library_widget.ktx.init
 import com.knight.kotlin.library_widget.ktx.setItemChildClickListener
 import com.knight.kotlin.library_widget.ktx.setItemClickListener
 import com.knight.kotlin.module_home.R
+import com.knight.kotlin.module_home.activity.HomeArticlesTabActivity
 import com.knight.kotlin.module_home.adapter.HomeArticleAdapter
 import com.knight.kotlin.module_home.adapter.OpenSourceAdapter
 import com.knight.kotlin.module_home.adapter.TopArticleAdapter
@@ -36,6 +41,7 @@ import com.knight.kotlin.module_home.entity.BannerBean
 import com.knight.kotlin.module_home.entity.HomeArticleListBean
 import com.knight.kotlin.module_home.entity.OpenSourceBean
 import com.knight.kotlin.module_home.entity.TopArticleBean
+import com.knight.kotlin.module_home.utils.HomeAnimUtils
 import com.knight.kotlin.module_home.vm.HomeRecommendVm
 import com.scwang.smart.refresh.layout.api.RefreshHeader
 import com.scwang.smart.refresh.layout.api.RefreshLayout
@@ -99,6 +105,9 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
     //是否打开了二楼
     private var openTwoLevel = false
 
+    //置顶文章是否展开
+    private var isShowOnlythree = false
+
 
     //头部view中的recycleview
     private lateinit var home_top_article_rv: SwipeRecyclerView
@@ -108,6 +117,7 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
 
     override fun HomeRecommendFragmentBinding.initView() {
         bindHeadView()
+        initTopAdapter()
         initArticleListener()
         initTwoLevel()
         homeIconFab.backgroundTintList =
@@ -120,7 +130,6 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
         homeTwoLevelHeader.setEnablePullToCloseTwoLevel(false)
         recommendRefreshLayout.setEnableLoadMore(true)
         recommendRefreshLayout.setOnLoadMoreListener(this@HomeRecommendFragment)
-//        recommendRefreshLayout.setOnRefreshListener(this@HomeRecommendFragment)
         recommendRefreshLayout.setOnMultiListener(object : SimpleMultiListener() {
             override fun onHeaderMoving(
                 header: RefreshHeader?,
@@ -184,7 +193,13 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
 
     override fun initRequestData() {
         currentPage = 0
+        //未读信息请求
+        getUser()?.let {
+           mViewModel.getUnreadMessage()
+        }
+        //获取置顶文章
         mViewModel.getTopArticle()
+        //获取banner
         mViewModel.getBanner()
     }
 
@@ -194,6 +209,7 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
         observeLiveData(mViewModel.bannerList, ::setBanner)
         observeLiveData(mViewModel.collectArticle, ::collectSucess)
         observeLiveData(mViewModel.unCollectArticle, ::unCollectSuccess)
+        observeLiveData(mViewModel.unReadMessageNumber,::setUnreadMessage)
     }
 
 
@@ -202,7 +218,35 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
      * 点击事件
      */
     private fun initTopAdapter() {
+        mTopArticleAdapter.run {
+            setItemClickListener { adapter, view, position ->
+                ArouteUtils.startWebArticle(
+                    data[position].link,
+                    data[position].title,
+                    data[position].id,
+                    data[position].collect,
+                    data[position].envelopePic,
+                    data[position].desc,
+                    data[position].chapterName,
+                    data[position].author,
+                    data[position].shareUser
+                )
 
+            }
+
+            setOnItemLongClickListener { adapter, view, position ->
+                BlurBuilderUtils.snapShotWithoutStatusBar(requireActivity())
+                startActivity(
+                    Intent(activity, HomeArticlesTabActivity::class.java)
+                        .putParcelableArrayListExtra("toparticles", ArrayList(data))
+                )
+                activity?.overridePendingTransition(
+                    R.anim.base_scalealpha_in,
+                    R.anim.base_scalealpha_slient
+                )
+                false
+            }
+        }
     }
 
     /**
@@ -221,6 +265,12 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
         topArticleFootView.findViewById<LinearLayout>(R.id.home_ll_seemorearticles)
             .setOnClickListener {
                 //展开收缩逻辑
+                HomeAnimUtils.setArrowAnimate(
+                    mTopArticleAdapter,
+                    topArticleFootView.findViewById(R.id.home_iv_toparticlearrow),
+                    isShowOnlythree
+                )
+                isShowOnlythree = !isShowOnlythree
             }
 
     }
@@ -277,22 +327,34 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
                     }
 
                 }
-                //Item点击事件
-                setItemClickListener { adapter, view, position ->
-                    //跳到webview
-                    ARouter.getInstance().build(RouteActivity.Web.WebPager)
-                        .withString("webUrl", mOpenSourceAdapter.data[position].abroadlink)
-                        .withString("webTitle", mOpenSourceAdapter.data[position].name)
-                        .navigation()
 
-                }
 
+
+            }
+
+            //Item点击事件
+            setItemClickListener { adapter, view, position ->
+                //跳到webview
+                ARouter.getInstance().build(RouteActivity.Web.WebPager)
+                    .withString("webUrl", mOpenSourceAdapter.data[position].abroadlink)
+                    .withString("webTitle", mOpenSourceAdapter.data[position].name)
+                    .navigation()
 
             }
         }
 
 
     }
+
+    /**
+     *
+     * 处理未读消息
+     */
+    private fun setUnreadMessage(number:Int) {
+
+
+    }
+
 
     /**
      * 获取置顶文章数据
@@ -318,19 +380,17 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
     private fun initArticleListener() {
         mHomeArticleAdapter.run {
             setItemClickListener { adapter, view, position ->
-                val mWebDataEntity = WebDataEntity(
+                ArouteUtils.startWebArticle(
                     mHomeArticleAdapter.data[position - 1].link,
                     mHomeArticleAdapter.data[position - 1].title,
                     mHomeArticleAdapter.data[position - 1].id,
                     mHomeArticleAdapter.data[position - 1].collect,
-                    mHomeArticleAdapter.data[position - 1].envelopePic ?: "",
-                    mHomeArticleAdapter.data[position - 1].desc ?: "",
-                    mHomeArticleAdapter.data[position - 1].chapterName ?: "",
-                    mHomeArticleAdapter.data[position - 1].author
-                        ?: mHomeArticleAdapter.data[position - 1].shareUser ?: ""
+                    mHomeArticleAdapter.data[position - 1].envelopePic,
+                    mHomeArticleAdapter.data[position - 1].desc,
+                    mHomeArticleAdapter.data[position - 1].chapterName,
+                    mHomeArticleAdapter.data[position - 1].author,
+                    mHomeArticleAdapter.data[position - 1].shareUser
                 )
-                ARouter.getInstance().build(RouteActivity.Web.WebArticlePager)
-                    .withParcelable("webDataEntity", mWebDataEntity).navigation()
             }
             addChildClickViewIds(R.id.home_icon_collect)
             setItemChildClickListener { adapter, view, position ->
@@ -362,11 +422,22 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
                     data.imagePath,
                     holder.imageView
                 )
+                holder.imageView.setOnClick {
+                    ArouteUtils.startWebArticle(
+                        data.url,
+                        data.title,
+                        data.id,
+                        false,
+                        data.imagePath,
+                        data.desc,
+                        "banner",
+                        "张鸿洋",
+                        "张鸿洋"
+                    )
+                }
             }
 
         }).addBannerLifecycleObserver(this).indicator = CircleIndicator(activity)
-
-
         //请求首页文章
         mViewModel.getHomeArticle(currentPage)
     }
@@ -376,6 +447,7 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
      * 获取首页文章列表数据
      */
     private fun setArticles(data: HomeArticleListBean) {
+        //这里返回的页码自己+1
         currentPage = data.curPage
         mBinding.recommendRefreshLayout.finishLoadMore()
         mBinding.recommendRefreshLayout.finishRefresh()
@@ -397,7 +469,7 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
     }
 
     override fun onLoadMore(refreshLayout: RefreshLayout) {
-        TODO("Not yet implemented")
+        mViewModel.getHomeArticle(currentPage)
     }
 
 

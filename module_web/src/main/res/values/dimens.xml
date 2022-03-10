@@ -14,6 +14,12 @@
     <dimen name="web_tv_share_article_textsize">16sp</dimen>
     <dimen name="web_tv_collect_article_height">45dp</dimen>
     <dimen name="web_tv_collect_article_textsize">16sp</dimen>
-
-
+    <dimen name="web_transite_rl_height">200dp</dimen>
+    <dimen name="web_transite_iv_height">200dp</dimen>
+    <dimen name="web_transite_author_margin_left">20dp</dimen>
+    <dimen name="web_transite_author_margin_bottom">10dp</dimen>
+    <dimen name="web_transite_author_text_size">16sp</dimen>
+    <dimen name="web_transite_chaptername_margin_left">20dp</dimen>
+    <dimen name="web_transite_chaptername_margin_bottom">10dp</dimen>
+    <dimen name="web_transite_chaptername_text_size">16sp</dimen>
 </resources>

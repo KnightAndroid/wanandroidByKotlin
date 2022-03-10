@@ -20,4 +20,7 @@
     <color name="home_bg_item_article">#303030</color>
     <color name="home_tv_article_title_color">#D3D3D3</color>
     <color name="home_item_article_bottom_color">#000000</color>
+    <color name="home_toparticle_desc_color">#D3D3D3</color>
+    <color name="home_toparticle_date_color">#D3D3D3</color>
+    <color name="home_toparticle_author_color">#D3D3D3</color>
 </resources>

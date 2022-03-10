@@ -8,9 +8,8 @@ import com.knight.kotlin.library_aop.loginintercept.ILoginFilter
 import com.knight.kotlin.library_aop.loginintercept.LoginManager
 import com.knight.kotlin.library_base.BaseApp
 import com.knight.kotlin.library_base.app.ApplicationLifecycle
-import com.knight.kotlin.library_base.config.CacheKey
 import com.knight.kotlin.library_base.entity.UserInfoEntity
-import com.knight.kotlin.library_base.util.CacheUtils
+import com.knight.kotlin.library_base.ktx.getUser
 import com.knight.kotlin.library_base.util.ProcessUtil
 
 
@@ -58,15 +57,12 @@ class AopApplication: ApplicationLifecycle {
                 //没跳过登录
                 // TODO: 后面直接跳转到登录页面
                 if (!loginDefine) {
-                    Toast.makeText(application,"没有登录",Toast.LENGTH_LONG).show()
+                    Toast.makeText(application,"还没有登录,请登录后在操作",Toast.LENGTH_LONG).show()
                 }
             }
 
             override fun isLogin(applicationContext: Context?): Boolean {
-                val userInfoEntity: UserInfoEntity = CacheUtils.getDataInfo(
-                    CacheKey.USER,
-                    UserInfoEntity::class.java
-                )
+                val userInfoEntity: UserInfoEntity = getUser()
                 return userInfoEntity != null
             }
 

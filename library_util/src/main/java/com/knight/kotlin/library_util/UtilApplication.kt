@@ -76,7 +76,6 @@ class UtilApplication:ApplicationLifecycle {
      */
     private fun initARouter():String {
         //正式环境需要关闭ARouter
-        LogUtils.d("进来11111")
         if (BuildConfig.TYPE != "MASTER") {
             ARouter.openLog() //打印日志
             ARouter.openDebug() //开启调试模式(如果在InstantRun模式下运行，必须开启调试模式！线上版本需要关闭,否则有安全风险)

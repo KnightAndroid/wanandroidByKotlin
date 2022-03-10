@@ -27,4 +27,7 @@
      <color name="home_tv_articledesc_color">#999999</color>
      <color name="home_item_article_bottom_color">#EFF2F5</color>
      <color name="home_item_article_data_color">#999999</color>
+     <color name="home_toparticle_desc_color">#333333</color>
+     <color name="home_toparticle_date_color">#333333</color>
+     <color name="home_toparticle_author_color">#333333</color>
 </resources>

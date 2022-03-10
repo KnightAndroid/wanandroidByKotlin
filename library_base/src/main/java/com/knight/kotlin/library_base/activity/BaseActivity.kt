@@ -1,5 +1,7 @@
 package com.knight.kotlin.library_base.activity
 
+import android.content.Context
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -17,7 +19,9 @@ import com.knight.kotlin.library_base.loadsir.LoadCallBack
 import com.knight.kotlin.library_base.network.AutoRegisterNetListener
 import com.knight.kotlin.library_base.network.NetworkStateChangeListener
 import com.knight.kotlin.library_base.util.BindingReflex
+import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_base.util.EventBusUtils
+import com.knight.kotlin.library_base.util.LanguageFontSizeUtils
 import com.knight.kotlin.library_base.util.StatusBarUtils
 import com.knight.kotlin.library_base.util.ViewRecreateHelper
 import com.knight.kotlin.library_base.view.BaseView
@@ -46,7 +50,13 @@ abstract class BaseActivity<VB : ViewBinding,VM : BaseViewModel> : AppCompatActi
      * 全局加载视图
      */
     private lateinit var mLoadService: LoadService<Any>
+    private var fontScale:Float = 1.0f
 
+
+    override fun attachBaseContext(base: Context) {
+        fontScale = CacheUtils.getSystemFontSize()
+        super.attachBaseContext(LanguageFontSizeUtils.attachBaseContext(base, fontScale))
+    }
 
 
     override fun onCreate(savedInstanceState:Bundle?) {
@@ -169,6 +179,17 @@ abstract class BaseActivity<VB : ViewBinding,VM : BaseViewModel> : AppCompatActi
      */
     private class ActivityRecreateHelper(savedInstanceState:Bundle?=null) :
             ViewRecreateHelper(savedInstanceState)
+
+    override fun applyOverrideConfiguration(overrideConfiguration: Configuration?) {
+        // 兼容androidX在部分手机切换语言失败问题
+
+        if (overrideConfiguration != null) {
+            val uiMode = overrideConfiguration.uiMode
+            overrideConfiguration.setTo(baseContext.resources.configuration)
+            overrideConfiguration.uiMode = uiMode
+        }
+        super.applyOverrideConfiguration(overrideConfiguration)
+    }
 
     override fun onDestroy() {
         if (javaClass.isAnnotationPresent(EventBusRegister::class.java)) EventBusUtils.unRegister(this)

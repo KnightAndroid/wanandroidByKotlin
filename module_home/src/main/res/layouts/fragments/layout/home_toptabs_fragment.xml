@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.knight.kotlin.module_home.fragment.HomeTopTabsFragment">
+
+
+
+    <com.knight.kotlin.library_widget.pagetransformer.DragLayout
+        android:id="@+id/home_toparticle_drawlayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:bototmExtraIndicatorHeight="@dimen/home_draglayout_indicator_height"
+        app:bottomDragVisibleHeight="@dimen/home_draglayout_visible_height">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/home_draglayout_height"
+            android:layout_gravity="center_vertical"
+            android:alpha="0"
+            android:background="@drawable/base_round">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/home_draglayout_ll_height"
+                android:layout_gravity="bottom"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/home_toparticle_desc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/home_toparticle_desc_margin_left"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:paddingRight="@dimen/home_toparticle_desc_padding_right"
+                    android:textColor="@color/home_toparticle_desc_color"
+                    android:textSize="@dimen/home_toparticle_desc_text_size"
+                    />
+
+                <TextView
+                    android:id="@+id/home_toparticle_superchaptername"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/home_toparticle_superchaptername_margin_left"
+                    android:layout_marginTop="@dimen/home_toparticle_superchaptername_margin_top"
+                    android:background="@drawable/home_articlechapter_type"
+                    tools:text="官方"
+                    android:textColor="@color/base_color_theme"
+                    android:textSize="@dimen/home_toparticle_superchaptername_textsize"
+                    android:paddingTop="@dimen/home_toparticle_superchaptername_padding_top"
+                    android:paddingBottom="@dimen/home_toparticle_superchaptername_padding_bottom"
+                    android:paddingLeft="@dimen/home_toparticle_superchaptername_padding_left"
+                    android:paddingRight="@dimen/home_toparticle_superchaptername_padding_right"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/home_toparticle_draglayout_line_height"
+                    android:layout_marginTop="@dimen/home_toparticle_draglayout_line_margin_top"
+                    android:background="@color/base_line_color" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/home_toparticle_draglayout_rl_margin_left"
+                    android:layout_marginTop="@dimen/home_toparticle_draglayout_rl_margin_top"
+                    android:layout_marginRight="@dimen/home_toparticle_draglayout_rl_margin_right">
+
+
+                    <TextView
+                        android:id="@+id/home_toparticle_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        tools:text="2021-12-22"
+                        android:textColor="@color/home_toparticle_date_color"
+                        android:textSize="@dimen/home_toparticle_date_text_size"/>
+
+                    <ImageView
+                        android:id="@+id/home_iv_toparticle_collect"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/base_icon_nocollect" />
+
+                </RelativeLayout>
+
+
+
+
+            </LinearLayout>
+
+        </FrameLayout>
+
+        <com.knight.kotlin.library_widget.pagetransformer.AspectRatioCardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/home_aspect_cardview_margin_left"
+            android:layout_marginRight="@dimen/home_aspect_cardview_margin_right"
+            android:layout_marginBottom="@dimen/home_aspect_cardview_margin_bottom"
+            app:cardCornerRadius="@dimen/home_aspect_corner_radius"
+            app:cardElevation="@dimen/home_aspect_card_elevate"
+            app:cardMaxElevation="@dimen/home_aspect_max_card_elevate">
+
+
+            <ImageView
+                android:id="@+id/home_toparticle_iv"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/home_toparticle_iv_height"
+                android:scaleType="fitXY"/>
+
+
+            <TextView
+                android:id="@+id/home_toparticle_author"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginLeft="@dimen/home_toparticle_author_margin_left"
+                android:layout_marginBottom="@dimen/home_toparticle_author_margin_bottom"
+                android:drawableLeft="@drawable/home_icon_author"
+                android:drawablePadding="@dimen/home_toparticle_author_drawable_padding"
+                android:textColor="@color/home_toparticle_author_color"
+                android:textSize="@dimen/home_toparticle_author_text_size"
+                android:paddingTop="@dimen/home_toparticle_author_padding_top"
+                android:paddingBottom="@dimen/home_toparticle_author_padding_bottom"
+                android:paddingLeft="@dimen/home_toparticle_author_padding_left"
+                android:paddingRight="@dimen/home_toparticle_author_paddding_right"/>
+
+
+             <TextView
+                 android:id="@+id/home_tv_toparticle_title"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:layout_gravity="center"
+                 android:layout_marginLeft="@dimen/home_tv_toparticle_title_margin_left"
+                 android:layout_marginRight="@dimen/home_tv_toparticle_title_margin_right"
+                 android:textColor="@android:color/white"
+                 android:textSize="@dimen/home_tv_toparticle_title_text_size"
+                 android:textStyle="bold"/>
+
+
+
+
+        </com.knight.kotlin.library_widget.pagetransformer.AspectRatioCardView>
+
+
+
+        
+    </com.knight.kotlin.library_widget.pagetransformer.DragLayout>
+
+</FrameLayout>

@@ -17,8 +17,8 @@
             android:id="@+id/home_rl_message"
             android:layout_width="match_parent"
             android:layout_height="@dimen/home_rl_message_height"
-            android:visibility="gone"
             android:background="@color/home_rl_message"
+            android:visibility="gone"
             >
 
             <ImageView

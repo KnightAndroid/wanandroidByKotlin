@@ -16,6 +16,16 @@ object RouteActivity {
         const val MainActivity = "$MAIN/MainActivity"
     }
 
+
+    /**
+     *
+     * 首页模块
+     */
+    object Home {
+        private const val HOME = "/module_home"
+        const val HomeArticlesTabActivity = "$HOME/ArticlesTabActivity"
+    }
+
     /**
      * 闪屏模块 欢迎模块
      *
@@ -34,6 +44,7 @@ object RouteActivity {
         const val WebPager = "$WEB/WebPagerActivity"
         const val WebArticlePager = "$WEB/WebArticleActivity"
         const val WebPreviewPhotoPager = "$WEB/WebPreviewActivity"
+        const val WebTransitionPager = "$WEB/WebTransitActivity"
     }
 
 

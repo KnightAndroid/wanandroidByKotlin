@@ -40,6 +40,14 @@ interface HomeRecommendApiService {
 
     /**
      *
+     * 获取未读消息
+     */
+    @GET("message/lg/count_unread/json")
+    suspend fun getUnreadMessage():BaseResponse<Int>
+
+
+    /**
+     *
      * 收藏文章
      */
     @POST("lg/collect/{collectArticleId}/json")

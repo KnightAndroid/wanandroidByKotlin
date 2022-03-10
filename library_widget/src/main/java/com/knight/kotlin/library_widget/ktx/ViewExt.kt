@@ -2,7 +2,11 @@ package com.knight.kotlin.library_widget.ktx
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.CompositePageTransformer
+import androidx.viewpager2.widget.MarginPageTransformer
+import androidx.viewpager2.widget.ViewPager2
 import com.chad.library.adapter.base.BaseQuickAdapter
+import com.knight.kotlin.library_widget.pagetransformer.CardPagerTransfromer
 import com.yanzhenjie.recyclerview.SwipeRecyclerView
 
 /**
@@ -23,6 +27,36 @@ fun SwipeRecyclerView.init(
     adapter = bindAdapter
     isNestedScrollingEnabled = isScroll
     return this
+}
+
+
+
+fun ViewPager2.init(
+    mCompositePageTransformer: CompositePageTransformer,
+    multiWidth:Int,
+    pageMargin:Int
+):CompositePageTransformer {
+    setPageTransformer(mCompositePageTransformer)
+    mCompositePageTransformer.addTransformer(MarginPageTransformer(pageMargin))
+    val recyclerView = getChildAt(0) as RecyclerView
+    if (orientation == ViewPager2.ORIENTATION_VERTICAL) {
+        recyclerView.setPadding(
+            paddingLeft,
+            multiWidth + Math.abs(pageMargin),
+            paddingRight,
+            multiWidth + Math.abs(pageMargin)
+        )
+    } else {
+        recyclerView.setPadding(
+            multiWidth + Math.abs(pageMargin),
+            paddingTop,
+            multiWidth + Math.abs(pageMargin),
+            paddingBottom
+        )
+    }
+    recyclerView.clipToPadding = false
+    mCompositePageTransformer.addTransformer(CardPagerTransfromer(0.85f))
+    return mCompositePageTransformer
 }
 
 

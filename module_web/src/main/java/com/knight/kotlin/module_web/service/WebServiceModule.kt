@@ -22,7 +22,7 @@ class WebServiceModule {
      * Web模块的[WebApiService]依赖提供方法
      *
      * @param retrofit Retrofit
-     * @return HomeApiService
+     * @return WebApiService
      */
     @Singleton
     @Provides

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.knight.kotlin.library_widget.TransitWebCoorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/web_appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:elevation="0dp">
+
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/web_collbarlayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:titleEnabled="false">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/web_transite_rl_height">
+
+                <ImageView
+                    android:id="@+id/web_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/web_transite_iv_height"
+                    android:scaleType="centerCrop"/>
+
+                 <TextView
+                     android:id="@+id/web_article_author"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_above="@+id/web_chapterName"
+                     android:layout_marginLeft="@dimen/web_transite_author_margin_left"
+                     android:layout_marginBottom="@dimen/web_transite_author_margin_bottom"
+                     android:textColor="@android:color/white"
+                     android:textSize="@dimen/web_transite_author_text_size"
+                     android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/web_chapterName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="@dimen/web_transite_chaptername_margin_left"
+                    android:layout_marginBottom="@dimen/web_transite_chaptername_margin_bottom"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/web_transite_chaptername_text_size"
+                    android:textStyle="bold"/>
+
+            </RelativeLayout>
+
+            <include
+                android:id="@+id/web_transition_toolbar"
+                layout="@layout/base_include_toolbar"/>
+
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+
+
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/web_nestscrollview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+
+        <com.knight.kotlin.library_widget.WebContainer
+            android:id="@+id/web_transition_ll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"/>
+
+    </androidx.core.widget.NestedScrollView>
+
+</com.knight.kotlin.library_widget.TransitWebCoorLayout>

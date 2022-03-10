@@ -17,4 +17,9 @@ object Appconfig {
       * APP主题颜色
       */
      var appThemeColor = "#55aff4"
+
+     const val IMAGE_TRANSITION_NAME = "transitionImage"
+     const val TEXT_AUTHOR_NAME = "authorName"
+     const val TEXT_CHAPTERNAME_NAME = "chapterName"
+
 }

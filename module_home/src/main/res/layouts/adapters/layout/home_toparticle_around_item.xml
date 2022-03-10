@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.knight.kotlin.module_home.adapter.TopArticleAroundAdapter"
+    android:layout_width="@dimen/home_rl_top_article_around_width"
+    android:layout_height="@dimen/home_rl_top_article_around_height"
+    android:layout_centerHorizontal="true">
+    
+    
+    <RelativeLayout
+        android:id="@+id/home_rl_toparticle"
+        android:layout_width="@dimen/home_rl_top_article_width"
+        android:layout_height="@dimen/home_rl_top_article_height"
+        android:layout_centerInParent="true">
+
+        <ImageView
+            android:id="@+id/home_iv_toparticle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+
+        <TextView
+            android:id="@+id/home_tv_toparticle_author"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/home_tv_toparticle_author_text_size"
+            android:textStyle="bold"/>
+
+
+
+
+
+
+    </RelativeLayout>
+    
+    
+
+</RelativeLayout>

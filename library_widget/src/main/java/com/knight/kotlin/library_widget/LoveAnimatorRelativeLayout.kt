@@ -80,7 +80,7 @@ class LoveAnimatorRelativeLayout : RelativeLayout {
                     }
                 })
                 //回调出去
-                mOnCollectListener!!.onCollect()
+                mOnCollectListener?.onCollect()
                 return true
             }
         }

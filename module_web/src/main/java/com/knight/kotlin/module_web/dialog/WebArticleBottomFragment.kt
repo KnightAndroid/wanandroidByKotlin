@@ -6,25 +6,31 @@ import android.view.Gravity
 import android.view.View
 import androidx.fragment.app.viewModels
 import com.knight.kotlin.library_aop.clickintercept.SingleClick
+import com.knight.kotlin.library_aop.loginintercept.LoginCheck
 import com.knight.kotlin.library_base.fragment.BaseDialogFragment
-import com.knight.kotlin.library_base.vm.EmptyViewModel
+import com.knight.kotlin.library_base.ktx.observeLiveData
 import com.knight.kotlin.library_util.SystemUtils
 import com.knight.kotlin.library_util.toast
+import com.knight.kotlin.library_util.toast.ToastUtils
 import com.knight.kotlin.module_web.R
 import com.knight.kotlin.module_web.databinding.WebArticleBottomDialogBinding
+import com.knight.kotlin.module_web.vm.WebVm
+import dagger.hilt.android.AndroidEntryPoint
 
 /**
  * Author:Knight
  * Time:2022/1/13 10:29
  * Description:WebArticleBottomFragment
  */
+
+@AndroidEntryPoint
 class WebArticleBottomFragment constructor(
     articleUrl: String,
     articleTitle: String,
     articleId: Int,
     collect: Boolean
-) : BaseDialogFragment<WebArticleBottomDialogBinding, EmptyViewModel>() {
-    override val mViewModel: EmptyViewModel by viewModels()
+) : BaseDialogFragment<WebArticleBottomDialogBinding, WebVm>() {
+    override val mViewModel: WebVm by viewModels()
 
 
     /**
@@ -41,7 +47,7 @@ class WebArticleBottomFragment constructor(
      *
      * 文章id
      */
-    private var articleId: Int? = null
+    private var articleId: Int = 0
 
 
     /**
@@ -81,7 +87,7 @@ class WebArticleBottomFragment constructor(
     override fun onClick(v: View) {
         when (v) {
             mBinding.webTvCollectArticle -> {
-
+                collectArticle()
             }
 
             mBinding.webTvCopyUrl -> {
@@ -118,7 +124,22 @@ class WebArticleBottomFragment constructor(
     }
 
     override fun initObserver() {
+        observeLiveData(mViewModel.collectSucess,::collectSuccess)
+    }
 
+
+    /**
+     *
+     * 收藏成功
+     */
+    private fun collectSuccess(data:Boolean) {
+        ToastUtils.show(R.string.web_success_collect)
+        //TODO("通知刷新全局")
+    }
+
+    @LoginCheck
+    private fun collectArticle() {
+        mViewModel.collectArticle(articleId)
     }
 
     override fun initRequestData() {

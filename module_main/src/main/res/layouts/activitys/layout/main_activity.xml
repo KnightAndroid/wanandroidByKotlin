@@ -19,6 +19,7 @@
         android:layout_gravity="bottom|end"
         android:background="@color/main_bottom_color"
         app:itemTextColor="@drawable/main_bottom_color_selector"
+        app:layout_behavior="com.knight.kotlin.library_widget.BottomNavigationBehavior"
         app:menu="@menu/main_menu_main" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -5,7 +5,8 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
 import androidx.annotation.NonNull
-import java.util.*
+import java.util.Locale
+import java.util.Random
 
 
 /**
@@ -23,7 +24,7 @@ object ColorUtils {
      */
     fun getRandColorCode(): Int {
         val random = Random()
-        return 0xff000000.toInt().toChar().code or random.nextInt(0x00ffffff.toInt().toChar().code)
+        return 0xff000000.toInt() or random.nextInt(0x00ffffff)
     }
 
     /**

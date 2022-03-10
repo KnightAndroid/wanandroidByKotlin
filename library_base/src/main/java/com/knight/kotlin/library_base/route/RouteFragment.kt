@@ -16,6 +16,7 @@ object RouteFragment {
         const val HomeFragment = "$HOME/HomeFragment"
         const val RecommendFragment = "$HOME/RecommendFragment"
         const val HomeArticleFragment = "$HOME/ArticleFragment"
+        const val HomeTopArticleFragment = "$HOME/TopArticleFragment"
     }
 
     /**

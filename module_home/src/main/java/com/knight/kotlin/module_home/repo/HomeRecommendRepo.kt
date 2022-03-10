@@ -17,6 +17,18 @@ class HomeRecommendRepo @Inject constructor(): BaseRepository() {
     @Inject
     lateinit var mHomeRecommendApiService: HomeRecommendApiService
 
+
+    /**
+     * 获取未读消息
+     */
+    suspend fun getUnreadMessage() = request<Int> {
+        mHomeRecommendApiService.getUnreadMessage().run {
+            responseCodeExceptionHandler(code, msg)
+            emit(data)
+        }
+    }
+
+
     /**
      * 获取置顶文章数据
      *
