@@ -30,4 +30,5 @@
      <color name="home_toparticle_desc_color">#333333</color>
      <color name="home_toparticle_date_color">#333333</color>
      <color name="home_toparticle_author_color">#333333</color>
+     <color name="home_tv_officialaccount_name_color">#333333</color>
 </resources>

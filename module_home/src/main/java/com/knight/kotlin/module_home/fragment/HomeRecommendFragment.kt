@@ -17,12 +17,14 @@ import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.knight.kotlin.library_base.ktx.getUser
 import com.knight.kotlin.library_base.ktx.observeLiveData
 import com.knight.kotlin.library_base.ktx.setOnClick
+import com.knight.kotlin.library_base.ktx.toHtml
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.route.RouteFragment
 import com.knight.kotlin.library_base.util.ArouteUtils
 import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_base.util.ColorUtils
 import com.knight.kotlin.library_base.util.GsonUtils
+import com.knight.kotlin.library_base.util.LanguageFontSizeUtils
 import com.knight.kotlin.library_util.BlurBuilderUtils
 import com.knight.kotlin.library_util.JsonUtils
 import com.knight.kotlin.library_util.SystemUtils
@@ -34,6 +36,7 @@ import com.knight.kotlin.library_widget.ktx.setItemClickListener
 import com.knight.kotlin.module_home.R
 import com.knight.kotlin.module_home.activity.HomeArticlesTabActivity
 import com.knight.kotlin.module_home.adapter.HomeArticleAdapter
+import com.knight.kotlin.module_home.adapter.OfficialAccountAdapter
 import com.knight.kotlin.module_home.adapter.OpenSourceAdapter
 import com.knight.kotlin.module_home.adapter.TopArticleAdapter
 import com.knight.kotlin.module_home.databinding.HomeRecommendFragmentBinding
@@ -76,6 +79,9 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
 
     //推荐文章适配器
     private val mHomeArticleAdapter: HomeArticleAdapter by lazy { HomeArticleAdapter(arrayListOf()) }
+
+    //公众号适配器
+    private val mOfficialAccountAdapter:OfficialAccountAdapter by lazy {OfficialAccountAdapter(arrayListOf())}
 
     //头部View
     private val recommendHeadView: View by lazy {
@@ -351,7 +357,19 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
      * 处理未读消息
      */
     private fun setUnreadMessage(number:Int) {
+        if (number > 0) {
+            var strMsg:String = ""
+            home_rl_message.visibility = View.VISIBLE
+            if (LanguageFontSizeUtils.isChinese()) {
+                strMsg = "您有<font color=\"#EE7931\"> $number</font> 条未读消息</font>"
+            } else {
+                strMsg = "You have <font color=\"#EE7931\"> $number</font> Unread messages</font>"
+            }
 
+            home_tv_unread_message.setText(strMsg.toHtml())
+        } else {
+            home_rl_message.visibility = View.GONE
+        }
 
     }
 

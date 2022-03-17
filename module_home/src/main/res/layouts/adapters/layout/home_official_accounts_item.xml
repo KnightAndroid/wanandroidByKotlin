@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/home_official_accounts_width"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/home_official_accounts_margin_top"
+    android:layout_marginBottom="@dimen/home_official_accounts_margin_bottom"
+    tools:context="com.knight.kotlin.module_home.adapter.OfficialAccountAdapter">
+
+    <RelativeLayout
+        android:id="@+id/home_rl_head"
+        android:layout_width="@dimen/home_official_accounts_width"
+        android:layout_height="@dimen/home_official_account_head_height"
+        android:layout_centerHorizontal="true">
+
+        <ImageView
+            android:id="@+id/home_iv_official_account"
+            android:layout_width="@dimen/home_official_account_iv_head_width"
+            android:layout_height="@dimen/home_official_account_iv_head_height"
+            />
+
+        <TextView
+            android:id="@+id/tv_head_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/home_official_head_text_size"
+            android:textStyle="bold"/>
+
+
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/home_tv_officialaccount_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/home_rl_head"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/home_officialaccount_name_margin_top"
+        android:textColor="@color/home_tv_officialaccount_name_color"
+        android:textSize="@dimen/home_officialaccount_name_text_size"/>
+
+
+</RelativeLayout>

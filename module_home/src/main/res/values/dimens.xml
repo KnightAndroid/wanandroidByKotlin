@@ -133,4 +133,14 @@
      <dimen name="home_rl_top_article_width">52dp</dimen>
      <dimen name="home_rl_top_article_height">52dp</dimen>
      <dimen name="home_tv_toparticle_author_text_size">16sp</dimen>
+     <dimen name="home_official_accounts_width">94dp</dimen>
+     <dimen name="home_official_accounts_margin_top">10dp</dimen>
+     <dimen name="home_official_accounts_margin_bottom">10dp</dimen>
+     <dimen name="home_official_account_head_width">52dp</dimen>
+     <dimen name="home_official_account_head_height">52dp</dimen>
+     <dimen name="home_official_account_iv_head_width">52dp</dimen>
+     <dimen name="home_official_account_iv_head_height">52dp</dimen>
+     <dimen name="home_official_head_text_size">16sp</dimen>
+     <dimen name="home_officialaccount_name_margin_top">5dp</dimen>
+     <dimen name="home_officialaccount_name_text_size">14sp</dimen>
 </resources>
