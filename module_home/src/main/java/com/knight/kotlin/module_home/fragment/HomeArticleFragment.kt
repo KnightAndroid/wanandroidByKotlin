@@ -30,4 +30,8 @@ class HomeArticleFragment:BaseFragment<HomeArticleFragmentBinding,EmptyViewModel
     override fun initRequestData() {
     }
 
+    override fun reLoadData() {
+
+    }
+
 }

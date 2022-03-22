@@ -31,4 +31,8 @@ class NavigateFragment :BaseFragment<NavigateFragmentBinding, EmptyViewModel>() 
 
     override fun setThemeColor(isDarkMode: Boolean) {
     }
+
+    override fun reLoadData() {
+
+    }
 }

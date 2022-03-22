@@ -107,4 +107,8 @@ class DownLoadDialogFragment : BaseDialogFragment<DownloadDialogBinding,EmptyVie
 
     }
 
+    override fun reLoadData() {
+
+    }
+
 }

@@ -3,6 +3,7 @@ package com.knight.kotlin.module_home.api
 import com.knight.kotlin.library_network.bean.BaseResponse
 import com.knight.kotlin.module_home.entity.BannerBean
 import com.knight.kotlin.module_home.entity.HomeArticleListBean
+import com.knight.kotlin.library_common.entity.OfficialAccountEntity
 import com.knight.kotlin.module_home.entity.TopArticleBean
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -37,6 +38,12 @@ interface HomeRecommendApiService {
     @GET("article/list/{page}/json?page_size=10")
     suspend fun getHomeArticle(@Path("page") page:Int):BaseResponse<HomeArticleListBean>
 
+    /**
+     * 获取公众号数据
+     *
+     */
+    @GET("wxarticle/chapters/json")
+    suspend fun getOfficialAccount():BaseResponse<MutableList<OfficialAccountEntity>>
 
     /**
      *

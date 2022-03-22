@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.knight.kotlin.module_wechat.activity.WechatTabActivity">
+
+
+    <LinearLayout
+        android:id="@+id/wechat_ll_article"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/include_wechat_toolbar"
+            layout="@layout/base_include_toolbar"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/wechat_tab_rl_height"
+            android:layout_marginRight="@dimen/wechat_tab_rl_margin_right">
+
+
+            <com.knight.kotlin.library_widget.ClearEditText
+                android:id="@+id/wechat_search_et"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/wechat_tab_edittext_margin_start"
+                android:layout_marginLeft="@dimen/wechat_tab_edittext_margin_left"
+                android:background="@drawable/wechat_tab_filtrate_shape"
+                android:drawableLeft="@drawable/base_icon_search_edittext"
+                android:gravity="center_vertical"
+                android:hint="@string/wechat_search_hint"
+                android:imeOptions="actionSearch"
+                android:paddingLeft="@dimen/wechat_tab_edittext_padding_right"
+                android:paddingRight="@dimen/wechat_tab_edittext_padding_left"
+                android:singleLine="true"
+                android:textColor="@color/wechat_tab_search_et_text_color"
+                android:textColorHint="@color/wechat_tab_search_et_hint_color"
+                android:textCursorDrawable="@drawable/base_textcursorcolor"
+                android:textSize="@dimen/wechat_search_et_text_size"/>
+
+        </RelativeLayout>
+
+
+        <net.lucode.hackware.magicindicator.MagicIndicator
+            android:id="@+id/wechat_indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/wechat_tab_indicator_height"
+            android:layout_marginStart="@dimen/wechat_tab_indicator_margin_start"
+            android:theme="@style/base_AppTheme.AppBarOverlay"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:popupTheme="@style/base_AppTheme.PopupOverlay"/>
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/wechat_view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+</LinearLayout>

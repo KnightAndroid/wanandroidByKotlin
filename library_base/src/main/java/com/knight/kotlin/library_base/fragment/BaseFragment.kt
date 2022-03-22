@@ -169,12 +169,14 @@ abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel> : Fragment(), 
      * 默认加载
      */
     protected fun requestLoading(view: View) {
-        if (!::mLoadService.isLateinit) {
+        if (!::mLoadService.isInitialized) {
             mLoadService = LoadSir.getDefault().register(view, Callback.OnReloadListener {
+                mLoadService.showCallback(LoadCallBack::class.java)
+                reLoadData()
             })
         }
         mLoadService.showCallback(LoadCallBack::class.java)
-        initRequestData()
+
 
     }
 

@@ -41,4 +41,11 @@ class MainActivity : BaseActivity<MainActivityBinding,MainViewModel>() {
     override fun initObserver() {}
 
     override fun initRequestData() {}
+    override fun reLoadData() {
+
+    }
+
+    override fun setThemeColor(isDarkMode: Boolean) {
+
+    }
 }

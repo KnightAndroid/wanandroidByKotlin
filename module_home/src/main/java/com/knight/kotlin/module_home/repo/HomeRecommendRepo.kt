@@ -5,6 +5,7 @@ import com.knight.kotlin.library_network.model.responseCodeExceptionHandler
 import com.knight.kotlin.module_home.api.HomeRecommendApiService
 import com.knight.kotlin.module_home.entity.BannerBean
 import com.knight.kotlin.module_home.entity.HomeArticleListBean
+import com.knight.kotlin.library_common.entity.OfficialAccountEntity
 import com.knight.kotlin.module_home.entity.TopArticleBean
 import javax.inject.Inject
 
@@ -46,6 +47,18 @@ class HomeRecommendRepo @Inject constructor(): BaseRepository() {
      */
     suspend fun getBanner() = request<MutableList<BannerBean>> {
         mHomeRecommendApiService.getBanner().run {
+            responseCodeExceptionHandler(code,msg)
+            emit(data)
+        }
+    }
+
+
+    /**
+     * 获取公众号数据
+     *
+     */
+    suspend fun getOfficialAccount() = request<MutableList<OfficialAccountEntity>> {
+        mHomeRecommendApiService.getOfficialAccount().run {
             responseCodeExceptionHandler(code,msg)
             emit(data)
         }

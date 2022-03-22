@@ -211,4 +211,11 @@ class WebTransitionActivity:BaseActivity<WebTransitionActivityBinding,EmptyViewM
         super.onDestroy()
         mAgentWeb.webLifeCycle.onDestroy()
     }
+
+    override fun reLoadData() {
+
+    }
+
+    override fun setThemeColor(isDarkMode: Boolean) {
+    }
 }

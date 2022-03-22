@@ -18,6 +18,11 @@ dependencies {
     implementation project(path: ':library_common')
     api Dependencies.GitHub.SwipeRecyclerView
     api Dependencies.GitHub.BaseAdapterHelper
+    api Dependencies.GitHub.SmartKernel
+    api Dependencies.GitHub.SmartHeader
+    api Dependencies.GitHub.SmartFooter
+    api Dependencies.GitHub.SmartHeaderTwoLevel
+    api Dependencies.GitHub.MagicIndicator
 
 
 }

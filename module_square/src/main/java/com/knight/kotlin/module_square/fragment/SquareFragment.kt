@@ -31,4 +31,8 @@ class SquareFragment:BaseFragment<SquareFragmentBinding, EmptyViewModel>() {
 
     override fun setThemeColor(isDarkMode: Boolean) {
     }
+
+    override fun reLoadData() {
+
+    }
 }

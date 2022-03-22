@@ -95,6 +95,7 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation project(path:":module_welcome")
     implementation project(path:":module_home")
+    implementation project(path:":module_wechat")
     implementation project(path:":module_main")
     implementation project(path:":module_mine")
     implementation project(path:":module_navigate")

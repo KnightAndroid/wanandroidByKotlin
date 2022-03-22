@@ -31,4 +31,8 @@ class ProjectFragment:BaseFragment<ProjectActivityBinding, EmptyViewModel>() {
     override fun setThemeColor(isDarkMode: Boolean) {
 
     }
+
+    override fun reLoadData() {
+
+    }
 }

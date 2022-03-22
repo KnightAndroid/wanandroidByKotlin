@@ -144,4 +144,8 @@ class HomeTopTabsFragment : BaseFragment<HomeToptabsFragmentBinding, EmptyViewMo
             .withOptionsCompat(options)
             .navigation(getActivity());
     }
+
+    override fun reLoadData() {
+
+    }
 }

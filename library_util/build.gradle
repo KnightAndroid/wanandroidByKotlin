@@ -22,6 +22,6 @@ dependencies {
     kapt Dependencies.GitHub.AutoServiceAnnotations
     kapt Dependencies.GitHub.ARouteCompiler
 
-    api Dependencies.GitHub.MagicIndicator
+
 
 }

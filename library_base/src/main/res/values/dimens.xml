@@ -41,4 +41,25 @@
     <dimen name="base_new_flag_right_padding">4dp</dimen>
     <dimen name="base_new_flag_left_padding">4dp</dimen>
 
+    <dimen name="base_item_author_margin_start">16dp</dimen>
+    <dimen name="base_item_author_margin_top">16dp</dimen>
+    <dimen name="base_item_author_padding_right">8dp</dimen>
+    <dimen name="base_item_article_author_textsize">12sp</dimen>
+    <dimen name="base_item_article_chaptername_margin_right">8dp</dimen>
+    <dimen name="base_item_article_chaptername_padding_left">4dp</dimen>
+    <dimen name="base_item_article_chaptername_padding_top">2dp</dimen>
+    <dimen name="base_item_article_chaptername_padding_right">4dp</dimen>
+    <dimen name="base_item_article_chaptername_padding_bottom">2dp</dimen>
+    <dimen name="base_articlechapter_type_stroke">1dp</dimen>
+    <dimen name="base_item_article_chaptername_text_size">12sp</dimen>
+    <dimen name="base_tv_articletitle_margin_left">16dp</dimen>
+    <dimen name="base_tv_articletitle_margin_top">10dp</dimen>
+    <dimen name="base_tv_articletitle_margin_right">16dp</dimen>
+    <dimen name="base_tv_articletitle_textsize">16sp</dimen>
+    <dimen name="base_item_articledata_margin_left">16dp</dimen>
+    <dimen name="base_item_articledata_margin_top">10dp</dimen>
+    <dimen name="base_item_articledata_text_size">12sp</dimen>
+    <dimen name="base_item_bootom_height">8dp</dimen>
+    <dimen name="base_item_bootom_margin_top">16dp</dimen>
+    <dimen name="base_icon_collect_margin_right">16dp</dimen>
 </resources>

@@ -87,4 +87,8 @@ class UpdateAppDialogFragment: BaseDialogFragment<UpdateAppDialogBinding,EmptyVi
 
     override fun initRequestData() {
     }
+
+    override fun reLoadData() {
+
+    }
 }

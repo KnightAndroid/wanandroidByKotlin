@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.google.common.reflect.TypeToken
@@ -25,6 +26,7 @@ import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_base.util.ColorUtils
 import com.knight.kotlin.library_base.util.GsonUtils
 import com.knight.kotlin.library_base.util.LanguageFontSizeUtils
+import com.knight.kotlin.library_common.entity.OfficialAccountEntity
 import com.knight.kotlin.library_util.BlurBuilderUtils
 import com.knight.kotlin.library_util.JsonUtils
 import com.knight.kotlin.library_util.SystemUtils
@@ -40,10 +42,7 @@ import com.knight.kotlin.module_home.adapter.OfficialAccountAdapter
 import com.knight.kotlin.module_home.adapter.OpenSourceAdapter
 import com.knight.kotlin.module_home.adapter.TopArticleAdapter
 import com.knight.kotlin.module_home.databinding.HomeRecommendFragmentBinding
-import com.knight.kotlin.module_home.entity.BannerBean
-import com.knight.kotlin.module_home.entity.HomeArticleListBean
-import com.knight.kotlin.module_home.entity.OpenSourceBean
-import com.knight.kotlin.module_home.entity.TopArticleBean
+import com.knight.kotlin.module_home.entity.*
 import com.knight.kotlin.module_home.utils.HomeAnimUtils
 import com.knight.kotlin.module_home.vm.HomeRecommendVm
 import com.scwang.smart.refresh.layout.api.RefreshHeader
@@ -94,6 +93,9 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
     //未读消息
     private lateinit var home_tv_unread_message: TextView
 
+    //公众号列表
+    private lateinit var home_rv_official_account:SwipeRecyclerView
+
     //头部的尾部
     private val topArticleFootView: View by lazy {
         LayoutInflater.from(requireActivity()).inflate(R.layout.home_toparticle_foot, null)
@@ -124,6 +126,7 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
     override fun HomeRecommendFragmentBinding.initView() {
         bindHeadView()
         initTopAdapter()
+        initOfficialListener()
         initArticleListener()
         initTwoLevel()
         homeIconFab.backgroundTintList =
@@ -207,6 +210,8 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
         mViewModel.getTopArticle()
         //获取banner
         mViewModel.getBanner()
+        //获取公众号
+        mViewModel.getOfficialAccount()
     }
 
     override fun initObserver() {
@@ -216,6 +221,8 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
         observeLiveData(mViewModel.collectArticle, ::collectSucess)
         observeLiveData(mViewModel.unCollectArticle, ::unCollectSuccess)
         observeLiveData(mViewModel.unReadMessageNumber,::setUnreadMessage)
+        observeLiveData(mViewModel.officialAccountList,::setOfficialAccount)
+
     }
 
 
@@ -264,6 +271,8 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
         home_tv_unread_message = recommendHeadView.findViewById(R.id.home_tv_unread_message)
         home_top_article_rv = recommendHeadView.findViewById(R.id.home_top_article_rv)
         mBanner = recommendHeadView.findViewById(R.id.home_banner)
+        home_rv_official_account = recommendHeadView.findViewById(R.id.home_rv_official_account)
+
         home_rl_message.setOnClickListener {
             TODO("跳转到消息界面")
         }
@@ -395,6 +404,36 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
     }
 
 
+    /**
+     * 设置公众号数据
+     *
+     */
+    private fun setOfficialAccount(data : MutableList<OfficialAccountEntity>) {
+        mOfficialAccountAdapter.setNewInstance(data)
+    }
+
+
+    /**
+     *
+     * 绑定公众号布局管理器
+     */
+    private fun initOfficialListener() {
+        home_rv_official_account.init(StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.HORIZONTAL),mOfficialAccountAdapter,true)
+
+        mOfficialAccountAdapter.run {
+            //Item点击事件
+            setItemClickListener {adapter, view, position ->
+                ARouter.getInstance().build(RouteActivity.Wechat.WechatTabActivity)
+                    .withParcelableArrayList("data",ArrayList(data))
+                    .withInt("position",position)
+                    .navigation()
+            }
+        }
+    }
+    /**
+     *
+     * 设置文章列表事件监听
+     */
     private fun initArticleListener() {
         mHomeArticleAdapter.run {
             setItemClickListener { adapter, view, position ->
@@ -518,6 +557,10 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
         mHomeArticleAdapter.data[selectItem].collect = false
         mHomeArticleAdapter.notifyItemChanged(selectItem)
 
+    }
+
+    override fun reLoadData() {
+        initRequestData()
     }
 
 

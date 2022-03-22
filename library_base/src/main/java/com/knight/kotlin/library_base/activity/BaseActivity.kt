@@ -50,8 +50,31 @@ abstract class BaseActivity<VB : ViewBinding,VM : BaseViewModel> : AppCompatActi
      * 全局加载视图
      */
     private lateinit var mLoadService: LoadService<Any>
+
+    /**
+     *
+     * 字体大小
+     */
     private var fontScale:Float = 1.0f
 
+    /**
+     *
+     * 主题颜色
+     */
+    protected var themeColor:Int = 0
+
+    /**
+     * 是否黑暗模式
+     *
+     */
+    protected var isDarkMode:Boolean = false
+
+
+
+    /**
+     * 设置主题颜色
+     */
+    protected abstract fun setThemeColor(isDarkMode:Boolean)
 
     override fun attachBaseContext(base: Context) {
         fontScale = CacheUtils.getSystemFontSize()
@@ -70,7 +93,10 @@ abstract class BaseActivity<VB : ViewBinding,VM : BaseViewModel> : AppCompatActi
         ARouter.getInstance().inject(this)
         //注册EventBus
         if (javaClass.isAnnotationPresent(EventBusRegister::class.java)) EventBusUtils.register(this)
+        themeColor = CacheUtils.getThemeColor()
+        isDarkMode = CacheUtils.getNormalDark()
         mBinding.initView()
+        setThemeColor(isDarkMode)
         initNetworkListener()
         initObserver()
         initRequestData()
@@ -113,10 +139,10 @@ abstract class BaseActivity<VB : ViewBinding,VM : BaseViewModel> : AppCompatActi
      * 默认加载
      */
     protected fun requestLoading(view: View) {
-        if (!::mLoadService.isLateinit) {
+        if (!::mLoadService.isInitialized) {
             mLoadService = LoadSir.getDefault().register(view, Callback.OnReloadListener {
                 mLoadService.showCallback(LoadCallBack::class.java)
-                initRequestData()
+                reLoadData()
             })
         }
 

@@ -145,4 +145,8 @@ class WebArticleBottomFragment constructor(
     override fun initRequestData() {
 
     }
+
+    override fun reLoadData() {
+
+    }
 }

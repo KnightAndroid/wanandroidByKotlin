@@ -26,6 +26,16 @@ object RouteActivity {
         const val HomeArticlesTabActivity = "$HOME/ArticlesTabActivity"
     }
 
+
+    /**
+     * 公众号模块
+     *
+     */
+    object Wechat {
+        private const val WECHAT = "/module_wechat"
+        const val WechatTabActivity = "$WECHAT/WechatTabActivity"
+    }
+
     /**
      * 闪屏模块 欢迎模块
      *

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="wechat_tab_filtrate_shape">#1f767680</color>
+    <color name="wechat_tab_search_et_text_color">#333333</color>
+    <color name="wechat_tab_search_et_hint_color">#999999</color>
+</resources>

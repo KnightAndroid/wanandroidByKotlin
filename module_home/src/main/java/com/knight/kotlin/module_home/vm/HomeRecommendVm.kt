@@ -6,6 +6,7 @@ import com.knight.kotlin.library_base.vm.BaseViewModel
 import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_home.entity.BannerBean
 import com.knight.kotlin.module_home.entity.HomeArticleListBean
+import com.knight.kotlin.library_common.entity.OfficialAccountEntity
 import com.knight.kotlin.module_home.entity.TopArticleBean
 import com.knight.kotlin.module_home.repo.HomeRecommendRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -28,6 +29,9 @@ class HomeRecommendVm @Inject constructor(private val mRepo: HomeRecommendRepo) 
     val articleList = MutableLiveData<HomeArticleListBean>()
     //广告数据
     val bannerList = MutableLiveData<MutableList<BannerBean>>()
+    //公众号
+    val officialAccountList = MutableLiveData<MutableList<OfficialAccountEntity>>()
+
     //是否收藏成功
     val collectArticle = MutableLiveData<Boolean>()
     //是否取消收藏成功
@@ -77,6 +81,22 @@ class HomeRecommendVm @Inject constructor(private val mRepo: HomeRecommendRepo) 
                 }
         }
     }
+
+    /**
+     * 获取公众号数据
+     *
+     */
+    fun getOfficialAccount() {
+        viewModelScope.launch (Dispatchers.IO){
+            mRepo.getOfficialAccount()
+                .catch { toast(it.message ?: "") }
+                .collect {
+                    officialAccountList.postValue(it)
+                }
+        }
+    }
+
+
 
     /**
      *

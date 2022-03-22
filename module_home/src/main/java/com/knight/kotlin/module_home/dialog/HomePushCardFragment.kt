@@ -72,4 +72,8 @@ class HomePushCardFragment:BaseFragment<HomePushcardDialogBinding,EmptyViewModel
         }
     }
 
+    override fun reLoadData() {
+
+    }
+
 }

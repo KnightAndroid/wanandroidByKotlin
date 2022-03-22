@@ -157,13 +157,13 @@ class WebActivity : BaseActivity<WebActivityBinding,EmptyViewModel>() {
         mAgentWeb.webLifeCycle.onDestroy()
     }
 
+    override fun reLoadData() {
 
+    }
 
+    override fun setThemeColor(isDarkMode: Boolean) {
 
-
-
-
-
+    }
 
 
 }

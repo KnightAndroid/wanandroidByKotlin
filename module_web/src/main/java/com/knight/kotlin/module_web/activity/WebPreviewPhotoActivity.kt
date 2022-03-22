@@ -43,4 +43,12 @@ class WebPreviewPhotoActivity:BaseActivity<WebPreviewphotoActivityBinding,EmptyV
 
     override fun initRequestData() {
     }
+
+    override fun reLoadData() {
+
+    }
+
+    override fun setThemeColor(isDarkMode: Boolean) {
+
+    }
 }

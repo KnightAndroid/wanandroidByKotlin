@@ -2,6 +2,7 @@ package com.knight.kotlin.module_web.api
 
 import com.knight.kotlin.library_network.bean.BaseResponse
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Path
 
 /**
@@ -16,6 +17,6 @@ interface  WebApiService {
      * 文章点赞/收藏
      *
      */
-    @GET("lg/collect/{collectArticleId}/json")
+    @POST("lg/collect/{collectArticleId}/json")
     suspend fun collectArticle(@Path("collectArticleId") collectArticleId:Int): BaseResponse<Any>
 }

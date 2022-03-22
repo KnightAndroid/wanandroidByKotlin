@@ -1,0 +1,5 @@
+<resources>
+    <string name="wechat_app_name">WechatApp</string>
+    <string name="wechat_search_hint">Please enter keyword search</string>
+    <string name="wechat_official">Official account</string>
+</resources>

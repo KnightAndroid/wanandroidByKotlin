@@ -28,6 +28,13 @@ interface BaseView<VB : ViewBinding> {
      */
     fun initRequestData()
 
+
+    /**
+     * 用于重新请求接口
+     *
+     */
+    fun reLoadData()
+
     /**
      *
      * 页面是否重建：

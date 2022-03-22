@@ -208,5 +208,9 @@ class HomeFragment : BaseFragment<HomeFragmentBinding, HomeVm>() {
         }
     }
 
+    override fun reLoadData() {
+
+    }
+
 
 }

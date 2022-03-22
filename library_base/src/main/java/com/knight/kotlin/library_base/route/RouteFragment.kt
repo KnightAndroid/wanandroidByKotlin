@@ -19,6 +19,18 @@ object RouteFragment {
         const val HomeTopArticleFragment = "$HOME/TopArticleFragment"
     }
 
+
+    /**
+     *
+     * 微信
+     *
+     */
+    object Wechat {
+        private const val WECHAT = "/module_wechat"
+        const val WechatOfficialAccountFragment = "$WECHAT/WechatOfficialAccountFragment"
+
+    }
+
     /**
      *
      * 广场

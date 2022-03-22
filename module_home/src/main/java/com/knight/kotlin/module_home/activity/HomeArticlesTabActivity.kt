@@ -137,4 +137,12 @@ class HomeArticlesTabActivity : BaseActivity<HomeArticlesTabActivityBinding, Emp
         super.finish()
         BlurBuilderUtils.recycle()
     }
+
+    override fun reLoadData() {
+
+    }
+
+    override fun setThemeColor(isDarkMode: Boolean) {
+
+    }
 }

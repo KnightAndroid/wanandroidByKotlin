@@ -79,4 +79,10 @@ class MineFragment: BaseFragment<MineFragmentBinding, MineViewModel>() {
     private fun requestUserInfoCoinError(){
         requestSuccess()
     }
+
+    override fun reLoadData() {
+        if (BaseApp.user != null) {
+            mViewModel.getUserInfoCoin()
+        }
+    }
 }

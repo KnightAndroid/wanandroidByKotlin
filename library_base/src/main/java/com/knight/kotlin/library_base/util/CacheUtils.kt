@@ -107,7 +107,7 @@ object CacheUtils {
      * @return true 深色模式 false  不是深色模式
      */
     fun getNormalDark(): Boolean {
-        return mmkv?.decodeBool(CacheKey.NORMALDARK, false)!!
+        return mmkv?.decodeBool(CacheKey.NORMALDARK, false) ?: false
     }
 
     /**

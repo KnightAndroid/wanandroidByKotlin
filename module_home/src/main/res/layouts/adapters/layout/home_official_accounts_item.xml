@@ -10,7 +10,7 @@
 
     <RelativeLayout
         android:id="@+id/home_rl_head"
-        android:layout_width="@dimen/home_official_accounts_width"
+        android:layout_width="@dimen/home_official_account_head_width"
         android:layout_height="@dimen/home_official_account_head_height"
         android:layout_centerHorizontal="true">
 

@@ -1,0 +1,5 @@
+<resources>
+    <string name="wechat_app_name">WechatApp</string>
+    <string name="wechat_search_hint">请输入关键字搜索</string>
+    <string name="wechat_official">公众号</string>
+</resources>

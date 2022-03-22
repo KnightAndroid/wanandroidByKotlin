@@ -6,6 +6,7 @@ import android.text.Html
 import android.widget.TextView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
+import com.knight.kotlin.library_base.ktx.toHtml
 import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.module_home.R
 import com.knight.kotlin.module_home.entity.HomeArticleEntity
@@ -58,13 +59,7 @@ class HomeArticleAdapter(data:MutableList<HomeArticleEntity>): BaseQuickAdapter<
             }
 
             //标题
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                holder.setText(R.id.home_tv_articletitle,Html.fromHtml(title,
-                    Html.FROM_HTML_MODE_LEGACY))
-            } else {
-                holder.setText(R.id.home_tv_articletitle,Html.fromHtml(title))
-            }
-
+            holder.setText(R.id.home_tv_articletitle,title.toHtml())
             //描述
             if (!desc.isNullOrEmpty()) {
                 holder.setVisible(R.id.home_tv_articledesc,true)

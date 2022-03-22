@@ -174,4 +174,12 @@ class WebArticleActivity :BaseActivity<WebArticleActivityBinding,WebVm>(),LoveAn
          ToastUtils.show(R.string.web_success_collect)
          //TODO("通知刷新全局")
     }
+
+    override fun reLoadData() {
+
+    }
+
+    override fun setThemeColor(isDarkMode: Boolean) {
+
+    }
 }

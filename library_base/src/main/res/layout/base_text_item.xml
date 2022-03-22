@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/base_text_item_color"
+    android:foreground="?android:attr/selectableItemBackground">
+
+    <TextView
+        android:id="@+id/base_item_article_author"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/base_item_author_margin_start"
+        android:layout_marginTop="@dimen/base_item_author_margin_top"
+        android:paddingRight="@dimen/base_item_author_padding_right"
+        android:textColor="@color/base_item_article_author_color"
+        android:textSize="@dimen/base_item_article_author_textsize"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="23232323" />
+
+    <TextView
+        android:id="@+id/base_tv_article_superchaptername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/base_item_article_chaptername_margin_right"
+        android:background="@drawable/base_article_chapter_type"
+        android:paddingLeft="@dimen/base_item_article_chaptername_padding_left"
+        android:paddingTop="@dimen/base_item_article_chaptername_padding_top"
+        android:paddingRight="@dimen/base_item_article_chaptername_padding_right"
+        android:paddingBottom="@dimen/base_item_article_chaptername_padding_bottom"
+        android:textColor="@color/base_color_theme"
+        android:textSize="@dimen/base_item_article_chaptername_text_size"
+        app:layout_constraintBottom_toBottomOf="@id/base_item_article_author"
+        app:layout_constraintLeft_toRightOf="@id/base_item_article_author"
+        app:layout_constraintTop_toTopOf="@id/base_item_article_author"
+        tools:text="xdsdsds" />
+
+
+    <TextView
+        android:id="@+id/base_tv_articletitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/base_tv_articletitle_margin_left"
+        android:layout_marginRight="@dimen/base_tv_articletitle_margin_right"
+        android:layout_marginTop="@dimen/base_tv_articletitle_margin_top"
+        tools:text="这是标题这是标题这是标题"
+        android:textSize="@dimen/base_tv_articletitle_textsize"
+        android:textColor="@color/base_tv_articletitle_color"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/base_item_article_author"/>
+
+    <TextView
+        android:id="@+id/base_item_articledata"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/base_item_articledata_margin_left"
+        android:layout_marginTop="@dimen/base_item_articledata_margin_top"
+        tools:text="一天前"
+        android:textSize="@dimen/base_item_articledata_text_size"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/base_tv_articletitle"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/base_item_bootom_height"
+        android:layout_marginTop="@dimen/base_item_bootom_margin_top"
+        android:background="@color/base_item_bottomview_color"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/base_item_articledata"/>
+
+
+    <ImageView
+        android:id="@+id/base_icon_collect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/base_icon_collect_margin_right"
+        android:background="@drawable/base_icon_nocollect"
+        app:layout_constraintBottom_toBottomOf="@id/base_item_article_author"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/base_item_article_author"/>
+
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

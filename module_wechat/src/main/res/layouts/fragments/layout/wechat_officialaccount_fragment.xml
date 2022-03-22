@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+
+
+
+    <include
+        android:id="@+id/include_wechat_articles"
+        layout="@layout/base_layout_recycleview"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/wechat_float_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/wechat_float_btn_margin_end"
+        android:layout_marginRight="@dimen/wechat_float_btn_margin_right"
+        android:layout_marginBottom="@dimen/wechat_float_btn_margin_bottom"
+        android:src="@drawable/base_icon_up"
+        app:backgroundTint="@color/base_color_theme"
+        app:layout_behavior="com.knight.kotlin.library_widget.FloatButtonBehavior"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

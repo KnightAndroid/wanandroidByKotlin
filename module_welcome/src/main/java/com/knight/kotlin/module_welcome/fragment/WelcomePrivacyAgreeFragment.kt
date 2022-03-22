@@ -106,5 +106,9 @@ class WelcomePrivacyAgreeFragment : BaseDialogFragment<WelcomePrivacyAgreeFragme
 
     }
 
+    override fun reLoadData() {
+
+    }
+
 
 }

@@ -1,0 +1,227 @@
+package com.knight.kotlin.module_wechat.fragment
+
+import android.os.Bundle
+import android.text.TextUtils
+import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.alibaba.android.arouter.facade.annotation.Route
+import com.knight.kotlin.library_aop.loginintercept.LoginCheck
+import com.knight.kotlin.library_base.fragment.BaseFragment
+import com.knight.kotlin.library_base.ktx.observeLiveData
+import com.knight.kotlin.library_base.ktx.observeLiveDataWithError
+import com.knight.kotlin.library_base.ktx.setOnClick
+import com.knight.kotlin.library_base.route.RouteFragment
+import com.knight.kotlin.library_base.util.ArouteUtils
+import com.knight.kotlin.library_base.util.CacheUtils
+import com.knight.kotlin.library_base.util.ColorUtils
+import com.knight.kotlin.library_widget.ktx.init
+import com.knight.kotlin.library_widget.ktx.setItemChildClickListener
+import com.knight.kotlin.library_widget.ktx.setItemClickListener
+import com.knight.kotlin.module_wechat.R
+import com.knight.kotlin.module_wechat.adapter.WechatArticleAdapter
+import com.knight.kotlin.module_wechat.databinding.WechatOfficialaccountFragmentBinding
+import com.knight.kotlin.module_wechat.entity.WechatArticleEntity
+import com.knight.kotlin.module_wechat.entity.WechatArticleListEntity
+import com.knight.kotlin.module_wechat.vm.WechatVm
+import com.scwang.smart.refresh.layout.api.RefreshLayout
+import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener
+import com.scwang.smart.refresh.layout.listener.OnRefreshListener
+import dagger.hilt.android.AndroidEntryPoint
+
+/**
+ *
+ * @ProjectName:    wanandroid
+ * @Package:        com.knight.kotlin.module_wechat.fragment
+ * @ClassName:      WechatArticleFragment
+ * @Description:    java类作用描述
+ * @Author:         knight
+ * @CreateDate:     2022/3/18 5:15 下午
+ * @UpdateUser:     更新者
+ * @UpdateDate:     2022/3/18 5:15 下午
+ * @UpdateRemark:   更新说明
+ * @Version:        1.0
+ */
+
+@AndroidEntryPoint
+@Route(path = RouteFragment.Wechat.WechatOfficialAccountFragment)
+class WechatOfficialAccountFragment:BaseFragment<WechatOfficialaccountFragmentBinding,WechatVm>(),OnRefreshListener,OnLoadMoreListener {
+
+    override val mViewModel: WechatVm by viewModels()
+
+    //页码
+    private var page:Int = 1
+
+    //点击哪个哪个列表
+    private var selectItemPosition = 0
+
+    //关键词
+    private var keyWords:String = ""
+
+    //微信文章列表适配器
+    private val mWechatArticleAdapter:WechatArticleAdapter by lazy {WechatArticleAdapter(arrayListOf())}
+    private var cid:Int = 0
+    companion object {
+
+        fun newInstance(cid:Int):WechatOfficialAccountFragment{
+            val wechatOfficialAccountFragment = WechatOfficialAccountFragment()
+            val args = Bundle()
+            args.putInt("cid",cid)
+            wechatOfficialAccountFragment.arguments = args
+            return wechatOfficialAccountFragment
+        }
+
+    }
+
+    override fun setThemeColor(isDarkMode: Boolean) {
+
+    }
+
+    override fun WechatOfficialaccountFragmentBinding.initView() {
+        cid = arguments?.getInt("cid") ?: 0
+        includeWechatArticles.baseFreshlayout.setOnRefreshListener(this@WechatOfficialAccountFragment)
+        includeWechatArticles.baseFreshlayout.setOnLoadMoreListener(this@WechatOfficialAccountFragment)
+        mBinding.includeWechatArticles.baseBodyRv.init(LinearLayoutManager(activity),mWechatArticleAdapter,false)
+        wechatFloatBtn.backgroundTintList = ColorUtils.createColorStateList(CacheUtils.getThemeColor(),CacheUtils.getThemeColor())
+        wechatFloatBtn.setOnClick { includeWechatArticles.baseBodyRv.smoothScrollToPosition(0) }
+        initListener()
+    }
+
+    override fun initObserver() {
+        observeLiveDataWithError(mViewModel.wechatArticle,mViewModel.requestSuccessFlag,::setWechatArticle,::setWechatArticleFailure)
+        observeLiveData(mViewModel.wechatArticleKeyword,::setWechatArticle)
+        observeLiveData(mViewModel.collectSucess,::collectSuccess)
+        observeLiveData(mViewModel.uncollectSuccess,::unCollectSuccess)
+    }
+
+    override fun initRequestData() {
+        requestLoading(mBinding.includeWechatArticles.baseFreshlayout)
+        mViewModel.getWechatArticle(cid,page)
+    }
+
+    fun initListener() {
+        mWechatArticleAdapter.run {
+            setItemClickListener { adapter, view, position ->
+                ArouteUtils.startWebArticle(
+                    data[position].link,
+                    data[position].title,
+                    data[position].id,
+                    data[position].collect,
+                    data[position].envelopePic,
+                    data[position].desc,
+                    data[position].chapterName,
+                    data[position].author,
+                    data[position].shareUser
+                )
+            }
+            addChildClickViewIds(R.id.base_icon_collect)
+            setItemChildClickListener { adapter, view, position ->
+                selectItemPosition = position
+                collectOrunCollect(data[position].collect,data[position].id)
+            }
+
+        }
+
+        //长按反馈
+    }
+
+
+
+
+
+    override fun onRefresh(refreshLayout: RefreshLayout) {
+        page = 1
+        keyWords = ""
+        mBinding.includeWechatArticles.baseFreshlayout.setEnableLoadMore(true)
+        mViewModel.getWechatArticle(cid,page)
+
+    }
+
+    //设置数据
+    fun setWechatArticle(data: WechatArticleListEntity) {
+        requestSuccess()
+        mBinding.includeWechatArticles.baseFreshlayout.finishRefresh()
+        mBinding.includeWechatArticles.baseFreshlayout.finishLoadMore()
+        if (page == 1) {
+            if (data.datas.size > 0) {
+                mWechatArticleAdapter.setNewInstance(data.datas)
+            } else {
+                requestEmptyData()
+            }
+
+        } else {
+            mWechatArticleAdapter.addData(data.datas)
+        }
+        if (data.datas.size < 10) {
+            mBinding.includeWechatArticles.baseFreshlayout.setEnableLoadMore(false)
+        } else {
+            page ++
+        }
+
+
+    }
+
+
+    /**
+     *
+     * 搜索
+     */
+    fun searchArticlesByKeyWords(keywords:String) {
+        page = 1
+        this.keyWords = keywords
+        mViewModel.getWechatArticleBykeywords(cid,page,keywords)
+        mBinding.includeWechatArticles.baseFreshlayout.setEnableLoadMore(true)
+        mBinding.includeWechatArticles.baseFreshlayout.autoRefresh()
+    }
+
+    /**
+     *
+     * 获取微信文章列表失败
+     */
+    fun setWechatArticleFailure() {
+        requestFailure()
+    }
+
+
+    /**
+     *
+     * 收藏成功
+     */
+    fun collectSuccess(data: Boolean) {
+        mWechatArticleAdapter.data[selectItemPosition].collect = true
+        mWechatArticleAdapter.notifyItemChanged(selectItemPosition)
+    }
+
+    /**
+     *
+     * 取消收藏成功
+     */
+    fun unCollectSuccess(data: Boolean) {
+        mWechatArticleAdapter.data[selectItemPosition].collect = false
+        mWechatArticleAdapter.notifyItemChanged(selectItemPosition)
+    }
+
+
+
+    override fun onLoadMore(refreshLayout: RefreshLayout) {
+        if (!TextUtils.isEmpty(keyWords)) {
+            mViewModel.getWechatArticleBykeywords(cid,page,keyWords)
+        } else {
+            mViewModel.getWechatArticle(cid,page)
+        }
+    }
+
+    override fun reLoadData() {
+        page = 1
+        mViewModel.getWechatArticle(cid,page)
+    }
+
+
+    @LoginCheck
+    private fun collectOrunCollect(collect: Boolean, articleId: Int){
+        if(collect) {
+            mViewModel.unCollectArticle(articleId)
+        } else {
+            mViewModel.collectArticle(articleId)
+        }
+    }
+}

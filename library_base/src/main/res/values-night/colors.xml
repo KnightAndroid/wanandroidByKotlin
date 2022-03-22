@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="base_text_item_color">#303030</color>
+    <color name="base_tv_articletitle_color">#D3D3D3</color>
+    <color name="base_item_bottomview_color">#000000</color>
+</resources>

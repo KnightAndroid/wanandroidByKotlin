@@ -84,4 +84,8 @@ class HomePushArticleFragment : BaseDialogFragment<HomePusharticleDialogBinding,
             }
         }
     }
+
+    override fun reLoadData() {
+
+    }
 }

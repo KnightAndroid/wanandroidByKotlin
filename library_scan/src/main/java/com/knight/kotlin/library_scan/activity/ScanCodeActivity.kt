@@ -253,4 +253,12 @@ class ScanCodeActivity:BaseActivity<ScancodeActivityBinding,EmptyViewModel>() {
         cameraExecutor?.shutdownNow()
         baseScanView?.cancelAnim()
     }
+
+    override fun reLoadData() {
+
+    }
+
+    override fun setThemeColor(isDarkMode: Boolean) {
+
+    }
 }

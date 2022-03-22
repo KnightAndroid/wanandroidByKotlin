@@ -38,6 +38,8 @@ class WelcomeActivity : BaseActivity<WelcomeActivityBinding, WelcomeVm>() {
     }
 
 
+
+
     /**
      *
      * 订阅LiveData
@@ -61,6 +63,14 @@ class WelcomeActivity : BaseActivity<WelcomeActivityBinding, WelcomeVm>() {
            CacheUtils.setThemeColor(ColorUtils.convertToColorInt(Appconfig.appThemeColor))
        }
        Appconfig.gray = data.gray
+    }
+
+    override fun reLoadData() {
+
+    }
+
+    override fun setThemeColor(isDarkMode: Boolean) {
+
     }
 
 }

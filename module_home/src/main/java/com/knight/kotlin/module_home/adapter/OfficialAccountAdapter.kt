@@ -6,7 +6,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.knight.kotlin.library_base.util.ColorUtils
 import com.knight.kotlin.module_home.R
-import com.knight.kotlin.module_home.entity.OfficialAccountEntity
+import com.knight.kotlin.library_common.entity.OfficialAccountEntity
 
 /**
  * Author:Knight
