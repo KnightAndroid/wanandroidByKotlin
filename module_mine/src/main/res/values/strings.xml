@@ -10,4 +10,19 @@
     <string name="mine_me_system_setting">设置</string>
     <string name="mine_gradle">等级&#160;</string>
     <string name="mine_rank">排名&#160;</string>
+    <string name="mine_tv_gesture_lock_more">更多</string>
+    <string name="mine_fingure_login">指纹登录</string>
+    <string name="mine_tv_quicklogin_cancel">取消</string>
+    <string name="mine_quick_gesture_login_failure">手势登录失效，请重新尝试</string>
+    <string name="mine_quick_login">快捷登录</string>
+    <string name="mine_quick_fingure_login_failure">指纹登录失效，请重新尝试</string>
+    <string name="mine_apploginname">wanandroid</string>
+    <string name="mine_account_name">账号</string>
+    <string name="mine_login_username_tip">请输入在wanandroid网站使用的账号</string>
+    <string name="mine_login_password">密码</string>
+    <string name="mine_hint_password">请输入密码</string>
+    <string name="mine_tv_login">登录</string>
+    <string name="mine_tv_register">注册</string>
+    <string name="mine_emptyusername_hint">账号不能为空</string>
+    <string name="mine_emptypassword_hint">密码不能为空</string>
 </resources>

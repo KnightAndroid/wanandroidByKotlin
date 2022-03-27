@@ -1,15 +1,20 @@
 package com.knight.kotlin.module_mine.fragment
 
+import android.content.Intent
 import android.graphics.drawable.GradientDrawable
 import android.view.View
 import androidx.fragment.app.viewModels
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.knight.kotlin.library_base.BaseApp
+import com.knight.kotlin.library_aop.clickintercept.SingleClick
 import com.knight.kotlin.library_base.fragment.BaseFragment
+import com.knight.kotlin.library_base.ktx.getUser
 import com.knight.kotlin.library_base.ktx.observeLiveDataWithError
 import com.knight.kotlin.library_base.route.RouteFragment
+import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_base.util.ColorUtils
 import com.knight.kotlin.module_mine.R
+import com.knight.kotlin.module_mine.activity.LoginActivity
+import com.knight.kotlin.module_mine.activity.QuickLoginActivity
 import com.knight.kotlin.module_mine.databinding.MineFragmentBinding
 import com.knight.kotlin.module_mine.entity.UserInfoCoinEntity
 import com.knight.kotlin.module_mine.vm.MineViewModel
@@ -25,12 +30,15 @@ import dagger.hilt.android.AndroidEntryPoint
 class MineFragment: BaseFragment<MineFragmentBinding, MineViewModel>() {
     override val mViewModel: MineViewModel by viewModels()
     override fun MineFragmentBinding.initView() {
-         BaseApp.user?.let {
+         getUser()?.let {
              mineTvUsername.text = it.username
              mineIvMessage.visibility = View.VISIBLE
          } ?: run {
              mineIvMessage.visibility = View.GONE
          }
+
+        setOnClickListener(mineTvUsername)
+
     }
 
     override fun initObserver() {
@@ -38,7 +46,7 @@ class MineFragment: BaseFragment<MineFragmentBinding, MineViewModel>() {
     }
 
     override fun initRequestData() {
-        if (BaseApp.user != null) {
+        getUser()?.let {
             requestLoading(mBinding.mineSl)
             mViewModel.getUserInfoCoin()
         }
@@ -81,8 +89,29 @@ class MineFragment: BaseFragment<MineFragmentBinding, MineViewModel>() {
     }
 
     override fun reLoadData() {
-        if (BaseApp.user != null) {
+        getUser()?.let {
             mViewModel.getUserInfoCoin()
         }
     }
+
+
+    @SingleClick
+    override fun onClick(v: View) {
+        when (v) {
+            mBinding.mineTvUsername -> {
+                if (getUser() == null) {
+                    if (CacheUtils.getGestureLogin() == true) {
+                        //如果开启手势登陆
+                        startActivity(Intent(activity,QuickLoginActivity::class.java))
+                    } else if (CacheUtils.getFingerLogin()) {
+                       // loginBlomtric()
+                    } else {
+                        startActivity(Intent(activity, LoginActivity::class.java))
+                    }
+                }
+            }
+        }
+    }
+
+
 }

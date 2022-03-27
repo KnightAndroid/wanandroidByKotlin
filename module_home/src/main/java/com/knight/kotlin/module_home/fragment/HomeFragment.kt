@@ -8,6 +8,7 @@ import androidx.fragment.app.viewModels
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.google.common.reflect.TypeToken
 import com.knight.kotlin.library_aop.clickintercept.SingleClick
+import com.knight.kotlin.library_base.event.MessageEvent
 import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.knight.kotlin.library_base.ktx.observeLiveData
 import com.knight.kotlin.library_base.route.RouteFragment
@@ -34,6 +35,8 @@ import com.knight.kotlin.module_home.dialog.HomePushArticleFragment
 import com.knight.kotlin.module_home.entity.EveryDayPushArticlesBean
 import com.knight.kotlin.module_home.vm.HomeVm
 import dagger.hilt.android.AndroidEntryPoint
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import java.lang.reflect.Type
 
 
@@ -209,6 +212,16 @@ class HomeFragment : BaseFragment<HomeFragmentBinding, HomeVm>() {
     }
 
     override fun reLoadData() {
+
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onMessageEvent(event:MessageEvent) {
+        when (event.type) {
+            MessageEvent.MessageType.LoginSuccess ->{
+                //登录成功
+            }
+        }
 
     }
 

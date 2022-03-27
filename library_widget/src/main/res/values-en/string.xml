@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="widget_min_gesture_password">At least four points are connected</string>
+    <string name="widget_gesture_password_inequality">The two gesture passwords are inconsistent</string>
+    <string name="widget_gesture_password_error">Gesture password error</string>
+    <string name="widget_gesture_password_again">Please enter the gesture password again</string>
+    <string name="widget_gesture_password_success">Successfully set gesture password</string>
+</resources>

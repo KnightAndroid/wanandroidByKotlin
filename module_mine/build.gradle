@@ -2,3 +2,8 @@ apply from: '../base_module.gradle'
 android {
     resourcePrefix "mine_"
 }
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation project(path: ':library_biometric')
+}

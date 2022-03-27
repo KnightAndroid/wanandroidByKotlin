@@ -3,6 +3,8 @@
     package="com.knight.kotlin.module_mine">
 
     <application>
+        <activity android:name=".activity.QuickLoginActivity"/>
+        <activity android:name=".activity.LoginActivity"/>
     </application>
 
 </manifest>

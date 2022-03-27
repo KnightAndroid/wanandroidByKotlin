@@ -45,11 +45,6 @@ open class BaseApp : Application() {
         @SuppressLint("StaticFieldLeak")
         lateinit var application: BaseApp
 
-        /**
-         * 用户信息
-         */
-        @SuppressLint("StaticFieldLeak")
-        var user: UserInfoEntity? = null
     }
 
 
@@ -76,7 +71,6 @@ open class BaseApp : Application() {
         //全局监听Activity 生命周期
         registerActivityLifecycleCallbacks(ActivityManagerUtils.getInstance())
         mLoadModuleProxy.onCreate(this)
-        initUser()
         //策略初始化安全第三方依赖
         initSafeSdk()
 
@@ -117,14 +111,7 @@ open class BaseApp : Application() {
         }
     }
 
-    /**
-     *
-     * 初始化用户信息
-     */
-    private fun initUser(): UserInfoEntity? {
-        user = CacheUtils.getDataInfo(CacheKey.USER, UserInfoEntity::class.java)
-        return user
-    }
+
 
 
     /**

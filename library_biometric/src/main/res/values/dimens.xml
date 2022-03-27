@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="touch_sensor_dimen">14dp</dimen>
+    <dimen name="touch_sensor_cancel_dimen">14dp</dimen>
+    <dimen name="biometric_ll_width">280dp</dimen>
+    <dimen name="biometric_iv_width">54dp</dimen>
+    <dimen name="biometric_iv_height">54dp</dimen>
+    <dimen name="biometric_iv_margin_top">20dp</dimen>
+    <dimen name="biometric_tv_fingure_status_margin_top">20dp</dimen>
+    <dimen name="biometric_tv_fingure_status_margin_bottom">10dp</dimen>
+    <dimen name="biometric_tv_cancel_padding_right">20dp</dimen>
+    <dimen name="biometric_tv_cancel_padding_left">20dp</dimen>
+    <dimen name="biometric_tv_cancel_padding_top">10dp</dimen>
+    <dimen name="biometric_tv_cancel_padding_bottom">10dp</dimen>
+</resources>

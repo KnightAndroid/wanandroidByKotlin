@@ -1,4 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <color name="mine_tv_gesture_time_color">#333333</color>
+    <color name="mine_tv_gesture_lock_more_text_color">#333333</color>
+    <color name="mine_tv_fingure_login_text_color">#333333</color>
+    <color name="mine_tv_fingure_login_cancel_text_color">#333333</color>
+    <color name="mine_cl_login_bg">#ffffff</color>
+    <color name="mine_login_tv_appname_color">#333333</color>
+    <color name="mine_tv_accountname_color">#333333</color>
+    <color name="mine_login_username_color">#333333</color>
+    <color name="mine_login_username_hint_color">#999999</color>
+    <color name="mine_mine_tv_password_color">#333333</color>
+    <color name="mine_login_password_color">#333333</color>
+    <color name="mine_mine_login_password_hint_color">#999999</color>
+    <color name="mine_tv_register_color">#999999</color>
 </resources>

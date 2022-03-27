@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/include_quick_login_toolbar"
+        layout="@layout/base_include_toolbar"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/mine_tv_gesture_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/mine_tv_gesture_time_margin_top"
+        android:textColor="@color/mine_tv_gesture_time_color"
+        android:textSize="@dimen/mine_tv_gesture_time_text_size"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/include_quick_login_toolbar"
+        android:layout_marginLeft="@dimen/mine_tv_gesture_time_margin_left"/>
+
+   <com.knight.kotlin.library_widget.GestureLockView
+       android:id="@+id/mine_gesturelock"
+       android:layout_width="match_parent"
+       android:layout_height="@dimen/mine_tv_gesturelock_height"
+       android:layout_marginStart="@dimen/mine_tv_gesturelock_margin_start"
+       android:layout_marginEnd="@dimen/mine_tv_gesturelock_margin_end"
+       android:layout_marginTop="@dimen/mine_tv_gesturelock_margin_top"
+       android:padding="0dp"
+       app:dot_color_pressed="#55aff4"
+       app:dot_pressed_radius="10dp"
+       app:dot_radius="10dp"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toBottomOf="@id/mine_tv_gesture_time"
+       app:line_width="12dp"
+       app:min_length="4"
+       app:row="3"/>
+
+    <TextView
+        android:id="@+id/tv_gesture_lock_more"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/mine_tv_gesturelock_more_margin_bottom"
+        android:text="@string/mine_tv_gesture_lock_more"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:textColor="@color/mine_tv_gesture_lock_more_text_color"
+        android:textSize="@dimen/mine_tv_gesture_lock_more_text_size"/>
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

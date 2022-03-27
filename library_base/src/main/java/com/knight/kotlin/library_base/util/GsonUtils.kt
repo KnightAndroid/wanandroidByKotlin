@@ -175,7 +175,7 @@ object GsonUtils {
      * @param obj
      * @return
      */
-    fun toJson(obj: Any?): String? {
+    fun toJson(obj: Any?): String {
         val gson: Gson = GsonBuilder().disableHtmlEscaping().create()
         return gson.toJson(obj)
     }

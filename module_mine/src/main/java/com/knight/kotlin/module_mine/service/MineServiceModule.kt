@@ -1,6 +1,8 @@
 package com.knight.kotlin.module_mine.service
 
+import com.knight.kotlin.module_mine.api.LoginApiService
 import com.knight.kotlin.module_mine.api.MineApiService
+import com.knight.kotlin.module_mine.api.QuickLoginApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,7 +20,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 class MineServiceModule {
     /**
-     * Welcome模块的[MineApiService]依赖提供方法
+     * Mine模块的[MineApiService]依赖提供方法
      *
      * @param retrofit Retrofit
      * @return MineApiService
@@ -28,4 +30,33 @@ class MineServiceModule {
     fun provideMineApiService(retrofit: Retrofit) : MineApiService {
         return retrofit.create(MineApiService::class.java)
     }
+
+    /**
+     * Mine模块的[QuickLoginApiService]依赖提供方法
+     *
+     * @param retrofit Retrofit
+     * @return QuickLoginApiService
+     */
+    @Singleton
+    @Provides
+    fun provideQuickLoginApiService(retrofit: Retrofit):QuickLoginApiService {
+        return retrofit.create(QuickLoginApiService::class.java)
+    }
+
+
+    /**
+     * Mine模块的[LoginApiService]依赖提供方法
+     *
+     * @param retrofit Retrofit
+     * @return LoginApiService
+     */
+    @Singleton
+    @Provides
+    fun provideLoginApiService(retrofit: Retrofit):LoginApiService {
+        return retrofit.create(LoginApiService::class.java)
+    }
+
+
+
+
 }

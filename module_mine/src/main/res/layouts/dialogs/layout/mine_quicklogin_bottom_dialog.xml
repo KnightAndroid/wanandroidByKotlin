@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/base_round"
+        android:orientation="vertical">
+        
+        <TextView
+            android:id="@+id/tv_fingure_login"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/mine_tv_fingure_login_height"
+            android:gravity="center"
+            android:text="@string/mine_fingure_login"
+            android:background="?attr/selectableItemBackground"
+            android:textColor="@color/mine_tv_fingure_login_text_color"
+            android:textSize="@dimen/mine_tv_fingure_login_text_size"
+            />
+        <TextView
+            android:id="@+id/tv_quicklogin_cancel"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/mine_tv_quicklogin_cancel_height"
+            android:gravity="center"
+            android:text="@string/mine_tv_quicklogin_cancel"
+            android:background="?attr/selectableItemBackground"
+            android:textColor="@color/mine_tv_fingure_login_cancel_text_color"
+            android:textSize="@dimen/mine_tv_fingure_login_cancel_text_size"/>
+
+        
+    </LinearLayout>
+
+</RelativeLayout>

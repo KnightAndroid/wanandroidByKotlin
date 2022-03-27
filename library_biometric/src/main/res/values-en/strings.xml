@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="biometric_touch_sensor">Touch the sensor to verify the fingerprint</string>
+    <string name="biometric_touch_verify_failure">Verification failed, please try again</string>
+    <string name="biometric_touch_verify_error">Please log in with your account and password</string>
+    <string name="biometric_touch_verify_finger">Verify fingerprint</string>
+    <string name="biometric_touchverify_succeeded">Verify Success</string>
+    <string name="biometric_use_password_login">Login with account and password</string>
+    <string name="biometric_not_open_touchverify">Not open temporarily</string>
+    <string name="biometric_cancel">Cancel</string>
+</resources>

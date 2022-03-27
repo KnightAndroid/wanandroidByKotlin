@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+
+    <LinearLayout
+        android:layout_width="@dimen/biometric_ll_width"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center_horizontal"
+        android:padding="10dp"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="@dimen/biometric_iv_width"
+            android:layout_height="@dimen/biometric_iv_height"
+            android:layout_marginTop="@dimen/biometric_iv_margin_top"
+            android:background="@drawable/biometric_fingerprint_ic"/>
+
+        <TextView
+            android:id="@+id/fingure_tv_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/biometric_tv_fingure_status_margin_top"
+            android:layout_marginBottom="@dimen/biometric_tv_fingure_status_margin_bottom"
+            android:text="@string/biometric_touch_sensor"
+            android:textColor="@color/biometric_touch_sensor_color"
+            android:textSize="@dimen/touch_sensor_dimen"
+            android:typeface="normal"/>
+
+        <TextView
+            android:id="@+id/fingure_tv_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="@dimen/biometric_tv_cancel_padding_right"
+            android:paddingLeft="@dimen/biometric_tv_cancel_padding_left"
+            android:paddingTop="@dimen/biometric_tv_cancel_padding_top"
+            android:paddingBottom="@dimen/biometric_tv_cancel_padding_bottom"
+            android:text="@string/biometric_cancel"
+            android:textColor="#419BF9"
+            android:textSize="@dimen/touch_sensor_cancel_dimen"/>
+
+    </LinearLayout>
+
+
+
+</RelativeLayout>

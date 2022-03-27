@@ -1,0 +1,15 @@
+import com.knight.wanandroid.buildsrc.Dependencies
+apply from:'../base_library.gradle'
+android {
+    buildFeatures {
+        viewBinding = true
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation project(path: ':library_base')
+    implementation Dependencies.JetPack.HiltCore
+    kapt Dependencies.JetPack.HiltApt
+    kapt Dependencies.JetPack.HiltAndroidx
+}

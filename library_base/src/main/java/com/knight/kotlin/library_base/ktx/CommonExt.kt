@@ -4,6 +4,7 @@ import android.content.Context
 import android.text.Html
 import android.text.Spanned
 import android.view.View
+import com.knight.kotlin.library_base.config.Appconfig
 import com.knight.kotlin.library_base.config.CacheKey
 import com.knight.kotlin.library_base.entity.UserInfoEntity
 import com.knight.kotlin.library_base.util.CacheUtils
@@ -97,8 +98,14 @@ fun String.toHtml(flag: Int = Html.FROM_HTML_MODE_LEGACY): Spanned {
 /**
  * 返回用户信息
  */
-fun getUser():UserInfoEntity {
-    return CacheUtils.getDataInfo(CacheKey.USER, UserInfoEntity::class.java)
+fun getUser():UserInfoEntity? {
+    Appconfig.user?.let {
+        return it
+    } ?: run {
+        Appconfig.user = CacheUtils.getDataInfo(CacheKey.USER, UserInfoEntity::class.java)
+        return Appconfig.user
+    }
+
 }
 
 

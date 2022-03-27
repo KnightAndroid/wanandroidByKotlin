@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/mine_cl_login_bg">
+
+
+    <include
+        android:id="@+id/mine_login_toolbar"
+        layout="@layout/base_include_toolbar"/>
+
+    <TextView
+        android:id="@+id/login_tv_appname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/mine_login_tv_appname_margin_start"
+        android:layout_marginTop="@dimen/mine_login_tv_appname_margin_top"
+        android:text="@string/mine_apploginname"
+        android:textColor="@color/mine_login_tv_appname_color"
+        android:textSize="@dimen/mine_login_tv_appname_text_size"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/mine_login_toolbar"
+        />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/mine_login_cardview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/mine_login_cardview_margin_left"
+        android:layout_marginTop="@dimen/mine_login_cardview_margin_top"
+        android:layout_marginRight="@dimen/mine_login_cardview_margin_right"
+        app:cardCornerRadius="@dimen/mine_login_cardview_corner_radius"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/login_tv_appname">
+
+        <LinearLayout
+            android:id="@+id/mine_ll_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/mine_ll_login_margin_left"
+            android:layout_marginTop="@dimen/mine_ll_login_margin_top"
+            android:layout_marginRight="@dimen/mine_ll_login_margin_right"
+            android:layout_marginBottom="@dimen/mine_ll_login_margin_bottom"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/mine_tv_accountname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/mine_account_name"
+                android:textColor="@color/mine_tv_accountname_color"
+                android:textSize="@dimen/mine_tv_accountname_text_size"
+                android:textStyle="bold"/>
+
+
+            <com.knight.kotlin.library_widget.ClearEditText
+                android:id="@+id/mine_login_username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/mine_login_username_margin_top"
+                android:background="@android:color/transparent"
+                android:hint="@string/mine_login_username_tip"
+                android:lines="1"
+                android:maxLength="16"
+                android:textColor="@color/mine_login_username_color"
+                android:textColorHint="@color/mine_login_username_hint_color"
+                android:textCursorDrawable="@drawable/base_textcursorcolor"
+                android:textSelectHandle="@android:color/transparent"
+                android:textSize="@dimen/mine_login_username_text_size"/>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/mine_login_username_line_height"
+                android:layout_marginTop="@dimen/mine_login_username_line_margin_top"
+                android:background="@color/base_line_color"/>
+
+            <TextView
+                android:id="@+id/mine_tv_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/mine_tv_password_margin_top"
+                android:text="@string/mine_login_password"
+                android:textColor="@color/mine_mine_tv_password_color"
+                android:textSize="@dimen/mine_tv_password_text_size"
+                android:textStyle="bold"/>
+
+            <com.knight.kotlin.library_widget.ClearEditText
+                android:id="@+id/mine_login_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/mine_login_password_margin_top"
+                android:background="@android:color/transparent"
+                android:hint="@string/mine_hint_password"
+                android:inputType="textPassword"
+                android:lines="1"
+                android:maxLength="18"
+                android:textColor="@color/mine_login_password_color"
+                android:textCursorDrawable="@drawable/base_textcursorcolor"
+                android:textSelectHandle="@android:color/transparent"
+                android:textSize="@dimen/mine_login_password_text_size"/>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/mine_login_password_line_height"
+                android:layout_marginTop="@dimen/mine_login_password_line_margin_top"
+                android:background="@color/base_line_color"/>
+
+
+        </LinearLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/mine_rl_login_margin_top"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/mine_login_cardview">
+
+
+        <TextView
+            android:id="@+id/mine_tv_login"
+            android:layout_width="@dimen/mine_tv_login_width"
+            android:layout_height="@dimen/mine_tv_login_height"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/mine_tv_login_bg"
+            android:gravity="center"
+            android:text="@string/mine_tv_login"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/mine_mine_tv_login_text_size"
+            android:textStyle="bold" />
+
+
+        <TextView
+            android:id="@+id/mine_tv_register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/mine_tv_register_margin_right"
+            android:text="@string/mine_tv_register"
+            android:textColor="@color/mine_tv_register_color"
+            android:textSize="@dimen/mine_tv_register_text_size"/>
+
+    </RelativeLayout>
+
+
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

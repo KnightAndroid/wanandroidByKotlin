@@ -219,8 +219,20 @@ object CacheUtils {
     /**
      * 返回生物识别iv向量
      */
-    fun getCliperIv(): String? {
-        return mmkv?.decodeString(CacheKey.CLIPER_IV, "")
+    fun getCliperIv(): String {
+        return mmkv?.decodeString(CacheKey.CLIPER_IV, "") ?: ""
+    }
+
+    /**
+     * 保存生物识别iv向量
+     *
+     * @param cliperIv
+     */
+    fun setCliperIv(cliperIv: String?) {
+        mmkv?.encode(
+            CacheKey.CLIPER_IV,
+            cliperIv
+        )
     }
 
     /**
@@ -252,8 +264,8 @@ object CacheUtils {
      * 得到明文账号密码信息
      * @return
      */
-    fun getLoginMessage(): String? {
-        return mmkv?.decodeString(CacheKey.LOGIN_MESSAGE, "")
+    fun getLoginMessage(): String {
+        return mmkv?.decodeString(CacheKey.LOGIN_MESSAGE, "") ?: ""
     }
 
     /**

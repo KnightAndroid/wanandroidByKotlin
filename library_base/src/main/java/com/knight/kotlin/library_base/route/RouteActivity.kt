@@ -58,5 +58,17 @@ object RouteActivity {
     }
 
 
+    /**
+     * 我的模块
+     *
+     */
+    object Mine {
+        private const val MINE = "/module_mine"
+        const val QuickLoginActivity = "$MINE/QuickLoginActivity"
+        const val LoginActivity = "$MINE/LoginActivity"
+
+    }
+
+
 
 }

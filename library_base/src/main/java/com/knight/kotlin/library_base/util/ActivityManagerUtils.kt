@@ -54,7 +54,7 @@ class ActivityManagerUtils : Application.ActivityLifecycleCallbacks {
         val keys: Array<String> = mActivityArrayMap.keys.toTypedArray()
         for (key in keys) {
             val activity = mActivityArrayMap[key]
-            activity!!.finish()
+            activity?.finish()
             mActivityArrayMap.remove(key)
         }
     }

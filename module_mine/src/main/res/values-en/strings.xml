@@ -11,4 +11,19 @@
     <string name="mine_me_system_setting">Set up</string>
     <string name="mine_gradle">Gradle&#160;</string>
     <string name="mine_rank">Rank&#160;</string>
+    <string name="mine_tv_gesture_lock_more">More</string>
+    <string name="mine_fingure_login">Fingure Login</string>
+    <string name="mine_tv_quicklogin_cancel">Cancel</string>
+    <string name="mine_quick_gesture_login_failure">Gesture login failed, please try again</string>
+    <string name="mine_quick_login">Quick Login</string>
+    <string name="mine_quick_fingure_login_failure">Fingure login failed, please try again</string>
+    <string name="mine_apploginname">wanandroid</string>
+    <string name="mine_account_name">Account</string>
+    <string name="mine_login_username_tip">Please enter the account used on the wanandroid website</string>
+    <string name="mine_login_password">Password</string>
+    <string name="mine_hint_password">Please input a password</string>
+    <string name="mine_tv_login">Login</string>
+    <string name="mine_tv_register">Register</string>
+    <string name="mine_emptyusername_hint">Account number cannot be empty</string>
+    <string name="mine_emptypassword_hint">Password cannot be empty</string>
 </resources>

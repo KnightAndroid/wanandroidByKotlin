@@ -62,7 +62,7 @@ class AopApplication: ApplicationLifecycle {
             }
 
             override fun isLogin(applicationContext: Context?): Boolean {
-                val userInfoEntity: UserInfoEntity = getUser()
+                val userInfoEntity: UserInfoEntity? = getUser()
                 return userInfoEntity != null
             }
 

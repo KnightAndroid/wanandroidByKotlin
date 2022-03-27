@@ -59,9 +59,7 @@ class WelcomeActivity : BaseActivity<WelcomeActivityBinding, WelcomeVm>() {
 
     private fun setAppThemeData(data:AppThemeBean) {
        Appconfig.appThemeColor = data.themeColor
-       if (data.forceTheme) {
-           CacheUtils.setThemeColor(ColorUtils.convertToColorInt(Appconfig.appThemeColor))
-       }
+       CacheUtils.setThemeColor(ColorUtils.convertToColorInt(Appconfig.appThemeColor))
        Appconfig.gray = data.gray
     }
 

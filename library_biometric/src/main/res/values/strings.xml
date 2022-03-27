@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="biometric_touch_sensor">触摸传感器以验证指纹</string>
+    <string name="biometric_touch_verify_failure">验证失败,请重试</string>
+    <string name="biometric_touch_verify_error">请使用账号密码登录</string>
+    <string name="biometric_touch_verify_finger">验证指纹</string>
+    <string name="biometric_touchverify_succeeded">验证成功</string>
+    <string name="biometric_use_password_login">使用账号密码登录</string>
+    <string name="biometric_not_open_touchverify">暂不开启</string>
+    <string name="biometric_cancel">取消</string>
+</resources>

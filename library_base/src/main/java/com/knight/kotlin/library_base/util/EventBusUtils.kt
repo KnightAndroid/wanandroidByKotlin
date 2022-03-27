@@ -1,5 +1,6 @@
 package com.knight.kotlin.library_base.util
 
+import com.knight.kotlin.library_base.event.MessageEvent
 import org.greenrobot.eventbus.EventBus
 
 
@@ -31,6 +32,12 @@ object EventBusUtils {
      */
     fun postStrickyEvent(strickyEvent:Any) = EventBus.getDefault().postSticky(strickyEvent)
 
+
+    /**
+     *
+     * 发送普通事件
+     */
+    fun postEvent(event:MessageEvent) = EventBus.getDefault().post(event)
 
     /**
      * 手动获取粘性事件
