@@ -69,6 +69,15 @@ object RouteActivity {
 
     }
 
+    /**
+     *
+     * 设置模块
+     */
+    object Set {
+        private const val SET = "/module_set"
+        const val SetActivity = "$SET/SetActivity"
+    }
+
 
 
 }

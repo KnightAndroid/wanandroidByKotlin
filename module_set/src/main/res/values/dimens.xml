@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="set_ll_padding_bottom">10dp</dimen>
+    <dimen name="set_tv_basic_margin_left">26dp</dimen>
+    <dimen name="set_tv_basic_text_size">16sp</dimen>
+    <dimen name="set_rl_darkmode_margin_left">26dp</dimen>
+    <dimen name="set_rl_darkmode_margin_top">20dp</dimen>
+    <dimen name="set_tv_darkmode_text_size">18sp</dimen>
+    <dimen name="set_tv_darkmode_status_margin_right">20dp</dimen>
+    <dimen name="set_darkmore_status_text_size">16sp</dimen>
+    <dimen name="set_rl_statustheme_margin_left">26dp</dimen>
+    <dimen name="set_rl_statustheme_margin_top">20dp</dimen>
+    <dimen name="set_tv_status_theme">18sp</dimen>
+</resources>

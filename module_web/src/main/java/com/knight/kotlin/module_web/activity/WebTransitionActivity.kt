@@ -98,7 +98,7 @@ class WebTransitionActivity:BaseActivity<WebTransitionActivityBinding,EmptyViewM
                     webTransitionToolbar.baseIvBack.setBackgroundResource(R.drawable.base_right_whitearrow)
                 } else {
                     webTransitionToolbar.baseTvTitle.setTextColor(ContextCompat.getColor(this@WebTransitionActivity,R.color.black))
-                    webTransitionToolbar.baseIvBack.setBackgroundResource(R.drawable.base_right_arrow)
+                    webTransitionToolbar.baseIvBack.setBackgroundResource(R.drawable.base_iv_left_arrow)
                 }
             }
         })

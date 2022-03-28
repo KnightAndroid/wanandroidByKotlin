@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/set_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.SetActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/set_ll_padding_bottom">
+
+        <include
+            android:id="@+id/include_set_toobar"
+            layout="@layout/base_include_toolbar" />
+
+        <TextView
+            android:id="@+id/set_tv_basic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/set_tv_basic_margin_left"
+            android:text="@string/set_basic"
+            android:textColor="@color/base_color_theme"
+            android:textSize="@dimen/set_tv_basic_text_size"/>
+
+        <RelativeLayout
+            android:id="@+id/set_rl_darkmode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/set_rl_darkmode_margin_left"
+            android:layout_marginTop="@dimen/set_rl_darkmode_margin_top">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/set_dark_mode"
+                android:textColor="@color/set_tv_darkmode_color"
+                android:textSize="@dimen/set_tv_darkmode_text_size"/>
+
+            <TextView
+                android:id="@+id/set_tv_darkmode_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/set_tv_darkmode_status_margin_right"
+                android:drawableRight="@drawable/base_iv_right_arrow"
+                android:gravity="center"
+                android:text="@string/set_dark_close"
+                android:textColor="@color/set_darkmore_status_color"
+                android:textSize="@dimen/set_darkmore_status_text_size"/>
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/set_rl_statustheme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/set_rl_statustheme_margin_left"
+            android:layout_marginTop="@dimen/set_rl_statustheme_margin_top">
+
+            <TextView
+                android:id="@+id/set_status_theme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:tag="oneLevelText"
+                android:text="@string/set_status_theme"
+                android:textColor="@color/set_tv_status_theme_color"
+                android:textSize="@dimen/set_tv_status_theme" />
+
+        </RelativeLayout>
+
+
+
+
+    </LinearLayout>
+
+
+</androidx.core.widget.NestedScrollView>

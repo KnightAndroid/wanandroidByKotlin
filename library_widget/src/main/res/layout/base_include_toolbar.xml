@@ -15,7 +15,7 @@
         android:layout_width="@dimen/widget_compat_toolbar_width"
         android:layout_height="@dimen/widget_compat_toolbar_height"
         android:layout_marginLeft="@dimen/widget_compat_toolbar_left"
-        android:background="@drawable/base_right_arrow"/>
+        android:background="@drawable/base_iv_left_arrow"/>
 
     <com.knight.kotlin.library_widget.MarqueeTextView
         android:id="@+id/base_tv_title"

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="set_app_name">module_set</string>
+    <string name="set_basic">Basic settings</string>
+    <string name="set_dark_mode">Dark Mode</string>
+    <string name="set_dark_close">Closed</string>
+    <string name="set_status_theme">Status bar shading</string>
+</resources>
