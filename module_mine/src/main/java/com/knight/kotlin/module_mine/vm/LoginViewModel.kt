@@ -6,7 +6,6 @@ import com.knight.kotlin.library_base.entity.UserInfoEntity
 import com.knight.kotlin.library_base.vm.BaseViewModel
 import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_mine.repo.LoginRepo
-import com.knight.kotlin.module_mine.repo.QuickLoginRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
@@ -43,6 +42,7 @@ class LoginViewModel @Inject constructor(private val mRepo: LoginRepo) : BaseVie
             mRepo.login(userName, passWord)
                 .catch {
                     toast(it.message ?: "")
+                    requestSuccessFlag.postValue(false)
                 }
                 .collect {
                     userInfo.postValue(it) }

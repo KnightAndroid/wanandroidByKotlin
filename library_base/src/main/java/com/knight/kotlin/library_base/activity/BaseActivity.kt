@@ -85,8 +85,9 @@ abstract class BaseActivity<VB : ViewBinding,VM : BaseViewModel> : AppCompatActi
     override fun onCreate(savedInstanceState:Bundle?) {
         super.onCreate(savedInstanceState)
         setTheme(getActivityTheme())
-        StatusBarUtils.transparentStatusBar(this)
+
         setContentView(mBinding.root)
+        StatusBarUtils.transparentStatusBar(this)
         //处理保存的状态
         mStatusHelper?.onRestoreInstanceStatus(savedInstanceState)
         //ARouter 依赖注入

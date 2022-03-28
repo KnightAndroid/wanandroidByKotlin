@@ -26,4 +26,5 @@
     <string name="mine_tv_register">Register</string>
     <string name="mine_emptyusername_hint">Account number cannot be empty</string>
     <string name="mine_emptypassword_hint">Password cannot be empty</string>
+    <string name="mine_request_login">Loading...</string>
 </resources>

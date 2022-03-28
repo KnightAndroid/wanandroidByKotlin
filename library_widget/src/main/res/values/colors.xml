@@ -7,4 +7,5 @@
     <color name="widget_gesturelock_dot_color">#AACCCCCC</color>
     <color name="widget_gesturelock_dot_pressed_color">#FFBBBBBB</color>
     <color name="widget_gesturelock_line_color">#55CCCCCC</color>
+    <color name="widget_progress_color">#4E4E4E</color>
 </resources>

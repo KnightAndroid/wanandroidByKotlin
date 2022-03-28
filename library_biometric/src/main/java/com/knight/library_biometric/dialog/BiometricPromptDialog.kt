@@ -65,6 +65,8 @@ class BiometricPromptDialog: BaseDialogFragment<BiometricLoginDialogBinding,Empt
         mDialogActionCallback?.let {
             it.onDialogDismiss()
         }
+        mDialogActionCallback = null
+
     }
 
     @RequiresApi(Build.VERSION_CODES.M)

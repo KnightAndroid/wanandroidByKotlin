@@ -8,4 +8,6 @@
     <dimen name="widget_gesture_default_dot_radius">4dp</dimen>
     <dimen name="widget_gesture_default_line_width">8dp</dimen>
     <dimen name="widget_gesture_default_dot_pressed_radius">4dp</dimen>
+    <dimen name="widget_background_layout_padding">16dp</dimen>
+    <dimen name="widget_tv_loading_show_margin_top">2dp</dimen>
 </resources>

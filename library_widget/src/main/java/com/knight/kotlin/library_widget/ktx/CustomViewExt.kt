@@ -1,5 +1,6 @@
 package com.knight.kotlin.library_util
 
+import android.app.Activity
 import android.content.Context
 import android.graphics.Color
 import android.view.animation.AccelerateInterpolator
@@ -9,6 +10,7 @@ import com.knight.kotlin.library_base.BaseApp
 import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_base.util.dp2px
 import com.knight.kotlin.library_widget.ScaleTransitionPagerTitleView
+import com.knight.kotlin.library_widget.utils.CirViewUtils
 import net.lucode.hackware.magicindicator.MagicIndicator
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNavigatorAdapter
@@ -168,6 +170,24 @@ fun MagicIndicator.bindWechatViewPager2(
 
 
     })
+
+
+}
+
+/**
+ *
+ * 显示loading框
+ */
+fun showHud(activity: Activity, messgae:String) {
+    CirViewUtils.showHud(activity,messgae)
+}
+
+/**
+ *
+ * 取消loading框
+ */
+fun dismissHud() {
+    CirViewUtils.dismissHud()
 }
 
 

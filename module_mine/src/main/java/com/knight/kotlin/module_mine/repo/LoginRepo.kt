@@ -4,7 +4,6 @@ import com.knight.kotlin.library_base.entity.UserInfoEntity
 import com.knight.kotlin.library_base.repository.BaseRepository
 import com.knight.kotlin.library_network.model.responseCodeExceptionHandler
 import com.knight.kotlin.module_mine.api.LoginApiService
-import com.knight.kotlin.module_mine.api.QuickLoginApiService
 import javax.inject.Inject
 
 /**
@@ -31,7 +30,7 @@ class LoginRepo @Inject constructor() : BaseRepository() {
      */
     suspend fun login(userName:String,passWord:String) = request<UserInfoEntity>{
         mLoginApiService.login(userName,passWord).run {
-            responseCodeExceptionHandler(code, msg)
+            responseCodeExceptionHandler(code,msg)
             emit(data)
         }
     }

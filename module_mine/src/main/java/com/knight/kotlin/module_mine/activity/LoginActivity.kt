@@ -12,6 +12,7 @@ import com.knight.kotlin.library_base.entity.LoginEntity
 import com.knight.kotlin.library_base.entity.UserInfoEntity
 import com.knight.kotlin.library_base.event.MessageEvent
 import com.knight.kotlin.library_base.ktx.observeLiveData
+import com.knight.kotlin.library_base.ktx.observeLiveDataWithError
 import com.knight.kotlin.library_base.ktx.setOnClick
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.util.CacheUtils
@@ -20,13 +21,14 @@ import com.knight.kotlin.library_base.util.GsonUtils
 import com.knight.kotlin.library_base.util.dp2px
 import com.knight.kotlin.library_util.SoftInputScrollUtils
 import com.knight.kotlin.library_util.SystemUtils
+import com.knight.kotlin.library_util.dismissHud
+import com.knight.kotlin.library_util.showHud
 import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_mine.R
 import com.knight.kotlin.module_mine.databinding.MineLoginActivityBinding
 import com.knight.kotlin.module_mine.vm.LoginViewModel
 import com.knight.library_biometric.control.BiometricControl
 import dagger.hilt.android.AndroidEntryPoint
-import org.greenrobot.eventbus.EventBus
 import javax.crypto.BadPaddingException
 import javax.crypto.Cipher
 import javax.crypto.IllegalBlockSizeException
@@ -87,6 +89,7 @@ class LoginActivity : BaseActivity<MineLoginActivityBinding,LoginViewModel>(){
         }
         mineTvLogin.setOnClick {
             if (validateLoginMessage()) {
+                showHud(this@LoginActivity,getString(R.string.mine_request_login))
                 mViewModel.login(mineLoginUsername.text.toString().trim(),mineLoginPassword.text.toString().trim())
             }
 
@@ -117,6 +120,7 @@ class LoginActivity : BaseActivity<MineLoginActivityBinding,LoginViewModel>(){
 
     override fun initObserver() {
         observeLiveData(mViewModel.userInfo,::setUserInfo)
+        observeLiveDataWithError(mViewModel.userInfo,mViewModel.requestSuccessFlag,::setUserInfo,::requestUserInfoError)
     }
 
     override fun initRequestData() {
@@ -129,6 +133,7 @@ class LoginActivity : BaseActivity<MineLoginActivityBinding,LoginViewModel>(){
 
 
     private fun setUserInfo(userInfo:UserInfoEntity){
+        dismissHud()
         val loginMessage = GsonUtils.toJson(LoginEntity(mBinding.mineLoginUsername.text.toString().trim(),mBinding.mineLoginPassword.toString().trim()))
         if (!CacheUtils.getFingerLogin()) {
             //没开通就开通快捷登录
@@ -148,6 +153,14 @@ class LoginActivity : BaseActivity<MineLoginActivityBinding,LoginViewModel>(){
                 finish()
             }
         }
+    }
+
+    /**
+     *
+     * 请求用户信息接口错误
+     */
+    private fun requestUserInfoError(){
+        dismissHud()
     }
 
     /**

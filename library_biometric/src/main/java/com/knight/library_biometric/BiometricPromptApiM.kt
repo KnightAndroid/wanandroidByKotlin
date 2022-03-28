@@ -45,8 +45,6 @@ class BiometricPromptApiM constructor(activity:FragmentActivity) : IBiometricPro
         callback: BiometricPromptManager.OnBiometricIdentifyCallback
     ) {
         //指纹识别的回调
-
-        //指纹识别的回调
         mManagerIdentifyCallback = callback
 
         mDialog = BiometricPromptDialog.newInstance()
@@ -59,6 +57,7 @@ class BiometricPromptApiM constructor(activity:FragmentActivity) : IBiometricPro
                         it.cancel()
                     }
                 }
+                mDialog = null
             }
 
             override fun onCancel() {
@@ -68,7 +67,7 @@ class BiometricPromptApiM constructor(activity:FragmentActivity) : IBiometricPro
                 }
             }
         })
-        mDialog?.showAllowingStateLoss(mActivity!!.supportFragmentManager, "BiometricPromptApiM")
+        mDialog?.showAllowingStateLoss(mActivity?.supportFragmentManager, "BiometricPromptApiM")
 
         mCancellationSignal = cancel
         if (mCancellationSignal == null) {
