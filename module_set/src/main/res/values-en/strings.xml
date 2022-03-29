@@ -5,4 +5,13 @@
     <string name="set_dark_mode">Dark Mode</string>
     <string name="set_dark_close">Closed</string>
     <string name="set_status_theme">Status bar shading</string>
+    <string name="set_status_theme_tip">The color of the status bar changes with the theme color</string>
+    <string name="set_theme_color">Theme color</string>
+    <string name="set_customize_color">Custom theme colors</string>
+    <string name="set_eyecare">Eye protection mode</string>
+    <string name="set_auto_change_night_time">Automatically switch to night mode</string>
+    <string name="set_change_time">Set Change Time</string>
+    <string name="set_common">General settings</string>
+    <string name="set_more_language">Multilingual</string>
+    <string name="set_changetextsize">Font Size</string>
 </resources>

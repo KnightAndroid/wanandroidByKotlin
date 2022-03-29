@@ -3,4 +3,9 @@
      <color name="set_tv_darkmode_color">#333333</color>
      <color name="set_darkmore_status_color">#999999</color>
      <color name="set_tv_status_theme_color">#333333</color>
+     <color name="set_tv_theme_color">#333333</color>
+     <color name="set_tv_eyecare_color">#333333</color>
+     <color name="set_auto_change_night_time_color">#333333</color>
+     <color name="set_tv_multilingual_color">#333333</color>
+     <color name="set_tv_changetextsize_color">#333333</color>
 </resources>

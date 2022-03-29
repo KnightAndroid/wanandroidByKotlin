@@ -5,4 +5,13 @@
     <string name="set_dark_mode">深色模式</string>
     <string name="set_dark_close">已关闭</string>
     <string name="set_status_theme">状态栏着色</string>
+    <string name="set_status_theme_tip">状态栏颜色伴随主题色变化</string>
+    <string name="set_theme_color">主题颜色</string>
+    <string name="set_customize_color">自定义主题颜色</string>
+    <string name="set_eyecare">护眼模式</string>
+    <string name="set_auto_change_night_time">自动切换夜间模式</string>
+    <string name="set_change_time">设置切换的时间</string>
+    <string name="set_common">通用设置</string>
+    <string name="set_more_language">多语言</string>
+    <string name="set_changetextsize">字体大小</string>
 </resources>

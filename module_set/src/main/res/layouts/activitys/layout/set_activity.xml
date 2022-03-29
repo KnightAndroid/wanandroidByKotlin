@@ -74,8 +74,178 @@
                 android:textColor="@color/set_tv_status_theme_color"
                 android:textSize="@dimen/set_tv_status_theme" />
 
+            <TextView
+                android:id="@+id/set_status_theme_tip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/set_status_theme"
+                android:layout_marginRight="@dimen/set_tv_status_theme_tip_margin_right"
+                android:layout_toLeftOf="@+id/set_cb_status_theme"
+                android:text="@string/set_status_theme_tip"/>
+
+            <CheckBox
+                android:id="@+id/set_cb_status_theme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/set_cb_status_theme_margin_right"
+                android:button="@drawable/set_checkbox_selector"/>
+
+
         </RelativeLayout>
 
+
+        <RelativeLayout
+            android:id="@+id/set_rl_theme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/set_rl_theme_margin_left"
+            android:layout_marginTop="@dimen/set_rl_theme_margin_top">
+
+            <TextView
+                android:id="@+id/set_theme_color"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/set_theme_color"
+                android:textColor="@color/set_tv_theme_color"
+                android:textSize="@dimen/set_tv_theme_color_text_size"
+                />
+            <TextView
+                android:id="@+id/set_themecolor_tip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/set_theme_color"
+                android:text="@string/set_customize_color" />
+
+
+            <ImageView
+                android:id="@+id/set_show_themecolor"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/set_show_themecolor_margin_right"
+                android:background="@android:color/holo_red_light" />
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/set_rl_eyecare_margin_left"
+            android:layout_marginTop="@dimen/set_rl_eyecare_margin_top"
+            >
+
+            <TextView
+                android:id="@+id/set_tv_eyecare"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:tag="oneLevelText"
+                android:text="@string/set_eyecare"
+                android:textColor="@color/set_tv_eyecare_color"
+                android:textSize="@dimen/set_tv_eyecare_text_size" />
+
+            <CheckBox
+                android:id="@+id/set_cb_eyecare"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/set_cb_eyecare_margin_right"
+                android:button="@drawable/set_checkbox_selector" />
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/set_rl_night_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/set_rl_night_time_margin_left"
+            android:layout_marginTop="@dimen/set_rl_night_time_margin_top"
+            >
+
+            <TextView
+                android:id="@+id/set_tv_change_night"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/set_auto_change_night_time"
+                android:textColor="@color/set_auto_change_night_time_color"
+                android:textSize="@dimen/set_auto_change_night_time_text_size"/>
+
+            <TextView
+                android:id="@+id/set_change_night_tip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/set_tv_change_night"
+                android:text="@string/set_change_time" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/set_cb_change_night_margin_right"
+                android:background="@drawable/base_iv_right_arrow" />
+
+
+
+
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/set_tv_common"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/set_tv_common_margin_top"
+            android:layout_marginLeft="@dimen/set_tv_common_margin_left"
+            android:text="@string/set_common"
+            android:textColor="@color/base_color_theme"
+            android:textSize="@dimen/set_tv_common_text_size"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/set_rl_multingual_margin_left"
+            android:layout_marginTop="@dimen/set_rl_multingual_margin_top">
+
+            <TextView
+                android:id="@+id/set_tv_multilingual"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/set_more_language"
+                android:textColor="@color/set_tv_multilingual_color"
+                android:textSize="@dimen/set_tv_multilingual_text_size" />
+
+            <TextView
+                android:id="@+id/set_tv_multilingual_mode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/set_tv_multilingual_mode_margin_right"
+                android:drawableRight="@drawable/base_iv_right_arrow" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/base_dimen_26"
+            android:layout_marginTop="@dimen/base_dimen_20"
+            >
+            <TextView
+                android:id="@+id/set_tv_changetextsize"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/set_changetextsize"
+                android:textColor="@color/set_tv_changetextsize_color"
+                android:textSize="@dimen/set_tv_changetextsize_text_size" />
+
+
+
+        </RelativeLayout>
 
 
 
