@@ -14,4 +14,8 @@
     <string name="set_common">General settings</string>
     <string name="set_more_language">Multilingual</string>
     <string name="set_changetextsize">Font Size</string>
+    <string name="set_gesture_password">Set Gesture Password</string>
+    <string name="set_clear_cache">Clear cache</string>
+    <string name="set_other">Other</string>
+    <string name="set_project_repository">Warehouse of the project</string>
 </resources>

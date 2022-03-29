@@ -8,4 +8,6 @@
     <color name="set_auto_change_night_time_color">#D3D3D3</color>
     <color name="set_tv_multilingual_color">#D3D3D3</color>
     <color name="set_tv_changetextsize_color">#D3D3D3</color>
+    <color name="set_tv_gesture_password_color">#D3D3D3</color>
+    <color name="set_tv_clearcache_color">#D3D3D3</color>
 </resources>

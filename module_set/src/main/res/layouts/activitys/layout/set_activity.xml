@@ -243,9 +243,105 @@
                 android:textColor="@color/set_tv_changetextsize_color"
                 android:textSize="@dimen/set_tv_changetextsize_text_size" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/base_dimen_20"
+                android:background="@drawable/base_iv_right_arrow" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/set_rl_gesture_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/set_rl_gesture_password_margin_left"
+            android:layout_marginTop="@dimen/set_rl_gesture_password_margin_top"
+            >
+
+            <TextView
+                android:id="@+id/set_tv_gesture_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/set_gesture_password"
+                android:textColor="@color/set_tv_gesture_password_color"
+                android:textSize="@dimen/set_tv_gesture_password_text_size" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/set_tv_gesture_password_arrow_right_margin_right"
+                android:background="@drawable/base_iv_right_arrow" />
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/set_rl_clearcache_margin_left"
+            android:layout_marginTop="@dimen/set_rl_clearcache_margin_top"
+            >
+
+            <TextView
+                android:id="@+id/set_tv_clearcache"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/set_clear_cache"
+                android:textColor="@color/set_tv_clearcache_color"
+                android:textSize="@dimen/set_tv_clearcache_text_size" />
+
+            <TextView
+                android:id="@+id/set_cachememory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/set_tv_clearcache"
+                android:text="10.23MB" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/base_dimen_20"
+                android:background="@drawable/base_iv_right_arrow" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/set_tv_other"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/base_dimen_26"
+            android:layout_marginTop="@dimen/base_dimen_30"
+            android:text="@string/set_other"
+            android:textColor="@color/base_color_theme"
+            android:textSize="@dimen/set_tv_other_text_size" />
+
+        <!--本项目仓库-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/set_tv_repository_margin_left"
+            android:layout_marginTop="@dimen/set_tv_repository_margin_top">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/set_project_repository"
+                android:textColor="@color/base_color_title"
+                android:textSize="@dimen/base_dimen_text_size_18" />
 
 
         </RelativeLayout>
+
+
+
+
 
 
 

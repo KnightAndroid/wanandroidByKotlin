@@ -35,4 +35,14 @@
     <dimen name="set_rl_change_text_size_margin_left">26dp</dimen>
     <dimen name="set_rl_change_text_size_margin_top">26dp</dimen>
     <dimen name="set_tv_changetextsize_text_size">18sp</dimen>
+    <dimen name="set_rl_gesture_password_margin_left">26dp</dimen>
+    <dimen name="set_rl_gesture_password_margin_top">20dp</dimen>
+    <dimen name="set_tv_gesture_password_text_size">18sp</dimen>
+    <dimen name="set_tv_gesture_password_arrow_right_margin_right">20dp</dimen>
+    <dimen name="set_rl_clearcache_margin_left">26dp</dimen>
+    <dimen name="set_rl_clearcache_margin_top">20dp</dimen>
+    <dimen name="set_tv_clearcache_text_size">18sp</dimen>
+    <dimen name="set_tv_other_text_size">16sp</dimen>
+    <dimen name="set_tv_repository_margin_left">26dp</dimen>
+    <dimen name="set_tv_repository_margin_top">2dp</dimen>
 </resources>
