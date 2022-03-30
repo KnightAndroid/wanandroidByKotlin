@@ -10,4 +10,8 @@
      <color name="set_tv_changetextsize_color">#333333</color>
      <color name="set_tv_gesture_password_color">#333333</color>
      <color name="set_tv_clearcache_color">#333333</color>
+     <color name="set_tv_project_repository_color">#333333</color>
+     <color name="set_tv_official_website_color">#333333</color>
+     <color name="set_tv_about_wanandroid_color">#333333</color>
+     <color name="set_tv_logout_color">#333333</color>
 </resources>

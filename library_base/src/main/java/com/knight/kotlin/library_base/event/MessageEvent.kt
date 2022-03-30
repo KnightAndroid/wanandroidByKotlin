@@ -170,7 +170,9 @@ data class MessageEvent(var type: MessageType) {
 
     enum class MessageType {
         //登录成功
-        LoginSuccess
+        LoginSuccess,
+        //退出登录
+        LogoutSuccess
     }
 
 }

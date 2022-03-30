@@ -7,6 +7,7 @@ import android.util.Base64
 import androidx.activity.viewModels
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.knight.kotlin.library_base.activity.BaseActivity
+import com.knight.kotlin.library_base.config.Appconfig
 import com.knight.kotlin.library_base.config.CacheKey
 import com.knight.kotlin.library_base.entity.LoginEntity
 import com.knight.kotlin.library_base.entity.UserInfoEntity
@@ -134,21 +135,22 @@ class LoginActivity : BaseActivity<MineLoginActivityBinding,LoginViewModel>(){
 
     private fun setUserInfo(userInfo:UserInfoEntity){
         dismissHud()
+        //登录成功发送事件
+        Appconfig.user = userInfo
+        //保存用户信息
+        CacheUtils.saveDataInfo(CacheKey.USER, userInfo)
         val loginMessage = GsonUtils.toJson(LoginEntity(mBinding.mineLoginUsername.text.toString().trim(),mBinding.mineLoginPassword.toString().trim()))
         if (!CacheUtils.getFingerLogin()) {
             //没开通就开通快捷登录
-            openBlomtric(loginMessage,userInfo)
+            openBlomtric(loginMessage)
         } else {
             //开通了 但是 对应存储的信息和输入账号信息不一致
             val localLoginMessage = CacheUtils.getLoginMessage()
             CacheUtils.setLoginMessage(loginMessage)
             if (localLoginMessage != localLoginMessage) {
                 //判断本地存在的信息是否和页面信息一致 不一致为当前账号开启快捷登录
-                openBlomtric(loginMessage, userInfo)
+                openBlomtric(loginMessage)
             } else {
-                //保存用户信息
-                CacheUtils.saveDataInfo(CacheKey.USER, userInfo)
-                //登录成功发送事件
                 EventBusUtils.postEvent(MessageEvent(MessageEvent.MessageType.LoginSuccess))
                 finish()
             }
@@ -167,11 +169,9 @@ class LoginActivity : BaseActivity<MineLoginActivityBinding,LoginViewModel>(){
      * 开通指纹登录
      * @param loginMessage
      */
-    private fun openBlomtric(loginMessage: String, userInfo: UserInfoEntity) {
+    private fun openBlomtric(loginMessage: String) {
         BiometricControl.openBlomtric(this, object : BiometricControl.BiometricStatusCallback {
             override fun onUsePassword() {
-                //保存用户信息
-                CacheUtils.saveDataInfo(CacheKey.USER, userInfo)
                 CacheUtils.setLoginMessage(loginMessage)
                 //登录成功发送事件
                 EventBusUtils.postEvent(MessageEvent(MessageEvent.MessageType.LoginSuccess))
@@ -185,8 +185,6 @@ class LoginActivity : BaseActivity<MineLoginActivityBinding,LoginViewModel>(){
                     CacheUtils.setEncryptLoginMessage(Base64.encodeToString(bytes, Base64.URL_SAFE))
                     val iv = cipher?.iv
                     CacheUtils.setCliperIv(Base64.encodeToString(iv, Base64.URL_SAFE))
-                    //保存用户信息
-                    CacheUtils.saveDataInfo(CacheKey.USER, userInfo)
                     CacheUtils.setLoginMessage(loginMessage)
                     //保存开启了指纹登录
                     CacheUtils.setFingerLogin(true)
@@ -201,8 +199,7 @@ class LoginActivity : BaseActivity<MineLoginActivityBinding,LoginViewModel>(){
             }
 
             override fun onFailed() {
-                //保存用户信息
-                CacheUtils.saveDataInfo(CacheKey.USER, userInfo)
+
                 //登录成功发送事件
                 CacheUtils.setLoginMessage(loginMessage)
                 EventBusUtils.postEvent(MessageEvent(MessageEvent.MessageType.LoginSuccess))
@@ -211,8 +208,6 @@ class LoginActivity : BaseActivity<MineLoginActivityBinding,LoginViewModel>(){
 
             override fun error(code: Int, reason: String?) {
                 toast("$code,$reason")
-                //保存用户信息
-                CacheUtils.saveDataInfo(CacheKey.USER, userInfo)
                 CacheUtils.setLoginMessage(loginMessage)
                 //登录成功发送事件
                 EventBusUtils.postEvent(MessageEvent(MessageEvent.MessageType.LoginSuccess))
@@ -221,8 +216,6 @@ class LoginActivity : BaseActivity<MineLoginActivityBinding,LoginViewModel>(){
 
             override fun onCancel() {
                 toast(R.string.mine_tv_quicklogin_cancel)
-                //保存用户信息
-                CacheUtils.saveDataInfo(CacheKey.USER, userInfo)
                 CacheUtils.setLoginMessage(loginMessage)
                 //登录成功发送事件
                 EventBusUtils.postEvent(MessageEvent(MessageEvent.MessageType.LoginSuccess))

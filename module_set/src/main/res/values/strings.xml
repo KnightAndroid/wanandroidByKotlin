@@ -18,4 +18,10 @@
     <string name="set_clear_cache">清除缓存</string>
     <string name="set_other">其他</string>
     <string name="set_project_repository">本项目仓库</string>
+    <string name="set_official_website">官网</string>
+    <string name="set_about_wanandroid">关于wanandroid</string>
+    <string name="set_quit_account">退出</string>
+    <string name="set_confirm_logout">是否退出当前账号</string>
+    <string name="set_logout">退出登录中...</string>
+
 </resources>

@@ -27,4 +27,7 @@
     <string name="mine_emptyusername_hint">Account number cannot be empty</string>
     <string name="mine_emptypassword_hint">Password cannot be empty</string>
     <string name="mine_request_login">Loading...</string>
+    <string name="mine_blomtric_cancel">Cancel</string>
+    <string name="mine_nodata_gradle">Gradle -</string>
+    <string name="mine_nodata_rank">Rank -</string>
 </resources>

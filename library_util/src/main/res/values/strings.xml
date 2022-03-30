@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="util_confim">确定</string>
+    <string name="util_cancel">取消</string>
+</resources>

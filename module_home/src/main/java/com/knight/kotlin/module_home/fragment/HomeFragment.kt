@@ -10,6 +10,7 @@ import com.google.common.reflect.TypeToken
 import com.knight.kotlin.library_aop.clickintercept.SingleClick
 import com.knight.kotlin.library_base.event.MessageEvent
 import com.knight.kotlin.library_base.fragment.BaseFragment
+import com.knight.kotlin.library_base.ktx.getUser
 import com.knight.kotlin.library_base.ktx.observeLiveData
 import com.knight.kotlin.library_base.route.RouteFragment
 import com.knight.kotlin.library_base.util.CacheUtils
@@ -29,6 +30,7 @@ import com.knight.kotlin.library_util.SystemUtils
 import com.knight.kotlin.library_util.ViewInitUtils
 import com.knight.kotlin.library_util.bindViewPager2
 import com.knight.kotlin.library_util.toast.ToastUtils
+import com.knight.kotlin.module_home.R
 import com.knight.kotlin.module_home.constants.HomeConstants
 import com.knight.kotlin.module_home.databinding.HomeFragmentBinding
 import com.knight.kotlin.module_home.dialog.HomePushArticleFragment
@@ -218,8 +220,14 @@ class HomeFragment : BaseFragment<HomeFragmentBinding, HomeVm>() {
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onMessageEvent(event:MessageEvent) {
         when (event.type) {
-            MessageEvent.MessageType.LoginSuccess ->{
+            MessageEvent.MessageType.LoginSuccess -> {
                 //登录成功
+                mBinding.homeIncludeToolbar.homeTvLoginname.text = getUser()?.username
+            }
+
+            MessageEvent.MessageType.LogoutSuccess -> {
+                //退出登录成功
+                mBinding.homeIncludeToolbar.homeTvLoginname.setText(getString(R.string.home_tv_login))
             }
         }
 

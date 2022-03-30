@@ -26,4 +26,7 @@
     <string name="mine_emptyusername_hint">账号不能为空</string>
     <string name="mine_emptypassword_hint">密码不能为空</string>
     <string name="mine_request_login">登录中...</string>
+    <string name="mine_blomtric_cancel">取消</string>
+    <string name="mine_nodata_gradle">等级 -</string>
+    <string name="mine_nodata_rank">排名第 -</string>
 </resources>

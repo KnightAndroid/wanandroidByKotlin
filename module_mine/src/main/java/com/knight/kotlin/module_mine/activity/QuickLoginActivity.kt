@@ -5,6 +5,7 @@ import android.util.Base64
 import androidx.activity.viewModels
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.knight.kotlin.library_base.activity.BaseActivity
+import com.knight.kotlin.library_base.config.Appconfig
 import com.knight.kotlin.library_base.config.CacheKey
 import com.knight.kotlin.library_base.entity.LoginEntity
 import com.knight.kotlin.library_base.entity.UserInfoEntity
@@ -160,6 +161,7 @@ class QuickLoginActivity :  BaseActivity<MineQuickloginActivityBinding,QuickLogi
 
 
     private fun setUserInfo(userInfo:UserInfoEntity) {
+        Appconfig.user = userInfo
         //保存用户信息
         CacheUtils.saveDataInfo(CacheKey.USER,userInfo)
         //登录成功发送事件

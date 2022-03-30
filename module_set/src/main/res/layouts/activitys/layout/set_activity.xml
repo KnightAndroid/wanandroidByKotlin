@@ -233,8 +233,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/base_dimen_26"
-            android:layout_marginTop="@dimen/base_dimen_20"
-            >
+            android:layout_marginTop="@dimen/base_dimen_20">
+
             <TextView
                 android:id="@+id/set_tv_changetextsize"
                 android:layout_width="wrap_content"
@@ -251,6 +251,53 @@
                 android:layout_marginRight="@dimen/base_dimen_20"
                 android:background="@drawable/base_iv_right_arrow" />
 
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/set_rl_about_margin_left"
+            android:layout_marginTop="@dimen/set_rl_about_margin_top">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/set_about_wanandroid"
+                android:textColor="@color/set_tv_about_wanandroid_color"
+                android:textSize="@dimen/set_tv_about_text_size"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/set_tv_about_wanandroid_arrow_margin_right"
+                android:background="@drawable/base_iv_right_arrow" />
+
+        </RelativeLayout>
+
+       <!--退出账户-->
+        <RelativeLayout
+            android:id="@+id/set_rl_logout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/set_rl_logout_margin_left"
+            android:layout_marginTop="@dimen/set_rl_logout_margin_top">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/set_quit_account"
+                android:textColor="@color/set_tv_logout_color"
+                android:textSize="@dimen/set_tv_logout_text_size"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/set_tv_logout_arrow_margin_right"
+                android:background="@drawable/base_iv_right_arrow" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -279,6 +326,7 @@
 
         </RelativeLayout>
 
+        </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -336,10 +384,140 @@
                 android:textColor="@color/base_color_title"
                 android:textSize="@dimen/base_dimen_text_size_18" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/set_tv_changetextsize_arrow_margin_right"
+                android:background="@drawable/base_iv_right_arrow" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/set_rl_gesture_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/set_rl_gesture_password_margin_left"
+            android:layout_marginTop="@dimen/set_rl_gesture_password_margin_top"
+            >
+
+            <TextView
+                android:id="@+id/set_tv_gesture_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/set_gesture_password"
+                android:textColor="@color/set_tv_gesture_password_color"
+                android:textSize="@dimen/set_tv_gesture_password_text_size"/>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/set_tv_gesture_password_arrow_margin_right"
+                android:background="@drawable/base_iv_right_arrow"/>
 
         </RelativeLayout>
 
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/set_rl_clearcache_margin_left"
+            android:layout_marginTop="@dimen/set_rl_clearcache_margin_top">
+
+            <TextView
+                android:id="@+id/set_tv_clearcache"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/set_clear_cache"
+                android:textColor="@color/set_tv_clearcache_color"
+                android:textSize="@dimen/set_tv_clearcache_text_size"
+                />
+
+
+            <TextView
+                android:id="@+id/set_cachememory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/set_tv_clearcache"
+                tools:text="10.23MB" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/set_tv_cachememory_margin_right"
+                android:background="@drawable/base_iv_right_arrow" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/set_tv_other"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/base_dimen_26"
+            android:layout_marginTop="@dimen/base_dimen_30"
+            android:text="@string/set_other"
+            android:textColor="@color/base_color_theme"
+            android:textSize="@dimen/set_tv_other_text_size" />
+
+         <RelativeLayout
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_marginLeft="@dimen/set_rl_project_repository_margin_left"
+             android:layout_marginTop="@dimen/set_rl_project_repository_margin_top">
+
+             <TextView
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:tag="oneLevelText"
+                 android:text="@string/set_project_repository"
+                 android:textColor="@color/set_tv_project_repository_color"
+                 android:textSize="@dimen/set_tv_project_repository_text_size" />
+
+
+             <TextView
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_alignParentRight="true"
+                 android:layout_centerVertical="true"
+                 android:layout_marginRight="@dimen/set_tv_project_repository_arrow_margin_right"
+                 android:background="@drawable/base_iv_right_arrow" />
+
+
+
+         </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/set_rl_official_website_margin_left"
+            android:layout_marginTop="@dimen/set_rl_official_website_margin_top">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/set_official_website"
+                android:textColor="@color/set_tv_official_website_color"
+                android:textSize="@dimen/set_tv_official_website_text_size"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/set_tv_official_website_arrow_margin_right"
+                android:background="@drawable/base_iv_right_arrow" />
+
+
+
+        </RelativeLayout>
 
 
 
