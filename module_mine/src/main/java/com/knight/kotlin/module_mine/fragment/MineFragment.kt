@@ -54,7 +54,7 @@ class MineFragment: BaseFragment<MineFragmentBinding, MineViewModel>() {
              mineIvMessage.visibility = View.GONE
          }
 
-        setOnClickListener(mineTvUsername)
+        setOnClickListener(mineTvUsername,mineRlSetup)
 
     }
 
@@ -142,6 +142,10 @@ class MineFragment: BaseFragment<MineFragmentBinding, MineViewModel>() {
                     }
                 }
             }
+            mBinding.mineRlSetup -> {
+
+            }
+
         }
     }
 

@@ -226,7 +226,7 @@
 
                 <!--系统设置-->
                 <RelativeLayout
-                    android:id="@+id/rl_mine_setup"
+                    android:id="@+id/mine_rl_setup"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/mine_rl_system_set_margin_top"
