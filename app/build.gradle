@@ -42,8 +42,37 @@ android {
 
     }
 
+
+
+
     buildTypes {
+
+        debug {
+            //代码混淆开关
+            minifyEnabled false
+            //移除无用资源
+            shrinkResources false
+            //压缩对齐开关
+            zipAlignEnabled false
+            //混淆规则文件
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            //签名信息配置
+            signingConfig signingConfigs.release
+        }
+
         release {
+            //代码混淆开关
+            minifyEnabled true
+            //移除无用资源
+            shrinkResources true
+            //压缩对齐开关
+            zipAlignEnabled true
+            //混淆规则文件
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            //签名信息配置
+            signingConfig signingConfigs.release
+        }
+        master {
             //代码混淆开关
             minifyEnabled true
             //移除无用资源

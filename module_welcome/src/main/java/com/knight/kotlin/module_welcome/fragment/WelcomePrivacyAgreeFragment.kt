@@ -23,6 +23,7 @@ import com.knight.kotlin.library_base.vm.EmptyViewModel
 import com.knight.kotlin.library_util.TextClickUtils
 import com.knight.kotlin.library_util.TextClickUtils.OnClickToWebListener
 import com.knight.kotlin.library_util.ViewInitUtils
+import com.knight.kotlin.library_util.startPage
 import com.knight.kotlin.module_welcome.databinding.WelcomePrivacyAgreeFragmentBinding
 import kotlin.system.exitProcess
 
@@ -58,7 +59,7 @@ class WelcomePrivacyAgreeFragment : BaseDialogFragment<WelcomePrivacyAgreeFragme
        //初始化危险类sdk
        BaseApp.application.initDangrousSdk()
        dismiss()
-       ARouter.getInstance().build(RouteActivity.Main.MainActivity).navigation()
+       startPage(RouteActivity.Main.MainActivity)
        activity?.finish()
     }
 

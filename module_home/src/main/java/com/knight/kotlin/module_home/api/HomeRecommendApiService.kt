@@ -1,9 +1,9 @@
 package com.knight.kotlin.module_home.api
 
+import com.knight.kotlin.library_common.entity.OfficialAccountEntity
 import com.knight.kotlin.library_network.bean.BaseResponse
 import com.knight.kotlin.module_home.entity.BannerBean
 import com.knight.kotlin.module_home.entity.HomeArticleListBean
-import com.knight.kotlin.library_common.entity.OfficialAccountEntity
 import com.knight.kotlin.module_home.entity.TopArticleBean
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -65,7 +65,7 @@ interface HomeRecommendApiService {
      *
      * 取消收藏
      */
-    @POST("lg/uncollect_originId/{uncollectArticleId}/json")
+    @POST("lg/uncollect_originId/{unCollectArticleId}/json")
     suspend fun unCollectArticle(@Path("unCollectArticleId") unCollectArticleId:Int):BaseResponse<Any>
 
 

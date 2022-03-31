@@ -6,7 +6,9 @@ import android.util.Base64
 import android.view.View
 import androidx.fragment.app.viewModels
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.alibaba.android.arouter.launcher.ARouter
 import com.knight.kotlin.library_aop.clickintercept.SingleClick
+import com.knight.kotlin.library_base.annotation.EventBusRegister
 import com.knight.kotlin.library_base.config.Appconfig
 import com.knight.kotlin.library_base.config.CacheKey
 import com.knight.kotlin.library_base.entity.LoginEntity
@@ -16,12 +18,15 @@ import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.knight.kotlin.library_base.ktx.getUser
 import com.knight.kotlin.library_base.ktx.observeLiveData
 import com.knight.kotlin.library_base.ktx.observeLiveDataWithError
+import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.route.RouteFragment
 import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_base.util.ColorUtils
 import com.knight.kotlin.library_base.util.EventBusUtils
 import com.knight.kotlin.library_base.util.GsonUtils
+import com.knight.kotlin.library_util.dismissHud
 import com.knight.kotlin.library_util.image.ImageLoader
+import com.knight.kotlin.library_util.showHud
 import com.knight.kotlin.library_util.toast.ToastUtils
 import com.knight.kotlin.module_mine.R
 import com.knight.kotlin.module_mine.activity.LoginActivity
@@ -42,6 +47,7 @@ import javax.crypto.IllegalBlockSizeException
  * Time:2021/12/23 18:12
  * Description:MineFragment
  */
+@EventBusRegister
 @AndroidEntryPoint
 @Route(path = RouteFragment.Mine.MineFragment)
 class MineFragment: BaseFragment<MineFragmentBinding, MineViewModel>() {
@@ -86,6 +92,7 @@ class MineFragment: BaseFragment<MineFragmentBinding, MineViewModel>() {
      */
     private fun setUserInfoCoin(userInfoCoinEntity: UserInfoCoinEntity) {
         requestSuccess()
+        dismissHud()
         //设置头像
         val gradientDrawable = GradientDrawable()
         gradientDrawable.shape = GradientDrawable.OVAL
@@ -103,13 +110,14 @@ class MineFragment: BaseFragment<MineFragmentBinding, MineViewModel>() {
      * 登录完信息
      */
     private fun setUserInfo(userInfo:UserInfoEntity) {
+
         mViewModel.getUserInfoCoin()
         mBinding.mineIvMessage.visibility = View.VISIBLE
         Appconfig.user = userInfo
         //保存用户信息
         CacheUtils.saveDataInfo(CacheKey.USER,userInfo)
         //登录成功发送事件
-        EventBusUtils.postEvent(MessageEvent(MessageEvent.MessageType.LogoutSuccess))
+        EventBusUtils.postEvent(MessageEvent(MessageEvent.MessageType.LoginSuccess))
     }
 
     /**
@@ -143,7 +151,7 @@ class MineFragment: BaseFragment<MineFragmentBinding, MineViewModel>() {
                 }
             }
             mBinding.mineRlSetup -> {
-
+                  ARouter.getInstance().build(RouteActivity.Set.SetActivity).navigation()
             }
 
         }
@@ -155,8 +163,10 @@ class MineFragment: BaseFragment<MineFragmentBinding, MineViewModel>() {
         when (event.type) {
             MessageEvent.MessageType.LoginSuccess ->{
                 //登录成功 请求金币信息
+                showHud(requireActivity(),getString(R.string.mine_request_loading))
                 mViewModel.getUserInfoCoin()
                 mBinding.mineIvMessage.visibility = View.VISIBLE
+
             }
 
             MessageEvent.MessageType.LogoutSuccess -> {

@@ -3,7 +3,7 @@
     package="com.knight.kotlin.module_set">
 
     <application>
-
+        <activity android:name=".activity.SetActivity"/>
     </application>
 
 </manifest>

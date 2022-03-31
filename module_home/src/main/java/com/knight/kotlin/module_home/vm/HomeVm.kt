@@ -2,6 +2,7 @@ package com.knight.kotlin.module_home.vm
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.knight.kotlin.library_base.entity.UserInfoEntity
 import com.knight.kotlin.library_base.vm.BaseViewModel
 import com.knight.kotlin.library_common.entity.AppUpdateBean
 import com.knight.kotlin.library_database.db.AppDataBase
@@ -38,6 +39,8 @@ class HomeVm @Inject constructor(private val mRepo:HomeRepo): BaseViewModel(){
     val articles = MutableLiveData<List<PushDateEntity>>()
     //获取APP版本更新
     val appUpdateMessage = MutableLiveData<AppUpdateBean>()
+    //登录信息
+    val userInfo = MutableLiveData<UserInfoEntity>()
 
 
     /**
@@ -101,6 +104,21 @@ class HomeVm @Inject constructor(private val mRepo:HomeRepo): BaseViewModel(){
                 .catch { toast(it.message ?: "") }
                 .collect {
                 }
+        }
+    }
+
+    /**
+     * 登录
+     */
+    fun login(userName:String,passWord:String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            mRepo.login(userName, passWord)
+                .catch {
+                    toast(it.message ?: "")
+                    requestSuccessFlag.postValue(false)
+                }
+                .collect {
+                    userInfo.postValue(it) }
         }
     }
 

@@ -29,7 +29,7 @@ object CacheUtils {
     /**
      * 保存对象信息
      */
-    fun <T> saveDataInfo(tag: String?, data: T?) {
+    fun <T> saveDataInfo(tag: String?, data: T) {
         if (data == null) {
             return
         }
@@ -124,8 +124,8 @@ object CacheUtils {
      *
      * @return
      */
-    fun getStatusBarIsWithTheme(): Boolean? {
-        return mmkv?.decodeBool(CacheKey.STATUSWITHTHEME, false)
+    fun getStatusBarIsWithTheme(): Boolean {
+        return mmkv?.decodeBool(CacheKey.STATUSWITHTHEME, false) ?: false
     }
 
     /**
@@ -306,8 +306,8 @@ object CacheUtils {
      * 返回是否开启手势密码登录
      * @return
      */
-    fun getGestureLogin(): Boolean? {
-        return mmkv?.decodeBool(CacheKey.GESTURELOGIN, false)
+    fun getGestureLogin(): Boolean {
+        return mmkv?.decodeBool(CacheKey.GESTURELOGIN, false) ?: false
     }
 
     /**

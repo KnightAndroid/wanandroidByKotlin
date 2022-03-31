@@ -1,6 +1,7 @@
 package com.knight.kotlin.library_util
 
 import android.widget.Toast
+import com.alibaba.android.arouter.launcher.ARouter
 import com.knight.kotlin.library_util.toast.ToastUtils
 
 /**
@@ -28,4 +29,14 @@ fun toast(msg:String,duration: Int = Toast.LENGTH_SHORT) {
  */
 fun toast(msgId:Int,duration:Int = Toast.LENGTH_SHORT) {
     ToastUtils.show(msgId)
+}
+
+
+/**
+ * 跳转activity
+ *
+ */
+fun startPage(activity:String) {
+    ARouter.getInstance().build(activity).navigation()
+
 }

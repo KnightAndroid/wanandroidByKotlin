@@ -139,7 +139,7 @@ class LoginActivity : BaseActivity<MineLoginActivityBinding,LoginViewModel>(){
         Appconfig.user = userInfo
         //保存用户信息
         CacheUtils.saveDataInfo(CacheKey.USER, userInfo)
-        val loginMessage = GsonUtils.toJson(LoginEntity(mBinding.mineLoginUsername.text.toString().trim(),mBinding.mineLoginPassword.toString().trim()))
+        val loginMessage = GsonUtils.toJson(LoginEntity(mBinding.mineLoginUsername.text.toString().trim(),mBinding.mineLoginPassword.text.toString().trim()))
         if (!CacheUtils.getFingerLogin()) {
             //没开通就开通快捷登录
             openBlomtric(loginMessage)

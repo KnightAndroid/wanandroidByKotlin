@@ -14,6 +14,7 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.google.common.reflect.TypeToken
 import com.knight.kotlin.library_aop.loginintercept.LoginCheck
+import com.knight.kotlin.library_base.annotation.EventBusRegister
 import com.knight.kotlin.library_base.event.MessageEvent
 import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.knight.kotlin.library_base.ktx.getUser
@@ -36,6 +37,8 @@ import com.knight.kotlin.library_util.toast.ToastUtils
 import com.knight.kotlin.library_widget.ktx.init
 import com.knight.kotlin.library_widget.ktx.setItemChildClickListener
 import com.knight.kotlin.library_widget.ktx.setItemClickListener
+import com.knight.kotlin.library_widget.skeleton.Skeleton
+import com.knight.kotlin.library_widget.skeleton.SkeletonScreen
 import com.knight.kotlin.module_home.R
 import com.knight.kotlin.module_home.activity.HomeArticlesTabActivity
 import com.knight.kotlin.module_home.adapter.HomeArticleAdapter
@@ -69,6 +72,7 @@ import org.greenrobot.eventbus.ThreadMode
  * Time:2021/12/29 15:46
  * Description:HomeRecommendFragment
  */
+@EventBusRegister
 @AndroidEntryPoint
 @Route(path = RouteFragment.Home.RecommendFragment)
 class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRecommendVm>(),
@@ -86,7 +90,11 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
     private val mHomeArticleAdapter: HomeArticleAdapter by lazy { HomeArticleAdapter(arrayListOf()) }
 
     //公众号适配器
-    private val mOfficialAccountAdapter:OfficialAccountAdapter by lazy {OfficialAccountAdapter(arrayListOf())}
+    private val mOfficialAccountAdapter: OfficialAccountAdapter by lazy {
+        OfficialAccountAdapter(
+            arrayListOf()
+        )
+    }
 
     //头部View
     private val recommendHeadView: View by lazy {
@@ -100,7 +108,7 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
     private lateinit var home_tv_unread_message: TextView
 
     //公众号列表
-    private lateinit var home_rv_official_account:SwipeRecyclerView
+    private lateinit var home_rv_official_account: SwipeRecyclerView
 
     //头部的尾部
     private val topArticleFootView: View by lazy {
@@ -122,14 +130,20 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
     //置顶文章是否展开
     private var isShowOnlythree = false
 
-
     //头部view中的recycleview
     private lateinit var home_top_article_rv: SwipeRecyclerView
+
+    private var mSkeletonScreen: SkeletonScreen? = null
 
     override fun setThemeColor(isDarkMode: Boolean) {
     }
 
     override fun HomeRecommendFragmentBinding.initView() {
+        mSkeletonScreen = Skeleton.bind(mBinding.rlHome)
+            .load(R.layout.activity_home_skeleton)
+            .duration(1200)
+            .angle(0)
+            .show()
         bindHeadView()
         initTopAdapter()
         initOfficialListener()
@@ -210,7 +224,7 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
         currentPage = 0
         //未读信息请求
         getUser()?.let {
-           mViewModel.getUnreadMessage()
+            mViewModel.getUnreadMessage()
         }
         //获取置顶文章
         mViewModel.getTopArticle()
@@ -226,8 +240,8 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
         observeLiveData(mViewModel.bannerList, ::setBanner)
         observeLiveData(mViewModel.collectArticle, ::collectSucess)
         observeLiveData(mViewModel.unCollectArticle, ::unCollectSuccess)
-        observeLiveData(mViewModel.unReadMessageNumber,::setUnreadMessage)
-        observeLiveData(mViewModel.officialAccountList,::setOfficialAccount)
+        observeLiveData(mViewModel.unReadMessageNumber, ::setUnreadMessage)
+        observeLiveData(mViewModel.officialAccountList, ::setOfficialAccount)
 
     }
 
@@ -350,7 +364,6 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
                 }
 
 
-
             }
 
             //Item点击事件
@@ -371,9 +384,9 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
      *
      * 处理未读消息
      */
-    private fun setUnreadMessage(number:Int) {
+    private fun setUnreadMessage(number: Int) {
         if (number > 0) {
-            var strMsg:String = ""
+            var strMsg: String = ""
             home_rl_message.visibility = View.VISIBLE
             if (LanguageFontSizeUtils.isChinese()) {
                 strMsg = "您有<font color=\"#EE7931\"> $number</font> 条未读消息</font>"
@@ -414,7 +427,7 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
      * 设置公众号数据
      *
      */
-    private fun setOfficialAccount(data : MutableList<OfficialAccountEntity>) {
+    private fun setOfficialAccount(data: MutableList<OfficialAccountEntity>) {
         mOfficialAccountAdapter.setNewInstance(data)
     }
 
@@ -424,18 +437,24 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
      * 绑定公众号布局管理器
      */
     private fun initOfficialListener() {
-        home_rv_official_account.init(StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.HORIZONTAL),mOfficialAccountAdapter,true)
+        home_rv_official_account.init(
+            StaggeredGridLayoutManager(
+                2,
+                StaggeredGridLayoutManager.HORIZONTAL
+            ), mOfficialAccountAdapter, true
+        )
 
         mOfficialAccountAdapter.run {
             //Item点击事件
-            setItemClickListener {adapter, view, position ->
+            setItemClickListener { adapter, view, position ->
                 ARouter.getInstance().build(RouteActivity.Wechat.WechatTabActivity)
-                    .withParcelableArrayList("data",ArrayList(data))
-                    .withInt("position",position)
+                    .withParcelableArrayList("data", ArrayList(data))
+                    .withInt("position", position)
                     .navigation()
             }
         }
     }
+
     /**
      *
      * 设置文章列表事件监听
@@ -510,6 +529,7 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
      * 获取首页文章列表数据
      */
     private fun setArticles(data: HomeArticleListBean) {
+        mSkeletonScreen?.hide()
         //这里返回的页码自己+1
         currentPage = data.curPage
         mBinding.recommendRefreshLayout.finishLoadMore()

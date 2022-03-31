@@ -1,5 +1,6 @@
 package com.knight.kotlin.module_home.repo
 
+import com.knight.kotlin.library_base.entity.UserInfoEntity
 import com.knight.kotlin.library_base.repository.BaseRepository
 import com.knight.kotlin.library_common.entity.AppUpdateBean
 import com.knight.kotlin.library_network.model.responseCodeExceptionHandler
@@ -33,6 +34,17 @@ class HomeRepo @Inject constructor() : BaseRepository() {
     suspend fun checkAppUpdateMessage() = request<AppUpdateBean>{
         mHomeApiService.checkAppUpdateMessage().run {
             responseCodeExceptionHandler(code, msg)
+            emit(data)
+        }
+    }
+
+    /**
+     *
+     * 登录
+     */
+    suspend fun login(userName:String,passWord:String) = request<UserInfoEntity>{
+        mHomeApiService.login(userName,passWord).run {
+            responseCodeExceptionHandler(code,msg)
             emit(data)
         }
     }

@@ -30,4 +30,5 @@
     <string name="mine_blomtric_cancel">Cancel</string>
     <string name="mine_nodata_gradle">Gradle -</string>
     <string name="mine_nodata_rank">Rank -</string>
+    <string name="mine_request_loading">Waiting...</string>
 </resources>

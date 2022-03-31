@@ -80,6 +80,7 @@ object Dependencies {
        const val BaseAdapter = "3.0.4"                     // Base适配器
        const val RecycleviewVersion = "1.3.2"              // recycleview
        const val BannerVersion = "2.2.2"                   // Banner
+       const val ShimmerLayoutVersion = "2.1.0"            // shimmerLayout
        //其他相关------------------------------------------------------
        const val Aspectj = "1.9.7"                         // aop相关
     }
@@ -224,6 +225,8 @@ object Dependencies {
         const val SwipeRecyclerView = "com.yanzhenjie.recyclerview:x:${Version.RecycleviewVersion}"
         //Banner https://github.com/youth5201314/banner
         const val Banner = "io.github.youth5201314:banner:${Version.BannerVersion}"
+        //骨架屏 https://github.com/team-supercharge/ShimmerLayout
+        const val ShimmerLayout = "io.supercharge:shimmerlayout:${Version.ShimmerLayoutVersion}"
     }
 
 

@@ -1,5 +1,7 @@
 //library_base 配置文件
 import com.knight.wanandroid.buildsrc.*
+import org.gradle.api.internal.collections.DefaultPendingSource
+
 apply from:'../base_library.gradle'
 apply plugin: 'dagger.hilt.android.plugin'
 android {
@@ -25,6 +27,7 @@ dependencies {
     api Dependencies.GitHub.SmartFooter
     api Dependencies.GitHub.SmartHeaderTwoLevel
     api Dependencies.GitHub.MagicIndicator
+    implementation Dependencies.GitHub.ShimmerLayout
 
 
 }
