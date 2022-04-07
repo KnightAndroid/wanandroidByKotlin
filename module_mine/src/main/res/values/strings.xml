@@ -30,4 +30,13 @@
     <string name="mine_nodata_gradle">等级 -</string>
     <string name="mine_nodata_rank">排名第 -</string>
     <string name="mine_request_loading">请稍等...</string>
+    <string name="mine_register_namehint">请输入注册账号</string>
+    <string name="mine_register_confirm">确认密码</string>
+    <string name="mine_register_againconfirm_hint">请再一次填写确认密码</string>
+    <string name="mine_register">注册</string>
+    <string name="mine_confirmpassowrd_notempty">确认密码不能为空</string>
+    <string name="mine_passworduneaual">密码和确认密码不一致,请重新输入</string>
+    <string name="mine_register_loading">注册中,请稍等...</string>
+
+
 </resources>

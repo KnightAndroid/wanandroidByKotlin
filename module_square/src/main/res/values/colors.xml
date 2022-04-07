@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <color name="square_tv_articletitle_color">#333333</color>
+    <color name="square_sharearticle_et_color">#333333</color>
+    <color name="square_sharearticle_et_hint_color">#999999</color>
+    <color name="square_tv_article_link_color">#333333</color>
 </resources>

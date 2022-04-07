@@ -31,4 +31,11 @@
     <string name="mine_nodata_gradle">Gradle -</string>
     <string name="mine_nodata_rank">Rank -</string>
     <string name="mine_request_loading">Waiting...</string>
+    <string name="mine_register_namehint">Please enter the registered account</string>
+    <string name="mine_register_confirm">Confirm password</string>
+    <string name="mine_register_againconfirm_hint">Please fill in the confirmation password again</string>
+    <string name="mine_register">Register</string>
+    <string name="mine_confirmpassowrd_notempty">Confirm password cannot be empty</string>
+    <string name="mine_passworduneaual">The confirmation password cannot be blank. The password and confirmation password are inconsistent. Please re-enter</string>
+    <string name="mine_register_loading">Register...</string>
 </resources>

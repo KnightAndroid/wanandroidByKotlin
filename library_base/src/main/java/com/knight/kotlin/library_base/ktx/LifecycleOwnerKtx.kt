@@ -52,3 +52,13 @@ inline fun <T> LifecycleOwner.observeLiveDataWithError(
         }
     }
 }
+
+/**
+ *
+ * 对值监听
+ */
+inline fun <T> LifecycleOwner.observeEventData(liveData: LiveData<T>,crossinline observer: () -> Unit) {
+    liveData.observe(this) {
+        observer()
+    }
+}

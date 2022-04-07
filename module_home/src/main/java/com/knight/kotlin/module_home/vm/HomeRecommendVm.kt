@@ -3,16 +3,19 @@ package com.knight.kotlin.module_home.vm
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.knight.kotlin.library_base.vm.BaseViewModel
+import com.knight.kotlin.library_common.entity.OfficialAccountEntity
 import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_home.entity.BannerBean
 import com.knight.kotlin.module_home.entity.HomeArticleListBean
-import com.knight.kotlin.library_common.entity.OfficialAccountEntity
 import com.knight.kotlin.module_home.entity.TopArticleBean
 import com.knight.kotlin.module_home.repo.HomeRecommendRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.onCompletion
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -59,10 +62,17 @@ class HomeRecommendVm @Inject constructor(private val mRepo: HomeRecommendRepo) 
     fun getTopArticle() {
         viewModelScope.launch(Dispatchers.IO) {
             mRepo.getTopArticle()
-                .catch { toast(it.message ?: "") }
-                .collect {
+                .onStart {
+                    //开始
+                }
+                .onEach {
                     topArticles.postValue(it)
                 }
+                .onCompletion {
+                    //结束
+                }
+                .catch { toast(it.message ?: "") }
+                .collect()
         }
     }
 

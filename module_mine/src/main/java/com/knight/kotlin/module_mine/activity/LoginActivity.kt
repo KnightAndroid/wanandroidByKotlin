@@ -12,9 +12,10 @@ import com.knight.kotlin.library_base.config.CacheKey
 import com.knight.kotlin.library_base.entity.LoginEntity
 import com.knight.kotlin.library_base.entity.UserInfoEntity
 import com.knight.kotlin.library_base.event.MessageEvent
-import com.knight.kotlin.library_base.ktx.observeLiveData
+import com.knight.kotlin.library_base.ktx.dismissLoading
 import com.knight.kotlin.library_base.ktx.observeLiveDataWithError
 import com.knight.kotlin.library_base.ktx.setOnClick
+import com.knight.kotlin.library_base.ktx.showLoading
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_base.util.EventBusUtils
@@ -22,8 +23,7 @@ import com.knight.kotlin.library_base.util.GsonUtils
 import com.knight.kotlin.library_base.util.dp2px
 import com.knight.kotlin.library_util.SoftInputScrollUtils
 import com.knight.kotlin.library_util.SystemUtils
-import com.knight.kotlin.library_util.dismissHud
-import com.knight.kotlin.library_util.showHud
+import com.knight.kotlin.library_util.startPage
 import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_mine.R
 import com.knight.kotlin.module_mine.databinding.MineLoginActivityBinding
@@ -90,7 +90,7 @@ class LoginActivity : BaseActivity<MineLoginActivityBinding,LoginViewModel>(){
         }
         mineTvLogin.setOnClick {
             if (validateLoginMessage()) {
-                showHud(this@LoginActivity,getString(R.string.mine_request_login))
+                showLoading(getString(R.string.mine_request_login))
                 mViewModel.login(mineLoginUsername.text.toString().trim(),mineLoginPassword.text.toString().trim())
             }
 
@@ -98,10 +98,8 @@ class LoginActivity : BaseActivity<MineLoginActivityBinding,LoginViewModel>(){
 
         mineTvRegister.setOnClick {
             //跳到注册页面
+            startPage(RouteActivity.Mine.RegisterActivity)
         }
-
-
-
 
     }
 
@@ -120,7 +118,6 @@ class LoginActivity : BaseActivity<MineLoginActivityBinding,LoginViewModel>(){
     }
 
     override fun initObserver() {
-        observeLiveData(mViewModel.userInfo,::setUserInfo)
         observeLiveDataWithError(mViewModel.userInfo,mViewModel.requestSuccessFlag,::setUserInfo,::requestUserInfoError)
     }
 
@@ -134,7 +131,7 @@ class LoginActivity : BaseActivity<MineLoginActivityBinding,LoginViewModel>(){
 
 
     private fun setUserInfo(userInfo:UserInfoEntity){
-        dismissHud()
+        dismissLoading()
         //登录成功发送事件
         Appconfig.user = userInfo
         //保存用户信息
@@ -162,7 +159,7 @@ class LoginActivity : BaseActivity<MineLoginActivityBinding,LoginViewModel>(){
      * 请求用户信息接口错误
      */
     private fun requestUserInfoError(){
-        dismissHud()
+        dismissLoading()
     }
 
     /**

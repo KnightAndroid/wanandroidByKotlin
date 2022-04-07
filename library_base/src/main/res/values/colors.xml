@@ -9,4 +9,5 @@
     <color name="base_tv_articletitle_color">#333333</color>
     <color name="base_item_articledata_color">#999999</color>
     <color name="base_item_bottomview_color">#EFF2F5</color>
+    <color name="base_progress_color">#4E4E4E</color>
 </resources>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="square_app_name">module_square</string>
+    <string name="square_share_article_title">Article title</string>
+    <string name="square_max_length_hint">Within 100 words</string>
+    <string name="square_article_link">Article link</string>
+</resources>

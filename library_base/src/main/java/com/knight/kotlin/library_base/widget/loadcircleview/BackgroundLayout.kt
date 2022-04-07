@@ -1,12 +1,12 @@
-package com.knight.kotlin.library_widget.loadcircleview
+package com.knight.kotlin.library_base.widget.loadcircleview
 
 import android.content.Context
 import android.graphics.drawable.GradientDrawable
 import android.os.Build
 import android.util.AttributeSet
 import android.widget.LinearLayout
+import com.knight.kotlin.library_base.R
 import com.knight.kotlin.library_base.util.dp2px
-import com.knight.kotlin.library_widget.R
 
 /**
  * Author:Knight
@@ -25,7 +25,7 @@ class BackgroundLayout : LinearLayout {
     }
 
     private fun init() {
-        val color = context.resources.getColor(R.color.widget_progress_color)
+        val color = context.resources.getColor(R.color.base_progress_color)
         initBackground(color, mCornerRadius)
     }
 

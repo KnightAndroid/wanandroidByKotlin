@@ -15,18 +15,18 @@ import com.knight.kotlin.library_base.entity.LoginEntity
 import com.knight.kotlin.library_base.entity.UserInfoEntity
 import com.knight.kotlin.library_base.event.MessageEvent
 import com.knight.kotlin.library_base.fragment.BaseFragment
+import com.knight.kotlin.library_base.ktx.dismissLoading
 import com.knight.kotlin.library_base.ktx.getUser
 import com.knight.kotlin.library_base.ktx.observeLiveData
 import com.knight.kotlin.library_base.ktx.observeLiveDataWithError
+import com.knight.kotlin.library_base.ktx.showLoading
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.route.RouteFragment
 import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_base.util.ColorUtils
 import com.knight.kotlin.library_base.util.EventBusUtils
 import com.knight.kotlin.library_base.util.GsonUtils
-import com.knight.kotlin.library_util.dismissHud
 import com.knight.kotlin.library_util.image.ImageLoader
-import com.knight.kotlin.library_util.showHud
 import com.knight.kotlin.library_util.toast.ToastUtils
 import com.knight.kotlin.module_mine.R
 import com.knight.kotlin.module_mine.activity.LoginActivity
@@ -92,7 +92,7 @@ class MineFragment: BaseFragment<MineFragmentBinding, MineViewModel>() {
      */
     private fun setUserInfoCoin(userInfoCoinEntity: UserInfoCoinEntity) {
         requestSuccess()
-        dismissHud()
+        dismissLoading()
         //设置头像
         val gradientDrawable = GradientDrawable()
         gradientDrawable.shape = GradientDrawable.OVAL
@@ -163,7 +163,7 @@ class MineFragment: BaseFragment<MineFragmentBinding, MineViewModel>() {
         when (event.type) {
             MessageEvent.MessageType.LoginSuccess ->{
                 //登录成功 请求金币信息
-                showHud(requireActivity(),getString(R.string.mine_request_loading))
+                showLoading(getString(R.string.mine_request_loading))
                 mViewModel.getUserInfoCoin()
                 mBinding.mineIvMessage.visibility = View.VISIBLE
 

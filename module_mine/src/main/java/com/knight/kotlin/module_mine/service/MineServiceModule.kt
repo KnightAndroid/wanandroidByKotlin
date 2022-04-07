@@ -3,6 +3,7 @@ package com.knight.kotlin.module_mine.service
 import com.knight.kotlin.module_mine.api.LoginApiService
 import com.knight.kotlin.module_mine.api.MineApiService
 import com.knight.kotlin.module_mine.api.QuickLoginApiService
+import com.knight.kotlin.module_mine.api.RegisterApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -55,6 +56,21 @@ class MineServiceModule {
     fun provideLoginApiService(retrofit: Retrofit):LoginApiService {
         return retrofit.create(LoginApiService::class.java)
     }
+
+    /**
+     * Mine模块的[RegisterApiService]依赖提供方法
+     *
+     * @param retrofit Retrofit
+     * @return RegisterApiService
+     */
+    @Singleton
+    @Provides
+    fun provideRegisterApiService(retrofit: Retrofit): RegisterApiService {
+        return retrofit.create(RegisterApiService::class.java)
+    }
+
+
+
 
 
 

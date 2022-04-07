@@ -28,6 +28,16 @@ object RouteActivity {
 
 
     /**
+     *
+     * 广场模块
+     */
+    object Square {
+        private const val SQUARE = "/module_square"
+        const val SquareShareArticleActivity = "$SQUARE/ShareArticleActivity"
+    }
+
+
+    /**
      * 公众号模块
      *
      */
@@ -66,6 +76,7 @@ object RouteActivity {
         private const val MINE = "/module_mine"
         const val QuickLoginActivity = "$MINE/QuickLoginActivity"
         const val LoginActivity = "$MINE/LoginActivity"
+        const val RegisterActivity = "$MINE/RegisterActivity"
 
     }
 

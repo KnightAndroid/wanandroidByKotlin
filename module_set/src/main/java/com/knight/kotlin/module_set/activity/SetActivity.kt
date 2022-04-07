@@ -16,8 +16,6 @@ import com.knight.kotlin.library_base.util.ColorUtils
 import com.knight.kotlin.library_base.util.EventBusUtils
 import com.knight.kotlin.library_util.CacheFileUtils
 import com.knight.kotlin.library_util.DialogUtils
-import com.knight.kotlin.library_util.dismissHud
-import com.knight.kotlin.library_util.showHud
 import com.knight.kotlin.module_set.R
 import com.knight.kotlin.module_set.databinding.SetActivityBinding
 import com.knight.kotlin.module_set.vm.SetVm
@@ -79,7 +77,7 @@ class SetActivity : BaseActivity<SetActivityBinding, SetVm>(){
     }
 
     private fun logoutSuccess(logout:Boolean) {
-        dismissHud()
+       // dismissLoading()
         mBinding.setRlLogout.visibility = View.GONE
         mBinding.setRlGesturePassword.visibility = View.GONE
         CacheUtils.loginOut()
@@ -96,7 +94,7 @@ class SetActivity : BaseActivity<SetActivityBinding, SetVm>(){
                     this@SetActivity,
                     resources.getString(R.string.set_confirm_logout),
                     { _, _ ->
-                        showHud(this@SetActivity,getString(R.string.set_logout))
+                    //    showLoading(getString(R.string.set_logout))
                         mViewModel.logout()
                     }) { dialog, which -> }
             }

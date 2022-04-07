@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <include
+        android:id="@+id/square_sharearticle_toolbar"
+        layout="@layout/base_include_toolbar" />
+
+
+    <TextView
+        android:id="@+id/square_tv_articletitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/base_dimen_24"
+        android:layout_marginTop="@dimen/base_dimen_10"
+        android:text="@string/square_share_article_title"
+        android:textColor="@color/square_tv_articletitle_color"
+        android:textSize="@dimen/square_tv_articletitle_text_size"
+        android:textStyle="bold" />
+
+
+    <com.knight.kotlin.library_widget.ClearEditText
+        android:id="@+id/square_sharearticle_et"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/square_sharearticle_et_margin_left"
+        android:layout_marginRight="@dimen/square_sharearticle_et_margin_right"
+        android:layout_marginTop="@dimen/square_sharearticle_et_margin_top"
+        android:background="@null"
+        android:hint="@string/square_max_length_hint"
+        android:maxEms="100"
+        android:minHeight="@dimen/square_sharearticle_et_min_height"
+        android:textColor="@color/square_sharearticle_et_color"
+        android:textColorHint="@color/square_sharearticle_et_hint_color"
+        android:textCursorDrawable="@drawable/base_textcursorcolor"
+        android:textSelectHandle="@android:color/transparent"
+        android:textSize="@dimen/square_sharearticle_et_text_size"/>
+
+    <TextView
+        android:id="@+id/square_tv_article_link"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/base_dimen_24"
+        android:layout_marginTop="@dimen/base_dimen_10"
+        android:text="@string/square_article_link"
+        android:textColor="@color/square_tv_article_link_color"
+        android:textSize="@dimen/square_tv_article_link_text_size"
+        android:textStyle="bold" />
+
+<!--    <com.knight.kotlin.library_widget.ClearEditText-->
+<!--        android:id="@+id/square_sharearticle_link"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginLeft="@dimen/square_sharearticle_link_margin_left"-->
+<!--        android:layout_marginTop="@dimen/square_sharearticle_link_margin_top"-->
+<!--        android:layout_marginRight="@dimen/square_sharearticle_link_margin_right"-->
+<!--        android:background="@drawable/square_article_link_bg"-->
+<!--        android:gravity="top"-->
+<!--        android:hint="@string/square_article_hintlink"-->
+<!--        android:minHeight="120dp"-->
+<!--        android:paddingLeft="@dimen/base_dimen_5"-->
+<!--        android:paddingTop="@dimen/base_dimen_5"-->
+<!--        android:textColor="@color/base_color_title"-->
+<!--        android:textColorHint="@color/square_color999999"-->
+<!--        android:textCursorDrawable="@drawable/base_textcursorcolor"-->
+<!--        android:textSelectHandle="@android:color/transparent"-->
+<!--        android:textSize="@dimen/base_dimen_text_size_16" />-->
+
+
+
+
+
+
+</LinearLayout>

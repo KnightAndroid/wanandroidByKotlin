@@ -13,4 +13,15 @@
     <color name="mine_login_password_color">#D3D3D3</color>
     <color name="mine_mine_login_password_hint_color">#666666</color>
     <color name="mine_tv_register_color">#666666</color>
+    <color name="mine_register_bg_color">#303030</color>
+    <color name="mine_register_tv_appname_color">#D3D3D3</color>
+    <color name="mine_tv_registeraccountname_color">#D3D3D3</color>
+    <color name="mine_register_username_color">#D3D3D3</color>
+    <color name="mine_register_username_hint_color">#666666</color>
+    <color name="mine_tv_registerpassword_color">#D3D3D3</color>
+    <color name="mine_cl_register_password_color">#D3D3D3</color>
+    <color name="mine_cl_register_password_hint_color">#666666</color>
+    <color name="mine_tv_confirmpassword_color">#D3D3D3</color>
+    <color name="mine_cl_register_confirmpassword_color">#D3D3D3</color>
+    <color name="mine_cl_register_confirmpassword_hint_color">#666666</color>
 </resources>

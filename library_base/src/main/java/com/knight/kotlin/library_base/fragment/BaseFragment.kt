@@ -14,6 +14,7 @@ import com.kingja.loadsir.core.LoadService
 import com.kingja.loadsir.core.LoadSir
 import com.knight.kotlin.library_base.annotation.EventBusRegister
 import com.knight.kotlin.library_base.ktx.ClickAction
+import com.knight.kotlin.library_base.ktx.subscribeData
 import com.knight.kotlin.library_base.loadsir.EmptyCallBack
 import com.knight.kotlin.library_base.loadsir.ErrorCallBack
 import com.knight.kotlin.library_base.loadsir.LoadCallBack
@@ -23,6 +24,7 @@ import com.knight.kotlin.library_base.util.EventBusUtils
 import com.knight.kotlin.library_base.util.ViewRecreateHelper
 import com.knight.kotlin.library_base.view.BaseView
 import com.knight.kotlin.library_base.vm.BaseViewModel
+import com.knight.kotlin.library_base.widget.loadcircleview.ProgressHud
 
 /**
  * Author:Knight
@@ -46,7 +48,7 @@ abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel> : Fragment(), 
     private var isFirst: Boolean = true
 
     protected val mBinding get() = _binding!!
-    protected abstract val mViewModel: VM
+    abstract val mViewModel: VM
 
     /**
      * fragment状态保存工具类
@@ -69,6 +71,8 @@ abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel> : Fragment(), 
      * 全局加载视图
      */
     private lateinit var mLoadService: LoadService<Any>
+
+    val loadingDialog: ProgressHud by lazy{ ProgressHud(requireActivity()) }
 
     /**
      * 懒加载
@@ -105,6 +109,7 @@ abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel> : Fragment(), 
         setThemeColor(isDarkMode)
         mBinding.initView()
         onVisible()
+        subscribeData()
         initObserver()
 
 

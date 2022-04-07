@@ -13,6 +13,7 @@ import com.kingja.loadsir.core.LoadSir
 import com.knight.kotlin.library_base.R
 import com.knight.kotlin.library_base.annotation.EventBusRegister
 import com.knight.kotlin.library_base.ktx.ClickAction
+import com.knight.kotlin.library_base.ktx.subscribeData
 import com.knight.kotlin.library_base.loadsir.EmptyCallBack
 import com.knight.kotlin.library_base.loadsir.ErrorCallBack
 import com.knight.kotlin.library_base.loadsir.LoadCallBack
@@ -26,6 +27,7 @@ import com.knight.kotlin.library_base.util.StatusBarUtils
 import com.knight.kotlin.library_base.util.ViewRecreateHelper
 import com.knight.kotlin.library_base.view.BaseView
 import com.knight.kotlin.library_base.vm.BaseViewModel
+import com.knight.kotlin.library_base.widget.loadcircleview.ProgressHud
 
 /**
  * Author:Knight
@@ -38,7 +40,7 @@ abstract class BaseActivity<VB : ViewBinding,VM : BaseViewModel> : AppCompatActi
         BindingReflex.reflexViewBinding(javaClass,layoutInflater)
     }
 
-    protected abstract val mViewModel:VM
+    public abstract val mViewModel:VM
 
     /**
      * activity页面重建帮助类
@@ -69,6 +71,8 @@ abstract class BaseActivity<VB : ViewBinding,VM : BaseViewModel> : AppCompatActi
      */
     protected var isDarkMode:Boolean = false
 
+    val loadingDialog: ProgressHud by lazy{ ProgressHud(this)}
+
 
 
     /**
@@ -85,7 +89,6 @@ abstract class BaseActivity<VB : ViewBinding,VM : BaseViewModel> : AppCompatActi
     override fun onCreate(savedInstanceState:Bundle?) {
         super.onCreate(savedInstanceState)
         setTheme(getActivityTheme())
-
         setContentView(mBinding.root)
         StatusBarUtils.transparentStatusBar(this)
         //处理保存的状态
@@ -99,8 +102,10 @@ abstract class BaseActivity<VB : ViewBinding,VM : BaseViewModel> : AppCompatActi
         mBinding.initView()
         setThemeColor(isDarkMode)
         initNetworkListener()
+        subscribeData()
         initObserver()
         initRequestData()
+
     }
 
 

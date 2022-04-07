@@ -62,4 +62,7 @@
     <dimen name="base_item_bootom_height">8dp</dimen>
     <dimen name="base_item_bootom_margin_top">16dp</dimen>
     <dimen name="base_icon_collect_margin_right">16dp</dimen>
+
+    <dimen name="base_background_layout_padding">16dp</dimen>
+    <dimen name="base_tv_loading_show_margin_top">2dp</dimen>
 </resources>

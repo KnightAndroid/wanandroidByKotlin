@@ -34,8 +34,6 @@ data class MessageEvent(var type: MessageType) {
     }
 
     fun put(value: String): MessageEvent {
-
-
         bundle.putString(KEY_STRING, value)
         return this
     }

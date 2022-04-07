@@ -1,9 +1,9 @@
-package com.knight.kotlin.library_widget.loadcircleview
+package com.knight.kotlin.library_base.widget.loadcircleview
 
 import android.content.Context
 import android.graphics.Canvas
 import android.util.AttributeSet
-import com.knight.kotlin.library_widget.R
+import com.knight.kotlin.library_base.R
 
 /**
  * Author:Knight
@@ -25,7 +25,7 @@ class CirView : androidx.appcompat.widget.AppCompatImageView {
 
     private fun init() {
         //        设置图片
-        setImageResource(R.drawable.widget_icon_loading)
+        setImageResource(R.drawable.base_icon_loading)
         mFrameTime = 1000 / 12
         //        转圈速度
         mUpdateViewRunnable = object : Runnable {

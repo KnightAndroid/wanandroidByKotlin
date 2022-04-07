@@ -5,6 +5,7 @@
     <application>
         <activity android:name=".activity.QuickLoginActivity"/>
         <activity android:name=".activity.LoginActivity"/>
+        <activity android:name=".activity.RegisterActivity"/>
     </application>
 
 </manifest>

@@ -3,4 +3,5 @@
     <string name="base_app_name">wanandroid</string>
     <string name="base_error_data">An error occurred. Please click Retry</string>
     <string name="base_success_copylink">Success copy Link</string>
+    <string name="base_loading">request...</string>
 </resources>

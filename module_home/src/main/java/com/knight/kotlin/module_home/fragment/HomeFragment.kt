@@ -2,6 +2,9 @@ package com.knight.kotlin.module_home.fragment
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
+import android.os.Build
 import android.util.Base64
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -23,6 +26,7 @@ import com.knight.kotlin.library_base.route.RouteFragment
 import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_base.util.EventBusUtils
 import com.knight.kotlin.library_base.util.GsonUtils
+import com.knight.kotlin.library_base.util.dp2px
 import com.knight.kotlin.library_common.entity.AppUpdateBean
 import com.knight.kotlin.library_common.fragment.UpdateAppDialogFragment
 import com.knight.kotlin.library_database.entity.PushDateEntity
@@ -109,7 +113,9 @@ class HomeFragment : BaseFragment<HomeFragmentBinding, HomeVm>() {
     }
 
     override fun setThemeColor(isDarkMode: Boolean) {
-
+       if (!isDarkMode) {
+           isWithStatusTheme(isDarkMode)
+       }
     }
 
     /**
@@ -323,6 +329,41 @@ class HomeFragment : BaseFragment<HomeFragmentBinding, HomeVm>() {
                 startPage(RouteActivity.Mine.LoginActivity)
             }
         })
+    }
+
+
+    /**
+     * 状态栏是否跟随主题色变化
+     *
+     */
+    private fun isWithStatusTheme(statusWIthTheme:Boolean) {
+        if (!CacheUtils.getNightModeStatus()) {
+            val gradientDrawable = GradientDrawable()
+            gradientDrawable.shape = GradientDrawable.RECTANGLE
+            gradientDrawable.cornerRadius = 45.dp2px().toFloat()
+            if (statusWIthTheme) {
+                gradientDrawable.setColor(Color.WHITE)
+                mBinding.homeIncludeToolbar.homeTvLoginname.setTextColor(Color.WHITE)
+                mBinding.homeIncludeToolbar.homeIvAdd.setBackgroundResource(R.drawable.home_icon_add_white)
+                mBinding.homeIncludeToolbar.homeIvEveryday.setBackgroundResource(R.drawable.home_icon_everyday_white)
+                mBinding.homeIncludeToolbar.toolbar.setBackgroundColor(CacheUtils.getThemeColor())
+            } else {
+                gradientDrawable.setColor(Color.parseColor("#1f767680"))
+                mBinding.homeIncludeToolbar.homeTvLoginname.setTextColor(Color.parseColor("#333333"))
+                mBinding.homeIncludeToolbar.homeIvEveryday.setBackgroundResource(R.drawable.home_icon_everyday)
+                mBinding.homeIncludeToolbar.homeIvAdd.setBackgroundResource(R.drawable.home_icon_add)
+                mBinding.homeIncludeToolbar.toolbar.setBackgroundColor(Color.WHITE)
+            }
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                mBinding.homeIncludeToolbar.homeRlSearch.background = gradientDrawable
+            } else {
+                mBinding.homeIncludeToolbar.homeRlSearch.setBackgroundDrawable(gradientDrawable)
+            }
+
+
+        }
+
     }
 
 

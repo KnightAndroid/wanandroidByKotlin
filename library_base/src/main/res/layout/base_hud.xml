@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.knight.kotlin.library_widget.loadcircleview.BackgroundLayout
+<com.knight.kotlin.library_base.widget.loadcircleview.BackgroundLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/background"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:padding="@dimen/widget_background_layout_padding"
+    android:padding="@dimen/base_background_layout_padding"
     android:gravity="center"
     android:orientation="vertical"
     >
@@ -21,8 +21,8 @@
         android:layout_height="wrap_content"
         android:text="加载中..."
         android:textColor="@android:color/white"
-        android:layout_marginTop="@dimen/widget_tv_loading_show_margin_top"/>
+        android:layout_marginTop="@dimen/base_tv_loading_show_margin_top"/>
 
 
 
-</com.knight.kotlin.library_widget.loadcircleview.BackgroundLayout>
+</com.knight.kotlin.library_base.widget.loadcircleview.BackgroundLayout>

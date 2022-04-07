@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="square_tv_articletitle_margin_left">24dp</dimen>
+    <dimen name="square_tv_articletitle_margin_top">10dp</dimen>
+    <dimen name="square_tv_articletitle_text_size">16sp</dimen>
+    <dimen name="square_sharearticle_et_margin_left">24dp</dimen>
+    <dimen name="square_sharearticle_et_margin_top">5dp</dimen>
+    <dimen name="square_sharearticle_et_margin_right">24dp</dimen>
+    <dimen name="square_sharearticle_et_min_height">60dp</dimen>
+    <dimen name="square_sharearticle_et_text_size">16sp</dimen>
+    <dimen name="square_tv_article_link_text_size">16sp</dimen>
+    <dimen name="square_sharearticle_link_margin_left">24dp</dimen>
+    <dimen name="square_sharearticle_link_margin_top">10dp</dimen>
+    <dimen name="square_sharearticle_link_margin_right">24dp</dimen>
+</resources>

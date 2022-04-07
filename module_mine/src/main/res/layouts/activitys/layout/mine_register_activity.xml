@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mine_register_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/mine_register_bg_color">
+
+
+    <include
+        android:id="@+id/mine_register_toolbar"
+        layout="@layout/base_include_toolbar"/>
+
+
+    <TextView
+        android:id="@+id/register_tv_appname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/mine_tv_register_app_name_margin_left"
+        android:layout_marginTop="@dimen/mine_tv_register_app_name_margin_top"
+        android:text="@string/mine_apploginname"
+        android:textColor="@color/mine_register_tv_appname_color"
+        android:textSize="@dimen/mine_tv_register_appname_text_size"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/mine_register_toolbar"
+        />
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/mine_register_cardview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/mine_register_cardview_margin_left"
+            android:layout_marginRight="@dimen/mine_register_cardview_margin_right"
+            android:layout_marginTop="@dimen/mine_register_cardview_margin_top"
+            app:cardCornerRadius="@dimen/mine_register_cardview_corner_radius"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/register_tv_appname"
+            >
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/mine_register_ll_margin_left"
+                android:layout_marginTop="@dimen/mine_register_ll_margin_top"
+                android:layout_marginRight="@dimen/mine_register_ll_margin_right"
+                android:layout_marginBottom="@dimen/mine_register_ll_margin_bottom"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:id="@+id/mine_tv_registeraccountname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mine_account_name"
+                    android:textColor="@color/mine_tv_registeraccountname_color"
+                    android:textSize="@dimen/mine_tv_registeraccountname_text_size"
+                    android:textStyle="bold"/>
+
+                <com.knight.kotlin.library_widget.ClearEditText
+                    android:id="@+id/mine_register_username"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/mine_register_username_margin_top"
+                    android:background="@android:color/transparent"
+                    android:hint="@string/mine_register_namehint"
+                    android:lines="1"
+                    android:maxLength="16"
+                    android:textColor="@color/mine_register_username_color"
+                    android:textColorHint="@color/mine_register_username_hint_color"
+                    android:textCursorDrawable="@drawable/base_textcursorcolor"
+                    android:textSelectHandle="@android:color/transparent"
+                    android:textSize="@dimen/mine_register_username_text_size"
+                    />
+
+
+                <TextView
+                    android:id="@+id/register_account_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="@dimen/mine_register_account_line_margin_top"
+                    android:background="@color/base_line_color"/>
+
+
+                <TextView
+                    android:id="@+id/mine_tv_registerpassword"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/mine_tv_registerpassword_margin_top"
+                    android:text="@string/mine_login_password"
+                    android:textColor="@color/mine_tv_registerpassword_color"
+                    android:textSize="@dimen/mine_tv_registerpassword_text_size"
+                    android:textStyle="bold"/>
+
+                <com.knight.kotlin.library_widget.ClearEditText
+                    android:id="@+id/mine_register_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/mine_cl_register_password_margin_top"
+                    android:background="@android:color/transparent"
+                    android:hint="@string/mine_hint_password"
+                    android:inputType="textPassword"
+                    android:lines="1"
+                    android:maxLength="18"
+                    android:textColor="@color/mine_cl_register_password_color"
+                    android:textCursorDrawable="@drawable/base_textcursorcolor"
+                    android:textSelectHandle="@android:color/transparent"
+                    android:textSize="@dimen/mine_cl_register_password_text_size"
+                    />
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="@dimen/mine_password_account_line"
+                    android:background="@color/base_line_color"/>
+
+                <TextView
+                    android:id="@+id/mine_tv_confirmpassword"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/mine_tv_confirmpassword_margin_top"
+                    android:text="@string/mine_register_confirm"
+                    android:textColor="@color/mine_tv_confirmpassword_color"
+                    android:textSize="@dimen/mine_tv_confirmpassword_text_size"
+                    android:textStyle="bold" />
+                
+                
+                
+                <com.knight.kotlin.library_widget.ClearEditText
+                    android:id="@+id/mine_register_confirmpassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/mine_register_confirmpassword_margin_top"
+                    android:background="@android:color/transparent"
+                    android:hint="@string/mine_register_againconfirm_hint"
+                    android:inputType="textPassword"
+                    android:lines="1"
+                    android:maxLength="18"
+                    android:textColor="@color/mine_cl_register_confirmpassword_color"
+                    android:textColorHint="@color/mine_cl_register_confirmpassword_hint_color"
+                    android:textCursorDrawable="@drawable/base_textcursorcolor"
+                    android:textSelectHandle="@android:color/transparent"
+                    android:textSize="@dimen/mine_cl_register_confirmpassword_text_size"
+                    />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="@dimen/mine_confim_password_bottom_line"
+                    android:background="@color/base_line_color"/>
+
+
+
+            </LinearLayout>
+
+
+
+
+
+        </androidx.cardview.widget.CardView>
+
+
+    <TextView
+        android:id="@+id/mine_tv_register"
+        android:layout_width="158dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="@dimen/base_dimen_20"
+        android:background="@drawable/mine_register_confim"
+        android:gravity="center"
+        android:onClick="@{()->click.register()}"
+        android:text="@string/mine_register"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/mine_register_confim_text_size"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/mine_register_cardview" />
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

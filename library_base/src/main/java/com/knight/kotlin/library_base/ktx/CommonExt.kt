@@ -4,9 +4,14 @@ import android.content.Context
 import android.text.Html
 import android.text.Spanned
 import android.view.View
+import androidx.annotation.MainThread
+import com.knight.kotlin.library_base.R
+import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.config.Appconfig
 import com.knight.kotlin.library_base.config.CacheKey
 import com.knight.kotlin.library_base.entity.UserInfoEntity
+import com.knight.kotlin.library_base.fragment.BaseFragment
+import com.knight.kotlin.library_base.util.ActivityManagerUtils
 import com.knight.kotlin.library_base.util.CacheUtils
 import kotlin.reflect.KClass
 
@@ -107,6 +112,84 @@ fun getUser():UserInfoEntity? {
     }
 
 }
+
+/**
+ *
+ * 返回app字符串
+ */
+fun appStr(id:Int):String {
+    return ActivityManagerUtils.getInstance()?.getTopActivity()?.getString(id) ?: ""
+}
+
+
+internal fun BaseActivity<*,*>.subscribeData() {
+    observeEventData(mViewModel._showLoading) {
+
+        showLoading(msg = mViewModel._showLoading.value ?:"")
+    }
+    observeEventData(mViewModel._dismissLoading) {
+        dismissLoading()
+    }
+
+}
+
+internal fun BaseFragment<*, *>.subscribeData() {
+    mViewModel._showLoading.observe(this) {
+
+        showLoading(it)
+    }
+
+    mViewModel._dismissLoading.observe(this){
+        dismissLoading()
+    }
+
+}
+
+
+/**
+ *
+ * 显示请求框
+ */
+fun BaseActivity<*,*>.showLoading(msg:String = appStr(R.string.base_loading)) {
+    loadingDialog.show(msg)
+}
+
+/**
+ * 隐藏加载框
+ */
+fun BaseActivity<*,*>.dismissLoading() {
+    loadingDialog.dismiss()
+}
+
+
+/**
+ *
+ * 显示请求框
+ */
+@MainThread
+fun BaseFragment<*,*>.showLoading(msg:String = appStr(R.string.base_loading)) {
+    loadingDialog.show(msg)
+}
+
+/**
+ * 隐藏显示卡
+ */
+fun BaseFragment<*,*>.dismissLoading() {
+    loadingDialog.dismiss()
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

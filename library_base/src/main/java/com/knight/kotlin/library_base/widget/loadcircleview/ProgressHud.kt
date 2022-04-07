@@ -1,4 +1,4 @@
-package com.knight.kotlin.library_widget.loadcircleview
+package com.knight.kotlin.library_base.widget.loadcircleview
 
 import android.app.Dialog
 import android.content.Context
@@ -12,16 +12,17 @@ import android.view.WindowManager
 import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import com.knight.kotlin.library_base.R
+import com.knight.kotlin.library_base.ktx.appStr
 import com.knight.kotlin.library_base.util.dp2px
-import com.knight.kotlin.library_widget.R
 
 /**
  * Author:Knight
  * Time:2022/3/28 10:39
  * Description:ProgressHud
  */
-class ProgressHud constructor(context: Context,text:String) {
-    private var mProgressHudDialog:ProgressHudDialog? =null
+class ProgressHud constructor(context: Context) {
+    private var mProgressHudDialog: ProgressHudDialog? =null
     private val mDimAmount = 0f
     private var mWindowColor = 0
     private var mCornerRadius = 0f
@@ -29,11 +30,8 @@ class ProgressHud constructor(context: Context,text:String) {
 
     init {
         mProgressHudDialog =
-            ProgressHudDialog(
-                context,
-                text
-            )
-        mWindowColor = ContextCompat.getColor(context,R.color.widget_progress_color)
+            ProgressHudDialog(context)
+        mWindowColor = ContextCompat.getColor(context, R.color.base_progress_color)
         mCornerRadius = 10f
         //转圈圈的圆形view
         val view: View = CirView(mContext)
@@ -41,21 +39,24 @@ class ProgressHud constructor(context: Context,text:String) {
 
     }
 
-    fun setSize(width:Int,height:Int):ProgressHud {
+    fun setSize(width:Int,height:Int): ProgressHud {
         mProgressHudDialog?.setSize(width, height)
         return this
     }
 
     //   设置矩形的圆角程度
-    fun setCornerRadius(radius: Float):ProgressHud {
+    fun setCornerRadius(radius: Float): ProgressHud {
         mCornerRadius = radius
         return this
     }
 
     //展示
-    fun show(): ProgressHud {
+    fun show(msg:String = appStr(R.string.base_loading)): ProgressHud {
         if (!isShowing()) {
-            mProgressHudDialog?.show()
+            mProgressHudDialog?.let {
+                it.show()
+                it.setShowMessage(msg)
+            }
         }
         return this
     }
@@ -81,17 +82,17 @@ class ProgressHud constructor(context: Context,text:String) {
         private var tv_loading_show: TextView? = null
         private var mWidth = 0
         private var mHeight = 0
-        private var tv_text = ""
 
-        constructor(context: Context,tv_text:String):super(context) {
-            this.tv_text = tv_text
+
+        constructor(context: Context):super(context) {
+
         }
 
 
         override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)
             requestWindowFeature(Window.FEATURE_NO_TITLE)
-            setContentView(R.layout.kprogresshud_hud)
+            setContentView(R.layout.base_hud)
             val window = window
             window?.setBackgroundDrawable(ColorDrawable(0))
             window?.addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
@@ -111,8 +112,8 @@ class ProgressHud constructor(context: Context,text:String) {
                 updateBackgroundSize()
             }
             mCustomViewContainer = findViewById<View>(R.id.container) as FrameLayout
-            tv_loading_show = findViewById(R.id.tv_loading_show)
-            tv_loading_show?.setText(tv_text)
+            tv_loading_show = findViewById<View>(R.id.tv_loading_show) as TextView
+
             addViewToFrame(mView)
         }
 
@@ -140,6 +141,12 @@ class ProgressHud constructor(context: Context,text:String) {
                     addViewToFrame(view)
                 }
             }
+        }
+
+
+        fun setShowMessage(message:String):ProgressHud {
+            tv_loading_show?.text = message
+            return this@ProgressHud
         }
 
         fun setSize(width: Int, height: Int) {
