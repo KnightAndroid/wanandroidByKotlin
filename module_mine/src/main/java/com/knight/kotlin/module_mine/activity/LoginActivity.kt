@@ -12,10 +12,8 @@ import com.knight.kotlin.library_base.config.CacheKey
 import com.knight.kotlin.library_base.entity.LoginEntity
 import com.knight.kotlin.library_base.entity.UserInfoEntity
 import com.knight.kotlin.library_base.event.MessageEvent
-import com.knight.kotlin.library_base.ktx.dismissLoading
-import com.knight.kotlin.library_base.ktx.observeLiveDataWithError
+import com.knight.kotlin.library_base.ktx.observeLiveData
 import com.knight.kotlin.library_base.ktx.setOnClick
-import com.knight.kotlin.library_base.ktx.showLoading
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_base.util.EventBusUtils
@@ -29,6 +27,7 @@ import com.knight.kotlin.module_mine.R
 import com.knight.kotlin.module_mine.databinding.MineLoginActivityBinding
 import com.knight.kotlin.module_mine.vm.LoginViewModel
 import com.knight.library_biometric.control.BiometricControl
+import com.knight.library_biometric.listener.BiometricStatusCallback
 import dagger.hilt.android.AndroidEntryPoint
 import javax.crypto.BadPaddingException
 import javax.crypto.Cipher
@@ -54,7 +53,7 @@ class LoginActivity : BaseActivity<MineLoginActivityBinding,LoginViewModel>(){
     override val mViewModel: LoginViewModel by viewModels()
 
     private val mSoftInputScrollUtils: SoftInputScrollUtils by lazy{ SoftInputScrollUtils(this@LoginActivity) }
-
+    private var mBiometricStatusCallback:BiometricStatusCallback?=null
 
 
     override fun setThemeColor(isDarkMode: Boolean) {
@@ -90,7 +89,6 @@ class LoginActivity : BaseActivity<MineLoginActivityBinding,LoginViewModel>(){
         }
         mineTvLogin.setOnClick {
             if (validateLoginMessage()) {
-                showLoading(getString(R.string.mine_request_login))
                 mViewModel.login(mineLoginUsername.text.toString().trim(),mineLoginPassword.text.toString().trim())
             }
 
@@ -118,7 +116,7 @@ class LoginActivity : BaseActivity<MineLoginActivityBinding,LoginViewModel>(){
     }
 
     override fun initObserver() {
-        observeLiveDataWithError(mViewModel.userInfo,mViewModel.requestSuccessFlag,::setUserInfo,::requestUserInfoError)
+        observeLiveData(mViewModel.userInfo,::setUserInfo)
     }
 
     override fun initRequestData() {
@@ -131,7 +129,6 @@ class LoginActivity : BaseActivity<MineLoginActivityBinding,LoginViewModel>(){
 
 
     private fun setUserInfo(userInfo:UserInfoEntity){
-        dismissLoading()
         //登录成功发送事件
         Appconfig.user = userInfo
         //保存用户信息
@@ -153,21 +150,12 @@ class LoginActivity : BaseActivity<MineLoginActivityBinding,LoginViewModel>(){
             }
         }
     }
-
-    /**
-     *
-     * 请求用户信息接口错误
-     */
-    private fun requestUserInfoError(){
-        dismissLoading()
-    }
-
     /**
      * 开通指纹登录
      * @param loginMessage
      */
     private fun openBlomtric(loginMessage: String) {
-        BiometricControl.openBlomtric(this, object : BiometricControl.BiometricStatusCallback {
+        BiometricControl.setStatusCallback(object : BiometricStatusCallback{
             override fun onUsePassword() {
                 CacheUtils.setLoginMessage(loginMessage)
                 //登录成功发送事件
@@ -196,7 +184,6 @@ class LoginActivity : BaseActivity<MineLoginActivityBinding,LoginViewModel>(){
             }
 
             override fun onFailed() {
-
                 //登录成功发送事件
                 CacheUtils.setLoginMessage(loginMessage)
                 EventBusUtils.postEvent(MessageEvent(MessageEvent.MessageType.LoginSuccess))
@@ -218,6 +205,11 @@ class LoginActivity : BaseActivity<MineLoginActivityBinding,LoginViewModel>(){
                 EventBusUtils.postEvent(MessageEvent(MessageEvent.MessageType.LoginSuccess))
                 finish()
             }
-        })
+        }).openBlomtric(this)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        BiometricControl.setunListener()
     }
 }

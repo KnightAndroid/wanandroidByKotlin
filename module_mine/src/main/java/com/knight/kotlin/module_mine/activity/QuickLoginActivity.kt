@@ -24,6 +24,7 @@ import com.knight.kotlin.module_mine.databinding.MineQuickloginActivityBinding
 import com.knight.kotlin.module_mine.dialog.QuickBottomDialog
 import com.knight.kotlin.module_mine.vm.QuickLoginViewModel
 import com.knight.library_biometric.control.BiometricControl
+import com.knight.library_biometric.listener.BiometricStatusCallback
 import dagger.hilt.android.AndroidEntryPoint
 import javax.crypto.BadPaddingException
 import javax.crypto.Cipher
@@ -110,8 +111,7 @@ class QuickLoginActivity :  BaseActivity<MineQuickloginActivityBinding,QuickLogi
     }
 
     override fun fingureQuick() {
-        BiometricControl.loginBlomtric(this, object : BiometricControl.BiometricStatusCallback {
-
+        BiometricControl.setStatusCallback(object : BiometricStatusCallback{
             override fun onUsePassword() {
                 startActivity(
                     Intent(this@QuickLoginActivity, LoginActivity::class.java)
@@ -150,13 +150,12 @@ class QuickLoginActivity :  BaseActivity<MineQuickloginActivityBinding,QuickLogi
 
             override fun error(code: Int, reason: String?) {
                 toast("$code,$reason")
-
             }
 
             override fun onCancel() {
                 toast(R.string.mine_tv_quicklogin_cancel)
             }
-        })
+        }).loginBlomtric(this)
     }
 
 
@@ -167,5 +166,10 @@ class QuickLoginActivity :  BaseActivity<MineQuickloginActivityBinding,QuickLogi
         //登录成功发送事件
         EventBusUtils.postEvent(MessageEvent(MessageEvent.MessageType.LoginSuccess))
         finish()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        BiometricControl.setunListener()
     }
 }

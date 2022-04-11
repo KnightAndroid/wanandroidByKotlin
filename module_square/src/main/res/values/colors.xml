@@ -4,4 +4,7 @@
     <color name="square_sharearticle_et_color">#333333</color>
     <color name="square_sharearticle_et_hint_color">#999999</color>
     <color name="square_tv_article_link_color">#333333</color>
+    <color name="square_article_link_bg_color">#dbdbdb</color>
+    <color name="square_sharearticle_link_color">#333333</color>
+    <color name="square_sharearticle_link_hint_color">#999999</color>
 </resources>

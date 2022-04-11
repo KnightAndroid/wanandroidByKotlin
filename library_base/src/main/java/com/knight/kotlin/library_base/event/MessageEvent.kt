@@ -170,7 +170,11 @@ data class MessageEvent(var type: MessageType) {
         //登录成功
         LoginSuccess,
         //退出登录
-        LogoutSuccess
+        LogoutSuccess,
+        //分享文章成功
+        ShareArticleSuccess,
+        //收藏成功
+        CollectSuccess
     }
 
 }

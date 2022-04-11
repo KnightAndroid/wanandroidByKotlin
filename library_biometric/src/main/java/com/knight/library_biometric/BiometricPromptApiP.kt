@@ -1,11 +1,11 @@
 package com.knight.library_biometric
 
-import android.app.Activity
 import android.hardware.biometrics.BiometricPrompt
 import android.os.Build
 import android.os.CancellationSignal
 import android.util.Base64
 import androidx.annotation.RequiresApi
+import androidx.fragment.app.FragmentActivity
 import com.knight.kotlin.library_base.util.CacheUtils
 
 /**
@@ -23,22 +23,22 @@ import com.knight.kotlin.library_base.util.CacheUtils
  */
 
 @RequiresApi(Build.VERSION_CODES.P)
-class BiometricPromptApiP constructor(activity:Activity, builder:BiometricPromptManager.Builder) : IBiometricPromptImpl{
-    private val mActivity: Activity
+class BiometricPromptApiP constructor(builder:BiometricPromptManager.Builder) : IBiometricPromptImpl{
+    private val mActivity = builder.mActivity.get() as FragmentActivity
     private var mBiometricPrompt: BiometricPrompt? = null
     private var mManagerIdentifyCallback: BiometricPromptManager.OnBiometricIdentifyCallback? = null
     private lateinit var mCancellationSignal: CancellationSignal
 
     init {
-        mActivity = activity
-        mBiometricPrompt = BiometricPrompt.Builder(activity)
+        mBiometricPrompt = BiometricPrompt.Builder(mActivity)
             .setTitle(builder.mTitle ?: "")
             .setDescription(builder.mDesc ?: "")
             .setSubtitle("")
             .setNegativeButton(
                 builder.mNegativeText!!,
-                activity.mainExecutor
+                mActivity.mainExecutor
             ) { dialogInterface, i ->
+
                 mManagerIdentifyCallback?.onUsePassword()
                 mCancellationSignal.cancel()
             }

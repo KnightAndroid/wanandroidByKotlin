@@ -1,6 +1,7 @@
 package com.knight.kotlin.module_home.service
 
 import com.knight.kotlin.module_home.api.HomeApiService
+import com.knight.kotlin.module_home.api.HomeArticleApiService
 import com.knight.kotlin.module_home.api.HomeRecommendApiService
 import dagger.Module
 import dagger.Provides
@@ -35,4 +36,14 @@ class MainServiceModule {
     fun provideHomeRecommendApiService(retrofit: Retrofit) :HomeRecommendApiService {
         return retrofit.create(HomeRecommendApiService::class.java)
     }
+
+    @Singleton
+    @Provides
+    fun provideHomeArticleApiService(retrofit: Retrofit) : HomeArticleApiService {
+        return retrofit.create(HomeArticleApiService::class.java)
+    }
+
+
+
+
 }

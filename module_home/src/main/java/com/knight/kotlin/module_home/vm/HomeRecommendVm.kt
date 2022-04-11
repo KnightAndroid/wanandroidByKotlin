@@ -13,6 +13,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
@@ -48,13 +49,25 @@ class HomeRecommendVm @Inject constructor(private val mRepo: HomeRecommendRepo) 
      * 获取未读消息
      */
     fun getUnreadMessage() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             mRepo.getUnreadMessage()
-                .catch { toast(it.message?:"") }
-                .collect {
+                //指定线程
+                .flowOn(Dispatchers.IO)
+                .onStart {
+                    //开始
+                }
+                .onEach {
                     unReadMessageNumber.postValue(it)
                 }
+                .onCompletion {
+                    //结束
+                    dimissLoading()
+                }
+                .catch { toast(it.message ?: "") }
+                .collect()
+
         }
+
     }
     /**
      * 获取指置顶文章
@@ -85,11 +98,21 @@ class HomeRecommendVm @Inject constructor(private val mRepo: HomeRecommendRepo) 
     fun getBanner() {
         viewModelScope.launch(Dispatchers.IO) {
             mRepo.getBanner()
-                .catch { toast(it.message ?: "") }
-                .collect {
+                .onStart {
+                    //开始
+                }
+                .onEach {
                     bannerList.postValue(it)
                 }
+                .onCompletion {
+                    //结束
+                }
+                .catch { toast(it.message ?: "") }
+                .collect()
         }
+
+
+
     }
 
     /**
@@ -97,13 +120,22 @@ class HomeRecommendVm @Inject constructor(private val mRepo: HomeRecommendRepo) 
      *
      */
     fun getOfficialAccount() {
-        viewModelScope.launch (Dispatchers.IO){
+        viewModelScope.launch(Dispatchers.IO) {
             mRepo.getOfficialAccount()
-                .catch { toast(it.message ?: "") }
-                .collect {
+                .onStart {
+                    //开始
+                }
+                .onEach {
                     officialAccountList.postValue(it)
                 }
+                .onCompletion {
+                    //结束
+                }
+                .catch { toast(it.message ?: "") }
+                .collect()
         }
+
+
     }
 
 
@@ -115,11 +147,20 @@ class HomeRecommendVm @Inject constructor(private val mRepo: HomeRecommendRepo) 
     fun getHomeArticle(page:Int) {
         viewModelScope.launch(Dispatchers.IO) {
             mRepo.getHomeArticle(page)
-                .catch { toast(it.message?:"") }
-                .collect {
+                .onStart {
+                    //开始
+                }
+                .onEach {
                     articleList.postValue(it)
                 }
+                .onCompletion {
+                    //结束
+                }
+                .catch { toast(it.message ?: "") }
+                .collect()
         }
+
+
     }
 
     /**
@@ -129,12 +170,18 @@ class HomeRecommendVm @Inject constructor(private val mRepo: HomeRecommendRepo) 
     fun collectArticle(collectArticleId:Int) {
         viewModelScope.launch(Dispatchers.IO) {
             mRepo.collectArticle(collectArticleId)
-                .catch { toast(it.message?:"") }
-                .collect {
+                .onStart {
+                    //开始
+                }
+                .onEach {
                     collectArticle.postValue(true)
                 }
+                .onCompletion {
+                    //结束
+                }
+                .catch { toast(it.message ?: "") }
+                .collect()
         }
-
     }
 
     /**
@@ -144,11 +191,19 @@ class HomeRecommendVm @Inject constructor(private val mRepo: HomeRecommendRepo) 
     fun unCollectArticle(unCollectArticleId:Int) {
         viewModelScope.launch(Dispatchers.IO) {
             mRepo.unCollectArticle(unCollectArticleId)
-                .catch { toast(it.message?:"") }
-                .collect {
+                .onStart {
+                    //开始
+                }
+                .onEach {
                     unCollectArticle.postValue(true)
                 }
+                .onCompletion {
+                    //结束
+                }
+                .catch { toast(it.message ?: "") }
+                .collect()
         }
+
 
     }
 

@@ -3,6 +3,7 @@ package com.knight.library_biometric
 import android.os.CancellationSignal
 import androidx.fragment.app.FragmentActivity
 import com.knight.library_biometric.utils.BiometricUtils
+import java.lang.ref.WeakReference
 import javax.crypto.Cipher
 
 /**
@@ -19,24 +20,24 @@ import javax.crypto.Cipher
  * @Version:        1.0
  */
 
-class BiometricPromptManager constructor(builder: Builder) {
+class BiometricPromptManager constructor(builder:Builder) {
     private var mImpl: IBiometricPromptImpl? = null
-    private var mActivity: FragmentActivity? = null
-
     init {
-        mActivity = builder.mActivity
         if (BiometricUtils.isAboveApiP()) {
-            mActivity?.let {
-                mImpl = BiometricPromptApiP(it, builder)
-            }
+
+            mImpl = BiometricPromptApiP(builder)
+
         } else if (BiometricUtils.isAboveApiM()) {
-            mActivity?.let {
-                mImpl = BiometricPromptApiM(it)
-            }
+
+            mImpl = BiometricPromptApiM(builder.mActivity.get() as FragmentActivity)
+
 
         }
 
     }
+
+
+
     interface OnBiometricIdentifyCallback {
         /**
          *
@@ -86,7 +87,7 @@ class BiometricPromptManager constructor(builder: Builder) {
     }
 
 
-    class Builder {
+    class Builder constructor(activty: WeakReference<FragmentActivity>) {
         //标题
         var mTitle: String? = null
 
@@ -97,7 +98,7 @@ class BiometricPromptManager constructor(builder: Builder) {
         var mNegativeText: String? = null
 
         //activity
-        var mActivity: FragmentActivity? = null
+        var mActivity: WeakReference<FragmentActivity> = activty
         fun setTitle(title: String?): Builder {
             mTitle = title
             return this
@@ -113,15 +114,10 @@ class BiometricPromptManager constructor(builder: Builder) {
             return this
         }
 
-        fun setActivity(mActivity: FragmentActivity): Builder {
-            this.mActivity = mActivity
-            return this
-        }
-
-
-
         fun build(): BiometricPromptManager {
             return BiometricPromptManager(this)
         }
+
+
     }
 }

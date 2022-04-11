@@ -7,8 +7,10 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import com.knight.kotlin.library_aop.clickintercept.SingleClick
 import com.knight.kotlin.library_aop.loginintercept.LoginCheck
+import com.knight.kotlin.library_base.event.MessageEvent
 import com.knight.kotlin.library_base.fragment.BaseDialogFragment
 import com.knight.kotlin.library_base.ktx.observeLiveData
+import com.knight.kotlin.library_base.util.EventBusUtils
 import com.knight.kotlin.library_util.SystemUtils
 import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.library_util.toast.ToastUtils
@@ -134,7 +136,7 @@ class WebArticleBottomFragment constructor(
      */
     private fun collectSuccess(data:Boolean) {
         ToastUtils.show(R.string.web_success_collect)
-        //TODO("通知刷新全局")
+        EventBusUtils.postEvent(MessageEvent(MessageEvent.MessageType.CollectSuccess))
     }
 
     @LoginCheck

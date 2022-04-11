@@ -50,6 +50,7 @@ import com.knight.kotlin.module_home.dialog.HomePushArticleFragment
 import com.knight.kotlin.module_home.entity.EveryDayPushArticlesBean
 import com.knight.kotlin.module_home.vm.HomeVm
 import com.knight.library_biometric.control.BiometricControl
+import com.knight.library_biometric.listener.BiometricStatusCallback
 import dagger.hilt.android.AndroidEntryPoint
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -228,7 +229,7 @@ class HomeFragment : BaseFragment<HomeFragmentBinding, HomeVm>() {
            }
 
            mBinding.homeIncludeToolbar.homeIvAdd->{
-               TODO("发布文章界面")
+               startPage(RouteActivity.Square.SquareShareArticleActivity)
            }
            mBinding.homeIncludeToolbar.homeTvLoginname -> {
                if (mBinding.homeIncludeToolbar.homeTvLoginname.text.toString().equals(getString(R.string.home_tv_login))) {
@@ -285,7 +286,7 @@ class HomeFragment : BaseFragment<HomeFragmentBinding, HomeVm>() {
      * 指纹登录
      */
     private fun loginBiomtric() {
-        BiometricControl.loginBlomtric(requireActivity(), object : BiometricControl.BiometricStatusCallback {
+        BiometricControl.setStatusCallback(object : BiometricStatusCallback{
             override fun onUsePassword() {
                 startPage(RouteActivity.Mine.LoginActivity)
             }
@@ -328,7 +329,12 @@ class HomeFragment : BaseFragment<HomeFragmentBinding, HomeVm>() {
                 ToastUtils.show(R.string.home_biometric_cancel)
                 startPage(RouteActivity.Mine.LoginActivity)
             }
-        })
+        }).loginBlomtric(requireActivity())
+
+
+
+
+
     }
 
 

@@ -1,12 +1,22 @@
 package com.knight.kotlin.module_square.activity
 
+import android.text.TextUtils
 import androidx.activity.viewModels
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.knight.kotlin.library_base.activity.BaseActivity
+import com.knight.kotlin.library_base.event.MessageEvent
+import com.knight.kotlin.library_base.ktx.observeLiveData
+import com.knight.kotlin.library_base.ktx.setOnClick
 import com.knight.kotlin.library_base.route.RouteActivity
-import com.knight.kotlin.library_base.vm.EmptyViewModel
+import com.knight.kotlin.library_base.util.EventBusUtils
+import com.knight.kotlin.library_util.toast
+import com.knight.kotlin.library_util.toast.ToastUtils
+import com.knight.kotlin.module_square.R
 import com.knight.kotlin.module_square.databinding.SquareShareArticleActivityBinding
+import com.knight.kotlin.module_square.vm.SquareShareArticleVm
 import dagger.hilt.android.AndroidEntryPoint
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 /**
  * Author:Knight
@@ -15,25 +25,65 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 @AndroidEntryPoint
 @Route(path = RouteActivity.Square.SquareShareArticleActivity)
-class SquareShareArticleActivity :BaseActivity<SquareShareArticleActivityBinding,EmptyViewModel>() {
-    override val mViewModel: EmptyViewModel by viewModels()
+class SquareShareArticleActivity :BaseActivity<SquareShareArticleActivityBinding,SquareShareArticleVm>() {
+
+    private var title = ""
+    private var link = ""
+    override val mViewModel: SquareShareArticleVm by viewModels()
     override fun setThemeColor(isDarkMode: Boolean) {
-        TODO("Not yet implemented")
+
     }
 
     override fun SquareShareArticleActivityBinding.initView() {
-        TODO("Not yet implemented")
+        squareSharearticleToolbar.baseTvTitle.setText(R.string.square_sharearticle)
+        squareSharearticleToolbar.baseIvBack.setOnClick { finish() }
+        squareTvArticle.setOnClick {
+            if (validateArticleMessage()) {
+                mViewModel.shareArticle(title, link)
+            }
+        }
+
     }
 
     override fun initObserver() {
-        TODO("Not yet implemented")
+        observeLiveData(mViewModel.shareArticleSuccess,::successShareArticle)
     }
 
     override fun initRequestData() {
-        TODO("Not yet implemented")
+
     }
 
     override fun reLoadData() {
-        TODO("Not yet implemented")
+
     }
+
+    private fun successShareArticle(successShare:Boolean){
+        toast(R.string.square_share_success)
+        EventBusUtils.postEvent(MessageEvent(MessageEvent.MessageType.ShareArticleSuccess))
+        finish()
+    }
+
+    /**
+     *
+     * 校验文章信息和链接
+     * @return
+     */
+    private fun validateArticleMessage(): Boolean {
+        var validFlag = true
+        title = mBinding.squareSharearticleEt.text.toString().trim()
+        link = mBinding.squareSharearticleLink.text.toString().trim()
+        if (TextUtils.isEmpty(title)) {
+            ToastUtils.show(R.string.square_title_noempty)
+            validFlag = false
+        } else if (TextUtils.isEmpty(link)) {
+            ToastUtils.show(R.string.square_link_noempty)
+            validFlag = false
+        } else if (!link.startsWith("http://") && !link.startsWith("https://")) {
+            ToastUtils.show(R.string.square_linkstart_rule)
+            validFlag = false
+        }
+        return validFlag
+    }
+
+
 }

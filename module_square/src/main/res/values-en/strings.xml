@@ -4,4 +4,16 @@
     <string name="square_share_article_title">Article title</string>
     <string name="square_max_length_hint">Within 100 words</string>
     <string name="square_article_link">Article link</string>
+    <string name="square_article_hintlink">For example：https://www.wanandroid.com</string>
+    <string name="square_sharearticle">Share</string>
+    <string name="square_tv_article_rule">1. As long as it is any good article, you can share it, not necessarily original! The delivered articles will enter the square;\n
+2. CSDN, Nuggets, Jianshu and other official blog sites will pass directly without review;\n
+3. Other personal sites will enter the review stage. Do not post any invalid links. Please delete the tested ones as soon as possible, otherwise it may have a certain impact on your account;\n
+4. At present, it is in the testing stage. If you find 500 errors, you can submit a log to me and let\'s make the website better together;\n
+5. Since I am the only one to develop and maintain this site, I will try my best to ensure the audit within 24 hours. Of course, it may be too tired and will be postponed. Please keep the Buddhist system。</string>
+    <string name="square_share_article_loading">Share...</string>
+    <string name="square_share_success">Share success</string>
+    <string name="square_title_noempty">Article title cannot be empty</string>
+    <string name="square_link_noempty">Article link cannot be empty</string>
+    <string name="square_linkstart_rule">The article link must start with HTTP or HTTPS</string>
 </resources>

@@ -20,7 +20,6 @@ import com.knight.kotlin.library_widget.ktx.setItemClickListener
 import com.knight.kotlin.module_wechat.R
 import com.knight.kotlin.module_wechat.adapter.WechatArticleAdapter
 import com.knight.kotlin.module_wechat.databinding.WechatOfficialaccountFragmentBinding
-import com.knight.kotlin.module_wechat.entity.WechatArticleEntity
 import com.knight.kotlin.module_wechat.entity.WechatArticleListEntity
 import com.knight.kotlin.module_wechat.vm.WechatVm
 import com.scwang.smart.refresh.layout.api.RefreshLayout
@@ -137,7 +136,7 @@ class WechatOfficialAccountFragment:BaseFragment<WechatOfficialaccountFragmentBi
     }
 
     //设置数据
-    fun setWechatArticle(data: WechatArticleListEntity) {
+    private fun setWechatArticle(data: WechatArticleListEntity) {
         requestSuccess()
         mBinding.includeWechatArticles.baseFreshlayout.finishRefresh()
         mBinding.includeWechatArticles.baseFreshlayout.finishLoadMore()
@@ -177,7 +176,7 @@ class WechatOfficialAccountFragment:BaseFragment<WechatOfficialaccountFragmentBi
      *
      * 获取微信文章列表失败
      */
-    fun setWechatArticleFailure() {
+    private fun setWechatArticleFailure() {
         requestFailure()
     }
 
@@ -186,7 +185,7 @@ class WechatOfficialAccountFragment:BaseFragment<WechatOfficialaccountFragmentBi
      *
      * 收藏成功
      */
-    fun collectSuccess(data: Boolean) {
+    private fun collectSuccess(data: Boolean) {
         mWechatArticleAdapter.data[selectItemPosition].collect = true
         mWechatArticleAdapter.notifyItemChanged(selectItemPosition)
     }
@@ -195,7 +194,7 @@ class WechatOfficialAccountFragment:BaseFragment<WechatOfficialaccountFragmentBi
      *
      * 取消收藏成功
      */
-    fun unCollectSuccess(data: Boolean) {
+    private fun unCollectSuccess(data: Boolean) {
         mWechatArticleAdapter.data[selectItemPosition].collect = false
         mWechatArticleAdapter.notifyItemChanged(selectItemPosition)
     }

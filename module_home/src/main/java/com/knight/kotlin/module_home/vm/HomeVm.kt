@@ -15,6 +15,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.onCompletion
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -47,11 +51,22 @@ class HomeVm @Inject constructor(private val mRepo:HomeRepo): BaseViewModel(){
      * 获取每天推送文章
      */
     fun getEveryDayPushArticle() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             mRepo.getEveryDayPushArticle()
+                //指定线程
+                .flowOn(Dispatchers.IO)
+                .onStart {
+                    //开始
+                }
+                .onEach {
+                    everyDayPushArticles.postValue(it)
+                }
+                .onCompletion {
+                    //结束
+                }
                 .catch { toast(it.message ?: "") }
-                .collect {
-                    everyDayPushArticles.postValue(it) }
+                .collect()
+
         }
     }
 
@@ -60,13 +75,25 @@ class HomeVm @Inject constructor(private val mRepo:HomeRepo): BaseViewModel(){
      * 检查APP版本更新
      */
     fun checkAppUpdateMessage() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             mRepo.checkAppUpdateMessage()
-                .catch { toast(it.message ?: "") }
-                .collect {
+                //指定线程
+                .flowOn(Dispatchers.IO)
+                .onStart {
+                    //开始
+                }
+                .onEach {
                     appUpdateMessage.postValue(it)
                 }
+                .onCompletion {
+                    //结束
+                }
+                .catch { toast(it.message ?: "") }
+                .collect()
+
         }
+
+
     }
 
 
@@ -75,12 +102,24 @@ class HomeVm @Inject constructor(private val mRepo:HomeRepo): BaseViewModel(){
      * 查询本地历史记录
      */
     fun queryPushDate(){
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             repository.findPushArticlesDate()
-                .catch {  }
-                .collect {
-                    articles.postValue(it) }
+                //指定线程
+                .flowOn(Dispatchers.IO)
+                .onStart {
+                    //开始
+                }
+                .onEach {
+                    articles.postValue(it)
+                }
+                .onCompletion {
+                    //结束
+                }
+                .catch { toast(it.message ?: "") }
+                .collect()
+
         }
+
     }
 
 
@@ -99,11 +138,21 @@ class HomeVm @Inject constructor(private val mRepo:HomeRepo): BaseViewModel(){
      * 插入
      */
     fun insertPushArticlesDate(pushDateEntity: PushDateEntity){
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             repository.insertPushArticlesDate(pushDateEntity)
-                .catch { toast(it.message ?: "") }
-                .collect {
+                //指定线程
+                .flowOn(Dispatchers.IO)
+                .onStart {
+                    //开始
                 }
+                .onEach {
+                }
+                .onCompletion {
+                    //结束
+                }
+                .catch { toast(it.message ?: "") }
+                .collect()
+
         }
     }
 
@@ -111,15 +160,24 @@ class HomeVm @Inject constructor(private val mRepo:HomeRepo): BaseViewModel(){
      * 登录
      */
     fun login(userName:String,passWord:String) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             mRepo.login(userName, passWord)
-                .catch {
-                    toast(it.message ?: "")
-                    requestSuccessFlag.postValue(false)
+                //指定线程
+                .flowOn(Dispatchers.IO)
+                .onStart {
+                    //开始
                 }
-                .collect {
-                    userInfo.postValue(it) }
+                .onEach {
+                    userInfo.postValue(it)
+                }
+                .onCompletion {
+                    //结束
+                }
+                .catch { toast(it.message ?: "") }
+                .collect()
+
         }
+
     }
 
 

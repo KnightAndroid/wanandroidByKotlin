@@ -34,25 +34,6 @@ class SetVm @Inject constructor(private val mRepo:SetRepo) : BaseViewModel() {
      * 退出账户
      */
     fun logout() {
-//        viewModelScope.launch(Dispatchers.IO) {
-//            mRepo.logout()
-//                .onStart {
-//                    //开始
-//
-//                    showLoading(msg = appStr(R.string.set_logout))
-//                }
-//                .onEach {
-//                    logoutStatus.postValue(true)
-//                }
-//                .onCompletion {
-//                    //结束
-//                    dimissLoading()
-//                }
-//                .catch { toast(it.message ?: "") }
-//                .collect()
-//
-//        }
-
         viewModelScope.launch {
             mRepo.logout()
                 .flowOn(Dispatchers.IO)

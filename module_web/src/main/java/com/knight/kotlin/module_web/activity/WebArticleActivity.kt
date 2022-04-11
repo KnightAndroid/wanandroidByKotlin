@@ -19,9 +19,11 @@ import com.just.agentweb.WebViewClient
 import com.knight.kotlin.library_aop.loginintercept.LoginCheck
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.entity.WebDataEntity
+import com.knight.kotlin.library_base.event.MessageEvent
 import com.knight.kotlin.library_base.ktx.observeLiveData
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.util.CacheUtils
+import com.knight.kotlin.library_base.util.EventBusUtils
 import com.knight.kotlin.library_util.toast.ToastUtils
 import com.knight.kotlin.library_widget.LoveAnimatorRelativeLayout
 import com.knight.kotlin.module_web.R
@@ -172,7 +174,7 @@ class WebArticleActivity :BaseActivity<WebArticleActivityBinding,WebVm>(),LoveAn
     private fun collectSuccess(data:Boolean) {
          webDataEntity?.isCollect = true
          ToastUtils.show(R.string.web_success_collect)
-         //TODO("通知刷新全局")
+         EventBusUtils.postEvent(MessageEvent(MessageEvent.MessageType.CollectSuccess))
     }
 
     override fun reLoadData() {

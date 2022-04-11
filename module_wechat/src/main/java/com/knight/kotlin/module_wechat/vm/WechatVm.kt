@@ -10,6 +10,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.onCompletion
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -47,14 +51,26 @@ class WechatVm @Inject constructor(private val mRepo:WechatRepo) : BaseViewModel
      * 获取公众号数据
      */
     fun getWechatArticle(cid:Int,page:Int) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             mRepo.getWechatArticle(cid,page)
-                .catch { toast(it.message ?: "")
-                    requestSuccessFlag.postValue(false)}
-                .collect {
+                .flowOn(Dispatchers.IO)
+                .onStart {
+                    //开始
+
+                }
+                .onEach {
                     wechatArticle.postValue(it)
                 }
+                .onCompletion {
+                    //结束
+                }
+                .catch {
+                    requestSuccessFlag.postValue(false)
+                }
+                .collect()
+
         }
+
     }
 
     /**
@@ -63,14 +79,22 @@ class WechatVm @Inject constructor(private val mRepo:WechatRepo) : BaseViewModel
      *
      */
     fun collectArticle(collectArticleId:Int) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             mRepo.collectArticle(collectArticleId)
+                .flowOn(Dispatchers.IO)
+                .onStart {
+                    //开始
+                }
+                .onEach {
+                    collectSucess.postValue(true)
+                }
+                .onCompletion {
+                    //结束
+                }
                 .catch {
                     toast(it.message ?: "")
                 }
-                .collect {
-                    collectSucess.postValue(true)
-                }
+                .collect()
         }
     }
 
@@ -80,14 +104,22 @@ class WechatVm @Inject constructor(private val mRepo:WechatRepo) : BaseViewModel
      *
      */
     fun unCollectArticle(unCollectArticleId:Int) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             mRepo.cancelCollectArticle(unCollectArticleId)
+                .flowOn(Dispatchers.IO)
+                .onStart {
+                    //开始
+                }
+                .onEach {
+                    collectSucess.postValue(true)
+                }
+                .onCompletion {
+                    //结束
+                }
                 .catch {
                     toast(it.message ?: "")
                 }
-                .collect {
-                    uncollectSuccess.postValue(true)
-                }
+                .collect()
         }
     }
 
@@ -96,14 +128,23 @@ class WechatVm @Inject constructor(private val mRepo:WechatRepo) : BaseViewModel
      * 根据关键字搜索
      */
     fun getWechatArticleBykeywords(cid:Int,page:Int,keyword:String) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             mRepo.getWechatArticleByKeyWords(cid,page,keyword)
+                .flowOn(Dispatchers.IO)
+                .onStart {
+                    //开始
+                }
+                .onEach {
+                    collectSucess.postValue(true)
+                }
+                .onCompletion {
+                    //结束
+                }
                 .catch {
                     toast(it.message ?: "")
                 }
-                .collect {
-                    wechatArticleKeyword.postValue(it)
-                }
+                .collect()
         }
+
     }
 }

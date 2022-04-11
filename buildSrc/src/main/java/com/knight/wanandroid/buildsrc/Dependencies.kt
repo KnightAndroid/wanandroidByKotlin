@@ -83,6 +83,7 @@ object Dependencies {
        const val ShimmerLayoutVersion = "2.1.0"            // shimmerLayout
        //其他相关------------------------------------------------------
        const val Aspectj = "1.9.7"                         // aop相关
+       const val LeakCanaryVersion = "2.8.1"               // 内存泄漏相关
     }
     /**
      * AndroidX相关依赖
@@ -227,6 +228,8 @@ object Dependencies {
         const val Banner = "io.github.youth5201314:banner:${Version.BannerVersion}"
         //骨架屏 https://github.com/team-supercharge/ShimmerLayout
         const val ShimmerLayout = "io.supercharge:shimmerlayout:${Version.ShimmerLayoutVersion}"
+        //内存泄漏 https://github.com/square/leakcanary
+        const val LeakCanary = "com.squareup.leakcanary:leakcanary-android:${Version.LeakCanaryVersion}"
     }
 
 

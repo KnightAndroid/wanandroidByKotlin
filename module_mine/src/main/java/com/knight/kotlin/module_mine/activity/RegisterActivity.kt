@@ -9,21 +9,20 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.entity.LoginEntity
 import com.knight.kotlin.library_base.entity.UserInfoEntity
-import com.knight.kotlin.library_base.ktx.dismissLoading
-import com.knight.kotlin.library_base.ktx.observeLiveDataWithError
+import com.knight.kotlin.library_base.ktx.observeLiveData
 import com.knight.kotlin.library_base.ktx.setOnClick
-import com.knight.kotlin.library_base.ktx.showLoading
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_base.util.GsonUtils
 import com.knight.kotlin.library_base.util.dp2px
 import com.knight.kotlin.library_util.SoftInputScrollUtils
 import com.knight.kotlin.library_util.SystemUtils
-import com.knight.kotlin.library_util.toast.ToastUtils
+import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_mine.R
 import com.knight.kotlin.module_mine.databinding.MineRegisterActivityBinding
 import com.knight.kotlin.module_mine.vm.RegisterViewModel
 import com.knight.library_biometric.control.BiometricControl
+import com.knight.library_biometric.listener.BiometricStatusCallback
 import dagger.hilt.android.AndroidEntryPoint
 import javax.crypto.BadPaddingException
 import javax.crypto.Cipher
@@ -76,7 +75,6 @@ class RegisterActivity : BaseActivity<MineRegisterActivityBinding,RegisterViewMo
         mBinding.mineRegisterToolbar.baseIvBack.setOnClickListener { finish() }
         mBinding.mineTvRegister.setOnClick {
             if (validateRegisterMessage()) {
-                showLoading(getString(R.string.mine_register_loading))
                 mViewModel.register(mBinding.mineRegisterUsername.text.toString().trim(),mBinding.mineRegisterPassword.text.toString().trim(),mBinding.mineRegisterConfirmpassword.text.toString().trim())
             }
         }
@@ -114,7 +112,7 @@ class RegisterActivity : BaseActivity<MineRegisterActivityBinding,RegisterViewMo
     }
 
     override fun initObserver() {
-        observeLiveDataWithError(mViewModel.userInfo,mViewModel.requestSuccessFlag,::setUserInfo,::registerFailure)
+        observeLiveData(mViewModel.userInfo,::setUserInfo)
     }
 
     override fun initRequestData() {
@@ -127,17 +125,11 @@ class RegisterActivity : BaseActivity<MineRegisterActivityBinding,RegisterViewMo
 
 
     private fun setUserInfo(userInfo:UserInfoEntity) {
-        dismissLoading()
         val loginMessage = GsonUtils.toJson(LoginEntity(mBinding.mineRegisterUsername.text.toString().trim(),mBinding.mineRegisterPassword.text.toString().trim()))
         CacheUtils.setLoginMessage(loginMessage)
         openBlomtric(loginMessage)
 
     }
-
-    private fun registerFailure() {
-        dismissLoading()
-    }
-
 
     /**
      *
@@ -145,7 +137,7 @@ class RegisterActivity : BaseActivity<MineRegisterActivityBinding,RegisterViewMo
      * @param loginMessage
      */
     private fun openBlomtric(loginMessage: String) {
-        BiometricControl.openBlomtric(this, object : BiometricControl.BiometricStatusCallback {
+        BiometricControl.setStatusCallback(object : BiometricStatusCallback {
             override fun onUsePassword() {
                 finish()
             }
@@ -169,19 +161,24 @@ class RegisterActivity : BaseActivity<MineRegisterActivityBinding,RegisterViewMo
             }
 
             override fun onFailed() {
+                //登录成功发送事件
                 finish()
             }
 
             override fun error(code: Int, reason: String?) {
-                ToastUtils.show("$code,$reason")
+                toast("$code,$reason")
                 finish()
             }
 
             override fun onCancel() {
                 finish()
             }
-        })
+        }).openBlomtric(this)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        BiometricControl.setunListener()
+    }
 
 }

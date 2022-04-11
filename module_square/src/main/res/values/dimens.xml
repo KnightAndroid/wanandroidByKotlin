@@ -12,4 +12,16 @@
     <dimen name="square_sharearticle_link_margin_left">24dp</dimen>
     <dimen name="square_sharearticle_link_margin_top">10dp</dimen>
     <dimen name="square_sharearticle_link_margin_right">24dp</dimen>
+    <dimen name="square_sharearticle_link_bg_radius">6dp</dimen>
+    <dimen name="square_sharearticle_link_padding_left">5dp</dimen>
+    <dimen name="square_sharearticle_link_padding_right">5dp</dimen>
+    <dimen name="square_sharearticle_link_text_size">16sp</dimen>
+    <dimen name="square_tv_article_height">52dp</dimen>
+    <dimen name="square_tv_article_width">158dp</dimen>
+    <dimen name="square_tv_article_margin_top">20dp</dimen>
+    <dimen name="square_tv_sharearticle_text_size">16sp</dimen>
+    <dimen name="square_tv_article_rule_margin_left">24dp</dimen>
+    <dimen name="square_tv_article_rule_margin_top">20dp</dimen>
+    <dimen name="square_tv_article_rule_margin_right">24dp</dimen>
+    <dimen name="square_tv_article_rule_text_size">14sp</dimen>
 </resources>

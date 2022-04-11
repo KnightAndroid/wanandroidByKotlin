@@ -27,7 +27,7 @@ import com.knight.kotlin.library_base.util.ColorUtils
 import com.knight.kotlin.library_base.util.EventBusUtils
 import com.knight.kotlin.library_base.util.GsonUtils
 import com.knight.kotlin.library_util.image.ImageLoader
-import com.knight.kotlin.library_util.toast.ToastUtils
+import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_mine.R
 import com.knight.kotlin.module_mine.activity.LoginActivity
 import com.knight.kotlin.module_mine.activity.QuickLoginActivity
@@ -35,6 +35,7 @@ import com.knight.kotlin.module_mine.databinding.MineFragmentBinding
 import com.knight.kotlin.module_mine.entity.UserInfoCoinEntity
 import com.knight.kotlin.module_mine.vm.MineViewModel
 import com.knight.library_biometric.control.BiometricControl
+import com.knight.library_biometric.listener.BiometricStatusCallback
 import dagger.hilt.android.AndroidEntryPoint
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -192,7 +193,7 @@ class MineFragment: BaseFragment<MineFragmentBinding, MineViewModel>() {
      * 指纹登录
      */
     private fun loginBlomtric() {
-        BiometricControl.loginBlomtric(requireActivity(), object : BiometricControl.BiometricStatusCallback {
+        BiometricControl.setStatusCallback(object : BiometricStatusCallback{
             override fun onUsePassword() {
                 startActivity(Intent(activity, LoginActivity::class.java))
             }
@@ -224,15 +225,21 @@ class MineFragment: BaseFragment<MineFragmentBinding, MineViewModel>() {
             }
 
             override fun error(code: Int, reason: String?) {
-                ToastUtils.show("$code,$reason")
+                toast("$code,$reason")
                 startActivity(Intent(activity, LoginActivity::class.java))
             }
 
             override fun onCancel() {
-                ToastUtils.show(R.string.mine_blomtric_cancel)
+                toast(R.string.mine_tv_quicklogin_cancel)
                 startActivity(Intent(activity, LoginActivity::class.java))
             }
-        })
+        }).loginBlomtric(requireActivity())
+    }
+
+
+    override fun onDestroy() {
+        super.onDestroy()
+        BiometricControl.setunListener()
     }
 
 
