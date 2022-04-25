@@ -4,4 +4,5 @@
     <string name="base_error_data">An error occurred. Please click Retry</string>
     <string name="base_success_copylink">Success copy Link</string>
     <string name="base_loading">request...</string>
+    <string name="base_unavailable_text">Confirm that the network connection is not available, please check the network settings</string>
 </resources>

@@ -35,6 +35,9 @@ object Dependencies {
        const val Junit = "4.13"
        //Material样式
        const val Material = "1.2.0"
+       //智能排版
+       const val FlexLayoutVersion = "2.0.1"
+
 
        //kotlin相关-----------------------------------------------
        const val Kotlin = "1.5.10"
@@ -84,6 +87,7 @@ object Dependencies {
        //其他相关------------------------------------------------------
        const val Aspectj = "1.9.7"                         // aop相关
        const val LeakCanaryVersion = "2.8.1"               // 内存泄漏相关
+
     }
     /**
      * AndroidX相关依赖
@@ -122,6 +126,8 @@ object Dependencies {
     object Android {
         const val Junit = "junit:junit:${Version.Junit}"
         const val Material = "com.google.android.material:material:${Version.Material}"
+        //flexLayout
+        const val FlexLayout = "com.google.android:flexbox:${Version.FlexLayoutVersion}"
     }
 
     /**

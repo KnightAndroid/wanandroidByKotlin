@@ -42,3 +42,7 @@
 # 加载视图混淆
 -dontwarn com.kingja.loadsir.**
 -keep class com.kingja.loadsir.** {*;}
+
+-keepclassmembers class * {
+    @com.knight.kotlin.library_base.network.interfaces.NetworkMonitor <methods>;
+}

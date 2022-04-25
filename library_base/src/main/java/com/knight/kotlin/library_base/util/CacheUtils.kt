@@ -142,6 +142,7 @@ object CacheUtils {
      *
      * @return
      */
+    @JvmStatic
     fun getThemeColor(): Int {
         return mmkv?.decodeInt(CacheKey.THEMECOLOR, ColorUtils.convertToColorInt("55aff4")) ?: ColorUtils.convertToColorInt("55aff4")
     }

@@ -12,7 +12,7 @@ import kotlinx.parcelize.Parcelize
  */
 @Parcelize
 @Entity(tableName = "pushdate_table")
-class PushDateEntity(
+data class PushDateEntity(
     @PrimaryKey(autoGenerate = true)
     var id: Long?=null,
     var time: String?=null

@@ -24,6 +24,7 @@ data class MessageEvent(var type: MessageType) {
     private val KEY_SERIALIZABLE = "key_serializable"
     private val KEY_PARCELABLE = "key_parcelable"
     private val KEY_PARCELABLE_LIST = "key_parcelable_list"
+    private val KEY_STRING_LIST = "key_stringList"
     var bundle = Bundle()
 
     fun put(value: Int): MessageEvent {
@@ -91,6 +92,13 @@ data class MessageEvent(var type: MessageType) {
 
 
         bundle.putParcelable(key, value)
+
+        return this
+    }
+
+
+    fun putStringList(value: ArrayList<String>):MessageEvent {
+        bundle.putStringArrayList(KEY_STRING_LIST,value)
         return this
     }
 
@@ -144,6 +152,10 @@ data class MessageEvent(var type: MessageType) {
         return bundle.getString(key)
     }
 
+    fun getStringList():ArrayList<String>{
+        return bundle.getStringArrayList(KEY_STRING_LIST) ?: ArrayList()
+    }
+
     fun getBoolean(key: String): Boolean {
 
 
@@ -174,7 +186,9 @@ data class MessageEvent(var type: MessageType) {
         //分享文章成功
         ShareArticleSuccess,
         //收藏成功
-        CollectSuccess
+        CollectSuccess,
+        //改变标签
+        ChangeLabel
     }
 
 }

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <include
+        android:id="@+id/include_add_label"
+        layout="@layout/base_include_toolbar"/>
+
+
+
+    <EditText
+        android:id="@+id/home_inputlabel_et"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:hint="@string/home_inputlabel_tip"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/include_add_label"
+        android:layout_marginTop="@dimen/home_inputlabel_et_margin_top"
+        android:layout_marginLeft="@dimen/home_inputlabel_et_margin_left"
+        android:layout_marginRight="@dimen/home_inputlabel_et_margin_right"
+        android:textSize="@dimen/home_inputlabel_et_text_size"/>
+
+    <View
+        android:id="@+id/home_inputlabel_bottom_view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        app:layout_constraintTop_toBottomOf="@id/home_inputlabel_et"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="@dimen/home_inputlabel_bottom_view_margin_top"
+        android:layout_marginRight="@dimen/home_inputlabel_bottom_view_margin_right"
+        android:layout_marginLeft="@dimen/home_inputlabel_bottom_view_margin_left"/>
+
+    <TextView
+        android:id="@+id/home_tv_labelnumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/home_inputlabel_et"
+        android:text="0/30"
+        android:textSize="@dimen/home_tv_labelnumber_textsize"
+        android:layout_marginRight="@dimen/home_tv_labelnumber_margin_right"
+        android:layout_marginTop="@dimen/home_tv_labelnumber_margin_top"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

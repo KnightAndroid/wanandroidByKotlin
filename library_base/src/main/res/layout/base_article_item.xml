@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/base_cl_article_item_color"
+    android:foreground="?android:attr/selectableItemBackground"
+    >
+
+
+    <TextView
+        android:id="@+id/base_item_tv_author"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/base_item_tv_author_margin_start"
+        android:layout_marginTop="@dimen/base_item_tv_author_margin_top"
+        android:textColor="@color/base_item_tv_author_color"
+        android:textSize="@dimen/base_item_tv_author_text_size"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="深红骑士"
+        />
+
+
+    <ImageView
+        android:id="@+id/base_item_imageview"
+        android:layout_width="@dimen/base_item_imageview_width"
+        android:layout_height="@dimen/base_item_imageview_height"
+        android:layout_marginStart="@dimen/base_item_imageview_margin_start"
+        android:layout_marginTop="@dimen/base_item_imageview_margin_top"
+        android:scaleType="centerCrop"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/base_item_tv_author"/>
+
+
+    <TextView
+        android:id="@+id/base_tv_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/base_tv_title_margin_left"
+        android:layout_marginEnd="@dimen/base_tv_title_margin_end"
+        android:ellipsize="end"
+        android:lines="2"
+        tools:text="Android上协程网络请求请求收到"
+        android:textColor="@color/base_tv_title_color"
+        android:textSize="@dimen/base_tv_title_text_size"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toRightOf="@id/base_item_imageview"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/base_item_imageview" />
+
+
+    <TextView
+        android:id="@+id/base_tv_project_desc"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/base_tv_project_desc_margin_left"
+        android:layout_marginTop="@dimen/base_tv_project_desc_margin_top"
+        android:layout_marginEnd="@dimen/base_tv_project_desc_margin_end"
+        android:ellipsize="end"
+        android:lineSpacingExtra="@dimen/base_tv_project_desc_linespacingextra"
+        android:lines="3"
+        tools:text="这是项目描述这是项目描述这是项目是项目描述这是描述是项目描述这是"
+        android:textColor="@color/base_tv_project_desc_color"
+        android:textSize="@dimen/base_tv_project_desc_text_size"
+        app:layout_constraintLeft_toRightOf="@id/base_item_imageview"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/base_tv_title" />
+
+    <TextView
+        android:id="@+id/base_tv_superchapter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/base_tv_superchapter_margin_left"
+        android:text="开源自主"
+        android:textColor="@color/base_tv_superchapter_color"
+        android:textSize="@dimen/base_tv_superchapter_text_size"
+        app:layout_constraintBottom_toBottomOf="@id/base_item_imageview"
+        app:layout_constraintLeft_toRightOf="@id/base_item_imageview" />
+
+    <TextView
+        android:id="@+id/base_item_tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/base_item_tv_time_margin_end"
+        android:text="一天前"
+        android:textColor="@color/base_item_tv_time_color"
+        android:textSize="@dimen/base_item_tv_time_text_size"
+        app:layout_constraintBottom_toBottomOf="@id/base_tv_superchapter"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/base_tv_superchapter" />
+
+    <ImageView
+        android:id="@+id/base_article_collect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/base_article_collect_margin_end"
+        android:background="@drawable/base_icon_nocollect"
+        app:layout_constraintBottom_toBottomOf="@id/base_item_tv_author"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/base_item_tv_author" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/base_item_bottom_height"
+        android:layout_marginTop="@dimen/base_item_bottom_margin_top"
+        android:background="@color/base_item_bottom_view"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/base_item_tv_time" />
+</androidx.constraintlayout.widget.ConstraintLayout>

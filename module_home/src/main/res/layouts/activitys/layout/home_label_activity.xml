@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.KnowLedgeLabelActivity">
+
+    <include
+        android:id="@+id/home_include_title"
+        layout="@layout/base_include_toolbar"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <RelativeLayout
+        android:id="@+id/home_rl_label_head"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/home_rl_label_head_margin_top"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/home_include_title">
+
+
+
+        <TextView
+            android:id="@+id/home_tv_mylabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/home_tv_mylabel_margin_left"
+            android:text="@string/home_knowledge_label"
+            android:textColor="@color/home_tv_mylabel_color"
+            android:textSize="@dimen/home_tv_mylabel_text_size"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/home_tv_mylabel"
+            android:layout_marginLeft="@dimen/base_dimen_16"
+            android:layout_toRightOf="@+id/home_tv_mylabel"
+            android:text="@string/home_hold_down_drag"
+            android:textColor="@color/home_tv_knwoledge_label_drag_color"
+            android:textSize="@dimen/home_tv_knwoledge_label_drag_text_size" />
+
+
+        <TextView
+            android:id="@+id/home_label_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/home_tv_label_edit_margin_right"
+            android:text="@string/home_knowledge_edit"
+            android:textColor="@color/base_color_theme"
+            android:textSize="@dimen/home_tv_label_edit_text_size" />
+    </RelativeLayout>
+    <com.knight.kotlin.library_widget.flowlayout.FlowLayout
+        android:id="@+id/home_knowledget_tag"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/home_knowledget_tag_margin_left"
+        android:layout_marginTop="@dimen/home_knowledget_tag_margin_top"
+        android:layout_marginRight="@dimen/home_knowledget_tag_margin_right"
+        app:defaultTextColor="@color/base_color_theme"
+        app:fixViewTextColor="@color/base_color_theme"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/home_rl_label_head"
+        app:selectTextColor="@color/base_color_theme"/>
+
+    <RelativeLayout
+        android:id="@+id/home_rl_moreknowledge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/home_rl_moreknowledge_margin_top"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/home_knowledget_tag">
+
+
+        <TextView
+            android:id="@+id/home_tv_morelabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/home_tv_morelabel_margin_left"
+            android:text="@string/home_more_knowledge"
+            android:textColor="@color/home_tv_morelabel_color"
+            android:textSize="@dimen/home_tv_morelabel_text_size" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/home_tv_morelabel"
+            android:layout_marginLeft="@dimen/base_dimen_16"
+            android:layout_toRightOf="@+id/home_tv_morelabel"
+            android:text="@string/home_click_myknowledge"
+            android:textColor="@color/home_my_knowlwdge_hint_color"
+            android:textSize="@dimen/home_my_knowlwdge_hint_text_size" />
+    </RelativeLayout>
+
+    <com.yanzhenjie.recyclerview.SwipeRecyclerView
+        android:id="@+id/home_moreknowledge_rv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/home_moreknowledge_rv_margin_left"
+        android:layout_marginTop="@dimen/home_moreknowledge_rv_margin_top"
+        android:layout_marginRight="@dimen/home_moreknowledge_rv_margin_right"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/home_rl_moreknowledge" />
+
+    <ImageView
+        android:id="@+id/home_iv_addlabel"
+        android:layout_width="@dimen/home_iv_addlabel_width"
+        android:layout_height="@dimen/home_iv_addlabel_height"
+        android:layout_marginLeft="@dimen/home_iv_addlabel_margin_left"
+        android:layout_marginTop="@dimen/home_iv_addlabel_margin_top"
+        android:src="@drawable/home_icon_add_label"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/home_moreknowledge_rv" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

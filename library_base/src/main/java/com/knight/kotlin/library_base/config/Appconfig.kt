@@ -1,7 +1,6 @@
 package com.knight.kotlin.library_base.config
 
 import com.knight.kotlin.library_base.entity.UserInfoEntity
-import com.knight.kotlin.library_base.util.CacheUtils
 
 /**
  * Author:Knight
@@ -21,9 +20,27 @@ object Appconfig {
       */
      var appThemeColor = "#55aff4"
 
+     /**
+      * 文章类型：文字文章
+      *
+      */
+     const val ARTICLE_TEXT_TYPE = 0
+
+     /**
+      * 文章类型：图片文章
+      *
+      */
+     const val ARTICLE_PICTURE_TYPE = 1;
+
      const val IMAGE_TRANSITION_NAME = "transitionImage"
      const val TEXT_AUTHOR_NAME = "authorName"
      const val TEXT_CHAPTERNAME_NAME = "chapterName"
+
+     /**
+      *
+      * 字段搜索名称
+      */
+     var search_keyword = ""
 
      /**
       *

@@ -27,6 +27,7 @@ dependencies {
     api Dependencies.GitHub.SmartFooter
     api Dependencies.GitHub.SmartHeaderTwoLevel
     api Dependencies.GitHub.MagicIndicator
+    api Dependencies.Android.FlexLayout
     implementation Dependencies.GitHub.ShimmerLayout
 
 

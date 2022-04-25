@@ -4,6 +4,10 @@
 
     <application>
         <activity android:name=".activity.HomeArticlesTabActivity"/>
+        <activity android:name=".activity.HomeSearchActivity"/>
+        <activity android:name=".activity.SearchResultActivity"/>
+        <activity android:name=".activity.KnowLedgeLabelActivity"/>
+        <activity android:name=".activity.AddKnowLedgeLabelActivity"/>
     </application>
 
 </manifest>

@@ -327,7 +327,7 @@ object StringUtils {
         context: Context,
         str: String?,
         keywords: String?
-    ): SpannableStringBuilder? { // 将字符串中所有与关键字相同的部分标红
+    ): SpannableStringBuilder { // 将字符串中所有与关键字相同的部分标红
         var str = str
         var keywords = keywords
         str = str ?: ""

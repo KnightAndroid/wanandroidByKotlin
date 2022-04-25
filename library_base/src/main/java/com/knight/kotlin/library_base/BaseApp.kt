@@ -5,11 +5,10 @@ import android.app.Application
 import android.content.Context
 import com.kingja.loadsir.core.LoadSir
 import com.knight.kotlin.library_base.app.LoadModuleProxy
-import com.knight.kotlin.library_base.config.CacheKey
-import com.knight.kotlin.library_base.entity.UserInfoEntity
 import com.knight.kotlin.library_base.loadsir.EmptyCallBack
 import com.knight.kotlin.library_base.loadsir.ErrorCallBack
 import com.knight.kotlin.library_base.loadsir.LoadCallBack
+import com.knight.kotlin.library_base.network.NetworkManager
 import com.knight.kotlin.library_base.util.ActivityManagerUtils
 import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_base.util.HookUtils
@@ -101,6 +100,7 @@ open class BaseApp : Application() {
      * 初始化安全任务
      */
     private fun initSafeSdk() {
+        initNetworkStateClient()
         initLoadSir()
         val allTimeMillis = measureTimeMillis {
             val depends = mLoadModuleProxy.initSafeTask()
@@ -113,6 +113,15 @@ open class BaseApp : Application() {
 
 
 
+    /**
+     *
+     * 初始化网络状态监听器
+     *
+     */
+    private fun initNetworkStateClient() :String {
+        NetworkManager.getInstance().init(this)
+        return "NetworkStateClient --->> init complete"
+    }
 
     /**
      * 初始化状态页

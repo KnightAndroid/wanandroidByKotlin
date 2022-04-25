@@ -24,6 +24,10 @@ object RouteActivity {
     object Home {
         private const val HOME = "/module_home"
         const val HomeArticlesTabActivity = "$HOME/ArticlesTabActivity"
+        const val HomeSearchActivity = "$HOME/HomeSearchActivity"
+        const val HomeSearchResultActivity = "$HOME/HomeSearchResultActivity"
+        const val HomeKnowLedgeLabelActivity = "$HOME/KnowLedgeLabelActivity"
+        const val AddKnowLedgeLableActivity = "$HOME/AddKnowLedgeLabelActivity"
     }
 
 

@@ -31,4 +31,20 @@
      <color name="home_toparticle_date_color">#333333</color>
      <color name="home_toparticle_author_color">#333333</color>
      <color name="home_tv_officialaccount_name_color">#333333</color>
+     <color name="home_search_compattoobar_color">#ffffff</color>
+     <color name="home_search_et_text_color">#333333</color>
+     <color name="home_search_et_hint_color">#999999</color>
+     <color name="home_tv_search_cancel_color">#333333</color>
+     <color name="home_tv_hotsearch_text_color">#333333</color>
+     <color name="home_tv_search_history_color">#333333</color>
+     <color name="home_tv_search_keyword_color">#999999</color>
+     <color name="home_ct_search_bg_color">#ffffff</color>
+     <color name="home_et_searchresult_color">#333333</color>
+     <color name="home_et_searchresult_hint_color">#999999</color>
+     <color name="home_tv_searchresult_cancel_color">#333333</color>
+     <color name="home_tv_mylabel_color">#333333</color>
+     <color name="home_tv_knwoledge_label_drag_color">#999999</color>
+     <color name="home_tv_morelabel_color">#333333</color>
+     <color name="home_my_knowlwdge_hint_color">#999999</color>
+     <color name="home_inputlabel_et_color">#333333</color>
 </resources>

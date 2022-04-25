@@ -173,7 +173,6 @@
         android:layout_marginTop="@dimen/base_dimen_20"
         android:background="@drawable/mine_register_confim"
         android:gravity="center"
-        android:onClick="@{()->click.register()}"
         android:text="@string/mine_register"
         android:textColor="@android:color/white"
         android:textSize="@dimen/mine_register_confim_text_size"

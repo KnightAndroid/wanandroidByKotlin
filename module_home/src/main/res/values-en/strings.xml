@@ -7,4 +7,24 @@
     <string name="home_top_sticky">Topping</string>
     <string name="home_toparticle_foot">See more</string>
     <string name="home_biometric_cancel">Cancel</string>
+    <string name="home_cancel">Cancel</string>
+    <string name="home_hotsearch">Popular search</string>
+    <string name="home_search_histroy">Search history</string>
+    <string name="home_clear">Clear</string>
+    <string name="home_input_content_search">Please enter the content and search again</string>
+    <string name="home_clearall_searchrecord">Clear search record</string>
+    <string name="home_knowledge_label">Knowledge label</string>
+    <string name="home_hold_down_drag">Long press to adjust</string>
+    <string name="home_knowledge_edit">Edit</string>
+    <string name="home_click_myknowledge">Add Click tabs</string>
+    <string name="home_more_knowledge">More labels</string>
+    <string name="home_same_label_tip">The same label already exists</string>
+    <string name="home_edit">Edit</string>
+    <string name="home_save">Complete</string>
+    <string name="home_save_add_label">Save</string>
+    <string name="home_add_label_failure">Failed to add tag, please try again</string>
+    <string name="home_addlabel">Add label</string>
+    <string name="home_moreenough_tips">The maximum number of labels cannot exceed %d</string>
+    <string name="home_inputlabel_tip">Please enter a custom label</string>
+    <string name="home_input_label_empty">Please input label</string>
 </resources>

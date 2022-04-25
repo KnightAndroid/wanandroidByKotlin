@@ -7,4 +7,25 @@
     <string name="home_top_sticky">置顶</string>
     <string name="home_toparticle_foot">查看更多</string>
     <string name="home_biometric_cancel">取消</string>
+    <string name="home_cancel">取消</string>
+    <string name="home_hotsearch">热门搜索</string>
+    <string name="home_search_histroy">搜索历史</string>
+    <string name="home_clear">清空</string>
+    <string name="home_input_content_search">请输入内容再搜索</string>
+    <string name="home_clearall_searchrecord">是否清空搜索记录</string>
+    <string name="home_knowledge_label">知识标签</string>
+    <string name="home_hold_down_drag">长按可调整顺序</string>
+    <string name="home_knowledge_edit">编辑</string>
+    <string name="home_click_myknowledge">点击添加我的知识标签</string>
+    <string name="home_more_knowledge">更多标签</string>
+    <string name="home_same_label_tip">已有相同标签</string>
+    <string name="home_edit">编辑</string>
+    <string name="home_save">完成</string>
+    <string name="home_save_add_label">保存</string>
+    <string name="home_add_label_failure">添加标签失败,清重新尝试</string>
+    <string name="home_addlabel">添加标签</string>
+    <string name="home_moreenough_tips">最多不能超过%d个标签</string>
+    <string name="home_inputlabel_tip">请输入自定义标签</string>
+    <string name="home_input_label_empty">还没输入标签</string>
+
 </resources>

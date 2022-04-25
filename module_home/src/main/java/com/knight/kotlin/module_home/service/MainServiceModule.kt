@@ -3,6 +3,8 @@ package com.knight.kotlin.module_home.service
 import com.knight.kotlin.module_home.api.HomeApiService
 import com.knight.kotlin.module_home.api.HomeArticleApiService
 import com.knight.kotlin.module_home.api.HomeRecommendApiService
+import com.knight.kotlin.module_home.api.HomeSearchApiService
+import com.knight.kotlin.module_home.api.HomeSearchResultApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -42,6 +44,22 @@ class MainServiceModule {
     fun provideHomeArticleApiService(retrofit: Retrofit) : HomeArticleApiService {
         return retrofit.create(HomeArticleApiService::class.java)
     }
+
+
+    @Singleton
+    @Provides
+    fun provideHomeSearchApiService(retrofit: Retrofit) : HomeSearchApiService {
+        return retrofit.create(HomeSearchApiService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideHomeSearchResultApiService(retrofit: Retrofit) : HomeSearchResultApiService {
+        return retrofit.create(HomeSearchResultApiService::class.java)
+    }
+
+
+
 
 
 

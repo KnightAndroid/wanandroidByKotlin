@@ -7,18 +7,23 @@ import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersisto
 import com.knight.kotlin.library_base.BaseApp
 import com.knight.kotlin.library_network.BuildConfig
 import com.knight.kotlin.library_network.config.BaseUrlConfig
+import com.knight.kotlin.library_network.interceptor.CacheInterceptor
+import com.knight.kotlin.library_network.interceptor.HttpInterceptor
+import com.knight.kotlin.library_network.interceptor.NetworkInterceptor
 import com.knight.kotlin.library_network.log.LoggingInterceptor
 import com.knight.kotlin.library_network.util.ReplaceUrlCallFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import okhttp3.Cache
 import okhttp3.HttpUrl
 import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.io.File
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
@@ -44,6 +49,9 @@ class ClientConfig {
        // val level = if (BuildConfig.TYPE != "MASTER") HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
        // val loggingInterceptor = HttpLoggingInterceptor().setLevel(level)
 
+        //缓存目录
+        val cacheFile: File = File(BaseApp.context.getCacheDir(), "knight_wanandroid")
+        val cache = Cache(cacheFile, 1024 * 1024 * 50)
 
         //设置拦截器
         val loggingInterceptor = LoggingInterceptor.Builder()
@@ -57,7 +65,11 @@ class ClientConfig {
         return OkHttpClient.Builder()
             .connectTimeout(15L * 1000L, TimeUnit.MILLISECONDS)
             .readTimeout(20L * 1000L,TimeUnit.MILLISECONDS)
-            .addInterceptor(loggingInterceptor)
+            .addInterceptor(loggingInterceptor) //日志拦截器
+            .addInterceptor(CacheInterceptor()) //缓存拦截器
+            .addInterceptor(NetworkInterceptor()) //配合缓存拦截器
+            .addInterceptor(HttpInterceptor())//重复拦截
+            .cache(cache)
             .retryOnConnectionFailure(true)
             .cookieJar(PersistentCookieJar(SetCookieCache(),SharedPrefsCookiePersistor(BaseApp.application)))
             .build()

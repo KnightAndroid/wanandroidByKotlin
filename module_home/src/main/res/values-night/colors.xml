@@ -24,4 +24,17 @@
     <color name="home_toparticle_date_color">#D3D3D3</color>
     <color name="home_toparticle_author_color">#D3D3D3</color>
     <color name="home_tv_officialaccount_name_color">#D3D3D3</color>
+    <color name="home_search_compattoobar_color">#303030</color>
+    <color name="home_search_et_text_color">#D3D3D3</color>
+    <color name="home_search_et_hint_color">#666666</color>
+    <color name="home_tv_search_cancel_color">#D3D3D3</color>
+    <color name="home_tv_hotsearch_text_color">#D3D3D3</color>
+    <color name="home_tv_search_history_color">#D3D3D3</color>
+    <color name="home_ct_search_bg_color">#303030</color>
+    <color name="home_et_searchresult_color">#D3D3D3</color>
+    <color name="home_et_searchresult_hint_color">#666666</color>
+    <color name="home_tv_searchresult_cancel_color">#D3D3D3</color>
+    <color name="home_tv_mylabel_color">#D3D3D3</color>
+    <color name="home_tv_morelabel_color">#D3D3D3</color>
+    <color name="home_inputlabel_et_color">#D3D3D3</color>
 </resources>

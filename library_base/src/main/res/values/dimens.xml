@@ -65,4 +65,29 @@
 
     <dimen name="base_background_layout_padding">16dp</dimen>
     <dimen name="base_tv_loading_show_margin_top">2dp</dimen>
+    <dimen name="base_item_tv_author_margin_start">16dp</dimen>
+    <dimen name="base_item_tv_author_margin_top">16dp</dimen>
+    <dimen name="base_item_tv_author_text_size">12sp</dimen>
+    <dimen name="base_item_imageview_height">160dp</dimen>
+    <dimen name="base_item_imageview_width">130dp</dimen>
+    <dimen name="base_item_imageview_margin_start">16dp</dimen>
+    <dimen name="base_item_imageview_margin_top">10dp</dimen>
+    <dimen name="base_tv_title_margin_left">10dp</dimen>
+    <dimen name="base_tv_title_margin_end">16dp</dimen>
+
+    <dimen name="base_tv_title_text_size">16sp</dimen>
+    <dimen name="base_tv_project_desc_margin_left">10dp</dimen>
+    <dimen name="base_tv_project_desc_margin_top">10dp</dimen>
+    <dimen name="base_tv_project_desc_margin_end">16dp</dimen>
+    <dimen name="base_tv_project_desc_linespacingextra">4dp</dimen>
+    <dimen name="base_tv_project_desc_text_size">12sp</dimen>
+    <dimen name="base_tv_superchapter_margin_left">10dp</dimen>
+    <dimen name="base_tv_superchapter_text_size">12sp</dimen>
+    <dimen name="base_item_tv_time_margin_end">16dp</dimen>
+    <dimen name="base_item_tv_time_text_size">12sp</dimen>
+    <dimen name="base_article_collect_margin_end">16dp</dimen>
+    <dimen name="base_item_bottom_height">8dp</dimen>
+    <dimen name="base_item_bottom_margin_top">16dp</dimen>
+    <dimen name="base_tv_network_tip">50dp</dimen>
+    <dimen name="base_tv_network_tip_text_size">16sp</dimen>
 </resources>

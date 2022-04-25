@@ -12,7 +12,6 @@ import android.view.KeyEvent
 import androidx.annotation.NonNull
 import androidx.annotation.Nullable
 import androidx.fragment.app.viewModels
-import com.alibaba.android.arouter.launcher.ARouter
 import com.knight.kotlin.library_base.BaseApp
 import com.knight.kotlin.library_base.fragment.BaseDialogFragment
 import com.knight.kotlin.library_base.ktx.setOnClick
@@ -24,6 +23,7 @@ import com.knight.kotlin.library_util.TextClickUtils
 import com.knight.kotlin.library_util.TextClickUtils.OnClickToWebListener
 import com.knight.kotlin.library_util.ViewInitUtils
 import com.knight.kotlin.library_util.startPage
+import com.knight.kotlin.library_util.startPageWithParams
 import com.knight.kotlin.module_welcome.databinding.WelcomePrivacyAgreeFragmentBinding
 import kotlin.system.exitProcess
 
@@ -78,18 +78,17 @@ class WelcomePrivacyAgreeFragment : BaseDialogFragment<WelcomePrivacyAgreeFragme
         mBinding.appPrivacyTip.movementMethod = LinkMovementMethod.getInstance()
         spannable.setSpan(TextClickUtils().setOnClickWebListener(object : OnClickToWebListener {
             override fun goWeb() {
-                ARouter.getInstance().build(RouteActivity.Web.WebPager)
-                    .withString("webUrl", "file:android_asset/wanandroid_useragree.html")
-                    .withString("webTitle", "用户协议")
-                    .navigation()
+
+                startPageWithParams(RouteActivity.Web.WebPager,
+                    "webUrl" to "file:android_asset/wanandroid_useragree.html",
+                            "webTitle" to "用户协议")
             }
         }), 8, 14, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         spannable.setSpan(TextClickUtils().setOnClickWebListener(object : OnClickToWebListener {
             override fun goWeb() {
-                ARouter.getInstance().build(RouteActivity.Web.WebPager)
-                    .withString("webUrl", "file:android_asset/wanandroid_userprivacy.html")
-                    .withString("webTitle", "隐私政策")
-                    .navigation()
+                startPageWithParams(RouteActivity.Web.WebPager,
+                            "webUrl" to "file:android_asset/wanandroid_userprivacy.html",
+                                    "webTitle" to "隐私政策")
             }
 
         }), 15, 21, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)

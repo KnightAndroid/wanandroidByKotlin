@@ -5,6 +5,11 @@
         <attr name="bototmExtraIndicatorHeight" format="dimension" />
     </declare-styleable>
 
+    <declare-styleable name="StickyScrollView">
+        <attr name="stuckShadowHeight" format="dimension" />
+        <attr name="stuckShadowDrawable" format="reference" />
+    </declare-styleable>
+
     <declare-styleable name="GestureLockView">
         <!--点的行数-->
         <attr name="row" format="integer" />
@@ -30,5 +35,21 @@
         <!--轨迹/密码最小长度-->
         <attr name="min_length" format="integer" />
 
+    </declare-styleable>
+
+    <declare-styleable name="flowLayout">
+        <attr name="flowLayoutTextSize" format="integer" />
+        <attr name="verticalSpacingSize" format="integer" />
+        <attr name="childViewPadding" format="integer" />
+        <attr name="horizontalSpacingSize" format="integer" />
+        <attr name="deleteIconWidth" format="integer" />
+        <attr name="deleteIconMargin" format="integer" />
+        <attr name="tagHeight" format="integer" />
+        <attr name="selectViewBackground" format="reference" />
+        <attr name="selectTextColor" format="color" />
+        <attr name="defaultViewBackground" format="reference" />
+        <attr name="defaultTextColor" format="color" />
+        <attr name="fixViewEditingBackground" format="reference" />
+        <attr name="fixViewTextColor" format="color" />
     </declare-styleable>
 </resources>

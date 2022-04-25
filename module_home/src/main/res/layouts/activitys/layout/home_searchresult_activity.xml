@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.SearchResultActivity">
+
+
+    <com.knight.kotlin.library_widget.CompatToolBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/home_ct_search_bg_color">
+
+
+        <ImageView
+            android:id="@+id/searchresult_iv_back"
+            android:layout_width="@dimen/home_iv_searchresult_back_width"
+            android:layout_height="@dimen/home_iv_searchresult_back_height"
+            android:layout_marginLeft="@dimen/home_iv_searchresult_back_margin_left"
+            android:background="@drawable/base_right_arrow"/>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <com.knight.kotlin.library_widget.ClearEditText
+            android:id="@+id/searchresult_et"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/home_et_searchresult_height"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/home_et_searchresult_margin_start"
+            android:layout_marginLeft="@dimen/home_et_searchresult_margin_left"
+            android:layout_toLeftOf="@+id/searchresult_tv_cancel"
+            android:background="@drawable/base_bg_filtrate_shape"
+            android:gravity="center_vertical"
+            android:hint="@string/home_hint_search"
+            android:imeOptions="actionSearch"
+            android:paddingLeft="@dimen/home_et_searchresult_padding_left"
+            android:paddingRight="@dimen/home_et_searchresult_padding_right"
+            android:singleLine="true"
+            android:textColor="@color/home_et_searchresult_color"
+            android:textColorHint="@color/home_et_searchresult_hint_color"
+            android:textCursorDrawable="@drawable/base_textcursorcolor"
+            android:textSize="@dimen/home_et_searchresult_text_size"
+            />
+
+            <TextView
+                android:id="@+id/searchresult_tv_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/home_tv_searchresult_cancel_margin_left"
+                android:layout_marginRight="@dimen/home_tv_searchresult_cancel_margin_right"
+                android:text="@string/home_cancel"
+                android:textColor="@color/home_tv_searchresult_cancel_color"
+                android:textSize="@dimen/home_tv_searchresult_cancel_text_size"
+                />
+
+        </RelativeLayout>
+    </com.knight.kotlin.library_widget.CompatToolBar>
+
+    <include
+        android:id="@+id/include_searchresult"
+        layout="@layout/base_layout_recycleview"/>
+
+</LinearLayout>

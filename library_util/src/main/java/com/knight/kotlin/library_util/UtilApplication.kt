@@ -8,7 +8,6 @@ import com.google.auto.service.AutoService
 import com.knight.kotlin.library_base.BaseApp
 import com.knight.kotlin.library_base.BuildConfig
 import com.knight.kotlin.library_base.app.ApplicationLifecycle
-import com.knight.kotlin.library_base.network.NetworkStateClient
 import com.knight.kotlin.library_base.util.ProcessUtil
 import com.knight.kotlin.library_util.toast.ToastInterceptor
 import com.knight.kotlin.library_util.toast.ToastUtils.init
@@ -47,7 +46,6 @@ class UtilApplication:ApplicationLifecycle {
         val list = mutableListOf<() -> String>()
         //在主进程初始化
         if (ProcessUtil.isMainProcess(BaseApp.context)) {
-            list.add{initNetworkStateClient()}
             list.add{initARouter()}
             list.add{initToast()}
         }
@@ -61,15 +59,7 @@ class UtilApplication:ApplicationLifecycle {
 
 
 
-    /**
-     *
-     * 初始化网络状态监听器
-     *
-     */
-    private fun initNetworkStateClient() :String {
-        NetworkStateClient.register()
-        return "NetworkStateClient --->> init complete"
-    }
+
     /**
      *
      * 注册阿里ARoute 初始化

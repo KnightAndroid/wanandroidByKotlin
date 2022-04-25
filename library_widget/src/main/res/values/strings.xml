@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="widget_set_edit_tips">你应该首先设置标签</string>
     <string name="widget_min_gesture_password">至少连接四个点，请重新输入</string>
     <string name="widget_gesture_password_inequality">两次手势密码不一致</string>
     <string name="widget_gesture_password_error">手势密码错误</string>

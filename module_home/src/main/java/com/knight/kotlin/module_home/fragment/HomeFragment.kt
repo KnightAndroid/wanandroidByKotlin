@@ -42,6 +42,7 @@ import com.knight.kotlin.library_util.SystemUtils
 import com.knight.kotlin.library_util.ViewInitUtils
 import com.knight.kotlin.library_util.bindViewPager2
 import com.knight.kotlin.library_util.startPage
+import com.knight.kotlin.library_util.startPageWithStringArrayListParams
 import com.knight.kotlin.library_util.toast.ToastUtils
 import com.knight.kotlin.module_home.R
 import com.knight.kotlin.module_home.constants.HomeConstants
@@ -88,7 +89,7 @@ class HomeFragment : BaseFragment<HomeFragmentBinding, HomeVm>() {
         initMagicIndicator()
         setOnClickListener(homeIncludeToolbar.homeScanIcon,homeIncludeToolbar.homeTvLoginname,
             homeIncludeToolbar.homeIvEveryday,
-            homeIncludeToolbar.homeIvAdd)
+            homeIncludeToolbar.homeIvAdd,homeIncludeToolbar.homeRlSearch,homeIvLabelmore)
         getUser()?.let {
             homeIncludeToolbar.homeTvLoginname.text = it.username
         } ?: kotlin.run {
@@ -243,8 +244,13 @@ class HomeFragment : BaseFragment<HomeFragmentBinding, HomeVm>() {
                }
            }
 
+            mBinding.homeIncludeToolbar.homeRlSearch ->{
+                startPage(RouteActivity.Home.HomeSearchActivity)
+            }
 
-
+            mBinding.homeIvLabelmore -> {
+                startPageWithStringArrayListParams(RouteActivity.Home.HomeKnowLedgeLabelActivity,"data" to ArrayList(knowledgeLabelList))
+            }
         }
     }
 
@@ -278,6 +284,27 @@ class HomeFragment : BaseFragment<HomeFragmentBinding, HomeVm>() {
                 //退出登录成功
                 mBinding.homeIncludeToolbar.homeTvLoginname.setText(getString(R.string.home_tv_login))
             }
+
+            //更改标签
+            MessageEvent.MessageType.ChangeLabel -> {
+                knowledgeLabelList.clear()
+                knowledgeLabelList.addAll(event.getStringList())
+                mFragments.clear()
+                for (i in knowledgeLabelList.indices) {
+                    if (i == 0) {
+                        mFragments.add(HomeRecommendFragment())
+                    } else {
+                        mFragments.add(HomeArticleFragment())
+                    }
+                }
+                mBinding.magicIndicator.navigator.notifyDataSetChanged()
+                mBinding.viewPager.adapter?.notifyDataSetChanged()
+                ViewInitUtils.setViewPager2Init(requireActivity(),mBinding.viewPager,mFragments,
+                    isOffscreenPageLimit = true,
+                    isUserInputEnabled = false
+                )
+            }
+
         }
 
     }

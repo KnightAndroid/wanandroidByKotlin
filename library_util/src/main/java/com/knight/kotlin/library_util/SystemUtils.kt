@@ -12,7 +12,13 @@ import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.graphics.drawable.Drawable
 import android.os.Build
+import android.os.Handler
+import android.os.Looper
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -115,6 +121,71 @@ object SystemUtils {
         } catch (t: Throwable) {
         }
     }
+
+    /**
+     *
+     * 延迟显示软键盘
+     * @param view
+     */
+    fun showDelaySoftKeyBoard(view: View) {
+        Handler(Looper.getMainLooper()).postDelayed({
+            showSoftKeyBoard(
+                view
+            )
+        }, 500)
+    }
+
+
+    /**
+     *
+     * 显示软键盘
+     * @param view
+     */
+    fun showSoftKeyBoard(view: View) {
+        try {
+            view.isFocusable = true
+            view.isFocusableInTouchMode = true
+            view.requestFocus()
+            val imm =
+                view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.showSoftInput(view, InputMethodManager.RESULT_UNCHANGED_SHOWN)
+            imm.toggleSoftInput(
+                InputMethodManager.HIDE_IMPLICIT_ONLY,
+                InputMethodManager.HIDE_IMPLICIT_ONLY
+            )
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
+        }
+    }
+
+
+    /**
+     *
+     * 监听输入框
+     * @param et
+     * @param tv
+     */
+    fun editTextChangeListener(et: EditText, tv: TextView) {
+        et.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+                if (s.toString() != "") {
+                    tv.text = "搜索"
+                } else {
+                    tv.text = "取消"
+                }
+            }
+
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable) {
+                if (s.toString() != "") {
+                    tv.text = "搜索"
+                } else {
+                    tv.text = "取消"
+                }
+            }
+        })
+    }
+
 
 
 

@@ -140,7 +140,7 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
 
     override fun HomeRecommendFragmentBinding.initView() {
         mSkeletonScreen = Skeleton.bind(mBinding.rlHome)
-            .load(R.layout.activity_home_skeleton)
+            .load(R.layout.home_skeleton_activity)
             .duration(1200)
             .angle(0)
             .show()
@@ -157,8 +157,9 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
             true
         )
         homeTwoLevelHeader.setEnablePullToCloseTwoLevel(false)
-        recommendRefreshLayout.setEnableLoadMore(true)
+     //   recommendRefreshLayout.setEnableLoadMore(true)
         recommendRefreshLayout.setOnLoadMoreListener(this@HomeRecommendFragment)
+        recommendRefreshLayout.setOnRefreshListener(this@HomeRecommendFragment)
         recommendRefreshLayout.setOnMultiListener(object : SimpleMultiListener() {
             override fun onHeaderMoving(
                 header: RefreshHeader?,
@@ -171,7 +172,7 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
             }
 
             override fun onRefresh(refreshLayout: RefreshLayout) {
-                initRequestData()
+                //initRequestData()
             }
 
             override fun onStateChanged(

@@ -1,0 +1,218 @@
+package com.knight.kotlin.module_home.adapter
+
+import android.graphics.drawable.GradientDrawable
+import android.os.Build
+import android.text.Html
+import android.text.TextUtils
+import android.view.View
+import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
+import com.chad.library.adapter.base.viewholder.BaseViewHolder
+import com.knight.kotlin.library_base.config.Appconfig
+import com.knight.kotlin.library_base.util.CacheUtils
+import com.knight.kotlin.library_util.StringUtils
+import com.knight.kotlin.library_util.image.ImageLoader
+import com.knight.kotlin.module_home.R
+import com.knight.kotlin.module_home.entity.HomeArticleEntity
+
+/**
+ * Author:Knight
+ * Time:2022/4/20 13:44
+ * Description:SearchResultAdapter
+ */
+class SearchResultAdapter(data:MutableList<HomeArticleEntity>):BaseMultiItemQuickAdapter<HomeArticleEntity,BaseViewHolder>() {
+
+
+    init {
+        addItemType(Appconfig.ARTICLE_TEXT_TYPE, R.layout.base_text_item)
+        addItemType(Appconfig.ARTICLE_PICTURE_TYPE, R.layout.base_article_item)
+
+    }
+
+    override fun convert(holder: BaseViewHolder, item: HomeArticleEntity) {
+        item.run {
+            when(holder.itemViewType) {
+                Appconfig.ARTICLE_TEXT_TYPE ->{
+                    //作者
+                    if (author.isNullOrEmpty()) {
+                        holder.setText(R.id.base_item_article_author, StringUtils.getStyle(context, shareUser, Appconfig.search_keyword))
+                    } else {
+                        holder.setText(R.id.base_item_article_author, StringUtils.getStyle(context, author, Appconfig.search_keyword))
+                    }
+
+                    if (!TextUtils.isEmpty(superChapterName) || !TextUtils.isEmpty(chapterName)) {
+                        holder.setVisible(R.id.base_tv_article_superchaptername,true)
+                        val gradientDrawable = GradientDrawable()
+                        gradientDrawable.shape = GradientDrawable.RECTANGLE
+                        gradientDrawable.setStroke(2, CacheUtils.getThemeColor())
+                        if (!TextUtils.isEmpty(superChapterName)) {
+                            if (!TextUtils.isEmpty(chapterName)) {
+                                holder.setText(
+                                    R.id.base_tv_article_superchaptername,
+                                    "$superChapterName/$chapterName"
+                                )
+                            } else {
+                                holder.setText(
+                                    R.id.base_tv_article_superchaptername,
+                                    superChapterName
+                                )
+                            }
+                        } else {
+                            if (!TextUtils.isEmpty(chapterName)) {
+                                holder.setText(
+                                    R.id.base_tv_article_superchaptername,
+                                    chapterName
+                                )
+                            } else {
+                                holder.setText(R.id.base_tv_article_superchaptername, "")
+                            }
+                        }
+                        holder.setTextColor(
+                            R.id.base_tv_article_superchaptername,
+                            CacheUtils.getThemeColor()
+                        )
+
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                            holder.getView<View>(R.id.base_tv_article_superchaptername).background =
+                                gradientDrawable
+                        } else {
+                            holder.getView<View>(R.id.base_tv_article_superchaptername)
+                                .setBackgroundDrawable(gradientDrawable)
+                        }
+                    } else {
+                        holder.setGone(R.id.base_tv_article_superchaptername, true)
+                    }
+
+                    //时间赋值
+                    if (!TextUtils.isEmpty(niceDate)) {
+                        holder.setText(
+                            R.id.base_item_articledata,
+                            niceDate
+                        )
+                    } else {
+                        holder.setText(
+                            R.id.base_item_articledata,
+                            niceShareDate
+                        )
+                    }
+
+                    //标题
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        holder.setText(
+                            R.id.base_tv_articletitle,
+                            StringUtils.getStyle(
+                                context,
+                                Html.fromHtml(
+                                    title,
+                                    Html.FROM_HTML_MODE_LEGACY
+                                ).toString(),
+                                Appconfig.search_keyword
+                            )
+                        )
+                    } else {
+                        holder.setText(
+                            R.id.base_tv_articletitle,
+                            StringUtils.getStyle(
+                                context,
+                                Html.fromHtml(title).toString(),
+                                Appconfig.search_keyword
+                            )
+                        )
+                    }
+                    //是否收藏
+                    if (collect) {
+                        holder.setBackgroundResource(
+                            R.id.base_icon_collect,
+                            R.drawable.base_icon_collect
+                        )
+                    } else {
+                        holder.setBackgroundResource(
+                            R.id.base_icon_collect,
+                            R.drawable.base_icon_nocollect
+                        )
+                    }
+
+                }
+                Appconfig.ARTICLE_PICTURE_TYPE ->{
+                    //项目图片
+                    ImageLoader.loadStringPhoto(
+                        context,
+                        envelopePic ?:"",
+                        holder.getView(R.id.base_item_imageview)
+                    )
+
+                    //作者
+                    if (!TextUtils.isEmpty(author)) {
+                        holder.setText(R.id.base_item_tv_author, StringUtils.getStyle(context, author, Appconfig.search_keyword))
+                    } else {
+                        holder.setText(R.id.base_item_tv_author, StringUtils.getStyle(context, shareUser, Appconfig.search_keyword))
+                    }
+                    //时间赋值
+                    if (!TextUtils.isEmpty(niceDate)) {
+                        holder.setText(R.id.base_item_tv_time, niceDate)
+                    } else {
+                        holder.setText(R.id.base_item_tv_time, niceShareDate)
+                    }
+
+                    //标题
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        holder.setText(
+                            R.id.base_tv_title,
+                            StringUtils.getStyle(context, Html.fromHtml(title, Html.FROM_HTML_MODE_LEGACY).toString(), Appconfig.search_keyword))
+                    } else {
+                        holder.setText(
+                            R.id.base_tv_title,
+                            StringUtils.getStyle(context, Html.fromHtml(title).toString(), Appconfig.search_keyword))
+                    }
+
+
+                    //描述
+                    if (!TextUtils.isEmpty(desc)) {
+                        holder.setVisible(R.id.base_tv_project_desc, true)
+                        //标题
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                            holder.setText(
+                                R.id.base_tv_project_desc,
+                                StringUtils.getStyle(context, Html.fromHtml(desc, Html.FROM_HTML_MODE_LEGACY).toString(), Appconfig.search_keyword))
+                        } else {
+                            holder.setText(R.id.base_tv_project_desc,
+                                StringUtils.getStyle(context, Html.fromHtml(desc).toString(), Appconfig.search_keyword))
+                        }
+                    } else {
+                        holder.setGone(R.id.base_tv_project_desc, true)
+                    }
+
+                    //分类
+                    if (!TextUtils.isEmpty(superChapterName)) {
+                        holder.setVisible(R.id.base_tv_superchapter, true)
+                        holder.setText(
+                            R.id.base_tv_superchapter,
+                            superChapterName
+                        )
+                    } else {
+                        holder.setGone(R.id.base_tv_superchapter, true)
+                    }
+
+                    //是否收藏
+                    if (collect) {
+                        holder.setBackgroundResource(
+                            R.id.base_article_collect,
+                            R.drawable.base_icon_collect
+                        )
+                    } else {
+                        holder.setBackgroundResource(
+                            R.id.base_article_collect,
+                            R.drawable.base_icon_nocollect
+                        )
+                    }
+
+                }
+
+                else ->{
+
+                }
+            }
+        }
+
+    }
+
+}
