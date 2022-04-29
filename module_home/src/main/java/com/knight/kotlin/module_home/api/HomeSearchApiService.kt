@@ -12,7 +12,7 @@ import retrofit2.http.GET
 interface HomeSearchApiService {
 
     /**
-     * 获取置顶文章
+     * 热词
      */
     @GET("hotkey/json")
     suspend fun getHotKey(): BaseResponse<MutableList<SearchHotKeyEntity>>

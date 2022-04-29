@@ -16,7 +16,7 @@ class HomeSearchRepo @Inject constructor() : BaseRepository() {
     lateinit var mHomeSearchApiService: HomeSearchApiService
 
     /**
-     * 获取推送文章信息接口
+     * 获取热词
      *
      */
     suspend fun getHotKey() = request<MutableList<SearchHotKeyEntity>>{

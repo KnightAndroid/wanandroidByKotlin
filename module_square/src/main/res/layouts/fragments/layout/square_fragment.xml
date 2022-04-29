@@ -1,17 +1,175 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/square_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <com.knight.kotlin.library_widget.CompatToolBar
+            android:id="@+id/square_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/square_toolbar_color"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/square_iv_question"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/square_iv_question_margin_left"
+                    android:background="@drawable/square_icon_question"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/square_tv_tipshare"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/square_tv_tipshare_margin_left"
+                    android:text="@string/square_click_share"
+                    android:textColor="@color/square_tv_tipshare_text_color"
+                    android:textSize="@dimen/square_tv_tipshare_text_size"
+                    app:layout_constraintRight_toLeftOf="@+id/square_tv_goshare"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/square_tv_goshare"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/square_tv_goshare_margin_right"
+                    android:background="@drawable/square_shape_sharearticle"
+                    android:paddingLeft="@dimen/square_tv_goshare_padding_left"
+                    android:paddingTop="@dimen/square_tv_goshare_padding_right"
+                    android:paddingRight="@dimen/square_tv_goshare_padding_top"
+                    android:paddingBottom="@dimen/square_tv_goshare_padding_bottom"
+                    android:text="@string/square_share_article"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/square_tv_goshare_text_size"
+                    app:layout_constraintBottom_toBottomOf="@id/square_tv_tipshare"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/square_tv_tipshare" />
+
+                <TextView
+                    android:id="@+id/square_tv_addcoins"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/base_dimen_6"
+                    android:text="@string/square_share_addcoins"
+                    android:textColor="@color/square_tv_addcoins_text_color"
+                    android:textSize="@dimen/square_tv_addcoins_text_size"
+                    app:layout_constraintLeft_toLeftOf="@id/square_tv_tipshare"
+                    app:layout_constraintTop_toBottomOf="@id/square_tv_tipshare" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </com.knight.kotlin.library_widget.CompatToolBar>
+
+
+        <com.scwang.smart.refresh.layout.SmartRefreshLayout
+            android:id="@+id/square_sharearticle_freshlayout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/square_toolbar">
+
+            <com.scwang.smart.refresh.header.ClassicsHeader
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <com.knight.kotlin.library_widget.StickyScrollView
+                android:id="@+id/square_nestedsv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fillViewport="true"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/square_tv_everysearch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/square_tv_everysearch_margin_left"
+                        android:layout_marginTop="@dimen/square_tv_everysearch_margin_top"
+                        android:text="@string/square_every_one_search"
+                        android:textColor="@color/square_tv_everysearch_color"
+                        android:textSize="@dimen/square_tv_everysearch_text_size" />
+
+                    <com.yanzhenjie.recyclerview.SwipeRecyclerView
+                        android:id="@+id/square_searchhot_rv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/square_searchhot_rv_margin_left"
+                        android:layout_marginTop="@dimen/square_searchhot_rv_margin_top"
+                        android:layout_marginRight="@dimen/square_searchhot_rv_margin_right" />
+
+                    <TextView
+                        android:id="@+id/square_tv_new_share"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/square_tv_new_share_margin_left"
+                        android:text="@string/square_new_sharearticle"
+                        android:textColor="@color/square_tv_new_share_text_color"
+                        android:textSize="@dimen/square_tv_new_share_text_size" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/square_view_bottom_height"
+                        android:layout_marginTop="@dimen/square_view_bottom_margin_top"
+                        android:background="@color/base_item_bottom_view" />
+
+                    <com.yanzhenjie.recyclerview.SwipeRecyclerView
+                        android:id="@+id/square_article_rv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+
+
+            </com.knight.kotlin.library_widget.StickyScrollView>
+
+            <com.scwang.smart.refresh.footer.ClassicsFooter
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+
+        </com.scwang.smart.refresh.layout.SmartRefreshLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/square_fab_up"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="这是广场页面"/>
+        android:layout_alignParentRight="true"
+        android:layout_gravity="bottom|end"
+        android:layout_marginRight="@dimen/square_fab_up_margin_right"
+        android:layout_marginBottom="@dimen/square_fab_up_margin_bottom"
+        android:src="@drawable/base_icon_up"
+        app:backgroundTint="@color/base_color_theme" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</FrameLayout>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.knight.kotlin.module_square.adapter.HotKeyAdapter"
+    android:id="@+id/square_tv_hotkey"
+    android:layout_width="wrap_content"
+    android:layout_height="40dp"
+    android:textColor="@color/base_color_theme"
+    android:textSize="@dimen/square_tv_hotkey_text_size"
+    android:paddingLeft="@dimen/square_tv_hotkey_padding_left"
+    android:paddingRight="@dimen/square_tv_hotkey_padding_right"
+    android:layout_marginTop="@dimen/square_tv_hotkey_margin_top"
+    android:layout_marginBottom="@dimen/square_tv_hotkey_margin_bottom"
+    android:gravity="center"
+    android:text="sdsdsdsdsd"
+    android:background="@drawable/square_kotkeyframe_shape"
+    android:layout_marginLeft="@dimen/square_tv_hotkey_margin_left"
+    android:layout_marginRight="@dimen/square_tv_hotkey_margin_right"
+    >
+</TextView>

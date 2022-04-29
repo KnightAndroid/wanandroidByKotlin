@@ -15,4 +15,9 @@
     <string name="square_title_noempty">文章标题不能为空</string>
     <string name="square_link_noempty">文章链接不能为空</string>
     <string name="square_linkstart_rule">文章链接必须是http或者是https开头</string>
+    <string name="square_click_share">你可以点击</string>
+    <string name="square_share_article">分享文章</string>
+    <string name="square_share_addcoins">每日首次分享加积分</string>
+    <string name="square_every_one_search">大家都在搜</string>
+    <string name="square_new_sharearticle">最新分享</string>
 </resources>

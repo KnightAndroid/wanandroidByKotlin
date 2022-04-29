@@ -16,4 +16,9 @@
     <string name="square_title_noempty">Article title cannot be empty</string>
     <string name="square_link_noempty">Article link cannot be empty</string>
     <string name="square_linkstart_rule">The article link must start with HTTP or HTTPS</string>
+    <string name="square_click_share">You can click</string>
+    <string name="square_share_article">Share articles</string>
+    <string name="square_share_addcoins">Daily first share plus points</string>
+    <string name="square_every_one_search">Everyone is searching</string>
+    <string name="square_new_sharearticle">Latest share</string>
 </resources>

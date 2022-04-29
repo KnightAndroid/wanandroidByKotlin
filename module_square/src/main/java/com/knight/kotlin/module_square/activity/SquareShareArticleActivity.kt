@@ -3,6 +3,7 @@ package com.knight.kotlin.module_square.activity
 import android.text.TextUtils
 import androidx.activity.viewModels
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.knight.kotlin.library_aop.loginintercept.LoginCheck
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.event.MessageEvent
 import com.knight.kotlin.library_base.ktx.observeLiveData
@@ -15,8 +16,6 @@ import com.knight.kotlin.module_square.R
 import com.knight.kotlin.module_square.databinding.SquareShareArticleActivityBinding
 import com.knight.kotlin.module_square.vm.SquareShareArticleVm
 import dagger.hilt.android.AndroidEntryPoint
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
 
 /**
  * Author:Knight
@@ -38,10 +37,10 @@ class SquareShareArticleActivity :BaseActivity<SquareShareArticleActivityBinding
         squareSharearticleToolbar.baseTvTitle.setText(R.string.square_sharearticle)
         squareSharearticleToolbar.baseIvBack.setOnClick { finish() }
         squareTvArticle.setOnClick {
-            if (validateArticleMessage()) {
-                mViewModel.shareArticle(title, link)
-            }
+            submitArticle()
         }
+
+
 
     }
 
@@ -68,7 +67,7 @@ class SquareShareArticleActivity :BaseActivity<SquareShareArticleActivityBinding
      * 校验文章信息和链接
      * @return
      */
-    private fun validateArticleMessage(): Boolean {
+    private fun validateArticleMessage():Boolean {
         var validFlag = true
         title = mBinding.squareSharearticleEt.text.toString().trim()
         link = mBinding.squareSharearticleLink.text.toString().trim()
@@ -86,4 +85,10 @@ class SquareShareArticleActivity :BaseActivity<SquareShareArticleActivityBinding
     }
 
 
+    @LoginCheck
+    private fun submitArticle() {
+        if (validateArticleMessage()) {
+            mViewModel.shareArticle(title, link)
+        }
+    }
 }

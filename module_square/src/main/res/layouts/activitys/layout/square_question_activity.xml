@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/square_question_activity_bg">
+
+    <com.knight.kotlin.library_widget.CompatToolBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/square_iv_question_lefticon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/square_iv_question_lefticon_margin_left"
+            android:background="@drawable/square_icon_question"/>
+
+
+        <com.knight.kotlin.library_widget.MarqueeTextView
+            android:id="@+id/square_question_tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/square_question_tv_title_text_size"
+            android:gravity="center"
+            android:text="标题"
+            android:textColor="@color/square_question_tv_title_text_color"
+            android:singleLine="true"
+            android:scrollHorizontally="true"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:layout_gravity="center"
+            android:maxEms="12"/>
+
+
+    </com.knight.kotlin.library_widget.CompatToolBar>
+
+    <include
+        android:id="@+id/include_square_question"
+        layout="@layout/base_layout_recycleview" />
+
+
+</LinearLayout>

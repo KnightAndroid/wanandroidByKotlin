@@ -48,6 +48,7 @@ object RouteFragment {
     object Project {
         private const val PROJECT = "/module_project"
         const val ProjectFragment = "$PROJECT/ProjectFragment"
+        const val ProjectArticleFragment = "$PROJECT/ProjectArticleFragment"
     }
 
 
