@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="navigate_indicator_height">40dp</dimen>
+    <dimen name="navigate_right_sidebar_margin_left">10dp</dimen>
+    <dimen name="navigate_right_title_height">33dp</dimen>
+    <dimen name="navigate_right_title_padding_bottom">3dp</dimen>
+    <dimen name="navigate_right_title_padding_top">3dp</dimen>
+    <dimen name="navigate_right_view_width">4dp</dimen>
+    <dimen name="navigate_right_view_height">15dp</dimen>
+    <dimen name="navigate_right_view_margin_left">15dp</dimen>
+    <dimen name="navigate_right_tv_title_padding_left">6dp</dimen>
+    <dimen name="navigate_right_tv_title_padding_right">13dp</dimen>
+    <dimen name="navigate_right_tv_title_text_size">14sp</dimen>
+    <dimen name="navigate_tv_content_min_height">40dp</dimen>
+    <dimen name="navigate_tv_content_margin_left">5dp</dimen>
+    <dimen name="navigate_tv_content_margin_top">5dp</dimen>
+    <dimen name="navigate_tv_content_margin_right">5dp</dimen>
+    <dimen name="navigate_tv_content_margin_bottom">10dp</dimen>
+    <dimen name="navigate_keyword_shape_corner">6dp</dimen>
+    <dimen name="navigate_keyword_padding_left">10dp</dimen>
+    <dimen name="navigate_keyword_padding_right">10dp</dimen>
+    <dimen name="navigate_keyword_text_size">16sp</dimen>
+    <dimen name="navigate_linear_layout_minheight">50dp</dimen>
+    <dimen name="navigate_tv_selectview_width">16dp</dimen>
+    <dimen name="navigate_tv_text_size">14sp</dimen>
+    <dimen name="navigate_hierachy_right_sidebar_margin_left">10dp</dimen>
+    <dimen name="navigate_hierachy_indicator_height">40dp</dimen>
+</resources>

@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.knight.kotlin.library_widget.slidinglayout.SlidingUpPanelLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:sothree="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/mine_slidup_panellayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="bottom"
+    sothree:umanoDragView="@+id/mine_drag_view"
+    sothree:umanoOverlay="true"
+    sothree:umanoPanelHeight="68dp"
+    sothree:umanoParallaxOffset="100dp"
+    sothree:umanoScrollableView="@+id/base_body_rv"
+    sothree:umanoShadowHeight="0dp">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/incule_othermessage_toolbar"
+            layout="@layout/base_include_toolbar" />
+
+        <RelativeLayout
+            android:id="@+id/mine_rl_otheruser"
+            android:layout_width="@dimen/mine_rl_otheruser_width"
+            android:layout_height="@dimen/mine_rl_otheruser_height"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/mine_rl_otheruser_margin_top">
+
+            <ImageView
+                android:id="@+id/mine_other_iv_head"
+                android:layout_width="@dimen/mine_other_iv_head_width"
+                android:layout_height="@dimen/mine_other_iv_head_height"
+                android:layout_centerVertical="true"
+                android:background="@drawable/mine_iv_default_head"/>
+
+            <TextView
+                android:id="@+id/mine_other_tv_userabbr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/mine_other_tv_userabbr_text_size"
+                android:textStyle="bold"/>
+
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/mine_tv_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/mine_other_share_tv_username_margin_top"
+            android:text="鸿洋"
+            android:textColor="@color/base_color_theme"
+            android:textSize="@dimen/mine_other_share_tv_username_text_size"
+            android:textStyle="bold" />
+
+    <LinearLayout
+        android:id="@+id/mine_other_ll_rank"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/mine_other_ll_rank_margin_top"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/mine_other_coincount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="积分 30831"
+            android:textColor="@color/base_color_theme"
+            android:textSize="@dimen/mine_other_coincount_text_size" />
+
+        <TextView
+            android:id="@+id/mine_other_tv_level"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/base_dimen_10"
+            android:text="等级 -"
+            android:textColor="@color/base_color_theme"
+            android:textSize="@dimen/mine_other_tv_level_text_size" />
+
+        <TextView
+            android:id="@+id/mine_other_tv_rank"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/base_dimen_10"
+            android:text="排名第 -"
+            android:textColor="@color/base_color_theme"
+            android:textSize="@dimen/mine_other_tv_rank_text_size" />
+
+
+    </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/mine_drag_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="60dp"
+        android:background="@drawable/mine_top_around"
+        android:clickable="true"
+        android:focusable="false"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="6dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/base_dimen_10"
+            android:background="@drawable/mine_sliduppanelayout_line" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp">
+
+            <TextView
+                android:id="@+id/mine_otherarticle_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:paddingLeft="@dimen/mine_otherarticle_tv_padding_left"
+                android:text="@string/mine_sharearticles"
+                android:textColor="@color/mine_otherarticle_rv_text_color"
+                android:textSize="@dimen/mine_otherarticle_tv_text_size" />
+
+            <ImageView
+                android:id="@+id/mine_iv_otherrefresh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/mine_iv_otherrefresh_margin_right"
+                android:background="@drawable/mine_iv_refresh"
+              />
+
+
+        </RelativeLayout>
+
+        <include
+            android:id="@+id/include_other_sharearticle"
+            layout="@layout/base_layout_recycleview"/>
+    </LinearLayout>
+
+</com.knight.kotlin.library_widget.slidinglayout.SlidingUpPanelLayout>

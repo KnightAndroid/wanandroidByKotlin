@@ -21,7 +21,7 @@ class MainViewModel @Inject constructor(private val mRepository:MainRepository):
         ARouter.getInstance().build(RouteFragment.Home.HomeFragment).navigation()  as Fragment,
         ARouter.getInstance().build(RouteFragment.Square.SquareFragment).navigation()  as Fragment,
         ARouter.getInstance().build(RouteFragment.Project.ProjectFragment).navigation()  as Fragment,
-        ARouter.getInstance().build(RouteFragment.Navigate.NavigateFragment).navigation()  as Fragment,
+        ARouter.getInstance().build(RouteFragment.Navigate.NavigateHomeFragment).navigation()  as Fragment,
         ARouter.getInstance().build(RouteFragment.Mine.MineFragment).navigation()  as Fragment
     )
 

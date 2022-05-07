@@ -27,6 +27,7 @@ import com.knight.kotlin.library_base.util.ColorUtils
 import com.knight.kotlin.library_base.util.EventBusUtils
 import com.knight.kotlin.library_base.util.GsonUtils
 import com.knight.kotlin.library_util.image.ImageLoader
+import com.knight.kotlin.library_util.startPage
 import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_mine.R
 import com.knight.kotlin.module_mine.activity.LoginActivity
@@ -61,7 +62,7 @@ class MineFragment: BaseFragment<MineFragmentBinding, MineViewModel>() {
              mineIvMessage.visibility = View.GONE
          }
 
-        setOnClickListener(mineTvUsername,mineRlSetup)
+        setOnClickListener(mineTvUsername,mineRlSetup,mineLlRank)
 
     }
 
@@ -153,6 +154,10 @@ class MineFragment: BaseFragment<MineFragmentBinding, MineViewModel>() {
             }
             mBinding.mineRlSetup -> {
                   ARouter.getInstance().build(RouteActivity.Set.SetActivity).navigation()
+            }
+
+            mBinding.mineLlRank -> {
+                  startPage(RouteActivity.Mine.UserCoinRankActivity)
             }
 
         }

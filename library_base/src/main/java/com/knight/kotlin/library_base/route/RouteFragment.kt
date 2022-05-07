@@ -59,7 +59,12 @@ object RouteFragment {
      */
     object Navigate {
         private const val NAVIGATE = "/module_navigate"
+        const val NavigateHomeFragment = "$NAVIGATE/NavigateHomeFragment"
         const val NavigateFragment = "$NAVIGATE/NavigateFragment"
+        const val HierachyFragment = "$NAVIGATE/HierachyFragment"
+        const val NavigateRightTreeFragment = "$NAVIGATE/NavigateRightTreeFragment"
+        const val HierachyTabArticleFragment = "$NAVIGATE/HierachyTabArticleFragment"
+
     }
 
 

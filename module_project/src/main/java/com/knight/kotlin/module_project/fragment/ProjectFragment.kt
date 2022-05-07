@@ -4,6 +4,7 @@ import androidx.fragment.app.viewModels
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.knight.kotlin.library_base.ktx.observeLiveData
+import com.knight.kotlin.library_base.ktx.toHtml
 import com.knight.kotlin.library_base.route.RouteFragment
 import com.knight.kotlin.library_util.ViewInitUtils
 import com.knight.kotlin.library_util.bindWechatViewPager2
@@ -52,10 +53,11 @@ class ProjectFragment:BaseFragment<ProjectActivityBinding, ProjectVm>() {
         mTitileDatas.clear()
         val projectTypeBean = ProjectTypeBean()
         projectTypeBean.name = "最新项目"
-        projectTypes.add(0,projectTypeBean)
+        projectTypes.add(projectTypeBean)
+        mTitileDatas.add(projectTypeBean.name)
         mFragments.add(ProjecArticleFragment.newInstance(0,true))
         for (i in projectTypes.indices) {
-            mTitileDatas.add(projectTypes[i].name)
+            mTitileDatas.add(projectTypes[i].name.toHtml().toString())
             mFragments.add(ProjecArticleFragment.newInstance(projectTypes[i].id, false))
         }
         ViewInitUtils.setViewPager2Init(requireActivity(),mBinding.projectViewPager,mFragments,

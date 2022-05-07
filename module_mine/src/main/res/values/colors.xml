@@ -24,4 +24,6 @@
     <color name="mine_tv_confirmpassword_color">#333333</color>
     <color name="mine_cl_register_confirmpassword_color">#333333</color>
     <color name="mine_cl_register_confirmpassword_hint_color">#999999</color>
+    <color name="mine_tv_bottom_coin_rank_color">#dddddd</color>
+    <color name="mine_otherarticle_rv_text_color">#333333</color>
 </resources>

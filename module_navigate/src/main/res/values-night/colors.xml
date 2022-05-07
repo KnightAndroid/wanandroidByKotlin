@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="navigate_home_toolbar_color">#303030</color>
+    <color name="navigate_bg_color">#303030</color>
+    <color name="navigate_right_sidebar_bg">#303030</color>
+    <color name="navigate_tree_tight_rv_color">#303030</color>
+    <color name="navigate_right_title_item_bg">#303030</color>
+    <color name="navigate_right_tv_title_color">#D3D3D3</color>
+    <color name="navigate_linear_layout_bg">#303030</color>
+    <color name="navigate_tv_sort_color">#D3D3D3</color>
+    <color name="navigate_hierachy_bg_color">#303030</color>
+    <color name="navigate_hierachy_right_sidebar_color">#303030</color>
+    <color name="navigate_hierachy_indicator_color">#303030</color>
+    <color name="navigate_hierachy_detail_color">#303030</color>
+</resources>

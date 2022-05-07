@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="navigate_app_name">module_navigate</string>
+    <string name="navigate_hierachy_tab_navigate">Navigate</string>
+    <string name="navigate_hierachy_tab_hierachy">Hierachy</string>
+</resources>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigate_linear_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="@dimen/navigate_linear_layout_minheight"
+    android:background="@color/navigate_linear_layout_bg"
+    android:orientation="horizontal"
+    >
+
+    <TextView
+        android:id="@+id/navigate_tv_selectview"
+        android:layout_width="@dimen/navigate_tv_selectview_width"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:id="@+id/navigate_tv_sort"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:textColor="@color/navigate_tv_sort_color"
+        android:text="基础知识"
+        android:textSize="@dimen/navigate_tv_text_size"/>
+</LinearLayout>

@@ -9,6 +9,7 @@
     <string name="mine_me_share_articles">Share</string>
     <string name="mine_me_history_records">Reading history</string>
     <string name="mine_me_system_setting">Set up</string>
+    <string name="mine_integral">Integral&#160;</string>
     <string name="mine_gradle">Gradle&#160;</string>
     <string name="mine_rank">Rank&#160;</string>
     <string name="mine_tv_gesture_lock_more">More</string>
@@ -38,4 +39,7 @@
     <string name="mine_confirmpassowrd_notempty">Confirm password cannot be empty</string>
     <string name="mine_passworduneaual">The confirmation password cannot be blank. The password and confirmation password are inconsistent. Please re-enter</string>
     <string name="mine_register_loading">Register...</string>
+    <string name="mine_coin_rank">CoinRank</string>
+    <string name="mine_sharearticles">Share articles</string>
+    <string name="mine_other_shareArticles">Other share</string>
 </resources>

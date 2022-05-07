@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="80dp">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/mine_coin_rank_rl_margin_left"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+
+        <ImageView
+            android:id="@+id/mine_iv_rank"
+            android:layout_width="@dimen/mine_iv_rank_width"
+            android:layout_height="@dimen/mine_iv_rank_height"
+            android:layout_centerVertical="true"
+            />
+
+        <TextView
+            android:id="@+id/mine_tv_rank"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/mine_iv_rank"
+            android:layout_marginStart="@dimen/mine_tv_rank_margin_start"
+            android:layout_centerVertical="true"
+            android:text="1"
+            android:textSize="@dimen/mine_tv_rank_text_size" />
+
+
+        <TextView
+            android:id="@+id/mine_tv_rankusername"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/mine_tv_rank"
+            android:layout_marginStart="@dimen/base_dimen_30"
+            android:layout_centerVertical="true"
+            android:text="深红骑士"
+            android:textSize="@dimen/mine_tv_rankusername_text_size" />
+
+    </RelativeLayout>
+
+
+    <TextView
+        android:id="@+id/mine_tv_rankcoincount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/mine_tv_rankcoincount_margin_right"
+        android:textColor="@color/base_color_theme"
+        android:textSize="@dimen/mine_tv_rankcoincount_text_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/mine_tv_bottom_coin_rank_color"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

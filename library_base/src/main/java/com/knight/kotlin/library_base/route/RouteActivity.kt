@@ -61,6 +61,17 @@ object RouteActivity {
 
 
     /**
+     * 导航模块
+     *
+     */
+    object Navigate {
+        private const val NAVIGATE = "/module_navigate"
+        const val HierachyTabActivity = "$NAVIGATE/HierachyTabActivity"
+        const val HierachyDetailActivity = "$NAVIGATE/HierachyDetailActivity"
+    }
+
+
+    /**
      * H5网页模块
      */
     object Web {
@@ -81,7 +92,8 @@ object RouteActivity {
         const val QuickLoginActivity = "$MINE/QuickLoginActivity"
         const val LoginActivity = "$MINE/LoginActivity"
         const val RegisterActivity = "$MINE/RegisterActivity"
-
+        const val UserCoinRankActivity = "$MINE/UserCoinRankActivity"
+        const val OtherShareArticleActivity = "$MINE/OtherShareArticleActivity"
     }
 
     /**

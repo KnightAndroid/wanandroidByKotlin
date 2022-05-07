@@ -3,7 +3,8 @@
     package="com.knight.kotlin.module_navigate">
 
     <application>
-
+       <activity android:name=".activity.HierachyTabActivity"/>
+       <activity android:name=".activity.HierachyDetailActivity"/>
     </application>
 
 </manifest>

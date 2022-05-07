@@ -6,6 +6,8 @@
         <activity android:name=".activity.QuickLoginActivity"/>
         <activity android:name=".activity.LoginActivity"/>
         <activity android:name=".activity.RegisterActivity"/>
+        <activity android:name=".activity.CoinRankActivity"/>
+        <activity android:name=".activity.OtherShareArticleActivity"/>
     </application>
 
 </manifest>

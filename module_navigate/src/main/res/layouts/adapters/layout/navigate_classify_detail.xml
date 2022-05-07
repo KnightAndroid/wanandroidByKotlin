@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.knight.kotlin.module_navigate.adapter.HierachyClassifyDetailAdapter"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/navigate_tv_content"
+    android:minHeight="@dimen/navigate_tv_content_min_height"
+    android:layout_marginLeft="@dimen/navigate_tv_content_margin_left"
+    android:layout_marginRight="@dimen/navigate_tv_content_margin_right"
+    android:layout_marginTop="@dimen/navigate_tv_content_margin_top"
+    android:layout_marginBottom="@dimen/navigate_tv_content_margin_bottom"
+    android:background="@drawable/navigate_keywords_shape"
+    android:gravity="center"
+    android:text="wewewew"
+    android:paddingLeft="@dimen/navigate_keyword_padding_left"
+    android:paddingRight="@dimen/navigate_keyword_padding_right"
+    android:textColor="@color/base_color_theme"
+    android:textSize="@dimen/navigate_keyword_text_size"
+    >
+
+
+
+</TextView>

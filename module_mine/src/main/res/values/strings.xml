@@ -8,6 +8,7 @@
     <string name="mine_me_share_articles">我的分享</string>
     <string name="mine_me_history_records">阅读历史</string>
     <string name="mine_me_system_setting">设置</string>
+    <string name="mine_integral">积分&#160;</string>
     <string name="mine_gradle">等级&#160;</string>
     <string name="mine_rank">排名&#160;</string>
     <string name="mine_tv_gesture_lock_more">更多</string>
@@ -37,6 +38,8 @@
     <string name="mine_confirmpassowrd_notempty">确认密码不能为空</string>
     <string name="mine_passworduneaual">密码和确认密码不一致,请重新输入</string>
     <string name="mine_register_loading">注册中,请稍等...</string>
-
+    <string name="mine_coin_rank">积分排行榜</string>
+    <string name="mine_sharearticles">分享文章</string>
+    <string name="mine_other_shareArticles">他的分享</string>
 
 </resources>

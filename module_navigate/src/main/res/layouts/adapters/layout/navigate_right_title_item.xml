@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.knight.kotlin.module_navigate.adapter.HierachyClassifyDetailAdapter"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/navigate_right_title_height"
+    android:id="@+id/navigate_root"
+    android:background="@color/navigate_right_title_item_bg"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingTop="@dimen/navigate_right_title_padding_top"
+    android:paddingBottom="@dimen/navigate_right_title_padding_bottom"
+    >
+
+
+    <View
+        android:id="@+id/navigate_right_view"
+        android:layout_width="@dimen/navigate_right_view_width"
+        android:layout_height="@dimen/navigate_right_view_height"
+        android:layout_marginLeft="@dimen/navigate_right_view_margin_left"/>
+
+    <TextView
+        android:id="@+id/navigate_right_tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:paddingLeft="@dimen/navigate_right_tv_title_padding_left"
+        android:paddingRight="@dimen/navigate_right_tv_title_padding_right"
+        android:textColor="@color/navigate_right_tv_title_color"
+        android:textSize="@dimen/navigate_right_tv_title_text_size"/>
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/hierachy_arrow_right"/>
+
+
+</LinearLayout>
