@@ -127,7 +127,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/mine_me_points"
                         android:textColor="@android:color/white"
-                        android:textSize="@dimen/mine_tv_point_flag"/>
+                        android:textSize="@dimen/mine_tv_point_flag" />
 
 
                     <TextView
@@ -139,6 +139,7 @@
                         android:layout_toLeftOf="@+id/mine_iv_point_arrow"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/mine_tv_point_flag"
+                        android:text="0"
                         />
 
                     <ImageView

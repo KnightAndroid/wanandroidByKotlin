@@ -5,16 +5,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.knight.kotlin.module_mine.activity.CoinRankActivity">
+    android:orientation="vertical">
 
 
     <include
-        android:id="@+id/include_coinrank_toolbar"
+        android:id="@+id/include_point_toolbar"
         layout="@layout/base_include_toolbar"/>
 
     <include
-        android:id="@+id/include_mine_coinrank"
+        android:id="@+id/include_mine_detailpoint"
         layout="@layout/base_layout_recycleview"/>
 
 </LinearLayout>

@@ -127,4 +127,25 @@
     <dimen name="mine_otherarticle_tv_text_size">16sp</dimen>
     <dimen name="mine_otherarticle_tv_padding_left">16dp</dimen>
     <dimen name="mine_iv_otherrefresh_margin_right">16dp</dimen>
+    <dimen name="mine_coindetail_rl_margin_left">20dp</dimen>
+    <dimen name="mine_tv_detailpointtitle_text_size">16sp</dimen>
+    <dimen name="mine_tv_timereason_margin_top">5dp</dimen>
+    <dimen name="mine_tv_timereason_text_size">14sp</dimen>
+    <dimen name="mine_tv_coincount_margin_right">20dp</dimen>
+    <dimen name="mine_tv_coincount_text_size">16sp</dimen>
+    <dimen name="mine_cl_coin_padding_bottom">20dp</dimen>
+    <dimen name="mine_tv_head_detailpoint_margin_top">50dp</dimen>
+    <dimen name="mine_tv_head_detailpoint_text_size">30sp</dimen>
+    <dimen name="mine_ll_point_rule_margin_top">10dp</dimen>
+    <dimen name="mine_tv_rule_text_size">16sp</dimen>
+    <dimen name="mine_iv_rule_margin_left">10dp</dimen>
+    <dimen name="mine_point_rl_rule_margin_start">20dp</dimen>
+    <dimen name="mine_point_rl_rule_margin_end">20dp</dimen>
+    <dimen name="mine_coin_rule_corners">10dp</dimen>
+    <dimen name="mine_tv_title_point_rule_margin_top">20dp</dimen>
+    <dimen name="mine_tv_title_point_rule_text_size">18sp</dimen>
+    <dimen name="mine_tv_rule_detail_point_margin_start">16dp</dimen>
+    <dimen name="mine_tv_rule_detail_point_margin_end">16dp</dimen>
+    <dimen name="mine_tv_rule_detail_point_margin_top">10dp</dimen>
+    <dimen name="mine_tv_rule_detail_point_extra">4dp</dimen>
 </resources>

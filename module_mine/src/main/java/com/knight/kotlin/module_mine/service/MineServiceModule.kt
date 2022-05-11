@@ -3,6 +3,7 @@ package com.knight.kotlin.module_mine.service
 import com.knight.kotlin.module_mine.api.CoinRankApiService
 import com.knight.kotlin.module_mine.api.LoginApiService
 import com.knight.kotlin.module_mine.api.MineApiService
+import com.knight.kotlin.module_mine.api.MyCoinsApiService
 import com.knight.kotlin.module_mine.api.OtherShareApiService
 import com.knight.kotlin.module_mine.api.QuickLoginApiService
 import com.knight.kotlin.module_mine.api.RegisterApiService
@@ -88,13 +89,29 @@ class MineServiceModule {
      * Mine模块的[OtherShareApiService]依赖提供方法
      *
      * @param retrofit Retrofit
-     * @return CoinRankApiService
+     * @return OtherShareApiService
      */
     @Singleton
     @Provides
     fun provideOtherShareApiService(retrofit: Retrofit): OtherShareApiService {
         return retrofit.create(OtherShareApiService::class.java)
     }
+
+
+
+    /**
+     * Mine模块的[MyCoinsApiService]依赖提供方法
+     *
+     * @param retrofit Retrofit
+     * @return MyCoinsApiService
+     */
+    @Singleton
+    @Provides
+    fun provideMyCoinsApiService(retrofit: Retrofit): MyCoinsApiService {
+        return retrofit.create(MyCoinsApiService::class.java)
+    }
+
+
 
 
 

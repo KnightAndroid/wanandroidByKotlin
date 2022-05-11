@@ -41,5 +41,16 @@
     <string name="mine_coin_rank">积分排行榜</string>
     <string name="mine_sharearticles">分享文章</string>
     <string name="mine_other_shareArticles">他的分享</string>
+    <string name="mine_coin_detail">积分明细</string>
+    <string name="mine_rule">规则</string>
+    <string name="mine_points_rule">积分规则</string>
+    <string name="mine_point_detail_rule"><Data>
+        <![CDATA[
+        <font><big><b>1、每日登陆积分 ： 基数 + 登陆次数</big></b><font><br>
+        &#8195 &#8195(1)、基数默认为 10，每个基数对应最大值为 10 + 29，然后基数增加为 11 ，从 11 + 0 ~ 11 + 29 ，周而复始。<br/>
+        <big><b>2、分享文章</b></big><br/>
+        &#8195 &#8195(1)、每天仅第一篇会增加积分，避免不必要分享。<br/>
+        &#8195 &#8195(2)、基数默认为 10，每个基数对应最大值为 10 + 29，然后基数增加为 11 ，从 11 + 0 ~ 11 + 29 ，周而复始。<br/>
+    ]]></Data></string>
 
 </resources>

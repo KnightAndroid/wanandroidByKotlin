@@ -94,6 +94,7 @@ object RouteActivity {
         const val RegisterActivity = "$MINE/RegisterActivity"
         const val UserCoinRankActivity = "$MINE/UserCoinRankActivity"
         const val OtherShareArticleActivity = "$MINE/OtherShareArticleActivity"
+        const val MyPointsActivity = "$MINE/MyPointsActivity"
     }
 
     /**

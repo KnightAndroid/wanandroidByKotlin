@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    tools:context="com.knight.kotlin.module_mine.adapter.MyCointsAdapter">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/mine_coindetail_rl_margin_left"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/mine_tv_detailpointtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/mine_tv_detailpointtitle_text_color"
+            android:textSize="@dimen/mine_tv_detailpointtitle_text_size"
+            />
+
+        <TextView
+            android:id="@+id/mine_tv_timereason"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/mine_tv_detailpointtitle"
+            android:layout_marginTop="@dimen/mine_tv_timereason_margin_top"
+            android:textColor="@color/mine_tv_timereason_text_color"
+            android:textSize="@dimen/mine_tv_timereason_text_size"
+            />
+
+    </RelativeLayout>
+    <TextView
+        android:id="@+id/mine_tv_coincount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/mine_tv_coincount_margin_right"
+        android:text="+42"
+        android:textColor="@color/base_color_theme"
+        android:textSize="@dimen/mine_tv_coincount_text_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/mine_detailpoiint_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/mine_detailpoiint_line_color"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

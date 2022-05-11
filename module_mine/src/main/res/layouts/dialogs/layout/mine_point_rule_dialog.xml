@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/mine_point_rl_rule_margin_start"
+        android:layout_marginEnd="@dimen/mine_point_rl_rule_margin_end"
+        android:background="@drawable/mine_point_rule_round"
+        android:orientation="vertical">
+
+
+
+
+        <TextView
+            android:id="@+id/tv_title_point_rule"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/mine_tv_title_point_rule_margin_top"
+            android:text="@string/mine_points_rule"
+            android:textColor="@color/mine_tv_title_point_rule_text_color"
+            android:textSize="@dimen/mine_tv_title_point_rule_text_size"
+            android:textStyle="bold"/>
+
+
+        <TextView
+            android:id="@+id/tv_rule_detail_point"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_title_point_rule"
+            android:layout_marginStart="@dimen/mine_tv_rule_detail_point_margin_start"
+            android:layout_marginEnd="@dimen/mine_tv_rule_detail_point_margin_end"
+            android:layout_marginTop="@dimen/mine_tv_rule_detail_point_margin_top"
+            android:lineSpacingExtra="@dimen/mine_tv_rule_detail_point_extra"
+            android:textColor="@color/mine_tv_rule_detail_point_text_color"
+            android:text="@string/mine_point_detail_rule"/>
+
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

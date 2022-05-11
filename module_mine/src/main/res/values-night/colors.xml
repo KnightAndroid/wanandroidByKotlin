@@ -25,4 +25,7 @@
     <color name="mine_cl_register_confirmpassword_color">#D3D3D3</color>
     <color name="mine_cl_register_confirmpassword_hint_color">#666666</color>
     <color name="mine_otherarticle_rv_text_color">#D3D3D3</color>
+    <color name="mine_tv_detailpointtitle_text_color">#D3D3D3</color>
+    <color name="mine_tv_title_point_rule_text_color">#D3D3D3</color>
+    <color name="mine_tv_rule_detail_point_text_color">#D3D3D3</color>
 </resources>

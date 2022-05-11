@@ -42,4 +42,15 @@
     <string name="mine_coin_rank">CoinRank</string>
     <string name="mine_sharearticles">Share articles</string>
     <string name="mine_other_shareArticles">Other share</string>
+    <string name="mine_coin_detail">Integral details</string>
+    <string name="mine_rule">Rule</string>
+    <string name="mine_points_rule">Points Rule</string>
+    <string name="mine_point_detail_rule"><Data>
+        <![CDATA[
+        <font><big><b>1.Daily login points: base + login times</big></b><font><br>
+        &#8195 &#8195(1)、The default cardinality is 10. The maximum value corresponding to each cardinality is 10 + 29, and then the cardinality is increased to 11, from 11 + 0 to 11 + 29。<br>
+        <big><b>2、Share articles</b></big><br/>
+        &#8195 &#8195(1)、Only the first article will add points every day to avoid unnecessary sharing。</br>
+        &#8195 &#8195(2)、The default cardinality is 10. The maximum value corresponding to each cardinality is 10 + 29, and then the cardinality is increased to 11, from 11 + 0 to 11 + 29。</br>
+    ]]></Data></string>
 </resources>

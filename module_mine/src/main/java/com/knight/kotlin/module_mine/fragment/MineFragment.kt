@@ -8,6 +8,7 @@ import androidx.fragment.app.viewModels
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.knight.kotlin.library_aop.clickintercept.SingleClick
+import com.knight.kotlin.library_aop.loginintercept.LoginCheck
 import com.knight.kotlin.library_base.annotation.EventBusRegister
 import com.knight.kotlin.library_base.config.Appconfig
 import com.knight.kotlin.library_base.config.CacheKey
@@ -28,6 +29,7 @@ import com.knight.kotlin.library_base.util.EventBusUtils
 import com.knight.kotlin.library_base.util.GsonUtils
 import com.knight.kotlin.library_util.image.ImageLoader
 import com.knight.kotlin.library_util.startPage
+import com.knight.kotlin.library_util.startPageWithParams
 import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_mine.R
 import com.knight.kotlin.module_mine.activity.LoginActivity
@@ -62,7 +64,7 @@ class MineFragment: BaseFragment<MineFragmentBinding, MineViewModel>() {
              mineIvMessage.visibility = View.GONE
          }
 
-        setOnClickListener(mineTvUsername,mineRlSetup,mineLlRank)
+        setOnClickListener(mineTvUsername,mineRlSetup,mineLlRank,mineRlPoint)
 
     }
 
@@ -104,7 +106,7 @@ class MineFragment: BaseFragment<MineFragmentBinding, MineViewModel>() {
         mBinding.mineTvUsername.text = userInfoCoinEntity.username
         mBinding.mineTvLevel.text = getString(R.string.mine_gradle) + userInfoCoinEntity.level
         mBinding.mineTvRank.text = getString(R.string.mine_rank) + userInfoCoinEntity.rank
-        mBinding.mineTvPoints.text = userInfoCoinEntity.coinCount.toString()
+        mBinding.mineTvPoints.text = if (userInfoCoinEntity.coinCount.toString().equals("")) "0" else  userInfoCoinEntity.coinCount.toString()
     }
 
 
@@ -160,6 +162,9 @@ class MineFragment: BaseFragment<MineFragmentBinding, MineViewModel>() {
                   startPage(RouteActivity.Mine.UserCoinRankActivity)
             }
 
+            mBinding.mineRlPoint -> {
+                goCoinsDetail()
+            }
         }
     }
 
@@ -180,7 +185,7 @@ class MineFragment: BaseFragment<MineFragmentBinding, MineViewModel>() {
                 mBinding.mineTvUsername.setText(getString(R.string.mine_please_login))
                 mBinding.mineTvLevel.setText(getString(R.string.mine_nodata_gradle))
                 mBinding.mineTvRank.setText(getString(R.string.mine_nodata_rank))
-                mBinding.mineTvPoints.setText("")
+                mBinding.mineTvPoints.setText("0")
                 mBinding.mineIvMessage.setVisibility(View.GONE)
                 mBinding.mineIvHead.setBackground(null)
                 ImageLoader.loadCircleIntLocalPhoto(
@@ -191,6 +196,12 @@ class MineFragment: BaseFragment<MineFragmentBinding, MineViewModel>() {
             }
         }
 
+    }
+
+
+    @LoginCheck
+    private fun goCoinsDetail() {
+        startPageWithParams(RouteActivity.Mine.MyPointsActivity,"userCoin" to mBinding.mineTvPoints.text.toString())
     }
 
 
