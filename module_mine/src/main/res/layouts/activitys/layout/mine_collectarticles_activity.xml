@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/mine_mycollect_article_ll"
+    tools:context="com.knight.kotlin.module_mine.activity.MyCollectArticleActivity">
+
+
+
+    <include
+        android:id="@+id/include_mycollect_toolbar"
+        layout="@layout/base_include_toolbar"/>
+
+    <include
+        android:id="@+id/include_mine_collectfreshalayout"
+        layout="@layout/base_layout_recycleview"/>
+</LinearLayout>

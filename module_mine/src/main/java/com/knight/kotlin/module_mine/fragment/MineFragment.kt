@@ -35,7 +35,7 @@ import com.knight.kotlin.module_mine.R
 import com.knight.kotlin.module_mine.activity.LoginActivity
 import com.knight.kotlin.module_mine.activity.QuickLoginActivity
 import com.knight.kotlin.module_mine.databinding.MineFragmentBinding
-import com.knight.kotlin.module_mine.entity.UserInfoCoinEntity
+import com.knight.kotlin.module_mine.entity.UserInfoMessageEntity
 import com.knight.kotlin.module_mine.vm.MineViewModel
 import com.knight.library_biometric.control.BiometricControl
 import com.knight.library_biometric.listener.BiometricStatusCallback
@@ -64,7 +64,7 @@ class MineFragment: BaseFragment<MineFragmentBinding, MineViewModel>() {
              mineIvMessage.visibility = View.GONE
          }
 
-        setOnClickListener(mineTvUsername,mineRlSetup,mineLlRank,mineRlPoint)
+        setOnClickListener(mineTvUsername,mineRlSetup,mineLlRank,mineRlPoint,mineRlCollect)
 
     }
 
@@ -94,7 +94,7 @@ class MineFragment: BaseFragment<MineFragmentBinding, MineViewModel>() {
      *
      * 设置用户金币，排名
      */
-    private fun setUserInfoCoin(userInfoCoinEntity: UserInfoCoinEntity) {
+    private fun setUserInfoCoin(userInfoMessageEntity: UserInfoMessageEntity) {
         requestSuccess()
         dismissLoading()
         //设置头像
@@ -102,11 +102,11 @@ class MineFragment: BaseFragment<MineFragmentBinding, MineViewModel>() {
         gradientDrawable.shape = GradientDrawable.OVAL
         gradientDrawable.setColor(ColorUtils.getRandColorCode())
         mBinding.mineIvHead.background = gradientDrawable
-        mBinding.mineTvUserabbr.text = userInfoCoinEntity.username.substring(0,1)
-        mBinding.mineTvUsername.text = userInfoCoinEntity.username
-        mBinding.mineTvLevel.text = getString(R.string.mine_gradle) + userInfoCoinEntity.level
-        mBinding.mineTvRank.text = getString(R.string.mine_rank) + userInfoCoinEntity.rank
-        mBinding.mineTvPoints.text = if (userInfoCoinEntity.coinCount.toString().equals("")) "0" else  userInfoCoinEntity.coinCount.toString()
+        mBinding.mineTvUserabbr.text = userInfoMessageEntity.coinInfo.username.substring(0,1)
+        mBinding.mineTvUsername.text = userInfoMessageEntity.coinInfo.username
+        mBinding.mineTvLevel.text = getString(R.string.mine_gradle) + userInfoMessageEntity.coinInfo.level
+        mBinding.mineTvRank.text = getString(R.string.mine_rank) +userInfoMessageEntity.coinInfo.rank
+        mBinding.mineTvPoints.text = if (userInfoMessageEntity.coinInfo.coinCount.toString().equals("")) "0" else  userInfoMessageEntity.coinInfo.coinCount.toString()
     }
 
 
@@ -165,6 +165,10 @@ class MineFragment: BaseFragment<MineFragmentBinding, MineViewModel>() {
             mBinding.mineRlPoint -> {
                 goCoinsDetail()
             }
+
+            mBinding.mineRlCollect -> {
+                goMyCollectArticles()
+            }
         }
     }
 
@@ -202,6 +206,11 @@ class MineFragment: BaseFragment<MineFragmentBinding, MineViewModel>() {
     @LoginCheck
     private fun goCoinsDetail() {
         startPageWithParams(RouteActivity.Mine.MyPointsActivity,"userCoin" to mBinding.mineTvPoints.text.toString())
+    }
+
+    @LoginCheck
+    private fun goMyCollectArticles() {
+        startPage(RouteActivity.Mine.MyCollectArticleActivity)
     }
 
 

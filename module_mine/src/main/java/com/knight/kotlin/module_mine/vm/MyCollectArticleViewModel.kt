@@ -2,11 +2,10 @@ package com.knight.kotlin.module_mine.vm
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.knight.kotlin.library_base.entity.UserInfoEntity
 import com.knight.kotlin.library_base.vm.BaseViewModel
 import com.knight.kotlin.library_util.toast
-import com.knight.kotlin.module_mine.entity.UserInfoMessageEntity
-import com.knight.kotlin.module_mine.repo.MineRepo
+import com.knight.kotlin.module_mine.entity.MyCollectArticleListEntity
+import com.knight.kotlin.module_mine.repo.MyCollectArticleRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
@@ -20,65 +19,68 @@ import javax.inject.Inject
 
 /**
  * Author:Knight
- * Time:2022/1/18 17:40
- * Description:MineViewModel
+ * Time:2022/5/13 10:45
+ * Description:MyCollectArticleViewModel
  */
 @HiltViewModel
-class MineViewModel @Inject constructor(private val mRepo:MineRepo) : BaseViewModel(){
+class MyCollectArticleViewModel @Inject constructor(private val mRepo: MyCollectArticleRepo) : BaseViewModel()  {
+
 
     /**
-     * 用户金币
+     * 自己收藏文章
      */
-    val userInfoCoin = MutableLiveData<UserInfoMessageEntity>()
-    /**
-     * 用户信息
-     */
-    val userInfo = MutableLiveData<UserInfoEntity>()
+    val myCollectArticleLists = MutableLiveData<MyCollectArticleListEntity>()
+    //是否取消收藏成功
+    val unCollectArticle = MutableLiveData<Boolean>()
 
 
     /**
      * 获取用户金币
      */
-    fun getUserInfoCoin() {
+    fun getMyCollectArticles(page:Int) {
         viewModelScope.launch {
-            mRepo.getUserInfoCoin()
+            mRepo.getMyCollectArticles(page)
                 .flowOn(Dispatchers.IO)
                 .onStart {
                     //开始
                 }
                 .onEach {
-                    userInfoCoin.postValue(it)
+                    myCollectArticleLists.postValue(it)
                 }
                 .onCompletion {
                     //结束
                 }
                 .catch {
                     toast(it.message ?: "")
-                    requestSuccessFlag.postValue(false)
                 }
                 .collect()
         }
     }
 
     /**
-     * 登录
+     *
+     * 取消收藏
+     *
      */
-    fun login(userName:String,passWord:String) {
+    fun unCollectArticle(unCollectArticleId:Int) {
         viewModelScope.launch {
-            mRepo.login(userName, passWord)
+            mRepo.cancelCollectArticle(unCollectArticleId)
                 .flowOn(Dispatchers.IO)
                 .onStart {
                     //开始
                 }
                 .onEach {
-                    userInfo.postValue(it)
+                    unCollectArticle.postValue(true)
                 }
                 .onCompletion {
                     //结束
                 }
-                .catch { toast(it.message ?: "") }
+                .catch {
+                    toast(it.message ?: "")
+                }
                 .collect()
-
         }
     }
+
+
 }

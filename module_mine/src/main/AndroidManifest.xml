@@ -9,6 +9,7 @@
         <activity android:name=".activity.CoinRankActivity"/>
         <activity android:name=".activity.OtherShareArticleActivity"/>
         <activity android:name=".activity.MyCoinsActivity"/>
+        <activity android:name=".activity.MyCollectArticleActivity"/>
     </application>
 
 </manifest>

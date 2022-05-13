@@ -4,7 +4,7 @@ import com.knight.kotlin.library_base.entity.UserInfoEntity
 import com.knight.kotlin.library_base.repository.BaseRepository
 import com.knight.kotlin.library_network.model.responseCodeExceptionHandler
 import com.knight.kotlin.module_mine.api.MineApiService
-import com.knight.kotlin.module_mine.entity.UserInfoCoinEntity
+import com.knight.kotlin.module_mine.entity.UserInfoMessageEntity
 import javax.inject.Inject
 
 /**
@@ -17,7 +17,7 @@ class MineRepo @Inject constructor() : BaseRepository() {
     @Inject
     lateinit var mMineApiService:MineApiService
 
-    suspend fun getUserInfoCoin() = request<UserInfoCoinEntity>{
+    suspend fun getUserInfoCoin() = request<UserInfoMessageEntity>{
         mMineApiService.getUserInfoCoin().run {
             responseCodeExceptionHandler(code, msg)
             emit(data)

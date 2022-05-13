@@ -49,7 +49,7 @@ class LoginViewModel @Inject constructor(private val mRepo: LoginRepo) : BaseVie
                 .flowOn(Dispatchers.IO)
                 .onStart {
                     //开始
-                    showLoading(appStr(R.string.mine_register_loading))
+                    showLoading(appStr(R.string.mine_request_login))
                 }
                 .onEach {
                     userInfo.postValue(it)

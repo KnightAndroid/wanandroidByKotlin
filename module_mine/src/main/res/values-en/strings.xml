@@ -53,4 +53,5 @@
         &#8195 &#8195(1)、Only the first article will add points every day to avoid unnecessary sharing。</br>
         &#8195 &#8195(2)、The default cardinality is 10. The maximum value corresponding to each cardinality is 10 + 29, and then the cardinality is increased to 11, from 11 + 0 to 11 + 29。</br>
     ]]></Data></string>
+    <string name="mine_confirm_cancelarticle">Do you want to cancel the collection of this article</string>
 </resources>
