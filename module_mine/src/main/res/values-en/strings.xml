@@ -54,4 +54,8 @@
         &#8195 &#8195(2)、The default cardinality is 10. The maximum value corresponding to each cardinality is 10 + 29, and then the cardinality is increased to 11, from 11 + 0 to 11 + 29。</br>
     ]]></Data></string>
     <string name="mine_confirm_cancelarticle">Do you want to cancel the collection of this article</string>
+    <string name="mine_me_shareArticles">My Share</string>
+    <string name="mine_confirm_cancel_share_article">Do you want to cancel the share of this article</string>
+    <string name="mine_cleanall">Clear</string>
+    <string name="mine_cancel_all_historyrecord">Do you want to delete all reading history</string>
 </resources>

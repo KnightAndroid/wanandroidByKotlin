@@ -53,5 +53,9 @@
         &#8195 &#8195(2)、基数默认为 10，每个基数对应最大值为 10 + 29，然后基数增加为 11 ，从 11 + 0 ~ 11 + 29 ，周而复始。<br/>
     ]]></Data></string>
     <string name="mine_confirm_cancelarticle">是否取消收藏此文章</string>
+    <string name="mine_me_shareArticles">我的分享</string>
+    <string name="mine_confirm_cancel_share_article">是否删除此文章</string>
+    <string name="mine_cleanall">清空</string>
+    <string name="mine_cancel_all_historyrecord">是否要删除所有阅读历史记录</string>
 
 </resources>

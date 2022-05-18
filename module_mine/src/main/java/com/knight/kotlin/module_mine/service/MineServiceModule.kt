@@ -1,10 +1,12 @@
 package com.knight.kotlin.module_mine.service
 
 import com.knight.kotlin.module_mine.api.CoinRankApiService
+import com.knight.kotlin.module_mine.api.HistoryRecordService
 import com.knight.kotlin.module_mine.api.LoginApiService
 import com.knight.kotlin.module_mine.api.MineApiService
 import com.knight.kotlin.module_mine.api.MyCoinsApiService
 import com.knight.kotlin.module_mine.api.MyCollectArticleService
+import com.knight.kotlin.module_mine.api.MyShareArticlesApiService
 import com.knight.kotlin.module_mine.api.OtherShareApiService
 import com.knight.kotlin.module_mine.api.QuickLoginApiService
 import com.knight.kotlin.module_mine.api.RegisterApiService
@@ -124,6 +126,34 @@ class MineServiceModule {
     fun MyCollectArticleService(retrofit: Retrofit): MyCollectArticleService {
         return retrofit.create(MyCollectArticleService::class.java)
     }
+
+
+    /**
+     * Mine模块的[MyShareArticlesApiService]依赖提供方法
+     *
+     * @param retrofit Retrofit
+     * @return MyCollectArticleService
+     */
+    @Singleton
+    @Provides
+    fun MyShareArticlesService(retrofit: Retrofit): MyShareArticlesApiService {
+        return retrofit.create(MyShareArticlesApiService::class.java)
+    }
+
+
+    /**
+     * Mine模块的[HistoryRecordService]依赖提供方法
+     *
+     * @param retrofit Retrofit
+     * @return MyCollectArticleService
+     */
+    @Singleton
+    @Provides
+    fun MyHistoryRecordService(retrofit: Retrofit): HistoryRecordService {
+        return retrofit.create(HistoryRecordService::class.java)
+    }
+
+
 
 
 

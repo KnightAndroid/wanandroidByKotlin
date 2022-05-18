@@ -31,4 +31,8 @@
     <color name="mine_detailpoiint_line_color">#dddddd</color>
     <color name="mine_tv_title_point_rule_text_color">#333333</color>
     <color name="mine_tv_rule_detail_point_text_color">#333333</color>
+    <color name="mine_sharearticle_item_bg_color">#ffffff</color>
+    <color name="mine_tv_share_articleauthor_text_color">#999999</color>
+    <color name="mine_tv_share_articledata_text_color">#999999</color>
+    <color name="mine_tv_share_articletitle_text_color">#333333</color>
 </resources>

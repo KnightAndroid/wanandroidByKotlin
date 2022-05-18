@@ -10,6 +10,8 @@
         <activity android:name=".activity.OtherShareArticleActivity"/>
         <activity android:name=".activity.MyCoinsActivity"/>
         <activity android:name=".activity.MyCollectArticleActivity"/>
+        <activity android:name=".activity.MyShareArticlesActivity"/>
+        <activity android:name=".activity.HistoryRecordActivity"/>
     </application>
 
 </manifest>

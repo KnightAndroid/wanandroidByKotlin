@@ -148,4 +148,23 @@
     <dimen name="mine_tv_rule_detail_point_margin_end">16dp</dimen>
     <dimen name="mine_tv_rule_detail_point_margin_top">10dp</dimen>
     <dimen name="mine_tv_rule_detail_point_extra">4dp</dimen>
+    <dimen name="mine_tv_share_articleauthor_margin_left">16dp</dimen>
+    <dimen name="mine_tv_share_articleauthor_margin_top">16dp</dimen>
+    <dimen name="mine_tv_share_articleauthor_padding_right">8dp</dimen>
+    <dimen name="mine_tv_share_articleauthor_text_size">12sp</dimen>
+    <dimen name="mine_tv_share_articlenew_margin_left">2dp</dimen>
+    <dimen name="mine_tv_share_articlenew_text_size">12sp</dimen>
+    <dimen name="mine_tv_share_articledata_margin_right">16dp</dimen>
+    <dimen name="mine_tv_share_articledata_text_size">12sp</dimen>
+    <dimen name="mine_tv_share_articletitle_margin_left">16dp</dimen>
+    <dimen name="mine_tv_share_articletitle_margin_top">10dp</dimen>
+    <dimen name="mine_tv_share_articletitle_margin_right">16dp</dimen>
+    <dimen name="mine_tv_share_articletitle_text_size">16sp</dimen>
+    <dimen name="mine_tv_share_articlechaptername_margin_top">10dp</dimen>
+    <dimen name="mine_tv_share_articlechaptername_padding_left">4dp</dimen>
+    <dimen name="mine_tv_share_articlechaptername_padding_top">2dp</dimen>
+    <dimen name="mine_tv_share_articlechaptername_padding_right">4dp</dimen>
+    <dimen name="mine_tv_share_articlechaptername_padding_bottom">2dp</dimen>
+    <dimen name="mine_tv_share_articlechaptername_text_size">12sp</dimen>
+    <dimen name="mine_iv_share_articles_delete_margin_right">16dp</dimen>
 </resources>

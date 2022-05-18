@@ -20,10 +20,13 @@ import com.knight.kotlin.library_aop.loginintercept.LoginCheck
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.entity.WebDataEntity
 import com.knight.kotlin.library_base.event.MessageEvent
+import com.knight.kotlin.library_base.ktx.getUser
 import com.knight.kotlin.library_base.ktx.observeLiveData
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_base.util.EventBusUtils
+import com.knight.kotlin.library_database.entity.HistoryReadRecordsEntity
+import com.knight.kotlin.library_util.DataBaseUtils
 import com.knight.kotlin.library_util.toast.ToastUtils
 import com.knight.kotlin.library_widget.LoveAnimatorRelativeLayout
 import com.knight.kotlin.module_web.R
@@ -33,6 +36,7 @@ import com.knight.kotlin.module_web.utils.ViewBindUtils
 import com.knight.kotlin.module_web.vm.WebVm
 import com.knight.kotlin.module_web.widget.WebLayout
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.Date
 
 /**
  * Author:Knight
@@ -101,9 +105,7 @@ class WebArticleActivity :BaseActivity<WebArticleActivityBinding,WebVm>(),LoveAn
             }
 
         }
-        //TODO("阅读历史")
-
-
+        DataBaseUtils.saveHistoryRecord(setHistoryReadRecord())
     }
 
 
@@ -182,6 +184,23 @@ class WebArticleActivity :BaseActivity<WebArticleActivityBinding,WebVm>(),LoveAn
     }
 
     override fun setThemeColor(isDarkMode: Boolean) {
+
+    }
+
+
+
+    private fun setHistoryReadRecord() : HistoryReadRecordsEntity {
+        lateinit var historyReadRecordsEntity:HistoryReadRecordsEntity
+        webDataEntity?.let {
+            historyReadRecordsEntity = HistoryReadRecordsEntity(0,
+            getUser()?.id ?: 0,it.isCollect,it.webUrl,it.articleId,it.title,it.envelopePic, Date(),it.author,it.chapterName,it.articledesc)
+
+        } ?: run {
+            historyReadRecordsEntity = HistoryReadRecordsEntity(0,0,false,"",
+                0,"","",Date(),
+                "","","")
+        }
+        return historyReadRecordsEntity
 
     }
 }

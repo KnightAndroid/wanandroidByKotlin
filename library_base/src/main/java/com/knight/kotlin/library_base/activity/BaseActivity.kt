@@ -242,7 +242,7 @@ abstract class BaseActivity<VB : ViewBinding,VM : BaseViewModel> : AppCompatActi
     }
 
 
-    override fun dispatchTouchEvent(event: MotionEvent?): Boolean {
+    override fun dispatchTouchEvent(event: MotionEvent): Boolean {
         return if (mSwipeBackHelper != null && mSwipeBackHelper.dispatchTouchEvent(event)) {
             true
         } else super.dispatchTouchEvent(event)

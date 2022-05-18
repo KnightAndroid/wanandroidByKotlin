@@ -12,4 +12,28 @@
         <attr name="textPadding" format="dimension" />
         <attr name="showGradient" format="boolean" />
     </declare-styleable>
+
+    <declare-styleable name="MenuItem">
+        <attr name="menu_title" format="string" />
+        <attr name="icon" format="reference" />
+    </declare-styleable>
+
+    <style name="Animation_top_left">
+        <item name="android:windowEnterAnimation">@anim/widget_open_top_left</item>
+        <item name="android:windowExitAnimation">@anim/widget_close_top_left</item>
+    </style>
+
+    <style name="Animation_bottom_left">
+        <item name="android:windowEnterAnimation">@anim/widget_open_bottom_left</item>
+        <item name="android:windowExitAnimation">@anim/widget_close_bottom_left</item>
+    </style>
+
+    <style name="Animation_bottom_right">
+        <item name="android:windowEnterAnimation">@anim/widget_open_bottom_right</item>
+        <item name="android:windowExitAnimation">@anim/widget_close_bottom_right</item>
+    </style>
+    <style name="Animation_top_right">
+        <item name="android:windowEnterAnimation">@anim/widget_open_top_right</item>
+        <item name="android:windowExitAnimation">@anim/widget_close_top_right</item>
+    </style>
 </resources>

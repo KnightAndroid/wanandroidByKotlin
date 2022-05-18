@@ -7,9 +7,11 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.knight.kotlin.library_database.converter.DateConverter
 import com.knight.kotlin.library_database.dao.EveryDayPushArticleDao
+import com.knight.kotlin.library_database.dao.HistoryReadRecordsDao
 import com.knight.kotlin.library_database.dao.PushArticlesDateDao
 import com.knight.kotlin.library_database.dao.SearchDayPushArticleDao
 import com.knight.kotlin.library_database.entity.EveryDayPushEntity
+import com.knight.kotlin.library_database.entity.HistoryReadRecordsEntity
 import com.knight.kotlin.library_database.entity.PushDateEntity
 import com.knight.kotlin.library_database.entity.SearchHistroyKeywordEntity
 
@@ -22,7 +24,7 @@ import com.knight.kotlin.library_database.entity.SearchHistroyKeywordEntity
  */
 //
 
-@Database(entities = [EveryDayPushEntity::class,PushDateEntity::class, SearchHistroyKeywordEntity::class],version = 1,exportSchema = false)
+@Database(entities = [EveryDayPushEntity::class,PushDateEntity::class, SearchHistroyKeywordEntity::class,HistoryReadRecordsEntity::class],version = 1,exportSchema = false)
 @TypeConverters(DateConverter::class)
 abstract class AppDataBase :RoomDatabase(){
 
@@ -32,6 +34,8 @@ abstract class AppDataBase :RoomDatabase(){
     abstract fun mPushDateDao():PushArticlesDateDao
     //搜索记录
     abstract fun mHistroyKeywordDao(): SearchDayPushArticleDao
+    //阅读历史记录
+    abstract fun mHistoryReadRecordsDao():HistoryReadRecordsDao
 
     companion object {
         @Volatile private var INSTANCE:AppDataBase?=null

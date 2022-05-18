@@ -1,6 +1,9 @@
 package com.knight.kotlin.library_util
 
+import com.knight.kotlin.library_base.ktx.getUser
+import com.knight.kotlin.library_database.entity.HistoryReadRecordsEntity
 import com.knight.kotlin.library_database.entity.SearchHistroyKeywordEntity
+import com.knight.kotlin.library_database.repository.HistoryReadRecordsRepository
 import com.knight.kotlin.library_database.repository.HistroyKeywordsRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -51,6 +54,51 @@ object DataBaseUtils : CoroutineScope by CoroutineScope(Dispatchers.Main) {
             }
             ?.catch { toast(it.message ?: "") }
             ?.collect()
+    }
+
+    /**
+     *
+     * 保存阅读历史记录
+     */
+    fun saveHistoryRecord(historyReadRecordEntity: HistoryReadRecordsEntity) = launch {
+        HistoryReadRecordsRepository.getInstance().findHistoryReadRecords(
+            historyReadRecordEntity.webUrl, historyReadRecordEntity.articleId,
+            getUser()?.id ?: 0
+        )
+            .flowOn(Dispatchers.IO)
+            .onStart {
+
+            }
+            .onEach {
+                it?.let {
+                    HistoryReadRecordsRepository.getInstance().updateHistoryReadRecord(it)
+                        .flowOn(Dispatchers.IO)
+                        .onStart {  }
+                        .onEach {  }
+                        .onCompletion {  }
+                        .catch {  }
+                        .collect {  }
+                } ?: run {
+
+                    HistoryReadRecordsRepository.getInstance().insertHistoryReadRecord(historyReadRecordEntity)
+                        .flowOn(Dispatchers.IO)
+                        .onStart {  }
+                        .onEach {  }
+                        .onCompletion {  }
+                        .catch {  }
+                        .collect {  }
+
+                }
+
+            }
+            .onCompletion {
+
+            }
+            .catch {
+            }
+            .collect()
+
+
     }
 
 
