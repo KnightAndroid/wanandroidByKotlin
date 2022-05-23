@@ -89,8 +89,8 @@ object CacheUtils {
      *
      * @return
      */
-    fun getFollowSystem(): Boolean? {
-        return mmkv?.decodeBool(CacheKey.ISFOLLOWSYSTEM, false)
+    fun getFollowSystem(): Boolean {
+        return mmkv?.decodeBool(CacheKey.ISFOLLOWSYSTEM, false) ?: false
     }
 
     /**
@@ -422,8 +422,8 @@ object CacheUtils {
      * 返回夜间模式开启状态
      * @return
      */
-    fun getAutoNightMode(): Boolean? {
-        return mmkv?.decodeBool(CacheKey.AUTONIGHTMODE, false)
+    fun getAutoNightMode(): Boolean {
+        return mmkv?.decodeBool(CacheKey.AUTONIGHTMODE, false) ?:false
     }
 
     /**
@@ -441,7 +441,7 @@ object CacheUtils {
      * @return
      */
     fun getNightModeStatus(): Boolean {
-        return mmkv?.decodeBool(CacheKey.INNIGHTMODE)!!
+        return mmkv?.decodeBool(CacheKey.INNIGHTMODE) ?: false
     }
 
 

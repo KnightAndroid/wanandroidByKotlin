@@ -1,0 +1,15 @@
+[
+  {
+    "name": "普通模式",
+    "englishName": "Normal mode",
+    "isDark": false,
+    "select": false,
+    "showLine": true
+  },{
+    "name": "深色模式",
+    "englishName": "Dark Mode",
+    "isDark": true,
+    "select": false,
+    "showLine": false
+  }
+]

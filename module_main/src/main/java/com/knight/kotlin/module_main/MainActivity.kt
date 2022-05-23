@@ -72,4 +72,11 @@ class MainActivity : BaseActivity<MainActivityBinding,MainViewModel>() {
         }
         return super.onKeyDown(keyCode, event)
     }
+
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mViewModel.fragments.clear()
+
+    }
 }

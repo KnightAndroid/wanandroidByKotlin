@@ -14,4 +14,10 @@
      <color name="set_tv_official_website_color">#333333</color>
      <color name="set_tv_about_wanandroid_color">#333333</color>
      <color name="set_tv_logout_color">#333333</color>
+     <color name="set_rl_follow_system_color">#ffffff</color>
+     <color name="set_tv_follow_system_color">#333333</color>
+     <color name="set_tv_followsystem_tip_color">#999999</color>
+     <color name="set_tv_manual_select_color">#999999</color>
+     <color name="set_rl_manual_select_color">#ffffff</color>
+     <color name="set_tv_dark_name_color">#333333</color>
 </resources>

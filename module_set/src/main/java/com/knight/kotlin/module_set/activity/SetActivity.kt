@@ -16,6 +16,7 @@ import com.knight.kotlin.library_base.util.ColorUtils
 import com.knight.kotlin.library_base.util.EventBusUtils
 import com.knight.kotlin.library_util.CacheFileUtils
 import com.knight.kotlin.library_util.DialogUtils
+import com.knight.kotlin.library_util.startPage
 import com.knight.kotlin.module_set.R
 import com.knight.kotlin.module_set.databinding.SetActivityBinding
 import com.knight.kotlin.module_set.vm.SetVm
@@ -31,7 +32,7 @@ class SetActivity : BaseActivity<SetActivityBinding, SetVm>(){
 
 
     override fun SetActivityBinding.initView() {
-        setOnClickListener(setRlLogout)
+        setOnClickListener(setRlLogout,setRlDarkmode)
         setCachememory.setText(CacheFileUtils.getToalCacheSize(this@SetActivity))
         includeSetToobar.baseIvBack.setOnClickListener { finish() }
         includeSetToobar.baseTvTitle.setText(getString(R.string.set_app_name))
@@ -47,7 +48,7 @@ class SetActivity : BaseActivity<SetActivityBinding, SetVm>(){
         setCbStatusTheme.buttonTintList = ColorUtils.createColorStateList(CacheUtils.getThemeColor(), ColorUtils.convertToColorInt("a6a6a6"))
         setCbEyecare.isChecked = CacheUtils.getIsEyeCare()
         setCbEyecare.buttonTintList = ColorUtils.createColorStateList(CacheUtils.getThemeColor(), ColorUtils.convertToColorInt("a6a6a6"))
-
+        initDarkMode()
     }
     override fun setThemeColor(isDarkMode: Boolean) {
         setThemeTextColor()
@@ -86,10 +87,23 @@ class SetActivity : BaseActivity<SetActivityBinding, SetVm>(){
 
     }
 
+
+    private fun initDarkMode() {
+        if (CacheUtils.getFollowSystem()) {
+            mBinding.setTvDarkmodeStatus.setText(getString(R.string.set_follow_system))
+        } else {
+            if (CacheUtils.getNormalDark()) {
+                mBinding.setTvDarkmodeStatus.setText(getString(R.string.set_dark_open))
+            } else {
+                mBinding.setTvDarkmodeStatus.setText(getString(R.string.set_dark_close))
+            }
+        }
+    }
+
     @SingleClick
     override fun onClick(v: View) {
         when (v) {
-            mBinding.setRlLogout ->{
+            mBinding.setRlLogout -> {
                 DialogUtils.getConfirmDialog(
                     this@SetActivity,
                     resources.getString(R.string.set_confirm_logout),
@@ -97,6 +111,10 @@ class SetActivity : BaseActivity<SetActivityBinding, SetVm>(){
                     //    showLoading(getString(R.string.set_logout))
                         mViewModel.logout()
                     }) { dialog, which -> }
+            }
+
+            mBinding.setRlDarkmode -> {
+                startPage(RouteActivity.Set.DarkModelActivity)
             }
         }
     }

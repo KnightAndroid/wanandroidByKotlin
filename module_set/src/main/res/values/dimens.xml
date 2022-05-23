@@ -62,4 +62,23 @@
     <dimen name="set_tv_logout_text_size">18sp</dimen>
     <dimen name="set_tv_logout_arrow_margin_right">20dp</dimen>
     <dimen name="set_tv_gesture_password_arrow_right_margin_right">20dp</dimen>
+    <dimen name="set_rl_follow_system_height">70dp</dimen>
+    <dimen name="set_rl_follow_system_padding_left">16dp</dimen>
+    <dimen name="set_rl_follow_system_padding_right">16dp</dimen>
+    <dimen name="set_rl_follow_system_child_margin_left">8dp</dimen>
+    <dimen name="set_rl_follow_system_child_margin_right">8dp</dimen>
+    <dimen name="set_tv_follow_system_text_size">16sp</dimen>
+    <dimen name="set_tv_followsystem_tip_margin_top">2dp</dimen>
+    <dimen name="set_tv_followsystem_tip_margin_right">2dp</dimen>
+    <dimen name="set_tv_followsystem_tip_text_size">14sp</dimen>
+    <dimen name="set_tv_manual_system_margin_left">24dp</dimen>
+    <dimen name="set_tv_manual_system_margin_top">10dp</dimen>
+    <dimen name="set_tv_manual_system_text_size">14sp</dimen>
+    <dimen name="set_rl_manual_select_margin_top">5dp</dimen>
+    <dimen name="set_rl_manual_select_padding_left">24dp</dimen>
+    <dimen name="set_rl_manual_select_padding_right">24dp</dimen>
+    <dimen name="set_select_dark_item_height">54dp</dimen>
+    <dimen name="set_tv_dark_name_text_size">16sp</dimen>
+    <dimen name="set_iv_select_darkmodel_margin_right">10dp</dimen>
+    <dimen name="set_tv_darkmodel_line_height">1dp</dimen>
 </resources>

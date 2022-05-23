@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="set_app_name">module_set</string>
+    <string name="set_app_name">设置</string>
     <string name="set_basic">基本设置</string>
     <string name="set_dark_mode">深色模式</string>
     <string name="set_dark_close">已关闭</string>
+    <string name="set_dark_open">已开启</string>
     <string name="set_status_theme">状态栏着色</string>
     <string name="set_status_theme_tip">状态栏颜色伴随主题色变化</string>
     <string name="set_theme_color">主题颜色</string>
@@ -23,5 +24,10 @@
     <string name="set_quit_account">退出</string>
     <string name="set_confirm_logout">是否退出当前账号</string>
     <string name="set_logout">退出登录中...</string>
+    <string name="set_follow_system">跟随系统</string>
+    <string name="set_followsystem_tip">开启后，将跟随系统打开或关闭深色模式</string>
+    <string name="set_manual_select">手动选择</string>
+    <string name="set_dark_mode_save">保存</string>
+
 
 </resources>

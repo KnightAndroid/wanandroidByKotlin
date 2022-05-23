@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <include
+        android:id="@+id/include_darkmode_toolbar"
+        layout="@layout/base_include_toolbar" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/set_rl_follow_system_height"
+        android:background="@color/set_rl_follow_system_color"
+        android:paddingLeft="@dimen/set_rl_follow_system_padding_left"
+        android:paddingRight="@dimen/set_rl_follow_system_padding_right">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/set_rl_follow_system_child_margin_left"
+            android:layout_marginRight="@dimen/set_rl_follow_system_child_margin_right">
+
+
+            <TextView
+                android:id="@+id/set_tv_follow_system"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/set_follow_system"
+                android:textColor="@color/set_tv_follow_system_color"
+                android:textSize="@dimen/set_tv_follow_system_text_size" />
+
+
+            <TextView
+                android:id="@+id/set_tv_followsystem_tip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/set_tv_follow_system"
+                android:layout_marginTop="@dimen/set_tv_followsystem_tip_margin_top"
+                android:layout_marginRight="@dimen/set_tv_followsystem_tip_margin_right"
+                android:text="@string/set_followsystem_tip"
+                android:textColor="@color/set_tv_followsystem_tip_color"
+                android:textSize="@dimen/set_tv_followsystem_tip_text_size" />
+
+
+            <CheckBox
+                android:id="@+id/set_cb_select_system"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:button="@drawable/set_selectdark_selector" />
+
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/set_tv_manual_system"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/set_tv_manual_system_margin_left"
+        android:layout_marginTop="@dimen/set_tv_manual_system_margin_top"
+        android:text="@string/set_manual_select"
+        android:textColor="@color/set_tv_manual_select_color"
+        android:textSize="@dimen/set_tv_manual_system_text_size" />
+
+
+    <RelativeLayout
+        android:id="@+id/set_rl_manual_select"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/set_rl_manual_select_margin_top"
+        android:background="@color/set_rl_manual_select_color"
+        android:paddingLeft="@dimen/set_rl_manual_select_padding_left"
+        android:paddingRight="@dimen/set_rl_manual_select_padding_right">
+
+
+        <com.yanzhenjie.recyclerview.SwipeRecyclerView
+            android:id="@+id/set_rv_darkmodel_select"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
+    </RelativeLayout>
+
+
+</LinearLayout>

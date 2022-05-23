@@ -14,4 +14,8 @@
     <color name="set_tv_official_website_color">#D3D3D3</color>
     <color name="set_tv_about_wanandroid_color">#D3D3D3</color>
     <color name="set_tv_logout_color">#D3D3D3</color>
+    <color name="set_rl_follow_system_color">#303030</color>
+    <color name="set_tv_follow_system_color">#D3D3D3</color>
+    <color name="set_rl_manual_select_color">#303030</color>
+    <color name="set_tv_dark_name_color">#D3D3D3</color>
 </resources>

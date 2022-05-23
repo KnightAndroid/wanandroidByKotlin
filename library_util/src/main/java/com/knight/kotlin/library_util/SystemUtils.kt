@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.graphics.BlendMode
@@ -185,6 +186,28 @@ object SystemUtils {
             }
         })
     }
+
+
+    /**
+     *
+     * 重启应用
+     * @param context
+     */
+    fun restartApp(context: Context) {
+        val packageManager = context.packageManager ?: return
+        val intent = packageManager.getLaunchIntentForPackage(context.packageName)
+        if (intent != null) {
+            intent.addFlags(
+                Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                        or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            )
+            context.startActivity(intent)
+        }
+        android.os.Process.killProcess(android.os.Process.myPid());
+        System.exit(0);
+    }
+
+
 
 
 

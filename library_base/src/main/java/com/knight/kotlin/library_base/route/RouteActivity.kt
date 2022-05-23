@@ -107,6 +107,7 @@ object RouteActivity {
     object Set {
         private const val SET = "/module_set"
         const val SetActivity = "$SET/SetActivity"
+        const val DarkModelActivity = "$SET/DarkModelActivity"
     }
 
 

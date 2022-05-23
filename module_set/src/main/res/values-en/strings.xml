@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="set_app_name">module_set</string>
+    <string name="set_app_name">Set</string>
     <string name="set_basic">Basic settings</string>
     <string name="set_dark_mode">Dark Mode</string>
     <string name="set_dark_close">Closed</string>
+    <string name="set_dark_open">Turned on</string>
     <string name="set_status_theme">Status bar shading</string>
     <string name="set_status_theme_tip">The color of the status bar changes with the theme color</string>
     <string name="set_theme_color">Theme color</string>
@@ -23,4 +24,8 @@
     <string name="set_quit_account">Sign out</string>
     <string name="set_confirm_logout">Exit current account</string>
     <string name="set_logout">Quit...</string>
+    <string name="set_follow_system">Follow System</string>
+    <string name="set_followsystem_tip">When on, it will follow the system to turn dark mode on or off</string>
+    <string name="set_manual_select">Manual selection</string>
+    <string name="set_dark_mode_save">Save</string>
 </resources>

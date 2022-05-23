@@ -11,6 +11,7 @@ import com.knight.kotlin.library_base.loadsir.LoadCallBack
 import com.knight.kotlin.library_base.network.NetworkManager
 import com.knight.kotlin.library_base.util.ActivityManagerUtils
 import com.knight.kotlin.library_base.util.CacheUtils
+import com.knight.kotlin.library_base.util.DarkModeUtils
 import com.knight.kotlin.library_base.util.HookUtils
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
@@ -102,6 +103,7 @@ open class BaseApp : Application() {
     private fun initSafeSdk() {
         initNetworkStateClient()
         initLoadSir()
+        initDarkMode()
         val allTimeMillis = measureTimeMillis {
             val depends = mLoadModuleProxy.initSafeTask()
             var dependInfo: String
@@ -143,6 +145,15 @@ open class BaseApp : Application() {
         //初始化Provider
         HookUtils.initProvider(this)
         mLoadModuleProxy.initDangerousTask()
+    }
+
+
+    /**
+     *
+     * 初始化深色模式还是普通模式
+     */
+    fun initDarkMode() {
+        DarkModeUtils.darkNormal()
     }
 
     override fun onTerminate() {

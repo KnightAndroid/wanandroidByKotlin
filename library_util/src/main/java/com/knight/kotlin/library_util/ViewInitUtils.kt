@@ -40,6 +40,8 @@ object ViewInitUtils {
         }
     }
 
+
+
     @RequiresApi(api = Build.VERSION_CODES.M)
     fun avoidHintColor(view: View) {
         if (view is TextView) {
