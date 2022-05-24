@@ -188,7 +188,9 @@ data class MessageEvent(var type: MessageType) {
         //收藏成功
         CollectSuccess,
         //改变标签
-        ChangeLabel
+        ChangeLabel,
+        //状态栏着色
+        ChangeStatusTheme
     }
 
 }

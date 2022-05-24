@@ -2,6 +2,7 @@ package com.knight.kotlin.module_set.activity
 
 import android.graphics.drawable.GradientDrawable
 import android.view.View
+import android.widget.CompoundButton
 import androidx.activity.viewModels
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.knight.kotlin.library_aop.clickintercept.SingleClick
@@ -49,6 +50,14 @@ class SetActivity : BaseActivity<SetActivityBinding, SetVm>(){
         setCbEyecare.isChecked = CacheUtils.getIsEyeCare()
         setCbEyecare.buttonTintList = ColorUtils.createColorStateList(CacheUtils.getThemeColor(), ColorUtils.convertToColorInt("a6a6a6"))
         initDarkMode()
+        setCbStatusTheme.setOnCheckedChangeListener(object:CompoundButton.OnCheckedChangeListener{
+            override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
+                statusIsWithTheme = isChecked
+                CacheUtils.statusBarIsWithTheme(isChecked)
+                buttonView?.buttonTintList = ColorUtils.createColorStateList(CacheUtils.getThemeColor(), ColorUtils.convertToColorInt("a6a6a6"))
+                EventBusUtils.postEvent(MessageEvent(MessageEvent.MessageType.ChangeStatusTheme).put(isChecked))
+            }
+        })
     }
     override fun setThemeColor(isDarkMode: Boolean) {
         setThemeTextColor()

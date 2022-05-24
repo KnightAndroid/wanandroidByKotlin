@@ -90,7 +90,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/set_cb_status_theme_margin_right"
-                android:button="@drawable/set_checkbox_selector"/>
+                android:button="@drawable/set_checkbox_selector" />
 
 
         </RelativeLayout>

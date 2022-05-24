@@ -116,7 +116,7 @@ class HomeFragment : BaseFragment<HomeFragmentBinding, HomeVm>() {
 
     override fun setThemeColor(isDarkMode: Boolean) {
        if (!isDarkMode) {
-           isWithStatusTheme(isDarkMode)
+           isWithStatusTheme(CacheUtils.getStatusBarIsWithTheme())
        }
     }
 
@@ -303,6 +303,11 @@ class HomeFragment : BaseFragment<HomeFragmentBinding, HomeVm>() {
                     isOffscreenPageLimit = true,
                     isUserInputEnabled = false
                 )
+            }
+
+            //改变状态栏颜色
+            MessageEvent.MessageType.ChangeStatusTheme -> {
+                isWithStatusTheme(event.getBoolean())
             }
 
         }
