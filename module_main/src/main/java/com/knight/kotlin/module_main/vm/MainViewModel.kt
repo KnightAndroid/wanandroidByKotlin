@@ -17,13 +17,6 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(private val mRepository:MainRepository):BaseViewModel() {
 
-    val fragments:MutableList<Fragment> = mutableListOf(
-        ARouter.getInstance().build(RouteFragment.Home.HomeFragment).navigation()  as Fragment,
-        ARouter.getInstance().build(RouteFragment.Square.SquareFragment).navigation()  as Fragment,
-        ARouter.getInstance().build(RouteFragment.Project.ProjectFragment).navigation()  as Fragment,
-        ARouter.getInstance().build(RouteFragment.Navigate.NavigateHomeFragment).navigation()  as Fragment,
-        ARouter.getInstance().build(RouteFragment.Mine.MineFragment).navigation()  as Fragment
-    )
 
 
 }

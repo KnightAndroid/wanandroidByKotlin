@@ -17,9 +17,12 @@ import com.knight.kotlin.library_base.util.ColorUtils
 import com.knight.kotlin.library_base.util.EventBusUtils
 import com.knight.kotlin.library_util.CacheFileUtils
 import com.knight.kotlin.library_util.DialogUtils
+import com.knight.kotlin.library_util.SystemUtils
 import com.knight.kotlin.library_util.startPage
 import com.knight.kotlin.module_set.R
+import com.knight.kotlin.module_set.annoation.ColorStyle
 import com.knight.kotlin.module_set.databinding.SetActivityBinding
+import com.knight.kotlin.module_set.dialog.ColorPickerDialog
 import com.knight.kotlin.module_set.vm.SetVm
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -33,7 +36,7 @@ class SetActivity : BaseActivity<SetActivityBinding, SetVm>(){
 
 
     override fun SetActivityBinding.initView() {
-        setOnClickListener(setRlLogout,setRlDarkmode)
+
         setCachememory.setText(CacheFileUtils.getToalCacheSize(this@SetActivity))
         includeSetToobar.baseIvBack.setOnClickListener { finish() }
         includeSetToobar.baseTvTitle.setText(getString(R.string.set_app_name))
@@ -58,6 +61,7 @@ class SetActivity : BaseActivity<SetActivityBinding, SetVm>(){
                 EventBusUtils.postEvent(MessageEvent(MessageEvent.MessageType.ChangeStatusTheme).put(isChecked))
             }
         })
+        setOnClickListener(setRlLogout,setRlDarkmode,setRlTheme)
     }
     override fun setThemeColor(isDarkMode: Boolean) {
         setThemeTextColor()
@@ -125,6 +129,35 @@ class SetActivity : BaseActivity<SetActivityBinding, SetVm>(){
             mBinding.setRlDarkmode -> {
                 startPage(RouteActivity.Set.DarkModelActivity)
             }
+
+            mBinding.setRlTheme -> {
+                ColorPickerDialog.Builder(this,CacheUtils.getThemeColor(),
+                    ColorStyle.THEMECOLOR,getString(R.string.set_recover_themecolor))
+                    .setOnColorPickedListener(object :ColorPickerDialog.OnColorPickedListener{
+                        override fun onColorPicked(color: Int) {
+                            themeColor = color
+                            CacheUtils.setThemeColor(color)
+                            val gradientThemeDrawable = GradientDrawable()
+                            gradientThemeDrawable.shape = GradientDrawable.OVAL
+                            gradientThemeDrawable.setColor(CacheUtils.getThemeColor())
+                            mBinding.setShowThemecolor.setBackground(gradientThemeDrawable)
+                            updateTextColor(color)
+                            EventBusUtils.postEvent(MessageEvent(MessageEvent.MessageType.RecreateMain))
+                            //SystemUtils.restartApp(this@SetActivity)
+                        }
+                    }).build().show()
+            }
         }
+    }
+
+    /**
+     * 更改主题颜色
+     *
+     * @param color
+     */
+    private fun updateTextColor(color: Int) {
+        mBinding.setTvBasic.setTextColor(color)
+        mBinding.setTvCommon.setTextColor(color)
+        mBinding.setTvOther.setTextColor(color)
     }
 }

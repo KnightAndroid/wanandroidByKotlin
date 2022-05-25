@@ -78,7 +78,7 @@ object ColorUtils {
      * @param color
      * @return
      */
-    fun convertToRGB(color: Int): String? {
+    fun convertToRGB(color: Int): String {
         var red = Integer.toHexString(Color.red(color))
         var green = Integer.toHexString(Color.green(color))
         var blue = Integer.toHexString(Color.blue(color))

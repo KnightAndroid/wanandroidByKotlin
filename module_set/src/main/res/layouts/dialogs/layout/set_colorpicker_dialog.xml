@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/set_color_pickview_round"
+    android:orientation="vertical">
+
+
+
+    <com.knight.kotlin.library_widget.ColorPickerView
+        android:id="@+id/set_color_picker_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/set_color_picker_view_margin_left"
+        android:layout_marginRight="@dimen/set_color_picker_view_margin_right"
+        android:layerType="software"
+        android:tag="portrait"/>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/set_color_picker_rl_height"
+        android:layout_marginLeft="@dimen/set_color_picker_rl_margin_left"
+        android:layout_marginTop="@dimen/set_color_picker_rl_margin_top"
+        android:layout_marginRight="@dimen/set_color_picker_rl_margin_right"
+        android:layout_marginBottom="@dimen/set_color_picker_rl_margin_bottom"
+        android:orientation="horizontal"
+        >
+
+        <View
+            android:id="@+id/view_color_panel"
+            android:layout_width="@dimen/set_view_color_panel_width"
+            android:layout_height="@dimen/set_view_color_panel_height"
+            android:background="@color/base_color_theme" />
+
+        <TextView
+            android:id="@+id/tv_color_prefix"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/set_tv_color_prefix_margin_left"
+            android:layout_toRightOf="@id/view_color_panel"
+            android:gravity="center"
+            android:text="#"
+            android:textSize="@dimen/base_dimen_20" />
+
+        <EditText
+            android:id="@+id/et_color"
+            android:layout_width="@dimen/set_pickcolor_et_color_width"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/tv_color_prefix"
+            android:background="@null"
+            android:gravity="center"
+            android:hint="当前颜色"
+            android:inputType="textCapCharacters"
+            android:maxLength="7"
+            android:maxLines="1" />
+
+        <View
+            android:id="@+id/view_color_bottom"
+            android:layout_width="@dimen/set_view_color_bottom_width"
+            android:layout_height="@dimen/set_view_color_bottom_height"
+            android:layout_below="@id/et_color"
+            android:layout_toRightOf="@id/tv_color_prefix"
+            android:background="@color/base_color_theme" />
+
+        <TextView
+            android:id="@+id/set_tv_recovertheme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="23232323"
+            android:layout_centerVertical="true"
+            android:textSize="@dimen/set_tv_recovertheme_text_size"
+            android:textColor="@color/set_tv_recovertheme_color"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginTop="@dimen/set_ll_colorpicker_margin_top"
+        android:layout_marginRight="@dimen/set_ll_colorpicker_margin_right"
+        android:layout_marginBottom="@dimen/set_ll_colorpicker_margin_bottom">
+
+
+        <TextView
+            android:id="@+id/tv_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/set_colorpicker_cancel"
+            android:textColor="@color/set_color_picker_cancel_text_color"
+            android:textSize="@dimen/base_dimen_16" />
+
+
+        <TextView
+            android:id="@+id/tv_confim"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/set_color_picker_margin_left"
+            android:text="@string/set_colorpicker_confim"
+            android:textColor="@color/set_color_picker_confim_text_color"
+            android:textSize="@dimen/set_color_picker_confim_text_size" />
+
+    </LinearLayout>
+</LinearLayout>

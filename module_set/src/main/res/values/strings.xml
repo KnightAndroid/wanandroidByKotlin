@@ -28,6 +28,9 @@
     <string name="set_followsystem_tip">开启后，将跟随系统打开或关闭深色模式</string>
     <string name="set_manual_select">手动选择</string>
     <string name="set_dark_mode_save">保存</string>
+    <string name="set_colorpicker_cancel">取消</string>
+    <string name="set_colorpicker_confim">确定</string>
+    <string name="set_recover_themecolor">使用默认主题色</string>
 
 
 </resources>

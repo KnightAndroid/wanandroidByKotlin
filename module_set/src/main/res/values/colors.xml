@@ -20,4 +20,7 @@
      <color name="set_tv_manual_select_color">#999999</color>
      <color name="set_rl_manual_select_color">#ffffff</color>
      <color name="set_tv_dark_name_color">#333333</color>
+     <color name="set_tv_recovertheme_color">#333333</color>
+     <color name="set_color_picker_cancel_text_color">#999999</color>
+     <color name="set_color_picker_confim_text_color">#333333</color>
 </resources>

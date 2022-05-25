@@ -28,4 +28,7 @@
     <string name="set_followsystem_tip">When on, it will follow the system to turn dark mode on or off</string>
     <string name="set_manual_select">Manual selection</string>
     <string name="set_dark_mode_save">Save</string>
+    <string name="set_colorpicker_cancel">Cancel</string>
+    <string name="set_colorpicker_confim">Determine</string>
+    <string name="set_recover_themecolor">Use Default theme color</string>
 </resources>

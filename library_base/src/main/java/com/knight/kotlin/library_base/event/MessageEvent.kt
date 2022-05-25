@@ -190,7 +190,10 @@ data class MessageEvent(var type: MessageType) {
         //改变标签
         ChangeLabel,
         //状态栏着色
-        ChangeStatusTheme
+        ChangeStatusTheme,
+        //页面重建
+        RecreateMain
+
     }
 
 }

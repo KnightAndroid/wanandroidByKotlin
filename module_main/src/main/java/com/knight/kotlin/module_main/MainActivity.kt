@@ -2,9 +2,14 @@ package com.knight.kotlin.module_main
 
 import android.view.KeyEvent
 import androidx.activity.viewModels
+import androidx.fragment.app.Fragment
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.alibaba.android.arouter.launcher.ARouter
 import com.knight.kotlin.library_base.activity.BaseActivity
+import com.knight.kotlin.library_base.annotation.EventBusRegister
+import com.knight.kotlin.library_base.event.MessageEvent
 import com.knight.kotlin.library_base.route.RouteActivity
+import com.knight.kotlin.library_base.route.RouteFragment
 import com.knight.kotlin.library_base.util.ActivityManagerUtils
 import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_base.util.ColorUtils
@@ -13,7 +18,10 @@ import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_main.databinding.MainActivityBinding
 import com.knight.kotlin.module_main.vm.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
+@EventBusRegister
 @AndroidEntryPoint
 @Route(path = RouteActivity.Main.MainActivity)
 class MainActivity : BaseActivity<MainActivityBinding,MainViewModel>() {
@@ -25,9 +33,10 @@ class MainActivity : BaseActivity<MainActivityBinding,MainViewModel>() {
     override val mViewModel:MainViewModel by viewModels()
 
     private var mExitAppTime: Long = 0
-
+    val fragments:MutableList<Fragment> = mutableListOf()
     override fun MainActivityBinding.initView() {
-        ViewInitUtils.setViewPager2Init(this@MainActivity,mainViewpager,mViewModel.fragments,
+        initFragments()
+        ViewInitUtils.setViewPager2Init(this@MainActivity,mainViewpager,fragments,
             isOffscreenPageLimit = true,
             isUserInputEnabled = false
         )
@@ -58,6 +67,14 @@ class MainActivity : BaseActivity<MainActivityBinding,MainViewModel>() {
 
     }
 
+    private fun initFragments() {
+        fragments.add(ARouter.getInstance().build(RouteFragment.Home.HomeFragment).navigation()  as Fragment)
+        fragments.add(ARouter.getInstance().build(RouteFragment.Square.SquareFragment).navigation()  as Fragment)
+        fragments.add(ARouter.getInstance().build(RouteFragment.Project.ProjectFragment).navigation()  as Fragment)
+        fragments.add(ARouter.getInstance().build(RouteFragment.Navigate.NavigateHomeFragment).navigation()  as Fragment)
+        fragments.add(ARouter.getInstance().build(RouteFragment.Mine.MineFragment).navigation()  as Fragment)
+    }
+
 
     override fun onKeyDown(keyCode:Int,event: KeyEvent):Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -74,9 +91,37 @@ class MainActivity : BaseActivity<MainActivityBinding,MainViewModel>() {
     }
 
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onMessageEvent(event: MessageEvent) {
+        when (event.type) {
+            MessageEvent.MessageType.RecreateMain -> {
+                val fragmentTransaction = supportFragmentManager.beginTransaction()
+                if (fragments.get(0) != null) {
+                    fragmentTransaction.remove(fragments.get(0))
+                }
+
+                if (fragments.get(1) != null) {
+                    fragmentTransaction.remove(fragments.get(1))
+                }
+
+                if (fragments.get(2) != null) {
+                    fragmentTransaction.remove(fragments.get(2))
+
+                }
+
+                if (fragments.get(3) != null) {
+                    fragmentTransaction.remove(fragments.get(3))
+
+                }
+                fragmentTransaction.commitAllowingStateLoss()
+                recreate()
+            }
+        }
+    }
+
     override fun onDestroy() {
         super.onDestroy()
-        mViewModel.fragments.clear()
+        fragments.clear()
 
     }
 }

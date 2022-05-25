@@ -81,4 +81,23 @@
     <dimen name="set_tv_dark_name_text_size">16sp</dimen>
     <dimen name="set_iv_select_darkmodel_margin_right">10dp</dimen>
     <dimen name="set_tv_darkmodel_line_height">1dp</dimen>
+    <dimen name="set_color_picker_view_margin_left">6dp</dimen>
+    <dimen name="set_color_picker_view_margin_right">6dp</dimen>
+    <dimen name="set_color_picker_rl_height">40dp</dimen>
+    <dimen name="set_color_picker_rl_margin_top">6dp</dimen>
+    <dimen name="set_color_picker_rl_margin_left">14dp</dimen>
+    <dimen name="set_color_picker_rl_margin_right">10dp</dimen>
+    <dimen name="set_color_picker_rl_margin_bottom">6dp</dimen>
+    <dimen name="set_view_color_panel_width">80dp</dimen>
+    <dimen name="set_view_color_panel_height">40dp</dimen>
+    <dimen name="set_tv_color_prefix_margin_left">10dp</dimen>
+    <dimen name="set_pickcolor_et_color_width">80dp</dimen>
+    <dimen name="set_view_color_bottom_width">80dp</dimen>
+    <dimen name="set_view_color_bottom_height">1dp</dimen>
+    <dimen name="set_tv_recovertheme_text_size">16sp</dimen>
+    <dimen name="set_ll_colorpicker_margin_top">10dp</dimen>
+    <dimen name="set_ll_colorpicker_margin_right">10dp</dimen>
+    <dimen name="set_ll_colorpicker_margin_bottom">10dp</dimen>
+    <dimen name="set_color_picker_margin_left">20dp</dimen>
+    <dimen name="set_color_picker_confim_text_size">16sp</dimen>
 </resources>

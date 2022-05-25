@@ -18,4 +18,7 @@
     <color name="set_tv_follow_system_color">#D3D3D3</color>
     <color name="set_rl_manual_select_color">#303030</color>
     <color name="set_tv_dark_name_color">#D3D3D3</color>
+    <color name="set_tv_recovertheme_color">#D3D3D3</color>
+    <color name="set_color_picker_cancel_text_color">#666666</color>
+    <color name="set_color_picker_confim_text_color">#D3D3D3</color>
 </resources>

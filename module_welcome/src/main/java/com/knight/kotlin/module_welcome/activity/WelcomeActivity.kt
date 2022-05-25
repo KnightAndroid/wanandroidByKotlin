@@ -23,6 +23,7 @@ class WelcomeActivity : BaseActivity<WelcomeActivityBinding, WelcomeVm>() {
     override val mViewModel: WelcomeVm by viewModels()
     override fun WelcomeActivityBinding.initView() {
         setTheme(getActivityTheme())
+        logoAnim.setTextColor(CacheUtils.getThemeColor())
         logoAnim.addOffsetAnimListener(object : AnimatorListenerAdapter() {
             override fun onAnimationEnd(animation: Animator) {
                 super.onAnimationEnd(animation)
@@ -30,7 +31,7 @@ class WelcomeActivity : BaseActivity<WelcomeActivityBinding, WelcomeVm>() {
                     ARouter.getInstance().build(RouteActivity.Main.MainActivity).navigation()
                     finish()
                 } else {
-                    WelcomePrivacyAgreeFragment().show(supportFragmentManager,"dialog_privacy")
+                    WelcomePrivacyAgreeFragment().show(supportFragmentManager, "dialog_privacy")
                 }
             }
         })
@@ -38,14 +39,12 @@ class WelcomeActivity : BaseActivity<WelcomeActivityBinding, WelcomeVm>() {
     }
 
 
-
-
     /**
      *
      * 订阅LiveData
      */
     override fun initObserver() {
-        observeLiveData(mViewModel.themeData,::setAppThemeData)
+        observeLiveData(mViewModel.themeData, ::setAppThemeData)
     }
 
     /**
@@ -53,14 +52,19 @@ class WelcomeActivity : BaseActivity<WelcomeActivityBinding, WelcomeVm>() {
      *
      */
     override fun initRequestData() {
-       mViewModel.getAppTheme()
+        mViewModel.getAppTheme()
     }
 
 
-    private fun setAppThemeData(data:AppThemeBean) {
-       Appconfig.appThemeColor = data.themeColor
-       CacheUtils.setThemeColor(ColorUtils.convertToColorInt(Appconfig.appThemeColor))
-       Appconfig.gray = data.gray
+    private fun setAppThemeData(data: AppThemeBean) {
+        if (data.forceTheme) {
+            Appconfig.appThemeColor = data.themeColor
+            CacheUtils.setThemeColor(ColorUtils.convertToColorInt(Appconfig.appThemeColor))
+        } else {
+            Appconfig.appThemeColor = ColorUtils.convertToRGB(CacheUtils.getThemeColor())
+        }
+
+        Appconfig.gray = data.gray
     }
 
     override fun reLoadData() {
