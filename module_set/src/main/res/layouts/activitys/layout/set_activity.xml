@@ -131,6 +131,7 @@
 
 
         <RelativeLayout
+            android:id="@+id/set_rl_eyecare"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/set_rl_eyecare_margin_left"

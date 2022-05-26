@@ -2,6 +2,7 @@ package com.knight.kotlin.library_base.activity
 
 import android.content.Context
 import android.content.res.Configuration
+import android.graphics.Color
 import android.graphics.PixelFormat
 import android.os.Bundle
 import android.view.Gravity
@@ -9,6 +10,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
 import com.alibaba.android.arouter.launcher.ARouter
@@ -27,6 +29,7 @@ import com.knight.kotlin.library_base.network.enums.NetworkState
 import com.knight.kotlin.library_base.network.interfaces.NetworkMonitor
 import com.knight.kotlin.library_base.util.BindingReflex
 import com.knight.kotlin.library_base.util.CacheUtils
+import com.knight.kotlin.library_base.util.ColorUtils
 import com.knight.kotlin.library_base.util.EventBusUtils
 import com.knight.kotlin.library_base.util.LanguageFontSizeUtils
 import com.knight.kotlin.library_base.util.StatusBarUtils
@@ -79,6 +82,12 @@ abstract class BaseActivity<VB : ViewBinding,VM : BaseViewModel> : AppCompatActi
     protected var isDarkMode:Boolean = false
 
     /**
+     * 是否是护眼模式
+     *
+     */
+    protected var isEyeCare:Boolean = false
+
+    /**
      *
      * 侧滑帮助类
      */
@@ -94,7 +103,8 @@ abstract class BaseActivity<VB : ViewBinding,VM : BaseViewModel> : AppCompatActi
     private var mWindowManager: WindowManager? = null
     private var mLayoutParams: WindowManager.LayoutParams? = null
 
-
+    //护眼模式遮罩
+    private lateinit var mEyeFragmenLayout: FrameLayout
 
 
     /**
@@ -121,9 +131,11 @@ abstract class BaseActivity<VB : ViewBinding,VM : BaseViewModel> : AppCompatActi
         if (javaClass.isAnnotationPresent(EventBusRegister::class.java)) EventBusUtils.register(this)
         themeColor = CacheUtils.getThemeColor()
         isDarkMode = CacheUtils.getNormalDark()
+        isEyeCare = CacheUtils.getIsEyeCare()
         mBinding.initView()
         setThemeColor(isDarkMode)
         NetworkManager.getInstance().register(this)
+        initEye(isEyeCare)
         initTipView()
         subscribeData()
         initObserver()
@@ -227,6 +239,33 @@ abstract class BaseActivity<VB : ViewBinding,VM : BaseViewModel> : AppCompatActi
 //                Toast.makeText(applicationContext, "蜂窝网络", Toast.LENGTH_SHORT).show()
 //            }
         }
+    }
+
+
+    private fun initEye(isEyeCare:Boolean) {
+        mEyeFragmenLayout = FrameLayout(this)
+        openOrCloseEye(isEyeCare)
+        val params = WindowManager.LayoutParams()
+        params.flags = (WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
+                or WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+                or WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+        params.width = WindowManager.LayoutParams.MATCH_PARENT
+        params.height = WindowManager.LayoutParams.MATCH_PARENT
+        window.addContentView(mEyeFragmenLayout,params)
+
+    }
+
+    protected fun openOrCloseEye (status:Boolean) {
+        if (status) {
+            mEyeFragmenLayout?.let {
+                it.setBackgroundColor(ColorUtils.getFilterColor(70))
+            }
+        } else {
+            mEyeFragmenLayout?.let {
+                it.setBackgroundColor(Color.TRANSPARENT)
+            }
+        }
+
     }
 
     override fun isRecreate(): Boolean = mStatusHelper?.isRecreate ?: false

@@ -116,6 +116,11 @@ class MainActivity : BaseActivity<MainActivityBinding,MainViewModel>() {
                 fragmentTransaction.commitAllowingStateLoss()
                 recreate()
             }
+
+           MessageEvent.MessageType.EyeMode -> {
+                openOrCloseEye(event.getBoolean())
+           }
+
         }
     }
 
