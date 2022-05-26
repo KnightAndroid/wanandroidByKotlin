@@ -84,9 +84,10 @@ object Dependencies {
        const val RecycleviewVersion = "1.3.2"              // recycleview
        const val BannerVersion = "2.2.2"                   // Banner
        const val ShimmerLayoutVersion = "2.1.0"            // shimmerLayout
-       //其他相关------------------------------------------------------
+       //第三方其他相关------------------------------------------------------
        const val Aspectj = "1.9.7"                         // aop相关
        const val LeakCanaryVersion = "2.8.1"               // 内存泄漏相关
+       const val buglyVersion = "4.0.4"                    // bugly异常上报
 
     }
     /**
@@ -236,6 +237,15 @@ object Dependencies {
         const val ShimmerLayout = "io.supercharge:shimmerlayout:${Version.ShimmerLayoutVersion}"
         //内存泄漏 https://github.com/square/leakcanary
         const val LeakCanary = "com.squareup.leakcanary:leakcanary-android:${Version.LeakCanaryVersion}"
+    }
+
+    /**
+     * 第三方sdk
+     *
+     */
+    object OtherUtils {
+        //bugly https://bugly.qq.com/docs/release-notes/release-android-bugly
+        const val Bugly = "com.tencent.bugly:crashreport:${Version.buglyVersion}"
     }
 
 
