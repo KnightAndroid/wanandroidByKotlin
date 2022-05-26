@@ -1,11 +1,11 @@
 ## WanAndroid
 这是一个不断迭代，功能全面，简单易用的wanandroid APP
 
+**Java MVP版：**[https://github.com/KnightAndroid/wanandroid](https://github.com/KnightAndroid/wanandroid)
+
 ## 前言
 
-本APP是基于鸿洋开放的API来实现，项目采用Kotlin语言，MVVM代码模式，基于组件化 + 协程 + Jetpack + ARouter + Hilt + Retrofit等开源框架实现，本项目会一直持续维护迭代
-
-**Java版：**[https://github.com/KnightAndroid/wanandroid](https://github.com/KnightAndroid/wanandroid)
+本APP是基于鸿洋开放的API来实现，项目采用Kotlin语言，MVVM代码模式，基于组件化 + 协程 + Jetpack + ARouter + Hilt + Retrofit等开源框架实现，本项目会一直持续维护迭代。
 
 如果你也觉得好用，欢迎提供建议和想法(issues)，谢谢。
 
