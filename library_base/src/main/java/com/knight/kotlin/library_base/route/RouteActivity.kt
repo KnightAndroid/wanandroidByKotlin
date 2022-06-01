@@ -108,6 +108,8 @@ object RouteActivity {
         private const val SET = "/module_set"
         const val SetActivity = "$SET/SetActivity"
         const val DarkModelActivity = "$SET/DarkModelActivity"
+        const val SetLanguageActivity = "$SET/SetLanguageActivity"
+        const val SetAutoNightActivity = "$SET/SetAutoNightActivity"
     }
 
 

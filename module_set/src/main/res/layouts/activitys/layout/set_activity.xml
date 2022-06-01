@@ -206,6 +206,7 @@
             android:textSize="@dimen/set_tv_common_text_size"/>
 
         <RelativeLayout
+            android:id="@+id/set_rl_language"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/set_rl_multingual_margin_left"

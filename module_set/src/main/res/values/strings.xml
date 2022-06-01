@@ -31,6 +31,14 @@
     <string name="set_colorpicker_cancel">取消</string>
     <string name="set_colorpicker_confim">确定</string>
     <string name="set_recover_themecolor">使用默认主题色</string>
+    <string name="set_language_save">保存</string>
+    <string name="set_open_auto_night_time">是否开启自动切换夜间模式</string>
+    <string name="set_restart_app_anable">重启APP生效</string>
+    <string name="set_open_night_time">夜间模式开始时间</string>
+    <string name="set_open_day_time">日间模式开始时间</string>
+    <string name="set_night_mode">夜间模式设置</string>
+    <string name="set_night_mode_save">保存</string>
+    <string name="set_nightauto_mode_success">设置成功</string>
 
 
 </resources>

@@ -5,6 +5,8 @@
     <application>
         <activity android:name=".activity.SetActivity"/>
         <activity android:name=".activity.DarkModeActivity"/>
+        <activity android:name=".activity.SelectLanguageActivity"/>
+        <activity android:name=".activity.AutoNightTimeActivity"/>
     </application>
 
 </manifest>

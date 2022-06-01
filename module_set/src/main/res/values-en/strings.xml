@@ -31,4 +31,12 @@
     <string name="set_colorpicker_cancel">Cancel</string>
     <string name="set_colorpicker_confim">Determine</string>
     <string name="set_recover_themecolor">Use Default theme color</string>
+    <string name="set_language_save">Save</string>
+    <string name="set_open_auto_night_time">Turn on automatic night mode switching</string>
+    <string name="set_restart_app_anable">Restart APP Enable</string>
+    <string name="set_open_night_time">Night mode start time</string>
+    <string name="set_open_day_time">Day mode start time</string>
+    <string name="set_night_mode">Set Auto Night Time</string>
+    <string name="set_night_mode_save">Save</string>
+    <string name="set_nightauto_mode_success">Setting Success</string>
 </resources>

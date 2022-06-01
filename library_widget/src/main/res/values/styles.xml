@@ -36,4 +36,11 @@
         <item name="android:windowEnterAnimation">@anim/widget_open_top_right</item>
         <item name="android:windowExitAnimation">@anim/widget_close_top_right</item>
     </style>
+
+    <style name="dialog_time_style" parent="Theme.AppCompat.DayNight.Dialog.Alert">
+        <!--设置header部分显示的颜色-->
+        <item name="colorPrimary">@color/base_color_theme</item>
+        <item name="colorPrimaryDark">@color/base_color_theme</item>
+        <item name="colorAccent">@color/base_color_theme</item>
+    </style>
 </resources>

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.knight.kotlin.module_set.activity.AutoNightTimeActivity"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <include
+        android:id="@+id/include_auto_night_toolbar"
+        layout="@layout/base_include_toolbar"/>
+
+    <RelativeLayout
+        android:id="@+id/set_rl_open_night_mode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/set_rl_open_night_mode_margin_left"
+        >
+
+
+        <TextView
+            android:id="@+id/set_tv_open_night_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/set_open_auto_night_time"
+            android:textColor="@color/set_tv_open_night_time_color"
+            android:textSize="@dimen/set_tv_open_night_time_text_size" />
+
+
+        <TextView
+            android:id="@+id/set_tv_night_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/set_tv_open_night_time"
+            android:layout_marginRight="@dimen/set_tv_night_status_margin_right"
+            android:text="@string/set_restart_app_anable" />
+
+        <CheckBox
+            android:id="@+id/set_cb_night_mode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/base_dimen_20"
+            android:button="@drawable/set_checkbox_selector" />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/set_rl_start_night_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/set_start_night_time_margin_left"
+        android:layout_marginTop="@dimen/set_start_night_time_margin_top"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/set_tv_start_night_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/set_open_night_time"
+            android:textColor="@color/set_tv_start_night_time_color"
+            android:textSize="@dimen/set_tv_start_night_time_text_size" />
+
+
+        <TextView
+            android:id="@+id/set_tv_night_time_value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/set_tv_start_night_time"
+            android:layout_marginRight="@dimen/set_tv_night_time_value_margin_right"
+            android:text="22:00" />
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/set_rl_start_day_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/set_rl_start_day_time_margin_left"
+        android:layout_marginTop="@dimen/set_rl_start_day_time_margin_top"
+        android:visibility="gone">
+
+
+        <TextView
+            android:id="@+id/set_tv_start_day_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/set_open_day_time"
+            android:textColor="@color/set_tv_start_day_time_color"
+            android:textSize="@dimen/set_tv_start_day_time_text_size" />
+
+
+        <TextView
+            android:id="@+id/set_day_time_value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/set_tv_start_day_time"
+            android:layout_marginRight="@dimen/set_day_time_value_margin_right"
+            android:text="06:00" />
+
+    </RelativeLayout>
+
+
+</LinearLayout>

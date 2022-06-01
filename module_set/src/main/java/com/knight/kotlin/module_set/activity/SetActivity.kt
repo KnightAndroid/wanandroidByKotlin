@@ -36,7 +36,7 @@ class SetActivity : BaseActivity<SetActivityBinding, SetVm>(){
 
 
     override fun SetActivityBinding.initView() {
-        setOnClickListener(setRlLogout,setRlDarkmode,setRlTheme)
+        setOnClickListener(setRlLogout,setRlDarkmode,setRlTheme,setRlLanguage,setRlNightTime)
         setCachememory.setText(CacheFileUtils.getToalCacheSize(this@SetActivity))
         includeSetToobar.baseIvBack.setOnClickListener { finish() }
         includeSetToobar.baseTvTitle.setText(getString(R.string.set_app_name))
@@ -175,6 +175,15 @@ class SetActivity : BaseActivity<SetActivityBinding, SetVm>(){
                             //SystemUtils.restartApp(this@SetActivity)
                         }
                     }).build().show()
+            }
+
+            mBinding.setRlLanguage -> {
+                startPage(RouteActivity.Set.SetLanguageActivity)
+            }
+
+
+            mBinding.setRlNightTime -> {
+                startPage(RouteActivity.Set.SetAutoNightActivity)
             }
         }
     }

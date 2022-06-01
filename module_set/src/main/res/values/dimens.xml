@@ -100,4 +100,20 @@
     <dimen name="set_ll_colorpicker_margin_bottom">10dp</dimen>
     <dimen name="set_color_picker_margin_left">20dp</dimen>
     <dimen name="set_color_picker_confim_text_size">16sp</dimen>
+    <dimen name="set_rl_language_adapter_item_height">54dp</dimen>
+    <dimen name="set_tv_language_name_text_size">16sp</dimen>
+    <dimen name="set_tv_language_name_margin_left">24dp</dimen>
+    <dimen name="set_iv_select_language_margin_right">10dp</dimen>
+    <dimen name="set_tv_language_line_height">1dp</dimen>
+    <dimen name="set_rl_open_night_mode_margin_left">26dp</dimen>
+    <dimen name="set_tv_open_night_time_text_size">18sp</dimen>
+    <dimen name="set_tv_night_status_margin_right">2dp</dimen>
+    <dimen name="set_start_night_time_margin_left">26dp</dimen>
+    <dimen name="set_start_night_time_margin_top">20dp</dimen>
+    <dimen name="set_tv_start_night_time_text_size">16sp</dimen>
+    <dimen name="set_tv_night_time_value_margin_right">2dp</dimen>
+    <dimen name="set_rl_start_day_time_margin_left">26dp</dimen>
+    <dimen name="set_rl_start_day_time_margin_top">20dp</dimen>
+    <dimen name="set_tv_start_day_time_text_size">16sp</dimen>
+    <dimen name="set_day_time_value_margin_right">2dp</dimen>
 </resources>
