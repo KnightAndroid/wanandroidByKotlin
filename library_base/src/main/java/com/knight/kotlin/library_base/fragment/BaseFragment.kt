@@ -59,7 +59,7 @@ abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel> : Fragment(), 
     /**
      * 颜色值
      */
-    protected var themeColor: Int? = null
+    protected val themeColor:Int =  CacheUtils.getThemeColor()
 
     /**
      * 是否暗黑模式
@@ -105,7 +105,6 @@ abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel> : Fragment(), 
         //注册EventBus
         if (javaClass.isAnnotationPresent(EventBusRegister::class.java)) EventBusUtils.register(this)
         isDarkMode = CacheUtils.getNormalDark()
-        initThemeColor()
         setThemeColor(isDarkMode)
         mBinding.initView()
         onVisible()
@@ -135,13 +134,7 @@ abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel> : Fragment(), 
         super.onSaveInstanceState(outState)
     }
 
-    /**
-     * 获取主题颜色
-     *
-     */
-    protected fun initThemeColor() {
-        themeColor = CacheUtils.getThemeColor()
-    }
+
 
 
     /**

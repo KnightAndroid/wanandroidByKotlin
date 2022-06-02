@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="course_app_name">module_course</string>
+    <string name="course_titile">Course</string>
+    <string name="course_detail_title">Course Detail</string>
+</resources>

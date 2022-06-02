@@ -1,18 +1,26 @@
 package com.knight.kotlin.module_home.fragment
 
+import android.animation.Animator
+import android.animation.AnimatorSet
+import android.animation.ValueAnimator
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
+import android.view.animation.DecelerateInterpolator
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.Group
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.common.reflect.TypeToken
+import com.knight.kotlin.library_aop.clickintercept.SingleClick
 import com.knight.kotlin.library_aop.loginintercept.LoginCheck
 import com.knight.kotlin.library_base.annotation.EventBusRegister
 import com.knight.kotlin.library_base.event.MessageEvent
@@ -24,15 +32,16 @@ import com.knight.kotlin.library_base.ktx.toHtml
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.route.RouteFragment
 import com.knight.kotlin.library_base.util.ArouteUtils
-import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_base.util.ColorUtils
 import com.knight.kotlin.library_base.util.GsonUtils
 import com.knight.kotlin.library_base.util.LanguageFontSizeUtils
+import com.knight.kotlin.library_base.util.dp2px
 import com.knight.kotlin.library_common.entity.OfficialAccountEntity
 import com.knight.kotlin.library_util.BlurBuilderUtils
 import com.knight.kotlin.library_util.JsonUtils
 import com.knight.kotlin.library_util.SystemUtils
 import com.knight.kotlin.library_util.image.ImageLoader
+import com.knight.kotlin.library_util.startPage
 import com.knight.kotlin.library_util.toast.ToastUtils
 import com.knight.kotlin.library_widget.ktx.init
 import com.knight.kotlin.library_widget.ktx.setItemChildClickListener
@@ -135,6 +144,15 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
 
     private var mSkeletonScreen: SkeletonScreen? = null
 
+    //动画集合,用来控制动画的有序播放
+    private var animatorSet: AnimatorSet? = null
+
+    //圆的半径
+    private var radius: Int = 0
+
+    //FloatingActionButton宽度和高度，宽高一样
+    private var width: Int = 0
+
     override fun setThemeColor(isDarkMode: Boolean) {
     }
 
@@ -149,15 +167,19 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
         initOfficialListener()
         initArticleListener()
         initTwoLevel()
-        homeIconFab.backgroundTintList =
-            ColorUtils.createColorStateList(CacheUtils.getThemeColor(), CacheUtils.getThemeColor())
+        setOnClickListener(homeIconFab,homeIconCourse!!,homeIconUtils!!,homeIconScrollUp!!)
+        homeIconFab.backgroundTintList = ColorUtils.createColorStateList(themeColor, themeColor)
+        homeIconCourse.backgroundTintList = ColorUtils.createColorStateList(themeColor, themeColor)
+        homeIconUtils.backgroundTintList = ColorUtils.createColorStateList(themeColor, themeColor)
+        homeIconScrollUp.backgroundTintList =
+            ColorUtils.createColorStateList(themeColor, themeColor)
         homeRecommendArticleBody.init(
             LinearLayoutManager(requireActivity()),
             mHomeArticleAdapter,
             true
         )
         homeTwoLevelHeader.setEnablePullToCloseTwoLevel(false)
-     //   recommendRefreshLayout.setEnableLoadMore(true)
+        //   recommendRefreshLayout.setEnableLoadMore(true)
         recommendRefreshLayout.setOnLoadMoreListener(this@HomeRecommendFragment)
         recommendRefreshLayout.setOnRefreshListener(this@HomeRecommendFragment)
         recommendRefreshLayout.setOnMultiListener(object : SimpleMultiListener() {
@@ -198,7 +220,7 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
                         homeIconFab.setImageDrawable(
                             ContextCompat.getDrawable(
                                 requireActivity(),
-                                R.drawable.base_icon_up
+                                R.drawable.home_icon_show_icon
                             )
                         )
                     }
@@ -211,15 +233,19 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
             true
         }
 
-        homeIconFab.setOnClickListener {
-            if (openTwoLevel) {
-                homeTwoLevelHeader.finishTwoLevel()
-            } else {
-                homeRecommendArticleBody.smoothScrollToPosition(0)
-            }
-        }
+
+        setViewVisible(false)
+        radius = 80.dp2px()
+
     }
 
+
+    override fun onResume() {
+        super.onResume()
+        mBinding.homeIconFab.post {
+            width = mBinding.homeIconFab.measuredWidth
+        }
+    }
 
     override fun initRequestData() {
         currentPage = 0
@@ -590,6 +616,38 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
         initRequestData()
     }
 
+
+    @SingleClick
+    override fun onClick(v: View) {
+        when (v) {
+            mBinding.homeIconFab -> {
+                if (openTwoLevel) {
+                    mBinding.homeTwoLevelHeader.finishTwoLevel()
+                } else {
+                    showAnimation()
+                }
+            }
+
+            mBinding.homeIconUtils -> {
+                startPage(RouteActivity.Utils.UtilsActivity)
+            }
+
+            mBinding.homeIconCourse -> {
+                startPage(RouteActivity.Course.CourseListActivity)
+            }
+
+            mBinding.homeIconScrollUp -> {
+                scrollTop()
+            }
+
+
+        }
+    }
+
+    fun scrollTop() {
+        mBinding.homeRecommendArticleBody.smoothScrollToPosition(0)
+    }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onMessageEvent(event: MessageEvent) {
         when (event.type) {
@@ -604,6 +662,94 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
             }
         }
 
+    }
+
+
+    /**
+     *
+     * 设置view是否显示与否
+     */
+    private fun setViewVisible(isShow: Boolean) {
+        mBinding.homeGpIconCourse?.visibility = if (isShow) View.VISIBLE else View.GONE
+        mBinding.homeGpIconUtils?.visibility = if (isShow) View.VISIBLE else View.GONE
+        mBinding.homeGpIconUp?.visibility = if (isShow) View.VISIBLE else View.GONE
+    }
+
+
+    private fun getValueAnimator(
+        button: FloatingActionButton,
+        reverse: Boolean,
+        group: Group,
+        angle: Int
+    ): ValueAnimator {
+        val valueANimator: ValueAnimator
+        if (reverse) {
+            valueANimator = ValueAnimator.ofFloat(1f, 0f)
+        } else {
+            valueANimator = ValueAnimator.ofFloat(0f, 1f)
+        }
+        valueANimator.addUpdateListener(object : ValueAnimator.AnimatorUpdateListener {
+            override fun onAnimationUpdate(animation: ValueAnimator) {
+                val v = animation.animatedValue as Float
+                val params = button.layoutParams as ConstraintLayout.LayoutParams
+                params.circleRadius = (radius * v).toInt()
+                params.circleAngle = 270f + angle * v
+                params.width = (width * v).toInt()
+                params.height = (width * v).toInt()
+                button.layoutParams = params
+            }
+        })
+
+        valueANimator.addListener(object : Animator.AnimatorListener {
+            override fun onAnimationStart(animation: Animator?) {
+                group.visibility = View.VISIBLE
+            }
+
+            override fun onAnimationEnd(animation: Animator?) {
+                if (group == mBinding.homeGpIconCourse && reverse) {
+                    setViewVisible(false)
+                }
+            }
+
+            override fun onAnimationCancel(animation: Animator?) {
+
+            }
+
+            override fun onAnimationRepeat(animation: Animator?) {
+
+            }
+        })
+        valueANimator.duration = 300
+        valueANimator.interpolator = DecelerateInterpolator()
+        return valueANimator
+    }
+
+
+    private fun showAnimation() {
+        if (animatorSet != null && animatorSet?.isRunning ?: false) {
+            return
+        }
+        animatorSet = AnimatorSet()
+        val utils: ValueAnimator
+        val course: ValueAnimator
+        val upScrollView: ValueAnimator
+        if (mBinding.homeGpIconCourse?.visibility != View.VISIBLE) {
+            course =
+                getValueAnimator(mBinding.homeIconCourse!!, false, mBinding.homeGpIconCourse!!, 0)
+            utils =
+                getValueAnimator(mBinding.homeIconUtils!!, false, mBinding.homeGpIconUtils!!, 45)
+            upScrollView =
+                getValueAnimator(mBinding.homeIconScrollUp!!, false, mBinding.homeGpIconUp!!, 90)
+            animatorSet?.playSequentially(course, utils, upScrollView)
+        } else {
+            course =
+                getValueAnimator(mBinding.homeIconCourse!!, true, mBinding.homeGpIconCourse!!, 0)
+            utils = getValueAnimator(mBinding.homeIconUtils!!, true, mBinding.homeGpIconUtils!!, 45)
+            upScrollView =
+                getValueAnimator(mBinding.homeIconScrollUp!!, true, mBinding.homeGpIconUp!!, 90)
+            animatorSet?.playSequentially(upScrollView, utils, course)
+        }
+        animatorSet?.start()
     }
 
 

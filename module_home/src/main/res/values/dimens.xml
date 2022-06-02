@@ -226,4 +226,10 @@
      <dimen name="home_tv_labelnumber_textsize">14sp</dimen>
      <dimen name="home_tv_labelnumber_margin_right">16dp</dimen>
      <dimen name="home_tv_labelnumber_margin_top">10dp</dimen>
+     <dimen name="home_icon_course_margin_bottom">32dp</dimen>
+     <dimen name="home_icon_course_margin_end">32dp</dimen>
+     <dimen name="home_icon_utils_margin_bottom">32dp</dimen>
+     <dimen name="home_icon_utils_margin_end">32dp</dimen>
+     <dimen name="home_icon_scroll_up_margin_bottom">32dp</dimen>
+     <dimen name="home_icon_scroll_up_margin_end">32dp</dimen>
 </resources>

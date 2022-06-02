@@ -113,5 +113,27 @@ object RouteActivity {
     }
 
 
+    /***
+     *
+     * 工具类
+     *
+     */
+    object Utils {
+        private const val Utils = "/module_utils"
+        const val UtilsActivity = "$Utils/UtilsActivity"
+    }
+
+    /**
+     *
+     * 课程模块
+     *
+     */
+    object Course {
+        private const val Course = "/module_course"
+        const val CourseListActivity = "$Course/CourseListActivity"
+        const val CourseDetailListActivity = "$Course/CourseDetailListActivity"
+    }
+
+
 
 }

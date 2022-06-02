@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="utils_adapter_cv_item_margin_top">8dp</dimen>
+    <dimen name="utils_adapter_cv_item_margin_left">16dp</dimen>
+    <dimen name="utils_adapter_cv_item_margin_right">16dp</dimen>
+    <dimen name="utils_adapter_cv_item_margin_bottom">6dp</dimen>
+    <dimen name="utils_adapter_cv_item_radius">6dp</dimen>
+    <dimen name="utils_adapter_cl_item_margin_bottom">8dp</dimen>
+    <dimen name="utils_adapter_tv_title_margin_top">8dp</dimen>
+    <dimen name="utils_adapter_tv_title_margin_left">8dp</dimen>
+    <dimen name="utils_adapter_tv_title_padding_right">8dp</dimen>
+    <dimen name="utils_adapter_tv_title_text_size">16sp</dimen>
+    <dimen name="utils_adapter_tv_desc_text_size">16sp</dimen>
+    <dimen name="utils_adapter_tv_desc_margin_top">6dp</dimen>
+    <dimen name="utils_adapter_tv_desc_margin_left">8dp</dimen>
+    <dimen name="utils_adapter_tv_desc_margin_right">8dp</dimen>
+</resources>

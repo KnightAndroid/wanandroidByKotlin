@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/course_adapter_list_cl_color"
+    android:foreground="?android:attr/selectableItemBackground">
+
+
+
+    <TextView
+        android:id="@+id/course_list_tv_author"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/course_list_tv_author_margin_start"
+        android:layout_marginTop="@dimen/course_list_tv_author_margin_top"
+        android:text="深红骑士"
+        android:textColor="@color/course_list_tv_author_text_color"
+        android:textSize="@dimen/course_list_tv_author_text_size"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/course_list_iv_cover"
+        android:layout_width="@dimen/course_list_iv_cover_width"
+        android:layout_height="@dimen/course_list_iv_cover_height"
+        android:layout_marginStart="@dimen/course_list_iv_cover_margin_start"
+        android:layout_marginTop="@dimen/course_list_iv_cover_margin_top"
+        android:scaleType="centerCrop"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/course_list_tv_author"/>
+
+    <TextView
+        android:id="@+id/course_tv_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/course_tv_title_margin_left"
+        android:layout_marginEnd="@dimen/course_tv_title_margin_end"
+        android:ellipsize="end"
+        android:lines="2"
+        android:text="Android上协程网络请求请求收到"
+        android:textColor="@color/course_tv_title_text_color"
+        android:textSize="@dimen/course_tv_title_text_size"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toRightOf="@id/course_list_iv_cover"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/course_list_iv_cover" />
+
+    <TextView
+        android:id="@+id/course_list_tv_desc"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/course_list_tv_desc_margin_left"
+        android:layout_marginTop="@dimen/course_list_tv_desc_margin_top"
+        android:layout_marginEnd="@dimen/course_list_tv_desc_margin_end"
+        android:ellipsize="end"
+        android:lineSpacingExtra="@dimen/course_list_tv_desc_extra"
+        android:lines="3"
+        android:text="这是教程描述这是教程描述这是教程是教程描述这是描述是项目描述这是"
+        android:textColor="@color/course_list_tv_desc_text_color"
+        android:textSize="@dimen/course_list_tv_desc_text_size"
+        app:layout_constraintLeft_toRightOf="@id/course_list_iv_cover"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/course_tv_title" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/course_list_bottom_view_height"
+        android:layout_marginTop="@dimen/course_list_bottom_view_margin_top"
+        android:background="@color/base_item_bottom_view"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/course_list_iv_cover" />
+</androidx.constraintlayout.widget.ConstraintLayout>

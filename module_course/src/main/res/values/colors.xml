@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="course_adapter_list_cl_color">#ffffff</color>
+    <color name="course_list_tv_author_text_color">#999999</color>
+    <color name="course_tv_title_text_color">#333333</color>
+    <color name="course_list_tv_desc_text_color">#999999</color>
+    <color name="course_adapter_detail_list_cl_color">#ffffff</color>
+    <color name="course_detail_list_articleauthor_color">#999999</color>
+    <color name="course_detail_list_tv_articletitle_color">#333333</color>
+    <color name="course_detail_list_tv_articledata_color">#999999</color>
+</resources>

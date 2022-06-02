@@ -7,15 +7,15 @@
 
 
 
-    <FrameLayout
-        android:id="@+id/fl_recommend_root"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+
 
         <RelativeLayout
             android:id="@+id/rl_home"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent">
 
             <com.scwang.smart.refresh.layout.SmartRefreshLayout
                 android:id="@+id/recommend_refreshLayout"
@@ -71,13 +71,95 @@
             android:id="@+id/home_icon_fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_gravity="bottom|end"
             android:layout_marginRight="@dimen/home_icon_fab_margin_right"
             android:layout_marginBottom="@dimen/home_icon_fab_margin_bottom"
-            android:src="@drawable/base_icon_up"/>
+            android:src="@drawable/home_icon_show_icon"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
 
-    </FrameLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/home_icon_course"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/home_icon_course_margin_bottom"
+        android:layout_marginEnd="@dimen/home_icon_course_margin_end"
+        android:padding="10dp"
+        android:src="@drawable/home_icon_course"
+        app:fabSize="normal"
+        app:layout_constraintCircle="@+id/home_icon_fab"
+        app:layout_constraintCircleRadius="80dp"
+        app:layout_constraintCircleAngle="270"
+        app:tint="#ffffff"
+        app:pressedTranslationZ="20dp"
+        app:rippleColor="#1f000000"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        />
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/home_icon_utils"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/home_icon_utils_margin_bottom"
+        android:layout_marginEnd="@dimen/home_icon_utils_margin_end"
+        android:padding="10dp"
+        android:src="@drawable/home_icon_utils"
+        app:fabSize="normal"
+        app:layout_constraintCircle="@+id/home_icon_fab"
+        app:layout_constraintCircleRadius="80dp"
+        app:layout_constraintCircleAngle="315"
+        app:tint="#ffffff"
+        app:pressedTranslationZ="20dp"
+        app:rippleColor="#1f000000"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/home_icon_scroll_up"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/home_icon_scroll_up_margin_bottom"
+        android:layout_marginEnd="@dimen/home_icon_scroll_up_margin_end"
+        android:padding="10dp"
+        android:src="@drawable/base_icon_up"
+        app:fabSize="normal"
+        app:layout_constraintCircle="@+id/home_icon_fab"
+        app:layout_constraintCircleRadius="80dp"
+        app:layout_constraintCircleAngle="360"
+        app:tint="#ffffff"
+        android:visibility="gone"
+        app:pressedTranslationZ="20dp"
+        app:rippleColor="#1f000000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        />
+
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/home_gp_icon_course"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="home_icon_course"/>
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/home_gp_icon_utils"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="home_icon_utils"/>
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/home_gp_icon_up"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="home_icon_scroll_up"/>
+
+
+
+
 
 
 

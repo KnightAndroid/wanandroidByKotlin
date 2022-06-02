@@ -1,0 +1,5 @@
+<resources>
+    <string name="course_app_name">module_course</string>
+    <string name="course_titile">教程</string>
+    <string name="course_detail_title">教程列表</string>
+</resources>
