@@ -145,10 +145,10 @@
 
 -  二维码下载
 
-| ![wx_qrcode](https://gitee.com/MengSuiXinSuoYuan/wanandroid_server/raw/master/wanandroid_picture/wanandroid_download.png) |
+| ![wx_qrcode](https://gitee.com/MengSuiXinSuoYuan/wanandroid_server/raw/master/wanandroid_picture/wanandroid_kotlin_download.png) |
 |---|
 
--  链接下载 [APP下载链接](https://www.pgyer.com/Sdbi)
+-  链接下载 [APP下载链接](https://www.pgyer.com/uf4k)
 
 ## Thanks
 感谢鸿洋大大开放的[API](https://github.com/hongyangAndroid/wanandroid)
