@@ -232,6 +232,7 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/set_rl_change_text_size"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/base_dimen_26"

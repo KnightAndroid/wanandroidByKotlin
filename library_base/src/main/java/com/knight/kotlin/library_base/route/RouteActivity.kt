@@ -110,6 +110,7 @@ object RouteActivity {
         const val DarkModelActivity = "$SET/DarkModelActivity"
         const val SetLanguageActivity = "$SET/SetLanguageActivity"
         const val SetAutoNightActivity = "$SET/SetAutoNightActivity"
+        const val SetChangeTextSizeActivity = "$SET/SetChangeTextSizeActivity"
     }
 
 
