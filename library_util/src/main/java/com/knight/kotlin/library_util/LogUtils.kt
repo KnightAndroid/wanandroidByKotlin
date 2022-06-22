@@ -17,7 +17,7 @@ class LogUtils {
         private val isLog:Boolean = BuildConfig.DEBUG
         fun debugInfo(tag:String,msg:String) {
             if (!isLog || TextUtils.isEmpty(msg)) {
-                return;
+                return
             }
             Log.d(tag, msg);
         }
