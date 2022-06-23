@@ -26,5 +26,17 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
 
+    <com.knight.kotlin.library_widget.ChangeSizeView
+        android:id="@+id/set_csv_font_size"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/set_csv_font_size_height"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:standerSize="16"
+        android:background="@android:color/white"
+        app:circleRadius="11dp"
+        app:lineColor="@color/set_csv_font_default_color"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

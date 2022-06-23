@@ -43,4 +43,19 @@
         <item name="colorPrimaryDark">@color/base_color_theme</item>
         <item name="colorAccent">@color/base_color_theme</item>
     </style>
+
+    <!--仿微信字体大小调整 FontSizeView-->
+    <declare-styleable name="FontSizeView">
+        <attr name="lineWidth" format="dimension|reference" />
+        <attr name="lineColor" format="color|reference" />
+        <attr name="totalCount" format="integer" />
+        <attr name="circleColor" format="color|reference" />
+        <attr name="circleRadius" format="dimension|reference" />
+
+        <attr name="textFontColor" format="color|reference" />
+        <attr name="smallSize" format="integer" />
+        <attr name="standerSize" format="integer" />
+        <attr name="bigSize" format="integer" />
+        <attr name="defaultPosition" format="integer" />
+    </declare-styleable>
 </resources>

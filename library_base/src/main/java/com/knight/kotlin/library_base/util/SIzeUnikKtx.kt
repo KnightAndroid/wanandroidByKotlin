@@ -23,9 +23,9 @@ fun Context.dp2px(dpValue: Float): Int {
 /**
  * px 转 dp
  */
-fun Context.px2dp(pxValue: Float): Int {
-    val scale = resources.displayMetrics.density
-    return (pxValue / scale + 0.5f).toInt()
+fun Int.px2dp(): Int {
+    val scale = Resources.getSystem().displayMetrics.density
+    return (this / scale + 0.5f).toInt()
 }
 
 /**
@@ -39,7 +39,7 @@ fun Context.sp2px(spValue: Float): Int {
 /**
  * px 转 sp
  */
-fun Context.px2sp(pxValue: Float): Int {
-    val scale = resources.displayMetrics.scaledDensity
-    return (pxValue / scale + 0.5f).toInt()
+fun Int.px2sp(): Int {
+    val scale = Resources.getSystem().displayMetrics.scaledDensity
+    return (this / scale + 0.5f).toInt()
 }

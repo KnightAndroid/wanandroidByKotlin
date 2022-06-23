@@ -28,4 +28,5 @@
      <color name="set_tv_start_night_time_color">#333333</color>
      <color name="set_tv_start_day_time_color">#333333</color>
      <color name="set_change_text_size_tip_color">#333333</color>
+     <color name="set_csv_font_default_color">#999999</color>
 </resources>
