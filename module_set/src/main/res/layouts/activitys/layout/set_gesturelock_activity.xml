@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <include
+        android:id="@+id/include_gesture_toolbar"
+        layout="@layout/base_include_toolbar"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <com.knight.kotlin.library_widget.GestureLockView
+        android:id="@+id/customGestureLockView"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_marginEnd="@dimen/set_custom_gesture_lock_view_margin_end"
+        android:layout_marginStart="@dimen/set_custom_gesture_lock_view_margin_start"
+        android:layout_marginTop="@dimen/set_custom_gesture_lock_view_margin_top"
+        app:dot_color_pressed="#55aff4"
+        app:dot_pressed_radius="10dp"
+        app:dot_radius="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/include_gesture_toolbar"
+        app:line_width="12dp"
+        app:min_length="4"
+        app:row="3"/>
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -41,6 +41,9 @@
     <string name="set_nightauto_mode_success">设置成功</string>
     <string name="set_changetextsize_tip">拖动下面的滑块，可设置字体大小</string>
     <string name="set_changetextsize_save">保存</string>
+    <string name="set_show_gesture_password">手势密码</string>
+    <string name="set_clearcache_tip">确定要删除所有缓存?</string>
+    <string name="set_clearchae_successfully">清除缓存成功</string>
 
 
 </resources>

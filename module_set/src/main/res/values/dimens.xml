@@ -117,4 +117,7 @@
     <dimen name="set_tv_start_day_time_text_size">16sp</dimen>
     <dimen name="set_day_time_value_margin_right">2dp</dimen>
     <dimen name="set_csv_font_size_height">80dp</dimen>
+    <dimen name="set_custom_gesture_lock_view_margin_end">50dp</dimen>
+    <dimen name="set_custom_gesture_lock_view_margin_start">50dp</dimen>
+    <dimen name="set_custom_gesture_lock_view_margin_top">76dp</dimen>
 </resources>

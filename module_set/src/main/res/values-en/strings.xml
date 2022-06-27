@@ -41,4 +41,7 @@
     <string name="set_nightauto_mode_success">Setting Success</string>
     <string name="set_changetextsize_tip">Drag the slider below to set the font size</string>
     <string name="set_changetextsize_save">Save</string>
+    <string name="set_show_gesture_password">Gesture Password</string>
+    <string name="set_clearcache_tip">Are you sure you want to delete all caches?</string>
+    <string name="set_clearchae_successfully">Cache cleared successfully</string>
 </resources>

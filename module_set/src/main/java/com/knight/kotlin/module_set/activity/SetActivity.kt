@@ -18,6 +18,7 @@ import com.knight.kotlin.library_base.util.EventBusUtils
 import com.knight.kotlin.library_util.CacheFileUtils
 import com.knight.kotlin.library_util.DialogUtils
 import com.knight.kotlin.library_util.startPage
+import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.library_widget.RippleAnimation
 import com.knight.kotlin.module_set.R
 import com.knight.kotlin.module_set.annoation.ColorStyle
@@ -36,8 +37,8 @@ class SetActivity : BaseActivity<SetActivityBinding, SetVm>(){
 
 
     override fun SetActivityBinding.initView() {
-        setOnClickListener(setRlLogout,setRlDarkmode,setRlTheme,setRlLanguage,setRlNightTime,setRlChangeTextSize)
-        setCachememory.setText(CacheFileUtils.getToalCacheSize(this@SetActivity))
+        setOnClickListener(setRlLogout,setRlDarkmode,setRlTheme,setRlLanguage,setRlNightTime,setRlChangeTextSize,setRlGesturePassword,setRlClearCache)
+        setTvCachememory.setText(CacheFileUtils.getToalCacheSize(this@SetActivity))
         includeSetToobar.baseIvBack.setOnClickListener { finish() }
         includeSetToobar.baseTvTitle.setText(getString(R.string.set_app_name))
         getUser()?.let {
@@ -188,6 +189,20 @@ class SetActivity : BaseActivity<SetActivityBinding, SetVm>(){
 
             mBinding.setRlChangeTextSize -> {
                 startPage(RouteActivity.Set.SetChangeTextSizeActivity)
+            }
+
+            mBinding.setRlGesturePassword -> {
+                startPage(RouteActivity.Set.SetGestureLockActivity)
+            }
+
+            mBinding.setRlClearCache -> {
+                DialogUtils.getConfirmDialog(this@SetActivity,getString(R.string.set_clearcache_tip),          {dialog, which ->
+                    CacheFileUtils.cleadAllCache(this)
+                    toast(R.string.set_clearchae_successfully)
+                    mBinding.setTvCachememory.setText(CacheFileUtils.getToalCacheSize(this))
+                }){
+                        dialog, which ->
+                }
             }
         }
     }

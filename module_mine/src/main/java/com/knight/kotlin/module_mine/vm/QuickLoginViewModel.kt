@@ -3,8 +3,10 @@ package com.knight.kotlin.module_mine.vm
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.knight.kotlin.library_base.entity.UserInfoEntity
+import com.knight.kotlin.library_base.ktx.appStr
 import com.knight.kotlin.library_base.vm.BaseViewModel
 import com.knight.kotlin.library_util.toast
+import com.knight.kotlin.module_mine.R
 import com.knight.kotlin.module_mine.repo.QuickLoginRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -49,12 +51,14 @@ class QuickLoginViewModel @Inject constructor(private val mRepo: QuickLoginRepo)
                 .flowOn(Dispatchers.IO)
                 .onStart {
                     //开始
+                    showLoading(appStr(R.string.mine_request_login))
                 }
                 .onEach {
                     userInfo.postValue(it)
                 }
                 .onCompletion {
                     //结束
+                    dimissLoading()
                 }
                 .catch { toast(it.message ?: "") }
                 .collect()

@@ -78,10 +78,10 @@ class GestureLockView : View {
     private var setTwoGesturePassword = false
 
     interface OnSetPasswordListener {
-        fun setOneGesturePassword(onePassword: String?)
-        fun setTwoGesturePassword(twoPassword: String?)
-        fun setOnCheckPassword(passwd: String?): Boolean
-        fun setError(errorMsg: String?)
+        fun setOneGesturePassword(onePassword: String)
+        fun setTwoGesturePassword(twoPassword: String)
+        fun setOnCheckPassword(passwd: String): Boolean
+        fun setError(errorMsg: String)
     }
     @JvmOverloads
     constructor(context: Context, attributeSet: AttributeSet? = null,defAttrStyle: Int = 0)

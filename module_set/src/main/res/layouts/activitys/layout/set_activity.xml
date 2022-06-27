@@ -255,29 +255,7 @@
                 android:background="@drawable/base_iv_right_arrow" />
 
         </RelativeLayout>
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/set_rl_about_margin_left"
-            android:layout_marginTop="@dimen/set_rl_about_margin_top">
 
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/set_about_wanandroid"
-                android:textColor="@color/set_tv_about_wanandroid_color"
-                android:textSize="@dimen/set_tv_about_text_size"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/set_tv_about_wanandroid_arrow_margin_right"
-                android:background="@drawable/base_iv_right_arrow" />
-
-        </RelativeLayout>
 
 
 
@@ -310,6 +288,7 @@
 
 
         <RelativeLayout
+            android:id="@+id/set_rl_clear_cache"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/set_rl_clearcache_margin_left"
@@ -325,7 +304,7 @@
                 android:textSize="@dimen/set_tv_clearcache_text_size" />
 
             <TextView
-                android:id="@+id/set_cachememory"
+                android:id="@+id/set_tv_cachememory"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/set_tv_clearcache"
@@ -403,6 +382,31 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/set_tv_official_website_arrow_margin_right"
                 android:background="@drawable/base_iv_right_arrow" />
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/set_rl_about_margin_left"
+            android:layout_marginTop="@dimen/set_rl_about_margin_top">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/set_about_wanandroid"
+                android:textColor="@color/set_tv_about_wanandroid_color"
+                android:textSize="@dimen/set_tv_about_text_size"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/set_tv_about_wanandroid_arrow_margin_right"
+                android:background="@drawable/base_iv_right_arrow" />
+
         </RelativeLayout>
 
         <!--退出账户-->
