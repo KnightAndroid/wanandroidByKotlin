@@ -18,6 +18,7 @@ import com.knight.kotlin.library_base.util.EventBusUtils
 import com.knight.kotlin.library_util.CacheFileUtils
 import com.knight.kotlin.library_util.DialogUtils
 import com.knight.kotlin.library_util.startPage
+import com.knight.kotlin.library_util.startPageWithParams
 import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.library_widget.RippleAnimation
 import com.knight.kotlin.module_set.R
@@ -37,7 +38,9 @@ class SetActivity : BaseActivity<SetActivityBinding, SetVm>(){
 
 
     override fun SetActivityBinding.initView() {
-        setOnClickListener(setRlLogout,setRlDarkmode,setRlTheme,setRlLanguage,setRlNightTime,setRlChangeTextSize,setRlGesturePassword,setRlClearCache)
+        setOnClickListener(setRlLogout,setRlDarkmode,setRlTheme,
+            setRlLanguage,setRlNightTime,setRlChangeTextSize,setRlGesturePassword,
+            setRlClearCache,setRlRepository,setRlOfficialwebsite,setRlAbout)
         setTvCachememory.setText(CacheFileUtils.getToalCacheSize(this@SetActivity))
         includeSetToobar.baseIvBack.setOnClickListener { finish() }
         includeSetToobar.baseTvTitle.setText(getString(R.string.set_app_name))
@@ -203,6 +206,21 @@ class SetActivity : BaseActivity<SetActivityBinding, SetVm>(){
                 }){
                         dialog, which ->
                 }
+            }
+            mBinding.setRlRepository -> {
+                startPageWithParams(RouteActivity.Web.WebPager,
+                    "webUrl" to "https://github.com/KnightAndroid/wanandroidByKotlin",
+                    "webTitle" to getString(R.string.set_project_repository))
+            }
+
+            mBinding.setRlOfficialwebsite -> {
+                startPageWithParams(RouteActivity.Web.WebPager,
+                    "webUrl" to "https://www.wanandroid.com/",
+                    "webTitle" to getString(R.string.set_official_website)  )
+            }
+
+            mBinding.setRlAbout -> {
+                startPage(RouteActivity.Set.AboutActivity)
             }
         }
     }

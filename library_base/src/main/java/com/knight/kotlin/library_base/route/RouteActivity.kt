@@ -112,6 +112,8 @@ object RouteActivity {
         const val SetAutoNightActivity = "$SET/SetAutoNightActivity"
         const val SetChangeTextSizeActivity = "$SET/SetChangeTextSizeActivity"
         const val SetGestureLockActivity = "$SET/SetGestureLockActivity"
+        const val AboutActivity = "$SET/AboutActivity"
+        const val AppRecordMessageActivity = "$SET/AppRecordMessageActivity"
     }
 
 

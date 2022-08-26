@@ -29,4 +29,7 @@
      <color name="set_tv_start_day_time_color">#333333</color>
      <color name="set_change_text_size_tip_color">#333333</color>
      <color name="set_csv_font_default_color">#999999</color>
+     <color name="set_tv_about_app_version_color">#999999</color>
+     <color name="set_cv_about_backgroud_color">#55aff4</color>
+     <color name="set_tv_appupdate_desc_color">#333333</color>
 </resources>

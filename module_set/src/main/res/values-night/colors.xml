@@ -26,4 +26,6 @@
     <color name="set_tv_start_night_time_color">#D3D3D3</color>
     <color name="set_tv_start_day_time_color">#D3D3D3</color>
     <color name="set_change_text_size_tip_color">#D3D3D3</color>
+    <color name="set_cv_about_backgroud_color">#666666</color>
+    <color name="set_tv_appupdate_desc_color">#D3D3D3</color>
 </resources>

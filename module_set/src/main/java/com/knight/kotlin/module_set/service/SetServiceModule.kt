@@ -1,5 +1,7 @@
 package com.knight.kotlin.module_set.service
 
+import com.knight.kotlin.module_set.api.AboutApiService
+import com.knight.kotlin.module_set.api.AppUpdateRecordService
 import com.knight.kotlin.module_set.api.SetApiService
 import dagger.Module
 import dagger.Provides
@@ -17,7 +19,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 class SetServiceModule {
     /**
-     * Wechat模块的[SetApiService]依赖提供方法
+     * Set模块的[SetApiService]依赖提供方法
      *
      * @param retrofit Retrofit
      * @return SetApiService
@@ -27,4 +29,36 @@ class SetServiceModule {
     fun provideSetApiService(retrofit: Retrofit) : SetApiService {
         return retrofit.create(SetApiService::class.java)
     }
+
+
+    /**
+     * Set模块的[AboutApiService]依赖提供方法
+     *
+     * @param retrofit Retrofit
+     * @return SetApiService
+     */
+    @Singleton
+    @Provides
+    fun provideAboutApiService(retrofit: Retrofit) : AboutApiService {
+        return retrofit.create(AboutApiService::class.java)
+    }
+
+
+    /**
+     * Set模块的[AppUpdateRecordService]依赖提供方法
+     *
+     * @param retrofit Retrofit
+     * @return SetApiService
+     */
+    @Singleton
+    @Provides
+    fun provideAppUpdateRecordService(retrofit: Retrofit) : AppUpdateRecordService {
+        return retrofit.create(AppUpdateRecordService::class.java)
+    }
+
+
+
+
+
+
 }

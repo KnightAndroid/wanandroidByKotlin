@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.knight.kotlin.module_set.activity.AboutActivity">
+
+
+    <include
+        android:id="@+id/include_about_toobar"
+        layout="@layout/base_include_toolbar" />
+
+
+    <TextView
+        android:id="@+id/tv_about_app_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/set_about_app_name_margin_top"
+        android:text="@string/base_app_name"
+        android:textColor="@color/base_color_theme"
+        android:textSize="@dimen/set_tv_about_app_name_text_size"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/include_about_toobar"/>
+
+    <TextView
+        android:id="@+id/tv_about_app_version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1.0.0(2323)"
+        android:textColor="@color/set_tv_about_app_version_color"
+        android:textSize="@dimen/set_tv_about_app_version_text_size"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_about_app_name"/>
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_about"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/set_cv_about_margin_left"
+        android:layout_marginTop="@dimen/set_cv_about_margin_top"
+        android:layout_marginRight="@dimen/set_cv_about_margin_right"
+        app:cardBackgroundColor="@color/set_cv_about_backgroud_color"
+        app:cardCornerRadius="@dimen/set_cv_about_radius"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_about_app_version">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/set_cv_padding_left"
+            android:paddingRight="@dimen/set_cv_padding_right">
+
+
+            <RelativeLayout
+                android:id="@+id/set_rl_appupdate_record"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/set_rl_update_daily_margin_top"
+                android:layout_marginBottom="@dimen/set_rl_update_daily_margin_bottom">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/set_about_update_daily"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/set_tv_update_textsize"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/set_iv_white_right_arrow"/>
+
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/set_rl_access_partner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/set_rl_access_parnter_margin_top"
+                android:layout_marginBottom="@dimen/set_rl_access_parnter_margin_bottom">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/set_access_partner_directory"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/set_tv_access_partner_directory_text_size" />
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/set_iv_white_right_arrow"/>
+
+
+
+            </RelativeLayout>
+
+
+
+            <!--检查更新-->
+            <RelativeLayout
+                android:id="@+id/set_rl_check_update"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/set_rl_check_update_margin_top"
+                android:layout_marginBottom="@dimen/set_rl_check_update_margin_bottom">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/set_check_update"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/set_tv_check_update_text_size"/>
+
+
+                <TextView
+                    android:id="@+id/tv_new_version"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:drawableRight="@drawable/set_iv_white_right_arrow"
+                    android:gravity="center"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/set_tv_new_version_text_size"/>
+            </RelativeLayout>
+
+
+
+        </LinearLayout>
+
+
+
+    </androidx.cardview.widget.CardView>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/set_ll_about_margin_bottom"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center">
+
+
+            <TextView
+                android:id="@+id/tv_service_protocol"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/set_service_protocol"/>
+
+            <TextView
+                android:id="@+id/tv_privacy_protocol"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/set_tv_privacy_protocol_margin_left"
+                android:layout_toRightOf="@id/tv_service_protocol"
+                android:text="@string/set_tv_privacy_protocol"/>
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Copyright©2020-2021 wanandroid All Rights Reserved"/>
+
+    </LinearLayout>
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

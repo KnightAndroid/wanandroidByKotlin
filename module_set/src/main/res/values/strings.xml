@@ -44,6 +44,14 @@
     <string name="set_show_gesture_password">手势密码</string>
     <string name="set_clearcache_tip">确定要删除所有缓存?</string>
     <string name="set_clearchae_successfully">清除缓存成功</string>
-
-
+    <string name="set_about_update_daily">更新日志</string>
+    <string name="set_access_partner_directory">接入合作方目录</string>
+    <string name="set_check_update">检查更新</string>
+    <string name="set_service_protocol"><u>软件许可及服务协议</u></string>
+    <string name="set_tv_privacy_protocol"><u>隐私政策</u></string>
+    <string name="set_about">关于</string>
+    <string name="set_app_record">更新日志</string>
+    <string name="set_no_update_version">暂无版本更新</string>
+    <string name="set_privacy_protocol">隐私政策</string>
+    <string name="set_suser_ervice_protocol">软件许可及服务协议</string>
 </resources>

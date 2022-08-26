@@ -44,4 +44,15 @@
     <string name="set_show_gesture_password">Gesture Password</string>
     <string name="set_clearcache_tip">Are you sure you want to delete all caches?</string>
     <string name="set_clearchae_successfully">Cache cleared successfully</string>
+    <string name="set_about_update_daily">Update Log</string>
+    <string name="set_access_partner_directory">Access Parnter directory</string>
+    <string name="set_check_update">Check Update</string>
+    <string name="set_service_protocol"><u>Software license and service agreement</u></string>
+    <string name="set_tv_privacy_protocol"><u>Privacy policy</u></string>
+    <string name="set_about">About</string>
+    <string name="set_app_record">Update daily</string>
+    <string name="set_no_update_version">No version update</string>
+    <string name="set_privacy_protocol">Privacy Prorocol</string>
+    <string name="set_suser_ervice_protocol">Software license</string>
+
 </resources>

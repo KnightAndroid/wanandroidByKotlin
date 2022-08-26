@@ -52,6 +52,16 @@ object SystemUtils {
         return versioncode
     }
 
+
+    /**
+     * 返回应用程序名称
+     */
+    fun getAppName(context:Context) :String {
+        val pm:PackageManager = context.packageManager;
+        val pi: PackageInfo = pm.getPackageInfo(context.getPackageName(), 0)
+        return context.resources.getString(pi.applicationInfo.labelRes)
+    }
+
     /**
      * 返回当前程序版本名
      */

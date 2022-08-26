@@ -336,6 +336,7 @@
 
         <!--本项目仓库-->
          <RelativeLayout
+             android:id="@+id/set_rl_repository"
              android:layout_width="match_parent"
              android:layout_height="wrap_content"
              android:layout_marginLeft="@dimen/set_rl_project_repository_margin_left"
@@ -360,8 +361,9 @@
 
          </RelativeLayout>
 
-        <!-- 项目仓库 -->
+        <!-- 官网 -->
         <RelativeLayout
+            android:id="@+id/set_rl_officialwebsite"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/set_rl_official_website_margin_left"
@@ -386,6 +388,7 @@
 
 
         <RelativeLayout
+            android:id="@+id/set_rl_about"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/set_rl_about_margin_left"
@@ -397,7 +400,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/set_about_wanandroid"
                 android:textColor="@color/set_tv_about_wanandroid_color"
-                android:textSize="@dimen/set_tv_about_text_size"/>
+                android:textSize="@dimen/set_tv_about_text_size" />
 
             <TextView
                 android:layout_width="wrap_content"

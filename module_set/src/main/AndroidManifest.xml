@@ -10,6 +10,8 @@
         <activity android:name=".activity.ChangeTextSizeActivity"/>
         <activity android:name=".activity.GestureLockActivity"
             android:configChanges="keyboardHidden|keyboard|screenSize|locale|navigation|smallestScreenSize"/>
+        <activity android:name=".activity.AboutActivity"/>
+        <activity android:name=".activity.AppRecordMessageActivity"/>
     </application>
 
 </manifest>

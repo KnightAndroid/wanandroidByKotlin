@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/set_cv_version_record_margin_top"
+    android:layout_marginLeft="@dimen/set_cv_version_record_margin_left"
+    android:layout_marginRight="@dimen/set_cv_version_record_margin_right"
+    app:cardCornerRadius="@dimen/set_cv_version_record_radius"
+    android:foreground="?android:attr/selectableItemBackground"
+    >
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/set_cl_version_margin_bottom">
+
+
+        <TextView
+            android:id="@+id/tv_appupdate_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="@dimen/set_tv_appupdate_title_margin_top"
+            android:layout_marginLeft="@dimen/set_tv_appupdate_title_margin_left"
+            android:paddingRight="@dimen/set_tv_appupdate_title_padding_right"
+            android:text="323333"
+            android:textColor="@color/base_color_theme"
+            android:textSize="@dimen/set_tv_appupdate_title_text_size"/>
+
+       <TextView
+           android:id="@+id/tv_appupdate_time"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           app:layout_constraintRight_toRightOf="parent"
+           app:layout_constraintTop_toTopOf="@id/tv_appupdate_title"
+           android:text="2020-07-02"
+           app:layout_constraintBottom_toBottomOf="@id/tv_appupdate_title"
+           android:layout_marginRight="@dimen/set_tv_appupdate_time_margin_right"/>
+
+
+        <TextView
+            android:id="@+id/tv_appupdate_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tv_appupdate_title"
+            android:textSize="@dimen/set_tv_appupdate_desc_text_size"
+            android:layout_marginTop="@dimen/set_tv_appupdate_desc_margin_top"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginLeft="@dimen/set_tv_appupdate_desc_margin_left"
+            android:paddingRight="@dimen/set_tv_appupdate_desc_padding_right"
+            android:textColor="@color/set_tv_appupdate_desc_color"/>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.cardview.widget.CardView>
