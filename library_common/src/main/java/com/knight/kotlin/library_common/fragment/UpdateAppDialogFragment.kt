@@ -79,6 +79,10 @@ class UpdateAppDialogFragment: BaseDialogFragment<UpdateAppDialogBinding,EmptyVi
             DownLoadDialogFragment.newInstance(mAppUpdateBean?.downLoadLink).showAllowingStateLoss(
                 parentFragmentManager,"dialog_download")
         }
+
+        mBinding.ivAppupdateClose.setOnClickListener {
+            dismiss()
+        }
     }
 
     override fun initObserver() {
