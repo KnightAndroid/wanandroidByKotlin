@@ -126,6 +126,11 @@
 ![wanandroid_normal_release.png](https://gitee.com/MengSuiXinSuoYuan/wanandroid_server/raw/master/wanandroid_picture/wanandroid_normal_release.png)
 
 ## 更新日志
+### 1.0.2(3)
+-  wanandroid 第三版发布
+-  新增关于功能(更新日志，接入合作方目录，检查更新)
+-  发布时间：2022/09/02
+
 ### 1.0.1(2)
 -  wanandroid 第二版发布
 -  新增课程工具模块

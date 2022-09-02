@@ -80,6 +80,6 @@ class WebBottomFragment constructor(url: String?, mWebView: WebView?) :
         }
     }
 
-    override fun reLoadData() { TODO("Not yet implemented")
+    override fun reLoadData() {
     }
 }
