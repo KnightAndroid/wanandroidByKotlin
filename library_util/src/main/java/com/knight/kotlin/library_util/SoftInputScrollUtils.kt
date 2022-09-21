@@ -227,7 +227,7 @@ class SoftInputScrollUtils constructor(activity:Activity) : OnGlobalLayoutListen
         val usableHeightNow = rect!!.bottom - rect.top
         val usableHeightSansKeyboard = rootView.height
         val heightDifference = usableHeightSansKeyboard - usableHeightNow
-        return heightDifference > usableHeightSansKeyboard / 4
+        return heightDifference > (usableHeightSansKeyboard / 4)
     }
 
     private fun isViewFocus(): View? {

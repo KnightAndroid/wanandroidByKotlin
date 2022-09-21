@@ -81,7 +81,7 @@ class LoginActivity : BaseActivity<MineLoginActivityBinding,LoginViewModel>(){
     }
 
     override fun MineLoginActivityBinding.initView() {
-        mSoftInputScrollUtils.moveBy(mineLoginCardview)
+        mSoftInputScrollUtils.moveBy(mineLoginRoot)
         mSoftInputScrollUtils.moveWith(mineTvLogin,mineLoginUsername,mineLoginPassword)
         mineLoginToolbar.baseTvTitle.text = getString(R.string.mine_tv_login)
         mineLoginToolbar.baseIvBack.setOnClick {
