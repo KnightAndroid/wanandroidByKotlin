@@ -215,8 +215,7 @@ object Dependencies {
         const val aspectJ = "org.aspectj:aspectjrt:${Version.Aspectj}"
         //全局加载视图 https://github.com/KingJA/LoadSir
         const val LoadSir = "com.kingja.loadsir:loadsir:${Version.LoadSir}"
-        //Cookie管理框架 https://github.com/franmontiel/PersistentCookieJar
-        const val Cookie = "com.github.franmontiel:PersistentCookieJar:${Version.Cookie}"
+        //Cookie管理框架 https://github.com/franmontiel/PersistentCookieJar https://github.com/gotev/android-cookie-store
         //图像加载库 https://github.com/bumptech/glide
         const val Glide = "com.github.bumptech.glide:glide:${Version.Glide}"
         //智能刷新库 核心依赖 https://github.com/scwang90/SmartRefreshLayout

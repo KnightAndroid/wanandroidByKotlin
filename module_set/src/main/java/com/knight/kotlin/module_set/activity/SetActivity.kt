@@ -15,6 +15,7 @@ import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_base.util.ColorUtils
 import com.knight.kotlin.library_base.util.EventBusUtils
+import com.knight.kotlin.library_network.client.ClientConfig
 import com.knight.kotlin.library_util.CacheFileUtils
 import com.knight.kotlin.library_util.DialogUtils
 import com.knight.kotlin.library_util.startPage
@@ -129,6 +130,8 @@ class SetActivity : BaseActivity<SetActivityBinding, SetVm>(){
         mBinding.setRlGesturePassword.visibility = View.GONE
         CacheUtils.loginOut()
         Appconfig.user = null
+        //清除cookie
+        ClientConfig.cookieManager.cookieStore.removeAll()
         EventBusUtils.postEvent(MessageEvent(MessageEvent.MessageType.LogoutSuccess))
 
     }

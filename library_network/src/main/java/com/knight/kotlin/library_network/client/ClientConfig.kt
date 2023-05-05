@@ -1,12 +1,12 @@
 package com.knight.kotlin.library_network.client
 
 import androidx.annotation.Nullable
-import com.franmontiel.persistentcookiejar.PersistentCookieJar
-import com.franmontiel.persistentcookiejar.cache.SetCookieCache
-import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor
 import com.knight.kotlin.library_base.BaseApp
 import com.knight.kotlin.library_network.BuildConfig
 import com.knight.kotlin.library_network.config.BaseUrlConfig
+import com.knight.kotlin.library_network.cookie.InMemoryCookieStore
+import com.knight.kotlin.library_network.cookie.JavaNetCookieJar
+import com.knight.kotlin.library_network.cookie.SharedPreferencesCookieStore
 import com.knight.kotlin.library_network.interceptor.CacheInterceptor
 import com.knight.kotlin.library_network.interceptor.HttpInterceptor
 import com.knight.kotlin.library_network.interceptor.NetworkInterceptor
@@ -24,6 +24,8 @@ import okhttp3.Request
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.File
+import java.net.CookieManager
+import java.net.CookiePolicy
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
@@ -38,6 +40,15 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 class ClientConfig {
+
+
+
+
+    companion object {
+
+        lateinit var cookieManager: CookieManager
+    }
+
     /**
      * [OkHttpClient]依赖提供方法
      * @return OkHttpClient
@@ -45,13 +56,11 @@ class ClientConfig {
     @Singleton
     @Provides
     fun okHttpClientConfConfig():OkHttpClient {
-        //拦截日志
-       // val level = if (BuildConfig.TYPE != "MASTER") HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
-       // val loggingInterceptor = HttpLoggingInterceptor().setLevel(level)
-
         //缓存目录
         val cacheFile: File = File(BaseApp.context.getCacheDir(), "knight_wanandroid")
         val cache = Cache(cacheFile, 1024 * 1024 * 50)
+
+        cookieManager= CookieManager(createCookieStore("myCookies",true), CookiePolicy.ACCEPT_ALL)
 
         //设置拦截器
         val loggingInterceptor = LoggingInterceptor.Builder()
@@ -71,7 +80,7 @@ class ClientConfig {
             .addInterceptor(HttpInterceptor())//重复拦截
             .cache(cache)
             .retryOnConnectionFailure(true)
-            .cookieJar(PersistentCookieJar(SetCookieCache(),SharedPrefsCookiePersistor(BaseApp.application)))
+            .cookieJar(JavaNetCookieJar(cookieManager))
             .build()
     }
 
@@ -101,9 +110,15 @@ class ClientConfig {
                 }
             })
             .addConverterFactory(GsonConverterFactory.create())
-            //.client(okHttpClient)
             .build()
 
+    }
+
+
+    private fun createCookieStore(name:String,persistent:Boolean) = if (persistent) {
+        SharedPreferencesCookieStore(BaseApp.context,name)
+    } else {
+        InMemoryCookieStore(name)
     }
 }
 
