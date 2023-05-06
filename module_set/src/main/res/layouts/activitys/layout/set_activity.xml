@@ -412,6 +412,32 @@
 
         </RelativeLayout>
 
+        <!-- 个人信息查阅与设备管理 -->
+        <RelativeLayout
+            android:id="@+id/set_rl_person_message_manager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/set_rl_person_message_manager_margin_left"
+            android:layout_marginTop="@dimen/set_rl_person_message_manager_margin_top">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/set_personal_message_manager"
+                android:textColor="@color/set_tv_personal_manager_wanandroid_color"
+                android:textSize="@dimen/set_tv_about_text_size" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/set_tv_person_message_arrow_margin_right"
+                android:background="@drawable/base_iv_right_arrow" />
+        </RelativeLayout>
+
+
         <!--退出账户-->
         <RelativeLayout
             android:id="@+id/set_rl_logout"

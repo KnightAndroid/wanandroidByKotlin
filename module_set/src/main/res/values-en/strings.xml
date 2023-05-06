@@ -21,6 +21,9 @@
     <string name="set_project_repository">Warehouse of the project</string>
     <string name="set_official_website">Official website</string>
     <string name="set_about_wanandroid">About wanandroid</string>
+    <string name="set_personal_message_manager">Personal information And Manager</string>
+    <string name="set_personal_message">Message</string>
+    <string name="set_device_message">Deceive Message</string>
     <string name="set_quit_account">Sign out</string>
     <string name="set_confirm_logout">Exit current account</string>
     <string name="set_logout">Quit...</string>

@@ -12,6 +12,7 @@
             android:configChanges="keyboardHidden|keyboard|screenSize|locale|navigation|smallestScreenSize"/>
         <activity android:name=".activity.AboutActivity"/>
         <activity android:name=".activity.AppRecordMessageActivity"/>
+        <activity android:name=".activity.PersonalAndManagerActivity"/>
     </application>
 
 </manifest>

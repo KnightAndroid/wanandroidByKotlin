@@ -1,3 +1,4 @@
+apply from:'supportApi.gradle'
 rootProject.name = "wanandroid"
 include ':app'
 include ':library_base'
@@ -19,6 +20,7 @@ include ':library_permiss'
 include ':library_scan'
 include ':module_wechat'
 include ':library_biometric'
-include ':module_set'
+//include ':module_set'
 include ':module_utils'
 include ':module_course'
+includeWithApi(':module_set')

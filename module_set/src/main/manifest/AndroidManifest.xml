@@ -32,7 +32,7 @@
             android:name="design_height_in_dp"
             android:value="100000" />
         <activity
-            android:name=".activity.ProjectActivity"
+            android:name=".activity.SetActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

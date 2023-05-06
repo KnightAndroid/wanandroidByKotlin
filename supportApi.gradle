@@ -1,0 +1,89 @@
+gradle.projectsLoaded {
+    // 自动为module引入生成的module-api
+    gradle.rootProject.allprojects.forEach { Project p ->
+        p.afterEvaluate {
+            def apiProject = gradle.rootProject.allprojects.find {
+                it.name.endsWith("${p.name}-api")
+            }
+            if (apiProject != null) {
+                p.dependencies.add("api", apiProject)
+            }
+        }
+    }
+}
+//自定义include
+ext.includeWithApi = { String moduleName ->
+    include(moduleName)
+    String originDir = project(moduleName).projectDir
+    String targetDir = "${originDir}-api"
+
+    def selfName = "${project(moduleName).name}"
+    def prefixName = moduleName.substring(0, moduleName.length() - selfName.length())
+    //新模块的路径
+    def sdkName = "${project(moduleName).name}-api"
+
+    // 每次编译删除之前的文件
+    deleteDir(targetDir)
+    //复制.api文件到新的路径
+    copy() {
+        from originDir
+        into targetDir
+        exclude '**/build/'
+        exclude '**/res/'
+        include '**/*.api'
+        include '**/*.kapi'
+        include 'api.gradle'
+    }
+
+    def build = new File(targetDir + "/api.gradle")
+    if (build.exists()) {
+        build.renameTo(new File(targetDir + "/build.gradle"))
+    }
+
+    // 重命名.api文件，生成正常的.java文件
+    renameApiFiles(targetDir, '.api', '.java')
+    renameApiFiles(targetDir, '.kapi', '.kt')
+
+    //删除空文件夹
+    deleteEmptyDir(new File(targetDir))
+    //正常加载新的模块
+    include prefixName + "$sdkName"
+}
+
+
+private void deleteEmptyDir(File dir) {
+    if (dir.isDirectory()) {
+        File[] fs = dir.listFiles();
+        if (fs != null && fs.length > 0) {
+            for (int i = 0; i < fs.length; i++) {
+                File tmpFile = fs[i];
+                if (tmpFile.isDirectory()) {
+                    deleteEmptyDir(tmpFile);
+                }
+                if (tmpFile.isDirectory() && tmpFile.listFiles().length <= 0) {
+                    tmpFile.delete()
+                }
+            }
+        }
+        if (dir.isDirectory() && dir.listFiles().length == 0) {
+            dir.delete()
+        }
+    }
+}
+
+private void deleteDir(String targetDir) {
+    FileTree targetFiles = fileTree(targetDir)
+    targetFiles.exclude "*.iml"
+    targetFiles.each { File file ->
+        file.delete()
+    }
+}
+
+
+private def renameApiFiles(root_dir, String suffix, String replace) {
+    FileTree files = fileTree(root_dir).include("**/*$suffix")
+    files.each {
+        File file ->
+            file.renameTo(new File(file.absolutePath.replace(suffix, replace)))
+    }
+}

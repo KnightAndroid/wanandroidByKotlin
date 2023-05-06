@@ -113,7 +113,9 @@ object RouteActivity {
         const val SetChangeTextSizeActivity = "$SET/SetChangeTextSizeActivity"
         const val SetGestureLockActivity = "$SET/SetGestureLockActivity"
         const val AboutActivity = "$SET/AboutActivity"
+        const val PersonalDeviceMessage = "$SET/SetPersonalDeviceActivity"
         const val AppRecordMessageActivity = "$SET/AppRecordMessageActivity"
+
     }
 
 

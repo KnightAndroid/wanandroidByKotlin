@@ -445,6 +445,23 @@ object CacheUtils {
     }
 
 
+    /**
+     * 设置排名
+     *
+     */
+    fun saveUserRank(rank:String) {
+        mmkv?.encode(CacheKey.RANK,rank)
+    }
+
+
+    /**
+     * 返回排名
+     *
+     */
+    fun getUserRank() : String {
+        return mmkv?.decodeString(CacheKey.RANK,"0") ?: "0"
+    }
+
 
 
 }

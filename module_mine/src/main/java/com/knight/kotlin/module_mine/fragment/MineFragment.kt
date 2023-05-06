@@ -96,6 +96,7 @@ class MineFragment: BaseFragment<MineFragmentBinding, MineViewModel>() {
      */
     private fun setUserInfoCoin(userInfoMessageEntity: UserInfoMessageEntity) {
         requestSuccess()
+        CacheUtils.saveUserRank(userInfoMessageEntity.coinInfo.rank)
         dismissLoading()
         //设置头像
         val gradientDrawable = GradientDrawable()

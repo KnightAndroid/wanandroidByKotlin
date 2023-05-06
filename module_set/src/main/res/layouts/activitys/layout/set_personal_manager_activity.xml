@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.PersonalAndManagerActivity">
+
+
+    <include
+        android:id="@+id/include_set_message_manager_toobar"
+        layout="@layout/base_include_toolbar"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        />
+
+    <RelativeLayout
+        android:id="@+id/rl_personal_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/include_set_message_manager_toobar"
+        android:layout_marginTop="@dimen/set_rl_person_message_margin_top"
+        android:layout_marginLeft="@dimen/set_rl_person_message_margin_left"
+        >
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/set_personal_message"
+            android:textColor="@color/set_tv_personal_message_color"
+            android:textSize="@dimen/set_tv_personal_message_text_size"/>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:background="@drawable/base_iv_right_arrow"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/set_rl_person_message_arrow_margin_right"/>
+
+    </RelativeLayout>
+
+
+
+
+    <RelativeLayout
+        android:id="@+id/rl_device_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/rl_personal_message"
+        android:layout_marginTop="@dimen/set_rl_device_message_margin_top"
+        android:layout_marginLeft="@dimen/set_rl_device_message_margin_left"
+        >
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/set_device_message"
+            android:textColor="@color/set_tv_personal_message_color"
+            android:textSize="@dimen/set_tv_personal_message_text_size"/>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:background="@drawable/base_iv_right_arrow"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/set_rl_device_message_arrow_margin_right"/>
+
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -121,4 +121,11 @@ object CacheKey {
      */
     const val INNIGHTMODE = "inNightMode"
 
+    /**
+     *
+     * 设置排名
+     *
+     */
+    const val RANK = "rank"
+
 }

@@ -21,6 +21,9 @@
     <string name="set_project_repository">本项目仓库</string>
     <string name="set_official_website">官网</string>
     <string name="set_about_wanandroid">关于wanandroid</string>
+    <string name="set_personal_message_manager">个人信息查阅与管理</string>
+    <string name="set_personal_message">个人信息</string>
+    <string name="set_device_message">设备信息</string>
     <string name="set_quit_account">退出</string>
     <string name="set_confirm_logout">是否退出当前账号</string>
     <string name="set_logout">退出登录中...</string>

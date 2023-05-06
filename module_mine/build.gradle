@@ -6,4 +6,5 @@ android {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation project(path: ':library_biometric')
+    implementation project(path: ':module_set-api')
 }

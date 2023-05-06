@@ -13,6 +13,8 @@
      <color name="set_tv_project_repository_color">#333333</color>
      <color name="set_tv_official_website_color">#333333</color>
      <color name="set_tv_about_wanandroid_color">#333333</color>
+     <color name="set_tv_personal_manager_wanandroid_color">#333333</color>
+     <color name="set_tv_personal_message_color">#333333</color>
      <color name="set_tv_logout_color">#333333</color>
      <color name="set_rl_follow_system_color">#ffffff</color>
      <color name="set_tv_follow_system_color">#333333</color>

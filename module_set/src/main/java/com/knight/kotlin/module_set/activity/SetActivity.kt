@@ -222,6 +222,9 @@ class SetActivity : BaseActivity<SetActivityBinding, SetVm>(){
                     "webTitle" to getString(R.string.set_official_website)  )
             }
 
+            mBinding.setRlPersonMessageManager-> {
+
+            }
             mBinding.setRlAbout -> {
                 startPage(RouteActivity.Set.AboutActivity)
             }
