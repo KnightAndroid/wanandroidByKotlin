@@ -114,6 +114,7 @@ object RouteActivity {
         const val SetGestureLockActivity = "$SET/SetGestureLockActivity"
         const val AboutActivity = "$SET/AboutActivity"
         const val PersonalDeviceMessage = "$SET/SetPersonalDeviceActivity"
+        const val PersonalMessage = "$SET/SetPersonalMessage"
         const val AppRecordMessageActivity = "$SET/AppRecordMessageActivity"
 
     }

@@ -34,4 +34,5 @@
      <color name="set_tv_about_app_version_color">#999999</color>
      <color name="set_cv_about_backgroud_color">#55aff4</color>
      <color name="set_tv_appupdate_desc_color">#333333</color>
+     <color name="set_tv_user_name_color">#333333</color>
 </resources>

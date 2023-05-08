@@ -13,6 +13,7 @@
         <activity android:name=".activity.AboutActivity"/>
         <activity android:name=".activity.AppRecordMessageActivity"/>
         <activity android:name=".activity.PersonalAndManagerActivity"/>
+        <activity android:name=".activity.PersonalMessageActivity"/>
     </application>
 
 </manifest>

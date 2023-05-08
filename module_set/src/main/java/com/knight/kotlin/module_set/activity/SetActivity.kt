@@ -41,7 +41,7 @@ class SetActivity : BaseActivity<SetActivityBinding, SetVm>(){
     override fun SetActivityBinding.initView() {
         setOnClickListener(setRlLogout,setRlDarkmode,setRlTheme,
             setRlLanguage,setRlNightTime,setRlChangeTextSize,setRlGesturePassword,
-            setRlClearCache,setRlRepository,setRlOfficialwebsite,setRlAbout)
+            setRlClearCache,setRlRepository,setRlOfficialwebsite,setRlAbout,setRlPersonMessageManager)
         setTvCachememory.setText(CacheFileUtils.getToalCacheSize(this@SetActivity))
         includeSetToobar.baseIvBack.setOnClickListener { finish() }
         includeSetToobar.baseTvTitle.setText(getString(R.string.set_app_name))
@@ -223,7 +223,7 @@ class SetActivity : BaseActivity<SetActivityBinding, SetVm>(){
             }
 
             mBinding.setRlPersonMessageManager-> {
-
+                startPage(RouteActivity.Set.PersonalDeviceMessage)
             }
             mBinding.setRlAbout -> {
                 startPage(RouteActivity.Set.AboutActivity)

@@ -165,4 +165,13 @@
     <dimen name="set_tv_appupdate_desc_margin_left">8dp</dimen>
     <dimen name="set_tv_appupdate_desc_padding_right">8dp</dimen>
     <dimen name="set_tv_personal_message_text_size">18sp</dimen>
+    <dimen name="set_rl_user_name_margin_top">10dp</dimen>
+    <dimen name="set_tv_user_name_margin_left">26dp</dimen>
+    <dimen name="set_tv_user_name_text_size">18sp</dimen>
+    <dimen name="set_tv_user_name_margin_right">20dp</dimen>
+    <dimen name="set_rl_user_name_padding_bottom">10dp</dimen>
+    <dimen name="set_rl_user_email_margin_top">10dp</dimen>
+    <dimen name="set_tv_user_email_margin_left">26dp</dimen>
+    <dimen name="set_tv_user_email_margin_right">20dp</dimen>
+    <dimen name="set_rl_user_email_padding_bottom">10dp</dimen>
 </resources>

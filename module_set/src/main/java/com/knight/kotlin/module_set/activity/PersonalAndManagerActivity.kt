@@ -1,10 +1,13 @@
 package com.knight.kotlin.module_set.activity
 
+import android.view.View
 import androidx.activity.viewModels
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.knight.kotlin.library_aop.clickintercept.SingleClick
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.vm.EmptyViewModel
+import com.knight.kotlin.library_util.startPage
 import com.knight.kotlin.module_set.R
 import com.knight.kotlin.module_set.databinding.SetPersonalManagerActivityBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -24,6 +27,7 @@ class PersonalAndManagerActivity : BaseActivity<SetPersonalManagerActivityBindin
 
     override fun SetPersonalManagerActivityBinding.initView() {
         includeSetMessageManagerToobar.baseTvTitle.setText(getString(R.string.set_personal_message_manager))
+        setOnClickListener(setRlPersonalMessage,setRlDeviceMessage)
         includeSetMessageManagerToobar.baseIvBack.setOnClickListener { finish() }
     }
 
@@ -37,5 +41,14 @@ class PersonalAndManagerActivity : BaseActivity<SetPersonalManagerActivityBindin
 
     override fun reLoadData() {
 
+    }
+
+    @SingleClick
+    override fun onClick(v: View) {
+        when (v) {
+            mBinding.setRlPersonalMessage -> {
+                startPage(RouteActivity.Set.PersonalMessage)
+            }
+        }
     }
 }

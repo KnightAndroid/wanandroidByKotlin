@@ -57,5 +57,6 @@
     <string name="set_no_update_version">No version update</string>
     <string name="set_privacy_protocol">Privacy Prorocol</string>
     <string name="set_suser_ervice_protocol">Software license</string>
-
+    <string name="set_user_name">UserName</string>
+    <string name="set_user_email">Email</string>
 </resources>
