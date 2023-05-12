@@ -49,6 +49,10 @@ class PersonalAndManagerActivity : BaseActivity<SetPersonalManagerActivityBindin
             mBinding.setRlPersonalMessage -> {
                 startPage(RouteActivity.Set.PersonalMessage)
             }
+
+            mBinding.setRlDeviceMessage -> {
+                startPage(RouteActivity.Set.DeviceMessage)
+            }
         }
     }
 }

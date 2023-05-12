@@ -59,4 +59,15 @@
     <string name="set_suser_ervice_protocol">软件许可及服务协议</string>
     <string name="set_user_name">用户名</string>
     <string name="set_user_email">邮箱</string>
+    <string name="set_user_coincount">个人积分</string>
+    <string name="set_user_rank">排名</string>
+    <string name="set_os_system_version">设备系统版本</string>
+    <string name="set_android_sdk_version">安卓SDK版本号</string>
+    <string name="set_display_screen_size">屏幕分辨率</string>
+    <string name="set_area">地区</string>
+    <string name="set_time_zone">时区</string>
+    <string name="set_ip_address">IP地址</string>
+    <string name="set_mac_address">Mac地址</string>
+    <string name="set_sim_message">Sim卡信息</string>
+    <string name="set_unique_id">设备唯一id</string>
 </resources>

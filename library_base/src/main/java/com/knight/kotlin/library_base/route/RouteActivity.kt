@@ -115,6 +115,7 @@ object RouteActivity {
         const val AboutActivity = "$SET/AboutActivity"
         const val PersonalDeviceMessage = "$SET/SetPersonalDeviceActivity"
         const val PersonalMessage = "$SET/SetPersonalMessage"
+        const val DeviceMessage = "$SET/DeviceMessage"
         const val AppRecordMessageActivity = "$SET/AppRecordMessageActivity"
 
     }

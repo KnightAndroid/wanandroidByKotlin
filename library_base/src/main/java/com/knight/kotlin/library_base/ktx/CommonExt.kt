@@ -13,6 +13,7 @@ import com.knight.kotlin.library_base.entity.UserInfoEntity
 import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.knight.kotlin.library_base.util.ActivityManagerUtils
 import com.knight.kotlin.library_base.util.CacheUtils
+import com.knight.kotlin.library_base.util.StatusBarUtils
 import kotlin.reflect.KClass
 
 /**
@@ -87,6 +88,13 @@ val Context.screenWidth
 val Context.screenHeight
     get() = resources.displayMetrics.heightPixels
 
+
+/**
+ *
+ * 获取屏幕高度(包含状态栏)
+ */
+val Context.screenHeightWithStatus
+    get() = resources.displayMetrics.heightPixels + StatusBarUtils.getStatusBarHeight(this)
 /**
  * 转换html字符串
  *

@@ -14,6 +14,7 @@
         <activity android:name=".activity.AppRecordMessageActivity"/>
         <activity android:name=".activity.PersonalAndManagerActivity"/>
         <activity android:name=".activity.PersonalMessageActivity"/>
+        <activity android:name=".activity.DeviceMessageActivity"/>
     </application>
 
 </manifest>

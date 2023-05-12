@@ -19,13 +19,11 @@
     <RelativeLayout
         android:id="@+id/set_rl_user_name"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/set_rl_user_name_height"
         app:layout_constraintTop_toBottomOf="@id/include_set_message_toobar"
-        android:layout_marginTop="@dimen/set_rl_user_name_margin_top"
         android:background="@drawable/base_line_bg"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:paddingBottom="@dimen/set_rl_user_name_padding_bottom">
+        app:layout_constraintLeft_toLeftOf="parent">
 
 
         <TextView
@@ -33,6 +31,7 @@
             android:layout_height="wrap_content"
             android:text="@string/set_user_name"
             android:layout_marginLeft="@dimen/set_tv_user_name_margin_left"
+            android:layout_centerVertical="true"
             android:textColor="@color/set_tv_user_name_color"
             android:textSize="@dimen/set_tv_user_name_text_size"/>
 
@@ -44,7 +43,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/set_tv_user_name_margin_right"
-            android:text="深红骑士"/>
+          />
 
     </RelativeLayout>
 
@@ -52,11 +51,10 @@
     <RelativeLayout
         android:id="@+id/set_rl_email"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/set_rl_email_height"
         app:layout_constraintTop_toBottomOf="@id/set_rl_user_name"
-        android:layout_marginTop="@dimen/set_rl_user_name_margin_top"
         android:background="@drawable/base_line_bg"
-        android:paddingBottom="@dimen/set_rl_user_email_padding_bottom">
+        >
 
 
         <TextView
@@ -64,8 +62,9 @@
             android:layout_height="wrap_content"
             android:text="@string/set_user_email"
             android:layout_marginLeft="@dimen/set_tv_user_email_margin_left"
-            android:textColor="@color/set_tv_user_name_color"
-            android:textSize="@dimen/set_tv_user_name_text_size"/>
+            android:textColor="@color/set_tv_email_color"
+            android:textSize="@dimen/set_tv_user_name_text_size"
+            android:layout_centerVertical="true"/>
 
         <TextView
             android:id="@+id/tv_user_eamil"
@@ -74,7 +73,6 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/set_tv_user_email_margin_right"
-            android:text="深红骑士"
             />
 
     </RelativeLayout>
@@ -82,9 +80,59 @@
     <RelativeLayout
         android:id="@+id/set_rl_coin_count"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/set_rl_email">
+        android:layout_height="@dimen/set_rl_coins_height"
+        app:layout_constraintTop_toBottomOf="@id/set_rl_email"
+        android:background="@drawable/base_line_bg"
+        >
 
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/set_user_coincount"
+            android:layout_marginLeft="@dimen/set_tv_user_coin_margin_left"
+            android:textColor="@color/set_tv_coins_color"
+            android:textSize="@dimen/set_tv_user_name_text_size"
+            android:layout_centerVertical="true"/>
+
+
+        <TextView
+            android:id="@+id/tv_coin_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/set_tv_user_coins_margin_right"
+            />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/set_rl_rank"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/set_rl_rank_height"
+        app:layout_constraintTop_toBottomOf="@id/set_rl_coin_count"
+        android:background="@drawable/base_line_bg"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/set_user_rank"
+            android:layout_marginLeft="@dimen/set_tv_user_rank_margin_left"
+            android:textColor="@color/set_tv_coins_color"
+            android:textSize="@dimen/set_tv_user_name_text_size"
+            android:layout_centerVertical="true"/>
+
+
+        <TextView
+            android:id="@+id/tv_rank"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/set_tv_user_rank_margin_right"
+            />
 
 
     </RelativeLayout>

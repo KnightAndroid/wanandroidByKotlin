@@ -59,4 +59,15 @@
     <string name="set_suser_ervice_protocol">Software license</string>
     <string name="set_user_name">UserName</string>
     <string name="set_user_email">Email</string>
+    <string name="set_user_coincount">Coins</string>
+    <string name="set_user_rank">Rank</string>
+    <string name="set_os_system_version">System Version</string>
+    <string name="set_android_sdk_version">Android Sdk Version</string>
+    <string name="set_display_screen_size">Screen Size</string>
+    <string name="set_area">Area</string>
+    <string name="set_time_zone">TimeZone</string>
+    <string name="set_ip_address">IP Address</string>
+    <string name="set_mac_address">Mac Address</string>
+    <string name="set_sim_message">Sim Message</string>
+    <string name="set_unique_id">Unique Id</string>
 </resources>

@@ -1,7 +1,6 @@
 package com.knight.kotlin.module_mine.activity
 
 import android.graphics.Point
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import androidx.activity.viewModels
@@ -14,7 +13,6 @@ import com.knight.kotlin.library_base.ktx.observeLiveData
 import com.knight.kotlin.library_base.ktx.setOnClick
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.util.ArouteUtils
-import com.knight.kotlin.library_base.util.ServiceApiFactory
 import com.knight.kotlin.library_database.entity.HistoryReadRecordsEntity
 import com.knight.kotlin.library_util.DialogUtils
 import com.knight.kotlin.library_widget.floatmenu.FloatMenu
@@ -23,7 +21,6 @@ import com.knight.kotlin.module_mine.R
 import com.knight.kotlin.module_mine.adapter.HistoryRecordAdapter
 import com.knight.kotlin.module_mine.databinding.MineHistoryrecordActivityBinding
 import com.knight.kotlin.module_mine.vm.HistoryRecordViewModel
-import com.knight.kotlin.module_set.external.MineExternalContact
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener
@@ -64,8 +61,7 @@ class HistoryRecordActivity :BaseActivity<MineHistoryrecordActivityBinding,Histo
 
         }
 
-        val mineExternalContact = ServiceApiFactory.getInstance().getService(MineExternalContact::class.java)
-        mineExternalContact?.let { Log.d("sdsds", it.getUserRank()) }
+
         includeHistoryrecordRv.baseBodyRv.init(LinearLayoutManager(this@HistoryRecordActivity),mHistoryRecordAdapter,true)
         includeHistoryrecordRv.baseFreshlayout.setOnLoadMoreListener(this@HistoryRecordActivity)
         includeHistoryrecordRv.baseFreshlayout.setOnRefreshListener(this@HistoryRecordActivity)

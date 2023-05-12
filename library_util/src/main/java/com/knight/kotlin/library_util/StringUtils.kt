@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat
 
 import java.io.UnsupportedEncodingException
 import java.net.URLEncoder
+import java.security.MessageDigest
 import java.util.Locale
 import java.util.regex.Matcher
 import java.util.regex.Pattern
@@ -37,7 +38,7 @@ object StringUtils {
      * @return if string is null or its size is 0 or it is made by space, return true, else return false.
      */
     fun isBlank(str: String?): Boolean {
-        return str == null || str.trim { it <= ' ' }.length == 0
+        return str == null || str.trim { it <= ' ' }.isEmpty()
     }
 
     /**
@@ -53,7 +54,7 @@ object StringUtils {
      * @return if string is null or its size is 0, return true, else return false.
      */
     fun isEmpty(str: String?): Boolean {
-        return str == null || str.length == 0
+        return str == null || str.isEmpty()
     }
 
     /**
@@ -334,8 +335,8 @@ object StringUtils {
         keywords = keywords ?: ""
         val style = SpannableStringBuilder(str)
         var sonStr: String
-        if (str.length > 0 && keywords.length > 0) {
-            for (i in 0 until str.length) {
+        if (str.isNotEmpty() && keywords.isNotEmpty()) {
+            for (i in str.indices) {
                 sonStr = str.substring(i, str.length).toUpperCase(Locale.CHINESE)
                 if (sonStr.startsWith(keywords.toUpperCase(Locale.CHINESE))) {
                     style.setSpan(
@@ -350,5 +351,39 @@ object StringUtils {
             }
         }
         return style
+    }
+
+
+    /**
+     * 转16进制字符串
+     * @param data 数据
+     * @return 16进制字符串
+     *
+     */
+    fun bytesToHex(data:ByteArray):String {
+        val sb = StringBuilder()
+        var stmp:String?
+        for (element in data) {
+            stmp = Integer.toHexString(element.toInt() and 0xFF)
+            if (stmp.length == 1) sb.append("0")
+            sb.append(stmp)
+        }
+        return sb.toString().uppercase(Locale.CHINA)
+    }
+
+    /**
+     * 取SHA1
+     * @param data 数据
+     * @return 对应的hash值
+     */
+    fun getHashByString(data:String) :ByteArray {
+        try {
+            val messageDigest = MessageDigest.getInstance("SHA1")
+            messageDigest.reset()
+            messageDigest.update(data.toByteArray(charset("UTF-8")))
+            return messageDigest.digest()
+        } catch (e: Exception) {
+            return "".toByteArray()
+        }
     }
 }
