@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="message_indicator_height">44dp</dimen>
+    <dimen name="message_cv_margin_left">8dp</dimen>
+    <dimen name="message_cv_margin_right">8dp</dimen>
+    <dimen name="message_cv_margin_top">8dp</dimen>
+    <dimen name="message_item_author_margin_start">8dp</dimen>
+    <dimen name="message_item_author_margin_top">8dp</dimen>
+    <dimen name="message_item_author_padding_end">8dp</dimen>
+    <dimen name="message_item_author_text_size">12sp</dimen>
+    <dimen name="message_item_tag_text_size">12sp</dimen>
+    <dimen name="message_item_tag_padding_top">2dp</dimen>
+    <dimen name="message_item_tag_padding_bottom">2dp</dimen>
+    <dimen name="message_item_tag_padding_left">4dp</dimen>
+    <dimen name="message_item_tag_padding_right">4dp</dimen>
+    <dimen name="message_item_nicedata_margin_end">8dp</dimen>
+    <dimen name="message_item_nicedata_text_size">12sp</dimen>
+    <dimen name="message_tv_title_margin_left">8dp</dimen>
+    <dimen name="message_tv_title_margin_top">12dp</dimen>
+    <dimen name="message_tv_title_margin_right">8dp</dimen>
+    <dimen name="message_tv_title_text_size">16sp</dimen>
+    <dimen name="message_tv_desc_margin_left">8dp</dimen>
+    <dimen name="message_tv_desc_margin_right">8dp</dimen>
+    <dimen name="message_tv_desc_margin_top">6dp</dimen>
+    <dimen name="message_tv_desc_text_size">12sp</dimen>
+
+</resources>

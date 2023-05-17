@@ -143,5 +143,16 @@ object RouteActivity {
     }
 
 
+    /**
+     *
+     * 消息模块
+     */
+    object Message {
+        private const val Message = "/module_message"
+        const val MessageActivity = "$Message/MessageActivity"
+
+    }
+
+
 
 }

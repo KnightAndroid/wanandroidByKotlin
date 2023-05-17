@@ -1,0 +1,4 @@
+apply from: '../base_module.gradle'
+android {
+    resourcePrefix "message_"
+}

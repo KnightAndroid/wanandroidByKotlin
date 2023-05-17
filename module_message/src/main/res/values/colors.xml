@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="message_item_author_color">#999999</color>
+    <color name="message_item_tag_color">#55aff4</color>
+    <color name="message_item_nicedata_color">#999999</color>
+    <color name="message_tv_title_color">#333333</color>
+    <color name="message_tv_desc_color">#999999</color>
+</resources>

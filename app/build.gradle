@@ -134,6 +134,7 @@ dependencies {
     implementation project(path:":module_set")
     implementation project(path:":module_utils")
     implementation project(path:":module_course")
+    implementation project(path:":module_message")
     implementation Dependencies.JetPack.HiltCore
     kapt Dependencies.JetPack.HiltApt
     kapt Dependencies.JetPack.HiltAndroidx

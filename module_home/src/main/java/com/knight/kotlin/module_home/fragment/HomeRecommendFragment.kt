@@ -42,7 +42,6 @@ import com.knight.kotlin.library_util.JsonUtils
 import com.knight.kotlin.library_util.SystemUtils
 import com.knight.kotlin.library_util.image.ImageLoader
 import com.knight.kotlin.library_util.startPage
-import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.library_util.toast.ToastUtils
 import com.knight.kotlin.library_widget.ktx.init
 import com.knight.kotlin.library_widget.ktx.setItemChildClickListener
@@ -180,7 +179,6 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
             true
         )
         homeTwoLevelHeader.setEnablePullToCloseTwoLevel(false)
-        //   recommendRefreshLayout.setEnableLoadMore(true)
         recommendRefreshLayout.setOnLoadMoreListener(this@HomeRecommendFragment)
         recommendRefreshLayout.setOnRefreshListener(this@HomeRecommendFragment)
         recommendRefreshLayout.setOnMultiListener(object : SimpleMultiListener() {
@@ -322,7 +320,7 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
         home_rv_official_account = recommendHeadView.findViewById(R.id.home_rv_official_account)
 
         home_rl_message.setOnClickListener {
-            toast("还没实现")
+            startPage(RouteActivity.Message.MessageActivity)
         }
         home_top_article_rv.init(LinearLayoutManager(requireActivity()), mTopArticleAdapter)
         topArticleFootView.findViewById<LinearLayout>(R.id.home_ll_seemorearticles)

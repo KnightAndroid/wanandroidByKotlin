@@ -24,3 +24,4 @@ include ':library_biometric'
 include ':module_utils'
 include ':module_course'
 includeWithApi(':module_set')
+include ':module_message'

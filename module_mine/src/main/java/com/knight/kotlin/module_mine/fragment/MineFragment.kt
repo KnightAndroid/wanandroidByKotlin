@@ -64,7 +64,7 @@ class MineFragment: BaseFragment<MineFragmentBinding, MineViewModel>() {
              mineIvMessage.visibility = View.GONE
          }
 
-        setOnClickListener(mineTvUsername,mineRlSetup,mineLlRank,mineRlPoint,mineRlCollect,mineRlShare,mineRlHistoryRecord)
+        setOnClickListener(mineTvUsername,mineRlSetup,mineLlRank,mineRlPoint,mineRlCollect,mineRlShare,mineRlHistoryRecord,mineIvMessage)
 
     }
 
@@ -177,6 +177,10 @@ class MineFragment: BaseFragment<MineFragmentBinding, MineViewModel>() {
 
             mBinding.mineRlHistoryRecord -> {
                 startPage(RouteActivity.Mine.HistoryRecordActivity)
+            }
+
+            mBinding.mineIvMessage -> {
+                startPage(RouteActivity.Message.MessageActivity)
             }
         }
     }

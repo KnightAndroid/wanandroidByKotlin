@@ -78,6 +78,15 @@ object RouteFragment {
 
     }
 
+    /**
+     *
+     * 信息
+     */
+    object Message {
+        private const val MESSAGE = "/module_message"
+        const val MessageFragment = "$MESSAGE/MessageFragment"
+    }
+
 
 
 
