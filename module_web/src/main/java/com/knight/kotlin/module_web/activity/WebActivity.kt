@@ -67,7 +67,7 @@ class WebActivity : BaseActivity<WebActivityBinding,EmptyViewModel>() {
             .useDefaultIndicator(CacheUtils.getThemeColor(),2)
             .setWebChromeClient(mWebChromeClient)
             .setWebViewClient(mWebViewClient)
-            .setMainFrameErrorView(R.layout.agentweb_error_page,-1)
+            .setMainFrameErrorView(com.just.agentweb.R.layout.agentweb_error_page,-1)
             .setSecurityType(AgentWeb.SecurityType.STRICT_CHECK)
             .setWebLayout(WebLayout(this@WebActivity))
             //打开其他应用时，弹窗咨询用户是否前往

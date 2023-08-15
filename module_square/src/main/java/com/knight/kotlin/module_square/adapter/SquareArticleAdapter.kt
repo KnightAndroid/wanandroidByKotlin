@@ -54,9 +54,9 @@ class SquareArticleAdapter(data:MutableList<SquareArticleBean>):BaseQuickAdapter
             //标题
             holder.setText(R.id.square_tv_articletitle,title.toHtml())
             if (collect) {
-                holder.setBackgroundResource(R.id.square_icon_collect, R.drawable.base_icon_collect)
+                holder.setBackgroundResource(R.id.square_icon_collect, com.knight.kotlin.library_base.R.drawable.base_icon_collect)
             } else {
-                holder.setBackgroundResource(R.id.square_icon_collect, R.drawable.base_icon_nocollect)
+                holder.setBackgroundResource(R.id.square_icon_collect, com.knight.kotlin.library_base.R.drawable.base_icon_nocollect)
             }
 
             //是否是新文章

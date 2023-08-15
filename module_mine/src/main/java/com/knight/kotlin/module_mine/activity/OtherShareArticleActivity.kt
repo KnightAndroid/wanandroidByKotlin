@@ -147,10 +147,10 @@ class OtherShareArticleActivity :BaseActivity<MineOthershareActivityBinding,Othe
                     data[position].shareUser
                 )
             }
-            addChildClickViewIds(R.id.base_icon_collect)
+            addChildClickViewIds(com.knight.kotlin.library_base.R.id.base_icon_collect)
             setItemChildClickListener { adapter, view, position ->
                 when (view.id) {
-                    R.id.base_icon_collect -> {
+                    com.knight.kotlin.library_base.R.id.base_icon_collect -> {
                         selectItem = position
                         collectOrunCollect(
                             data[position].collect,

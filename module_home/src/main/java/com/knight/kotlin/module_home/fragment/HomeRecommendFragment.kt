@@ -210,7 +210,7 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
                         homeIconFab.setImageDrawable(
                             ContextCompat.getDrawable(
                                 requireActivity(),
-                                R.drawable.base_icon_bottom
+                                com.knight.kotlin.library_base.R.drawable.base_icon_bottom
                             )
                         )
                     }
@@ -300,8 +300,8 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
                         .putParcelableArrayListExtra("toparticles", ArrayList(data))
                 )
                 activity?.overridePendingTransition(
-                    R.anim.base_scalealpha_in,
-                    R.anim.base_scalealpha_slient
+                    com.knight.kotlin.library_base.R.anim.base_scalealpha_in,
+                    com.knight.kotlin.library_base.R.anim.base_scalealpha_slient
                 )
                 false
             }
@@ -377,14 +377,14 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
                             requireActivity(),
                             mOpenSourceAdapter.data[position].abroadlink
                         )
-                        ToastUtils.show(R.string.base_success_copylink)
+                        ToastUtils.show(com.knight.kotlin.library_base.R.string.base_success_copylink)
                     }
                     else -> {
                         SystemUtils.copyContent(
                             requireActivity(),
                             mOpenSourceAdapter.data[position].internallink
                         )
-                        ToastUtils.show(R.string.base_success_copylink)
+                        ToastUtils.show(com.knight.kotlin.library_base.R.string.base_success_copylink)
                     }
 
                 }

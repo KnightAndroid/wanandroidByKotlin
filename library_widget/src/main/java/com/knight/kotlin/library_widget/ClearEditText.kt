@@ -32,7 +32,7 @@ class ClearEditText:androidx.appcompat.widget.AppCompatEditText,View.OnFocusChan
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @JvmOverloads
-    constructor(context: Context, attributeSet: AttributeSet? = null,defAttrStyle: Int = R.attr.editTextStyle)
+    constructor(context: Context, attributeSet: AttributeSet? = null,defAttrStyle: Int = androidx.appcompat.R.attr.editTextStyle)
             : super(context, attributeSet, defAttrStyle) {
         init()
     }

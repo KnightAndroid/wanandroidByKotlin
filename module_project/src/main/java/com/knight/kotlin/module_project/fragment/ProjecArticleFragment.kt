@@ -166,7 +166,7 @@ class ProjecArticleFragment:BaseFragment<ProjectArticleFragmentBinding, ProjectA
 
     private fun initListener() {
         mProjectArticleAdapter.run {
-            addChildClickViewIds(R.id.base_article_collect)
+            addChildClickViewIds(com.knight.kotlin.library_base.R.id.base_article_collect)
             setOnItemChildClickListener { adapter, view, position ->
                 selectItem = position
                 collectOrunCollect(data[position].collect,data[position].id)

@@ -77,7 +77,7 @@ class WebTransitionActivity:BaseActivity<WebTransitionActivityBinding,EmptyViewM
         webTransitionToolbar.baseCompatToolbar.setBackgroundColor(
             ContextCompat.getColor(
                 this@WebTransitionActivity,
-                R.color.base_color_transparent
+                com.knight.kotlin.library_base.R.color.base_color_transparent
             ))
         webTransitionToolbar.baseIvBack.setOnClickListener {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -94,11 +94,13 @@ class WebTransitionActivity:BaseActivity<WebTransitionActivityBinding,EmptyViewM
                webImage.getBackground()
                     .setAlpha(255 - (255 * -verticalOffset / alphaMaxOffset ).toInt())
                 if (255 - (255 * -verticalOffset / alphaMaxOffset).toInt() > 127) {
-                    webTransitionToolbar.baseTvTitle.setTextColor(ContextCompat.getColor(this@WebTransitionActivity,R.color.white))
-                    webTransitionToolbar.baseIvBack.setBackgroundResource(R.drawable.base_right_whitearrow)
+                    webTransitionToolbar.baseTvTitle.setTextColor(ContextCompat.getColor(this@WebTransitionActivity,
+                        com.just.agentweb.R.color.white))
+                    webTransitionToolbar.baseIvBack.setBackgroundResource(com.knight.kotlin.library_base.R.drawable.base_right_whitearrow)
                 } else {
-                    webTransitionToolbar.baseTvTitle.setTextColor(ContextCompat.getColor(this@WebTransitionActivity,R.color.black))
-                    webTransitionToolbar.baseIvBack.setBackgroundResource(R.drawable.base_iv_left_arrow)
+                    webTransitionToolbar.baseTvTitle.setTextColor(ContextCompat.getColor(this@WebTransitionActivity,
+                        com.just.agentweb.R.color.black))
+                    webTransitionToolbar.baseIvBack.setBackgroundResource(com.knight.kotlin.library_base.R.drawable.base_iv_left_arrow)
                 }
             }
         })
@@ -136,7 +138,8 @@ class WebTransitionActivity:BaseActivity<WebTransitionActivityBinding,EmptyViewM
         if (CacheUtils.getNormalDark()) {
             mBinding.webTransitionToolbar.baseTvTitle.setTextColor(Color.BLACK)
         } else {
-            mBinding.webTransitionToolbar.baseTvTitle.setTextColor(ContextCompat.getColor(this,R.color.white))
+            mBinding.webTransitionToolbar.baseTvTitle.setTextColor(ContextCompat.getColor(this,
+                com.just.agentweb.R.color.white))
         }
         mBinding.webTransitionToolbar.baseTvTitle.typeface = Typeface.defaultFromStyle(Typeface.BOLD)
         mBinding.webTransitionToolbar.baseTvTitle.text = title.toHtml()
@@ -150,7 +153,7 @@ class WebTransitionActivity:BaseActivity<WebTransitionActivityBinding,EmptyViewM
             .useDefaultIndicator(CacheUtils.getThemeColor(),2)
             .setWebChromeClient(mWebChromeClient)
             .setWebViewClient(mWebViewClient)
-            .setMainFrameErrorView(R.layout.agentweb_error_page, -1)
+            .setMainFrameErrorView(com.just.agentweb.R.layout.agentweb_error_page, -1)
             .setSecurityType(AgentWeb.SecurityType.STRICT_CHECK)
             .setWebLayout(WebLayout(this))
             .setOpenOtherPageWays(DefaultWebClient.OpenOtherPageWays.ASK)//打开其他应用时，弹窗咨询用户是否前往其他应用

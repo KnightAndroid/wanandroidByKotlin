@@ -161,7 +161,7 @@ class ViewSkeletonScreen constructor(builder:Builder) : SkeletonScreen {
         }
 
         init {
-            mShimmerColor = ContextCompat.getColor(mView.context, R.color.shimmer_color)
+            mShimmerColor = ContextCompat.getColor(mView.context, io.supercharge.shimmerlayout.R.color.shimmer_color)
         }
     }
 }

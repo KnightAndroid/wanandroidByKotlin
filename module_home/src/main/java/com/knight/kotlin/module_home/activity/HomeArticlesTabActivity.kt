@@ -17,7 +17,6 @@ import com.knight.kotlin.library_util.BlurBuilderUtils
 import com.knight.kotlin.library_util.ViewInitUtils
 import com.knight.kotlin.library_widget.ktx.init
 import com.knight.kotlin.library_widget.ktx.setItemClickListener
-import com.knight.kotlin.module_home.R
 import com.knight.kotlin.module_home.adapter.TopArticleAroundAdapter
 import com.knight.kotlin.module_home.databinding.HomeArticlesTabActivityBinding
 import com.knight.kotlin.module_home.entity.TopArticleBean
@@ -117,7 +116,7 @@ class HomeArticlesTabActivity : BaseActivity<HomeArticlesTabActivityBinding, Emp
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             finish()
-            overridePendingTransition(R.anim.base_scalealpha_out, R.anim.base_scalealpha_slient)
+            overridePendingTransition(com.knight.kotlin.library_base.R.anim.base_scalealpha_out, com.knight.kotlin.library_base.R.anim.base_scalealpha_slient)
         }
         return true
     }
@@ -127,7 +126,7 @@ class HomeArticlesTabActivity : BaseActivity<HomeArticlesTabActivityBinding, Emp
         when (v) {
             mBinding.homeIvCircleClose ->{
                 finish()
-                overridePendingTransition(R.anim.base_scalealpha_out, R.anim.base_scalealpha_slient)
+                overridePendingTransition(com.knight.kotlin.library_base.R.anim.base_scalealpha_out, com.knight.kotlin.library_base.R.anim.base_scalealpha_slient)
             }
         }
     }

@@ -121,10 +121,10 @@ class MyCollectArticleActivity : BaseActivity<MineCollectarticlesActivityBinding
                 )
             }
 
-            addChildClickViewIds(R.id.base_icon_collect,R.id.base_article_collect)
+            addChildClickViewIds(com.knight.kotlin.library_base.R.id.base_icon_collect,com.knight.kotlin.library_base.R.id.base_article_collect)
             setItemChildClickListener { adapter, view, position ->
                 when (view.id) {
-                    R.id.base_icon_collect,R.id.base_article_collect -> {
+                    com.knight.kotlin.library_base.R.id.base_icon_collect,com.knight.kotlin.library_base.R.id.base_article_collect -> {
                         selectItem = position
                         DialogUtils.getConfirmDialog(this@MyCollectArticleActivity,getString(R.string.mine_confirm_cancelarticle),
                             { dialog, which ->

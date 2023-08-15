@@ -39,6 +39,7 @@ import com.knight.kotlin.library_base.vm.BaseViewModel
 import com.knight.kotlin.library_base.widget.loadcircleview.ProgressHud
 import com.knight.kotlin.library_base.widget.swapeback.SwipeBackHelper
 
+
 /**
  * Author:Knight
  * Time:2021/12/15 16:06
@@ -320,6 +321,8 @@ abstract class BaseActivity<VB : ViewBinding,VM : BaseViewModel> : AppCompatActi
             mWindowManager?.removeView(tipView)
             tipView = null
         }
+
+
         super.onDestroy()
     }
 

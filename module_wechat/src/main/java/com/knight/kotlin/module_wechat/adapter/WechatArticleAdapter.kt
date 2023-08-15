@@ -8,7 +8,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.knight.kotlin.library_base.ktx.toHtml
 import com.knight.kotlin.library_base.util.CacheUtils
-import com.knight.kotlin.module_wechat.R
 import com.knight.kotlin.module_wechat.entity.WechatArticleEntity
 
 /**
@@ -26,63 +25,63 @@ import com.knight.kotlin.module_wechat.entity.WechatArticleEntity
  */
 
 class WechatArticleAdapter(data:MutableList<WechatArticleEntity>) :
-    BaseQuickAdapter<WechatArticleEntity, BaseViewHolder>(R.layout.base_text_item,data) {
+    BaseQuickAdapter<WechatArticleEntity, BaseViewHolder>(com.knight.kotlin.library_base.R.layout.base_text_item,data) {
     override fun convert(holder: BaseViewHolder, item: WechatArticleEntity) {
         item.run {
 
             if(!author.isNullOrEmpty()){
-                holder.setText(R.id.base_item_article_author,author)
+                holder.setText(com.knight.kotlin.library_base.R.id.base_item_article_author,author)
             } else {
-                holder.setText(R.id.base_item_article_author,shareUser)
+                holder.setText(com.knight.kotlin.library_base.R.id.base_item_article_author,shareUser)
             }
 
             //一级分类
             if (!TextUtils.isEmpty(superChapterName) || !TextUtils.isEmpty(chapterName) ) {
-                holder.setVisible(R.id.base_tv_article_superchaptername,true)
+                holder.setVisible(com.knight.kotlin.library_base.R.id.base_tv_article_superchaptername,true)
                 val gradientDrawable = GradientDrawable()
                 gradientDrawable.shape = GradientDrawable.RECTANGLE
                 gradientDrawable.setStroke(2, CacheUtils.getThemeColor())
                 if (!TextUtils.isEmpty(superChapterName)) {
                     if (!TextUtils.isEmpty(chapterName)) {
-                        holder.setText(R.id.base_tv_article_superchaptername,
+                        holder.setText(com.knight.kotlin.library_base.R.id.base_tv_article_superchaptername,
                             "$superChapterName/$chapterName"
                         )
                     } else {
-                        holder.setText(R.id.base_tv_article_superchaptername,superChapterName)
+                        holder.setText(com.knight.kotlin.library_base.R.id.base_tv_article_superchaptername,superChapterName)
                     }
                 } else {
                     if (!TextUtils.isEmpty(chapterName)) {
-                        holder.setText(R.id.base_tv_article_superchaptername,chapterName)
+                        holder.setText(com.knight.kotlin.library_base.R.id.base_tv_article_superchaptername,chapterName)
                     } else {
-                        holder.setText(R.id.base_tv_article_superchaptername,"")
+                        holder.setText(com.knight.kotlin.library_base.R.id.base_tv_article_superchaptername,"")
                     }
                 }
 
-                holder.setTextColor(R.id.base_tv_article_superchaptername,CacheUtils.getThemeColor())
+                holder.setTextColor(com.knight.kotlin.library_base.R.id.base_tv_article_superchaptername,CacheUtils.getThemeColor())
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                    (holder.getView(R.id.base_tv_article_superchaptername) as TextView).background = gradientDrawable
+                    (holder.getView(com.knight.kotlin.library_base.R.id.base_tv_article_superchaptername) as TextView).background = gradientDrawable
                 } else {
-                    (holder.getView(R.id.base_tv_article_superchaptername) as TextView).setBackgroundDrawable(gradientDrawable)
+                    (holder.getView(com.knight.kotlin.library_base.R.id.base_tv_article_superchaptername) as TextView).setBackgroundDrawable(gradientDrawable)
                 }
             } else {
-                holder.setGone(R.id.base_tv_article_superchaptername,true)
+                holder.setGone(com.knight.kotlin.library_base.R.id.base_tv_article_superchaptername,true)
             }
 
             //时间赋值
             if (!niceDate.isNullOrEmpty()) {
-                holder.setText(R.id.base_item_articledata,niceDate)
+                holder.setText(com.knight.kotlin.library_base.R.id.base_item_articledata,niceDate)
             } else {
-                holder.setText(R.id.base_item_articledata,niceShareDate)
+                holder.setText(com.knight.kotlin.library_base.R.id.base_item_articledata,niceShareDate)
             }
 
             //标题
-            holder.setText(R.id.base_tv_articletitle,title.toHtml())
+            holder.setText(com.knight.kotlin.library_base.R.id.base_tv_articletitle,title.toHtml())
 
             //是否收藏
             if (collect) {
-                holder.setBackgroundResource(R.id.base_icon_collect,R.drawable.base_icon_collect)
+                holder.setBackgroundResource(com.knight.kotlin.library_base.R.id.base_icon_collect,com.knight.kotlin.library_base.R.drawable.base_icon_collect)
             } else {
-                holder.setBackgroundResource(R.id.base_icon_collect,R.drawable.base_icon_nocollect)
+                holder.setBackgroundResource(com.knight.kotlin.library_base.R.id.base_icon_collect,com.knight.kotlin.library_base.R.drawable.base_icon_nocollect)
             }
 
 

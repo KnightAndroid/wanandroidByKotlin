@@ -80,7 +80,7 @@ class WebArticleActivity :BaseActivity<WebArticleActivityBinding,WebVm>(),LoveAn
             .useDefaultIndicator(CacheUtils.getThemeColor(),2)
             .setWebChromeClient(mWebChromeClient)
             .setWebViewClient(mWebViewClient)
-            .setMainFrameErrorView(R.layout.agentweb_error_page,-1)
+            .setMainFrameErrorView(com.just.agentweb.R.layout.agentweb_error_page,-1)
             .setSecurityType(AgentWeb.SecurityType.STRICT_CHECK)
             .setWebLayout(WebLayout(this@WebArticleActivity))
             .setOpenOtherPageWays(DefaultWebClient.OpenOtherPageWays.ASK)//打开其他应用时，弹窗咨询用户是否前往其他应用

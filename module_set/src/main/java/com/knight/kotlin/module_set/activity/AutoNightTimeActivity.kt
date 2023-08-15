@@ -115,7 +115,8 @@ class AutoNightTimeActivity : BaseActivity<SetAutonighttimeActivityBinding,Empty
              * 设置晚间模式时间
              */
             mBinding.setRlStartNightTime -> {
-                val nightDialog = TimePickerDialog(this@AutoNightTimeActivity,R.style.dialog_time_style,object:TimePickerDialog.OnTimeSetListener{
+                val nightDialog = TimePickerDialog(this@AutoNightTimeActivity,
+                    com.knight.kotlin.library_widget.R.style.dialog_time_style,object:TimePickerDialog.OnTimeSetListener{
                     override fun onTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
                         temphourOfNight = if (hourOfDay < 10) "0$hourOfDay" else hourOfDay.toString()
                         tempminuterNight = if (minute < 10) "0$minute" else minute.toString()
@@ -127,7 +128,7 @@ class AutoNightTimeActivity : BaseActivity<SetAutonighttimeActivityBinding,Empty
             }
 
             mBinding.setRlStartDayTime -> {
-                val dayDialog = TimePickerDialog(this@AutoNightTimeActivity,R.style.dialog_time_style,object : TimePickerDialog.OnTimeSetListener{
+                val dayDialog = TimePickerDialog(this@AutoNightTimeActivity,com.knight.kotlin.library_widget.R.style.dialog_time_style,object : TimePickerDialog.OnTimeSetListener{
                     override fun onTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
                         temphourOfDay = if (hourOfDay < 10) "0$hourOfDay" else hourOfDay.toString()
                         tempminuterDay = if (minute < 10) "0$minute" else minute.toString()

@@ -162,9 +162,9 @@ class SearchResultActivity : BaseActivity<HomeSearchresultActivityBinding, HomeS
                 )
             }
 
-            addChildClickViewIds(R.id.base_icon_collect, R.id.base_article_collect)
+            addChildClickViewIds(com.knight.kotlin.library_base.R.id.base_icon_collect, com.knight.kotlin.library_base.R.id.base_article_collect)
             setItemChildClickListener { adapter, view, position ->
-                if (view.id == R.id.base_icon_collect || view.id == R.id.base_article_collect) {
+                if (view.id == com.knight.kotlin.library_base.R.id.base_icon_collect || view.id == com.knight.kotlin.library_base.R.id.base_article_collect) {
                     selectItem = position
                     collectOrunCollect(
                         data[position].collect,

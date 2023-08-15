@@ -112,7 +112,7 @@ class WechatOfficialAccountFragment:BaseFragment<WechatOfficialaccountFragmentBi
                     data[position].shareUser
                 )
             }
-            addChildClickViewIds(R.id.base_icon_collect)
+            addChildClickViewIds(com.knight.kotlin.library_base.R.id.base_icon_collect)
             setItemChildClickListener { adapter, view, position ->
                 selectItemPosition = position
                 collectOrunCollect(data[position].collect,data[position].id)

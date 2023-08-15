@@ -80,7 +80,7 @@ class SquareFragment:BaseFragment<SquareFragmentBinding, SquareVm>(),OnLoadMoreL
     private val mSquareQuestionAdapter:SquareQuestionAdapter by lazy {SquareQuestionAdapter(arrayListOf())}
     val mQuestionMenu: View by lazy{ LayoutInflater.from(requireActivity()).inflate(R.layout.square_question_activity,null)}
     //问题recycleview
-    val baserecycleview:SwipeRecyclerView by lazy{mQuestionMenu.findViewById(R.id.base_body_rv)}
+    val baserecycleview:SwipeRecyclerView by lazy{mQuestionMenu.findViewById(com.knight.kotlin.library_widget.R.id.base_body_rv)}
     //smartFresh布局
     val smartRefreshLayout:SmartRefreshLayout by lazy{mQuestionMenu.findViewById(R.id.include_square_question)}
     //标题
@@ -236,7 +236,7 @@ class SquareFragment:BaseFragment<SquareFragmentBinding, SquareVm>(),OnLoadMoreL
                     data.get(position).desc,data.get(position).chapterName,data[position].author,data[position].shareUser)
             }
 
-            addChildClickViewIds(R.id.base_icon_collect)
+            addChildClickViewIds(com.knight.kotlin.library_base.R.id.base_icon_collect)
             setItemChildClickListener { adapter, view, position ->
                 articleClick = false
                 selectItem = position

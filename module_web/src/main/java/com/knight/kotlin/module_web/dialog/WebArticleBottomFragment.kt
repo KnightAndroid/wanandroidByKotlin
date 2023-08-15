@@ -112,7 +112,7 @@ class WebArticleBottomFragment constructor(
                         Intent.EXTRA_TEXT,
                         getString(
                             R.string.web_share_article_url,
-                            getString(R.string.base_app_name),
+                            getString(com.knight.kotlin.library_base.R.string.base_app_name),
                             articleTitle,
                             articleUrl
                         )

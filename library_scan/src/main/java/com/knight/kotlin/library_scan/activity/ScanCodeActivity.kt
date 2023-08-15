@@ -155,8 +155,8 @@ class ScanCodeActivity:BaseActivity<ScancodeActivityBinding,EmptyViewModel>() {
                             setResult(RESULT_OK, intent)
                             finish()
                             overridePendingTransition(
-                                R.anim.base_bottom_slient,
-                                R.anim.base_bottom_out
+                                com.knight.kotlin.library_base.R.anim.base_bottom_slient,
+                                com.knight.kotlin.library_base.R.anim.base_bottom_out
                             )
                         }
                     })
@@ -240,7 +240,7 @@ class ScanCodeActivity:BaseActivity<ScancodeActivityBinding,EmptyViewModel>() {
         when(v) {
             mBinding.scanIvClose -> {
                 finish()
-                overridePendingTransition(R.anim.base_bottom_slient, R.anim.base_bottom_out)
+                overridePendingTransition(com.knight.kotlin.library_base.R.anim.base_bottom_slient, com.knight.kotlin.library_base.R.anim.base_bottom_out)
             }
             mBinding.scanIvFlash -> {
                 flashClick()

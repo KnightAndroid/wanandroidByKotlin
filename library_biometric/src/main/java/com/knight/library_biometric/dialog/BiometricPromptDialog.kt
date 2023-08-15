@@ -88,7 +88,7 @@ class BiometricPromptDialog: BaseDialogFragment<BiometricLoginDialogBinding,Empt
                 mBinding.fingureTvCancel.setVisibility(View.VISIBLE)
             }
             STATE_SUCCEED -> {
-                mBinding.fingureTvStatus.setTextColor(activity?.getColor(R.color.base_color_theme) ?: Color.parseColor("#55aff4"))
+                mBinding.fingureTvStatus.setTextColor(activity?.getColor(com.knight.kotlin.library_base.R.color.base_color_theme) ?: Color.parseColor("#55aff4"))
                 mBinding.fingureTvStatus.setText(getString(R.string.biometric_touchverify_succeeded))
                 mBinding.fingureTvCancel.setVisibility(View.VISIBLE)
                 mBinding.fingureTvStatus.postDelayed(Runnable { dismiss() }, 500)
