@@ -94,16 +94,16 @@ class ClientConfig {
     fun retrofitBuild(okHttpClient: OkHttpClient) :Retrofit {
 
         return Retrofit.Builder()
-            .baseUrl(BaseUrlConfig.URL)
+            .baseUrl(BaseUrlConfig.WANDROID_URL)
             .callFactory(object :
                 ReplaceUrlCallFactory(okHttpClient) {
                 @Nullable
                 override fun getNewUrl(baseUrlName: String?, request: Request?): HttpUrl? {
-
+                    //这里其实通过头部注解@Headers("BaseUrlName:gitee") 来说明这个链接使用 "https://gitee.com/"
                     if (baseUrlName == "gitee") {
                         val oldUrl: String = request?.url.toString()
                         val newUrl =
-                            oldUrl.replace(BaseUrlConfig.URL, "https://gitee.com/")
+                            oldUrl.replace(BaseUrlConfig.WANDROID_URL, BaseUrlConfig.GITEE_RUL)
                         return newUrl.toHttpUrl()
                     }
                     return null

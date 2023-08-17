@@ -109,9 +109,9 @@
 - [LeakCanary](https://github.com/square/leakcanary)
 
 ## 本项目开发环境
-- 基于Android Studio 4.1.1 || Android Studio Bumblebee
-- Android Gradle Plugin 6.1.1
-- Android Gradle插件4.0.0
+- 基于Android Studio Giraffe
+- Android Gradle Plugin 7.2
+- Android Gradle插件7.0.2
 
 打包方式如下图：
 ![wanandroid_release_apk.png](https://gitee.com/MengSuiXinSuoYuan/wanandroid_server/raw/master/wanandroid_picture/wanandroid_release_apk.png)
@@ -126,6 +126,15 @@
 ![wanandroid_normal_release.png](https://gitee.com/MengSuiXinSuoYuan/wanandroid_server/raw/master/wanandroid_picture/wanandroid_normal_release.png)
 
 ## 更新日志
+### 1.0.3(4)
+-  wanandroid 第四版发布
+-  AGP Gradle版本适配到7.2
+-  Android Plugin for Gradle 版本升级到7.0.2
+-  网络请求库版本和日志拦截器同时升级到4.11.0
+-  修改一些问题
+-  发布时间：2023/08/18
+
+
 ### 1.0.2(3)
 -  wanandroid 第三版发布
 -  新增关于功能(更新日志，接入合作方目录，检查更新)

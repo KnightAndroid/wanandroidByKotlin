@@ -40,7 +40,7 @@ import dagger.hilt.android.AndroidEntryPoint
 /**
  * Author:Knight
  * Time:2022/4/12 15:14
- * Description:HomeSearchActivity
+ * Description:HomeSearchActivity 搜索界面
  */
 @AndroidEntryPoint
 @Route(path = RouteActivity.Home.HomeSearchActivity)

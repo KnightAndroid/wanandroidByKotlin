@@ -63,8 +63,8 @@ object Dependencies {
        //GitHub相关--------------------------------------------------
        const val ARoute = "1.5.2"                          // 阿里路由
        const val ARouteCompiler = "1.5.2"                  // 阿里路由 APT
-       const val OkHttp = "4.9.0"                          // OkHttp
-       const val OkHttpInterceptorLogging = "4.9.1"        // OkHttp 请求Log拦截器
+       const val OkHttp = "4.11.0"                          // OkHttp
+       const val OkHttpInterceptorLogging = "4.11.0"        // OkHttp 请求Log拦截器
        const val Retrofit = "2.9.0"                        // Retrofit
        const val RetrofitConverterGson = "2.9.0"           // Retrofit Gson 转换器
        const val Gson = "2.8.7"                            // Gson
