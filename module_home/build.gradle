@@ -3,6 +3,7 @@ import com.knight.wanandroid.buildsrc.Dependencies
 apply from: '../base_module.gradle'
 android {
     resourcePrefix "home_"
+    namespace = "com.knight.kotlin.module_home"
 }
 
 

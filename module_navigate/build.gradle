@@ -1,5 +1,6 @@
 apply from: '../base_module.gradle'
 android {
     resourcePrefix "navigate_"
+    namespace = "com.knight.kotlin.module_navigate"
 }
 

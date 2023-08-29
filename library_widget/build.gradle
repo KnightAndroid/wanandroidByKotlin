@@ -1,14 +1,12 @@
 //library_base 配置文件
 import com.knight.wanandroid.buildsrc.*
-import org.gradle.api.internal.collections.DefaultPendingSource
-
 apply from:'../base_library.gradle'
 apply plugin: 'dagger.hilt.android.plugin'
 android {
     buildFeatures {
         viewBinding = true
     }
-
+    namespace = "com.knight.kotlin.library_widget"
 }
 
 dependencies {

@@ -5,6 +5,9 @@ android {
     buildFeatures {
         viewBinding = true
     }
+
+    namespace = "com.knight.kotlin.library_scan"
+
 }
 
 dependencies {

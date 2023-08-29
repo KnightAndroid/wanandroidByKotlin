@@ -1,4 +1,5 @@
 apply from: '../base_module.gradle'
 android {
     resourcePrefix "message_"
+    namespace = "com.knight.kotlin.module_message"
 }

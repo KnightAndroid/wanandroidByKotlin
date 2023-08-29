@@ -1,5 +1,6 @@
 apply from: '../base_module.gradle'
 android {
     resourcePrefix "welcome_"
+    namespace = "com.knight.kotlin.module_welcome"
 }
 

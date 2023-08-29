@@ -1,7 +1,9 @@
 //library-aop配置文件
 import com.knight.wanandroid.buildsrc.*
 apply from:'../base_library.gradle'
-
+android {
+    namespace = "com.knight.kotlin.library_permiss"
+}
 dependencies {
     implementation Dependencies.JetPack.HiltCore
     //依赖Util

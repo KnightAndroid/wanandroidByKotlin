@@ -9,6 +9,7 @@ apply plugin: 'android-aspectjx'
 
 
 android {
+    namespace = "com.knight.kotlin.wanandroid"
     compileSdkVersion ProjectBuildDencies.compileSdkVersion
     buildToolsVersion ProjectBuildDencies.buildToolsVersion
 

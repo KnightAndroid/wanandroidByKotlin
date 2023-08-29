@@ -1,6 +1,7 @@
 apply from: '../base_module.gradle'
 android {
     resourcePrefix "mine_"
+    namespace = "com.knight.kotlin.module_mine"
 }
 
 dependencies {

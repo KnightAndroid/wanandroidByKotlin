@@ -1,4 +1,5 @@
 apply from: '../base_module.gradle'
 android {
     resourcePrefix "square_"
+    namespace = "com.knight.kotlin.module_square"
 }

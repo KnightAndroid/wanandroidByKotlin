@@ -3,6 +3,9 @@ import com.knight.wanandroid.buildsrc.*
 apply from:'../base_library.gradle'
 apply plugin: 'dagger.hilt.android.plugin'
 android {
+
+   namespace = "com.knight.kotlin.library_base"
+
     buildFeatures {
         viewBinding = true
     }

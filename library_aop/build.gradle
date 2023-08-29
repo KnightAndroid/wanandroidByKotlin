@@ -3,7 +3,9 @@ import com.knight.wanandroid.buildsrc.*
 apply from:'../base_library.gradle'
 apply plugin: 'android-aspectjx'
 
-
+android {
+    namespace = "com.knight.kotlin.library_aop"
+}
 dependencies {
     //implementation Dependencies.GitHub.aspectJ
     implementation project(path: ':library_base')
