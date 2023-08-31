@@ -223,6 +223,8 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
                             )
                         )
                     }
+
+                    else -> {}
                 }
             }
         })
@@ -659,6 +661,8 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
                 home_rl_message.visibility = View.GONE
                 initRequestData()
             }
+
+            else -> {}
         }
 
     }
@@ -700,21 +704,21 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
         })
 
         valueANimator.addListener(object : Animator.AnimatorListener {
-            override fun onAnimationStart(animation: Animator?) {
+            override fun onAnimationStart(animation: Animator) {
                 group.visibility = View.VISIBLE
             }
 
-            override fun onAnimationEnd(animation: Animator?) {
+            override fun onAnimationEnd(animation: Animator) {
                 if (group == mBinding.homeGpIconCourse && reverse) {
                     setViewVisible(false)
                 }
             }
 
-            override fun onAnimationCancel(animation: Animator?) {
+            override fun onAnimationCancel(animation: Animator) {
 
             }
 
-            override fun onAnimationRepeat(animation: Animator?) {
+            override fun onAnimationRepeat(animation: Animator) {
 
             }
         })

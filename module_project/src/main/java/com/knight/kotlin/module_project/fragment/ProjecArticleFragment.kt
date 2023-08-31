@@ -15,7 +15,6 @@ import com.knight.kotlin.library_base.util.ArouteUtils
 import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_base.util.ColorUtils
 import com.knight.kotlin.library_widget.ktx.init
-import com.knight.kotlin.module_project.R
 import com.knight.kotlin.module_project.adapter.ProjectArticleAdapter
 import com.knight.kotlin.module_project.databinding.ProjectArticleFragmentBinding
 import com.knight.kotlin.module_project.entity.ProjectArticleListBean
@@ -219,6 +218,7 @@ class ProjecArticleFragment:BaseFragment<ProjectArticleFragmentBinding, ProjectA
                 onRefresh(mBinding.includeProject.baseFreshlayout)
             }
 
+            else -> {}
         }
 
     }

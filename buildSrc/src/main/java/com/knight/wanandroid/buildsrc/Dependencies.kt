@@ -24,9 +24,9 @@ object Dependencies {
        const val TestExtJunit = "1.1.2"
        const val TestEspresso = "3.3.0"
        //Activity
-       const val ActivityKtx = "1.1.0"
+       const val ActivityKtx = "1.5.1"
        //Fragment
-       const val FragmentKtx = "1.2.5"
+       const val FragmentKtx = "1.5.2"
        //分包 MultiDex
        const val MultiDex = "2.0.1"
 
@@ -34,25 +34,25 @@ object Dependencies {
        //单元测试
        const val Junit = "4.13"
        //Material样式
-       const val Material = "1.2.0"
+       const val Material = "1.5.0"
        //智能排版
        const val FlexLayoutVersion = "2.0.1"
 
 
        //kotlin相关-----------------------------------------------
-       const val Kotlin = "1.5.10"
+       const val Kotlin = "1.8.10"
        //协程
-       const val Coroutines = "1.5.0"
+       const val Coroutines = "1.7.0"
 
        //JetPack--------------------------------------------------
        //Lifecycle相关（ViewModel & LiveData & Lifecycle）
-       const val Lifecycle = "2.3.1"
+       const val Lifecycle = "2.5.1"
        const val LifecycleExtension = "2.2.0"
        //DI框架-Hilt
-       const val Hilt = "2.37"
+       const val Hilt = "2.47"
        const val HiltAndroidx = "1.0.0"
        //数据库Room
-       const val RoomVersion = "2.3.0"
+       const val RoomVersion = "2.4.3"
        //camerax
        const val CameraxVersion = "1.0.2"
        //cameraView
@@ -72,7 +72,7 @@ object Dependencies {
        const val AutoService = "1.0"                       // 自动生成SPI暴露服务文件
        const val EventBus = "3.3.1"                        // 事件总线
        const val AutoSize = "1.2.1"                        // 屏幕适配
-       const val BottomNavigation = "2.0.4"                // 底部导航栏
+       const val BottomNavigation = "2.0.0"                // 底部导航栏
        const val MagicIndicator = "1.7.0"                  // 指示器
        const val Agent = "v5.0.0-alpha.1-androidx"         // Android WebView
        const val Sketch = "2.7.1"                          // 预览大图
@@ -85,7 +85,6 @@ object Dependencies {
        const val BannerVersion = "2.2.2"                   // Banner
        const val ShimmerLayoutVersion = "2.1.0"            // shimmerLayout
        //第三方其他相关------------------------------------------------------
-       const val Aspectj = "1.9.7"                         // aop相关
        const val LeakCanaryVersion = "2.8.1"               // 内存泄漏相关
        const val buglyVersion = "4.0.4"                    // bugly异常上报
 
@@ -201,8 +200,9 @@ object Dependencies {
         const val EventBusAPT = "org.greenrobot:eventbus-annotation-processor:${Version.EventBus}"
         //屏幕适配 https://github.com/JessYanCoding/AndroidAutoSize
         const val AutoSize = "me.jessyan:autosize:${Version.AutoSize}"
-        //底部导航栏 https://github.com/ittianyu/BottomNavigationViewEx
-        const val bottomNavigate = "com.github.ittianyu:BottomNavigationViewEx:${Version.BottomNavigation}"
+        //底部导航栏 https://github.com/CListery/BottomNavigationEx
+        const val bottomNavigate = "io.github.clistery:bottomnavigationex-ex:${Version.BottomNavigation}"
+        const val bottomNavigateEx = "io.github.clistery:bottomnavigationex-16x:${Version.BottomNavigation}"
         //MMKV https://github.com/Tencent/MMKV
         const val MMKV = "com.tencent:mmkv:${Version.MMKV}"
         //滑动切换 https://github.com/hackware1993/MagicIndicator
@@ -211,8 +211,6 @@ object Dependencies {
         const val AgentWeb = "com.github.Justson.AgentWeb:agentweb-core:${Version.Agent}"
         //预览大图插件 https://github.com/panpf/sketch
         const val SketchPhoto = "io.github.panpf.sketch:sketch:${Version.Sketch}"
-        //aop
-        const val aspectJ = "org.aspectj:aspectjrt:${Version.Aspectj}"
         //全局加载视图 https://github.com/KingJA/LoadSir
         const val LoadSir = "com.kingja.loadsir:loadsir:${Version.LoadSir}"
         //Cookie管理框架 https://github.com/franmontiel/PersistentCookieJar https://github.com/gotev/android-cookie-store

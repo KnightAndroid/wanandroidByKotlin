@@ -67,7 +67,7 @@ class BiometricPromptApiM constructor(activity:FragmentActivity) : IBiometricPro
                 }
             }
         })
-        mDialog?.showAllowingStateLoss(mActivity?.supportFragmentManager, "BiometricPromptApiM")
+        mActivity?.supportFragmentManager?.let { mDialog?.showAllowingStateLoss(it, "BiometricPromptApiM") }
 
         mCancellationSignal = cancel
         if (mCancellationSignal == null) {

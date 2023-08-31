@@ -218,6 +218,7 @@ class OtherShareArticleActivity :BaseActivity<MineOthershareActivityBinding,Othe
                 onRefresh(mBinding.includeOtherSharearticle.baseFreshlayout)
             }
 
+            else -> {}
         }
 
     }

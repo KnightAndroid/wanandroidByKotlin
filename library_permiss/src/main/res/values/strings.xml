@@ -1,34 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="permission_hint">授权提示</string>
-    <string name="permission_message">使用此功能需要授予权限</string>
+    <string name="permission_description">权限说明</string>
+    <string name="permission_message">使用此功能需要先授予%s</string>
     <string name="permission_granted">授予</string>
     <string name="permission_denied">取消</string>
 
     <string name="permission_alert">授权提醒</string>
-    <string name="permission_fail_one">授权失败，请正确授予权限</string>
-    <string name="permission_fail_two">获取权限失败，请手动授予权限</string>
-    <string name="permission_fail_three">获取权限失败，请手动授予%s</string>
-    <string name="permission_fail_four">没有授予后台定位权限，请您选择“始终允许”</string>
-    <string name="permission_goto">前往授权</string>
+    <string name="permission_fail_hint">授权失败，请正确授予权限</string>
+    <string name="permission_fail_assign_hint">授权失败，请正确授予%s</string>
+    <string name="permission_manual_fail_hint">获取权限失败，请手动授予权限</string>
+    <string name="permission_manual_assign_fail_hint">获取权限失败，请手动授予%s</string>
+    <string name="permission_manual_assign_fail_background_location_hint">获取后台定位权限失败，请在定位权限中选择%s</string>
+    <string name="permission_manual_assign_fail_background_sensors_hint">获取后台传感器权限失败，请在传感器权限中选择%s</string>
+    <string name="permission_background_location_fail_hint">获取后台定位权限失败，\n请选择%s选项</string>
+    <string name="permission_background_sensors_fail_hint">获取后台传感器权限失败，\n请选择%s选项</string>
+    <string name="permission_background_default_option_label">始终允许</string>
+    <string name="permission_media_location_hint_fail">获取媒体位置权限失败\n请清除应用数据后重试</string>
+    <string name="permission_goto_setting_page">前往授权</string>
+
+    <string name="permission_unknown">权限</string>
+    <string name="permission_comma">、</string>
 
     <string name="permission_calendar">日历权限</string>
     <string name="permission_camera">相机权限</string>
-    <string name="permisssion_contacts">通讯录权限</string>
+    <string name="permission_contacts">通讯录权限</string>
     <string name="permission_location">定位权限</string>
     <string name="permission_location_background">后台定位权限</string>
-    <string name="permission_bluetooth">附近的设备权限</string>"
+    <string name="permission_nearby_devices">附近的设备权限</string>
     <string name="permission_microphone">麦克风权限</string>
     <string name="permission_phone">电话权限</string>
-    <string name="permission_call_log">通话记录权限</string>
-    <string name="permission_sensors">身体传感器权限</string>
-    <string name="permission_activity_recognition">健身运动权限</string>
+    <string name="permission_call_logs">通话记录权限</string>
+    <string name="permission_body_sensors">身体传感器权限</string>
+    <string name="permission_body_sensors_background">后台身体传感器权限</string>
+    <string name="permission_activity_recognition_api29">健身运动权限</string>
+    <string name="permission_activity_recognition_api30">身体活动权限</string>
+    <string name="permission_access_media_location">读取媒体文件位置权限</string>
     <string name="permission_sms">短信权限</string>
     <string name="permission_storage">存储权限</string>
+    <string name="permission_post_notifications">发送通知权限</string>
+    <string name="permission_image_and_video">照片和视频权限</string>
+    <string name="permission_music_and_audio">音乐和音频权限</string>
+    <string name="permission_get_installed_apps">读取应用列表权限</string>
 
-    <string name="permission_install">安装应用权限</string>
-    <string name="permission_notification">通知栏权限</string>
-    <string name="permission_window">悬浮窗权限</string>
-    <string name="permission_setting">系统设置权限</string>
-    <string name="permission_task">查看使用情况权限</string>
+    <string name="permission_all_file_access">所有文件访问权限</string>
+    <string name="permission_install_unknown_apps">安装应用权限</string>
+    <string name="permission_display_over_other_apps">悬浮窗权限</string>
+    <string name="permission_modify_system_settings">修改系统设置权限</string>
+    <string name="permission_allow_notifications">通知权限</string>
+    <string name="permission_allow_notifications_access">通知栏监听权限</string>
+    <string name="permission_apps_with_usage_access">查看使用情况权限</string>
+    <string name="permission_alarms_reminders">查看闹钟提醒权限</string>
+    <string name="permission_do_not_disturb_access">勿扰权限</string>
+    <string name="permission_ignore_battery_optimize">忽略电池优化权限</string>
+    <string name="permission_picture_in_picture">画中画权限</string>
+    <string name="permission_vpn">\tVPN\t权限</string>
+    <string name="permission_notification_listener_toast">监听到新的通知消息，标题为：%s，内容为：%s</string>
 </resources>

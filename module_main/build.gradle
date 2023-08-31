@@ -8,4 +8,5 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation Dependencies.GitHub.bottomNavigate
+    implementation Dependencies.GitHub.bottomNavigateEx
 }

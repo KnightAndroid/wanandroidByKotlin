@@ -211,6 +211,8 @@ class MineFragment: BaseFragment<MineFragmentBinding, MineViewModel>() {
                     mBinding.mineIvHead
                 )
             }
+
+            else -> {}
         }
 
     }

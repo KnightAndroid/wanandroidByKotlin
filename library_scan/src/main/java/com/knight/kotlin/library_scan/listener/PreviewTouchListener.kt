@@ -33,7 +33,7 @@ class PreviewTouchListener constructor(context: Context) : View.OnTouchListener{
     }
 
 
-    override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+    override fun onTouch(v: View?, event: MotionEvent): Boolean {
         mScaleGestureDetector?.onTouchEvent(event)
         return true
     }

@@ -176,6 +176,8 @@ class HomeArticleFragment:BaseFragment<HomeArticleFragmentBinding,HomeArticleVm>
                 currentPage = 0
                 mViewModel.getArticleByTag(currentPage,HomeConstants.ARTICLE_TYPE)
             }
+
+            else -> {}
         }
     }
 

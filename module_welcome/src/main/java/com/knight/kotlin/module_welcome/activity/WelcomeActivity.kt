@@ -22,7 +22,6 @@ import dagger.hilt.android.AndroidEntryPoint
 class WelcomeActivity : BaseActivity<WelcomeActivityBinding, WelcomeVm>() {
     override val mViewModel: WelcomeVm by viewModels()
     override fun WelcomeActivityBinding.initView() {
-        setTheme(getActivityTheme())
         logoAnim.setTextColor(CacheUtils.getThemeColor())
         logoAnim.addOffsetAnimListener(object : AnimatorListenerAdapter() {
             override fun onAnimationEnd(animation: Animator) {

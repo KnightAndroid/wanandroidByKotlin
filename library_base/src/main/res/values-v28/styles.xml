@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <style name="base_AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@android:color/white</item>
@@ -13,6 +13,7 @@
         <item name="android:windowAnimationStyle">@android:style/Animation.Toast</item>
 
     </style>
+
     <!-- 确定按钮样式-->
     <style name="base_positiveBtnStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
         <item name="android:textColor">#55aff4</item>

@@ -1,3 +1,5 @@
+//自定义gradle脚本-api模块的生成 为了生成-api后缀模块的脚本
+//链接：https://juejin.cn/post/6945413567285821453
 gradle.projectsLoaded {
     // 自动为module引入生成的module-api
     gradle.rootProject.allprojects.forEach { Project p ->

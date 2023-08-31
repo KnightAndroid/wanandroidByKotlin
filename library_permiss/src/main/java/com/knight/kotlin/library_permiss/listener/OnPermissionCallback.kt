@@ -18,7 +18,7 @@ interface OnPermissionCallback {
      * 有权限被拒绝授予时回调
      *
      * @param permissions 请求失败的权限组
-     * @param never       是否有某个权限被永久拒绝了
+     * @param never       是否勾选了不再询问选项
      */
-    fun onDenied(permissions: List<String>, never: Boolean) {}
+    fun onDenied(permissions: List<String>,  doNotAskAgain: Boolean) {}
 }

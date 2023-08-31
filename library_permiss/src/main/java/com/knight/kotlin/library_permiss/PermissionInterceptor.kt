@@ -1,14 +1,28 @@
 package com.knight.kotlin.library_permiss
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
-import android.content.DialogInterface
+import android.content.res.Configuration
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Build
+import android.os.Handler
+import android.os.Looper
+import android.text.TextUtils
+import android.view.Gravity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.view.WindowManager
+import android.widget.PopupWindow
+import android.widget.TextView
 import androidx.fragment.app.FragmentActivity
+import com.knight.kotlin.library_permiss.fragment.PermissionFragment
 import com.knight.kotlin.library_permiss.listener.IPermissionInterceptor
 import com.knight.kotlin.library_permiss.listener.OnPermissionCallback
 import com.knight.kotlin.library_permiss.permissions.Permission
-import com.knight.kotlin.library_util.toast.ToastUtils
+
 
 /**
  * Author:Knight
@@ -17,206 +31,194 @@ import com.knight.kotlin.library_util.toast.ToastUtils
  */
 class PermissionInterceptor: IPermissionInterceptor {
 
-    override fun grantedPermissions(
-        activity: FragmentActivity,
-        allPermissions: List<String>,
-        grantedPermissions: List<String>,
-        all: Boolean,
-        callback: OnPermissionCallback?
-    ) {
-        if (callback != null) {
-            callback.onGranted(grantedPermissions, all)
-        }
-    }
+    val HANDLER: Handler = Handler(Looper.getMainLooper())
 
-    override fun deniedPermissions(
-        activity: FragmentActivity,
-        allPermissions: List<String>,
-        deniedPermissions: List<String>,
-        never: Boolean,
-        callback: OnPermissionCallback?
+    /** 权限申请标记  */
+    private var mRequestFlag = false
+
+    /** 权限申请说明 Popup  */
+    private var mPermissionPopup: PopupWindow? = null
+
+    override fun launchPermissionRequest(
+         activity: FragmentActivity,
+         allPermissions: List<String>,
+         callback: OnPermissionCallback
     ) {
-        callback?.onDenied(deniedPermissions, never)
-        if (never) {
-            showPermissionDialog(activity, deniedPermissions)
-            return
+        mRequestFlag = true
+        val deniedPermissions: List<String> = XXPermissions.getDenied(activity, allPermissions)
+        val message = activity.getString(
+            R.string.permission_message,
+            PermissionNameConvert.getPermissionString(activity, deniedPermissions)
+        )
+        val decorView = activity.window.decorView as ViewGroup
+        val activityOrientation = activity.resources.configuration.orientation
+        var showPopupWindow = activityOrientation == Configuration.ORIENTATION_PORTRAIT
+        for (permission in allPermissions) {
+            if (!XXPermissions.isSpecial(permission)) {
+                continue
+            }
+            if (XXPermissions.isGranted(activity, permission)) {
+                continue
+            }
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R &&
+                TextUtils.equals(Permission.MANAGE_EXTERNAL_STORAGE, permission)
+            ) {
+                continue
+            }
+            // 如果申请的权限带有特殊权限，并且还没有授予的话
+            // 就不用 PopupWindow 对话框来显示，而是用 Dialog 来显示
+            showPopupWindow = false
+            break
         }
-        if (deniedPermissions.size == 1 && Permission.ACCESS_BACKGROUND_LOCATION.equals(
-                deniedPermissions[0]
+        if (showPopupWindow) {
+            PermissionFragment.launch(
+                activity,ArrayList(allPermissions), this,
+                callback
             )
-        ) {
-            ToastUtils.show(R.string.permission_fail_four)
-            return
-        }
-        if (callback == null) {
-            return
-        }
-        ToastUtils.show(R.string.permission_fail_one)
-    }
-
-    /**
-     *
-     * 显示授权对话框
-     * @param activity
-     * @param permissions
-     */
-    protected fun showPermissionDialog(activity: FragmentActivity, permissions: List<String>) {
-        AlertDialog.Builder(activity)
-            .setTitle(R.string.permission_alert)
-            .setCancelable(false)
-            .setMessage(getPermissionHint(activity, permissions))
-            .setPositiveButton(R.string.permission_goto,
-                DialogInterface.OnClickListener { dialog, which ->
+            // 延迟 300 毫秒是为了避免出现 PopupWindow 显示然后立马消失的情况
+            // 因为框架没有办法在还没有申请权限的情况下，去判断权限是否永久拒绝了，必须要在发起权限申请之后
+            // 所以只能通过延迟显示 PopupWindow 来做这件事，如果 300 毫秒内权限申请没有结束，证明本次申请的权限没有永久拒绝
+            HANDLER.postDelayed({
+                if (!mRequestFlag) {
+                    return@postDelayed
+                }
+                if (activity.isFinishing || Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1 && activity.isDestroyed
+                ) {
+                    return@postDelayed
+                }
+                showPopupWindow(activity, decorView, message)
+            }, 300)
+        } else {
+            // 注意：这里的 Dialog 只是示例，没有用 DialogFragment 来处理 Dialog 生命周期
+            AlertDialog.Builder(activity)
+                .setTitle(R.string.permission_description)
+                .setMessage(message)
+                .setCancelable(false)
+                .setPositiveButton(R.string.permission_granted) { dialog, which ->
                     dialog.dismiss()
-                    XXPermissions.startPermissionActivity(activity, permissions)
-                })
-            .show()
+                    PermissionFragment.launch(
+                        activity, ArrayList(allPermissions),
+                        this@PermissionInterceptor, callback
+                    )
+                }
+                .setNegativeButton(R.string.permission_denied) { dialog, which ->
+                    dialog.dismiss()
+                    if (callback == null) {
+                        return@setNegativeButton
+                    }
+                    callback.onDenied(deniedPermissions, false)
+                }
+                .show()
+        }
     }
 
-    /**
-     *
-     * 根据权限获取提示
-     * @param context
-     * @param permissions
-     * @return
-     */
-    protected fun getPermissionHint(context: Context, permissions: List<String>): String {
-        if (permissions == null || permissions.isEmpty()) {
-            return context.getString(R.string.permission_fail_two)
-        }
-        val hints: MutableList<String> = ArrayList()
-        for (permission in permissions) {
-            when (permission) {
-                Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE, Permission.MANAGE_EXTERNAL_STORAGE -> {
-                    val hint = context.getString(R.string.permission_storage)
-                    if (!hints.contains(hint)) {
-                        hints.add(hint)
-                    }
-                }
-                Permission.CAMERA -> {
-                    val hint = context.getString(R.string.permission_camera)
-                    if (!hints.contains(hint)) {
-                        hints.add(hint)
-                    }
-                }
-                Permission.RECORD_AUDIO -> {
-                    val hint = context.getString(R.string.permission_microphone)
-                    if (!hints.contains(hint)) {
-                        hints.add(hint)
-                    }
-                }
-                Permission.ACCESS_FINE_LOCATION, Permission.ACCESS_COARSE_LOCATION, Permission.ACCESS_BACKGROUND_LOCATION -> {
-                    var hint: String
-                    hint = if (!permissions.contains(Permission.ACCESS_FINE_LOCATION)
-                        && !permissions.contains(Permission.ACCESS_COARSE_LOCATION)
-                    ) {
-                        context.getString(R.string.permission_location_background)
-                    } else {
-                        context.getString(R.string.permission_location)
-                    }
-                    if (!hints.contains(hint)) {
-                        hints.add(hint)
-                    }
-                }
-                Permission.BLUETOOTH_SCAN, Permission.BLUETOOTH_CONNECT, Permission.BLUETOOTH_ADVERTISE -> {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                        val hint = context.getString(R.string.permission_bluetooth)
-                        if (!hints.contains(hint)) {
-                            hints.add(hint)
-                        }
-                    }
-                }
-                Permission.READ_PHONE_STATE, Permission.CALL_PHONE, Permission.ADD_VOICEMAIL, Permission.USE_SIP, Permission.READ_PHONE_NUMBERS, Permission.ANSWER_PHONE_CALLS -> {
-                    val hint = context.getString(R.string.permission_phone)
-                    if (!hints.contains(hint)) {
-                        hints.add(hint)
-                    }
-                }
-                Permission.GET_ACCOUNTS, Permission.READ_CONTACTS, Permission.WRITE_CONTACTS -> {
-                    val hint = context.getString(R.string.permisssion_contacts)
-                    if (!hints.contains(hint)) {
-                        hints.add(hint)
-                    }
-                }
-                Permission.READ_CALENDAR, Permission.WRITE_CALENDAR -> {
-                    val hint = context.getString(R.string.permission_calendar)
-                    if (!hints.contains(hint)) {
-                        hints.add(hint)
-                    }
-                }
-                Permission.READ_CALL_LOG, Permission.WRITE_CALL_LOG, Permission.PROCESS_OUTGOING_CALLS -> {
-                    val hint =
-                        context.getString(if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) R.string.permission_call_log else R.string.permission_phone)
-                    if (!hints.contains(hint)) {
-                        hints.add(hint)
-                    }
-                }
-                Permission.BODY_SENSORS -> {
-                    val hint = context.getString(R.string.permission_sensors)
-                    if (!hints.contains(hint)) {
-                        hints.add(hint)
-                    }
-                }
-                Permission.ACTIVITY_RECOGNITION -> {
-                    val hint = context.getString(R.string.permission_activity_recognition)
-                    if (!hints.contains(hint)) {
-                        hints.add(hint)
-                    }
-                }
-                Permission.SEND_SMS, Permission.RECEIVE_SMS, Permission.READ_SMS, Permission.RECEIVE_WAP_PUSH, Permission.RECEIVE_MMS -> {
-                    val hint = context.getString(R.string.permission_sms)
-                    if (!hints.contains(hint)) {
-                        hints.add(hint)
-                    }
-                }
-                Permission.REQUEST_INSTALL_PACKAGES -> {
-                    val hint = context.getString(R.string.permission_install)
-                    if (!hints.contains(hint)) {
-                        hints.add(hint)
-                    }
-                }
-                Permission.NOTIFICATION_SERVICE -> {
-                    val hint = context.getString(R.string.permission_notification)
-                    if (!hints.contains(hint)) {
-                        hints.add(hint)
-                    }
-                }
-                Permission.SYSTEM_ALERT_WINDOW -> {
-                    val hint = context.getString(R.string.permission_window)
-                    if (!hints.contains(hint)) {
-                        hints.add(hint)
-                    }
-                }
-                Permission.WRITE_SETTINGS -> {
-                    val hint = context.getString(R.string.permission_setting)
-                    if (!hints.contains(hint)) {
-                        hints.add(hint)
-                    }
-                }
-                Permission.PACKAGE_USAGE_STATS -> {
-                    val hint = context.getString(R.string.permission_task)
-                    if (!hints.contains(hint)) {
-                        hints.add(hint)
-                    }
-                }
-                else -> {
-                }
-            }
-        }
-        if (!hints.isEmpty()) {
-            val builder = StringBuilder()
-            for (text in hints) {
-                if (builder.length == 0) {
-                    builder.append(text)
-                } else {
-                    builder.append("、").append(text)
-                }
-            }
-            builder.append(" ")
-            return context.getString(R.string.permission_fail_three, builder.toString())
-        }
-        return context.getString(R.string.permission_fail_two)
+//    fun grantedPermissionRequest(
+//        activity: Activity?,  allPermissions: List<String>,
+//        grantedPermissions: List<String>, allGranted: Boolean,
+//         callback: OnPermissionCallback
+//    ) {
+//        if (callback == null) {
+//            return
+//        }
+//        callback.onGranted(grantedPermissions, allGranted)
+//    }
+//
+//    fun deniedPermissionRequest(
+//         activity: Activity, allPermissions: List<String>,
+//         deniedPermissions: List<String>, doNotAskAgain: Boolean,
+//        callback: OnPermissionCallback
+//    ) {
+//        callback?.onDenied(deniedPermissions, doNotAskAgain)
+//        if (doNotAskAgain) {
+//            if (deniedPermissions.size == 1 && Permission.ACCESS_MEDIA_LOCATION.equals(
+//                    deniedPermissions[0]
+//                )
+//            ) {
+//                ToastUtils.show(R.string.permission_media_location_hint_fail)
+//                return
+//            }
+//            showPermissionSettingDialog(activity, allPermissions, deniedPermissions, callback)
+//            return
+//        }
+//        if (deniedPermissions.size == 1) {
+//            val deniedPermission = deniedPermissions[0]
+//            val backgroundPermissionOptionLabel = getBackgroundPermissionOptionLabel(activity)
+//            if (Permission.ACCESS_BACKGROUND_LOCATION.equals(deniedPermission)) {
+//                ToastUtils.show(
+//                    activity.getString(
+//                        R.string.permission_background_location_fail_hint,
+//                        backgroundPermissionOptionLabel
+//                    )
+//                )
+//                return
+//            }
+//            if (Permission.BODY_SENSORS_BACKGROUND.equals(deniedPermission)) {
+//                ToastUtils.show(
+//                    activity.getString(
+//                        R.string.permission_background_sensors_fail_hint,
+//                        backgroundPermissionOptionLabel
+//                    )
+//                )
+//                return
+//            }
+//        }
+//        val message: String
+//        val permissionNames: List<String> =
+//            PermissionNameConvert.permissionsToNames(activity, deniedPermissions)
+//        message = if (!permissionNames.isEmpty()) {
+//            activity.getString(
+//                R.string.permission_fail_assign_hint,
+//                PermissionNameConvert.listToString(activity, permissionNames)
+//            )
+//        } else {
+//            activity.getString(R.string.permission_fail_hint)
+//        }
+//        ToastUtils.show(message)
+//    }
+
+    override fun finishPermissionRequest(
+         activity: Activity,  allPermissions: List<String>,
+        skipRequest: Boolean,  callback: OnPermissionCallback
+    ) {
+        mRequestFlag = false
+        dismissPopupWindow()
     }
+
+    private fun showPopupWindow(activity: Activity, decorView: ViewGroup, message: String) {
+        if (mPermissionPopup == null) {
+            val contentView: View = LayoutInflater.from(activity)
+                .inflate(R.layout.permission_description_popup, decorView, false)
+            mPermissionPopup = PopupWindow(activity)
+            mPermissionPopup?.let{
+                it.setContentView(contentView)
+                it.setWidth(WindowManager.LayoutParams.MATCH_PARENT)
+                it.setHeight(WindowManager.LayoutParams.WRAP_CONTENT)
+                it.setAnimationStyle(androidx.appcompat.R.style.Animation_AppCompat_Dialog)
+                it.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+                it.setTouchable(true)
+                it.setOutsideTouchable(true)
+            }
+
+        }
+        val messageView = mPermissionPopup!!.getContentView()
+            .findViewById<TextView>(R.id.tv_permission_description_message)
+        messageView.text = message
+        // 注意：这里的 PopupWindow 只是示例，没有监听 Activity onDestroy 来处理 PopupWindow 生命周期
+        mPermissionPopup!!.showAtLocation(decorView, Gravity.TOP, 0, 0)
+    }
+
+    private fun dismissPopupWindow() {
+        if (mPermissionPopup == null) {
+            return
+        }
+        if (!mPermissionPopup!!.isShowing()) {
+            return
+        }
+        mPermissionPopup!!.dismiss()
+    }
+
+
+
 
 
 }

@@ -1,4 +1,4 @@
-package com.knight.kotlin.module_main
+package com.knight.kotlin.module_main.activity
 
 import android.view.KeyEvent
 import androidx.activity.viewModels
@@ -15,6 +15,7 @@ import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_base.util.ColorUtils
 import com.knight.kotlin.library_util.ViewInitUtils
 import com.knight.kotlin.library_util.toast
+import com.knight.kotlin.module_main.R
 import com.knight.kotlin.module_main.databinding.MainActivityBinding
 import com.knight.kotlin.module_main.vm.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -41,9 +42,9 @@ class MainActivity : BaseActivity<MainActivityBinding,MainViewModel>() {
             isUserInputEnabled = false
         )
         btnNav.run {
-            itemTextColor = ColorUtils.createColorStateList(CacheUtils.getThemeColor(),ColorUtils.convertToColorInt("a6a6a6"))
-            itemIconTintList = ColorUtils.createColorStateList(CacheUtils.getThemeColor(),ColorUtils.convertToColorInt("a6a6a6"))
-            setOnNavigationItemSelectedListener {
+            realView.itemTextColor =  ColorUtils.createColorStateList(CacheUtils.getThemeColor(),ColorUtils.convertToColorInt("a6a6a6"))
+            setIconTintList(ColorUtils.createColorStateList(CacheUtils.getThemeColor(),ColorUtils.convertToColorInt("a6a6a6")))
+            realView.setOnItemSelectedListener {
                 when(it.itemId) {
                     R.id.homeFragment -> mainViewpager.setCurrentItem(0,false)
                     R.id.squareFragment -> mainViewpager.setCurrentItem(1,false)
@@ -53,6 +54,7 @@ class MainActivity : BaseActivity<MainActivityBinding,MainViewModel>() {
                 }
                 true
             }
+
         }
     }
 
@@ -121,6 +123,7 @@ class MainActivity : BaseActivity<MainActivityBinding,MainViewModel>() {
                 openOrCloseEye(event.getBoolean())
            }
 
+            else -> {}
         }
     }
 

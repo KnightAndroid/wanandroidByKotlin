@@ -33,6 +33,7 @@ import com.knight.kotlin.library_database.entity.PushDateEntity
 import com.knight.kotlin.library_permiss.XXPermissions
 import com.knight.kotlin.library_permiss.listener.OnPermissionCallback
 import com.knight.kotlin.library_permiss.permissions.Permission
+import com.knight.kotlin.library_permiss.utils.PermissionUtils
 import com.knight.kotlin.library_scan.activity.ScanCodeActivity
 import com.knight.kotlin.library_scan.annoation.ScanStyle
 import com.knight.kotlin.library_scan.decode.ScanCodeConfig
@@ -223,6 +224,17 @@ class HomeFragment : BaseFragment<HomeFragmentBinding, HomeVm>() {
                                    .build().start(ScanCodeActivity::class.java)
                            }
                        }
+
+                       override fun onDenied(permissions: List<String>, doNotAskAgain: Boolean) {
+                           super.onDenied(permissions, doNotAskAgain)
+                           activity?.let {
+                               PermissionUtils.showPermissionSettingDialog(it,permissions,permissions,object :OnPermissionCallback{
+                                   override fun onGranted(permissions: List<String>, all: Boolean) {
+
+                                   }
+                               })
+                           }
+                       }
                    })
            }
            mBinding.homeIncludeToolbar.homeIvEveryday->{
@@ -310,6 +322,7 @@ class HomeFragment : BaseFragment<HomeFragmentBinding, HomeVm>() {
                 isWithStatusTheme(event.getBoolean())
             }
 
+            else -> {}
         }
 
     }

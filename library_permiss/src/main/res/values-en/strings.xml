@@ -1,31 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="permission_hint">Authorization prompt</string>
-    <string name="permission_message">Permission is required to use this feature</string>
-    <string name="permission_granted">Grant</string>
-    <string name="permission_denied">Cancel</string>
+    <string name="permission_description">Permission description</string>
+    <string name="permission_message">%s needs to be granted to use this feature</string>
+    <string name="permission_granted">Granted</string>
+    <string name="permission_denied">Denied</string>
+
     <string name="permission_alert">Authorization reminder</string>
-    <string name="permission_fail_one">Authorization failed, please grant permission correctly</string>
-    <string name="permission_fail_two">Failed to obtain permission. Please grant permission manually</string>
-    <string name="permission_fail_three">Failed to obtain permission, please grant %s manually</string>
-    <string name="permission_fail_four">Background positioning permission is not granted. Please select "always allow"</string>
-    <string name="permission_goto">Go to authorization</string>
-    <string name="permission_calendar">Calendar permissions</string>
-    <string name="permission_camera">Camera permissions</string>
-    <string name="permisssion_contacts">Address book permissions</string>
-    <string name="permission_location">Location permissions</string>
-    <string name="permission_location_background">Background positioning permission</string>
-    <string name="permission_bluetooth">Nearby device permissions</string>"
-    <string name="permission_microphone">Microphone permissions</string>
-    <string name="permission_phone">Telephone authority</string>
-    <string name="permission_call_log">Call record permission</string>
-    <string name="permission_sensors">Body sensor permissions</string>
-    <string name="permission_activity_recognition">Fitness exercise authority</string>
-    <string name="permission_sms">SMS permission</string>
-    <string name="permission_storage">Storage permissions</string>
-    <string name="permission_install">Install app permissions</string>
-    <string name="permission_notification">Notification bar permissions</string>
-    <string name="permission_window">Suspended window permission</string>
-    <string name="permission_setting">System setting permissions</string>
-    <string name="permission_task">View usage permissions</string>
+    <string name="permission_fail_hint">Authorization failed, please grant permission correctly</string>
+    <string name="permission_fail_assign_hint">Authorization failed, please grant %s correctly</string>
+    <string name="permission_manual_fail_hint">Failed to obtain permission, please grant permission manually</string>
+    <string name="permission_manual_assign_fail_hint">Failed to obtain permission, please grant %s manually</string>
+    <string name="permission_manual_assign_fail_background_location_hint">Failed to obtain the background location permission, please select %s in the location permission</string>
+    <string name="permission_manual_assign_fail_background_sensors_hint">Failed to obtain the background sensor permission, please select %s in the sensor permission</string>
+    <string name="permission_background_location_fail_hint">Failed to obtain background location permission,\nPlease select %s option</string>
+    <string name="permission_background_sensors_fail_hint">Failed to obtain background sensor permission, please select %s sensor permission</string>
+    <string name="permission_background_default_option_label">Allow all the time</string>
+    <string name="permission_media_location_hint_fail">Failed to get media location permission\nPlease clear app data and try again</string>
+    <string name="permission_goto_setting_page">Go to authorization</string>
+
+    <string name="permission_unknown">permission</string>
+    <string name="permission_comma">, </string>
+
+    <string name="permission_calendar">calendar permission</string>
+    <string name="permission_camera">camera permission</string>
+    <string name="permission_contacts">contacts permission</string>
+    <string name="permission_location">location permission</string>
+    <string name="permission_location_background">background location permission</string>
+    <string name="permission_nearby_devices">nearby devices permission</string>
+    <string name="permission_microphone">microphone permission</string>
+    <string name="permission_phone">phone permission</string>
+    <string name="permission_call_logs">call logs permission</string>
+    <string name="permission_body_sensors">body sensors permission</string>
+    <string name="permission_body_sensors_background">background body sensors permission</string>
+    <string name="permission_activity_recognition_api29">physical activity permission</string>
+    <string name="permission_activity_recognition_api30">physical activity permission</string>
+    <string name="permission_access_media_location">read media file location permission</string>
+    <string name="permission_sms">sms permission</string>
+    <string name="permission_storage">storage permission</string>
+    <string name="permission_post_notifications">send notification permission</string>
+    <string name="permission_image_and_video">image and video permission</string>
+    <string name="permission_music_and_audio">music and audio permission</string>
+    <string name="permission_get_installed_apps">get info about installed apps permission</string>
+
+    <string name="permission_all_file_access">all file access permission</string>
+    <string name="permission_install_unknown_apps">install unknown apps permission</string>
+    <string name="permission_display_over_other_apps">display over other apps permission</string>
+    <string name="permission_modify_system_settings">modify system settings permission</string>
+    <string name="permission_allow_notifications">allow notifications permission</string>
+    <string name="permission_allow_notifications_access">allow notifications access permission</string>
+    <string name="permission_apps_with_usage_access">apps with usage access permission</string>
+    <string name="permission_alarms_reminders">alarms &amp; reminders permission</string>
+    <string name="permission_do_not_disturb_access">do not disturb access permission</string>
+    <string name="permission_ignore_battery_optimize">ignore battery optimize permission</string>
+    <string name="permission_picture_in_picture">picture-in-picture permission</string>
+    <string name="permission_vpn">\tVPN\tpermission</string>
+    <string name="permission_notification_listener_toast">A new notification message was listened for with the title: %s and the content: %s</string>
 </resources>

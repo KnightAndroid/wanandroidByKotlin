@@ -335,6 +335,8 @@ class SquareFragment:BaseFragment<SquareFragmentBinding, SquareVm>(),OnLoadMoreL
                 page = 0
                 mViewModel.getSquareArticles(page)
             }
+
+            else -> {}
         }
 
     }
