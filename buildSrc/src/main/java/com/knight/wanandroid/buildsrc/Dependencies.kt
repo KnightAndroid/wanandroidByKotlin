@@ -63,8 +63,8 @@ object Dependencies {
        //GitHub相关--------------------------------------------------
        const val ARoute = "1.5.2"                          // 阿里路由
        const val ARouteCompiler = "1.5.2"                  // 阿里路由 APT
-       const val OkHttp = "4.11.0"                          // OkHttp
-       const val OkHttpInterceptorLogging = "4.11.0"        // OkHttp 请求Log拦截器
+       const val OkHttp = "4.11.0"                         // OkHttp
+       const val OkHttpInterceptorLogging = "4.11.0"       // OkHttp 请求Log拦截器
        const val Retrofit = "2.9.0"                        // Retrofit
        const val RetrofitConverterGson = "2.9.0"           // Retrofit Gson 转换器
        const val Gson = "2.8.7"                            // Gson
@@ -86,7 +86,7 @@ object Dependencies {
        const val ShimmerLayoutVersion = "2.1.0"            // shimmerLayout
        //第三方其他相关------------------------------------------------------
        const val LeakCanaryVersion = "2.8.1"               // 内存泄漏相关
-       const val buglyVersion = "4.0.4"                    // bugly异常上报
+       const val buglyVersion = "4.1.9.2"                   // bugly异常上报
 
     }
     /**

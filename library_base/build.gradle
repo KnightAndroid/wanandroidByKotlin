@@ -51,6 +51,6 @@ dependencies {
     implementation Dependencies.GitHub.MMKV
     implementation Dependencies.GitHub.Gson
     api Dependencies.GitHub.LoadSir
-    implementation Dependencies.OtherUtils.Bugly
+    api Dependencies.OtherUtils.Bugly
 
 }

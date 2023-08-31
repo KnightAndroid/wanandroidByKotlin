@@ -13,7 +13,6 @@ import com.knight.kotlin.library_base.util.ActivityManagerUtils
 import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_base.util.DarkModeUtils
 import com.knight.kotlin.library_base.util.HookUtils
-import com.tencent.bugly.crashreport.CrashReport
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
 import kotlin.system.measureTimeMillis
@@ -151,19 +150,8 @@ open class BaseApp : Application() {
     fun initDangrousSdk() {
         //初始化Provider
         HookUtils.initProvider(this)
-        //初始化Bugly
-        initBuglySdk()
         mLoadModuleProxy.initDangerousTask()
     }
-
-    /**
-     *
-     * 注册Bugly
-     */
-    fun initBuglySdk() {
-        CrashReport.initCrashReport(this,"99ea018e83",false)
-    }
-
 
 
     /**

@@ -6,12 +6,12 @@ import android.content.Context
 import com.alibaba.android.arouter.launcher.ARouter
 import com.google.auto.service.AutoService
 import com.knight.kotlin.library_base.BaseApp
-import com.knight.kotlin.library_base.BuildConfig
 import com.knight.kotlin.library_base.app.ApplicationLifecycle
 import com.knight.kotlin.library_base.util.ProcessUtil
 import com.knight.kotlin.library_util.toast.ToastInterceptor
 import com.knight.kotlin.library_util.toast.ToastUtils.init
 import com.knight.kotlin.library_util.toast.ToastUtils.setInterceptor
+import com.tencent.bugly.crashreport.CrashReport
 
 
 /**
@@ -52,7 +52,18 @@ class UtilApplication:ApplicationLifecycle {
         return list
     }
 
+    /**
+     *
+     * 初始化危险类sdk
+     * 初始化Bugly
+     */
     override fun initDangerousTask() {
+        val strategy = CrashReport.UserStrategy(BaseApp.context)
+        strategy.deviceID = PhoneUtils.getDeviceUUID(BaseApp.context)
+        strategy.deviceModel = PhoneUtils.getPhoneModel()
+        strategy.appVersion = SystemUtils.getAppVersionName(BaseApp.context)
+        strategy.appPackageName = BaseApp.context.packageName
+        CrashReport.initCrashReport(BaseApp.context,"99ea018e83",false,strategy)
     }
 
 
