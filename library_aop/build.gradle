@@ -5,7 +5,7 @@ apply plugin: 'android-aspectjx'
 
 
 dependencies {
-    //implementation Dependencies.GitHub.aspectJ
+    //implementation com.knight.wanandroid.buildsrc.Dependencies.GitHub.aspectJ
     implementation project(path: ':library_base')
     implementation project(path: ':library_common')
 
