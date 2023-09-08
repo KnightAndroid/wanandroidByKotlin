@@ -1,2 +1,3 @@
 plugins { `kotlin-dsl` }
-repositories { jcenter() }
+repositories { jcenter()
+    gradlePluginPortal()}
