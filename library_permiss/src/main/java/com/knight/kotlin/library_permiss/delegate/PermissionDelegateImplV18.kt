@@ -5,7 +5,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.annotation.RequiresApi
 import com.knight.kotlin.library_permiss.AndroidVersion
-import com.knight.kotlin.library_permiss.NotificationListenerPermissionCompat.getPermissionIntent
+import com.knight.kotlin.library_permiss.NotificationListenerPermissionCompat
 import com.knight.kotlin.library_permiss.NotificationListenerPermissionCompat.isGrantedPermission
 import com.knight.kotlin.library_permiss.permissions.Permission
 import com.knight.kotlin.library_permiss.utils.PermissionUtils.equalsPermission
@@ -29,7 +29,7 @@ open class PermissionDelegateImplV18 : PermissionDelegateImplV14() {
         } else super.isGrantedPermission(context, permission)
     }
 
-    override fun isPermissionPermanentDenied(
+    override fun isDoNotAskAgainPermission(
         activity: Activity,
          permission: String
     ): Boolean {
@@ -38,7 +38,7 @@ open class PermissionDelegateImplV18 : PermissionDelegateImplV14() {
             )
         ) {
             false
-        } else super.isPermissionPermanentDenied(activity, permission)
+        } else super.isDoNotAskAgainPermission(activity, permission)
     }
 
     override  fun getPermissionIntent(context: Context, permission: String): Intent? {
@@ -46,7 +46,7 @@ open class PermissionDelegateImplV18 : PermissionDelegateImplV14() {
                 permission, Permission.BIND_NOTIFICATION_LISTENER_SERVICE
             )
         ) {
-            getPermissionIntent(context)
+            NotificationListenerPermissionCompat.getPermissionIntent(context)
         } else super.getPermissionIntent(context, permission)
     }
 }

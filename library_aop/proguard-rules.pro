@@ -30,3 +30,16 @@
     @com.knight.kotlin.library_aop.clickintercept.* <methods>;
     @com.knight.kotlin.library_aop.loginintercept.* <methods>;
 }
+
+-keep class * {
+    @androidx.annotation.Keep <fields>;
+}
+
+-keepnames class * implements com.flyjingfish.android_aop_annotation.base.BasePointCut
+-keepnames class * implements com.flyjingfish.android_aop_annotation.base.MatchClassMethod
+-keep class * implements com.flyjingfish.android_aop_annotation.base.BasePointCut{
+    public <init>();
+}
+-keep class * implements com.flyjingfish.android_aop_annotation.base.MatchClassMethod{
+    public <init>();
+}

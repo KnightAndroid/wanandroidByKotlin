@@ -3,7 +3,6 @@ package com.knight.kotlin.library_util
 import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
-import com.alibaba.android.arouter.launcher.ARouter
 import com.google.auto.service.AutoService
 import com.knight.kotlin.library_base.BaseApp
 import com.knight.kotlin.library_base.app.ApplicationLifecycle
@@ -12,6 +11,7 @@ import com.knight.kotlin.library_util.toast.ToastInterceptor
 import com.knight.kotlin.library_util.toast.ToastUtils.init
 import com.knight.kotlin.library_util.toast.ToastUtils.setInterceptor
 import com.tencent.bugly.crashreport.CrashReport
+import com.wyjson.router.GoRouter
 
 
 /**
@@ -78,11 +78,12 @@ class UtilApplication:ApplicationLifecycle {
     private fun initARouter():String {
         //正式环境需要关闭ARouter
         if (BuildConfig.TYPE != "MASTER") {
-            ARouter.openLog() //打印日志
-            ARouter.openDebug() //开启调试模式(如果在InstantRun模式下运行，必须开启调试模式！线上版本需要关闭,否则有安全风险)
+            GoRouter.openDebug()
+//            ARouter.openLog() //打印日志
+//            ARouter.openDebug() //开启调试模式(如果在InstantRun模式下运行，必须开启调试模式！线上版本需要关闭,否则有安全风险)
         }
-        ARouter.init(BaseApp.application)
-        return "ARouter --->> init complete"
+        GoRouter.autoLoadRouteModule(BaseApp.application)
+        return "GoRouter --->> init complete"
     }
 
     /**

@@ -9,12 +9,12 @@ import androidx.annotation.RequiresApi
 import com.knight.kotlin.library_permiss.AndroidVersion
 import com.knight.kotlin.library_permiss.PermissionIntentManager
 import com.knight.kotlin.library_permiss.permissions.Permission
+import com.knight.kotlin.library_permiss.utils.PermissionUtils
 import com.knight.kotlin.library_permiss.utils.PermissionUtils.areActivityIntent
 import com.knight.kotlin.library_permiss.utils.PermissionUtils.checkOpNoThrow
 import com.knight.kotlin.library_permiss.utils.PermissionUtils.checkSelfPermission
 import com.knight.kotlin.library_permiss.utils.PermissionUtils.equalsPermission
 import com.knight.kotlin.library_permiss.utils.PermissionUtils.getPackageNameUri
-import com.knight.kotlin.library_permiss.utils.PermissionUtils.shouldShowRequestPermissionRationale
 
 
 /**
@@ -44,26 +44,24 @@ open class PermissionDelegateImplV26 :PermissionDelegateImplV23() {
         } else super.isGrantedPermission(context, permission)
     }
 
-    override  fun isPermissionPermanentDenied(
+    override  fun isDoNotAskAgainPermission(
         activity: Activity,
         permission: String
     ): Boolean {
-        if (equalsPermission(permission, Permission.REQUEST_INSTALL_PACKAGES)) {
+        if (PermissionUtils.equalsPermission(permission, Permission.REQUEST_INSTALL_PACKAGES)) {
             return false
         }
-        if (equalsPermission(permission, Permission.PICTURE_IN_PICTURE)) {
+
+        if (PermissionUtils.equalsPermission(permission, Permission.PICTURE_IN_PICTURE)) {
             return false
         }
-        return if (equalsPermission(
-                permission, Permission.READ_PHONE_NUMBERS
-            ) ||
-            equalsPermission(permission, Permission.ANSWER_PHONE_CALLS)
-        ) {
-            !checkSelfPermission(activity, permission) &&
-                    !shouldShowRequestPermissionRationale(
-                        activity, permission
-                    )
-        } else super.isPermissionPermanentDenied(activity, permission)
+
+        if (PermissionUtils.equalsPermission(permission, Permission.READ_PHONE_NUMBERS) ||
+            PermissionUtils.equalsPermission(permission, Permission.ANSWER_PHONE_CALLS)) {
+            return !PermissionUtils.checkSelfPermission(activity, permission) &&
+                    !PermissionUtils.shouldShowRequestPermissionRationale(activity, permission)
+        }
+        return super.isDoNotAskAgainPermission(activity, permission)
     }
 
     override fun getPermissionIntent(

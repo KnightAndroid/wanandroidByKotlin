@@ -53,7 +53,7 @@ object GetInstalledAppsPermissionCompat {
         // 如果不支持申请，则直接返回 true（代表有这个权限），反正也不会崩溃，顶多就是获取不到第三方应用列表
     }
 
-    fun isPermissionPermanentDenied(activity: Activity): Boolean {
+    fun isDoNotAskAgainPermission(activity: Activity): Boolean {
         if (!isAndroid4_4()) {
             return false
         }
@@ -92,6 +92,7 @@ object GetInstalledAppsPermissionCompat {
      * 判断是否支持获取应用列表权限
      */
     @RequiresApi(api = AndroidVersion.ANDROID_6)
+    @SuppressWarnings("deprecation")
     private fun isSupportGetInstalledAppsPermission(context: Context): Boolean {
         try {
             val permissionInfo: PermissionInfo? =
@@ -115,6 +116,7 @@ object GetInstalledAppsPermissionCompat {
                 "oem_installed_apps_runtime_permission_enable"
             ) === 1
         } catch (e: Settings.SettingNotFoundException) {
+            // 没有这个系统属性时会抛出：android.provider.Settings$SettingNotFoundException: oem_installed_apps_runtime_permission_enable
             e.printStackTrace()
         }
         return false

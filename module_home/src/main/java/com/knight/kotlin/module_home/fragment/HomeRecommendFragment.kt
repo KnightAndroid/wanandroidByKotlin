@@ -16,11 +16,9 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.alibaba.android.arouter.launcher.ARouter
+import com.flyjingfish.android_aop_core.annotations.SingleClick
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.common.reflect.TypeToken
-import com.knight.kotlin.library_aop.clickintercept.SingleClick
 import com.knight.kotlin.library_aop.loginintercept.LoginCheck
 import com.knight.kotlin.library_base.annotation.EventBusRegister
 import com.knight.kotlin.library_base.event.MessageEvent
@@ -67,6 +65,8 @@ import com.scwang.smart.refresh.layout.constant.RefreshState
 import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener
 import com.scwang.smart.refresh.layout.simple.SimpleMultiListener
+import com.wyjson.router.GoRouter
+import com.wyjson.router.annotation.Route
 import com.yanzhenjie.recyclerview.SwipeRecyclerView
 import com.youth.banner.Banner
 import com.youth.banner.adapter.BannerImageAdapter
@@ -361,17 +361,17 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
             setItemChildClickListener { adapter, view, position ->
                 when (view.id) {
                     R.id.home_opensource_abroadlink -> {
-                        ARouter.getInstance().build(RouteActivity.Web.WebPager)
+                        GoRouter.getInstance().build(RouteActivity.Web.WebPager)
                             .withString("webUrl", mOpenSourceAdapter.data[position].abroadlink)
                             .withString("webTitle", mOpenSourceAdapter.data[position].name)
-                            .navigation()
+                            .go()
                     }
 
                     R.id.home_opensource_internallink -> {
-                        ARouter.getInstance().build(RouteActivity.Web.WebPager)
+                        GoRouter.getInstance().build(RouteActivity.Web.WebPager)
                             .withString("webUrl", mOpenSourceAdapter.data[position].internallink)
                             .withString("webTitle", mOpenSourceAdapter.data[position].name)
-                            .navigation()
+                            .go()
                     }
 
                     R.id.home_iv_abroadcopy -> {
@@ -397,10 +397,10 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
             //Item点击事件
             setItemClickListener { adapter, view, position ->
                 //跳到webview
-                ARouter.getInstance().build(RouteActivity.Web.WebPager)
+                GoRouter.getInstance().build(RouteActivity.Web.WebPager)
                     .withString("webUrl", mOpenSourceAdapter.data[position].abroadlink)
                     .withString("webTitle", mOpenSourceAdapter.data[position].name)
-                    .navigation()
+                    .go()
 
             }
         }
@@ -475,10 +475,10 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
         mOfficialAccountAdapter.run {
             //Item点击事件
             setItemClickListener { adapter, view, position ->
-                ARouter.getInstance().build(RouteActivity.Wechat.WechatTabActivity)
+                GoRouter.getInstance().build(RouteActivity.Wechat.WechatTabActivity)
                     .withParcelableArrayList("data", ArrayList(data))
                     .withInt("position", position)
-                    .navigation()
+                    .go()
             }
         }
     }

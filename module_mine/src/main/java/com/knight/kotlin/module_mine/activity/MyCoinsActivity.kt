@@ -5,8 +5,6 @@ import android.view.View
 import android.widget.LinearLayout
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.alibaba.android.arouter.facade.annotation.Autowired
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.ktx.init
 import com.knight.kotlin.library_base.ktx.observeLiveData
@@ -22,6 +20,8 @@ import com.knight.kotlin.module_mine.vm.MyDetailCoinsViewModel
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener
+import com.wyjson.router.annotation.Param
+import com.wyjson.router.annotation.Route
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -34,7 +34,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class MyCoinsActivity : BaseActivity<MineCoinsActivityBinding,MyDetailCoinsViewModel>(),OnRefreshListener,OnLoadMoreListener{
     override val mViewModel: MyDetailCoinsViewModel by viewModels()
     @JvmField
-    @Autowired(name = "userCoin")
+    @Param(name = "userCoin")
     var userCoin = ""
     private var page = 1
 

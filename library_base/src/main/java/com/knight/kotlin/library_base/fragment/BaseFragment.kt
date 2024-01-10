@@ -8,7 +8,6 @@ import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.viewbinding.ViewBinding
-import com.alibaba.android.arouter.launcher.ARouter
 import com.kingja.loadsir.callback.Callback
 import com.kingja.loadsir.core.LoadService
 import com.kingja.loadsir.core.LoadSir
@@ -25,6 +24,7 @@ import com.knight.kotlin.library_base.util.ViewRecreateHelper
 import com.knight.kotlin.library_base.view.BaseView
 import com.knight.kotlin.library_base.vm.BaseViewModel
 import com.knight.kotlin.library_base.widget.loadcircleview.ProgressHud
+import com.wyjson.router.GoRouter
 
 /**
  * Author:Knight
@@ -101,7 +101,12 @@ abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel> : Fragment(), 
         //处理恢复
         mStatusHelper?.onRestoreInstanceStatus(savedInstanceState)
         // ARouter 依赖注入
-        ARouter.getInstance().inject(this)
+        //GoRouter.getInstance().injectCheck(this)
+        try {
+            GoRouter.getInstance().inject(this)
+        } catch (e: Exception) {
+
+        }
         //注册EventBus
         if (javaClass.isAnnotationPresent(EventBusRegister::class.java)) EventBusUtils.register(this)
         isDarkMode = CacheUtils.getNormalDark()

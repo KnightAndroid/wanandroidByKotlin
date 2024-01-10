@@ -10,8 +10,6 @@ import android.webkit.WebSettings
 import android.webkit.WebView
 import android.widget.LinearLayout
 import androidx.activity.viewModels
-import com.alibaba.android.arouter.facade.annotation.Autowired
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.just.agentweb.AgentWeb
 import com.just.agentweb.DefaultWebClient
 import com.just.agentweb.WebChromeClient
@@ -35,6 +33,8 @@ import com.knight.kotlin.module_web.dialog.WebArticleBottomFragment
 import com.knight.kotlin.module_web.utils.ViewBindUtils
 import com.knight.kotlin.module_web.vm.WebVm
 import com.knight.kotlin.module_web.widget.WebLayout
+import com.wyjson.router.annotation.Param
+import com.wyjson.router.annotation.Route
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Date
 
@@ -50,7 +50,7 @@ class WebArticleActivity :BaseActivity<WebArticleActivityBinding,WebVm>(),LoveAn
 
 
     @JvmField
-    @Autowired(name="webDataEntity")
+    @Param(name="webDataEntity")
     var webDataEntity:WebDataEntity?=null
 
     private lateinit var mAgentWeb: AgentWeb

@@ -2,14 +2,15 @@ package com.knight.kotlin.module_set.activity
 
 import android.view.View
 import androidx.activity.viewModels
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.knight.kotlin.library_aop.clickintercept.SingleClick
+import com.flyjingfish.android_aop_core.annotations.SingleClick
+
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.vm.EmptyViewModel
 import com.knight.kotlin.library_util.startPage
 import com.knight.kotlin.module_set.R
 import com.knight.kotlin.module_set.databinding.SetPersonalManagerActivityBinding
+import com.wyjson.router.annotation.Route
 import dagger.hilt.android.AndroidEntryPoint
 
 /**

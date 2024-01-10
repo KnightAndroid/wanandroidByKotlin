@@ -3,8 +3,6 @@ package com.knight.kotlin.module_main.activity
 import android.view.KeyEvent
 import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.alibaba.android.arouter.launcher.ARouter
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.annotation.EventBusRegister
 import com.knight.kotlin.library_base.event.MessageEvent
@@ -18,6 +16,8 @@ import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_main.R
 import com.knight.kotlin.module_main.databinding.MainActivityBinding
 import com.knight.kotlin.module_main.vm.MainViewModel
+import com.wyjson.router.GoRouter
+import com.wyjson.router.annotation.Route
 import dagger.hilt.android.AndroidEntryPoint
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -70,11 +70,11 @@ class MainActivity : BaseActivity<MainActivityBinding,MainViewModel>() {
     }
 
     private fun initFragments() {
-        fragments.add(ARouter.getInstance().build(RouteFragment.Home.HomeFragment).navigation()  as Fragment)
-        fragments.add(ARouter.getInstance().build(RouteFragment.Square.SquareFragment).navigation()  as Fragment)
-        fragments.add(ARouter.getInstance().build(RouteFragment.Project.ProjectFragment).navigation()  as Fragment)
-        fragments.add(ARouter.getInstance().build(RouteFragment.Navigate.NavigateHomeFragment).navigation()  as Fragment)
-        fragments.add(ARouter.getInstance().build(RouteFragment.Mine.MineFragment).navigation()  as Fragment)
+        fragments.add(GoRouter.getInstance().build(RouteFragment.Home.HomeFragment).go()  as Fragment)
+        fragments.add(GoRouter.getInstance().build(RouteFragment.Square.SquareFragment).go()  as Fragment)
+        fragments.add(GoRouter.getInstance().build(RouteFragment.Project.ProjectFragment).go()  as Fragment)
+        fragments.add(GoRouter.getInstance().build(RouteFragment.Navigate.NavigateHomeFragment).go()  as Fragment)
+        fragments.add(GoRouter.getInstance().build(RouteFragment.Mine.MineFragment).go()  as Fragment)
     }
 
 

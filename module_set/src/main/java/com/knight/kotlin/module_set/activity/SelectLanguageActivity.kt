@@ -3,7 +3,6 @@ package com.knight.kotlin.module_set.activity
 import android.view.View
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.google.common.reflect.TypeToken
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.ktx.init
@@ -20,6 +19,7 @@ import com.knight.kotlin.module_set.R
 import com.knight.kotlin.module_set.adapter.SelectLanguageAdapter
 import com.knight.kotlin.module_set.databinding.SetLanguageActivityBinding
 import com.knight.kotlin.module_set.entity.LanguageEntity
+import com.wyjson.router.annotation.Route
 import dagger.hilt.android.AndroidEntryPoint
 import java.lang.reflect.Type
 

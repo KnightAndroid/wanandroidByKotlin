@@ -9,6 +9,7 @@ import androidx.annotation.RequiresApi
 import com.knight.kotlin.library_permiss.AndroidVersion
 import com.knight.kotlin.library_permiss.PermissionIntentManager
 import com.knight.kotlin.library_permiss.permissions.Permission
+import com.knight.kotlin.library_permiss.utils.PermissionUtils
 import com.knight.kotlin.library_permiss.utils.PermissionUtils.areActivityIntent
 import com.knight.kotlin.library_permiss.utils.PermissionUtils.equalsPermission
 import com.knight.kotlin.library_permiss.utils.PermissionUtils.getPackageNameUri
@@ -25,15 +26,13 @@ open class PermissionDelegateImplV30 : PermissionDelegateImplV29(){
        context: Context,
        permission: String
     ): Boolean {
-        return if (equalsPermission(
-                permission, Permission.MANAGE_EXTERNAL_STORAGE
-            )
-        ) {
-            isGrantedManageStoragePermission()
-        } else super.isGrantedPermission(context, permission)
+        if (PermissionUtils.equalsPermission(permission, Permission.MANAGE_EXTERNAL_STORAGE)) {
+            return isGrantedManageStoragePermission()
+        }
+        return super.isGrantedPermission(context, permission)
     }
 
-    override fun isPermissionPermanentDenied(
+    override fun isDoNotAskAgainPermission(
        activity: Activity,
        permission: String
     ): Boolean {
@@ -42,7 +41,7 @@ open class PermissionDelegateImplV30 : PermissionDelegateImplV29(){
             )
         ) {
             false
-        } else super.isPermissionPermanentDenied(activity, permission)
+        } else super.isDoNotAskAgainPermission(activity, permission)
     }
 
     override fun getPermissionIntent(

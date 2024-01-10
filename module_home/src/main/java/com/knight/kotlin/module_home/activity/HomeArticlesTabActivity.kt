@@ -7,8 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.knight.kotlin.library_aop.clickintercept.SingleClick
+import com.flyjingfish.android_aop_core.annotations.SingleClick
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.util.dp2px
@@ -21,6 +20,7 @@ import com.knight.kotlin.module_home.adapter.TopArticleAroundAdapter
 import com.knight.kotlin.module_home.databinding.HomeArticlesTabActivityBinding
 import com.knight.kotlin.module_home.entity.TopArticleBean
 import com.knight.kotlin.module_home.fragment.HomeTopTabsFragment
+import com.wyjson.router.annotation.Route
 import dagger.hilt.android.AndroidEntryPoint
 
 /**

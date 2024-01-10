@@ -2,8 +2,7 @@ package com.knight.kotlin.module_set.activity
 
 import android.view.View
 import androidx.activity.viewModels
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.knight.kotlin.library_aop.clickintercept.SingleClick
+import com.flyjingfish.android_aop_core.annotations.SingleClick
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.ktx.observeLiveData
 import com.knight.kotlin.library_base.ktx.setOnClick
@@ -17,6 +16,7 @@ import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_set.R
 import com.knight.kotlin.module_set.databinding.SetAboutActivityBinding
 import com.knight.kotlin.module_set.vm.AboutVm
+import com.wyjson.router.annotation.Route
 import dagger.hilt.android.AndroidEntryPoint
 
 /**

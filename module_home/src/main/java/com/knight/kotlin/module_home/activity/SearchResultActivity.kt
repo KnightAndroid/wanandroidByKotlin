@@ -5,8 +5,6 @@ import android.view.inputmethod.EditorInfo
 import android.widget.TextView.OnEditorActionListener
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.alibaba.android.arouter.facade.annotation.Autowired
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.knight.kotlin.library_aop.loginintercept.LoginCheck
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.config.Appconfig
@@ -28,6 +26,8 @@ import com.knight.kotlin.module_home.vm.HomeSearchResultVm
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener
+import com.wyjson.router.annotation.Param
+import com.wyjson.router.annotation.Route
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -46,7 +46,7 @@ class SearchResultActivity : BaseActivity<HomeSearchresultActivityBinding, HomeS
      * 搜索关键字
      */
     @JvmField
-    @Autowired(name = "keyword")
+    @Param(name = "keyword")
     var keyword: String = ""
 
     //选择收藏/取消收藏的Item项

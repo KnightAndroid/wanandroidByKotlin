@@ -5,9 +5,7 @@ import android.graphics.drawable.GradientDrawable
 import android.util.Base64
 import android.view.View
 import androidx.fragment.app.viewModels
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.alibaba.android.arouter.launcher.ARouter
-import com.knight.kotlin.library_aop.clickintercept.SingleClick
+import com.flyjingfish.android_aop_core.annotations.SingleClick
 import com.knight.kotlin.library_aop.loginintercept.LoginCheck
 import com.knight.kotlin.library_base.annotation.EventBusRegister
 import com.knight.kotlin.library_base.config.Appconfig
@@ -39,6 +37,8 @@ import com.knight.kotlin.module_mine.entity.UserInfoMessageEntity
 import com.knight.kotlin.module_mine.vm.MineViewModel
 import com.knight.library_biometric.control.BiometricControl
 import com.knight.library_biometric.listener.BiometricStatusCallback
+import com.wyjson.router.GoRouter
+import com.wyjson.router.annotation.Route
 import dagger.hilt.android.AndroidEntryPoint
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -156,7 +156,7 @@ class MineFragment: BaseFragment<MineFragmentBinding, MineViewModel>() {
                 }
             }
             mBinding.mineRlSetup -> {
-                  ARouter.getInstance().build(RouteActivity.Set.SetActivity).navigation()
+                  GoRouter.getInstance().build(RouteActivity.Set.SetActivity).go()
             }
 
             mBinding.mineLlRank -> {

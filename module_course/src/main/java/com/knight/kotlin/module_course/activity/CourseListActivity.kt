@@ -2,7 +2,6 @@ package com.knight.kotlin.module_course.activity
 
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.ktx.init
 import com.knight.kotlin.library_base.ktx.observeLiveData
@@ -18,6 +17,7 @@ import com.knight.kotlin.module_course.vm.CourseListVm
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener
+import com.wyjson.router.annotation.Route
 import dagger.hilt.android.AndroidEntryPoint
 
 

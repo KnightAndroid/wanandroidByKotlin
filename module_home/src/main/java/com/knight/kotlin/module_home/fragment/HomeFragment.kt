@@ -9,9 +9,8 @@ import android.util.Base64
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.alibaba.android.arouter.facade.annotation.Route
+import com.flyjingfish.android_aop_core.annotations.SingleClick
 import com.google.common.reflect.TypeToken
-import com.knight.kotlin.library_aop.clickintercept.SingleClick
 import com.knight.kotlin.library_base.annotation.EventBusRegister
 import com.knight.kotlin.library_base.config.Appconfig
 import com.knight.kotlin.library_base.config.CacheKey
@@ -53,6 +52,7 @@ import com.knight.kotlin.module_home.entity.EveryDayPushArticlesBean
 import com.knight.kotlin.module_home.vm.HomeVm
 import com.knight.library_biometric.control.BiometricControl
 import com.knight.library_biometric.listener.BiometricStatusCallback
+import com.wyjson.router.annotation.Route
 import dagger.hilt.android.AndroidEntryPoint
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode

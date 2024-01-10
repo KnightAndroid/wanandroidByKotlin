@@ -1,12 +1,12 @@
 package com.knight.kotlin.module_web.activity
 import androidx.activity.viewModels
-import com.alibaba.android.arouter.facade.annotation.Autowired
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.vm.EmptyViewModel
 import com.knight.kotlin.module_web.R
 import com.knight.kotlin.module_web.databinding.WebPreviewphotoActivityBinding
+import com.wyjson.router.annotation.Param
+import com.wyjson.router.annotation.Route
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -24,7 +24,7 @@ class WebPreviewPhotoActivity:BaseActivity<WebPreviewphotoActivityBinding,EmptyV
      * 文章里的图片
      */
     @JvmField
-    @Autowired(name = "photoUri")
+    @Param(name = "photoUri")
     var photoUri:String = ""
 
     override val mViewModel: EmptyViewModel by viewModels()

@@ -226,7 +226,7 @@ class DragLayout :FrameLayout {
 
     inner class MoveDetector : SimpleOnGestureListener() {
         override fun onScroll(
-            e1: MotionEvent, e2: MotionEvent, dx: Float,
+            e1: MotionEvent?, e2: MotionEvent, dx: Float,
             dy: Float
         ): Boolean {
             // 拖动了，touch不往下传递

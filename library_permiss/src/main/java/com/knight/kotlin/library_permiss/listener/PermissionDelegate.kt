@@ -17,9 +17,9 @@ interface PermissionDelegate {
     fun isGrantedPermission(context: Context, permission: String): Boolean
 
     /**
-     * 判断某个权限是否永久拒绝了
+     * 判断某个权限是否勾选了不在询问
      */
-    fun isPermissionPermanentDenied(
+    fun isDoNotAskAgainPermission(
         activity: Activity,
         permission: String
     ): Boolean

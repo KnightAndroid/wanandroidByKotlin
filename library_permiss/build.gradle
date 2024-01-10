@@ -12,5 +12,5 @@ dependencies {
     kapt Dependencies.JetPack.HiltApt
     kapt Dependencies.JetPack.HiltAndroidx
     kapt Dependencies.GitHub.AutoServiceAnnotations
-    kapt Dependencies.GitHub.ARouteCompiler
+    kapt Dependencies.GitHub.GoRouteCompiler
 }

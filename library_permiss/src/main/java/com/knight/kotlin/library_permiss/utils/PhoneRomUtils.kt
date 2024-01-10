@@ -311,6 +311,7 @@ object PhoneRomUtils {
             prop.load(`is`)
             return prop.getProperty(key, "")
         } catch (e: FileNotFoundException) {
+            // java.io.FileNotFoundException: /system/build.prop (Permission denied)
             e.printStackTrace()
         } catch (e: IOException) {
             e.printStackTrace()

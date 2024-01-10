@@ -22,6 +22,10 @@ import androidx.fragment.app.FragmentActivity
 import com.knight.kotlin.library_permiss.AndroidManifestInfo
 import com.knight.kotlin.library_permiss.AndroidManifestParser
 import com.knight.kotlin.library_permiss.AndroidVersion
+import com.knight.kotlin.library_permiss.AndroidVersion.getAndroidVersionCode
+import com.knight.kotlin.library_permiss.AndroidVersion.getTargetSdkVersionCode
+import com.knight.kotlin.library_permiss.AndroidVersion.isAndroid13
+import com.knight.kotlin.library_permiss.AndroidVersion.isAndroid14
 import com.knight.kotlin.library_permiss.PermissionIntentManager
 import com.knight.kotlin.library_permiss.PermissionNameConvert
 import com.knight.kotlin.library_permiss.R
@@ -30,6 +34,7 @@ import com.knight.kotlin.library_permiss.listener.OnPermissionCallback
 import com.knight.kotlin.library_permiss.listener.OnPermissionPageCallback
 import com.knight.kotlin.library_permiss.permissions.Permission
 import com.knight.kotlin.library_permiss.permissions.PermissionApi
+import com.knight.kotlin.library_permiss.permissions.PermissionApi.getPermissionResult
 import com.knight.kotlin.library_util.DialogUtils
 import org.xmlpull.v1.XmlPullParserException
 import java.io.IOException
@@ -241,74 +246,41 @@ object PermissionUtils {
         permissions: Array<String>,
         grantResults: IntArray
     ) {
-        for (i in permissions.indices) {
-            var recheck = false
+        for (i in 0 until permissions.size) {
             val permission = permissions[i]
 
-            // 如果这个权限是特殊权限，那么就重新进行权限检测
+            // 如果这个权限是特殊权限，则需要重新检查权限的状态
             if (PermissionApi.isSpecialPermission(permission)) {
-                recheck = true
+                grantResults[i] = getPermissionResult(activity, permission)
+                continue
             }
-            if (AndroidVersion.isAndroid13() && AndroidVersion.getTargetSdkVersionCode(activity) >= AndroidVersion.ANDROID_13 &&
+
+            // 如果是读取应用列表权限（国产权限），则需要重新检查权限的状态
+            if (equalsPermission(permission, Permission.GET_INSTALLED_APPS)) {
+                grantResults[i] = getPermissionResult(activity, permission)
+                continue
+            }
+
+            // 如果是在 Android 14 上面，并且是图片权限或者视频权限，则需要重新检查权限的状态
+            // 这是因为用户授权部分图片或者视频的时候，READ_MEDIA_VISUAL_USER_SELECTED 权限状态是授予的
+            // 但是 READ_MEDIA_IMAGES 和 READ_MEDIA_VIDEO 的权限状态是拒绝的
+            if (isAndroid14() &&
+                (equalsPermission(permission, Permission.READ_MEDIA_IMAGES) ||
+                        equalsPermission(permission, Permission.READ_MEDIA_VIDEO))
+            ) {
+                grantResults[i] = getPermissionResult(activity, permission)
+                continue
+            }
+            if (isAndroid13() && getTargetSdkVersionCode(activity) >= AndroidVersion.ANDROID_13 &&
                 equalsPermission(permission, Permission.WRITE_EXTERNAL_STORAGE)
             ) {
-                // 在 Android 13 不能申请 WRITE_EXTERNAL_STORAGE，会被系统直接拒绝
-                recheck = true
+                // 在 Android 13 不能申请 WRITE_EXTERNAL_STORAGE，会被系统直接拒绝，在这里需要重新检查权限的状态
+                grantResults[i] = getPermissionResult(activity, permission)
+                continue
             }
-            if (!AndroidVersion.isAndroid13() &&
-                (equalsPermission(permission, Permission.POST_NOTIFICATIONS) ||
-                        equalsPermission(permission, Permission.NEARBY_WIFI_DEVICES) ||
-                        equalsPermission(permission, Permission.BODY_SENSORS_BACKGROUND) ||
-                        equalsPermission(permission, Permission.READ_MEDIA_IMAGES) ||
-                        equalsPermission(permission, Permission.READ_MEDIA_VIDEO) ||
-                        equalsPermission(permission, Permission.READ_MEDIA_AUDIO))
-            ) {
-                recheck = true
-            }
-
-            // 重新检查 Android 12 的三个新权限
-            if (!AndroidVersion.isAndroid12() &&
-                (equalsPermission(permission, Permission.BLUETOOTH_SCAN) ||
-                        equalsPermission(permission, Permission.BLUETOOTH_CONNECT) ||
-                        equalsPermission(permission, Permission.BLUETOOTH_ADVERTISE))
-            ) {
-                recheck = true
-            }
-
-            // 重新检查 Android 10.0 的三个新权限
-            if (!AndroidVersion.isAndroid10() &&
-                (equalsPermission(permission, Permission.ACCESS_BACKGROUND_LOCATION) ||
-                        equalsPermission(permission, Permission.ACTIVITY_RECOGNITION) ||
-                        equalsPermission(permission, Permission.ACCESS_MEDIA_LOCATION))
-            ) {
-                recheck = true
-            }
-
-            // 重新检查 Android 9.0 的一个新权限
-            if (!AndroidVersion.isAndroid9() &&
-                equalsPermission(permission, Permission.ACCEPT_HANDOVER)
-            ) {
-                recheck = true
-            }
-
-            // 重新检查 Android 8.0 的两个新权限
-            if (!AndroidVersion.isAndroid8() &&
-                (equalsPermission(permission, Permission.ANSWER_PHONE_CALLS) ||
-                        equalsPermission(permission, Permission.READ_PHONE_NUMBERS))
-            ) {
-                recheck = true
-            }
-
-            // 如果是读取应用列表权限（国产权限），则需要重新检查
-            if (equalsPermission(permission, Permission.GET_INSTALLED_APPS)) {
-                recheck = true
-            }
-            if (recheck) {
-                grantResults[i] = if (PermissionApi.isGrantedPermission(
-                        activity,
-                        permission
-                    )
-                ) PackageManager.PERMISSION_GRANTED else PackageManager.PERMISSION_DENIED
+            if (Permission.getDangerPermissionFromAndroidVersion(permission) > getAndroidVersionCode()) {
+                // 如果是申请了新权限，但却是旧设备上面运行的，会被系统直接拒绝，在这里需要重新检查权限的状态
+                grantResults[i] = getPermissionResult(activity, permission)
             }
         }
     }

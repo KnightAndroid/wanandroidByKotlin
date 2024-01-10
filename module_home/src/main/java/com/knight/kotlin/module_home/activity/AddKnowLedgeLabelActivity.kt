@@ -4,7 +4,6 @@ import android.graphics.drawable.GradientDrawable
 import android.os.Build
 import android.view.View
 import androidx.activity.viewModels
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.ktx.ActivityMessenger
 import com.knight.kotlin.library_base.ktx.setOnClick
@@ -17,6 +16,7 @@ import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_home.R
 import com.knight.kotlin.module_home.databinding.HomeAddlabelActivityBinding
 import com.knight.kotlin.module_home.utils.InputUtils
+import com.wyjson.router.annotation.Route
 import dagger.hilt.android.AndroidEntryPoint
 
 /**

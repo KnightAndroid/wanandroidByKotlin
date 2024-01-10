@@ -5,7 +5,7 @@ import android.net.Uri
 import android.view.Gravity
 import android.view.View
 import androidx.fragment.app.viewModels
-import com.knight.kotlin.library_aop.clickintercept.SingleClick
+import com.flyjingfish.android_aop_core.annotations.SingleClick
 import com.knight.kotlin.library_aop.loginintercept.LoginCheck
 import com.knight.kotlin.library_base.event.MessageEvent
 import com.knight.kotlin.library_base.fragment.BaseDialogFragment

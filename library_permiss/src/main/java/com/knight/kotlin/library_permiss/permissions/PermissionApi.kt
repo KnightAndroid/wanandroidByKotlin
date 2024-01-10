@@ -16,8 +16,8 @@ import com.knight.kotlin.library_permiss.delegate.PermissionDelegateImplV29
 import com.knight.kotlin.library_permiss.delegate.PermissionDelegateImplV30
 import com.knight.kotlin.library_permiss.delegate.PermissionDelegateImplV31
 import com.knight.kotlin.library_permiss.delegate.PermissionDelegateImplV33
+import com.knight.kotlin.library_permiss.delegate.PermissionDelegateImplV34
 import com.knight.kotlin.library_permiss.listener.PermissionDelegate
-import com.knight.kotlin.library_permiss.utils.PermissionUtils
 
 
 /**
@@ -29,28 +29,38 @@ object PermissionApi {
 
 
 
-    private var DELEGATE: PermissionDelegate = if (AndroidVersion.isAndroid13()) {
+    private var DELEGATE: PermissionDelegate =
+    if (AndroidVersion.isAndroid14()) {
+        PermissionDelegateImplV34()
+    } else if (AndroidVersion.isAndroid13()) {
          PermissionDelegateImplV33 ()
     } else if (AndroidVersion.isAndroid12()) {
-        PermissionDelegateImplV31 ();
+        PermissionDelegateImplV31 ()
     } else if (AndroidVersion.isAndroid11()) {
-       PermissionDelegateImplV30 ();
+       PermissionDelegateImplV30 ()
     } else if (AndroidVersion.isAndroid10()) {
-        PermissionDelegateImplV29 ();
+        PermissionDelegateImplV29 ()
     } else if (AndroidVersion.isAndroid9()) {
-        PermissionDelegateImplV28 ();
+        PermissionDelegateImplV28 ()
     } else if (AndroidVersion.isAndroid8()) {
-         PermissionDelegateImplV26 ();
+         PermissionDelegateImplV26 ()
     } else if (AndroidVersion.isAndroid6()) {
-        PermissionDelegateImplV23 ();
+        PermissionDelegateImplV23 ()
     } else if (AndroidVersion.isAndroid5()) {
-        PermissionDelegateImplV21 ();
+        PermissionDelegateImplV21 ()
     } else if (AndroidVersion.isAndroid4_4()) {
-       PermissionDelegateImplV19 ();
+       PermissionDelegateImplV19 ()
     } else if (AndroidVersion.isAndroid4_3()) {
-         PermissionDelegateImplV18 ();
+         PermissionDelegateImplV18 ()
     } else {
-        PermissionDelegateImplV14 ();
+        PermissionDelegateImplV14 ()
+    }
+
+    /**
+     * 获取某个权限的申请结果
+     */
+    fun getPermissionResult(context: Context, permission: String): Int {
+        return if (isGrantedPermission(context, permission)) PackageManager.PERMISSION_GRANTED else PackageManager.PERMISSION_DENIED
     }
 
 
@@ -64,11 +74,11 @@ object PermissionApi {
     /**
      * 判断某个权限是否被永久拒绝
      */
-    fun isPermissionPermanentDenied(
+    fun isDoNotAskAgainPermission(
         activity: Activity,
         permission: String
     ): Boolean {
-        return DELEGATE.isPermissionPermanentDenied(activity, permission)
+        return DELEGATE.isDoNotAskAgainPermission(activity, permission)
     }
 
     /**
@@ -81,14 +91,14 @@ object PermissionApi {
     /**
      * 判断某个权限是否是特殊权限
      */
-    fun isSpecialPermission(permission: String?): Boolean {
-        return PermissionUtils.isSpecialPermission(permission!!)
+    fun isSpecialPermission(permission: String): Boolean {
+        return Permission.isSpecialPermission(permission)
     }
 
     /**
      * 判断某个权限集合是否包含特殊权限
      */
-    fun containsSpecialPermission(permissions: List<String?>?): Boolean {
+    fun containsSpecialPermission(permissions: List<String>): Boolean {
         if (permissions == null || permissions.isEmpty()) {
             return false
         }
@@ -156,12 +166,12 @@ object PermissionApi {
      * @param activity              Activity对象
      * @param permissions            请求的权限
      */
-    fun isPermissionPermanentDenied(
+    fun isDoNotAskAgainPermissions(
         activity: Activity,
         permissions: List<String>
     ): Boolean {
         for (permission in permissions) {
-            if (isPermissionPermanentDenied(activity, permission)) {
+            if (isDoNotAskAgainPermission(activity, permission)) {
                 return true
             }
         }

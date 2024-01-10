@@ -3,9 +3,9 @@ package com.knight.kotlin.library_util
 import android.os.Bundle
 import android.os.Parcelable
 import android.widget.Toast
-import com.alibaba.android.arouter.facade.Postcard
-import com.alibaba.android.arouter.launcher.ARouter
 import com.knight.kotlin.library_util.toast.ToastUtils
+import com.wyjson.router.GoRouter
+import com.wyjson.router.model.Card
 import java.io.Serializable
 import kotlin.reflect.KClass
 import kotlin.reflect.KType
@@ -44,7 +44,7 @@ fun toast(msgId:Int,duration:Int = Toast.LENGTH_SHORT) {
  *
  */
 fun startPage(activity:String) {
-    ARouter.getInstance().build(activity).navigation()
+    GoRouter.getInstance().build(activity).go()
 }
 
 /**
@@ -52,7 +52,7 @@ fun startPage(activity:String) {
  *
  */
 fun startPageWithParams(page:String,vararg params:Pair<String,Any>) {
-    ARouter.getInstance().build(page).putExtras(*params).navigation()
+    GoRouter.getInstance().build(page).putExtras(*params).go()
 }
 
 /**
@@ -60,7 +60,7 @@ fun startPageWithParams(page:String,vararg params:Pair<String,Any>) {
  *
  */
 fun startPageWithParcelableArrayListParams(page:String, params: Pair<String,ArrayList<out Parcelable>>) {
-    ARouter.getInstance().build(page).withParcelableArrayList(params.first,params.second).navigation()
+    GoRouter.getInstance().build(page).withParcelableArrayList(params.first,params.second).go()
 }
 
 
@@ -69,7 +69,7 @@ fun startPageWithParcelableArrayListParams(page:String, params: Pair<String,Arra
  *
  */
 fun startPageWithIntArrayListParams(page:String, params: Pair<String,ArrayList<Int>>) {
-    ARouter.getInstance().build(page).withIntegerArrayList(params.first,params.second).navigation()
+    GoRouter.getInstance().build(page).withIntegerArrayList(params.first,params.second).go()
 }
 
 /**
@@ -77,7 +77,7 @@ fun startPageWithIntArrayListParams(page:String, params: Pair<String,ArrayList<I
  *
  */
 fun startPageWithStringArrayListParams(page:String, params: Pair<String,ArrayList<String>>) {
-    ARouter.getInstance().build(page).withStringArrayList(params.first,params.second).navigation()
+    GoRouter.getInstance().build(page).withStringArrayList(params.first,params.second).go()
 }
 
 
@@ -85,7 +85,7 @@ fun startPageWithStringArrayListParams(page:String, params: Pair<String,ArrayLis
  *
  * 携带基本参数跳转指定界面
  */
-fun Postcard.putExtras(vararg params: Pair<String, Any>):Postcard {
+fun Card.putExtras(vararg params: Pair<String, Any>):Card {
     if (params.isEmpty()) return this
     params.forEach { (key, value) ->
         when (value) {

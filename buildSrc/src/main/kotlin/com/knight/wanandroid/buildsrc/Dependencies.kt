@@ -61,8 +61,8 @@ object Dependencies {
        const val ZingVersion = "3.4.1"
 
        //GitHub相关--------------------------------------------------
-       const val ARoute = "1.5.2"                          // 阿里路由
-       const val ARouteCompiler = "1.5.2"                  // 阿里路由 APT
+       const val GoRouter = "2.4.5"                          // GoRoute路由
+       const val GoRouteCompiler = "2.4.5"                  // 阿里路由 APT
        const val OkHttp = "4.11.0"                         // OkHttp
        const val OkHttpInterceptorLogging = "4.11.0"       // OkHttp 请求Log拦截器
        const val Retrofit = "2.9.0"                        // Retrofit
@@ -87,6 +87,7 @@ object Dependencies {
        //第三方其他相关------------------------------------------------------
        const val LeakCanaryVersion = "2.8.1"               // 内存泄漏相关
        const val buglyVersion = "4.1.9.2"                   // bugly异常上报
+       const val AndroidAop = "1.3.1"                       //aop相关
 
     }
     /**
@@ -179,8 +180,8 @@ object Dependencies {
      */
     object GitHub {
         //阿里ARouter https://github.com/alibaba/ARouter
-        const val ARoute = "com.alibaba:arouter-api:${Version.ARoute}"
-        const val ARouteCompiler = "com.alibaba:arouter-compiler:${Version.ARouteCompiler}"
+        const val GoRouter = "com.github.wyjsonGo.GoRouter:GoRouter-Api:${Version.GoRouter}"
+        const val GoRouteCompiler = "com.github.wyjsonGo.GoRouter:GoRouter-Compiler:${Version.GoRouteCompiler}"
         //google https://github.com/google/auto
         const val AutoService = "com.google.auto.service:auto-service:${Version.AutoService}"
         const val AutoServiceAnnotations =
@@ -234,6 +235,10 @@ object Dependencies {
         const val ShimmerLayout = "io.supercharge:shimmerlayout:${Version.ShimmerLayoutVersion}"
         //内存泄漏 https://github.com/square/leakcanary
         const val LeakCanary = "com.squareup.leakcanary:leakcanary-android:${Version.LeakCanaryVersion}"
+        //aop相关 https://github.com/FlyJingFish/AndroidAOP
+        const val AndroidAop = "io.github.FlyJingFish.AndroidAop:android-aop-core:${Version.AndroidAop}"
+        const val AndroidAopAnnotation = "io.github.FlyJingFish.AndroidAop:android-aop-annotation:${Version.AndroidAop}"
+        const val AndroidKsp = "io.github.FlyJingFish.AndroidAop:android-aop-ksp:${Version.AndroidAop}"
     }
 
     /**

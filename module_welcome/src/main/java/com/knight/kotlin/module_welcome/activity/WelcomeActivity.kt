@@ -3,8 +3,6 @@ package com.knight.kotlin.module_welcome.activity
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import androidx.activity.viewModels
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.alibaba.android.arouter.launcher.ARouter
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.config.Appconfig
 import com.knight.kotlin.library_base.ktx.observeLiveData
@@ -15,6 +13,8 @@ import com.knight.kotlin.module_welcome.databinding.WelcomeActivityBinding
 import com.knight.kotlin.module_welcome.entity.AppThemeBean
 import com.knight.kotlin.module_welcome.fragment.WelcomePrivacyAgreeFragment
 import com.knight.kotlin.module_welcome.vm.WelcomeVm
+import com.wyjson.router.GoRouter
+import com.wyjson.router.annotation.Route
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -27,7 +27,7 @@ class WelcomeActivity : BaseActivity<WelcomeActivityBinding, WelcomeVm>() {
             override fun onAnimationEnd(animation: Animator) {
                 super.onAnimationEnd(animation)
                 if (CacheUtils.getAgreeStatus()) {
-                    ARouter.getInstance().build(RouteActivity.Main.MainActivity).navigation()
+                    GoRouter.getInstance().build(RouteActivity.Main.MainActivity).go()
                     finish()
                 } else {
                     WelcomePrivacyAgreeFragment().show(supportFragmentManager, "dialog_privacy")

@@ -5,9 +5,9 @@ import android.content.Context
 import androidx.annotation.RequiresApi
 import com.knight.kotlin.library_permiss.AndroidVersion
 import com.knight.kotlin.library_permiss.permissions.Permission
+import com.knight.kotlin.library_permiss.utils.PermissionUtils
 import com.knight.kotlin.library_permiss.utils.PermissionUtils.checkSelfPermission
 import com.knight.kotlin.library_permiss.utils.PermissionUtils.equalsPermission
-import com.knight.kotlin.library_permiss.utils.PermissionUtils.shouldShowRequestPermissionRationale
 
 
 /**
@@ -30,18 +30,14 @@ open class PermissionDelegateImplV28 :PermissionDelegateImplV26() {
         } else super.isGrantedPermission(context, permission)
     }
 
-    override fun isPermissionPermanentDenied(
+    override fun isDoNotAskAgainPermission(
         activity: Activity,
         permission: String
     ): Boolean {
-        return if (equalsPermission(
-                permission, Permission.ACCEPT_HANDOVER
-            )
-        ) {
-            !checkSelfPermission(activity, permission) &&
-                    !shouldShowRequestPermissionRationale(
-                        activity, permission
-                    )
-        } else super.isPermissionPermanentDenied(activity, permission)
+        if (PermissionUtils.equalsPermission(permission, Permission.ACCEPT_HANDOVER)) {
+            return !PermissionUtils.checkSelfPermission(activity, permission) &&
+                    !PermissionUtils.shouldShowRequestPermissionRationale(activity, permission);
+        }
+        return super.isDoNotAskAgainPermission(activity, permission);
     }
 }

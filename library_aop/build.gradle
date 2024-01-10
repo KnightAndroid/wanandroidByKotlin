@@ -1,7 +1,14 @@
 //library-aop配置文件
 import com.knight.wanandroid.buildsrc.*
 apply from:'../base_library.gradle'
-apply plugin: 'android-aspectjx'
+//apply plugin: 'android-aspectjx'
+apply plugin : 'com.google.devtools.ksp'
+
+android {
+
+    namespace = "com.knight.kotlin.library_aop"
+
+}
 
 
 dependencies {
@@ -9,8 +16,11 @@ dependencies {
     implementation project(path: ':library_base')
     implementation project(path: ':library_common')
 
-    kapt Dependencies.GitHub.ARouteCompiler
+    kapt Dependencies.GitHub.GoRouteCompiler
     implementation Dependencies.JetPack.HiltCore
     kapt Dependencies.JetPack.HiltApt
     kapt Dependencies.JetPack.HiltAndroidx
+
+    //非必须项 👇，如果你想自定义切面需要用到，⚠️支持Java和Kotlin代码写的切面
+    ksp Dependencies.GitHub.AndroidKsp
 }

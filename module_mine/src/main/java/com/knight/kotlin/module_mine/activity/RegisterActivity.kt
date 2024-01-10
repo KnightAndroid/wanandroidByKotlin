@@ -5,7 +5,6 @@ import android.os.Build
 import android.text.TextUtils
 import android.util.Base64
 import androidx.activity.viewModels
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.entity.LoginEntity
 import com.knight.kotlin.library_base.entity.UserInfoEntity
@@ -23,6 +22,7 @@ import com.knight.kotlin.module_mine.databinding.MineRegisterActivityBinding
 import com.knight.kotlin.module_mine.vm.RegisterViewModel
 import com.knight.library_biometric.control.BiometricControl
 import com.knight.library_biometric.listener.BiometricStatusCallback
+import com.wyjson.router.annotation.Route
 import dagger.hilt.android.AndroidEntryPoint
 import javax.crypto.BadPaddingException
 import javax.crypto.Cipher

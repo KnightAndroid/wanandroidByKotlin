@@ -29,7 +29,7 @@ open class PermissionDelegateImplV14 : PermissionDelegate {
         return true
     }
 
-    override fun isPermissionPermanentDenied(activity: Activity, permission: String): Boolean {
+    override fun isDoNotAskAgainPermission(activity: Activity, permission: String): Boolean {
         return false
     }
 

@@ -1,7 +1,6 @@
 package com.knight.kotlin.module_main.vm
 
 import androidx.fragment.app.Fragment
-import com.alibaba.android.arouter.launcher.ARouter
 import com.knight.kotlin.library_base.route.RouteFragment
 import com.knight.kotlin.library_base.vm.BaseViewModel
 import com.knight.kotlin.module_main.repo.MainRepository

@@ -9,9 +9,11 @@ package com.knight.wanandroid.buildsrc
 object ProjectPluginDencies {
     const val AndroidToolsPlugin = "com.android.tools.build:gradle:7.0.2"
     const val KotlinPlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.10"
-    const val ARouterRegister = "com.alibaba:arouter-register:1.0.2"
+    const val GoRouterRegister = "com.github.wyjsonGo.GoRouter:GoRouter-Gradle-Plugin:2.4.5"
     const val HiltPlugin = "com.google.dagger:hilt-android-gradle-plugin:2.47"
     const val AspectJxPlugin = "com.hujiang.aspectjx:gradle-android-plugin-aspectjx:2.0.10"
+    const val AndroidAop = "io.github.FlyJingFish.AndroidAop:android-aop-plugin:1.3.1"
+    const val AndroidKsp = "com.google.devtools.ksp:1.8.10-1.0.9"
 }
 
 

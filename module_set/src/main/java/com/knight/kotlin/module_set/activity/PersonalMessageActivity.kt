@@ -1,7 +1,6 @@
 package com.knight.kotlin.module_set.activity
 
 import androidx.activity.viewModels
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.ktx.getUser
 import com.knight.kotlin.library_base.route.RouteActivity
@@ -10,6 +9,7 @@ import com.knight.kotlin.library_base.vm.EmptyViewModel
 import com.knight.kotlin.module_set.R
 import com.knight.kotlin.module_set.databinding.SetPersonalMessageActivityBinding
 import com.knight.kotlin.module_set.external.MineExternalContact
+import com.wyjson.router.annotation.Route
 import dagger.hilt.android.AndroidEntryPoint
 
 /**

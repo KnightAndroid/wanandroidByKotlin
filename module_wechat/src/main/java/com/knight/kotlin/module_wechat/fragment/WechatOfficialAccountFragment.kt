@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.text.TextUtils
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.knight.kotlin.library_aop.loginintercept.LoginCheck
 import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.knight.kotlin.library_base.ktx.observeLiveData
@@ -17,7 +16,6 @@ import com.knight.kotlin.library_base.util.ColorUtils
 import com.knight.kotlin.library_widget.ktx.init
 import com.knight.kotlin.library_widget.ktx.setItemChildClickListener
 import com.knight.kotlin.library_widget.ktx.setItemClickListener
-import com.knight.kotlin.module_wechat.R
 import com.knight.kotlin.module_wechat.adapter.WechatArticleAdapter
 import com.knight.kotlin.module_wechat.databinding.WechatOfficialaccountFragmentBinding
 import com.knight.kotlin.module_wechat.entity.WechatArticleListEntity
@@ -25,6 +23,7 @@ import com.knight.kotlin.module_wechat.vm.WechatVm
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener
+import com.wyjson.router.annotation.Route
 import dagger.hilt.android.AndroidEntryPoint
 
 /**

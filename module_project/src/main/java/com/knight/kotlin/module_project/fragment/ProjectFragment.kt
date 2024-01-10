@@ -1,7 +1,6 @@
 package com.knight.kotlin.module_project.fragment
 
 import androidx.fragment.app.viewModels
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.knight.kotlin.library_base.ktx.observeLiveData
 import com.knight.kotlin.library_base.ktx.toHtml
@@ -11,6 +10,7 @@ import com.knight.kotlin.library_util.bindWechatViewPager2
 import com.knight.kotlin.module_project.databinding.ProjectActivityBinding
 import com.knight.kotlin.module_project.entity.ProjectTypeBean
 import com.knight.kotlin.module_project.vm.ProjectVm
+import com.wyjson.router.annotation.Route
 import dagger.hilt.android.AndroidEntryPoint
 
 /**

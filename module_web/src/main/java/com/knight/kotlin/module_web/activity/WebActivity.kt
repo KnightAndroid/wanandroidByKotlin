@@ -10,22 +10,21 @@ import android.webkit.WebSettings
 import android.webkit.WebView
 import android.widget.LinearLayout
 import androidx.activity.viewModels
-import com.alibaba.android.arouter.facade.annotation.Autowired
-import com.alibaba.android.arouter.facade.annotation.Route
+import com.flyjingfish.android_aop_core.annotations.SingleClick
 import com.just.agentweb.AgentWeb
 import com.just.agentweb.DefaultWebClient
 import com.just.agentweb.WebChromeClient
 import com.just.agentweb.WebViewClient
-import com.knight.kotlin.library_aop.clickintercept.SingleClick
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_base.vm.EmptyViewModel
-import com.knight.kotlin.module_web.R
 import com.knight.kotlin.module_web.databinding.WebActivityBinding
 import com.knight.kotlin.module_web.dialog.WebBottomFragment
 import com.knight.kotlin.module_web.utils.ViewBindUtils
 import com.knight.kotlin.module_web.widget.WebLayout
+import com.wyjson.router.annotation.Param
+import com.wyjson.router.annotation.Route
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -35,11 +34,11 @@ class WebActivity : BaseActivity<WebActivityBinding,EmptyViewModel>() {
     override val mViewModel: EmptyViewModel by viewModels()
 
     @JvmField
-    @Autowired(name = "webUrl")
+    @Param(name = "webUrl")
     var webUrl:String = ""
 
     @JvmField
-    @Autowired(name = "webTitle")
+    @Param(name = "webTitle")
     var webTitle:String = ""
 
     private lateinit var mAgentWeb:AgentWeb

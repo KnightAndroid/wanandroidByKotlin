@@ -13,8 +13,6 @@ import android.widget.LinearLayout
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
-import com.alibaba.android.arouter.facade.annotation.Autowired
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.google.android.material.appbar.AppBarLayout
 import com.just.agentweb.AgentWeb
 import com.just.agentweb.DefaultWebClient
@@ -27,10 +25,11 @@ import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_base.util.dp2px
 import com.knight.kotlin.library_base.vm.EmptyViewModel
-import com.knight.kotlin.module_web.R
 import com.knight.kotlin.module_web.databinding.WebTransitionActivityBinding
 import com.knight.kotlin.module_web.utils.ViewBindUtils
 import com.knight.kotlin.module_web.widget.WebLayout
+import com.wyjson.router.annotation.Param
+import com.wyjson.router.annotation.Route
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -44,23 +43,23 @@ class WebTransitionActivity:BaseActivity<WebTransitionActivityBinding,EmptyViewM
     override val mViewModel: EmptyViewModel by viewModels()
 
     @JvmField
-    @Autowired(name = "cardBgColor")
+    @Param(name = "cardBgColor")
     var cardBgColor:Int = 0
 
     @JvmField
-    @Autowired(name = "webUrl")
+    @Param(name = "webUrl")
     var webUrl:String = ""
 
     @JvmField
-    @Autowired(name = "title")
+    @Param(name = "title")
     var title:String = ""
 
     @JvmField
-    @Autowired(name = "author")
+    @Param(name = "author")
     var author = ""
 
     @JvmField
-    @Autowired(name = "chapterName")
+    @Param(name = "chapterName")
     var chapterName = ""
 
     private lateinit var mAgentWeb: AgentWeb

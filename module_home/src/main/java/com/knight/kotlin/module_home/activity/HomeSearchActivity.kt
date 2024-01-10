@@ -7,11 +7,10 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.alibaba.android.arouter.facade.annotation.Route
+import com.flyjingfish.android_aop_core.annotations.SingleClick
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
-import com.knight.kotlin.library_aop.clickintercept.SingleClick
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.config.Appconfig
 import com.knight.kotlin.library_base.entity.SearchHotKeyEntity
@@ -35,6 +34,7 @@ import com.knight.kotlin.module_home.adapter.HomeHotKeyAdapter
 import com.knight.kotlin.module_home.adapter.SearchRecordAdapter
 import com.knight.kotlin.module_home.databinding.HomeSearchActivityBinding
 import com.knight.kotlin.module_home.vm.HomeSearchVm
+import com.wyjson.router.annotation.Route
 import dagger.hilt.android.AndroidEntryPoint
 
 /**

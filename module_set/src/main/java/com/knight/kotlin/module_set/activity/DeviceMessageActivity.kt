@@ -1,7 +1,6 @@
 package com.knight.kotlin.module_set.activity
 
 import androidx.activity.viewModels
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.ktx.screenHeightWithStatus
 import com.knight.kotlin.library_base.ktx.screenWidth
@@ -12,6 +11,7 @@ import com.knight.kotlin.library_util.NetWorkUtils
 import com.knight.kotlin.library_util.PhoneUtils
 import com.knight.kotlin.module_set.R
 import com.knight.kotlin.module_set.databinding.SetDeviceMessageActivityBinding
+import com.wyjson.router.annotation.Route
 import dagger.hilt.android.AndroidEntryPoint
 
 /**

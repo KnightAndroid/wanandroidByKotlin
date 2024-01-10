@@ -2,8 +2,8 @@ apply plugin: 'java-library'
 apply plugin: 'kotlin'
 //辅助生成后缀是-api模块的gradle模块 生成module_set-api
 java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
 
 dependencies {

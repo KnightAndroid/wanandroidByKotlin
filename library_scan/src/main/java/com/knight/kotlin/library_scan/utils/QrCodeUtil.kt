@@ -103,10 +103,7 @@ object QrCodeUtil {
      * @param content  条形码包含的内容
      * @return 返回生成的新位图
      */
-    private fun showContent(bCBitmap: Bitmap?, content: String): Bitmap? {
-        if (TextUtils.isEmpty(content) || null == bCBitmap) {
-            return null
-        }
+    private fun showContent(bCBitmap: Bitmap, content: String): Bitmap {
         val paint = Paint()
         paint.color = Color.BLACK
         paint.isAntiAlias = true
@@ -347,7 +344,6 @@ object QrCodeUtil {
                 ), logoRaduisX, logoRaduisY, paint
             )
         } catch (e: Exception) {
-            bitmap = null
             e.stackTrace
         }
         return bitmap
@@ -485,7 +481,6 @@ object QrCodeUtil {
                 ), logoRaduisX, logoRaduisY, paint
             )
         } catch (e: java.lang.Exception) {
-            bitmap = null
             e.stackTrace
         }
         return bitmap

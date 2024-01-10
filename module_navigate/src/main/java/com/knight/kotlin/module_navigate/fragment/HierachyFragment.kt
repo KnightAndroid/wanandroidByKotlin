@@ -4,7 +4,6 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.knight.kotlin.library_base.ktx.observeLiveData
 import com.knight.kotlin.library_base.route.RouteFragment
@@ -16,6 +15,7 @@ import com.knight.kotlin.module_navigate.listener.CheckListener
 import com.knight.kotlin.module_navigate.listener.RvListener
 import com.knight.kotlin.module_navigate.vm.HierachyVm
 import com.knight.kotlin.module_navigate.widget.ItemHeaderDecoration
+import com.wyjson.router.annotation.Route
 import dagger.hilt.android.AndroidEntryPoint
 
 /**

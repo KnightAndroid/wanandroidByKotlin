@@ -1,8 +1,8 @@
 package com.knight.kotlin.library_base.util
 
-import com.alibaba.android.arouter.launcher.ARouter
 import com.knight.kotlin.library_base.entity.WebDataEntity
 import com.knight.kotlin.library_base.route.RouteActivity
+import com.wyjson.router.GoRouter
 
 /**
  * Author:Knight
@@ -22,8 +22,8 @@ class ArouteUtils {
                 chapterName ?: "",
                 author
                     ?: shareUser ?: "")
-            ARouter.getInstance().build(RouteActivity.Web.WebArticlePager)
-                .withParcelable("webDataEntity", mWebDataEntity).navigation()
+            GoRouter.getInstance().build(RouteActivity.Web.WebArticlePager)
+                .withParcelable("webDataEntity", mWebDataEntity).go()
         }
 
     }

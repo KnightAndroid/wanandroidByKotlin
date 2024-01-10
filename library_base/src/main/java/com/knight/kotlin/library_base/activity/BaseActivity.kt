@@ -13,7 +13,6 @@ import android.view.WindowManager
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
-import com.alibaba.android.arouter.launcher.ARouter
 import com.kingja.loadsir.callback.Callback
 import com.kingja.loadsir.core.LoadService
 import com.kingja.loadsir.core.LoadSir
@@ -38,6 +37,7 @@ import com.knight.kotlin.library_base.view.BaseView
 import com.knight.kotlin.library_base.vm.BaseViewModel
 import com.knight.kotlin.library_base.widget.loadcircleview.ProgressHud
 import com.knight.kotlin.library_base.widget.swapeback.SwipeBackHelper
+import com.wyjson.router.GoRouter
 
 
 /**
@@ -127,7 +127,13 @@ abstract class BaseActivity<VB : ViewBinding,VM : BaseViewModel> : AppCompatActi
         //处理保存的状态
         mStatusHelper?.onRestoreInstanceStatus(savedInstanceState)
         //ARouter 依赖注入
-        ARouter.getInstance().inject(this)
+        //GoRouter.getInstance().injectCheck(this)
+        try {
+            GoRouter.getInstance().inject(this)
+        } catch (e: Exception) {
+
+        }
+
         //注册EventBus
         if (javaClass.isAnnotationPresent(EventBusRegister::class.java)) EventBusUtils.register(this)
         themeColor = CacheUtils.getThemeColor()

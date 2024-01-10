@@ -1,35 +1,24 @@
 package com.knight.kotlin.library_permiss
 
 import android.app.Activity
-
 import android.content.Context
 import android.content.Intent
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-
 import com.knight.kotlin.library_permiss.AndroidVersion.isAndroid13
 import com.knight.kotlin.library_permiss.AndroidVersion.isAndroid4_2
 import com.knight.kotlin.library_permiss.PermissionChecker.checkActivityStatus
-import com.knight.kotlin.library_permiss.PermissionChecker.checkBodySensorsPermission
-import com.knight.kotlin.library_permiss.PermissionChecker.checkLocationPermission
-import com.knight.kotlin.library_permiss.PermissionChecker.checkManifestPermissions
-import com.knight.kotlin.library_permiss.PermissionChecker.checkMediaLocationPermission
-import com.knight.kotlin.library_permiss.PermissionChecker.checkNearbyDevicesPermission
-import com.knight.kotlin.library_permiss.PermissionChecker.checkNotificationListenerPermission
 import com.knight.kotlin.library_permiss.PermissionChecker.checkPermissionArgument
-import com.knight.kotlin.library_permiss.PermissionChecker.checkPictureInPicturePermission
-import com.knight.kotlin.library_permiss.PermissionChecker.checkStoragePermission
-import com.knight.kotlin.library_permiss.PermissionChecker.checkTargetSdkVersion
 import com.knight.kotlin.library_permiss.PermissionChecker.optimizeDeprecatedPermission
 import com.knight.kotlin.library_permiss.PermissionIntentManager.getApplicationDetailsIntent
 import com.knight.kotlin.library_permiss.fragment.PermissionPageFragment
 import com.knight.kotlin.library_permiss.listener.IPermissionInterceptor
 import com.knight.kotlin.library_permiss.listener.OnPermissionCallback
 import com.knight.kotlin.library_permiss.listener.OnPermissionPageCallback
+import com.knight.kotlin.library_permiss.permissions.PermissionApi
 import com.knight.kotlin.library_permiss.permissions.PermissionApi.containsSpecialPermission
 import com.knight.kotlin.library_permiss.permissions.PermissionApi.getDeniedPermissions
 import com.knight.kotlin.library_permiss.permissions.PermissionApi.isGrantedPermissions
-import com.knight.kotlin.library_permiss.permissions.PermissionApi.isPermissionPermanentDenied
 import com.knight.kotlin.library_permiss.permissions.PermissionApi.isSpecialPermission
 import com.knight.kotlin.library_permiss.utils.PermissionUtils
 import com.knight.kotlin.library_permiss.utils.PermissionUtils.asArrayList
@@ -156,36 +145,36 @@ class XXPermissions constructor(context: Context) {
             return containsSpecial(asArrayList(*permissions))
         }
 
-        fun containsSpecial( permissions: List<String?>?): Boolean {
+        fun containsSpecial( permissions: List<String>): Boolean {
             return containsSpecialPermission(permissions)
         }
 
         /**
-         * 判断一个或多个权限是否被永久拒绝了
+         * 判断一个或多个权限是否被勾选了不再询问的选项
          *
          * 注意不能在请求权限之前调用，一定要在 [OnPermissionCallback.onDenied] 方法中调用
-         * 如果你在应用启动后，没有申请过这个权限，然后去判断它有没有永久拒绝，这样系统会一直返回 true，也就是永久拒绝
-         * 但是实际并没有永久拒绝，系统只是不想让你知道权限是否被永久拒绝了，你必须要申请过这个权限，才能去判断这个权限是否被永久拒绝
+         * 如果你在应用启动后，没有申请过这个权限，然后去判断它有没有勾选不再询问的选项，这样系统会一直返回 true，也就是不再询问
+         * 但是实际上还能继续申请，系统只是不想让你知道权限是否勾选了不再询问的选项，你必须要申请过这个权限，才能去判断这个权限是否勾选了不再询问的选项
          */
-        fun isPermanentDenied(
+        fun isDoNotAskAgainPermissions(
             activity: Activity,
             vararg permissions: String
         ): Boolean {
-            return isPermanentDenied(activity, asArrayList(*permissions))
+            return isDoNotAskAgainPermissions(activity, asArrayList(*permissions))
         }
 
-        fun isPermanentDenied(
+        fun isDoNotAskAgainPermissions(
             activity: Activity,
             vararg permissions: Array<String>
         ): Boolean {
-            return isPermanentDenied(activity, asArrayLists<String>(*permissions))
+            return isDoNotAskAgainPermissions(activity, asArrayLists<String>(*permissions))
         }
 
-        fun isPermanentDenied(
+        fun isDoNotAskAgainPermissions(
             activity: Activity,
             permissions: List<String>
         ): Boolean {
-            return isPermissionPermanentDenied(activity, permissions)
+            return PermissionApi.isDoNotAskAgainPermissions(activity, permissions)
         }
 
         /* android.content.Context */
@@ -399,9 +388,16 @@ class XXPermissions constructor(context: Context) {
     /**
      * 添加权限组
      */
-    fun permission(vararg permissions: String): XXPermissions {
+    fun permission(@PermissionLimit permission: String): XXPermissions {
 
-        return permission(PermissionUtils.asArrayList(*permissions))
+        if (permission == null) {
+            return this
+        }
+        if (PermissionUtils.containsPermission(mPermissions, permission)) {
+            return this
+        }
+        mPermissions.add(permission)
+        return this;
     }
 
     fun permission(vararg permissions: Array<String>): XXPermissions {
@@ -472,23 +468,25 @@ class XXPermissions constructor(context: Context) {
             // 获取清单文件信息
             val androidManifestInfo = getAndroidManifestInfo(context)
             // 检查申请的读取媒体位置权限是否符合规范
-            checkMediaLocationPermission(context, permissions)
+            PermissionChecker.checkMediaLocationPermission(context, permissions)
             // 检查申请的存储权限是否符合规范
-            checkStoragePermission(context, permissions, androidManifestInfo)
+            PermissionChecker.checkStoragePermission(context, permissions, androidManifestInfo)
             // 检查申请的传感器权限是否符合规范
-            checkBodySensorsPermission(permissions)
+            PermissionChecker.checkBodySensorsPermission(permissions)
             // 检查申请的定位权限是否符合规范
-            checkLocationPermission(permissions)
+            PermissionChecker.checkLocationPermission(permissions)
             // 检查申请的画中画权限是否符合规范
-            checkPictureInPicturePermission(activity!!, permissions, androidManifestInfo)
+            PermissionChecker.checkPictureInPicturePermission(activity!!, permissions, androidManifestInfo)
             // 检查申请的通知栏监听权限是否符合规范
-            checkNotificationListenerPermission(permissions, androidManifestInfo)
+            PermissionChecker.checkNotificationListenerPermission(permissions, androidManifestInfo)
             // 检查蓝牙和 WIFI 权限申请是否符合规范
-            checkNearbyDevicesPermission(permissions, androidManifestInfo)
+            PermissionChecker.checkNearbyDevicesPermission(permissions, androidManifestInfo)
+            // 检查对照片和视频的部分访问权限申请是否符合规范
+            PermissionChecker.checkReadMediaVisualUserSelectedPermission(permissions)
             // 检查申请的权限和 targetSdk 版本是否能吻合
-            checkTargetSdkVersion(context, permissions)
+            PermissionChecker.checkTargetSdkVersion(context, permissions)
             // 检测权限有没有在清单文件中注册
-            checkManifestPermissions(context, permissions, androidManifestInfo)
+            PermissionChecker.checkManifestPermissions(context, permissions, androidManifestInfo)
         }
 
         // 优化所申请的权限列表

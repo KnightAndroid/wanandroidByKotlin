@@ -87,7 +87,7 @@ class LoveAnimatorRelativeLayout : RelativeLayout {
         return super.dispatchTouchEvent(ev)
     }
 
-    override fun dispatchDraw(canvas: Canvas?) {
+    override fun dispatchDraw(canvas: Canvas) {
         super.dispatchDraw(canvas)
     }
 

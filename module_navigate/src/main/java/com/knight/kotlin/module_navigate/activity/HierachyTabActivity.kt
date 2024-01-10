@@ -2,8 +2,6 @@ package com.knight.kotlin.module_navigate.activity
 
 import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
-import com.alibaba.android.arouter.facade.annotation.Autowired
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.ktx.setOnClick
 import com.knight.kotlin.library_base.route.RouteActivity
@@ -12,6 +10,8 @@ import com.knight.kotlin.library_util.ViewInitUtils
 import com.knight.kotlin.library_util.bindWechatViewPager2
 import com.knight.kotlin.module_navigate.databinding.NavigateHierachyTabActivityBinding
 import com.knight.kotlin.module_navigate.fragment.HierachyTabArticleFragment
+import com.wyjson.router.annotation.Param
+import com.wyjson.router.annotation.Route
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -26,16 +26,16 @@ class HierachyTabActivity : BaseActivity<NavigateHierachyTabActivityBinding,Empt
     override val mViewModel: EmptyViewModel by viewModels()
 
     @JvmField
-    @Autowired(name = "titleName")
+    @Param(name = "titleName")
     var titleName:String = ""
 
 
     @JvmField
-    @Autowired(name = "cids")
+    @Param(name = "cids")
     var cids:ArrayList<Int>?=null
 
     @JvmField
-    @Autowired(name = "childrenNames")
+    @Param(name = "childrenNames")
     var childrenNames:ArrayList<String>?=null
 
 

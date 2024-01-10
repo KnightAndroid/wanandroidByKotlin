@@ -4,8 +4,7 @@ import android.graphics.drawable.GradientDrawable
 import android.view.View
 import android.widget.CompoundButton
 import androidx.activity.viewModels
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.knight.kotlin.library_aop.clickintercept.SingleClick
+import com.flyjingfish.android_aop_core.annotations.SingleClick
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.config.Appconfig
 import com.knight.kotlin.library_base.event.MessageEvent
@@ -27,6 +26,7 @@ import com.knight.kotlin.module_set.annoation.ColorStyle
 import com.knight.kotlin.module_set.databinding.SetActivityBinding
 import com.knight.kotlin.module_set.dialog.ColorPickerDialog
 import com.knight.kotlin.module_set.vm.SetVm
+import com.wyjson.router.annotation.Route
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

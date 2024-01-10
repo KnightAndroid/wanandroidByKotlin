@@ -10,7 +10,6 @@ import com.knight.kotlin.library_permiss.AndroidVersion.isAndroid11
 import com.knight.kotlin.library_permiss.AndroidVersion.isAndroid13
 import com.knight.kotlin.library_permiss.permissions.Permission
 import com.knight.kotlin.library_permiss.utils.PermissionUtils
-import com.knight.kotlin.library_permiss.utils.PermissionUtils.equalsPermission
 
 
 /**
@@ -25,70 +24,64 @@ open class PermissionDelegateImplV29 : PermissionDelegateImplV28(){
         context: Context,
         permission: String
     ): Boolean {
-        if (equalsPermission(permission, Permission.ACCESS_MEDIA_LOCATION)) {
+        if (PermissionUtils.equalsPermission(permission, Permission.ACCESS_MEDIA_LOCATION)) {
             return hasReadStoragePermission(context) &&
-                    PermissionUtils.checkSelfPermission(context, Permission.ACCESS_MEDIA_LOCATION)
+                    PermissionUtils.checkSelfPermission(context, Permission.ACCESS_MEDIA_LOCATION);
         }
-        if (equalsPermission(permission, Permission.ACCESS_BACKGROUND_LOCATION) ||
-            equalsPermission(permission, Permission.ACTIVITY_RECOGNITION)
-        ) {
-            return PermissionUtils.checkSelfPermission(context, permission)
+
+        if (PermissionUtils.equalsPermission(permission, Permission.ACCESS_BACKGROUND_LOCATION) ||
+            PermissionUtils.equalsPermission(permission, Permission.ACTIVITY_RECOGNITION)) {
+            return PermissionUtils.checkSelfPermission(context, permission);
         }
 
         // 向下兼容 Android 11 新权限
-        if (!isAndroid11()) {
-            if (equalsPermission(permission, Permission.MANAGE_EXTERNAL_STORAGE)) {
+        if (!AndroidVersion.isAndroid11()) {
+            if (PermissionUtils.equalsPermission(permission, Permission.MANAGE_EXTERNAL_STORAGE)) {
                 // 这个是 Android 10 上面的历史遗留问题，假设申请的是 MANAGE_EXTERNAL_STORAGE 权限
                 // 必须要在 AndroidManifest.xml 中注册 android:requestLegacyExternalStorage="true"
                 if (!isUseDeprecationExternalStorage()) {
-                    return false
+                    return false;
                 }
             }
         }
-        return super.isGrantedPermission(context, permission)
+
+        return super.isGrantedPermission(context, permission);
     }
 
-    override fun isPermissionPermanentDenied(
+    override fun isDoNotAskAgainPermission(
         activity: Activity,
         permission: String
     ): Boolean {
-        if (equalsPermission(permission, Permission.ACCESS_BACKGROUND_LOCATION)) {
-            return if (!PermissionUtils.checkSelfPermission(
-                    activity, Permission.ACCESS_FINE_LOCATION
-                )
-            ) {
-                !PermissionUtils.shouldShowRequestPermissionRationale(
-                    activity, Permission.ACCESS_FINE_LOCATION
-                )
-            } else !PermissionUtils.checkSelfPermission(activity, permission) &&
-                    !PermissionUtils.shouldShowRequestPermissionRationale(
-                        activity, permission
-                    )
+        if (PermissionUtils.equalsPermission(permission, Permission.ACCESS_BACKGROUND_LOCATION)) {
+            if (!PermissionUtils.checkSelfPermission(activity, Permission.ACCESS_FINE_LOCATION)) {
+                return !PermissionUtils.shouldShowRequestPermissionRationale(activity, Permission.ACCESS_FINE_LOCATION);
+            }
+            return !PermissionUtils.checkSelfPermission(activity, permission) &&
+                    !PermissionUtils.shouldShowRequestPermissionRationale(activity, permission);
         }
-        if (equalsPermission(permission, Permission.ACCESS_MEDIA_LOCATION)) {
+
+        if (PermissionUtils.equalsPermission(permission, Permission.ACCESS_MEDIA_LOCATION)) {
             return hasReadStoragePermission(activity) &&
                     !PermissionUtils.checkSelfPermission(activity, permission) &&
-                    !PermissionUtils.shouldShowRequestPermissionRationale(
-                        activity, permission
-                    )
+                    !PermissionUtils.shouldShowRequestPermissionRationale(activity, permission);
         }
-        if (equalsPermission(permission, Permission.ACTIVITY_RECOGNITION)) {
+
+        if (PermissionUtils.equalsPermission(permission, Permission.ACTIVITY_RECOGNITION)) {
             return !PermissionUtils.checkSelfPermission(activity, permission) &&
-                    !PermissionUtils.shouldShowRequestPermissionRationale(
-                        activity, permission
-                    )
+                    !PermissionUtils.shouldShowRequestPermissionRationale(activity, permission);
         }
 
         // 向下兼容 Android 11 新权限
-        if (!isAndroid11()) {
-            if (equalsPermission(permission, Permission.MANAGE_EXTERNAL_STORAGE)) {
+        if (!AndroidVersion.isAndroid11()) {
+            if (PermissionUtils.equalsPermission(permission, Permission.MANAGE_EXTERNAL_STORAGE)) {
                 // 处理 Android 10 上面的历史遗留问题
                 if (!isUseDeprecationExternalStorage()) {
-                    return true
+                    return true;
                 }
             }
         }
-        return super.isPermissionPermanentDenied(activity, permission)
+
+        return super.isDoNotAskAgainPermission(activity, permission);
     }
 
 

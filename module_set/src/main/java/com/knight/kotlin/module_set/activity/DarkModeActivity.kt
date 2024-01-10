@@ -6,9 +6,8 @@ import android.widget.CompoundButton
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.alibaba.android.arouter.facade.annotation.Route
+import com.flyjingfish.android_aop_core.annotations.SingleClick
 import com.google.common.reflect.TypeToken
-import com.knight.kotlin.library_aop.clickintercept.SingleClick
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.ktx.init
 import com.knight.kotlin.library_base.ktx.setOnClick
@@ -23,6 +22,7 @@ import com.knight.kotlin.module_set.R
 import com.knight.kotlin.module_set.adapter.SelectDarkModeAdapter
 import com.knight.kotlin.module_set.databinding.SetDarkmodeActivityBinding
 import com.knight.kotlin.module_set.entity.DarkSelectEntity
+import com.wyjson.router.annotation.Route
 import dagger.hilt.android.AndroidEntryPoint
 import java.lang.reflect.Type
 

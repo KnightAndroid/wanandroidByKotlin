@@ -3,7 +3,6 @@ package com.knight.kotlin.module_set.activity
 import android.content.res.Resources
 import android.view.View
 import androidx.activity.viewModels
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.knight.kotlin.library_base.BaseApp
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.ktx.setOnClick
@@ -15,6 +14,7 @@ import com.knight.kotlin.library_util.SystemUtils
 import com.knight.kotlin.library_widget.ChangeSizeView
 import com.knight.kotlin.module_set.R
 import com.knight.kotlin.module_set.databinding.SetChangetextsizeActivityBinding
+import com.wyjson.router.annotation.Route
 import dagger.hilt.android.AndroidEntryPoint
 import me.jessyan.autosize.AutoSize
 

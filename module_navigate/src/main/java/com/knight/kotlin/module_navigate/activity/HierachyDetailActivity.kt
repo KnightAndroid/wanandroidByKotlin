@@ -1,8 +1,6 @@
 package com.knight.kotlin.module_navigate.activity
 
 import androidx.activity.viewModels
-import com.alibaba.android.arouter.facade.annotation.Autowired
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.ktx.setOnClick
 import com.knight.kotlin.library_base.route.RouteActivity
@@ -10,6 +8,8 @@ import com.knight.kotlin.library_base.vm.EmptyViewModel
 import com.knight.kotlin.module_navigate.R
 import com.knight.kotlin.module_navigate.databinding.NavigateHierachyDetailActivityBinding
 import com.knight.kotlin.module_navigate.fragment.HierachyTabArticleFragment
+import com.wyjson.router.annotation.Param
+import com.wyjson.router.annotation.Route
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -23,13 +23,13 @@ class HierachyDetailActivity : BaseActivity<NavigateHierachyDetailActivityBindin
     override val mViewModel: EmptyViewModel by viewModels()
 
     @JvmField
-    @Autowired(name = "cid")
+    @Param(name = "cid")
     var cid = 0
 
     private lateinit var mHierachyTabArticleFragment: HierachyTabArticleFragment
 
     @JvmField
-    @Autowired(name = "titleName")
+    @Param(name = "titleName")
     var titleName: String = ""
 
     override fun setThemeColor(isDarkMode: Boolean) {

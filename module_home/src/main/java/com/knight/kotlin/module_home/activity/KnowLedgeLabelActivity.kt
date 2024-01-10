@@ -3,14 +3,12 @@ package com.knight.kotlin.module_home.activity
 import android.text.TextUtils
 import android.view.View
 import androidx.activity.viewModels
-import com.alibaba.android.arouter.facade.annotation.Autowired
-import com.alibaba.android.arouter.facade.annotation.Route
+import com.flyjingfish.android_aop_core.annotations.SingleClick
 import com.google.android.flexbox.AlignItems
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
 import com.google.common.reflect.TypeToken
-import com.knight.kotlin.library_aop.clickintercept.SingleClick
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.event.MessageEvent
 import com.knight.kotlin.library_base.ktx.ActivityMessenger
@@ -28,6 +26,8 @@ import com.knight.kotlin.library_widget.ktx.setItemClickListener
 import com.knight.kotlin.module_home.R
 import com.knight.kotlin.module_home.adapter.KnowLedgeAdapter
 import com.knight.kotlin.module_home.databinding.HomeLabelActivityBinding
+import com.wyjson.router.annotation.Param
+import com.wyjson.router.annotation.Route
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Random
 
@@ -44,7 +44,7 @@ class KnowLedgeLabelActivity : BaseActivity<HomeLabelActivityBinding, EmptyViewM
 
 
     @JvmField
-    @Autowired(name = "data")
+    @Param(name = "data")
     var data: ArrayList<String>? = null
 
     /**

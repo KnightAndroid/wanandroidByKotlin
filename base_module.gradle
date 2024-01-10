@@ -30,12 +30,12 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
+        jvmTarget = JavaVersion.VERSION_17.toString()
     }
 
     buildFeatures {
@@ -94,7 +94,7 @@ android {
 
 kapt {
     arguments {
-        arg("AROUTER_MODULE_NAME", project.name)
+        arg("GOROUTER_MODULE_NAME", project.name)
         arg("eventBusIndex", "${ProjectBuildDencies.applicationId}.eventbus.index.${project.name}EventIndex")
     }
 }
@@ -115,7 +115,7 @@ dependencies {
     androidTestImplementation Dependencies.Androidx.TestEspresso
     implementation Dependencies.JetPack.HiltCore
 
-    kapt Dependencies.GitHub.ARouteCompiler
+    kapt Dependencies.GitHub.GoRouteCompiler
     kapt Dependencies.GitHub.EventBusAPT
     kapt Dependencies.GitHub.AutoServiceAnnotations
     kapt Dependencies.JetPack.HiltApt

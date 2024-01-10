@@ -37,10 +37,10 @@ dependencies {
     kapt Dependencies.JetPack.LifecycleCompilerAPT
     //阿里路由  https://github.com/alibaba/ARouter
 
-    api Dependencies.GitHub.ARoute
+    api Dependencies.GitHub.GoRouter
     api Dependencies.GitHub.EventBus
     kapt Dependencies.GitHub.EventBusAPT
-    kapt Dependencies.GitHub.ARouteCompiler
+    kapt Dependencies.GitHub.GoRouteCompiler
     api Dependencies.GitHub.AutoSize
 
     api Dependencies.GitHub.AutoService
@@ -52,5 +52,8 @@ dependencies {
     implementation Dependencies.GitHub.Gson
     api Dependencies.GitHub.LoadSir
     api Dependencies.OtherUtils.Bugly
+    //必须项
+    api Dependencies.GitHub.AndroidAop
+    api Dependencies.GitHub.AndroidAopAnnotation
 
 }

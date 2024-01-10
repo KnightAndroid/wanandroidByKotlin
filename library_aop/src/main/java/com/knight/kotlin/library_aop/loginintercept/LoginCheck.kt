@@ -1,10 +1,14 @@
 package com.knight.kotlin.library_aop.loginintercept
 
+import com.flyjingfish.android_aop_annotation.anno.AndroidAopPointCut
+
 /**
  * Author:Knight
  * Time:2022/1/17 14:41
  * Description:LoginCHeck
  */
+
+@AndroidAopPointCut(LoginInterceptCut::class)
 @kotlin.annotation.Retention(AnnotationRetention.RUNTIME)
 @Target(AnnotationTarget.FUNCTION)
 annotation class LoginCheck(

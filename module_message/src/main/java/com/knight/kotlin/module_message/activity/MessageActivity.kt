@@ -2,7 +2,6 @@ package com.knight.kotlin.module_message.activity
 
 import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.ktx.setOnClick
 import com.knight.kotlin.library_base.route.RouteActivity
@@ -12,6 +11,7 @@ import com.knight.kotlin.library_util.bindWechatViewPager2
 import com.knight.kotlin.module_message.R
 import com.knight.kotlin.module_message.databinding.MessageActivityBinding
 import com.knight.kotlin.module_message.fragment.MessageFragment
+import com.wyjson.router.annotation.Route
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

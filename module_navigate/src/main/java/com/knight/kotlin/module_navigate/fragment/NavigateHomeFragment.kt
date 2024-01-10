@@ -2,7 +2,7 @@ package com.knight.kotlin.module_navigate.fragment
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.alibaba.android.arouter.facade.annotation.Route
+
 import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.knight.kotlin.library_base.route.RouteFragment
 import com.knight.kotlin.library_base.vm.EmptyViewModel
@@ -10,6 +10,7 @@ import com.knight.kotlin.library_util.ViewInitUtils
 import com.knight.kotlin.library_util.bindWechatViewPager2
 import com.knight.kotlin.module_navigate.R
 import com.knight.kotlin.module_navigate.databinding.NavigateHomeFragmentBinding
+import com.wyjson.router.annotation.Route
 import dagger.hilt.android.AndroidEntryPoint
 
 /**

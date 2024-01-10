@@ -3,8 +3,6 @@ package com.knight.kotlin.module_navigate.fragment
 import android.os.Bundle
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.alibaba.android.arouter.launcher.ARouter
 import com.google.android.flexbox.AlignItems
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
@@ -27,6 +25,8 @@ import com.knight.kotlin.module_navigate.listener.CheckListener
 import com.knight.kotlin.module_navigate.listener.RvListener
 import com.knight.kotlin.module_navigate.vm.NavigateRightTreeVm
 import com.knight.kotlin.module_navigate.widget.ItemHeaderDecoration
+import com.wyjson.router.GoRouter
+import com.wyjson.router.annotation.Route
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -80,11 +80,11 @@ class TreeRightFragment : BaseFragment<NavigateRightTreeFragmentBinding,Navigate
                 if (id == R.id.navigate_root) {
                     if (!isNavigate) {
                         //不是导航才能跳到tab切换页面
-                        ARouter.getInstance().build(RouteActivity.Navigate.HierachyTabActivity)
+                        GoRouter.getInstance().build(RouteActivity.Navigate.HierachyTabActivity)
                             .withStringArrayList("childrenNames",ArrayList(mDatas.get(position).childrenName))
                             .withIntegerArrayList("cids",ArrayList(mDatas.get(position).cid))
                             .withString("titleName",mDatas.get(position).titleName)
-                            .navigation()
+                            .go()
                     }
                 } else if (id == R.id.navigate_tv_content) {
                     if (isNavigate) {

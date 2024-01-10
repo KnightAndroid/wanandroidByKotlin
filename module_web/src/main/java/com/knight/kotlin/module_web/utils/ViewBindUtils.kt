@@ -3,11 +3,11 @@ package com.knight.kotlin.module_web.utils
 
 import android.view.View
 import android.webkit.WebView
-import com.alibaba.android.arouter.launcher.ARouter
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.module_web.R
 import com.knight.kotlin.module_web.enum.WebViewHitResult
 import com.knight.kotlin.module_web.enum.WebViewHitResultEnum
+import com.wyjson.router.GoRouter
 
 
 /**
@@ -30,10 +30,10 @@ object ViewBindUtils {
                 val webViewHitResult = WebViewHitResult(hitTestResult)
                 return when (webViewHitResult.getType()) {
                     WebViewHitResultEnum.IMAGE_TYPE, WebViewHitResultEnum.IMAGE_ANCHOR_TYPE, WebViewHitResultEnum.SRC_IMAGE_ANCHOR_TYPE -> {
-                        ARouter.getInstance().build(RouteActivity.Web.WebPreviewPhotoPager)
+                        GoRouter.getInstance().build(RouteActivity.Web.WebPreviewPhotoPager)
                             .withString("photoUri", webViewHitResult.getResult())
                             .withTransition(R.anim.web_fade_out_anim, R.anim.web_fade_in_anim)
-                            .navigation(mWebView.context)
+                            .go(mWebView.context)
                         true
                     }
                     else -> false

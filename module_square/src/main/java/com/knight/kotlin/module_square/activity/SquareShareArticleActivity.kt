@@ -2,7 +2,6 @@ package com.knight.kotlin.module_square.activity
 
 import android.text.TextUtils
 import androidx.activity.viewModels
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.knight.kotlin.library_aop.loginintercept.LoginCheck
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.event.MessageEvent
@@ -15,6 +14,7 @@ import com.knight.kotlin.library_util.toast.ToastUtils
 import com.knight.kotlin.module_square.R
 import com.knight.kotlin.module_square.databinding.SquareShareArticleActivityBinding
 import com.knight.kotlin.module_square.vm.SquareShareArticleVm
+import com.wyjson.router.annotation.Route
 import dagger.hilt.android.AndroidEntryPoint
 
 /**

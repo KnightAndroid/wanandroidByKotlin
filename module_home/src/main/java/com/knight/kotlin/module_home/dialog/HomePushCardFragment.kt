@@ -3,14 +3,14 @@ package com.knight.kotlin.module_home.dialog
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
-import com.alibaba.android.arouter.launcher.ARouter
-import com.knight.kotlin.library_aop.clickintercept.SingleClick
+import com.flyjingfish.android_aop_core.annotations.SingleClick
 import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.vm.EmptyViewModel
 import com.knight.kotlin.library_database.entity.EveryDayPushEntity
 import com.knight.kotlin.library_util.image.ImageLoader
 import com.knight.kotlin.module_home.databinding.HomePushcardDialogBinding
+import com.wyjson.router.GoRouter
 
 /**
  * Author:Knight
@@ -63,10 +63,10 @@ class HomePushCardFragment:BaseFragment<HomePushcardDialogBinding,EmptyViewModel
     override fun onClick(v: View) {
         when(v) {
             mBinding.cvArticle -> {
-                ARouter.getInstance().build(RouteActivity.Web.WebPager)
+                GoRouter.getInstance().build(RouteActivity.Web.WebPager)
                     .withString("webUrl",mEveryDayPushEntity?.articleLink)
                     .withString("webTitle",mEveryDayPushEntity?.articleTitle)
-                    .navigation()
+                    .go()
             }
 
         }

@@ -10,7 +10,7 @@ import android.os.Build
  * Description:AndroidVersion
  */
 object AndroidVersion {
-
+    const val ANDROID_14 = Build.VERSION_CODES.UPSIDE_DOWN_CAKE
     const val ANDROID_13 = Build.VERSION_CODES.TIRAMISU
     const val ANDROID_12_L = Build.VERSION_CODES.S_V2
     const val ANDROID_12 = Build.VERSION_CODES.S
@@ -44,6 +44,14 @@ object AndroidVersion {
         return context.applicationInfo.targetSdkVersion
     }
 
+
+    /**
+     * 是否是Android14及以上得版本
+     *
+     */
+    fun isAndroid14() :Boolean {
+        return Build.VERSION.SDK_INT >= ANDROID_14
+    }
     /**
      * 是否是 Android 13 及以上版本
      */
@@ -108,7 +116,7 @@ object AndroidVersion {
     }
 
     /**
-     * 是否是 Android 5.0 及以上版本
+     * 是否是 Android 5.1 及以上版本
      */
     fun isAndroid5_1(): Boolean {
         return Build.VERSION.SDK_INT >= ANDROID_5_1

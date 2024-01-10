@@ -3,8 +3,6 @@ package com.knight.kotlin.module_mine.activity
 import android.graphics.drawable.GradientDrawable
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.alibaba.android.arouter.facade.annotation.Autowired
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.kingja.loadsir.core.LoadService
 import com.knight.kotlin.library_aop.loginintercept.LoginCheck
 import com.knight.kotlin.library_base.activity.BaseActivity
@@ -29,6 +27,8 @@ import com.knight.kotlin.module_mine.vm.OtherShareArticleViewModel
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener
+import com.wyjson.router.annotation.Param
+import com.wyjson.router.annotation.Route
 import dagger.hilt.android.AndroidEntryPoint
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -47,7 +47,7 @@ class OtherShareArticleActivity :BaseActivity<MineOthershareActivityBinding,Othe
 
 
     @JvmField
-    @Autowired(name = "uid")
+    @Param(name = "uid")
     var uid = 0
     //选择收藏/取消收藏的Item项
     private var selectItem = -1

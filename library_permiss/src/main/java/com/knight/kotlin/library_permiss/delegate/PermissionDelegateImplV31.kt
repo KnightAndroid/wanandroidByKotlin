@@ -45,7 +45,7 @@ open class PermissionDelegateImplV31 : PermissionDelegateImplV30(){
         } else super.isGrantedPermission(context, permission)
     }
 
-    override fun isPermissionPermanentDenied(
+    override fun isDoNotAskAgainPermission(
         activity: Activity,
          permission: String
     ): Boolean {
@@ -72,7 +72,7 @@ open class PermissionDelegateImplV31 : PermissionDelegateImplV30(){
                         )
             } else !checkSelfPermission(activity, permission) &&
                     !shouldShowRequestPermissionRationale(activity, permission)
-        } else super.isPermissionPermanentDenied(activity, permission!!)
+        } else super.isDoNotAskAgainPermission(activity, permission!!)
     }
 
     override fun getPermissionIntent(

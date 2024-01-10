@@ -7,7 +7,6 @@ import androidx.annotation.RequiresApi
 import com.knight.kotlin.library_permiss.AndroidVersion
 import com.knight.kotlin.library_permiss.AndroidVersion.isAndroid13
 import com.knight.kotlin.library_permiss.GetInstalledAppsPermissionCompat
-import com.knight.kotlin.library_permiss.GetInstalledAppsPermissionCompat.isPermissionPermanentDenied
 import com.knight.kotlin.library_permiss.NotificationPermissionCompat
 import com.knight.kotlin.library_permiss.NotificationPermissionCompat.getPermissionIntent
 import com.knight.kotlin.library_permiss.WindowPermissionCompat
@@ -47,7 +46,7 @@ open class PermissionDelegateImplV19 :PermissionDelegateImplV18() {
         return super.isGrantedPermission(context, permission)
     }
 
-    override fun isPermissionPermanentDenied(
+    override fun isDoNotAskAgainPermission(
         activity: Activity,
         permission: String
     ): Boolean {
@@ -55,7 +54,7 @@ open class PermissionDelegateImplV19 :PermissionDelegateImplV18() {
             return false
         }
         if (equalsPermission(permission, Permission.GET_INSTALLED_APPS)) {
-            return isPermissionPermanentDenied(activity)
+            return GetInstalledAppsPermissionCompat.isDoNotAskAgainPermission(activity)
         }
         if (equalsPermission(permission, Permission.NOTIFICATION_SERVICE)) {
             return false
@@ -66,7 +65,7 @@ open class PermissionDelegateImplV19 :PermissionDelegateImplV18() {
                 return false
             }
         }
-        return super.isPermissionPermanentDenied(activity, permission)
+        return super.isDoNotAskAgainPermission(activity, permission)
     }
 
     override fun getPermissionIntent(context: Context, permission: String): Intent? {

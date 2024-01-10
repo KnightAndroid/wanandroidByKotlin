@@ -20,8 +20,8 @@ import com.knight.kotlin.library_permiss.listener.IPermissionInterceptor
 import com.knight.kotlin.library_permiss.listener.OnPermissionCallback
 import com.knight.kotlin.library_permiss.permissions.Permission
 import com.knight.kotlin.library_permiss.permissions.PermissionApi
+import com.knight.kotlin.library_permiss.permissions.PermissionApi.isDoNotAskAgainPermissions
 import com.knight.kotlin.library_permiss.permissions.PermissionApi.isGrantedPermission
-import com.knight.kotlin.library_permiss.permissions.PermissionApi.isPermissionPermanentDenied
 import com.knight.kotlin.library_permiss.permissions.PermissionApi.isSpecialPermission
 import com.knight.kotlin.library_permiss.utils.PermissionUtils.asArrayList
 import com.knight.kotlin.library_permiss.utils.PermissionUtils.containsPermission
@@ -154,9 +154,6 @@ class PermissionFragment: Fragment(),Runnable {
         if (mScreenOrientation != ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED) {
             return
         }
-
-        // 锁定当前 Activity 方向
-
         // 锁定当前 Activity 方向
         lockActivityOrientation(activity)
     }
@@ -208,13 +205,13 @@ class PermissionFragment: Fragment(),Runnable {
         }
 
         val allPermissions: List<String>? = arguments.getStringArrayList(REQUEST_PERMISSIONS)
-
-        // 是否需要申请特殊权限
+        if (allPermissions == null || allPermissions.isEmpty())  {
+            return
+        }
 
         // 是否需要申请特殊权限
         var requestSpecialPermission = false
 
-        // 判断当前是否包含特殊权限
 
         // 判断当前是否包含特殊权限
         for (permission in allPermissions!!) {
@@ -431,6 +428,9 @@ class PermissionFragment: Fragment(),Runnable {
         permissions: Array<String>,
         grantResults: IntArray
     ) {
+        if (permissions == null || grantResults == null) {
+            return
+        }
         if (permissions.size === 0 || grantResults.size === 0) {
             return
         }
@@ -503,7 +503,7 @@ class PermissionFragment: Fragment(),Runnable {
             callback?.let {
                 interceptor.deniedPermissionRequest(
                     activity, allPermissions, deniedPermissions,
-                    isPermissionPermanentDenied(activity, deniedPermissions), it
+                    PermissionApi.isDoNotAskAgainPermissions(activity, deniedPermissions), it
                 )
             }
         }

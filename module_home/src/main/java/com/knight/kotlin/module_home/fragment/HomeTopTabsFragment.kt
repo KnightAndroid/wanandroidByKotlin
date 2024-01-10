@@ -8,9 +8,7 @@ import android.view.View
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.util.Pair
 import androidx.fragment.app.viewModels
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.alibaba.android.arouter.launcher.ARouter
-import com.knight.kotlin.library_aop.clickintercept.SingleClick
+import com.flyjingfish.android_aop_core.annotations.SingleClick
 import com.knight.kotlin.library_base.config.Appconfig
 import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.knight.kotlin.library_base.route.RouteActivity
@@ -22,6 +20,8 @@ import com.knight.kotlin.library_base.vm.EmptyViewModel
 import com.knight.kotlin.library_widget.pagetransformer.DragLayout
 import com.knight.kotlin.module_home.databinding.HomeToptabsFragmentBinding
 import com.knight.kotlin.module_home.entity.TopArticleBean
+import com.wyjson.router.GoRouter
+import com.wyjson.router.annotation.Route
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -135,14 +135,14 @@ class HomeTopTabsFragment : BaseFragment<HomeToptabsFragmentBinding, EmptyViewMo
             )
 
         )
-        ARouter.getInstance().build(RouteActivity.Web.WebTransitionPager)
+        GoRouter.getInstance().build(RouteActivity.Web.WebTransitionPager)
             .withInt("cardBgColor",cardBgColor)
             .withString("webUrl",mTopArticleEntity.link)
             .withString("title",mTopArticleEntity.title)
             .withString("author",mTopArticleEntity.author)
             .withString("chapterName",mTopArticleEntity.chapterName)
-            .withOptionsCompat(options)
-            .navigation(getActivity());
+            .withActivityOptionsCompat(options)
+            .go(getActivity())
     }
 
     override fun reLoadData() {

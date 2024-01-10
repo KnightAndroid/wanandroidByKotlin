@@ -3,7 +3,6 @@ package com.knight.kotlin.module_mine.activity
 import android.content.Intent
 import android.util.Base64
 import androidx.activity.viewModels
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.config.Appconfig
 import com.knight.kotlin.library_base.config.CacheKey
@@ -25,6 +24,7 @@ import com.knight.kotlin.module_mine.dialog.QuickBottomDialog
 import com.knight.kotlin.module_mine.vm.QuickLoginViewModel
 import com.knight.library_biometric.control.BiometricControl
 import com.knight.library_biometric.listener.BiometricStatusCallback
+import com.wyjson.router.annotation.Route
 import dagger.hilt.android.AndroidEntryPoint
 import javax.crypto.BadPaddingException
 import javax.crypto.Cipher

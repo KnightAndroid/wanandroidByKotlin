@@ -2,7 +2,6 @@ package com.knight.kotlin.module_set.activity
 
 import android.util.Base64
 import androidx.activity.viewModels
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.util.CacheUtils
@@ -12,6 +11,7 @@ import com.knight.kotlin.library_util.toast.ToastUtils
 import com.knight.kotlin.library_widget.GestureLockView
 import com.knight.kotlin.module_set.R
 import com.knight.kotlin.module_set.databinding.SetGesturelockActivityBinding
+import com.wyjson.router.annotation.Route
 import dagger.hilt.android.AndroidEntryPoint
 
 /**

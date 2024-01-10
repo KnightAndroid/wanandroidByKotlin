@@ -39,7 +39,7 @@ object NotificationListenerPermissionCompat {
             enabledNotificationListeners.split(":".toRegex()).dropLastWhile { it.isEmpty() }
                 .toTypedArray()
         for (component in components) {
-            val componentName = ComponentName.unflattenFromString(component)
+            val componentName = ComponentName.unflattenFromString(component) ?: continue
             if (!TextUtils.equals(componentName!!.packageName, context.packageName)) {
                 continue
             }
