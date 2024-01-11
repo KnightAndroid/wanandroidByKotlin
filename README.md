@@ -90,7 +90,7 @@
 
 ## 主要开源框架
 
-- [Arouter](https://github.com/alibaba/ARouter)
+- [GoRouter](https://github.com/wyjsonGo/GoRouter)
 - [AndroidAutoSize](https://github.com/JessYanCoding/AndroidAutoSize)
 - [LoadSir](https://github.com/KingJA/LoadSir)
 - [SmartRefreshLayout](https://github.com/scwang90/SmartRefreshLayout)
@@ -110,8 +110,8 @@
 
 ## 本项目开发环境
 - 基于Android Studio Giraffe
-- Android Gradle Plugin 7.2
-- Android Gradle插件7.0.2
+- Android Gradle Plugin 8.0
+- Android Gradle插件8.0.0
 
 打包方式如下图：
 ![wanandroid_release_apk.png](https://gitee.com/MengSuiXinSuoYuan/wanandroid_server/raw/master/wanandroid_picture/wanandroid_release_apk.png)
@@ -126,6 +126,16 @@
 ![wanandroid_normal_release.png](https://gitee.com/MengSuiXinSuoYuan/wanandroid_server/raw/master/wanandroid_picture/wanandroid_normal_release.png)
 
 ## 更新日志
+
+### 1.1.0(5)
+-  wanandroid 第五版发布
+-  AGP 版本适配到8.0
+-  Android Plugin for Gradle 版本升级到8.0.0
+-  权限库版本，路由版本库，kotlin版本改造升级
+-  适配Android14
+-  修改一些问题
+-  发布时间：2024/01/11
+
 ### 1.0.3(4)
 -  wanandroid 第四版发布
 -  AGP Gradle版本适配到7.2

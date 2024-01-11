@@ -7,13 +7,12 @@ package com.knight.wanandroid.buildsrc
  * @since 14/14/21 14:53 PM
  */
 object ProjectPluginDencies {
-    const val AndroidToolsPlugin = "com.android.tools.build:gradle:7.0.2"
-    const val KotlinPlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.10"
-    const val GoRouterRegister = "com.github.wyjsonGo.GoRouter:GoRouter-Gradle-Plugin:2.4.5"
-    const val HiltPlugin = "com.google.dagger:hilt-android-gradle-plugin:2.47"
-    const val AspectJxPlugin = "com.hujiang.aspectjx:gradle-android-plugin-aspectjx:2.0.10"
-    const val AndroidAop = "io.github.FlyJingFish.AndroidAop:android-aop-plugin:1.3.1"
-    const val AndroidKsp = "com.google.devtools.ksp:1.8.10-1.0.9"
+    const val AndroidToolsPlugin = "com.android.tools.build:gradle:${Dependencies.Version.AndroidToolsPluginVersion}"
+    const val KotlinPlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Dependencies.Version.KotlinGradlePluginVersion}"
+    const val GoRouterRegister = "com.github.wyjsonGo.GoRouter:GoRouter-Gradle-Plugin:${Dependencies.Version.GoRouter}"
+    const val HiltPlugin = "com.google.dagger:hilt-android-gradle-plugin:${Dependencies.Version.Hilt}"
+    const val AndroidAop = "io.github.FlyJingFish.AndroidAop:android-aop-plugin:${Dependencies.Version.AndroidAop}"
+    const val AndroidKsp = "com.google.devtools.ksp:${Dependencies.Version.AndroidKspVersion}"
 }
 
 

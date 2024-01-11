@@ -5,7 +5,6 @@ apply plugin: 'kotlin-android'
 apply plugin: 'com.wyjson.gorouter'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'dagger.hilt.android.plugin'
-//apply plugin: 'android-aspectjx'
 apply plugin: 'android.aop'//最好放在最后一行
 
 
@@ -13,8 +12,8 @@ apply plugin: 'android.aop'//最好放在最后一行
 
 android {
     namespace = "com.knight.kotlin.wanandroid"
-    compileSdkVersion ProjectBuildDencies.compileSdkVersion
-    buildToolsVersion ProjectBuildDencies.buildToolsVersion
+    compileSdk ProjectBuildDencies.compileSdkVersion
+    buildToolsVersion = ProjectBuildDencies.buildToolsVersion
 
     defaultConfig {
         applicationId ProjectBuildDencies.applicationId

@@ -5,6 +5,7 @@ import androidx.activity.viewModels
 import com.flyjingfish.android_aop_core.annotations.SingleClick
 
 import com.knight.kotlin.library_base.activity.BaseActivity
+import com.knight.kotlin.library_base.ktx.getUser
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.vm.EmptyViewModel
 import com.knight.kotlin.library_util.startPage
@@ -28,6 +29,11 @@ class PersonalAndManagerActivity : BaseActivity<SetPersonalManagerActivityBindin
 
     override fun SetPersonalManagerActivityBinding.initView() {
         includeSetMessageManagerToobar.baseTvTitle.setText(getString(R.string.set_personal_message_manager))
+        getUser()?.let {
+            setRlPersonalMessage.visibility = View.VISIBLE
+        } ?: run {
+            setRlPersonalMessage.visibility = View.GONE
+        }
         setOnClickListener(setRlPersonalMessage,setRlDeviceMessage)
         includeSetMessageManagerToobar.baseIvBack.setOnClickListener { finish() }
     }

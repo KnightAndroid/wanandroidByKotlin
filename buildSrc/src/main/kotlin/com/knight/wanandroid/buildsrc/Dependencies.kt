@@ -14,35 +14,38 @@ object Dependencies {
      * since 14/12/21 14:40 PM
      */
     object Version {
+       //构建相关-----------------------------------------------
+       const val AndroidToolsPluginVersion = "8.0.0"
+       const val KotlinGradlePluginVersion = "1.8.10"
        //AndroidX----------------------------------------------
-       const val AppCompat = "1.3.0"
+       const val AppCompatVersion = "1.3.0"
        //核心依赖
-       const val CoreKtx = "1.7.0"
+       const val CoreKtxVersion = "1.7.0"
        //约束布局
-       const val ConstraintLayout = "2.0.1"
+       const val ConstraintLayoutVersion = "2.0.1"
        //单元测试
-       const val TestExtJunit = "1.1.2"
-       const val TestEspresso = "3.3.0"
+       const val TestExtJunitVersion = "1.1.2"
+       const val TestEspressoVersion = "3.3.0"
        //Activity
-       const val ActivityKtx = "1.5.1"
+       const val ActivityKtxVersion = "1.5.1"
        //Fragment
-       const val FragmentKtx = "1.5.2"
+       const val FragmentKtxVersion = "1.5.2"
        //分包 MultiDex
-       const val MultiDex = "2.0.1"
+       const val MultiDexVersion = "2.0.1"
 
        //Android-------------------------------------------------
        //单元测试
-       const val Junit = "4.13"
+       const val JunitVersion = "4.13"
        //Material样式
-       const val Material = "1.5.0"
+       const val MaterialVersion = "1.5.0"
        //智能排版
-       const val FlexLayoutVersion = "2.0.1"
+       const val FlexLayoutVersionVersion = "2.0.1"
 
 
        //kotlin相关-----------------------------------------------
-       const val Kotlin = "1.8.10"
+       const val KotlinVersion = "1.8.10"
        //协程
-       const val Coroutines = "1.7.0"
+       const val CoroutinesVersion = "1.7.0"
 
        //JetPack--------------------------------------------------
        //Lifecycle相关（ViewModel & LiveData & Lifecycle）
@@ -61,8 +64,8 @@ object Dependencies {
        const val ZingVersion = "3.4.1"
 
        //GitHub相关--------------------------------------------------
-       const val GoRouter = "2.4.5"                          // GoRoute路由
-       const val GoRouteCompiler = "2.4.5"                  // 阿里路由 APT
+       const val GoRouter = "2.4.6"                          // GoRoute路由
+       const val GoRouteCompiler = "2.4.6"                  // 阿里路由 APT
        const val OkHttp = "4.11.0"                         // OkHttp
        const val OkHttpInterceptorLogging = "4.11.0"       // OkHttp 请求Log拦截器
        const val Retrofit = "2.9.0"                        // Retrofit
@@ -86,8 +89,9 @@ object Dependencies {
        const val ShimmerLayoutVersion = "2.1.0"            // shimmerLayout
        //第三方其他相关------------------------------------------------------
        const val LeakCanaryVersion = "2.8.1"               // 内存泄漏相关
-       const val buglyVersion = "4.1.9.2"                   // bugly异常上报
+       const val BuglyVersion = "4.1.9.2"                   // bugly异常上报
        const val AndroidAop = "1.3.1"                       //aop相关
+       const val AndroidKspVersion = "1.8.10-1.0.9"         //ksp版本
 
     }
     /**
@@ -99,20 +103,20 @@ object Dependencies {
     object Androidx {
         //单元测试
         const val AndroidJUnitRunner = "androidx.test.runner.AndroidJUnitRunner"
-        const val TestExtJunit = "androidx.test.ext:junit:${Version.TestExtJunit}"
-        const val TestEspresso = "androidx.test.espresso:espresso-core:${Version.TestEspresso}"
+        const val TestExtJunit = "androidx.test.ext:junit:${Version.TestExtJunitVersion}"
+        const val TestEspresso = "androidx.test.espresso:espresso-core:${Version.TestEspressoVersion}"
         //AppCompat
-        const val AppCompat = "androidx.appcompat:appcompat:${Version.AppCompat}"
+        const val AppCompat = "androidx.appcompat:appcompat:${Version.AppCompatVersion}"
         //CoreKts
-        const val CoreKts = "androidx.core:core-ktx:${Version.CoreKtx}"
+        const val CoreKts = "androidx.core:core-ktx:${Version.CoreKtxVersion}"
         //约束布局
-        const val ConstraintLayout = "androidx.constraintlayout:constraintlayout:${Version.ConstraintLayout}"
+        const val ConstraintLayout = "androidx.constraintlayout:constraintlayout:${Version.ConstraintLayoutVersion}"
         //ActivityKtx
-        const val ActivityKtx = "androidx.activity:activity-ktx:${Version.ActivityKtx}"
+        const val ActivityKtx = "androidx.activity:activity-ktx:${Version.ActivityKtxVersion}"
         //FragmentKtx
-        const val FragmentKtx = "androidx.fragment:fragment-ktx:${Version.FragmentKtx}"
+        const val FragmentKtx = "androidx.fragment:fragment-ktx:${Version.FragmentKtxVersion}"
         //MultiDex
-        const val MultiDex = "androidx.multidex:multidex:${Version.MultiDex}"
+        const val MultiDex = "androidx.multidex:multidex:${Version.MultiDexVersion}"
 
 
     }
@@ -125,10 +129,10 @@ object Dependencies {
      * @since 14/12/21 15:48 PM
      */
     object Android {
-        const val Junit = "junit:junit:${Version.Junit}"
-        const val Material = "com.google.android.material:material:${Version.Material}"
+        const val Junit = "junit:junit:${Version.JunitVersion}"
+        const val Material = "com.google.android.material:material:${Version.MaterialVersion}"
         //flexLayout
-        const val FlexLayout = "com.google.android:flexbox:${Version.FlexLayoutVersion}"
+        const val FlexLayout = "com.google.android:flexbox:${Version.FlexLayoutVersionVersion}"
     }
 
     /**
@@ -138,11 +142,11 @@ object Dependencies {
      * @since 14/12/21 15:57 PM
      */
     object Kotlin {
-        const val Kotlin = "org.jetbrains.kotlin:kotlin-stdlib:${Version.Kotlin}"
+        const val Kotlin = "org.jetbrains.kotlin:kotlin-stdlib:${Version.KotlinVersion}"
         const val CoroutinesCore =
-            "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Version.Coroutines}"
+            "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Version.CoroutinesVersion}"
         const val CoroutinesAndroid =
-            "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Version.Coroutines}"
+            "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Version.CoroutinesVersion}"
     }
 
     /**
@@ -179,7 +183,7 @@ object Dependencies {
      * @since 14/12/21 19:07 PM
      */
     object GitHub {
-        //阿里ARouter https://github.com/alibaba/ARouter
+        //GoRouter https://github.com/wyjsonGo/GoRouter
         const val GoRouter = "com.github.wyjsonGo.GoRouter:GoRouter-Api:${Version.GoRouter}"
         const val GoRouteCompiler = "com.github.wyjsonGo.GoRouter:GoRouter-Compiler:${Version.GoRouteCompiler}"
         //google https://github.com/google/auto
@@ -247,7 +251,7 @@ object Dependencies {
      */
     object OtherUtils {
         //bugly https://bugly.qq.com/docs/release-notes/release-android-bugly
-        const val Bugly = "com.tencent.bugly:crashreport:${Version.buglyVersion}"
+        const val Bugly = "com.tencent.bugly:crashreport:${Version.BuglyVersion}"
     }
 
 

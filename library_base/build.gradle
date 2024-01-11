@@ -35,8 +35,6 @@ dependencies {
     kapt Dependencies.JetPack.HiltApt
     kapt Dependencies.JetPack.HiltAndroidx
     kapt Dependencies.JetPack.LifecycleCompilerAPT
-    //阿里路由  https://github.com/alibaba/ARouter
-
     api Dependencies.GitHub.GoRouter
     api Dependencies.GitHub.EventBus
     kapt Dependencies.GitHub.EventBusAPT
