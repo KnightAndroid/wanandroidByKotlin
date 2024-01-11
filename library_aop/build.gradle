@@ -4,11 +4,8 @@ apply from:'../base_library.gradle'
 apply plugin : 'com.google.devtools.ksp'
 
 android {
-
     namespace = "com.knight.kotlin.library_aop"
-
 }
-
 
 dependencies {
     implementation project(path: ':library_base')
@@ -17,7 +14,6 @@ dependencies {
     implementation Dependencies.JetPack.HiltCore
     kapt Dependencies.JetPack.HiltApt
     kapt Dependencies.JetPack.HiltAndroidx
-
     //非必须项 👇，如果你想自定义切面需要用到，⚠️支持Java和Kotlin代码写的切面
     ksp Dependencies.GitHub.AndroidKsp
 }
