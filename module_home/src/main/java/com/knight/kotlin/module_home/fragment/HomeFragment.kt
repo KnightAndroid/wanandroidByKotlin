@@ -8,7 +8,6 @@ import android.os.Build
 import android.util.Base64
 import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import com.flyjingfish.android_aop_core.annotations.SingleClick
 import com.google.common.reflect.TypeToken
 import com.knight.kotlin.library_base.annotation.EventBusRegister
@@ -85,7 +84,7 @@ class HomeFragment : BaseFragment<HomeFragmentBinding, HomeVm>() {
      * 获取推送文章
      */
     private lateinit var mEveryDayPushData: EveryDayPushArticlesBean
-    override val mViewModel: HomeVm by viewModels()
+
     override fun HomeFragmentBinding.initView() {
         initMagicIndicator()
         setOnClickListener(homeIncludeToolbar.homeScanIcon,homeIncludeToolbar.homeTvLoginname,

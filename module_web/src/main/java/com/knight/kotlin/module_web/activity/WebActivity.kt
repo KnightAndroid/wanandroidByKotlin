@@ -9,7 +9,6 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.widget.LinearLayout
-import androidx.activity.viewModels
 import com.flyjingfish.android_aop_core.annotations.SingleClick
 import com.just.agentweb.AgentWeb
 import com.just.agentweb.DefaultWebClient
@@ -31,7 +30,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 @Route(path = RouteActivity.Web.WebPager)
 class WebActivity : BaseActivity<WebActivityBinding,EmptyViewModel>() {
-    override val mViewModel: EmptyViewModel by viewModels()
+
 
     @JvmField
     @Param(name = "webUrl")

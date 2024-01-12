@@ -1,9 +1,7 @@
 package com.knight.kotlin.module_set.activity
 
 import android.view.View
-import androidx.activity.viewModels
 import com.flyjingfish.android_aop_core.annotations.SingleClick
-
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.ktx.getUser
 import com.knight.kotlin.library_base.route.RouteActivity
@@ -22,7 +20,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 @Route(path = RouteActivity.Set.PersonalDeviceMessage)
 class PersonalAndManagerActivity : BaseActivity<SetPersonalManagerActivityBinding,EmptyViewModel>() {
-    override val mViewModel: EmptyViewModel by viewModels()
+
     override fun setThemeColor(isDarkMode: Boolean) {
 
     }

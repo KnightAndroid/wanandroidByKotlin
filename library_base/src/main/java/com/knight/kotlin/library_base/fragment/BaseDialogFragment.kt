@@ -17,6 +17,7 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.viewbinding.ViewBinding
 import com.knight.kotlin.library_base.R
 import com.knight.kotlin.library_base.ktx.ClickAction
+import com.knight.kotlin.library_base.ktx.createViewModel
 import com.knight.kotlin.library_base.util.BindingReflex
 import com.knight.kotlin.library_base.util.ViewRecreateHelper
 import com.knight.kotlin.library_base.view.BaseView
@@ -38,7 +39,7 @@ abstract class BaseDialogFragment<VB: ViewBinding,VM: BaseViewModel> : DialogFra
     private var _binding:VB? = null
     protected val mBinding get() = _binding!!
 
-    protected abstract val mViewModel:VM
+    lateinit var mViewModel:VM
 
     /**
      * fragment状态保存工具类
@@ -96,6 +97,7 @@ abstract class BaseDialogFragment<VB: ViewBinding,VM: BaseViewModel> : DialogFra
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.window?.setWindowAnimations(R.style.base_dialog_anim)
+        mViewModel = createViewModel()
         getGravity()
         return dialog
     }

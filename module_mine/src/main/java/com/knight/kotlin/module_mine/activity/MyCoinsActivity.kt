@@ -3,7 +3,6 @@ package com.knight.kotlin.module_mine.activity
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
-import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.ktx.init
@@ -32,7 +31,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 @Route(path = RouteActivity.Mine.MyPointsActivity)
 class MyCoinsActivity : BaseActivity<MineCoinsActivityBinding,MyDetailCoinsViewModel>(),OnRefreshListener,OnLoadMoreListener{
-    override val mViewModel: MyDetailCoinsViewModel by viewModels()
+
     @JvmField
     @Param(name = "userCoin")
     var userCoin = ""

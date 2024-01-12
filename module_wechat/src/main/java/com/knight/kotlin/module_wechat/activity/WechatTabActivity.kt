@@ -2,7 +2,6 @@ package com.knight.kotlin.module_wechat.activity
 import android.graphics.drawable.GradientDrawable
 import android.os.Build
 import android.view.inputmethod.EditorInfo
-import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.ktx.setOnClick
@@ -24,7 +23,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 @Route(path = RouteActivity.Wechat.WechatTabActivity)
 class WechatTabActivity : BaseActivity<WechatTabActivityBinding, EmptyViewModel>() {
-    override val mViewModel: EmptyViewModel by viewModels()
+
 
     @JvmField
     @Param(name="data")

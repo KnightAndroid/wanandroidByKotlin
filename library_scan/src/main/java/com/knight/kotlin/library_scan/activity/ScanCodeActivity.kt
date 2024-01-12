@@ -7,7 +7,6 @@ import android.util.Size
 import android.view.View
 import android.view.WindowManager
 import android.widget.RelativeLayout
-import androidx.activity.viewModels
 import androidx.camera.core.AspectRatio
 import androidx.camera.core.Camera
 import androidx.camera.core.CameraControl
@@ -61,7 +60,6 @@ class ScanCodeActivity:BaseActivity<ScancodeActivityBinding,EmptyViewModel>() {
     private var isOpenLight = false
 
 
-    override val mViewModel: EmptyViewModel by viewModels()
     override fun ScancodeActivityBinding.initView() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
            val controller =  getWindow().getInsetsController()

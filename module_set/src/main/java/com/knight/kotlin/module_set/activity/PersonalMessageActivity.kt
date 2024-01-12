@@ -1,6 +1,5 @@
 package com.knight.kotlin.module_set.activity
 
-import androidx.activity.viewModels
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.ktx.getUser
 import com.knight.kotlin.library_base.route.RouteActivity
@@ -20,7 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 @Route(path = RouteActivity.Set.PersonalMessage)
 class PersonalMessageActivity : BaseActivity<SetPersonalMessageActivityBinding, EmptyViewModel>() {
-    override val mViewModel: EmptyViewModel by viewModels()
+
     override fun setThemeColor(isDarkMode: Boolean) {
 
     }

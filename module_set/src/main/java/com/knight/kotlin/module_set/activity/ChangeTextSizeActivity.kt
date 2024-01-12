@@ -2,7 +2,6 @@ package com.knight.kotlin.module_set.activity
 
 import android.content.res.Resources
 import android.view.View
-import androidx.activity.viewModels
 import com.knight.kotlin.library_base.BaseApp
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.ktx.setOnClick
@@ -26,7 +25,7 @@ import me.jessyan.autosize.AutoSize
 @AndroidEntryPoint
 @Route(path = RouteActivity.Set.SetChangeTextSizeActivity)
 class ChangeTextSizeActivity : BaseActivity<SetChangetextsizeActivityBinding,EmptyViewModel>() {
-    override val mViewModel: EmptyViewModel by viewModels()
+
 
     /**
      *

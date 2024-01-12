@@ -1,7 +1,6 @@
 package com.knight.kotlin.module_message.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.knight.kotlin.library_base.ktx.observeLiveData
@@ -28,8 +27,6 @@ import dagger.hilt.android.AndroidEntryPoint
 class MessageFragment : BaseFragment<MessageFragmentBinding,MessageVm>(), OnRefreshListener,
     OnLoadMoreListener {
 
-
-    override val mViewModel: MessageVm by viewModels()
     //页码
     private var page:Int = 1
 

@@ -12,7 +12,6 @@ import android.view.Gravity
 import android.view.KeyEvent
 import androidx.annotation.NonNull
 import androidx.annotation.Nullable
-import androidx.fragment.app.viewModels
 import com.knight.kotlin.library_base.fragment.BaseDialogFragment
 import com.knight.kotlin.library_base.vm.EmptyViewModel
 import com.knight.kotlin.library_common.databinding.DownloadDialogBinding
@@ -30,7 +29,6 @@ import java.io.File
  */
 class DownLoadDialogFragment : BaseDialogFragment<DownloadDialogBinding,EmptyViewModel>() {
 
-    override val mViewModel: EmptyViewModel by viewModels()
     private var downLoadLink:String? = null
     private var apkFile: File? = null
     private val successDownLoadApk = 1

@@ -4,7 +4,6 @@ import android.graphics.drawable.GradientDrawable
 import android.os.Build
 import android.text.TextUtils
 import android.util.Base64
-import androidx.activity.viewModels
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.config.Appconfig
 import com.knight.kotlin.library_base.config.CacheKey
@@ -49,9 +48,7 @@ import javax.crypto.IllegalBlockSizeException
 
 @AndroidEntryPoint
 @Route(path = RouteActivity.Mine.LoginActivity)
-class LoginActivity : BaseActivity<MineLoginActivityBinding,LoginViewModel>(){
-    override val mViewModel: LoginViewModel by viewModels()
-
+class LoginActivity : BaseActivity<MineLoginActivityBinding, LoginViewModel>(){
     private val mSoftInputScrollUtils: SoftInputScrollUtils by lazy{ SoftInputScrollUtils(this@LoginActivity) }
     private var mBiometricStatusCallback:BiometricStatusCallback?=null
 

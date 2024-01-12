@@ -10,7 +10,6 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.widget.LinearLayout
-import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import com.google.android.material.appbar.AppBarLayout
@@ -40,8 +39,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 @Route(path = RouteActivity.Web.WebTransitionPager)
 class WebTransitionActivity:BaseActivity<WebTransitionActivityBinding,EmptyViewModel>() {
-    override val mViewModel: EmptyViewModel by viewModels()
-
     @JvmField
     @Param(name = "cardBgColor")
     var cardBgColor:Int = 0

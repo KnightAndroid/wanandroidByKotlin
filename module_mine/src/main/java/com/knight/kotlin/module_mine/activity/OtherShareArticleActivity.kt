@@ -1,7 +1,6 @@
 package com.knight.kotlin.module_mine.activity
 
 import android.graphics.drawable.GradientDrawable
-import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kingja.loadsir.core.LoadService
 import com.knight.kotlin.library_aop.loginintercept.LoginCheck
@@ -42,8 +41,6 @@ import org.greenrobot.eventbus.ThreadMode
 @Route(path = RouteActivity.Mine.OtherShareArticleActivity)
 class OtherShareArticleActivity :BaseActivity<MineOthershareActivityBinding,OtherShareArticleViewModel>(),OnRefreshListener,OnLoadMoreListener {
 
-
-    override val mViewModel: OtherShareArticleViewModel by viewModels()
 
 
     @JvmField

@@ -1,8 +1,6 @@
 package com.knight.kotlin.module_navigate.fragment
 
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-
 import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.knight.kotlin.library_base.route.RouteFragment
 import com.knight.kotlin.library_base.vm.EmptyViewModel
@@ -21,7 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 @Route(path = RouteFragment.Navigate.NavigateHomeFragment)
 class NavigateHomeFragment :BaseFragment<NavigateHomeFragmentBinding, EmptyViewModel>() {
-    override val mViewModel: EmptyViewModel by viewModels()
+
 
     //存放体系和导航两个Fragment
     val mFragments: MutableList<Fragment> = mutableListOf()

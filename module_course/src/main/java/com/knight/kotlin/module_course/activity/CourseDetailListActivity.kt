@@ -1,6 +1,5 @@
 package com.knight.kotlin.module_course.activity
 
-import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.ktx.init
@@ -29,8 +28,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 @Route(path = RouteActivity.Course.CourseDetailListActivity)
 class CourseDetailListActivity:BaseActivity<CourseDetailListActivityBinding,CourseDetailListVm>(),OnRefreshListener,OnLoadMoreListener {
-    override val mViewModel: CourseDetailListVm by viewModels()
-
 
     @JvmField
     @Param(name = "cid")

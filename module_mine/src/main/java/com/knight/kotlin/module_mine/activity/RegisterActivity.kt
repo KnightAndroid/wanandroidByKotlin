@@ -4,7 +4,6 @@ import android.graphics.drawable.GradientDrawable
 import android.os.Build
 import android.text.TextUtils
 import android.util.Base64
-import androidx.activity.viewModels
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.entity.LoginEntity
 import com.knight.kotlin.library_base.entity.UserInfoEntity
@@ -36,8 +35,6 @@ import javax.crypto.IllegalBlockSizeException
 @AndroidEntryPoint
 @Route(path = RouteActivity.Mine.RegisterActivity)
 class RegisterActivity : BaseActivity<MineRegisterActivityBinding,RegisterViewModel>(){
-
-    override val mViewModel: RegisterViewModel by viewModels()
 
     private val mSoftInputScrollUtils: SoftInputScrollUtils by lazy{ SoftInputScrollUtils(this@RegisterActivity) }
     override fun setThemeColor(isDarkMode: Boolean) {

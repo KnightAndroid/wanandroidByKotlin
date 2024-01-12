@@ -3,7 +3,6 @@ package com.knight.kotlin.module_home.activity
 import android.text.TextUtils
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView.OnEditorActionListener
-import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.knight.kotlin.library_aop.loginintercept.LoginCheck
 import com.knight.kotlin.library_base.activity.BaseActivity
@@ -59,8 +58,6 @@ class SearchResultActivity : BaseActivity<HomeSearchresultActivityBinding, HomeS
 
     //搜索结果适配器
     private val mSearchResultAdapter: SearchResultAdapter by lazy { SearchResultAdapter(arrayListOf()) }
-
-    override val mViewModel: HomeSearchResultVm by viewModels()
     override fun setThemeColor(isDarkMode: Boolean) {
 
     }

@@ -4,7 +4,6 @@ import android.app.TimePickerDialog
 import android.view.View
 import android.widget.CompoundButton
 import android.widget.TimePicker
-import androidx.activity.viewModels
 import com.flyjingfish.android_aop_core.annotations.SingleClick
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.ktx.setOnClick
@@ -27,7 +26,7 @@ import java.util.Calendar
 @AndroidEntryPoint
 @Route(path = RouteActivity.Set.SetAutoNightActivity)
 class AutoNightTimeActivity : BaseActivity<SetAutonighttimeActivityBinding,EmptyViewModel>() {
-    override val mViewModel: EmptyViewModel by viewModels()
+
 
     private val mCarlendar:Calendar = Calendar.getInstance()
     private var temphourOfNight = CacheUtils.getStartNightModeHour()

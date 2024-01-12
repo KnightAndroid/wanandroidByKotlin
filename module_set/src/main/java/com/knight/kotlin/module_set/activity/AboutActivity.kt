@@ -28,7 +28,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @Route(path = RouteActivity.Set.AboutActivity)
 class AboutActivity:BaseActivity<SetAboutActivityBinding,AboutVm>() {
 
-    override val mViewModel: AboutVm by viewModels()
+
     override fun setThemeColor(isDarkMode: Boolean) {
         mBinding.tvAboutAppName.setTextColor(themeColor)
         mBinding.cvAbout.setBackgroundColor(themeColor)

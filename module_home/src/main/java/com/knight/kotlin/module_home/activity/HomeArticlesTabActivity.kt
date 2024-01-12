@@ -2,7 +2,6 @@ package com.knight.kotlin.module_home.activity
 
 import android.view.KeyEvent
 import android.view.View
-import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.CompositePageTransformer
@@ -32,7 +31,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 @Route(path = RouteActivity.Home.HomeArticlesTabActivity)
 class HomeArticlesTabActivity : BaseActivity<HomeArticlesTabActivityBinding, EmptyViewModel>() {
-    override val mViewModel: EmptyViewModel by viewModels()
 
     private val mHomeTopTabsFragments = mutableListOf<Fragment>()
 

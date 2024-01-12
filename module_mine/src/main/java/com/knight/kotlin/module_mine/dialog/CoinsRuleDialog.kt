@@ -1,7 +1,6 @@
 package com.knight.kotlin.module_mine.dialog
 
 import android.view.Gravity
-import androidx.fragment.app.viewModels
 import com.knight.kotlin.library_base.fragment.BaseDialogFragment
 import com.knight.kotlin.library_base.ktx.toHtml
 import com.knight.kotlin.library_base.vm.EmptyViewModel
@@ -14,7 +13,7 @@ import com.knight.kotlin.module_mine.databinding.MinePointRuleDialogBinding
  * Description:CoinsRuleDialog
  */
 class CoinsRuleDialog : BaseDialogFragment<MinePointRuleDialogBinding,EmptyViewModel>() {
-    override val mViewModel: EmptyViewModel by viewModels()
+
 
 
     companion object {

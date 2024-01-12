@@ -2,7 +2,6 @@ package com.knight.kotlin.module_home.dialog
 
 import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.viewModels
 import com.flyjingfish.android_aop_core.annotations.SingleClick
 import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.knight.kotlin.library_base.route.RouteActivity
@@ -18,7 +17,7 @@ import com.wyjson.router.GoRouter
  * Description:HomePushCardFragment
  */
 class HomePushCardFragment:BaseFragment<HomePushcardDialogBinding,EmptyViewModel>() {
-    override val mViewModel: EmptyViewModel by viewModels()
+
 
     private var mEveryDayPushEntity:EveryDayPushEntity?=null
     companion object {

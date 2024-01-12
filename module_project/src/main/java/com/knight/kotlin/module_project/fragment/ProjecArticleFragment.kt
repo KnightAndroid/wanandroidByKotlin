@@ -1,7 +1,6 @@
 package com.knight.kotlin.module_project.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.knight.kotlin.library_aop.loginintercept.LoginCheck
 import com.knight.kotlin.library_base.annotation.EventBusRegister
@@ -36,7 +35,6 @@ import org.greenrobot.eventbus.ThreadMode
 @Route(path = RouteFragment.Project.ProjectArticleFragment)
 class ProjecArticleFragment:BaseFragment<ProjectArticleFragmentBinding, ProjectArticleVm>(),OnRefreshListener,OnLoadMoreListener {
 
-    override val mViewModel: ProjectArticleVm by viewModels()
 
     //文章适配器列表
     private val mProjectArticleAdapter:ProjectArticleAdapter by lazy { ProjectArticleAdapter(mutableListOf())}

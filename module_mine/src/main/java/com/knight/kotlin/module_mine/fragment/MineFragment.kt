@@ -4,7 +4,6 @@ import android.content.Intent
 import android.graphics.drawable.GradientDrawable
 import android.util.Base64
 import android.view.View
-import androidx.fragment.app.viewModels
 import com.flyjingfish.android_aop_core.annotations.SingleClick
 import com.knight.kotlin.library_aop.loginintercept.LoginCheck
 import com.knight.kotlin.library_base.annotation.EventBusRegister
@@ -55,7 +54,6 @@ import javax.crypto.IllegalBlockSizeException
 @AndroidEntryPoint
 @Route(path = RouteFragment.Mine.MineFragment)
 class MineFragment: BaseFragment<MineFragmentBinding, MineViewModel>() {
-    override val mViewModel: MineViewModel by viewModels()
     override fun MineFragmentBinding.initView() {
          getUser()?.let {
              mineTvUsername.text = it.username

@@ -34,7 +34,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 @Route(path = RouteActivity.Mine.HistoryRecordActivity)
 class HistoryRecordActivity :BaseActivity<MineHistoryrecordActivityBinding,HistoryRecordViewModel>(),OnLoadMoreListener,OnRefreshListener{
-    override val mViewModel: HistoryRecordViewModel by viewModels()
+
 
     private var endStation = 10
     private var startPosition = 0

@@ -1,13 +1,11 @@
 package com.knight.kotlin.module_set.activity
 
 import android.util.Base64
-import androidx.activity.viewModels
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_base.vm.EmptyViewModel
 import com.knight.kotlin.library_util.toast
-import com.knight.kotlin.library_util.toast.ToastUtils
 import com.knight.kotlin.library_widget.GestureLockView
 import com.knight.kotlin.module_set.R
 import com.knight.kotlin.module_set.databinding.SetGesturelockActivityBinding
@@ -33,7 +31,6 @@ class GestureLockActivity : BaseActivity<SetGesturelockActivityBinding,EmptyView
 
 
     private var oneGesturePassword:String = ""
-    override val mViewModel: EmptyViewModel by viewModels()
 
 
     private val mOnSetPasswordListener:GestureLockView.OnSetPasswordListener = object:GestureLockView.OnSetPasswordListener{

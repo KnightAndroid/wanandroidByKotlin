@@ -2,7 +2,6 @@ package com.knight.kotlin.module_wechat.fragment
 
 import android.os.Bundle
 import android.text.TextUtils
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.knight.kotlin.library_aop.loginintercept.LoginCheck
 import com.knight.kotlin.library_base.fragment.BaseFragment
@@ -44,7 +43,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @Route(path = RouteFragment.Wechat.WechatOfficialAccountFragment)
 class WechatOfficialAccountFragment:BaseFragment<WechatOfficialaccountFragmentBinding,WechatVm>(),OnRefreshListener,OnLoadMoreListener {
 
-    override val mViewModel: WechatVm by viewModels()
+
 
     //页码
     private var page:Int = 1

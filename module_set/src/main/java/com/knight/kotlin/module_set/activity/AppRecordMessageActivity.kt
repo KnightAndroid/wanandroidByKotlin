@@ -26,7 +26,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @Route(path = RouteActivity.Set.AppRecordMessageActivity)
 class AppRecordMessageActivity : BaseActivity<SetVersionRecordActivityBinding,AppUpdateRecordVm>(),
     OnRefreshListener {
-    override val mViewModel: AppUpdateRecordVm by viewModels()
+
 
     private val mVersionRecordAdapter:VersionRecordAdapter by lazy {VersionRecordAdapter(arrayListOf())}
     override fun setThemeColor(isDarkMode: Boolean) {

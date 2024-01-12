@@ -11,7 +11,6 @@ import android.view.Gravity
 import android.view.KeyEvent
 import androidx.annotation.NonNull
 import androidx.annotation.Nullable
-import androidx.fragment.app.viewModels
 import com.knight.kotlin.library_base.BaseApp
 import com.knight.kotlin.library_base.fragment.BaseDialogFragment
 import com.knight.kotlin.library_base.ktx.setOnClick
@@ -35,7 +34,6 @@ import kotlin.system.exitProcess
  */
 class WelcomePrivacyAgreeFragment : BaseDialogFragment<WelcomePrivacyAgreeFragmentBinding,EmptyViewModel>() {
 
-    override val mViewModel: EmptyViewModel by viewModels()
     private lateinit var spannable: SpannableStringBuilder
 
     @NonNull

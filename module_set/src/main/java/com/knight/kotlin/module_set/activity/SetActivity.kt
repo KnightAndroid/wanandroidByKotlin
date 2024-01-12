@@ -3,7 +3,6 @@ package com.knight.kotlin.module_set.activity
 import android.graphics.drawable.GradientDrawable
 import android.view.View
 import android.widget.CompoundButton
-import androidx.activity.viewModels
 import com.flyjingfish.android_aop_core.annotations.SingleClick
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.config.Appconfig
@@ -35,8 +34,6 @@ class SetActivity : BaseActivity<SetActivityBinding, SetVm>(){
 
     //状态栏是否着色
     private var statusIsWithTheme = false
-    override val mViewModel: SetVm by viewModels()
-
 
     override fun SetActivityBinding.initView() {
         setOnClickListener(setRlLogout,setRlDarkmode,setRlTheme,

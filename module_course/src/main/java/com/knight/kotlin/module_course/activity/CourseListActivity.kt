@@ -1,6 +1,5 @@
 package com.knight.kotlin.module_course.activity
 
-import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.ktx.init
@@ -24,7 +23,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 @Route(path = RouteActivity.Course.CourseListActivity)
 class CourseListActivity : BaseActivity<CourseListActivityBinding,CourseListVm>(),OnRefreshListener,OnLoadMoreListener {
-    override val mViewModel: CourseListVm by viewModels()
 
     //工具类适配器
     private val mCourseListAdapter:CourseListAdapter by lazy {CourseListAdapter(arrayListOf())}

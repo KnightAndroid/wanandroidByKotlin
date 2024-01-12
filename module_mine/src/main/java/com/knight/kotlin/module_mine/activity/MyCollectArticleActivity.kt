@@ -1,6 +1,5 @@
 package com.knight.kotlin.module_mine.activity
 
-import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.ktx.init
@@ -31,7 +30,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @Route(path = RouteActivity.Mine.MyCollectArticleActivity)
 class MyCollectArticleActivity : BaseActivity<MineCollectarticlesActivityBinding, MyCollectArticleViewModel>(),OnRefreshListener,OnLoadMoreListener {
 
-    override val mViewModel: MyCollectArticleViewModel by viewModels()
+
 
     private var page:Int = 0
     private val mMyCollectArticleAdapter:MyCollectArticleAdapter by lazy { MyCollectArticleAdapter(

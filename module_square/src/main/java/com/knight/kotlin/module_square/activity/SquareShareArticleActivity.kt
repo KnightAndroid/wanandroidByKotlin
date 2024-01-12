@@ -1,7 +1,6 @@
 package com.knight.kotlin.module_square.activity
 
 import android.text.TextUtils
-import androidx.activity.viewModels
 import com.knight.kotlin.library_aop.loginintercept.LoginCheck
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.event.MessageEvent
@@ -28,7 +27,6 @@ class SquareShareArticleActivity :BaseActivity<SquareShareArticleActivityBinding
 
     private var title = ""
     private var link = ""
-    override val mViewModel: SquareShareArticleVm by viewModels()
     override fun setThemeColor(isDarkMode: Boolean) {
 
     }

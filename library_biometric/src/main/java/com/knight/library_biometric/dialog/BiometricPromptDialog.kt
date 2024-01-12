@@ -6,7 +6,6 @@ import android.os.Build
 import android.view.Gravity
 import android.view.View
 import androidx.annotation.RequiresApi
-import androidx.fragment.app.viewModels
 import com.knight.kotlin.library_base.fragment.BaseDialogFragment
 import com.knight.kotlin.library_base.ktx.setOnClick
 import com.knight.kotlin.library_base.vm.EmptyViewModel
@@ -28,8 +27,6 @@ import com.knight.library_biometric.databinding.BiometricLoginDialogBinding
  */
 
 class BiometricPromptDialog: BaseDialogFragment<BiometricLoginDialogBinding,EmptyViewModel>(){
-    override val mViewModel: EmptyViewModel by viewModels()
-
     private var mDialogActionCallback: OnBiometricPromptDialogActionCallback? = null
     override fun getGravity() = Gravity.CENTER
 

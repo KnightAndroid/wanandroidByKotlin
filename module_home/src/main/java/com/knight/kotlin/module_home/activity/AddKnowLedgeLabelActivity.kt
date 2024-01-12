@@ -3,7 +3,6 @@ package com.knight.kotlin.module_home.activity
 import android.graphics.drawable.GradientDrawable
 import android.os.Build
 import android.view.View
-import androidx.activity.viewModels
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.ktx.ActivityMessenger
 import com.knight.kotlin.library_base.ktx.setOnClick
@@ -27,7 +26,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 @Route(path = RouteActivity.Home.AddKnowLedgeLableActivity)
 class AddKnowLedgeLabelActivity : BaseActivity<HomeAddlabelActivityBinding,EmptyViewModel>() {
-    override val mViewModel: EmptyViewModel by viewModels()
 
     override fun setThemeColor(isDarkMode: Boolean) {
         val cursorDrawable = GradientDrawable()

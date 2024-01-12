@@ -2,7 +2,6 @@ package com.knight.kotlin.module_mine.activity
 
 import android.content.Intent
 import android.util.Base64
-import androidx.activity.viewModels
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.config.Appconfig
 import com.knight.kotlin.library_base.config.CacheKey
@@ -48,7 +47,7 @@ import javax.crypto.IllegalBlockSizeException
 @Route(path = RouteActivity.Mine.QuickLoginActivity)
 class QuickLoginActivity :  BaseActivity<MineQuickloginActivityBinding,QuickLoginViewModel>(),QuickBottomDialog.FingureLoginListener{
 
-    override val mViewModel:QuickLoginViewModel by viewModels()
+
 
     private var mQuickBottomDialog: QuickBottomDialog? = null
 

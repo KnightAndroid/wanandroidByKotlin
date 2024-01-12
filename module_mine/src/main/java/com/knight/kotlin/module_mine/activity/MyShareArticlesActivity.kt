@@ -1,6 +1,5 @@
 package com.knight.kotlin.module_mine.activity
 
-import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.ktx.init
@@ -31,7 +30,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @Route(path = RouteActivity.Mine.MyShareArticlesActivity)
 class MyShareArticlesActivity : BaseActivity<MineMySharearticlesActivityBinding,MyShareArticlesViewModel>(),OnRefreshListener,OnLoadMoreListener {
 
-    override val mViewModel: MyShareArticlesViewModel by viewModels()
+
 
     private var page:Int = 1
     private val mMyshareArticleAdater:MyShareArticleAdapter by lazy {MyShareArticleAdapter(arrayListOf())}

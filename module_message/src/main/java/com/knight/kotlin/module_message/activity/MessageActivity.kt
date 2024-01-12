@@ -1,6 +1,5 @@
 package com.knight.kotlin.module_message.activity
 
-import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.ktx.setOnClick
@@ -17,7 +16,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 @Route(path = RouteActivity.Message.MessageActivity)
 class MessageActivity : BaseActivity<MessageActivityBinding,EmptyViewModel>() {
-    override val mViewModel: EmptyViewModel by viewModels()
     val titleDatas by lazy {mutableListOf<String>(getString(R.string.message_readed),getString(R.string.message_unread))}
     val messageFragments by lazy{mutableListOf<Fragment>(MessageFragment.newInstance(true),MessageFragment.newInstance(false))}
     override fun setThemeColor(isDarkMode: Boolean) {

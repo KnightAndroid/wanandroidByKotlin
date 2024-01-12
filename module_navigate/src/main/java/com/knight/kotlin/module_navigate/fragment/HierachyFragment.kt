@@ -1,7 +1,6 @@
 package com.knight.kotlin.module_navigate.fragment
 
 import android.view.View
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.knight.kotlin.library_base.fragment.BaseFragment
@@ -26,7 +25,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 @Route(path = RouteFragment.Navigate.HierachyFragment)
 class HierachyFragment : BaseFragment<NavigateHierachyFragmentBinding, HierachyVm>(),CheckListener {
-    override val mViewModel: HierachyVm by viewModels()
+
 
     private var mHierachyLeftBarAdapter: LeftBarAdapter? = null
     private var mLinearLayoutManager: LinearLayoutManager? = null

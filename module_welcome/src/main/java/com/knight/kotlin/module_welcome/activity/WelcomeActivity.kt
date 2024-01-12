@@ -2,7 +2,6 @@ package com.knight.kotlin.module_welcome.activity
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
-import androidx.activity.viewModels
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.config.Appconfig
 import com.knight.kotlin.library_base.ktx.observeLiveData
@@ -20,7 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 @Route(path = RouteActivity.Weclome.WeclmeActivity)
 class WelcomeActivity : BaseActivity<WelcomeActivityBinding, WelcomeVm>() {
-    override val mViewModel: WelcomeVm by viewModels()
+
     override fun WelcomeActivityBinding.initView() {
         logoAnim.setTextColor(CacheUtils.getThemeColor())
         logoAnim.addOffsetAnimListener(object : AnimatorListenerAdapter() {

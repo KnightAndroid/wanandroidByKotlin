@@ -1,5 +1,4 @@
 package com.knight.kotlin.module_web.activity
-import androidx.activity.viewModels
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.vm.EmptyViewModel
@@ -27,7 +26,7 @@ class WebPreviewPhotoActivity:BaseActivity<WebPreviewphotoActivityBinding,EmptyV
     @Param(name = "photoUri")
     var photoUri:String = ""
 
-    override val mViewModel: EmptyViewModel by viewModels()
+
     override fun WebPreviewphotoActivityBinding.initView() {
         webPreviewIv.isZoomEnabled = true
         webPreviewIv.displayImage(photoUri)

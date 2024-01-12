@@ -1,7 +1,6 @@
 package com.knight.kotlin.module_navigate.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.knight.kotlin.library_aop.loginintercept.LoginCheck
 import com.knight.kotlin.library_base.fragment.BaseFragment
@@ -11,7 +10,6 @@ import com.knight.kotlin.library_base.util.ArouteUtils
 import com.knight.kotlin.library_widget.ktx.init
 import com.knight.kotlin.library_widget.ktx.setItemChildClickListener
 import com.knight.kotlin.library_widget.ktx.setItemClickListener
-import com.knight.kotlin.module_navigate.R
 import com.knight.kotlin.module_navigate.adapter.HierachyArticleAdapter
 import com.knight.kotlin.module_navigate.databinding.NavigateHierachyArticleFragmentBinding
 import com.knight.kotlin.module_navigate.entity.HierachyTabArticleListEntity
@@ -31,7 +29,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 @Route(path = RouteFragment.Navigate.HierachyTabArticleFragment)
 class HierachyTabArticleFragment:BaseFragment<NavigateHierachyArticleFragmentBinding,HIerachyArticleVm>(),OnLoadMoreListener,OnRefreshListener {
-    override val mViewModel: HIerachyArticleVm by viewModels()
+
 
 
     private var cid:Int = 0

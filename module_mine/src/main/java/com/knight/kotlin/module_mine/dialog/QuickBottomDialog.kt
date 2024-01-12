@@ -2,7 +2,6 @@ package com.knight.kotlin.module_mine.dialog
 
 import android.view.Gravity
 import android.view.View
-import androidx.fragment.app.viewModels
 import com.knight.kotlin.library_base.fragment.BaseDialogFragment
 import com.knight.kotlin.library_base.ktx.setOnClick
 import com.knight.kotlin.library_base.util.CacheUtils
@@ -24,7 +23,6 @@ import com.knight.kotlin.module_mine.databinding.MineQuickloginBottomDialogBindi
  */
 
 class QuickBottomDialog : BaseDialogFragment<MineQuickloginBottomDialogBinding,EmptyViewModel>() {
-    override val mViewModel: EmptyViewModel by viewModels()
 
     interface FingureLoginListener {
         fun fingureQuick()

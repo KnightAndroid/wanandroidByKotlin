@@ -13,6 +13,7 @@ import com.kingja.loadsir.core.LoadService
 import com.kingja.loadsir.core.LoadSir
 import com.knight.kotlin.library_base.annotation.EventBusRegister
 import com.knight.kotlin.library_base.ktx.ClickAction
+import com.knight.kotlin.library_base.ktx.createViewModel
 import com.knight.kotlin.library_base.ktx.subscribeData
 import com.knight.kotlin.library_base.loadsir.EmptyCallBack
 import com.knight.kotlin.library_base.loadsir.ErrorCallBack
@@ -48,7 +49,7 @@ abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel> : Fragment(), 
     private var isFirst: Boolean = true
 
     protected val mBinding get() = _binding!!
-    abstract val mViewModel: VM
+    lateinit var mViewModel: VM
 
     /**
      * fragment状态保存工具类
@@ -107,6 +108,7 @@ abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel> : Fragment(), 
         } catch (e: Exception) {
 
         }
+        mViewModel = createViewModel()
         //注册EventBus
         if (javaClass.isAnnotationPresent(EventBusRegister::class.java)) EventBusUtils.register(this)
         isDarkMode = CacheUtils.getNormalDark()

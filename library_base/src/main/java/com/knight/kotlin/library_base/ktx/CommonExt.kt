@@ -5,15 +5,20 @@ import android.text.Html
 import android.text.Spanned
 import android.view.View
 import androidx.annotation.MainThread
+import androidx.lifecycle.ViewModelProvider
+import androidx.viewbinding.ViewBinding
 import com.knight.kotlin.library_base.R
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.config.Appconfig
 import com.knight.kotlin.library_base.config.CacheKey
 import com.knight.kotlin.library_base.entity.UserInfoEntity
+import com.knight.kotlin.library_base.fragment.BaseDialogFragment
 import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.knight.kotlin.library_base.util.ActivityManagerUtils
 import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_base.util.StatusBarUtils
+import com.knight.kotlin.library_base.vm.BaseViewModel
+import java.lang.reflect.ParameterizedType
 import kotlin.reflect.KClass
 
 /**
@@ -188,14 +193,36 @@ fun BaseFragment<*,*>.dismissLoading() {
 
 
 
+/**
+ * 创建viewModel
+ */
+fun <VM: BaseViewModel,VB: ViewBinding> BaseActivity<VB, VM>.createViewModel(): VM {
+    return ViewModelProvider(this)[getVmClazz(this)]
+}
 
+/**
+ * 创建viewModel
+ */
+fun <VM: BaseViewModel,VB: ViewBinding> BaseFragment<VB,VM>.createViewModel(): VM {
+    return ViewModelProvider(this)[getVmClazz(this)]
+}
+/**
+ * 创建viewModel
+ */
+fun <VB: ViewBinding,VM: BaseViewModel,> BaseDialogFragment<VB, VM>.createViewModel(): VM {
+    return ViewModelProvider(this)[getVmClazz(this)]
+}
 
-
-
-
-
-
-
+/**
+ * 获取当前类绑定的泛型ViewModel-clazz
+ */
+@Suppress("UNCHECKED_CAST")
+fun <VM> getVmClazz(obj: Any): VM {
+    return (obj.javaClass.genericSuperclass as ParameterizedType).actualTypeArguments[1] as VM
+}
+fun <DB> getDbClazz(obj: Any): DB {
+    return (obj.javaClass.genericSuperclass as ParameterizedType).actualTypeArguments[1] as DB
+}
 
 
 

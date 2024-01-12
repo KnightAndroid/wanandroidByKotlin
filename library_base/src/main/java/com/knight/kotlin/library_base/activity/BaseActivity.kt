@@ -19,6 +19,7 @@ import com.kingja.loadsir.core.LoadSir
 import com.knight.kotlin.library_base.R
 import com.knight.kotlin.library_base.annotation.EventBusRegister
 import com.knight.kotlin.library_base.ktx.ClickAction
+import com.knight.kotlin.library_base.ktx.createViewModel
 import com.knight.kotlin.library_base.ktx.subscribeData
 import com.knight.kotlin.library_base.loadsir.EmptyCallBack
 import com.knight.kotlin.library_base.loadsir.ErrorCallBack
@@ -51,7 +52,7 @@ abstract class BaseActivity<VB : ViewBinding,VM : BaseViewModel> : AppCompatActi
         BindingReflex.reflexViewBinding(javaClass,layoutInflater)
     }
 
-    abstract val mViewModel:VM
+    lateinit var  mViewModel:VM
 
     /**
      * activity页面重建帮助类
@@ -123,6 +124,7 @@ abstract class BaseActivity<VB : ViewBinding,VM : BaseViewModel> : AppCompatActi
         super.onCreate(savedInstanceState)
         setTheme(getActivityTheme())
         setContentView(mBinding.root)
+        mViewModel = createViewModel()
         StatusBarUtils.transparentStatusBar(this)
         //处理保存的状态
         mStatusHelper?.onRestoreInstanceStatus(savedInstanceState)

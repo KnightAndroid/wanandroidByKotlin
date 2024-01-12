@@ -5,7 +5,6 @@ import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.flyjingfish.android_aop_core.annotations.SingleClick
 import com.google.android.flexbox.FlexDirection
@@ -61,8 +60,6 @@ import org.greenrobot.eventbus.ThreadMode
 @AndroidEntryPoint
 @Route(path = RouteFragment.Square.SquareFragment)
 class SquareFragment:BaseFragment<SquareFragmentBinding, SquareVm>(),OnLoadMoreListener,OnRefreshListener {
-    override val mViewModel: SquareVm by viewModels()
-
     //广场页码
     private var page = 0
     //问题文章页码

@@ -5,7 +5,6 @@ import android.os.Build
 import android.text.TextUtils
 import android.view.View
 import android.view.inputmethod.EditorInfo
-import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.flyjingfish.android_aop_core.annotations.SingleClick
 import com.google.android.flexbox.FlexDirection
@@ -46,7 +45,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @Route(path = RouteActivity.Home.HomeSearchActivity)
 class HomeSearchActivity : BaseActivity<HomeSearchActivityBinding,HomeSearchVm>(){
 
-    override val mViewModel: HomeSearchVm by viewModels()
     //热词适配器
     private val mHomeHotKeyAdapter: HomeHotKeyAdapter by lazy { HomeHotKeyAdapter(arrayListOf()) }
     //搜索记录

@@ -1,8 +1,6 @@
 package com.knight.kotlin.module_mine.activity
 
-import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.ktx.init
 import com.knight.kotlin.library_base.ktx.observeLiveData
@@ -30,7 +28,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @Route(path = RouteActivity.Mine.UserCoinRankActivity)
 class CoinRankActivity : BaseActivity<MineCoinRankActivityBinding,CoinRankViewModel>(),OnRefreshListener,OnLoadMoreListener {
 
-    override val mViewModel: CoinRankViewModel by viewModels()
+
 
     private val mRankCoinAdapter : RankCoinAdapter by lazy {RankCoinAdapter(mutableListOf())}
     private var page = 1

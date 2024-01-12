@@ -1,7 +1,6 @@
 package com.knight.kotlin.module_navigate.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.flexbox.AlignItems
 import com.google.android.flexbox.FlexDirection
@@ -37,7 +36,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 @Route(path = RouteFragment.Navigate.NavigateRightTreeFragment)
 class TreeRightFragment : BaseFragment<NavigateRightTreeFragmentBinding,NavigateRightTreeVm>(),CheckListener {
-    override val mViewModel: NavigateRightTreeVm by viewModels()
     private lateinit var mHierachyClassifyDetailAdapter:HierachyClassifyDetailAdapter
 
     private val mDatas: ArrayList<HierachyRightBeanEntity> = ArrayList<HierachyRightBeanEntity>()

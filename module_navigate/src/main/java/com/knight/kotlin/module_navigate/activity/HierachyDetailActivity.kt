@@ -1,6 +1,5 @@
 package com.knight.kotlin.module_navigate.activity
 
-import androidx.activity.viewModels
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.ktx.setOnClick
 import com.knight.kotlin.library_base.route.RouteActivity
@@ -20,8 +19,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 @Route(path = RouteActivity.Navigate.HierachyDetailActivity)
 class HierachyDetailActivity : BaseActivity<NavigateHierachyDetailActivityBinding,EmptyViewModel>(){
-    override val mViewModel: EmptyViewModel by viewModels()
-
     @JvmField
     @Param(name = "cid")
     var cid = 0

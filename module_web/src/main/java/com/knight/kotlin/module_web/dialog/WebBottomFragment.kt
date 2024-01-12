@@ -5,7 +5,6 @@ import android.net.Uri
 import android.view.Gravity
 import android.view.View
 import android.webkit.WebView
-import androidx.fragment.app.viewModels
 import com.flyjingfish.android_aop_core.annotations.SingleClick
 import com.knight.kotlin.library_base.fragment.BaseDialogFragment
 import com.knight.kotlin.library_base.vm.EmptyViewModel
@@ -22,7 +21,7 @@ import com.knight.kotlin.module_web.databinding.WebBottomDialogBinding
  */
 class WebBottomFragment constructor(url: String?, mWebView: WebView?) :
     BaseDialogFragment<WebBottomDialogBinding, EmptyViewModel>() {
-    override val mViewModel: EmptyViewModel by viewModels()
+
 
 
     private var url: String? = null

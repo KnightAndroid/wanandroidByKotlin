@@ -1,7 +1,6 @@
 package com.knight.kotlin.module_navigate.fragment
 
 import android.view.View
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.knight.kotlin.library_base.fragment.BaseFragment
@@ -27,7 +26,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 @Route(path = RouteFragment.Navigate.NavigateFragment)
 class NavigateFragment : BaseFragment<NavigateFragmentBinding,NavigateVm>(),CheckListener{
-    override val mViewModel: NavigateVm by viewModels()
 
 
     private var mNavigateLeftBarAdapter: LeftBarAdapter? = null

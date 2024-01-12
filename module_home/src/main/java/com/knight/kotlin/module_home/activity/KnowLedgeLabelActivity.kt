@@ -2,7 +2,6 @@ package com.knight.kotlin.module_home.activity
 
 import android.text.TextUtils
 import android.view.View
-import androidx.activity.viewModels
 import com.flyjingfish.android_aop_core.annotations.SingleClick
 import com.google.android.flexbox.AlignItems
 import com.google.android.flexbox.FlexDirection
@@ -40,8 +39,6 @@ import java.util.Random
 @AndroidEntryPoint
 @Route(path = RouteActivity.Home.HomeKnowLedgeLabelActivity)
 class KnowLedgeLabelActivity : BaseActivity<HomeLabelActivityBinding, EmptyViewModel>() {
-    override val mViewModel: EmptyViewModel by viewModels()
-
 
     @JvmField
     @Param(name = "data")

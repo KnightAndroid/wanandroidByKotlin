@@ -13,7 +13,6 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.Group
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.flyjingfish.android_aop_core.annotations.SingleClick
@@ -86,8 +85,6 @@ import org.greenrobot.eventbus.ThreadMode
 @Route(path = RouteFragment.Home.RecommendFragment)
 class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRecommendVm>(),
     OnRefreshListener, OnLoadMoreListener {
-
-    override val mViewModel: HomeRecommendVm by viewModels()
 
     //开源库适配器
     private val mOpenSourceAdapter: OpenSourceAdapter by lazy { OpenSourceAdapter(arrayListOf()) }

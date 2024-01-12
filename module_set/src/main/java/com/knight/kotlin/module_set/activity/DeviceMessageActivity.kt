@@ -1,6 +1,5 @@
 package com.knight.kotlin.module_set.activity
 
-import androidx.activity.viewModels
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.ktx.screenHeightWithStatus
 import com.knight.kotlin.library_base.ktx.screenWidth
@@ -22,7 +21,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 @Route(path = RouteActivity.Set.DeviceMessage)
 class DeviceMessageActivity : BaseActivity<SetDeviceMessageActivityBinding,EmptyViewModel>() {
-    override val mViewModel: EmptyViewModel by viewModels()
+
     override fun setThemeColor(isDarkMode: Boolean) {
 
     }

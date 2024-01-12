@@ -1,6 +1,5 @@
 package com.knight.kotlin.module_navigate.activity
 
-import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.ktx.setOnClick
@@ -23,7 +22,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @Route(path = RouteActivity.Navigate.HierachyTabActivity)
 class HierachyTabActivity : BaseActivity<NavigateHierachyTabActivityBinding,EmptyViewModel>() {
 
-    override val mViewModel: EmptyViewModel by viewModels()
 
     @JvmField
     @Param(name = "titleName")

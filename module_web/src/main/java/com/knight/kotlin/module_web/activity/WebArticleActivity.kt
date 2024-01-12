@@ -9,7 +9,6 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.widget.LinearLayout
-import androidx.activity.viewModels
 import com.just.agentweb.AgentWeb
 import com.just.agentweb.DefaultWebClient
 import com.just.agentweb.WebChromeClient
@@ -46,7 +45,7 @@ import java.util.Date
 @AndroidEntryPoint
 @Route(path = RouteActivity.Web.WebArticlePager)
 class WebArticleActivity :BaseActivity<WebArticleActivityBinding,WebVm>(),LoveAnimatorRelativeLayout.onCollectListener{
-    override val mViewModel: WebVm by viewModels()
+
 
 
     @JvmField

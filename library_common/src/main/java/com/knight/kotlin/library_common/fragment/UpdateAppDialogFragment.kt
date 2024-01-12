@@ -9,7 +9,6 @@ import android.view.KeyEvent
 import android.view.View
 import androidx.annotation.NonNull
 import androidx.annotation.Nullable
-import androidx.fragment.app.viewModels
 import com.knight.kotlin.library_base.fragment.BaseDialogFragment
 import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_base.util.dp2px
@@ -25,7 +24,7 @@ import com.knight.kotlin.library_common.entity.AppUpdateBean
  */
 class UpdateAppDialogFragment: BaseDialogFragment<UpdateAppDialogBinding,EmptyViewModel>() {
 
-    override val mViewModel: EmptyViewModel by viewModels()
+
     private var mAppUpdateBean:AppUpdateBean?=null
 
     companion object {

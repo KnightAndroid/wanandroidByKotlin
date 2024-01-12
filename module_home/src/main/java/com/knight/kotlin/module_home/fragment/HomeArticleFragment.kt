@@ -1,6 +1,5 @@
 package com.knight.kotlin.module_home.fragment
 
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.knight.kotlin.library_aop.loginintercept.LoginCheck
 import com.knight.kotlin.library_base.annotation.EventBusRegister
@@ -36,7 +35,7 @@ import org.greenrobot.eventbus.ThreadMode
 @AndroidEntryPoint
 @Route(path = RouteFragment.Home.HomeArticleFragment)
 class HomeArticleFragment:BaseFragment<HomeArticleFragmentBinding,HomeArticleVm>(),OnLoadMoreListener,OnRefreshListener {
-    override val mViewModel: HomeArticleVm by viewModels()
+
     //推荐文章适配器
     private val mHomeArticleAdapter: HomeArticleAdapter by lazy { HomeArticleAdapter(arrayListOf()) }
     private var currentPage = 0

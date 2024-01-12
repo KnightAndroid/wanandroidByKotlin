@@ -1,6 +1,5 @@
 package com.knight.kotlin.module_project.fragment
 
-import androidx.fragment.app.viewModels
 import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.knight.kotlin.library_base.ktx.observeLiveData
 import com.knight.kotlin.library_base.ktx.toHtml
@@ -25,7 +24,6 @@ class ProjectFragment:BaseFragment<ProjectActivityBinding, ProjectVm>() {
 
     private val mFragments = mutableListOf<ProjecArticleFragment>()
     private val mTitileDatas = mutableListOf<String>()
-    override val mViewModel: ProjectVm by viewModels()
 
     override fun ProjectActivityBinding.initView() {
         requestLoading(projectViewPager)

@@ -3,8 +3,6 @@ package com.knight.kotlin.module_set.activity
 import android.content.res.Configuration
 import android.view.View
 import android.widget.CompoundButton
-import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.flyjingfish.android_aop_core.annotations.SingleClick
 import com.google.common.reflect.TypeToken
@@ -35,7 +33,7 @@ import java.lang.reflect.Type
 @AndroidEntryPoint
 @Route(path = RouteActivity.Set.DarkModelActivity)
 class DarkModeActivity : BaseActivity<SetDarkmodeActivityBinding, EmptyViewModel>() {
-    override val mViewModel: EmptyViewModel by viewModels()
+
 
     /**
      *

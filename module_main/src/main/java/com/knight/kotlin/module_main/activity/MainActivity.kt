@@ -1,7 +1,6 @@
 package com.knight.kotlin.module_main.activity
 
 import android.view.KeyEvent
-import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.annotation.EventBusRegister
@@ -27,12 +26,7 @@ import org.greenrobot.eventbus.ThreadMode
 @Route(path = RouteActivity.Main.MainActivity)
 class MainActivity : BaseActivity<MainActivityBinding,MainViewModel>() {
 
-
-    /**
-     * MainActivity的ViewModel 通过Hilt自动注入
-     */
-    override val mViewModel:MainViewModel by viewModels()
-
+    
     private var mExitAppTime: Long = 0
     val fragments:MutableList<Fragment> = mutableListOf()
     override fun MainActivityBinding.initView() {

@@ -1,6 +1,5 @@
 package com.knight.kotlin.module_utils.activity
 
-import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.ktx.init
@@ -24,7 +23,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 @Route(path = RouteActivity.Utils.UtilsActivity)
 class UtilsActivity : BaseActivity<UtilsActivityBinding,UtilsVm>(),OnRefreshListener,OnLoadMoreListener {
-    override val mViewModel: UtilsVm by viewModels()
+
 
     //工具类适配器
     private val mUtilItemAdapter:UtilItemAdapter by lazy {UtilItemAdapter(arrayListOf())}

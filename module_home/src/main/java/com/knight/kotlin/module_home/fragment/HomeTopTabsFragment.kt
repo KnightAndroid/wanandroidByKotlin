@@ -7,7 +7,6 @@ import android.text.Html
 import android.view.View
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.util.Pair
-import androidx.fragment.app.viewModels
 import com.flyjingfish.android_aop_core.annotations.SingleClick
 import com.knight.kotlin.library_base.config.Appconfig
 import com.knight.kotlin.library_base.fragment.BaseFragment
@@ -33,7 +32,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @Route(path = RouteFragment.Home.HomeTopArticleFragment)
 class HomeTopTabsFragment : BaseFragment<HomeToptabsFragmentBinding, EmptyViewModel>(),
     DragLayout.GotoDetailListener {
-    override val mViewModel: EmptyViewModel by viewModels()
+
 
     private lateinit var mTopArticleEntity: TopArticleBean
     private var cardBgColor: Int = 0
