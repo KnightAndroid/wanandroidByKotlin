@@ -58,7 +58,9 @@ class LoginViewModel @Inject constructor(private val mRepo: LoginRepo) : BaseVie
                     //结束
                     dimissLoading()
                 }
-                .catch { toast(it.message ?: "") }
+                .catch {
+                    toast(it.message ?: "")
+                }
                 .collect()
 
         }

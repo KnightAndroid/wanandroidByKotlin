@@ -1,13 +1,10 @@
 package com.knight.kotlin.module_set.activity
 
 import android.view.View
-import androidx.activity.viewModels
 import com.flyjingfish.android_aop_core.annotations.SingleClick
 import com.knight.kotlin.library_base.activity.BaseActivity
-import com.knight.kotlin.library_base.ktx.observeLiveData
 import com.knight.kotlin.library_base.ktx.setOnClick
 import com.knight.kotlin.library_base.route.RouteActivity
-import com.knight.kotlin.library_common.entity.AppUpdateBean
 import com.knight.kotlin.library_common.fragment.UpdateAppDialogFragment
 import com.knight.kotlin.library_util.SystemUtils
 import com.knight.kotlin.library_util.startPage
@@ -35,17 +32,16 @@ class AboutActivity:BaseActivity<SetAboutActivityBinding,AboutVm>() {
     }
 
     override fun SetAboutActivityBinding.initView() {
-        mBinding.includeAboutToobar.baseTvTitle.setText(getString(R.string.set_about))
+        mBinding.includeAboutToobar.baseTvTitle.text = getString(R.string.set_about)
         mBinding.includeAboutToobar.baseIvBack.setOnClick {
             finish()
         }
-        mBinding.tvAboutAppName.setText(SystemUtils.getAppName(this@AboutActivity))
-        mBinding.tvAboutAppVersion.setText(SystemUtils.getAppVersionName(this@AboutActivity) + "("+ SystemUtils.getAppVersionCode(this@AboutActivity) + ")")
+        mBinding.tvAboutAppName.text = SystemUtils.getAppName(this@AboutActivity)
+        mBinding.tvAboutAppVersion.text = SystemUtils.getAppVersionName(this@AboutActivity).plus("(").plus( SystemUtils.getAppVersionCode(this@AboutActivity)).plus(")")
         setOnClickListener(setRlAppupdateRecord,setRlCheckUpdate,tvServiceProtocol,tvPrivacyProtocol,setRlAccessPartner)
     }
 
     override fun initObserver() {
-        observeLiveData(mViewModel.appUpdateMessage,::checkAppMessage)
     }
 
     override fun initRequestData() {
@@ -56,22 +52,6 @@ class AboutActivity:BaseActivity<SetAboutActivityBinding,AboutVm>() {
 
     }
 
-    /**
-     *
-     * 检查APP更新
-     */
-    private fun checkAppMessage(data: AppUpdateBean) {
-        //如果本地安装包大于远端 证明本地安装的说测试包 无需更新
-        if (SystemUtils.getAppVersionCode(this)  < data.versionCode ) {
-            if (data.versionName != SystemUtils.getAppVersionName(this) ) {
-                UpdateAppDialogFragment.newInstance(data).showAllowingStateLoss(
-                    supportFragmentManager, "dialog_update")
-
-            }
-        } else {
-            toast(getString(R.string.set_no_update_version))
-        }
-    }
     @SingleClick
     override fun onClick(v: View) {
         when (v) {
@@ -79,7 +59,19 @@ class AboutActivity:BaseActivity<SetAboutActivityBinding,AboutVm>() {
                 startPage(RouteActivity.Set.AppRecordMessageActivity)
             }
             mBinding.setRlCheckUpdate -> {
-                mViewModel.checkAppUpdateMessage()
+                mViewModel.checkAppUpdateMessage(successCallBack = {
+                    //如果本地安装包大于远端 证明本地安装的说测试包 无需更新
+                    if (SystemUtils.getAppVersionCode(this)  < it.versionCode ) {
+                        if (it.versionName != SystemUtils.getAppVersionName(this) ) {
+                            UpdateAppDialogFragment.newInstance(it).showAllowingStateLoss(
+                                supportFragmentManager, "dialog_update")
+                        }
+                    } else {
+                        toast(getString(R.string.set_no_update_version))
+                    }
+                }, failureCallBack = {
+                    toast(it ?: getString(com.knight.kotlin.library_base.R.string.base_request_failure))
+                })
             }
 
             mBinding.tvServiceProtocol -> {

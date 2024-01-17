@@ -58,7 +58,7 @@ object SystemUtils {
      */
     fun getAppName(context:Context) :String {
         val pm:PackageManager = context.packageManager;
-        val pi: PackageInfo = pm.getPackageInfo(context.getPackageName(), 0)
+        val pi: PackageInfo = pm.getPackageInfo(context.packageName, 0)
         return context.resources.getString(pi.applicationInfo.labelRes)
     }
 

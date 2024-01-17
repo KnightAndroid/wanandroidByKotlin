@@ -1,10 +1,8 @@
 package com.knight.kotlin.module_set.vm
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.knight.kotlin.library_base.vm.BaseViewModel
 import com.knight.kotlin.library_common.entity.AppUpdateBean
-import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_set.repo.AboutRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -24,12 +22,10 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class AboutVm @Inject constructor(private val mRepo: AboutRepo) : BaseViewModel() {
-    //获取APP版本更新
-    val appUpdateMessage = MutableLiveData<AppUpdateBean>()
     /**
      * 检查APP版本更新
      */
-    fun checkAppUpdateMessage() {
+    fun checkAppUpdateMessage(successCallBack:(AppUpdateBean)->Unit,failureCallBack:((String?) ->Unit) ?= null) {
         viewModelScope.launch {
             mRepo.checkAppUpdateMessage()
                 //指定线程
@@ -38,12 +34,14 @@ class AboutVm @Inject constructor(private val mRepo: AboutRepo) : BaseViewModel(
                     //开始
                 }
                 .onEach {
-                    appUpdateMessage.postValue(it)
+                    successCallBack(it)
                 }
                 .onCompletion {
                     //结束
                 }
-                .catch { toast(it.message ?: "") }
+                .catch {
+                    failureCallBack?.let { it1 -> it1(it.message) }
+                }
                 .collect()
 
         }

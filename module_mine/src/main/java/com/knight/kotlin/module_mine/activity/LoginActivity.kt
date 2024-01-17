@@ -34,23 +34,22 @@ import javax.crypto.IllegalBlockSizeException
 
 /**
  *
- * @ProjectName:    wanandroid
+ * @ProjectName:    wanAndroid
  * @Package:        com.knight.kotlin.module_mine.activity
  * @ClassName:      LoginActivity
  * @Description:    java类作用描述
  * @Author:         knight
  * @CreateDate:     2022/3/25 4:46 下午
  * @UpdateUser:     更新者
- * @UpdateDate:     2022/3/25 4:46 下午
+ * @UpdateDate:     2024/1/17 17:40 下午
  * @UpdateRemark:   更新说明
- * @Version:        1.0
+ * @Version:        1.1.0
  */
 
 @AndroidEntryPoint
 @Route(path = RouteActivity.Mine.LoginActivity)
 class LoginActivity : BaseActivity<MineLoginActivityBinding, LoginViewModel>(){
     private val mSoftInputScrollUtils: SoftInputScrollUtils by lazy{ SoftInputScrollUtils(this@LoginActivity) }
-    private var mBiometricStatusCallback:BiometricStatusCallback?=null
 
 
     override fun setThemeColor(isDarkMode: Boolean) {
@@ -58,11 +57,7 @@ class LoginActivity : BaseActivity<MineLoginActivityBinding, LoginViewModel>(){
         gradientDrawable.shape = GradientDrawable.RECTANGLE
         gradientDrawable.setColor(CacheUtils.getThemeColor())
         gradientDrawable.cornerRadius = 45.dp2px().toFloat()
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            mBinding.mineTvLogin.setBackground(gradientDrawable)
-        } else {
-            mBinding.mineTvLogin.setBackgroundDrawable(gradientDrawable)
-        }
+        mBinding.mineTvLogin.background = gradientDrawable
         val cursorDrawable = GradientDrawable()
         cursorDrawable.shape = GradientDrawable.RECTANGLE
         cursorDrawable.setColor(themeColor)
@@ -103,10 +98,10 @@ class LoginActivity : BaseActivity<MineLoginActivityBinding, LoginViewModel>(){
     private fun validateLoginMessage():Boolean{
         var validFlag = true
         if (TextUtils.isEmpty(mBinding.mineLoginUsername.text.toString().trim())) {
-            mBinding.mineLoginUsername.setError(getString(R.string.mine_emptyusername_hint))
+            mBinding.mineLoginUsername.error = getString(R.string.mine_emptyusername_hint)
             validFlag = false
         } else if (TextUtils.isEmpty(mBinding.mineLoginPassword.text.toString().trim())) {
-            mBinding.mineLoginPassword.setError(getString(R.string.mine_emptypassword_hint))
+            mBinding.mineLoginPassword.error = getString(R.string.mine_emptypassword_hint)
             validFlag = false
         }
         return validFlag
@@ -124,7 +119,11 @@ class LoginActivity : BaseActivity<MineLoginActivityBinding, LoginViewModel>(){
 
     }
 
-
+    /**
+     * 登录成功
+     *
+     * @param userInfo 用户信息
+     */
     private fun setUserInfo(userInfo:UserInfoEntity){
         //登录成功发送事件
         Appconfig.user = userInfo
@@ -133,14 +132,14 @@ class LoginActivity : BaseActivity<MineLoginActivityBinding, LoginViewModel>(){
         val loginMessage = GsonUtils.toJson(LoginEntity(mBinding.mineLoginUsername.text.toString().trim(),mBinding.mineLoginPassword.text.toString().trim()))
         if (!CacheUtils.getFingerLogin()) {
             //没开通就开通快捷登录
-            openBlomtric(loginMessage)
+            openFingerLogin(loginMessage)
         } else {
             //开通了 但是 对应存储的信息和输入账号信息不一致
             val localLoginMessage = CacheUtils.getLoginMessage()
             CacheUtils.setLoginMessage(loginMessage)
-            if (localLoginMessage != localLoginMessage) {
+            if (localLoginMessage != loginMessage) {
                 //判断本地存在的信息是否和页面信息一致 不一致为当前账号开启快捷登录
-                openBlomtric(loginMessage)
+                openFingerLogin(loginMessage)
             } else {
                 EventBusUtils.postEvent(MessageEvent(MessageEvent.MessageType.LoginSuccess))
                 finish()
@@ -149,9 +148,9 @@ class LoginActivity : BaseActivity<MineLoginActivityBinding, LoginViewModel>(){
     }
     /**
      * 开通指纹登录
-     * @param loginMessage
+     * @param loginMessage 登录信息
      */
-    private fun openBlomtric(loginMessage: String) {
+    private fun openFingerLogin(loginMessage: String) {
         BiometricControl.setStatusCallback(object : BiometricStatusCallback{
             override fun onUsePassword() {
                 CacheUtils.setLoginMessage(loginMessage)
