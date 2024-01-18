@@ -8,7 +8,6 @@ import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.viewbinding.ViewBinding
-import com.kingja.loadsir.callback.Callback
 import com.kingja.loadsir.core.LoadService
 import com.kingja.loadsir.core.LoadSir
 import com.knight.kotlin.library_base.annotation.EventBusRegister
@@ -106,7 +105,7 @@ abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel> : Fragment(), 
         try {
             GoRouter.getInstance().inject(this)
         } catch (e: Exception) {
-
+            e.printStackTrace()
         }
         mViewModel = createViewModel()
         //注册EventBus
@@ -175,10 +174,10 @@ abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel> : Fragment(), 
      */
     protected fun requestLoading(view: View) {
         if (!::mLoadService.isInitialized) {
-            mLoadService = LoadSir.getDefault().register(view, Callback.OnReloadListener {
+            mLoadService = LoadSir.getDefault().register(view) {
                 mLoadService.showCallback(LoadCallBack::class.java)
                 reLoadData()
-            })
+            }
         }
         mLoadService.showCallback(LoadCallBack::class.java)
 

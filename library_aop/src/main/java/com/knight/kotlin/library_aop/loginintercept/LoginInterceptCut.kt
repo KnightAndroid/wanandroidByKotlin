@@ -16,15 +16,15 @@ class LoginInterceptCut : BasePointCut<LoginCheck> {
             ?: throw RuntimeException("LoginManager没有初始化")
         val mContext: Context? = LoginAssistant.getInstance()?.getApplicationContext()
         val skipLogin = anno.isSkipLogin
-        if (skipLogin) {
+        return if (skipLogin) {
             //可以跳过登录
-            return joinPoint.proceed()
+            joinPoint.proceed()
         } else {
             if (iLoginFilter.isLogin(mContext)) {
-                return joinPoint.proceed()
+                joinPoint.proceed()
             } else {
                 //提示 需要登录
-                return iLoginFilter.login(mContext, anno.isSkipLogin)
+                iLoginFilter.login(mContext, false)
             }
         }
 

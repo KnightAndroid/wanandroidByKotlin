@@ -1,5 +1,6 @@
 package com.knight.kotlin.library_base.activity
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.Configuration
 import android.graphics.Color
@@ -13,7 +14,6 @@ import android.view.WindowManager
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
-import com.kingja.loadsir.callback.Callback
 import com.kingja.loadsir.core.LoadService
 import com.kingja.loadsir.core.LoadSir
 import com.knight.kotlin.library_base.R
@@ -106,7 +106,7 @@ abstract class BaseActivity<VB : ViewBinding,VM : BaseViewModel> : AppCompatActi
     private var mLayoutParams: WindowManager.LayoutParams? = null
 
     //护眼模式遮罩
-    private lateinit var mEyeFragmenLayout: FrameLayout
+    private lateinit var mEyeFragmentLayout: FrameLayout
 
 
     /**
@@ -133,7 +133,7 @@ abstract class BaseActivity<VB : ViewBinding,VM : BaseViewModel> : AppCompatActi
         try {
             GoRouter.getInstance().inject(this)
         } catch (e: Exception) {
-
+            e.printStackTrace()
         }
 
         //注册EventBus
@@ -161,10 +161,10 @@ abstract class BaseActivity<VB : ViewBinding,VM : BaseViewModel> : AppCompatActi
      */
     protected fun requestLoading(view: View) {
         if (!::mLoadService.isInitialized) {
-            mLoadService = LoadSir.getDefault().register(view, Callback.OnReloadListener {
+            mLoadService = LoadSir.getDefault().register(view) {
                 mLoadService.showCallback(LoadCallBack::class.java)
                 reLoadData()
-            })
+            }
         }
 
         mLoadService.showCallback(LoadCallBack::class.java)
@@ -174,8 +174,9 @@ abstract class BaseActivity<VB : ViewBinding,VM : BaseViewModel> : AppCompatActi
     /**
      * 初始化网络异常提示View
      */
+    @SuppressLint("InflateParams")
     private fun initTipView() {
-        tipView = getLayoutInflater().inflate(R.layout.base_layout_network_tip, null)
+        tipView = layoutInflater.inflate(R.layout.base_layout_network_tip, null)
         mWindowManager = getSystemService(WINDOW_SERVICE) as WindowManager
         mLayoutParams = WindowManager.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
@@ -240,19 +241,12 @@ abstract class BaseActivity<VB : ViewBinding,VM : BaseViewModel> : AppCompatActi
                     mWindowManager?.removeView(tipView)
                 }
             }
-//            NetworkState.NetworkState.WIFI
-//            -> {
-//                Toast.makeText(applicationContext, "WIFI网络", Toast.LENGTH_SHORT).show()
-//            }
-//            NetworkState.CELLULAR -> {
-//                Toast.makeText(applicationContext, "蜂窝网络", Toast.LENGTH_SHORT).show()
-//            }
         }
     }
 
 
     private fun initEye(isEyeCare:Boolean) {
-        mEyeFragmenLayout = FrameLayout(this)
+        mEyeFragmentLayout = FrameLayout(this)
         openOrCloseEye(isEyeCare)
         val params = WindowManager.LayoutParams()
         params.flags = (WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
@@ -260,19 +254,15 @@ abstract class BaseActivity<VB : ViewBinding,VM : BaseViewModel> : AppCompatActi
                 or WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
         params.width = WindowManager.LayoutParams.MATCH_PARENT
         params.height = WindowManager.LayoutParams.MATCH_PARENT
-        window.addContentView(mEyeFragmenLayout,params)
+        window.addContentView(mEyeFragmentLayout,params)
 
     }
 
     protected fun openOrCloseEye (status:Boolean) {
         if (status) {
-            mEyeFragmenLayout?.let {
-                it.setBackgroundColor(ColorUtils.getFilterColor(70))
-            }
+            mEyeFragmentLayout.setBackgroundColor(ColorUtils.getFilterColor(70))
         } else {
-            mEyeFragmenLayout?.let {
-                it.setBackgroundColor(Color.TRANSPARENT)
-            }
+            mEyeFragmentLayout.setBackgroundColor(Color.TRANSPARENT)
         }
 
     }
@@ -291,15 +281,13 @@ abstract class BaseActivity<VB : ViewBinding,VM : BaseViewModel> : AppCompatActi
 
 
     override fun dispatchTouchEvent(event: MotionEvent): Boolean {
-        return if (mSwipeBackHelper != null && mSwipeBackHelper.dispatchTouchEvent(event)) {
+        return if (mSwipeBackHelper.dispatchTouchEvent(event)) {
             true
         } else super.dispatchTouchEvent(event)
     }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
-        if (mSwipeBackHelper != null) {
-            mSwipeBackHelper.onTouchEvent(event)
-        }
+        mSwipeBackHelper.onTouchEvent(event)
         return super.onTouchEvent(event)
     }
 

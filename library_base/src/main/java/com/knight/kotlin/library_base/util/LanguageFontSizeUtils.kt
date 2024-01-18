@@ -1,7 +1,6 @@
 package com.knight.kotlin.library_base.util
 
 import android.content.Context
-import android.content.res.Configuration
 import android.content.res.Resources
 import android.os.Build
 import android.os.LocaleList
@@ -30,16 +29,11 @@ object LanguageFontSizeUtils {
      */
     fun setAppLanguage(context: Context) {
         val resources = context.resources
-        val displayMetrics = resources.displayMetrics
         val configuration = resources.configuration
         val locale = getSetLanguageLocale()
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            configuration.setLocale(locale)
-            context.createConfigurationContext(configuration)
-        } else {
-            configuration.locale = locale
-            resources.updateConfiguration(configuration, displayMetrics)
-        }
+        configuration.setLocale(locale)
+        context.createConfigurationContext(configuration)
+
     }
 
 
@@ -60,7 +54,7 @@ object LanguageFontSizeUtils {
      *
      * @return
      */
-    fun getSetLanguageLocale(): Locale {
+    private fun getSetLanguageLocale(): Locale {
         return when (CacheUtils.getLanguageMode()) {
             "Auto" -> getSystemLocale()
             "简体中文" -> Locale.SIMPLIFIED_CHINESE
@@ -75,10 +69,9 @@ object LanguageFontSizeUtils {
      *
      * @return
      */
-    fun getSystemLocale(): Locale {
+    private fun getSystemLocale(): Locale {
         //获取系统默认语言,兼容版本
-        var locale: Locale
-        locale = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        var locale: Locale = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             LocaleList.getDefault()[0]
         } else {
             Locale.getDefault()
@@ -100,11 +93,7 @@ object LanguageFontSizeUtils {
      */
     fun isChinese(): Boolean {
         val locale = getSetLanguageLocale()
-        return if (locale.language == Locale.SIMPLIFIED_CHINESE.language) {
-            true
-        } else {
-            false
-        }
+        return locale.language == Locale.SIMPLIFIED_CHINESE.language
     }
 
     /**

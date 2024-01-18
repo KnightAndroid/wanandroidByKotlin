@@ -7,11 +7,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.viewbinding.ViewBinding
-import java.lang.Exception
-import java.lang.RuntimeException
 import java.lang.reflect.InvocationTargetException
 import java.lang.reflect.ParameterizedType
-import java.util.*
+import java.util.Objects
 
 /**
  * Author:Knight
@@ -27,14 +25,15 @@ object BindingReflex {
      * @param aClass 当前类
      * @param from layouinflater
      */
+    @Suppress("UNCHECKED_CAST")
     fun <V : ViewBinding> reflexViewBinding(aClass: Class<*>, from: LayoutInflater?): V {
         try {
              val actualTypeArguments =
                  (Objects.requireNonNull(aClass.genericSuperclass) as ParameterizedType).actualTypeArguments
              for (i in actualTypeArguments.indices) {
-                 val tClass:Class<Any>
+                 val tClass:Class<*>
                  try {
-                     tClass = actualTypeArguments[i] as Class<Any>
+                     tClass = actualTypeArguments[i] as Class<*>
                  } catch (e:Exception) {
                      continue
                  }
@@ -43,7 +42,7 @@ object BindingReflex {
                      return inflate.invoke(null,from) as V
                  }
              }
-            return reflexViewBinding<V>(aClass.superclass,from)
+            return reflexViewBinding(aClass.superclass,from)
         } catch (e: NoSuchMethodException) {
             e.printStackTrace()
         } catch (e: IllegalAccessException) {
@@ -59,7 +58,8 @@ object BindingReflex {
      *
      * 反射获取ViewBinding
      */
-    fun <V : ViewBinding> reflexViewBinding(
+    @Suppress("UNCHECKED_CAST")
+    private fun <V : ViewBinding> reflexViewBinding(
         aClass:Class<*>,
         from:LayoutInflater?,
         viewGroup: ViewGroup?,
@@ -69,9 +69,9 @@ object BindingReflex {
             val actualTypeArguments =
                 (Objects.requireNonNull(aClass.genericSuperclass) as ParameterizedType).actualTypeArguments
             for (i in actualTypeArguments.indices) {
-                val tClass:Class<Any>
+                val tClass:Class<*>
                 try {
-                    tClass = actualTypeArguments[i] as Class<Any>
+                    tClass = actualTypeArguments[i] as Class<*>
                 } catch (e : Exception){
                     continue
                 }
@@ -87,11 +87,11 @@ object BindingReflex {
             }
             return reflexViewBinding<ViewBinding>(aClass.superclass,from,viewGroup,b) as V
         } catch (e: NoSuchMethodException) {
-
+            e.printStackTrace()
         } catch (e:IllegalAccessException) {
-
+            e.printStackTrace()
         } catch (e: InvocationTargetException) {
-
+            e.printStackTrace()
         }
         throw RuntimeException("ViewBinding初始化失败")
     }
@@ -103,14 +103,15 @@ object BindingReflex {
      * @param owner 生命周期管理
      * @return ViewModel实例
      */
-    fun <VM: ViewModel> reflexViewModel(aClass: Class<*>,owner : ViewModelStoreOwner) :VM {
+    @Suppress("UNCHECKED_CAST")
+    private fun <VM: ViewModel> reflexViewModel(aClass: Class<*>,owner : ViewModelStoreOwner) :VM {
         try {
             val actualTypeArguments =
                 (Objects.requireNonNull(aClass.genericSuperclass) as ParameterizedType).actualTypeArguments
             for (i in actualTypeArguments.indices) {
-                val tClass:Class<Any>
+                val tClass:Class<*>
                 try {
-                    tClass = actualTypeArguments[i] as Class<Any>
+                    tClass = actualTypeArguments[i] as Class<*>
                 } catch (e:Exception) {
                     continue
                 }
@@ -118,7 +119,7 @@ object BindingReflex {
                     return ViewModelProvider(owner)[tClass as Class<VM>]
                 }
             }
-            return reflexViewModel<VM>(aClass.superclass,owner)
+            return reflexViewModel(aClass.superclass,owner)
         } catch (e:Exception){
             e.printStackTrace()
         }
@@ -131,14 +132,15 @@ object BindingReflex {
      * 如果fragment的父Activity有相同的ViewModel 那么生成的ViewModel将会是同一个实例，做到Fragment与Activity的数据同步
      * 或者说是同一个Activity中的多个Fragment同步使用用一个ViewMode达到数据之间的同步
      */
-    fun <VM:ViewModel> reflexViewModelShared(aClass: Class<*>,fragment: Fragment):VM {
+    @Suppress("UNCHECKED_CAST")
+    private fun <VM:ViewModel> reflexViewModelShared(aClass: Class<*>,fragment: Fragment):VM {
         try {
             val actualTypeArguments =
                 (Objects.requireNonNull(aClass.genericSuperclass) as ParameterizedType).actualTypeArguments
             for (i in actualTypeArguments.indices) {
-                val tClass:Class<Any>
+                val tClass:Class<*>
                 try {
-                    tClass = actualTypeArguments[i] as Class<Any>
+                    tClass = actualTypeArguments[i] as Class<*>
                 } catch (e:Exception){
                     continue
                 }
@@ -146,7 +148,7 @@ object BindingReflex {
                     return ViewModelProvider(fragment.requireActivity())[tClass as Class<VM>]
                 }
             }
-            return reflexViewModelShared<VM>(aClass.superclass,fragment)
+            return reflexViewModelShared(aClass.superclass,fragment)
         } catch (e:Exception) {
             e.printStackTrace()
         }

@@ -46,26 +46,6 @@ class LoadModuleProxy : ApplicationLifecycle{
         mLoader.forEach { it.onTerminate(application) }
     }
 
-
-    /**
-     * 主线程前台初始化
-     * @return MutableList<() -> String> 初始化方法集合
-     *
-     */
-//    override fun initFrontTask(): MutableList<() -> String> {
-//        val list:MutableList<() -> String> = mutableListOf()
-//        mLoader.forEach { list.addAll(it.initFrontTask()) }
-//        return list
-//    }
-//
-//    /**
-//     * 不需要立即初始化的放在这里进行后台初始化
-//     */
-//    override fun initByBackTask() {
-//        mLoader.forEach { it.initByBackTask() }
-//
-//    }
-
     override fun initSafeTask():MutableList<() -> String> {
         val list:MutableList<() -> String> = mutableListOf()
         mLoader.forEach { list.addAll(it.initSafeTask()) }

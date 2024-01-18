@@ -19,19 +19,23 @@ import com.knight.kotlin.library_base.loadsir.LoadCallBack
 /**
  * 注册加载视图
  *
+ * @param view 需要加载的view
+ * @param callback 回调方法
+ * @return
  */
-fun LoadServiceInit(view: View, callback: () -> Unit): LoadService<Any> {
-    val loadsir = LoadSir.getDefault().register(view) {
+fun loadServiceInit(view: View, callback: () -> Unit): LoadService<Any> {
+    val loadService = LoadSir.getDefault().register(view) {
         //点击重试时触发的操作
         callback.invoke()
     }
-    loadsir.showCallback(LoadCallBack::class.java)
-    return loadsir
+    loadService.showCallback(LoadCallBack::class.java)
+    return loadService
 }
 
 
 /**
  * 提示错误信息
+ * @param message 错误信息
  */
 fun LoadService<*>.setErrorText(message:String) {
     this.setCallBack(ErrorCallBack::class.java){_,view ->

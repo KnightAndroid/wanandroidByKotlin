@@ -1,10 +1,8 @@
 package com.knight.kotlin.library_base.util
 
 import android.R
-import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
-import androidx.annotation.NonNull
 import java.util.Locale
 import java.util.Random
 
@@ -32,7 +30,7 @@ object ColorUtils {
      * 返回十六进制
      * @return
      */
-    fun getRandStringColorCode(): String? {
+    fun getRandStringColorCode(): String {
         var r: String
         var g: String
         var b: String
@@ -49,10 +47,9 @@ object ColorUtils {
     /**
      *
      * 返回colorList
-     * @param context
      * @return
      */
-    fun getOneColorStateList(context: Context?): ColorStateList? {
+    fun getOneColorStateList(): ColorStateList {
         val colors = intArrayOf(Color.parseColor("#55aff4"))
         val states = arrayOf(IntArray(0))
         return ColorStateList(states, colors)
@@ -102,7 +99,7 @@ object ColorUtils {
      * @return 16进制颜色
      * @throws NumberFormatException 当{@param argb}不是一个正确的颜色格式的字符串时
      */
-    fun convertToColorInt(@NonNull argb: String): Int {
+    fun convertToColorInt(argb: String): Int {
         return if (argb.matches(Regex("[0-9a-fA-F]{1,6}"))) {
             when (argb.length) {
                 1 -> Color.parseColor("#00000$argb")
@@ -136,7 +133,7 @@ object ColorUtils {
      * @param normal 默认
      * @return
      */
-    fun createColorStateList(checked: Int, normal: Int): ColorStateList? {
+    fun createColorStateList(checked: Int, normal: Int): ColorStateList {
         val colors = intArrayOf(checked, normal)
         val states = arrayOfNulls<IntArray>(2)
         states[0] = intArrayOf(R.attr.state_checked, R.attr.state_enabled)

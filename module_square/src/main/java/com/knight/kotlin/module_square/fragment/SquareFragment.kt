@@ -17,7 +17,7 @@ import com.knight.kotlin.library_base.config.Appconfig
 import com.knight.kotlin.library_base.entity.SearchHotKeyEntity
 import com.knight.kotlin.library_base.event.MessageEvent
 import com.knight.kotlin.library_base.fragment.BaseFragment
-import com.knight.kotlin.library_base.ktx.LoadServiceInit
+import com.knight.kotlin.library_base.ktx.loadServiceInit
 import com.knight.kotlin.library_base.ktx.observeLiveData
 import com.knight.kotlin.library_base.loadsir.LoadCallBack
 import com.knight.kotlin.library_base.route.RouteActivity
@@ -109,7 +109,7 @@ class SquareFragment:BaseFragment<SquareFragmentBinding, SquareVm>(),OnLoadMoreL
             mViewModel.getQuestion(questionPage)
         }
         squareRoot.addView(mQuestionMenu)
-        mViewLoadService = LoadServiceInit(mQuestionMenu.findViewById<View>(R.id.include_square_question),{
+        mViewLoadService = loadServiceInit(mQuestionMenu.findViewById<View>(R.id.include_square_question),{
 
         })
         RightLottieAnimation.GuillotineBuilder(mQuestionMenu,mQuestionMenu.findViewById(R.id.square_iv_question_lefticon),squareIvQuestion,mSquareQuestionAdapter)

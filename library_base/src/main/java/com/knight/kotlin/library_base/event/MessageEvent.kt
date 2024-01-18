@@ -1,7 +1,10 @@
 package com.knight.kotlin.library_base.event
 
+import android.os.Build
 import android.os.Bundle
 import android.os.Parcelable
+import androidx.annotation.RequiresApi
+import java.io.Serializable
 
 /**
  *
@@ -28,8 +31,6 @@ data class MessageEvent(var type: MessageType) {
     var bundle = Bundle()
 
     fun put(value: Int): MessageEvent {
-
-
         bundle.putInt(KEY_INT, value)
         return this
     }
@@ -40,59 +41,42 @@ data class MessageEvent(var type: MessageType) {
     }
 
     fun put(value: Boolean): MessageEvent {
-
-
         bundle.putBoolean(KEY_BOOL, value)
         return this
     }
 
-    fun put(value: java.io.Serializable): MessageEvent {
-
-
+    fun put(value: Serializable): MessageEvent {
         bundle.putSerializable(KEY_SERIALIZABLE, value)
         return this
     }
 
     fun put(value: Parcelable): MessageEvent {
-
-
         bundle.putParcelable(KEY_PARCELABLE, value)
         return this
     }
 
     fun put(key: String, value: Int): MessageEvent {
-
-
         bundle.putInt(key, value)
         return this
     }
 
     fun put(key: String, value: String): MessageEvent {
-
-
         bundle.putString(key, value)
         return this
     }
 
     fun put(key: String, value: Boolean): MessageEvent {
-
-
         bundle.putBoolean(key, value)
         return this
     }
 
-    fun put(key: String, value: java.io.Serializable): MessageEvent {
-
-
+    fun put(key: String, value: Serializable): MessageEvent {
         bundle.putSerializable(key, value)
         return this
     }
 
     fun put(key: String, value: Parcelable): MessageEvent {
-
-
         bundle.putParcelable(key, value)
-
         return this
     }
 
@@ -110,8 +94,6 @@ data class MessageEvent(var type: MessageType) {
     //===============================================================
 
     fun getInt(): Int {
-
-
         return bundle.getInt(KEY_INT)
     }
 
@@ -127,28 +109,29 @@ data class MessageEvent(var type: MessageType) {
         return bundle.getBoolean(KEY_BOOL)
     }
 
-    fun <T : java.io.Serializable> getSerializable(): java.io.Serializable {
-
+    fun <T : Serializable> getSerializable() : Serializable {
         return bundle.getSerializable(KEY_SERIALIZABLE) as T
     }
 
-    fun <T : Parcelable> getParcelable(): T? {
-
-
-        return bundle.getParcelable<T>(KEY_PARCELABLE)
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    fun <T : Serializable> getSerializable(clazz:Class<T>): T? {
+        return bundle.getSerializable(KEY_SERIALIZABLE,clazz)
     }
 
 
+    fun <T : Parcelable> getParcelable(): T? {
+        return bundle.getParcelable(KEY_PARCELABLE)
+    }
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    fun <T : Parcelable> getParcelable(clazz:Class<T>): T? {
+        return bundle.getParcelable(KEY_PARCELABLE,clazz)
+    }
 
     fun getInt(key: String): Int {
-
-
         return bundle.getInt(key)
     }
 
     fun getString(key: String): String? {
-
-
         return bundle.getString(key)
     }
 
@@ -157,21 +140,15 @@ data class MessageEvent(var type: MessageType) {
     }
 
     fun getBoolean(key: String): Boolean {
-
-
         return bundle.getBoolean(key)
     }
 
-    fun <T : java.io.Serializable> getSerializable(key: String): java.io.Serializable{
-
-
+    fun <T : Serializable> getSerializable(key: String): Serializable{
         return bundle.getSerializable(key) as T
     }
 
     fun <T : Parcelable> getParcelable(key: String): T? {
-
-
-        return bundle.getParcelable<T>(key)
+        return bundle.getParcelable(key)
     }
 
     fun <T : Parcelable> getParcelableArrayList(): ArrayList<T>? {

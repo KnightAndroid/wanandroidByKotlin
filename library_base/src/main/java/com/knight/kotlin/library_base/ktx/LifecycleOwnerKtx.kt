@@ -26,7 +26,7 @@ inline fun <T> LifecycleOwner.observeLiveData(
     liveData: LiveData<T>,
     crossinline action: (t: T) -> Unit,
 ) {
-    liveData.observe(this, { it?.let { t -> action(t) } })
+    liveData.observe(this) { it?.let { t -> action(t) } }
 }
 
 
@@ -44,11 +44,11 @@ inline fun <T> LifecycleOwner.observeLiveDataWithError(
     crossinline action: (t: T) -> Unit,
     crossinline errorAction: () -> Unit
 ) {
-    successFlag.observe(this) {
+    successFlag.observe(this) { it ->
         if (it == false) {
             errorAction()
         } else {
-            liveData.observe(this, { it?.let { t -> action(t) } })
+            liveData.observe(this) { it?.let { t -> action(t) } }
         }
     }
 }

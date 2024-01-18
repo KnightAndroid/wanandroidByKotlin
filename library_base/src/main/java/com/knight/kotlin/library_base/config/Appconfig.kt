@@ -30,7 +30,7 @@ object Appconfig {
       * 文章类型：图片文章
       *
       */
-     const val ARTICLE_PICTURE_TYPE = 1;
+     const val ARTICLE_PICTURE_TYPE = 1
 
      const val IMAGE_TRANSITION_NAME = "transitionImage"
      const val TEXT_AUTHOR_NAME = "authorName"

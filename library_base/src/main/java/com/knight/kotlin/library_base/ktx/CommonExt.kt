@@ -1,5 +1,6 @@
 package com.knight.kotlin.library_base.ktx
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.text.Html
 import android.text.Spanned
@@ -46,7 +47,7 @@ fun setOnClick(vararg views: View?, onClick: (View) -> Unit) {
 /**
  * 设置点击事件
  * @param view 需要设置点击事件的view
- * @param onClick 点击触发的方法
+ * @param action 点击触发的方法
  */
 inline fun setOnClick(view: View?, crossinline action: () -> Unit) {
     view?.setOnClickListener {
@@ -104,7 +105,7 @@ val Context.screenHeightWithStatus
  * 转换html字符串
  *
  */
-fun String.toHtml(flag: Int = Html.FROM_HTML_MODE_LEGACY): Spanned {
+fun String.toHtml(@SuppressLint("InlinedApi") flag: Int = Html.FROM_HTML_MODE_LEGACY): Spanned {
     return if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
         Html.fromHtml(this, flag)
     } else {
@@ -220,9 +221,7 @@ fun <VB: ViewBinding,VM: BaseViewModel,> BaseDialogFragment<VB, VM>.createViewMo
 fun <VM> getVmClazz(obj: Any): VM {
     return (obj.javaClass.genericSuperclass as ParameterizedType).actualTypeArguments[1] as VM
 }
-fun <DB> getDbClazz(obj: Any): DB {
-    return (obj.javaClass.genericSuperclass as ParameterizedType).actualTypeArguments[1] as DB
-}
+
 
 
 

@@ -16,7 +16,7 @@ import com.knight.kotlin.library_base.util.CacheUtils
  */
 class LoadCallBack:Callback() {
 
-    private lateinit var load_progress_bar: ProgressBar
+    private lateinit var loadProgressBar: ProgressBar
 
     override fun onCreateView(): Int {
         return R.layout.base_layout_load
@@ -25,8 +25,8 @@ class LoadCallBack:Callback() {
 
     override fun onViewCreate(context: Context,view: View){
         super.onViewCreate(context, view)
-        load_progress_bar = view.findViewById(R.id.base_load_pb)
-        load_progress_bar.indeterminateTintList = ColorStateList.valueOf(CacheUtils.getThemeColor())
+        loadProgressBar = view.findViewById(R.id.base_load_pb)
+        loadProgressBar.indeterminateTintList = ColorStateList.valueOf(CacheUtils.getThemeColor())
     }
 
 

@@ -203,6 +203,7 @@ object CacheUtils {
      * @param cacheKey
      * @param cacheValue
      */
+    @Suppress("unused")
     fun saveCacheValue(cacheKey: String?, cacheValue: String?): Boolean? {
         return mmkv?.putString(cacheKey, cacheValue)?.commit()
     }
@@ -213,6 +214,7 @@ object CacheUtils {
      * @param cacheKey
      * @return
      */
+    @Suppress("unused")
     fun getCacheValue(cacheKey: String?): String? {
         return mmkv?.getString(cacheKey, null)
     }
@@ -325,11 +327,11 @@ object CacheUtils {
      * 获取夜间模式开启时间 时
      * @return
      */
-    fun getStartNightModeHour(): String? {
+    fun getStartNightModeHour(): String {
         return if (TextUtils.isEmpty(mmkv?.decodeString(CacheKey.STARTNIGHTHOUR))) {
             "22"
         } else {
-            mmkv?.decodeString(CacheKey.STARTNIGHTHOUR)
+            mmkv?.decodeString(CacheKey.STARTNIGHTHOUR) ?: "22"
         }
     }
 
@@ -347,11 +349,11 @@ object CacheUtils {
      * 获取夜间模式开启时间 分
      * @return
      */
-    fun getStartNightModeMinuter(): String? {
+    fun getStartNightModeMinuter(): String {
         return if (TextUtils.isEmpty(mmkv?.decodeString(CacheKey.STARTNIGHTMINUTER))) {
             "00"
         } else {
-            mmkv!!.decodeString(CacheKey.STARTNIGHTMINUTER)
+            mmkv?.decodeString(CacheKey.STARTNIGHTMINUTER) ?: "00"
         }
     }
 
@@ -369,11 +371,11 @@ object CacheUtils {
      * 获取白天模式开启时间 时
      * @return
      */
-    fun getStartDayModeHour(): String? {
+    fun getStartDayModeHour(): String {
         return if (TextUtils.isEmpty(mmkv?.decodeString(CacheKey.STARTDAYHOUR))) {
             "06"
         } else {
-            mmkv?.decodeString(CacheKey.STARTDAYHOUR)
+            mmkv?.decodeString(CacheKey.STARTDAYHOUR) ?: "06"
         }
     }
 
@@ -391,11 +393,11 @@ object CacheUtils {
      * 获取白天模式开启时间 分
      * @return
      */
-    fun getStartDayModeMinuter(): String? {
+    fun getStartDayModeMinuter(): String {
         return if (TextUtils.isEmpty(mmkv?.decodeString(CacheKey.STARTDAYMINUTER))) {
             "00"
         } else {
-            mmkv?.decodeString(CacheKey.STARTDAYMINUTER)
+            mmkv?.decodeString(CacheKey.STARTDAYMINUTER) ?: "00"
         }
     }
 

@@ -22,6 +22,7 @@ class ServiceApiFactory {
     private val serviceMap = ArrayMap<Class<*>, Any>()
 
 
+    @Suppress("UNCHECKED_CAST")
     fun <T> getService(clazz: Class<T>): T? {
         val o = serviceMap[clazz]
         if (o != null && isInterface(o.javaClass, clazz.name)) {
@@ -40,7 +41,7 @@ class ServiceApiFactory {
         return null
     }
 
-    fun isInterface(c: Class<*>, szInterface: String): Boolean {
+    private fun isInterface(c: Class<*>, szInterface: String): Boolean {
         val face = c.interfaces
         for (aClass in face) {
             if (aClass.name == szInterface) {

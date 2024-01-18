@@ -4,7 +4,6 @@ import android.app.Application
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkRequest
@@ -40,7 +39,6 @@ class NetworkManager private constructor() {
 
     private var mApplication: Application? = null
     private var mJitterTime: Long = DEFAULT_JITTER_TIME
-    private var mNetworkBroadcastReceiver = NetworkBroadcastReceiver()
     private var mNetworkCallback = NetworkCallback()
     private var netWorkStateChangedMethodMap: HashMap<Any, ArrayList<NetworkStateReceiverMethod>> = HashMap()
     private val mUiHandler = Handler(Looper.getMainLooper())
@@ -71,12 +69,8 @@ class NetworkManager private constructor() {
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.N -> {
                 connectivityManager?.registerDefaultNetworkCallback(mNetworkCallback)
             }
-            Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP -> {
-                connectivityManager?.registerNetworkCallback(NetworkRequest.Builder().build(), mNetworkCallback)
-            }
             else -> {
-                val intentFilter = IntentFilter().apply { addAction(ANDROID_NET_CHANGE_ACTION) }
-                application.registerReceiver(mNetworkBroadcastReceiver, intentFilter)
+                connectivityManager?.registerNetworkCallback(NetworkRequest.Builder().build(), mNetworkCallback)
             }
         }
     }

@@ -6,8 +6,8 @@ import com.kingja.loadsir.core.LoadService
 import com.knight.kotlin.library_aop.loginintercept.LoginCheck
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.event.MessageEvent
-import com.knight.kotlin.library_base.ktx.LoadServiceInit
 import com.knight.kotlin.library_base.ktx.init
+import com.knight.kotlin.library_base.ktx.loadServiceInit
 import com.knight.kotlin.library_base.ktx.observeLiveData
 import com.knight.kotlin.library_base.ktx.setOnClick
 import com.knight.kotlin.library_base.loadsir.EmptyCallBack
@@ -78,7 +78,7 @@ class OtherShareArticleActivity :BaseActivity<MineOthershareActivityBinding,Othe
         }
         requestLoading(mineSlidupPanellayout)
         inculeOthermessageToolbar.baseTvTitle.setText(getString(R.string.mine_other_shareArticles))
-        mViewLoadService = LoadServiceInit(includeOtherSharearticle.baseFreshlayout,{
+        mViewLoadService = loadServiceInit(includeOtherSharearticle.baseFreshlayout,{
             mViewModel.getRankCoin(uid, page)
         })
         mViewLoadService.showCallback(LoadCallBack::class.java)

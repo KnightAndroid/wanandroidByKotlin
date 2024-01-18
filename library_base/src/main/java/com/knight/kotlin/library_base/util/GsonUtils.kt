@@ -72,8 +72,8 @@ object GsonUtils {
      * @return
     </T> */
     @Throws(java.lang.Exception::class)
-    operator fun <T> get(jsonString: String?, cls: Class<T>?, type: Int): T? {
-        var t: T? = null
+    operator fun <T> get(jsonString: String?, cls: Class<T>): T? {
+        val t: T?
         val gson = Gson()
         t = gson.fromJson(jsonString, cls)
         return t
@@ -94,6 +94,7 @@ object GsonUtils {
             val gson = Gson()
             t = gson.fromJson(jsonString, type)
         } catch (e: java.lang.Exception) {
+            e.printStackTrace()
         }
         return t
     }
@@ -131,11 +132,11 @@ object GsonUtils {
         return list
     }
 
-    fun <T> getObjectList(jsonString: String?, cls: Class<T>?): List<T>? {
+    fun <T> getObjectList(jsonString: String?, cls: Class<T>?): List<T> {
         val list: MutableList<T> = ArrayList()
         try {
             val gson = Gson()
-            val arry: JsonArray = JsonParser.parseString(jsonString).getAsJsonArray()
+            val arry: JsonArray = JsonParser.parseString(jsonString).asJsonArray
             for (jsonElement in arry) {
                 list.add(gson.fromJson(jsonElement, cls))
             }
@@ -150,13 +151,14 @@ object GsonUtils {
      * @param jsonString
      * @return
      */
-    fun getList(jsonString: String?): List<*>? {
+    private fun getList(jsonString: String?): List<*> {
         val typeToken: TypeToken<ArrayList<*>> = object : TypeToken<ArrayList<*>>() {}
         var list: List<*> = ArrayList<String>()
         try {
             val gson = Gson()
-            list = gson.fromJson(jsonString, typeToken.getType())
+            list = gson.fromJson(jsonString, typeToken.type)
         } catch (e: java.lang.Exception) {
+            e.printStackTrace()
         }
         return list
     }
@@ -166,7 +168,7 @@ object GsonUtils {
      * @param array
      * @return
      */
-    fun getList(array: JSONArray): List<*>? {
+    fun getList(array: JSONArray): List<*> {
         return getList(array.toString())
     }
 
@@ -180,14 +182,14 @@ object GsonUtils {
         return gson.toJson(obj)
     }
 
-    fun getString(jsonObject: JSONObject?, key: String?, defaultValue: String?): String? {
+    fun getString(jsonObject: JSONObject?, key: String?): String? {
         if (jsonObject == null || key.isNullOrEmpty()) {
-            return defaultValue
+            return ""
         }
 
         //add: 20160420
         return if (!jsonObject.has(key)) {
-            defaultValue
+            ""
         } else jsonObject.optString(key)
     }
 
@@ -198,12 +200,11 @@ object GsonUtils {
      * 根据对应json key 值转为字符串
      * @param jsonObject
      * @param key
-     * @param defaultValue
      * @return
      */
-    fun jsonToString(jsonObject: String?, key: String?, defaultValue: String?): String? {
+    private fun jsonToString(jsonObject: String, key: String?): String? {
         try {
-            return getString(JSONObject(jsonObject), key, defaultValue)
+            return getString(JSONObject(jsonObject), key)
         } catch (e: JSONException) {
             e.printStackTrace()
         }
@@ -221,8 +222,8 @@ object GsonUtils {
      * @param <T>
      * @return
     </T> */
-    fun <T> jsonToModel(json: String?, key: String?, clazz: Class<T>?): T? {
-        return get(jsonToString(json, key, ""), clazz)
+    fun <T> jsonToModel(json: String, key: String?, clazz: Class<T>?): T? {
+        return get(jsonToString(json, key), clazz)
     }
 
 

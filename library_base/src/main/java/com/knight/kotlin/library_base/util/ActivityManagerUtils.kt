@@ -44,14 +44,15 @@ class ActivityManagerUtils : Application.ActivityLifecycleCallbacks {
      * 获取栈顶的Activity
      */
     fun getTopActivity():Activity? {
-        return mActivityArrayMap.get(mCurrentTag)
+        return mActivityArrayMap[mCurrentTag]
     }
 
     /**
-     * 销毁所有Activity
+     * 销毁所有界面
+     *
+     *
      */
     fun finishAllActivity() {
-
         val keys: Array<String> = mActivityArrayMap.keys.toTypedArray()
         for (key in keys) {
             val activity = mActivityArrayMap[key]
@@ -60,7 +61,11 @@ class ActivityManagerUtils : Application.ActivityLifecycleCallbacks {
         }
     }
 
-
+    /**
+     * 销毁所有(除了特定的界面)的界面
+     * @param classArray
+     */
+    @Suppress("unused")
     @SafeVarargs
     fun finishAllActivities(vararg classArray: Class<out Activity?>) {
         val keys: Array<String> = mActivityArrayMap.keys.toTypedArray()
@@ -68,11 +73,9 @@ class ActivityManagerUtils : Application.ActivityLifecycleCallbacks {
             val activity = mActivityArrayMap[key]
             if (activity != null && !activity.isFinishing) {
                 var whiteClazz = false
-                if (classArray != null) {
-                    for (clazz in classArray) {
-                        if (activity.javaClass == clazz) {
-                            whiteClazz = true
-                        }
+                for (clazz in classArray) {
+                    if (activity.javaClass == clazz) {
+                        whiteClazz = true
                     }
                 }
                 //如果不是白名单上的Activity就销毁掉
@@ -88,14 +91,14 @@ class ActivityManagerUtils : Application.ActivityLifecycleCallbacks {
      * 获取一个独一无二的对象标记
      *
      */
-    fun getObjectTag(ob:Any):String {
+    private fun getObjectTag(ob:Any):String {
          //对象所在的包名+对象的内存hash地址
-         return ob.javaClass.getName().toString() + Integer.toHexString(ob.hashCode())
+         return ob.javaClass.name.toString() + Integer.toHexString(ob.hashCode())
     }
 
     override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
         mCurrentTag = getObjectTag(activity)
-        mActivityArrayMap.put(getObjectTag(activity),activity)
+        mActivityArrayMap[getObjectTag(activity)] = activity
     }
 
     override fun onActivityStarted(activity: Activity) {
@@ -117,7 +120,7 @@ class ActivityManagerUtils : Application.ActivityLifecycleCallbacks {
 
     override fun onActivityDestroyed(activity: Activity) {
         mActivityArrayMap.remove(getObjectTag(activity))
-        if (getObjectTag(activity).equals(mCurrentTag)) {
+        if (getObjectTag(activity) == mCurrentTag) {
             //清除当前标记
             mCurrentTag = null
 

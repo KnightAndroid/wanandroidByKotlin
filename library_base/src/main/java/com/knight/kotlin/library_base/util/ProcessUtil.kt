@@ -4,7 +4,6 @@ import android.app.ActivityManager
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Process
-import kotlin.jvm.Throws
 
 /**
  * Author:Knight
@@ -20,7 +19,7 @@ object ProcessUtil {
      * @return List<ActivityManager.RunningAppProcessInfo> 当前所有进程
      *
      */
-    fun getRunningAppProcessList(context: Context):List<ActivityManager.RunningAppProcessInfo> {
+    private fun getRunningAppProcessList(context: Context):List<ActivityManager.RunningAppProcessInfo> {
         val activityManager = context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
         return activityManager.runningAppProcesses
     }
@@ -31,7 +30,7 @@ object ProcessUtil {
      * @param processId Int 进程Id
      * @param processName String 进程名
      */
-    fun isPidOfProcessName(context:Context,processId:Int,processName:String) :Boolean {
+    private fun isPidOfProcessName(context:Context,processId:Int,processName:String) :Boolean {
         //遍历所有进程找到该进程id对应的进程
         for (process in getRunningAppProcessList(context)) {
             if (process.pid == processId) {

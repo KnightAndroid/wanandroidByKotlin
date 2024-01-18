@@ -8,5 +8,5 @@ package com.knight.kotlin.library_base.annotation
  */
 
 @Target(AnnotationTarget.CLASS)
-@kotlin.annotation.Retention(AnnotationRetention.RUNTIME)
+@Retention(AnnotationRetention.RUNTIME)
 annotation class EventBusRegister

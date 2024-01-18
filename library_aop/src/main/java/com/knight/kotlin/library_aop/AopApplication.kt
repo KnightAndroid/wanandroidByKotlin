@@ -65,8 +65,6 @@ class AopApplication: ApplicationLifecycle {
                 val userInfoEntity: UserInfoEntity? = getUser()
                 return userInfoEntity != null
             }
-
-            fun clearLoginStatus(applicationContext: Context?) {}
         }
         LoginManager.getInstance()?.init(application, iLoginFilter)
     }

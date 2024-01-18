@@ -1,5 +1,6 @@
 package com.knight.kotlin.library_base.util
 
+import android.annotation.SuppressLint
 import android.content.Context
 import java.lang.reflect.Field
 import java.lang.reflect.Method
@@ -29,6 +30,7 @@ object HookUtils {
         }
     }
 
+    @SuppressLint("PrivateApi", "DiscouragedPrivateApi")
     @Throws(java.lang.Exception::class)
     fun attachContext() {
         // 先获取到当前的ActivityThread对象
@@ -51,7 +53,7 @@ object HookUtils {
     private fun hookInstallContentProvider(activityThreadClass: Class<*>) {
         val appDataField: Field = activityThreadClass.getDeclaredField("mBoundApplication")
         appDataField.isAccessible = true
-        val appData: Any = appDataField.get(currentActivityThread)
+        val appData: Any = appDataField.get(currentActivityThread)!!
         val providersField: Field = appData.javaClass.getDeclaredField("providers")
         providersField.isAccessible = true
         providers = providersField.get(appData)

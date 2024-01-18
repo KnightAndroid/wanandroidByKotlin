@@ -7,13 +7,14 @@
 
 package com.knight.kotlin.library_base.ktx
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.BaseBundle
-import android.os.Build
 import android.os.Bundle
 import android.os.Parcelable
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import java.io.Serializable
@@ -395,6 +396,13 @@ class GhostFragment : Fragment() {
     private var intent: Intent? = null
     private var callback: ((result: Intent?) -> Unit)? = null
 
+    private var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (requestCode == this.requestCode) {
+            val resultIntent = if (result.resultCode == Activity.RESULT_OK && result.data != null) result.data else null
+            callback?.let { it(resultIntent) }
+        }
+    }
+
     fun init(requestCode: Int, intent: Intent, callback: ((result: Intent?) -> Unit)) {
         this.requestCode = requestCode
         this.intent = intent
@@ -403,15 +411,7 @@ class GhostFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        intent?.let { startActivityForResult(it, requestCode) }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == this.requestCode) {
-            val result = if (resultCode == Activity.RESULT_OK && data != null) data else null
-            callback?.let { it(result) }
-        }
+        resultLauncher.launch(intent)
     }
 
     override fun onDetach() {
@@ -421,6 +421,7 @@ class GhostFragment : Fragment() {
     }
 }
 
+@SuppressLint("DiscouragedPrivateApi")
 internal object IntentFieldMethod {
     lateinit var mExtras: Field
     lateinit var mMap: Field
@@ -429,13 +430,8 @@ internal object IntentFieldMethod {
     init {
         try {
             mExtras = Intent::class.java.getDeclaredField("mExtras")
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                mMap = BaseBundle::class.java.getDeclaredField("mMap")
-                unparcel = BaseBundle::class.java.getDeclaredMethod("unparcel")
-            } else {
-                mMap = Bundle::class.java.getDeclaredField("mMap")
-                unparcel = Bundle::class.java.getDeclaredMethod("unparcel")
-            }
+            mMap = BaseBundle::class.java.getDeclaredField("mMap")
+            unparcel = BaseBundle::class.java.getDeclaredMethod("unparcel")
             mExtras.isAccessible = true
             mMap.isAccessible = true
             unparcel.isAccessible = true
