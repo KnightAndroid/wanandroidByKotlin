@@ -2,9 +2,9 @@ package com.knight.kotlin.library_base.widget.loadcircleview
 
 import android.content.Context
 import android.graphics.drawable.GradientDrawable
-import android.os.Build
 import android.util.AttributeSet
 import android.widget.LinearLayout
+import androidx.core.content.ContextCompat
 import com.knight.kotlin.library_base.R
 import com.knight.kotlin.library_base.util.dp2px
 
@@ -13,19 +13,22 @@ import com.knight.kotlin.library_base.util.dp2px
  * Time:2022/3/28 11:25
  * Description:BackgroundLayout
  */
-class BackgroundLayout : LinearLayout {
+class BackgroundLayout @JvmOverloads constructor(
+    context: Context,
+    attributeSet: AttributeSet? = null,
+    defAttrStyle: Int = 0
+) : LinearLayout(context, attributeSet, defAttrStyle) {
 
 
     private var mCornerRadius = 0f
     private var mBackgroundColor = 0
-    @JvmOverloads
-    constructor(context: Context, attributeSet: AttributeSet? = null, defAttrStyle: Int = 0)
-            : super(context, attributeSet,defAttrStyle) {
+
+    init {
         init()
     }
 
     private fun init() {
-        val color = context.resources.getColor(R.color.base_progress_color)
+        val color = ContextCompat.getColor(context,R.color.base_progress_color)
         initBackground(color, mCornerRadius)
     }
 
@@ -35,11 +38,7 @@ class BackgroundLayout : LinearLayout {
         drawable.shape = GradientDrawable.RECTANGLE
         drawable.setColor(color)
         drawable.cornerRadius = cornerRadius
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            background = drawable
-        } else {
-            setBackgroundDrawable(drawable)
-        }
+        background = drawable
     }
 
     fun setCornerRadius(radius: Int) {

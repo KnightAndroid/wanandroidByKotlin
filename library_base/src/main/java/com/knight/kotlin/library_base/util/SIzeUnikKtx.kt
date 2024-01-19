@@ -2,6 +2,8 @@ package com.knight.kotlin.library_base.util
 
 import android.content.Context
 import android.content.res.Resources
+import android.os.Build
+import android.util.TypedValue
 
 /**
  * Author:Knight
@@ -32,14 +34,17 @@ fun Int.px2dp(): Int {
  * sp 转 px
  */
 fun Context.sp2px(spValue: Float): Int {
-    val scale = resources.displayMetrics.scaledDensity
-    return (spValue * scale + 0.5f).toInt()
+    return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,spValue,resources.displayMetrics).toInt()
 }
 
 /**
  * px 转 sp
  */
 fun Int.px2sp(): Int {
-    val scale = Resources.getSystem().displayMetrics.scaledDensity
-    return (this / scale + 0.5f).toInt()
+    return if (Build.VERSION.SDK_INT >= 34) {
+        TypedValue.deriveDimension(TypedValue.COMPLEX_UNIT_SP,this.toFloat(),Resources.getSystem().displayMetrics).toInt()
+    } else {
+        val scale = Resources.getSystem().displayMetrics.scaledDensity
+        (this / scale + 0.5f).toInt()
+    }
 }

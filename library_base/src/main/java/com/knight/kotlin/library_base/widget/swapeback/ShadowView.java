@@ -83,9 +83,6 @@ public class ShadowView extends View {
      * @return 比例，取值范围[0,1]
      */
     private float getShadowPosition(int alpha) {
-        //        float minAlpha = 0F, maxAlpha = 0.5F;
-        //        float differ = maxAlpha - minAlpha;
-        //        float radius = (differ + 1F / differ) / 2F;
         float radius = 1.25F;
         double squarePosition = radius * radius - Math.pow((radius - alpha / 255F), 2);
         if (squarePosition <= 0) {
@@ -104,9 +101,6 @@ public class ShadowView extends View {
      * @return 透明度，取值范围[0,255]
      */
     private int getShadowAlpha(float ratio) {
-        //        float minAlpha = 0F, maxAlpha = 0.5F;
-        //        float differ = maxAlpha - minAlpha;
-        //        float radius = (differ + 1F / differ) / 2F;
         float radius = 1.25F;
         double alphaF = radius - Math.sqrt(radius * radius - ratio * ratio);
         int alphaI = (int) (alphaF * 255 + 0.5F);

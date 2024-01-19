@@ -104,15 +104,16 @@ open class BaseApp : Application() {
     /**
      * 初始化安全任务
      */
+    @Suppress("ASSIGNED_BUT_NEVER_ACCESSED_VARIABLE")
     private fun initSafeSdk() {
         initNetworkStateClient()
         initLoadSir()
         initDarkMode()
-        val allTimeMillis = measureTimeMillis {
+        measureTimeMillis {
             val depends = mLoadModuleProxy.initSafeTask()
             var dependInfo: String
             depends.forEach {
-                val dependTimeMillis = measureTimeMillis { dependInfo = it() }
+                measureTimeMillis { dependInfo = it() }
             }
         }
     }
@@ -158,7 +159,7 @@ open class BaseApp : Application() {
      *
      * 初始化深色模式还是普通模式
      */
-    fun initDarkMode() {
+    private fun initDarkMode() {
         DarkModeUtils.darkNormal()
     }
 

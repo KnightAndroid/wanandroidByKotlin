@@ -61,7 +61,7 @@ class ProgressHud constructor(context: Context) {
         return this
     }
 
-    fun isShowing(): Boolean {
+    private fun isShowing(): Boolean {
         return mProgressHudDialog != null && mProgressHudDialog?.isShowing ?: false
     }
 
@@ -74,19 +74,14 @@ class ProgressHud constructor(context: Context) {
 
 
 
-    private inner class ProgressHudDialog : Dialog {
+    private inner class ProgressHudDialog(context: Context) : Dialog(context) {
         private var mView: View? = null
 
         private var mCustomViewContainer: FrameLayout? = null
         private var mBackgroundLayout: BackgroundLayout? = null
-        private var tv_loading_show: TextView? = null
+        private var tvLoadingShow: TextView? = null
         private var mWidth = 0
         private var mHeight = 0
-
-
-        constructor(context: Context):super(context) {
-
-        }
 
 
         override fun onCreate(savedInstanceState: Bundle?) {
@@ -112,7 +107,7 @@ class ProgressHud constructor(context: Context) {
                 updateBackgroundSize()
             }
             mCustomViewContainer = findViewById<View>(R.id.container) as FrameLayout
-            tv_loading_show = findViewById<View>(R.id.tv_loading_show) as TextView
+            tvLoadingShow = findViewById<View>(R.id.tv_loading_show) as TextView
 
             addViewToFrame(mView)
         }
@@ -145,7 +140,7 @@ class ProgressHud constructor(context: Context) {
 
 
         fun setShowMessage(message:String):ProgressHud {
-            tv_loading_show?.text = message
+            tvLoadingShow?.text = message
             return this@ProgressHud
         }
 

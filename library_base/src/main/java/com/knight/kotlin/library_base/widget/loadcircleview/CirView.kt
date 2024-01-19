@@ -10,16 +10,16 @@ import com.knight.kotlin.library_base.R
  * Time:2022/3/28 16:02
  * Description:CirView
  */
-class CirView : androidx.appcompat.widget.AppCompatImageView {
+class CirView @JvmOverloads constructor(context: Context, attributeSet: AttributeSet? = null) :
+    androidx.appcompat.widget.AppCompatImageView(context, attributeSet) {
 
 
     private var mRotateDegrees = 0f
     private var mFrameTime = 0
     private var mNeedToUpdateView = false
     private var mUpdateViewRunnable: Runnable? = null
-    @JvmOverloads
-    constructor(context: Context, attributeSet: AttributeSet? = null)
-            : super(context, attributeSet) {
+
+    init {
         init()
     }
 

@@ -3,11 +3,11 @@ package com.knight.kotlin.library_base.widget.swapeback;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.res.Configuration;
-import android.os.Build;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
@@ -19,9 +19,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-
-import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
@@ -65,7 +62,6 @@ import java.lang.reflect.Proxy;
  * @createdTime 2018-06-19
  */
 @SuppressWarnings({"unused", "WeakerAccess", "PrivateApi", "JavaReflectionMemberAccess", "JavaReflectionInvocation", "BooleanMethodIsAlwaysInverted", "FieldCanBeLocal"})
-@RequiresApi(api = Build.VERSION_CODES.KITKAT)
 public class SwipeBackHelper {
 
     /**
@@ -101,7 +97,7 @@ public class SwipeBackHelper {
     /**
      * 目标Activity
      */
-    private Activity mActivity;
+    private final Activity mActivity;
 
     /**
      * 滑动事件方向
@@ -248,7 +244,7 @@ public class SwipeBackHelper {
         int actionIndex = event.getActionIndex();
         switch (event.getActionMasked()) {
             //首次按下事件
-            case MotionEvent.ACTION_DOWN: {
+            case MotionEvent.ACTION_DOWN -> {
                 //标记滑动方向：未滑动
                 mDragDirection = DIRECTION_NONE;
                 //记录起始触摸坐标
@@ -271,10 +267,10 @@ public class SwipeBackHelper {
                     prepareSwipeViews();//预备侧滑操作相关的视图
                     convertToTranslucent();//通过反射将窗口转为透明
                 }
-                break;
             }
+
             //多指触摸时的手指抬起事件
-            case MotionEvent.ACTION_POINTER_UP: {
+            case MotionEvent.ACTION_POINTER_UP -> {
                 //横向滑动时当前触摸ID抬起，则需切换触摸ID
                 if (mDragDirection == DIRECTION_HORIZONTAL && event.getPointerId(actionIndex) == mCurTouchPointerId) {
                     //清除速度追踪
@@ -293,10 +289,10 @@ public class SwipeBackHelper {
                         }
                     }
                 }
-                break;
             }
+
             //触摸移动事件
-            case MotionEvent.ACTION_MOVE: {
+            case MotionEvent.ACTION_MOVE -> {
                 for (int index = 0; index < event.getPointerCount(); index++) {
                     //只响应当前触摸ID的移动操作
                     if (event.getPointerId(index) == mCurTouchPointerId) {
@@ -320,11 +316,10 @@ public class SwipeBackHelper {
                         break;
                     }
                 }
-                break;
             }
+
             //手指抬起事件
-            case MotionEvent.ACTION_UP:
-            case MotionEvent.ACTION_CANCEL: {
+            case MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
                 //横向滑动事件
                 if (mDragDirection == DIRECTION_HORIZONTAL) {
                     //计算横向手势速度
@@ -340,7 +335,6 @@ public class SwipeBackHelper {
                     mVelocityTracker.recycle();
                     mVelocityTracker = null;
                 }
-                break;
             }
         }
         return false;
@@ -365,12 +359,11 @@ public class SwipeBackHelper {
             return;
         }
         switch (event.getActionMasked()) {
-            case MotionEvent.ACTION_DOWN: {
+            case MotionEvent.ACTION_DOWN -> {
                 prepareSwipeViews();//预备侧滑操作相关的视图
                 convertToTranslucent();//通过反射将窗口转为透明
-                break;
             }
-            case MotionEvent.ACTION_MOVE: {
+            case MotionEvent.ACTION_MOVE -> {
                 for (int index = 0; index < event.getPointerCount(); index++) {
                     //只响应当前触摸ID的移动操作
                     if (event.getPointerId(index) == mCurTouchPointerId) {
@@ -383,7 +376,6 @@ public class SwipeBackHelper {
                         break;
                     }
                 }
-                break;
             }
         }
     }
@@ -508,24 +500,18 @@ public class SwipeBackHelper {
         //若监听器为null，直接标记透明转换已完成，否则标记未完成
         setTranslucentCompleted(listener == null);
         try {
-            // Android5.0开始，窗口透明转换API有改动，这里要做区分
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                Object options = null;
-                try {
-                    //反射获取ActivityOptions对象
-                    Method getActivityOptions = Activity.class.getDeclaredMethod("getActivityOptions");
-                    getActivityOptions.setAccessible(true);
-                    options = getActivityOptions.invoke(swipeBackActivity);
-                } catch (Exception ignored) {
-                }
-                Method convertToTranslucent = Activity.class.getDeclaredMethod("convertToTranslucent", listenerClass, ActivityOptions.class);
-                convertToTranslucent.setAccessible(true);
-                convertToTranslucent.invoke(swipeBackActivity, listener, options);
-            } else {
-                Method convertToTranslucent = Activity.class.getDeclaredMethod("convertToTranslucent", listenerClass);
-                convertToTranslucent.setAccessible(true);
-                convertToTranslucent.invoke(swipeBackActivity, listener);
+            Object options = null;
+            try {
+                //反射获取ActivityOptions对象
+                @SuppressLint("DiscouragedPrivateApi") Method getActivityOptions = Activity.class.getDeclaredMethod("getActivityOptions");
+                getActivityOptions.setAccessible(true);
+                options = getActivityOptions.invoke(swipeBackActivity);
+            } catch (Exception ignored) {
             }
+            Method convertToTranslucent = Activity.class.getDeclaredMethod("convertToTranslucent", listenerClass, ActivityOptions.class);
+            convertToTranslucent.setAccessible(true);
+            convertToTranslucent.invoke(swipeBackActivity, listener, options);
+
         } catch (Throwable ignored) {
             setTranslucentCompleted(true);
         }
@@ -566,13 +552,10 @@ public class SwipeBackHelper {
         if (mTranslucentConversionListener == null && translucentConversionListenerClass != null) {
             mTranslucentConversionListener = Proxy.newProxyInstance(translucentConversionListenerClass.getClassLoader()
                     , new Class[]{translucentConversionListenerClass}
-                    , new InvocationHandler() {
-                        @Override
-                        public Object invoke(Object proxy, Method method, Object[] args) {
-                            //标记转换已完成
-                            setTranslucentCompleted(true);
-                            return null;
-                        }
+                    , (proxy, method, args) -> {
+                        //标记转换已完成
+                        setTranslucentCompleted(true);
+                        return null;
                     });
         }
         return mTranslucentConversionListener;
@@ -650,12 +633,9 @@ public class SwipeBackHelper {
      */
     private ValueAnimator.AnimatorUpdateListener getAnimatorUpdateListener() {
         if (mAnimatorUpdateListener == null) {
-            mAnimatorUpdateListener = new ValueAnimator.AnimatorUpdateListener() {
-                @Override
-                public void onAnimationUpdate(ValueAnimator animation) {
-                    float translation = (Float) animation.getAnimatedValue();
-                    onSwipeBackEvent((int) (translation + 0.5F));
-                }
+            mAnimatorUpdateListener = animation -> {
+                float translation = (Float) animation.getAnimatedValue();
+                onSwipeBackEvent((int) (translation + 0.5F));
             };
         }
         return mAnimatorUpdateListener;
