@@ -137,23 +137,23 @@ fun appStr(id:Int):String {
 
 
 internal fun BaseActivity<*,*>.subscribeData() {
-    observeEventData(mViewModel._showLoading) {
+    observeEventData(mViewModel.showLoading) {
 
-        showLoading(msg = mViewModel._showLoading.value ?:"")
+        showLoading(msg = mViewModel.showLoading.value ?:"")
     }
-    observeEventData(mViewModel._dismissLoading) {
+    observeEventData(mViewModel.dismissLoading) {
         dismissLoading()
     }
 
 }
 
 internal fun BaseFragment<*, *>.subscribeData() {
-    mViewModel._showLoading.observe(this) {
+    mViewModel.showLoading.observe(this) {
 
         showLoading(it)
     }
 
-    mViewModel._dismissLoading.observe(this){
+    mViewModel.dismissLoading.observe(this){
         dismissLoading()
     }
 

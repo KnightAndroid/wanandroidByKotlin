@@ -65,21 +65,6 @@ object GsonUtils {
     }
 
     /**
-     * 转换Json字符串到对象 由调用者处理异常
-     * @param jsonString
-     * @param cls
-     * @param <T>
-     * @return
-    </T> */
-    @Throws(java.lang.Exception::class)
-    operator fun <T> get(jsonString: String?, cls: Class<T>): T? {
-        val t: T?
-        val gson = Gson()
-        t = gson.fromJson(jsonString, cls)
-        return t
-    }
-
-    /**
      * 转换Json字符串到对象（非List）
      * 当转换的对象为复杂泛型类型时，可以使用此接口：
      * Type type = new TypeToken<ReturnData></ReturnData><Business>>(){}.getType();

@@ -13,8 +13,8 @@ import com.knight.kotlin.library_base.ktx.appStr
  */
 abstract class BaseViewModel : ViewModel() {
      val requestSuccessFlag = MutableLiveData(true)
-     private val showLoading = MutableLiveData<String>()
-     private val dismissLoading = MutableLiveData<Unit>()
+     val showLoading = MutableLiveData<String>()
+     val dismissLoading = MutableLiveData<Unit>()
 
      @MainThread
      fun showLoading(msg:String = appStr(R.string.base_loading)){
