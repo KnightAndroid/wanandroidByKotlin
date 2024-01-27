@@ -87,17 +87,18 @@
 }
 
 #引入依赖包rt.jar（jdk路径）
--libraryjars 'D:\java\jre1.8.0_131\lib\rt.jar'
+#-libraryjars 'D:\java\jre1.8.0_131\lib\rt.jar'
 #引入依赖包android.jar(android SDK路径)
--libraryjars 'D:\Sdk\platforms\android-34\android.jar'
+#-libraryjars 'D:\Sdk\platforms\android-34\android.jar'
+#-libraryjars '/Users/luguian/Library/Android/sdk/latforms/android-34/android.jar'
 -ignorewarnings
 #以下是不需要混淆的文件,需要将用到的类和方法暴露出去
--keep class com.example.mylibrary.AesUtils {
+-keep class com.knight.library.cryption.AesUtils {
    public <fields>;
    public <methods>;
 }
 
--keep class com.example.mylibrary.SignatureUtils {
+-keep class com.knight.library.cryption.SignatureUtils {
    public <fields>;
    public <methods>;
 }

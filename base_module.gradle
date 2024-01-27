@@ -110,6 +110,8 @@ dependencies {
     api project(path: ':library_base')
     api project(path: ':library_database')
     api project(path: ':library_permiss')
+  //  api project(path: ':library_crypt')
+    api project(path: ':module_aar:aar')
     testImplementation Dependencies.Android.Junit
     androidTestImplementation Dependencies.Androidx.TestExtJunit
     androidTestImplementation Dependencies.Androidx.TestEspresso

@@ -1,6 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
     id("com.google.devtools.ksp") version com.knight.wanandroid.buildsrc.Dependencies.Version.AndroidKspVersion
+
 }
 buildscript {
     repositories {

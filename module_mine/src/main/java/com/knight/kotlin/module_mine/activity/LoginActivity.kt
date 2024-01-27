@@ -24,6 +24,7 @@ import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_mine.R
 import com.knight.kotlin.module_mine.databinding.MineLoginActivityBinding
 import com.knight.kotlin.module_mine.vm.LoginViewModel
+import com.knight.library.cryption.AesUtils
 import com.knight.library_biometric.control.BiometricControl
 import com.knight.library_biometric.listener.BiometricStatusCallback
 import com.wyjson.router.annotation.Route

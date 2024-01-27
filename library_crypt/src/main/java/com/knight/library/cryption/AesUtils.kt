@@ -16,7 +16,7 @@ import javax.crypto.NoSuchPaddingException
 object AesUtils {
 
     init {
-        System.loadLibrary("ctyption")
+        System.loadLibrary("cryption")
     }
     /**
      * base64编码

@@ -26,4 +26,6 @@ include ':module_course'
 includeWithApi(':module_set')
 include ':module_message'
 
-include ':library_crypt'
+//include ':library_crypt'
+
+include ':module_aar:aar'
