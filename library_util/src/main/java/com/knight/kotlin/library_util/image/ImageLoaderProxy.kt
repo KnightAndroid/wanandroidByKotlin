@@ -147,6 +147,29 @@ interface ImageLoaderProxy {
      */
     fun loadCircleIntLocalPhoto(mActivity: FragmentActivity, @RawRes @DrawableRes resourceId: Int?, imageView: ImageView)
 
+
+    /**
+     *
+     * 加载圆角图片
+     *
+     * @param context
+     * @param uri
+     * @param imageView
+     * @param corner
+     */
+    fun loadRoundedCornerPhoto(context: Context,uri: String, imageView: ImageView,corner:Int)
+
+
+    /**
+     * 加载视频第一帧
+     *
+     *
+     * @param context
+     * @param uri
+     * @param imageView
+     * @param corner
+     */
+    fun loadVedioFirstFrame(context: Context,uri: String, imageView: ImageView,corner:Int)
     /**
      * 通过uri方式加载gif图片到ImageView
      * @param context

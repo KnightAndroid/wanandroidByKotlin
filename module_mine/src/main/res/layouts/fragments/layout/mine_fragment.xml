@@ -114,6 +114,31 @@
                 android:paddingLeft="@dimen/mine_ll_point_padding_left"
                 android:paddingRight="@dimen/mine_ll_point_padding_right">
 
+
+                <!-- 推荐视频-->
+                <RelativeLayout
+                    android:id="@+id/mine_rl_vedio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/mine_rl_recommend_vedio_top"
+                    android:layout_marginBottom="@dimen/mine_rl_recommend_vedio_bottom">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/mine_me_vedio"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/mine_rv_vedio"/>
+
+                    <ImageView
+                        android:id="@+id/mine_iv_vedio_arrow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/mine_iv_arrow"/>
+
+                </RelativeLayout>
                 <!--我的积分-->
                 <RelativeLayout
                     android:id="@+id/mine_rl_point"

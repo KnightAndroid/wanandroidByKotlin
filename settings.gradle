@@ -27,5 +27,5 @@ includeWithApi(':module_set')
 include ':module_message'
 
 //include ':library_crypt'
-
 include ':module_aar:aar'
+include ':module_vedio'

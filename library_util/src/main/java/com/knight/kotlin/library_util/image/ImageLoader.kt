@@ -184,6 +184,29 @@ class ImageLoader {
         }
 
         /**
+         * 加载圆角图片
+         * @param context
+         * @param uri
+         * @param imageView
+         * @param corner
+         */
+        fun loadRoundedCornerPhoto(context: Context,uri: String, imageView: ImageView,corner:Int) {
+            mImageLoaderProxy.loadRoundedCornerPhoto(context, uri, imageView, corner)
+        }
+
+        /**
+         * 加载图片第一帧
+         *
+         * @param context
+         * @param uri
+         * @param imageView
+         * @param corner
+         */
+        fun loadVedioFirstFrame(context: Context,uri: String, imageView: ImageView,corner:Int) {
+            mImageLoaderProxy.loadVedioFirstFrame(context, uri, imageView, corner)
+        }
+
+        /**
          * 通过gif转为bitmap加载到imageView
          *
          * @param context

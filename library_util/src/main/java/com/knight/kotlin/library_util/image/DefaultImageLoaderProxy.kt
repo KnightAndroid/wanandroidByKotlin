@@ -14,11 +14,13 @@ import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.load.resource.gif.GifDrawable
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
+import com.knight.kotlin.library_base.util.dp2px
 
 /**
  * Author:Knight
@@ -131,6 +133,30 @@ class DefaultImageLoaderProxy :ImageLoaderProxy {
     ) {
         Glide.with(mActivity).load(resourceId).apply(
             RequestOptions.bitmapTransform(CircleCrop())
+                .override(imageView.width, imageView.height)
+        ).into(imageView)
+    }
+
+    override fun loadRoundedCornerPhoto(
+        context: Context,
+        uri: String,
+        imageView: ImageView,
+        corner: Int
+    ) {
+        Glide.with(context).load(uri).apply(
+            RequestOptions.bitmapTransform(RoundedCorners(corner.dp2px()))
+                .override(imageView.width, imageView.height)
+        ).into(imageView)
+    }
+
+    override fun loadVedioFirstFrame(
+        context: Context,
+        uri: String,
+        imageView: ImageView,
+        corner: Int
+    ) {
+        Glide.with(context).load(uri).apply(
+            RequestOptions.bitmapTransform(RoundedCorners(corner.dp2px())).apply(RequestOptions.frameOf(0))
                 .override(imageView.width, imageView.height)
         ).into(imageView)
     }

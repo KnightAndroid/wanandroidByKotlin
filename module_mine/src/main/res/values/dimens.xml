@@ -22,7 +22,10 @@
     <dimen name="mine_ll_point_padding_right">16dp</dimen>
     <dimen name="mine_rl_point_margin_top">20dp</dimen>
     <dimen name="mine_rl_point_margin_bottom">20dp</dimen>
+    <dimen name="mine_rl_recommend_vedio_top">20dp</dimen>
+    <dimen name="mine_rl_recommend_vedio_bottom">20dp</dimen>
     <dimen name="mine_tv_point_flag">18sp</dimen>
+    <dimen name="mine_rv_vedio">18sp</dimen>
     <dimen name="mine_tv_points_margin_right">2dp</dimen>
     <dimen name="mine_rl_collect_margin_top">20dp</dimen>
     <dimen name="mine_rl_collect_margin_bottom">20dp</dimen>

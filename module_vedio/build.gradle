@@ -1,0 +1,11 @@
+import com.knight.wanandroid.buildsrc.Dependencies
+
+apply from: '../base_module.gradle'
+android {
+    resourcePrefix "vedio_"
+    namespace = "com.knight.kotlin.module_vedio"
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+}

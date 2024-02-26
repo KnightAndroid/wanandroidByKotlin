@@ -100,10 +100,25 @@ class ClientConfig {
                 @Nullable
                 override fun getNewUrl(baseUrlName: String?, request: Request?): HttpUrl? {
                     //这里其实通过头部注解@Headers("BaseUrlName:gitee") 来说明这个链接使用 "https://gitee.com/"
+                    val oldUrl: String = request?.url.toString()
+                    var newUrl : String
                     if (baseUrlName == "gitee") {
-                        val oldUrl: String = request?.url.toString()
-                        val newUrl =
-                            oldUrl.replace(BaseUrlConfig.WANDROID_URL, BaseUrlConfig.GITEE_RUL)
+                        if (oldUrl.contains(BaseUrlConfig.WANDROID_URL)) {
+                           newUrl =
+                                oldUrl.replace(BaseUrlConfig.WANDROID_URL, BaseUrlConfig.GITEE_RUL)
+                        }  else  {
+                           newUrl =
+                                oldUrl.replace(BaseUrlConfig.VEDIO_URL, BaseUrlConfig.GITEE_RUL)
+                        }
+                        return newUrl.toHttpUrl()
+                    } else if (baseUrlName == "Vedio") {
+                        if (oldUrl.contains(BaseUrlConfig.WANDROID_URL)) {
+                            newUrl =
+                                oldUrl.replace(BaseUrlConfig.WANDROID_URL, BaseUrlConfig.VEDIO_URL)
+                        }  else  {
+                            newUrl =
+                                oldUrl.replace(BaseUrlConfig.GITEE_RUL, BaseUrlConfig.VEDIO_URL)
+                        }
                         return newUrl.toHttpUrl()
                     }
                     return null

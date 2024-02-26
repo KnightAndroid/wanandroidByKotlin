@@ -154,5 +154,15 @@ object RouteActivity {
     }
 
 
+    /**
+     *
+     * 视频模块
+     */
+    object Vedio {
+        private const val Vedio = "/module_vedio"
+        const val VedioMainActivity = "$Vedio/VedioMainActivity"
+    }
+
+
 
 }
