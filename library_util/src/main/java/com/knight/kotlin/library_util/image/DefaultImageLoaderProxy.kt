@@ -156,7 +156,7 @@ class DefaultImageLoaderProxy :ImageLoaderProxy {
         corner: Int
     ) {
         Glide.with(context).load(uri).apply(
-            RequestOptions.bitmapTransform(RoundedCorners(corner.dp2px())).apply(RequestOptions.frameOf(0))
+            RequestOptions.bitmapTransform(RoundedCornersTransformation(corner.dp2px().toFloat())).apply(RequestOptions.frameOf(0))
                 .override(imageView.width, imageView.height)
         ).into(imageView)
     }

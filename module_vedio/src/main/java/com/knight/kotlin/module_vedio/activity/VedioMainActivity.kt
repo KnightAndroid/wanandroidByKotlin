@@ -12,6 +12,7 @@ import com.knight.kotlin.library_widget.ktx.init
 import com.knight.kotlin.module_vedio.adapter.VedioMainAdapter
 import com.knight.kotlin.module_vedio.databinding.VedioMainActivityBinding
 import com.knight.kotlin.module_vedio.entity.VedioListEntity
+import com.knight.kotlin.module_vedio.utils.VedioCryUtils
 import com.knight.kotlin.module_vedio.vm.VedioVm
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener
@@ -27,6 +28,10 @@ class VedioMainActivity : BaseActivity<VedioMainActivityBinding,VedioVm>(), OnRe
 
     //视频列表适配器
     private val mVedioMainAdapter:VedioMainAdapter by lazy { VedioMainAdapter(mutableListOf())}
+
+
+    //由于部分视频播放不了 因此需要特别处理
+    private val vedios = mutableListOf<VedioListEntity>()
     override fun setThemeColor(isDarkMode: Boolean) {
 
     }
@@ -62,9 +67,23 @@ class VedioMainActivity : BaseActivity<VedioMainActivityBinding,VedioVm>(), OnRe
 
     private fun getDouyinVedios(data: MutableList<VedioListEntity>) {
         requestSuccess()
+        vedios.addAll(data)
         mBinding.includeVedio.baseFreshlayout.finishLoadMore()
         mBinding.includeVedio.baseFreshlayout.finishRefresh()
-        mVedioMainAdapter.setNewInstance(data)
+
+        for (i in vedios.size - 1 downTo 0) {
+            vedios[i].joke.videoUrl = VedioCryUtils.removePrefixToDecry( vedios[i].joke.videoUrl)
+            if (vedios[i].joke.videoUrl.contains("flag=null")) {
+                vedios.removeAt(i)
+            }
+        }
+        if (vedios.size < 10) {
+            mViewModel.getDouyinVedios()
+        } else {
+            mVedioMainAdapter.setNewInstance(vedios)
+        }
+
+
     }
 
     override fun onRefresh(refreshLayout: RefreshLayout) {

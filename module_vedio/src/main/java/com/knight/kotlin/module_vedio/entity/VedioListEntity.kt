@@ -15,7 +15,7 @@ data class VedioListEntity(
 
 @Parcelize
 data class VedioEntity(
-    val videoUrl : String,
+    var videoUrl : String,
     val videoSize : String,
     val content : String,
     val addTime : String,
