@@ -62,7 +62,7 @@ class MineFragment: BaseFragment<MineFragmentBinding, MineViewModel>() {
              mineIvMessage.visibility = View.GONE
          }
 
-        setOnClickListener(mineTvUsername,mineRlSetup,mineLlRank,mineRlPoint,mineRlVedio,mineRlCollect,mineRlShare,mineRlHistoryRecord,mineIvMessage)
+        setOnClickListener(mineTvUsername,mineRlSetup,mineLlRank,mineRlPoint,mineRlVideo,mineRlCollect,mineRlShare,mineRlHistoryRecord,mineIvMessage)
 
     }
 
@@ -165,8 +165,8 @@ class MineFragment: BaseFragment<MineFragmentBinding, MineViewModel>() {
                 goCoinsDetail()
             }
 
-            mBinding.mineRlVedio -> {
-                goVedios()
+            mBinding.mineRlVideo -> {
+                goVideos()
             }
 
             mBinding.mineRlCollect -> {
@@ -221,8 +221,8 @@ class MineFragment: BaseFragment<MineFragmentBinding, MineViewModel>() {
 
 
 
-    private fun goVedios() {
-        startPage(RouteActivity.Vedio.VedioMainActivity)
+    private fun goVideos() {
+        startPage(RouteActivity.Video.VideoMainActivity)
     }
     @LoginCheck
     private fun goCoinsDetail() {

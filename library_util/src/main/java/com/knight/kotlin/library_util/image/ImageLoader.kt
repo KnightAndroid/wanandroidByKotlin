@@ -195,15 +195,27 @@ class ImageLoader {
         }
 
         /**
-         * 加载图片第一帧
+         *  加载视频第一帧
+         *
+         *
+         * @param context
+         * @param uri
+         * @param imageView
+         */
+       fun loadVideoFirstFrame(context: Context,uri: String, imageView: ImageView) {
+           mImageLoaderProxy.loadVideoFirstFrame(context, uri, imageView)
+       }
+
+        /**
+         * 通过圆角加载图片第一帧
          *
          * @param context
          * @param uri
          * @param imageView
          * @param corner
          */
-        fun loadVedioFirstFrame(context: Context,uri: String, imageView: ImageView,corner:Int) {
-            mImageLoaderProxy.loadVedioFirstFrame(context, uri, imageView, corner)
+        fun loadVideoFirstFrameCorner(context: Context,uri: String, imageView: ImageView,corner:Int) {
+            mImageLoaderProxy.loadVideoFirstFrameCorner(context, uri, imageView, corner)
         }
 
         /**

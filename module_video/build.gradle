@@ -1,0 +1,17 @@
+import com.knight.wanandroid.buildsrc.Dependencies
+
+apply from: '../base_module.gradle'
+android {
+    resourcePrefix "video_"
+    namespace = "com.knight.kotlin.module_video"
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation Dependencies.Android.ExoPlayer
+    implementation Dependencies.Android.ExoPlayerCore
+    implementation Dependencies.Android.ExoPlayerDash
+    implementation Dependencies.Android.ExoPlayerHls
+    implementation Dependencies.Android.ExoPlayerRtmp
+    implementation Dependencies.Android.ExoPlayerUi
+}

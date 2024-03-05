@@ -149,7 +149,12 @@ class DefaultImageLoaderProxy :ImageLoaderProxy {
         ).into(imageView)
     }
 
-    override fun loadVedioFirstFrame(
+    override fun loadVideoFirstFrame(context: Context, uri: String, imageView: ImageView) {
+        Glide.with(context).asBitmap().load(uri).apply(RequestOptions.frameOf(0))
+                .override(imageView.width, imageView.height).into(imageView)
+    }
+
+    override fun loadVideoFirstFrameCorner(
         context: Context,
         uri: String,
         imageView: ImageView,

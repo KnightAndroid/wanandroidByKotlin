@@ -93,6 +93,8 @@ object Dependencies {
        const val AndroidAop = "1.3.1"                       //aop相关
        const val AndroidKspVersion = "1.8.10-1.0.9"         //ksp版本
 
+       const val ExoPlayerVersion = "2.17.0"                //视频播放器版本
+
     }
     /**
      * AndroidX相关依赖
@@ -133,6 +135,13 @@ object Dependencies {
         const val Material = "com.google.android.material:material:${Version.MaterialVersion}"
         //flexLayout
         const val FlexLayout = "com.google.android:flexbox:${Version.FlexLayoutVersionVersion}"
+        //exoPlayer
+        const val ExoPlayer = "com.google.android.exoplayer:exoplayer:${Version.ExoPlayerVersion}"
+        const val ExoPlayerCore = "com.google.android.exoplayer:exoplayer-core:${Version.ExoPlayerVersion}"
+        const val ExoPlayerDash = "com.google.android.exoplayer:exoplayer-dash:${Version.ExoPlayerVersion}"
+        const val ExoPlayerHls = "com.google.android.exoplayer:exoplayer-hls:${Version.ExoPlayerVersion}" //如果要播放 m3u8 ，添加exoplayer-hls
+        const val ExoPlayerUi = "com.google.android.exoplayer:exoplayer-ui:${Version.ExoPlayerVersion}"
+        const val ExoPlayerRtmp = "com.google.android.exoplayer:extension-rtmp:${Version.ExoPlayerVersion}"
     }
 
     /**

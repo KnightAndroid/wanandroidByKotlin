@@ -158,9 +158,10 @@ object RouteActivity {
      *
      * 视频模块
      */
-    object Vedio {
-        private const val Vedio = "/module_vedio"
-        const val VedioMainActivity = "$Vedio/VedioMainActivity"
+    object Video {
+        private const val Video = "/module_video"
+        const val VideoMainActivity = "$Video/VideoMainActivity"
+        const val VideoPlayListActivity = "$Video/VideoPlayListActivity"
     }
 
 

@@ -11,5 +11,5 @@ internal object BaseUrlConfig {
     //gitee 访问链接
     const val GITEE_RUL = "https://gitee.com/"
     //推荐视频 访问链接
-    const val VEDIO_URL = "http://tools.cretinzp.com/jokes/"
+    const val VIDEO_URL = "http://tools.cretinzp.com/jokes/"
 }

@@ -28,4 +28,4 @@ include ':module_message'
 
 //include ':library_crypt'
 include ':module_aar:aar'
-include ':module_vedio'
+include ':module_video'

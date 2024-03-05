@@ -1,0 +1,25 @@
+package com.knight.kotlin.module_video.adapter
+
+import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.viewholder.BaseViewHolder
+import com.knight.kotlin.library_util.image.ImageLoader
+import com.knight.kotlin.module_video.entity.VideoPlayEntity
+
+/**
+ * Author:Knight
+ * Time:2024/2/26 14:43
+ * Description:VideoMainAdapter
+ */
+class VideoMainAdapter(data:MutableList<VideoPlayEntity>) : BaseQuickAdapter<VideoPlayEntity,BaseViewHolder>(
+    com.knight.kotlin.module_video.R.layout.video_main_item,data) {
+    override fun convert(holder: BaseViewHolder, item: VideoPlayEntity) {
+        item.run {
+            ImageLoader.loadVideoFirstFrameCorner(context,item.videoUrl,holder.getView(
+                com.knight.kotlin.module_video.R.id.iv_video),10)
+        }
+
+
+    }
+
+
+}

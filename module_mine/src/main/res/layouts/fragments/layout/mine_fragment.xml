@@ -117,21 +117,21 @@
 
                 <!-- 推荐视频-->
                 <RelativeLayout
-                    android:id="@+id/mine_rl_vedio"
+                    android:id="@+id/mine_rl_video"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/mine_rl_recommend_vedio_top"
-                    android:layout_marginBottom="@dimen/mine_rl_recommend_vedio_bottom">
+                    android:layout_marginTop="@dimen/mine_rl_recommend_video_top"
+                    android:layout_marginBottom="@dimen/mine_rl_recommend_video_bottom">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/mine_me_vedio"
+                        android:text="@string/mine_me_video"
                         android:textColor="@android:color/white"
-                        android:textSize="@dimen/mine_rv_vedio"/>
+                        android:textSize="@dimen/mine_rv_video"/>
 
                     <ImageView
-                        android:id="@+id/mine_iv_vedio_arrow"
+                        android:id="@+id/mine_iv_video_arrow"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"

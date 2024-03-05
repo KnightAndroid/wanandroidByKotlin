@@ -108,16 +108,16 @@ class ClientConfig {
                                 oldUrl.replace(BaseUrlConfig.WANDROID_URL, BaseUrlConfig.GITEE_RUL)
                         }  else  {
                            newUrl =
-                                oldUrl.replace(BaseUrlConfig.VEDIO_URL, BaseUrlConfig.GITEE_RUL)
+                                oldUrl.replace(BaseUrlConfig.VIDEO_URL, BaseUrlConfig.GITEE_RUL)
                         }
                         return newUrl.toHttpUrl()
-                    } else if (baseUrlName == "Vedio") {
+                    } else if (baseUrlName == "Video") {
                         if (oldUrl.contains(BaseUrlConfig.WANDROID_URL)) {
                             newUrl =
-                                oldUrl.replace(BaseUrlConfig.WANDROID_URL, BaseUrlConfig.VEDIO_URL)
+                                oldUrl.replace(BaseUrlConfig.WANDROID_URL, BaseUrlConfig.VIDEO_URL)
                         }  else  {
                             newUrl =
-                                oldUrl.replace(BaseUrlConfig.GITEE_RUL, BaseUrlConfig.VEDIO_URL)
+                                oldUrl.replace(BaseUrlConfig.GITEE_RUL, BaseUrlConfig.VIDEO_URL)
                         }
                         return newUrl.toHttpUrl()
                     }
