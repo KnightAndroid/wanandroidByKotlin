@@ -31,8 +31,6 @@ class VideoPlayFragment : BaseFragment<VideoPlayFragmentBinding,EmptyViewModel>(
     private var curPlayPos = -1
     private lateinit var videoView: VideoPlayer
 
-    private var ivCurCover: ImageView? = null
-
     override fun setThemeColor(isDarkMode: Boolean) {
 
     }
@@ -159,7 +157,6 @@ class VideoPlayFragment : BaseFragment<VideoPlayFragmentBinding,EmptyViewModel>(
             override fun onRenderedFirstFrame() {
                 //第一帧已渲染，隐藏封面
                 ivCover.visibility = View.GONE
-                ivCurCover = ivCover
             }
         })
     }

@@ -14,7 +14,6 @@ import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.load.resource.gif.GifDrawable
 import com.bumptech.glide.request.RequestListener
@@ -144,7 +143,7 @@ class DefaultImageLoaderProxy :ImageLoaderProxy {
         corner: Int
     ) {
         Glide.with(context).load(uri).apply(
-            RequestOptions.bitmapTransform(RoundedCorners(corner.dp2px()))
+            RequestOptions.bitmapTransform(RoundedCornersTransformation(corner.dp2px().toFloat()))
                 .override(imageView.width, imageView.height)
         ).into(imageView)
     }

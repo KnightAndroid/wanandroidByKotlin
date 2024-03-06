@@ -20,6 +20,7 @@ data class VideoListEntity(
 data class VideoEntity(
     val jokesId:Long,
     var videoUrl : String,
+    val thumbUrl: String,
     val videoSize : String,
     val content : String,
     val addTime : String,
@@ -40,9 +41,9 @@ data class VideoUser (
 data class VideoPlayEntity(
     val userId : Long,
     var videoUrl : String,
+    val thumbUrl : String,
     val videoSize : String,
     var mediaSource: BaseMediaSource?=null,
-
     )
 
 

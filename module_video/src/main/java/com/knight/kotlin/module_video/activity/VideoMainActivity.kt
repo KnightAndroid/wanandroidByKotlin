@@ -16,7 +16,7 @@ import com.knight.kotlin.module_video.adapter.VideoMainAdapter
 import com.knight.kotlin.module_video.databinding.VideoMainActivityBinding
 import com.knight.kotlin.module_video.entity.VideoListEntity
 import com.knight.kotlin.module_video.entity.VideoPlayEntity
-import com.knight.kotlin.module_video.utils.VideoCryUtils
+import com.knight.kotlin.module_video.utils.VideoHelpUtils
 import com.knight.kotlin.module_video.vm.VideoVm
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener
@@ -70,23 +70,23 @@ class VideoMainActivity : BaseActivity<VideoMainActivityBinding,VideoVm>(), OnRe
 
 
     private fun getDouyinVideos(data: MutableList<VideoListEntity>) {
-        requestSuccess()
-
-        mBinding.includeVideo.baseFreshlayout.finishLoadMore()
-        mBinding.includeVideo.baseFreshlayout.finishRefresh()
-
         for (i in data.size - 1 downTo 0) {
-            val decryptUrl = VideoCryUtils.removePrefixToDecry(data[i].joke.videoUrl);
+            val decryptUrl = VideoHelpUtils.removePrefixToDecry(data[i].joke.videoUrl)
             if (!decryptUrl.contains("flag=null")) {
-                val videoPlayEntity = VideoPlayEntity(data[i].user.userId,decryptUrl,data[i].joke.videoSize)
+                val videoPlayEntity = VideoPlayEntity(data[i].user.userId,decryptUrl,VideoHelpUtils.removePrefixToDecry(data[i].joke.thumbUrl),data[i].joke.videoSize)
                 DataConstant.videoDatas.add(videoPlayEntity)
             }
         }
         if (DataConstant.videoDatas.size < 10) {
+            //这里如果少于10个视频就继续调用接口补充视频数
             mViewModel.getDouyinVideos()
         } else {
+            requestSuccess()
+            mBinding.includeVideo.baseFreshlayout.finishLoadMore()
+            mBinding.includeVideo.baseFreshlayout.finishRefresh()
             mVideoMainAdapter.setNewInstance(DataConstant.videoDatas)
         }
+
 
     }
 
@@ -102,11 +102,12 @@ class VideoMainActivity : BaseActivity<VideoMainActivityBinding,VideoVm>(), OnRe
     }
 
     override fun onRefresh(refreshLayout: RefreshLayout) {
-
+        DataConstant.videoDatas.clear()
+        mViewModel.getDouyinVideos()
     }
 
     override fun onLoadMore(refreshLayout: RefreshLayout) {
-
+        mViewModel.getDouyinVideos()
     }
 
 
