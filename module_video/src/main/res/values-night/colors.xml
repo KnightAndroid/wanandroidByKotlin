@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="video_color_like">#ff2c54</color>
     <color name="video_color_link">#FFDDA4</color>
+    <color name="video_color_like">#ff2c54</color>
 </resources>

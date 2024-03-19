@@ -9,7 +9,7 @@ import androidx.appcompat.widget.AppCompatTextView
 /**
  * Author:Knight
  * Time:2022/2/17 10:26
- * Description:AlignTextView
+ * Description:AlignTextView 两边对齐
  */
 class AlignTextView:AppCompatTextView {
     private var mLineY = 0

@@ -13,7 +13,8 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class VideoListEntity(
     val joke:VideoEntity,
-    val user:VideoUser
+    val user:VideoUser,
+    val info : VideoInfo
 ): Parcelable
 
 @Parcelize
@@ -22,7 +23,7 @@ data class VideoEntity(
     var videoUrl : String,
     val thumbUrl: String,
     val videoSize : String,
-    val content : String,
+    val content : String,//视频简介
     val addTime : String,
     /** 本地文件缓存资源 */
     val videoTime : Long
@@ -30,19 +31,43 @@ data class VideoEntity(
 
 
 @Parcelize
+data class VideoInfo(
+    val LikeNum:Long,
+    val shareNum:Long,
+    val commentNum:Long,
+    val disLikeNum:Long,
+    var isLike : Boolean,
+    val isUnlike : Boolean,
+    val isAttention : Boolean
+
+):Parcelable
+
+
+@Parcelize
 data class VideoUser (
     val userId : Long,
-    val nickName : String,
+    val nickName : String,//昵称
     val signature : String,
-    val avatar:String
+    val avatar:String //头像
 ): Parcelable
 
 
 data class VideoPlayEntity(
     val userId : Long,
+    val jokeId : Long,
     var videoUrl : String,
     val thumbUrl : String,
     val videoSize : String,
+    val nickName: String,
+    val avatar:String, //头像
+    val comment:String,
+    val LikeNum:Long,
+    val shareNum:Long,
+    val commentNum:Long,
+    val disLikeNum:Long,
+    var isLike : Boolean,
+    val isUnlike : Boolean,
+    val isAttention : Boolean,
     var mediaSource: BaseMediaSource?=null,
     )
 

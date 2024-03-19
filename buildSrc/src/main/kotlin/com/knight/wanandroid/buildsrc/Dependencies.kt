@@ -94,6 +94,7 @@ object Dependencies {
        const val AndroidKspVersion = "1.8.10-1.0.9"         //ksp版本
 
        const val ExoPlayerVersion = "2.17.0"                //视频播放器版本
+       const val lottileVersion =  "2.8.0"                  //lottie 动画版本
 
     }
     /**
@@ -261,6 +262,7 @@ object Dependencies {
     object OtherUtils {
         //bugly https://bugly.qq.com/docs/release-notes/release-android-bugly
         const val Bugly = "com.tencent.bugly:crashreport:${Version.BuglyVersion}"
+        const val Lottle = "com.airbnb.android:lottie:${Version.lottileVersion}"
     }
 
 

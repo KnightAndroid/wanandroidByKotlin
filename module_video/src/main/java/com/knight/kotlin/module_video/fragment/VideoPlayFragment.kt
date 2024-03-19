@@ -15,7 +15,10 @@ import com.knight.kotlin.module_video.R
 import com.knight.kotlin.module_video.activity.VideoPlayListActivity
 import com.knight.kotlin.module_video.adapter.VideoPlayAdapter
 import com.knight.kotlin.module_video.databinding.VideoPlayFragmentBinding
+import com.knight.kotlin.module_video.dialog.VideoCommentDialog
 import com.knight.kotlin.module_video.player.VideoPlayer
+import com.knight.kotlin.module_video.utils.OnVideoControllerListener
+import com.knight.kotlin.module_video.view.ControllerView
 
 /**
  *
@@ -89,7 +92,7 @@ class VideoPlayFragment : BaseFragment<VideoPlayFragmentBinding,EmptyViewModel>(
         val itemView = adapter!!.getRootViewAt(position)
         val rootView = itemView!!.findViewById<ViewGroup>(R.id.rl_video_root)
       //  val likeView: LikeView = rootView.findViewById(R.id.likeview)
-      //  val controllerView: ControllerView = rootView.findViewById(R.id.controller)
+        val controllerView: ControllerView = rootView.findViewById(R.id.controller)
         val ivPlay = rootView.findViewById<ImageView>(R.id.iv_play)
         val ivCover = rootView.findViewById<ImageView>(R.id.iv_cover)
 
@@ -108,7 +111,7 @@ class VideoPlayFragment : BaseFragment<VideoPlayFragmentBinding,EmptyViewModel>(
 //        })
 
         //评论点赞事件
-       // likeShareEvent(controllerView)
+        clickEvent(controllerView)
 
         //切换播放视频的作者主页数据
        // RxBus.getDefault().post(CurUserBean(DataCreate.datas[position]?.userBean!!))
@@ -157,6 +160,28 @@ class VideoPlayFragment : BaseFragment<VideoPlayFragmentBinding,EmptyViewModel>(
             override fun onRenderedFirstFrame() {
                 //第一帧已渲染，隐藏封面
                 ivCover.visibility = View.GONE
+            }
+        })
+    }
+
+
+    /**
+     * 用户操作事件
+     */
+    private fun clickEvent(controllerView: ControllerView) {
+        controllerView.setListener(object : OnVideoControllerListener {
+            override fun onHeadClick() {
+
+            }
+
+            override fun onLikeClick() {}
+            override fun onCommentClick(jokeId:Long) {
+                val commentDialog = VideoCommentDialog(jokeId)
+                commentDialog.show(childFragmentManager, "")
+            }
+
+            override fun onShareClick() {
+
             }
         })
     }

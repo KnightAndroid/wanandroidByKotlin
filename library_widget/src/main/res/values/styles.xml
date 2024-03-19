@@ -58,4 +58,21 @@
         <attr name="bigSize" format="integer" />
         <attr name="defaultPosition" format="integer" />
     </declare-styleable>
+
+
+    <style name="BottomSheetDialog" parent="AlertDialog.AppCompat">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:windowAnimationStyle">@style/dialog_animation</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+
+    <style name="dialog_animation" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/widget_dialog_enter</item>
+        <item name="android:windowExitAnimation">@anim/widget_dialog_exit</item>
+    </style>
 </resources>

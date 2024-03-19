@@ -2,4 +2,11 @@
 <resources>
     <string name="video_app_name">module_video</string>
     <string name="video_main_toolbar">recommend</string>
+    <!-- 点赞选中 -->
+    <string name="video_icon_like_fill">&#xe60d;</string>
+    <!--评论-->
+    <string name="video_icon_comment">&#xe621;</string>
+    <!-- 更多 -->
+    <string name="video_icon_more">&#xe61b;</string>
+
 </resources>

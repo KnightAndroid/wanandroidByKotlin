@@ -73,7 +73,22 @@ class VideoMainActivity : BaseActivity<VideoMainActivityBinding,VideoVm>(), OnRe
         for (i in data.size - 1 downTo 0) {
             val decryptUrl = VideoHelpUtils.removePrefixToDecry(data[i].joke.videoUrl)
             if (!decryptUrl.contains("flag=null")) {
-                val videoPlayEntity = VideoPlayEntity(data[i].user.userId,decryptUrl,VideoHelpUtils.removePrefixToDecry(data[i].joke.thumbUrl),data[i].joke.videoSize)
+                val videoPlayEntity = VideoPlayEntity(data[i].user.userId,
+                    data[i].joke.jokesId,
+                    decryptUrl,
+                    VideoHelpUtils.removePrefixToDecry(data[i].joke.thumbUrl),
+                    data[i].joke.videoSize,
+                    data[i].user.nickName,
+                    data[i].user.avatar,
+                    data[i].joke.content,
+                    data[i].info.LikeNum,
+                    data[i].info.shareNum,
+                    data[i].info.commentNum,
+                    data[i].info.disLikeNum,
+                    data[i].info.isLike,
+                    data[i].info.isUnlike,
+                    data[i].info.isAttention,
+                    )
                 DataConstant.videoDatas.add(videoPlayEntity)
             }
         }

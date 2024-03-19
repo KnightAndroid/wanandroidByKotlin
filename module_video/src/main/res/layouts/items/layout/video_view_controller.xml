@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:background="@android:color/black">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical"
+        android:layout_marginLeft="12dp"
+        android:layout_marginBottom="18dp"
+        android:layout_marginRight="120dp">
+
+        <TextView
+            android:id="@+id/tvNickname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" @大致爱高清"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:textColor="@android:color/white"/>
+
+        <com.knight.kotlin.library_widget.linkview.LinkTextView
+            android:id="@+id/autoLinkTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="只有 #允儿 的脸我才敢拉这么近"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            android:layout_marginTop="10dp"
+            app:highlight_textcolor="@color/video_color_link"/>
+
+        <com.knight.kotlin.library_widget.MarqueeTextView
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:text=" @大致爱高清 创作的原生 - 大致爱高清"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            android:ellipsize="marquee"
+            android:singleLine="true"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:layout_marginTop="10dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true">
+
+        <RelativeLayout
+            android:layout_width="52dp"
+            android:layout_height="62dp">
+
+            <com.knight.kotlin.library_widget.CircleImageView
+                android:id="@+id/ivHead"
+                android:layout_width="52dp"
+                android:layout_height="52dp"
+                app:es_shape_type="round"
+                android:scaleType="centerCrop"/>
+
+            <ImageView
+                android:id="@+id/ivFocus"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:padding="3dp"
+                android:src="@drawable/video_add_focus"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rlLike"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <com.knight.kotlin.library_widget.IconFontTextView
+                android:id="@+id/ivLike"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="32sp"
+                android:textColor="@android:color/white"
+                android:layout_centerInParent="true"
+                android:text="@string/video_icon_like_fill" />
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/animationView"
+                android:layout_width="85dp"
+                android:layout_height="85dp" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tvLikecount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="22.5w"
+            android:textSize="12sp"
+            android:textColor="@android:color/white"
+            android:layout_marginTop="-22dp"/>
+
+        <com.knight.kotlin.library_widget.IconFontTextView
+            android:id="@+id/ivComment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="32sp"
+            android:textColor="@android:color/white"
+            android:layout_marginTop="15dp"
+            android:text="@string/video_icon_comment"/>
+
+        <TextView
+            android:id="@+id/tvCommentcount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="3823"
+            android:layout_marginTop="2dp"
+            android:textSize="12sp"
+            android:textColor="@android:color/white"/>
+
+        <com.knight.kotlin.library_widget.IconFontTextView
+            android:id="@+id/ivShare"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="32sp"
+            android:textColor="@android:color/white"
+            android:layout_marginTop="12dp"
+            android:text="@string/video_icon_more"/>
+
+        <TextView
+            android:id="@+id/tvSharecount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="3371"
+            android:textSize="12sp"
+            android:layout_marginTop="-5dp"
+            android:textColor="@android:color/white"/>
+
+        <RelativeLayout
+            android:id="@+id/rlRecord"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="45dp"
+            android:layout_marginBottom="15dp">
+
+            <ImageView
+                android:id="@+id/ivRecord"
+                android:layout_width="58dp"
+                android:layout_height="58dp"
+                android:background="@drawable/video_ic_record" />
+
+            <com.knight.kotlin.library_widget.CircleImageView
+                android:id="@+id/ivHeadAnim"
+                android:layout_width="34dp"
+                android:layout_height="34dp"
+                app:ease_radius="15dp"
+                app:es_shape_type="round"
+                android:layout_centerInParent="true"/>
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

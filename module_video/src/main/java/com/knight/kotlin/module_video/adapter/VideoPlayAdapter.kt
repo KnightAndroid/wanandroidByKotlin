@@ -31,7 +31,7 @@ class VideoPlayAdapter(val context: Context, val recyclerView :RecyclerView) : B
 
     override fun onBindViewHolder(holder: VideoViewHolder, position: Int) {
         mList[position]?.let {
-           // holder.binding.controller.setVideoData(it)
+            holder.binding.controller.setVideoData(it)
             ImageLoader.loadVideoFirstFrame(context,it.videoUrl,holder.binding.ivCover)
 //            holder?.binding?.likeview?.setOnLikeListener(object : OnLikeListener {
 //                override fun onLikeListener() {
