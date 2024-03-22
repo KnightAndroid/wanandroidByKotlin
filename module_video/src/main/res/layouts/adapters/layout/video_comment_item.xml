@@ -38,6 +38,12 @@
             android:textColor="@android:color/black"
             android:textSize="14sp"
             android:layout_marginTop="5dp" />
+
+        <TextView
+            android:id="@+id/tv_comment_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2023-01-10"/>
     </LinearLayout>
 
     <LinearLayout
@@ -58,6 +64,6 @@
             android:id="@+id/tv_likecount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="89"/>
+            />
     </LinearLayout>
 </LinearLayout>

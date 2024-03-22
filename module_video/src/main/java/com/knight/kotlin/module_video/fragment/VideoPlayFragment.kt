@@ -176,7 +176,7 @@ class VideoPlayFragment : BaseFragment<VideoPlayFragmentBinding,EmptyViewModel>(
 
             override fun onLikeClick() {}
             override fun onCommentClick(jokeId:Long) {
-                val commentDialog = VideoCommentDialog(jokeId)
+                val commentDialog = VideoCommentDialog(jokeId,videoView)
                 commentDialog.show(childFragmentManager, "")
             }
 

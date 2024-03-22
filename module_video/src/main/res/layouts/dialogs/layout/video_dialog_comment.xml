@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="500dp"
     android:orientation="vertical"
+    android:id="@+id/video_ll_parent"
     android:background="@drawable/base_top_round_white"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
@@ -14,7 +15,6 @@
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="9221条评论"
             android:layout_centerInParent="true"/>
 
         <TextView

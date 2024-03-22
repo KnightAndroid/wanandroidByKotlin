@@ -64,8 +64,8 @@ object Dependencies {
        const val ZingVersion = "3.4.1"
 
        //GitHub相关--------------------------------------------------
-       const val GoRouter = "2.4.6"                          // GoRoute路由
-       const val GoRouteCompiler = "2.4.6"                  // 阿里路由 APT
+       const val GoRouter = "2.5.1"                          // GoRoute路由
+       const val GoRouteCompiler = "2.5.1"                  // 阿里路由 APT
        const val OkHttp = "4.11.0"                         // OkHttp
        const val OkHttpInterceptorLogging = "4.11.0"       // OkHttp 请求Log拦截器
        const val Retrofit = "2.9.0"                        // Retrofit

@@ -48,11 +48,21 @@ android {
 
     }
 
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+
 }
 
 kapt {
     arguments {
         arg("GOROUTER_MODULE_NAME", project.getName())
     }
+}
+
+dependencies {
+    testImplementation Dependencies.Android.Junit
+    androidTestImplementation Dependencies.Androidx.TestExtJunit
+    androidTestImplementation Dependencies.Androidx.TestEspresso
 }
 

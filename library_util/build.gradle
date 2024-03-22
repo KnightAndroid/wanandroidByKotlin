@@ -6,6 +6,8 @@ android {
         viewBinding = true
     }
     namespace = "com.knight.kotlin.library_util"
+
+
 }
 
 dependencies {
@@ -21,6 +23,8 @@ dependencies {
 
     kapt Dependencies.GitHub.AutoServiceAnnotations
     kapt Dependencies.GitHub.GoRouteCompiler
+
+
 
 
 

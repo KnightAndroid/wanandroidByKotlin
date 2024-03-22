@@ -23,7 +23,7 @@ import com.knight.kotlin.module_video.utils.OnVideoControllerListener
  */
 class ControllerView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) : RelativeLayout(context, attrs), View.OnClickListener {
     private var listener: OnVideoControllerListener? = null
-    private var videoData: VideoPlayEntity? = null
+    private lateinit var videoData: VideoPlayEntity
     private var binding: VideoViewControllerBinding = VideoViewControllerBinding.inflate(LayoutInflater.from(context), this, true)
 
     init {
@@ -31,38 +31,38 @@ class ControllerView @JvmOverloads constructor(context: Context, attrs: Attribut
     }
 
     private fun init() {
-        binding.ivHead!!.setOnClickListener(this)
-        binding.ivComment!!.setOnClickListener(this)
-        binding.ivShare!!.setOnClickListener(this)
-        binding.rlLike!!.setOnClickListener(this)
-        binding.ivFocus!!.setOnClickListener(this)
+        binding.ivHead.setOnClickListener(this)
+        binding.ivComment.setOnClickListener(this)
+        binding.ivShare.setOnClickListener(this)
+        binding.rlLike.setOnClickListener(this)
+        binding.ivFocus.setOnClickListener(this)
         setRotateAnim()
     }
 
     fun setVideoData(videoData: VideoPlayEntity) {
         this.videoData = videoData
         ImageLoader.loadStringPhoto(context,videoData.avatar,binding.ivHead)
-        binding.tvNickname!!.text = "@" + videoData.nickName
+        binding.tvNickname.text = "@" + videoData.nickName
         LinkHerfUtils.setContent(videoData.comment, binding.autoLinkTextView)
 
         ImageLoader.loadStringPhoto(context,videoData.avatar,binding.ivHeadAnim)
-        binding.tvLikecount!!.text = NumberUtils.numberFilter(videoData.LikeNum)
-        binding.tvCommentcount!!.text = NumberUtils.numberFilter(videoData.commentNum)
-        binding.tvSharecount!!.text = NumberUtils.numberFilter(videoData.shareNum)
-        binding.animationView!!.setAnimation("like.json")
+        binding.tvLikecount.text = NumberUtils.numberFilter(videoData.LikeNum)
+        binding.tvCommentcount.text = NumberUtils.numberFilter(videoData.commentNum)
+        binding.tvSharecount.text = NumberUtils.numberFilter(videoData.shareNum)
+        binding.animationView.setAnimation("like.json")
 
         //点赞状态
         if (videoData.isLike) {
-            binding.ivLike!!.setTextColor(resources.getColor(R.color.video_color_like))
+            binding.ivLike.setTextColor(resources.getColor(R.color.video_color_like))
         } else {
-            binding.ivLike!!.setTextColor(resources.getColor(android.R.color.white))
+            binding.ivLike.setTextColor(resources.getColor(android.R.color.white))
         }
 
         //关注状态
         if (videoData.isAttention) {
-            binding.ivFocus!!.visibility = GONE
+            binding.ivFocus.visibility = GONE
         } else {
-            binding.ivFocus!!.visibility = VISIBLE
+            binding.ivFocus.visibility = VISIBLE
         }
     }
 
@@ -75,16 +75,16 @@ class ControllerView @JvmOverloads constructor(context: Context, attrs: Attribut
             return
         }
         when (v.id) {
-            R.id.ivHead -> listener!!.onHeadClick()
+            R.id.ivHead -> listener?.onHeadClick()
             R.id.rlLike -> {
-                listener!!.onLikeClick()
+                listener?.onLikeClick()
                 like()
             }
-            R.id.ivComment -> listener!!.onCommentClick(videoData?.jokeId ?: 0L)
-            R.id.ivShare -> listener!!.onShareClick()
-            R.id.ivFocus -> if (!videoData!!.isAttention) {
-                videoData!!.isLike = true
-                binding.ivFocus!!.visibility = GONE
+            R.id.ivComment -> listener?.onCommentClick(videoData.jokeId ?: 0L)
+            R.id.ivShare -> listener?.onShareClick()
+            R.id.ivFocus -> if (!videoData.isAttention) {
+                videoData.isLike = true
+                binding.ivFocus.visibility = GONE
             }
         }
     }
@@ -93,17 +93,17 @@ class ControllerView @JvmOverloads constructor(context: Context, attrs: Attribut
      * 点赞动作
      */
     fun like() {
-        if (!videoData!!.isLike) {
+        if (!videoData.isLike) {
             //点赞
-            binding.animationView!!.visibility = VISIBLE
-            binding.animationView!!.playAnimation()
-            binding.ivLike!!.setTextColor(resources.getColor(R.color.video_color_like))
+            binding.animationView.visibility = VISIBLE
+            binding.animationView.playAnimation()
+            binding.ivLike.setTextColor(resources.getColor(R.color.video_color_like))
         } else {
             //取消点赞
-            binding.animationView!!.visibility = INVISIBLE
-            binding.ivLike!!.setTextColor(resources.getColor(android.R.color.white))
+            binding.animationView.visibility = INVISIBLE
+            binding.ivLike.setTextColor(resources.getColor(android.R.color.white))
         }
-        videoData!!.isLike = !videoData!!.isLike
+        videoData.isLike = !videoData.isLike
     }
 
     /**
@@ -115,6 +115,6 @@ class ControllerView @JvmOverloads constructor(context: Context, attrs: Attribut
         rotateAnimation.repeatCount = Animation.INFINITE
         rotateAnimation.duration = 8000
         rotateAnimation.interpolator = LinearInterpolator()
-        binding.rlRecord!!.startAnimation(rotateAnimation)
+        binding.rlRecord.startAnimation(rotateAnimation)
     }
 }
