@@ -6,6 +6,7 @@ import com.knight.kotlin.library_base.vm.EmptyViewModel
 import com.knight.kotlin.module_video.R
 import com.knight.kotlin.module_video.databinding.VideoPlayListActivityBinding
 import com.knight.kotlin.module_video.fragment.VideoPlayFragment
+import com.wyjson.router.annotation.Param
 import com.wyjson.router.annotation.Route
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -17,9 +18,10 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 @Route(path = RouteActivity.Video.VideoPlayListActivity)
 class VideoPlayListActivity : BaseActivity<VideoPlayListActivityBinding,EmptyViewModel>() {
-    companion object {
-        var initPos = 0
-    }
+
+    @JvmField
+    @Param(name = "curPos")
+    var curPos:Int = 0
 
     override fun setThemeColor(isDarkMode: Boolean) {
 
@@ -38,6 +40,6 @@ class VideoPlayListActivity : BaseActivity<VideoPlayListActivityBinding,EmptyVie
     }
 
     override fun VideoPlayListActivityBinding.initView() {
-        supportFragmentManager.beginTransaction().add(R.id.video_framelayout,VideoPlayFragment()).commit()
+        supportFragmentManager.beginTransaction().add(R.id.video_framelayout,VideoPlayFragment(curPos)).commit()
     }
 }

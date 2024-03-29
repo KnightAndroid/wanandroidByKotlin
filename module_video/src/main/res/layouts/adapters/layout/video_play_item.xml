@@ -13,6 +13,12 @@
         android:layout_height="match_parent"
         android:scaleType="centerCrop"/>
 
+
+    <com.knight.kotlin.module_video.view.LikeView
+        android:id="@+id/video_likeview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
     <com.knight.kotlin.module_video.view.ControllerView
         android:id="@+id/controller"
         android:layout_width="match_parent"

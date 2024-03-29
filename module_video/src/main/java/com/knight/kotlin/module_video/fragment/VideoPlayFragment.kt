@@ -12,13 +12,14 @@ import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.knight.kotlin.library_base.vm.EmptyViewModel
 import com.knight.kotlin.module_video.DataConstant
 import com.knight.kotlin.module_video.R
-import com.knight.kotlin.module_video.activity.VideoPlayListActivity
 import com.knight.kotlin.module_video.adapter.VideoPlayAdapter
 import com.knight.kotlin.module_video.databinding.VideoPlayFragmentBinding
 import com.knight.kotlin.module_video.dialog.VideoCommentDialog
 import com.knight.kotlin.module_video.player.VideoPlayer
 import com.knight.kotlin.module_video.utils.OnVideoControllerListener
 import com.knight.kotlin.module_video.view.ControllerView
+import com.knight.kotlin.module_video.view.LikeView
+
 
 /**
  *
@@ -27,13 +28,17 @@ import com.knight.kotlin.module_video.view.ControllerView
  * Time:2024/3/5 14:41
  * Description:VideoPlayFragment
  */
-class VideoPlayFragment : BaseFragment<VideoPlayFragmentBinding,EmptyViewModel>(){
+class VideoPlayFragment(curPlayPos : Int) : BaseFragment<VideoPlayFragmentBinding,EmptyViewModel>(){
 
     private var adapter:VideoPlayAdapter?=null
     /** 当前播放视频位置  */
     private var curPlayPos = -1
     private lateinit var videoView: VideoPlayer
 
+
+    init {
+        this.curPlayPos = curPlayPos
+    }
     override fun setThemeColor(isDarkMode: Boolean) {
 
     }
@@ -54,6 +59,7 @@ class VideoPlayFragment : BaseFragment<VideoPlayFragmentBinding,EmptyViewModel>(
         initRecyclerView()
         initVideoPlayer()
         setViewPagerLayoutManager()
+
     }
 
 
@@ -72,10 +78,11 @@ class VideoPlayFragment : BaseFragment<VideoPlayFragmentBinding,EmptyViewModel>(
 
     private fun setViewPagerLayoutManager() {
         with(mBinding.videoRecyclerView) {
+            setCurrentItem(curPlayPos, false);
+            registerOnPageChangeCallback(pageChangeCallback)
             orientation = ViewPager2.ORIENTATION_VERTICAL
             offscreenPageLimit = 1
-            registerOnPageChangeCallback(pageChangeCallback)
-            (mBinding.videoRecyclerView.getChildAt(0) as RecyclerView).scrollToPosition(VideoPlayListActivity.initPos)
+          //  (mBinding.videoRecyclerView.getChildAt(0) as RecyclerView).scrollToPosition(VideoPlayListActivity.initPos)
         }
     }
 
@@ -91,30 +98,26 @@ class VideoPlayFragment : BaseFragment<VideoPlayFragmentBinding,EmptyViewModel>(
         }
         val itemView = adapter!!.getRootViewAt(position)
         val rootView = itemView!!.findViewById<ViewGroup>(R.id.rl_video_root)
-      //  val likeView: LikeView = rootView.findViewById(R.id.likeview)
+        val likeView: LikeView = rootView.findViewById(R.id.video_likeview)
         val controllerView: ControllerView = rootView.findViewById(R.id.controller)
         val ivPlay = rootView.findViewById<ImageView>(R.id.iv_play)
         val ivCover = rootView.findViewById<ImageView>(R.id.iv_cover)
 
-//        //播放暂停事件
-//        likeView.setOnPlayPauseListener(object: LikeView.OnPlayPauseListener {
-//            override fun onPlayOrPause() {
-//                if (videoView!!.isPlaying()) {
-//                    videoView?.pause()
-//                    ivPlay.visibility = View.VISIBLE
-//                } else {
-//                    videoView?.play()
-//                    ivPlay.visibility = View.GONE
-//                }
-//            }
-//
-//        })
-
+        //暂停事件
+        likeView.setOnPlayPauseListener(object : LikeView.OnPlayPauseListener{
+            override fun onPlayOrPause() {
+                if (videoView.isPlaying()) {
+                    videoView.pause()
+                    ivPlay.visibility = View.VISIBLE
+                } else {
+                    videoView.play()
+                    ivPlay.visibility = View.GONE
+                }
+            }
+        })
         //评论点赞事件
         clickEvent(controllerView)
-
         //切换播放视频的作者主页数据
-       // RxBus.getDefault().post(CurUserBean(DataCreate.datas[position]?.userBean!!))
         curPlayPos = position
 
         //切换播放器位置

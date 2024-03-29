@@ -18,6 +18,7 @@ import com.knight.kotlin.library_util.image.ImageLoader
 import com.knight.kotlin.module_video.databinding.VideoPlayItemBinding
 import com.knight.kotlin.module_video.entity.VideoPlayEntity
 import com.knight.kotlin.module_video.player.VideoPlayer
+import com.knight.kotlin.module_video.view.LikeView
 
 /**
  * Author:Knight
@@ -32,18 +33,19 @@ class VideoPlayAdapter(val context: Context, val recyclerView :RecyclerView) : B
     override fun onBindViewHolder(holder: VideoViewHolder, position: Int) {
         mList[position]?.let {
             holder.binding.controller.setVideoData(it)
-            ImageLoader.loadVideoFirstFrame(context,it.videoUrl,holder.binding.ivCover)
-//            holder?.binding?.likeview?.setOnLikeListener(object : OnLikeListener {
-//                override fun onLikeListener() {
-//                    if (!it.isLiked) {  //未点赞，会有点赞效果，否则无
-//                        holder?.binding?.controller!!.like()
-//                    }
-//                }
-//            })
-            holder.binding.ivPlay.alpha = 0.4f
+            ImageLoader.loadVideoFirstFrame(context, it.videoUrl, holder.binding.ivCover)
+            holder.binding.videoLikeview.setOnLikeListener(object : LikeView.OnLikeListener {
+                override fun onLikeListener() {
+                    if (!it.isLike) {  //未点赞，会有点赞效果，否则无
+                        holder.binding.controller.like()
+                    }
+                }
+            })
+            //利用预加item，提前加载缓存资源
+            mList[position].mediaSource = buildMediaSource(mList[position].videoUrl)
         }
-        //利用预加item，提前加载缓存资源
-        mList[position].mediaSource = buildMediaSource(mList[position].videoUrl)
+
+
     }
 
     /**

@@ -7,7 +7,7 @@ import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_base.util.ColorUtils
 import com.knight.kotlin.library_base.util.dp2px
-import com.knight.kotlin.library_util.startPage
+import com.knight.kotlin.library_util.startPageWithParams
 import com.knight.kotlin.library_widget.SpacesItemDecoration
 import com.knight.kotlin.library_widget.ktx.init
 import com.knight.kotlin.library_widget.ktx.setItemClickListener
@@ -108,7 +108,9 @@ class VideoMainActivity : BaseActivity<VideoMainActivityBinding,VideoVm>(), OnRe
     fun initListener() {
         mVideoMainAdapter.run {
             setItemClickListener { adapter, view, position ->
-                startPage(RouteActivity.Video.VideoPlayListActivity)
+                startPageWithParams(RouteActivity.Video.VideoPlayListActivity,
+                    "curPos" to position
+                )
             }
 
         }

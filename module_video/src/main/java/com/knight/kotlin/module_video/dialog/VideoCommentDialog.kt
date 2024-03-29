@@ -58,10 +58,10 @@ class VideoCommentDialog(val jokeId:Long,val videoView: VideoPlayer) :  BaseBott
                 val height: Float = activity?.screenHeight?.toFloat() ?: 0f
                 if (state == BottomSheetBehavior.STATE_EXPANDED) {
                     val x = width / 2f
-                    //我在这里默认给了dialog的高度是1280/(3/2)，也就是用1280-1280/(3/2)就是视频的最小高度
+                    //我在这里默认给了dialog的高度是500dp，也就是用屏幕高度-dialog高度就是视频的最小高度
                     //得到高度之后还要继续计算高度占比来进行等比例缩放：
-                    //Dialog 高度占比 = 1280/(3/2)/1280≈0.67
-                    // VideoView 高度占比 = 1280-(1280/(3/2))/1280≈0.33
+                    //Dialog高度占比 = Dialog/屏幕高度
+                    //VideoView 高度占比 = (1280-Dialog高度)/1280≈0.33
                     // 所以0.33这个系数就是setScaleX()和setScaleY()的缩放比
                     binding.videoLlParent.post {
                         val scale: Float = height - binding.videoLlParent.height

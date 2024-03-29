@@ -16,8 +16,6 @@ class VideoMainAdapter(data:MutableList<VideoPlayEntity>) : BaseQuickAdapter<Vid
     override fun convert(holder: BaseViewHolder, item: VideoPlayEntity) {
         item.run {
             val videoImage :ImageView = holder.getView(com.knight.kotlin.module_video.R.id.iv_video)
-           // VideoHelpUtils.getVideoFirstFrame(videoUrl,videoImage.width,videoImage.height, MediaStore.Images.Thumbnails.MICRO_KIND)
-           // ImageLoader.loadVideoFirstFrameCorner(context,item.videoUrl,videoImage,10)
             ImageLoader.loadRoundedCornerPhoto(context,thumbUrl,videoImage,10)
         }
 
