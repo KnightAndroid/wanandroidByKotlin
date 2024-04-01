@@ -2,6 +2,7 @@ package com.knight.kotlin.module_video.fragment
 
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
 import android.widget.ImageView
 import android.widget.RelativeLayout.LayoutParams
 import androidx.recyclerview.widget.RecyclerView
@@ -78,25 +79,27 @@ class VideoPlayFragment(curPlayPos : Int) : BaseFragment<VideoPlayFragmentBindin
 
     private fun setViewPagerLayoutManager() {
         with(mBinding.videoRecyclerView) {
-            setCurrentItem(curPlayPos, false);
-            registerOnPageChangeCallback(pageChangeCallback)
+
             orientation = ViewPager2.ORIENTATION_VERTICAL
             offscreenPageLimit = 1
-          //  (mBinding.videoRecyclerView.getChildAt(0) as RecyclerView).scrollToPosition(VideoPlayListActivity.initPos)
+            registerOnPageChangeCallback(pageChangeCallback)
+            setCurrentItem(curPlayPos, false)
         }
     }
 
     private val pageChangeCallback = object: ViewPager2.OnPageChangeCallback() {
         override fun onPageSelected(position: Int) {
-            playCurVideo(position)
+            setBindCurView(position)
         }
     }
 
-    private fun playCurVideo(position: Int) {
-        if (position == curPlayPos) {
-            return
-        }
-        val itemView = adapter!!.getRootViewAt(position)
+    /**
+     * 播放当前页面视频
+     *
+     * @param itemView
+     * @param position
+     */
+    private fun playCurVideo(itemView :View,position: Int) {
         val rootView = itemView!!.findViewById<ViewGroup>(R.id.rl_video_root)
         val likeView: LikeView = rootView.findViewById(R.id.video_likeview)
         val controllerView: ControllerView = rootView.findViewById(R.id.controller)
@@ -124,6 +127,36 @@ class VideoPlayFragment(curPlayPos : Int) : BaseFragment<VideoPlayFragmentBindin
         dettachParentView(rootView)
         autoPlayVideo(curPlayPos, ivCover)
     }
+
+    /**
+     *
+     *
+     * 绑定当前页面事件
+     * @param position
+     */
+    private fun setBindCurView(position : Int) {
+        val itemView = adapter!!.getRootViewAt(position)
+        itemView?.let {
+            playCurVideo(it, position)
+        } ?: run {
+            (mBinding.videoRecyclerView.getChildAt(0) as RecyclerView).viewTreeObserver.addOnGlobalLayoutListener(
+                object : ViewTreeObserver.OnGlobalLayoutListener {
+                    override fun onGlobalLayout() {
+                        val itemView = adapter?.getRootViewAt(position)
+                        itemView?.let {
+                            playCurVideo(it, position)
+                            (mBinding.videoRecyclerView.getChildAt(0) as RecyclerView).getViewTreeObserver()
+                                .removeOnGlobalLayoutListener(this)
+                        }
+
+                    }
+                })
+        }
+    }
+
+
+
+
 
     /**
      * 移除videoview父view

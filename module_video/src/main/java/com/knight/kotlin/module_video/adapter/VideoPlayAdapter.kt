@@ -80,6 +80,7 @@ class VideoPlayAdapter(val context: Context, val recyclerView :RecyclerView) : B
             viewHolder.itemView
         } else {
             null
+
         }
     }
 

@@ -125,7 +125,7 @@ abstract class BaseActivity<VB : ViewBinding,VM : BaseViewModel> : AppCompatActi
         setTheme(getActivityTheme())
         setContentView(mBinding.root)
         mViewModel = createViewModel()
-        StatusBarUtils.transparentStatusBar(this)
+        setStatusBar()
         //处理保存的状态
         mStatusHelper?.onRestoreInstanceStatus(savedInstanceState)
         //ARouter 依赖注入
@@ -150,6 +150,12 @@ abstract class BaseActivity<VB : ViewBinding,VM : BaseViewModel> : AppCompatActi
         initObserver()
         initRequestData()
 
+    }
+
+
+
+    open fun setStatusBar() {
+        StatusBarUtils.transparentStatusBar(this)
     }
 
 

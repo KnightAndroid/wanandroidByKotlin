@@ -2,6 +2,7 @@ package com.knight.kotlin.module_video.activity
 
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.route.RouteActivity
+import com.knight.kotlin.library_base.util.StatusBarUtils
 import com.knight.kotlin.library_base.vm.EmptyViewModel
 import com.knight.kotlin.module_video.R
 import com.knight.kotlin.module_video.databinding.VideoPlayListActivityBinding
@@ -25,6 +26,10 @@ class VideoPlayListActivity : BaseActivity<VideoPlayListActivityBinding,EmptyVie
 
     override fun setThemeColor(isDarkMode: Boolean) {
 
+    }
+
+    override fun setStatusBar() {
+        StatusBarUtils.transparentStatusBarWithFont(this,false)
     }
 
     override fun initObserver() {
