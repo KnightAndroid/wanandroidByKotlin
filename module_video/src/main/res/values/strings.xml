@@ -8,4 +8,7 @@
     <!-- 更多 -->
     <string name="video_icon_more">&#xe61b;</string>
 
+    <!--视频播放页面标题-->
+    <string name="video_play_toolbar_title">推荐</string>
+
 </resources>

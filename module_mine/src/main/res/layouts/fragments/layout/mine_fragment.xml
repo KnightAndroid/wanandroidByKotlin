@@ -115,7 +115,7 @@
                 android:paddingRight="@dimen/mine_ll_point_padding_right">
 
 
-                <!-- 推荐视频-->
+                <!-- 段子-->
                 <RelativeLayout
                     android:id="@+id/mine_rl_video"
                     android:layout_width="match_parent"

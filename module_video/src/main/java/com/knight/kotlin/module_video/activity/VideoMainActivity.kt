@@ -1,5 +1,7 @@
 package com.knight.kotlin.module_video.activity
+import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
+import com.flyjingfish.android_aop_core.annotations.SingleClick
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.ktx.observeLiveData
 import com.knight.kotlin.library_base.ktx.setOnClick
@@ -65,6 +67,7 @@ class VideoMainActivity : BaseActivity<VideoMainActivityBinding,VideoVm>(), OnRe
         ),mVideoMainAdapter,true)
         includeVideo.baseBodyRv.addItemDecoration(SpacesItemDecoration(10.dp2px()))
         videoFloatBtn.backgroundTintList = ColorUtils.createColorStateList(CacheUtils.getThemeColor(), CacheUtils.getThemeColor())
+        setOnClickListener(videoFloatBtn)
         initListener()
     }
 
@@ -126,6 +129,16 @@ class VideoMainActivity : BaseActivity<VideoMainActivityBinding,VideoVm>(), OnRe
     override fun onLoadMore(refreshLayout: RefreshLayout) {
         mViewModel.getDouyinVideos()
     }
+
+    @SingleClick
+    override fun onClick(v: View) {
+        when (v) {
+            mBinding.videoFloatBtn -> {
+                mBinding.includeVideo.baseBodyRv.smoothScrollToPosition(0)
+            }
+        }
+    }
+
 
 
     override fun onDestroy() {

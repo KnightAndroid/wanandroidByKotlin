@@ -1,6 +1,8 @@
 package com.knight.kotlin.module_video.activity
 
+import android.graphics.Color
 import com.knight.kotlin.library_base.activity.BaseActivity
+import com.knight.kotlin.library_base.ktx.setOnClick
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.util.StatusBarUtils
 import com.knight.kotlin.library_base.vm.EmptyViewModel
@@ -25,6 +27,10 @@ class VideoPlayListActivity : BaseActivity<VideoPlayListActivityBinding,EmptyVie
     var curPos:Int = 0
 
     override fun setThemeColor(isDarkMode: Boolean) {
+         mBinding.includeVideoToolbar.baseIvBack.setBackgroundResource(com.knight.kotlin.library_base.R.drawable.base_iv_white_left_arrow)
+         mBinding.includeVideoToolbar.baseTvTitle.setText(R.string.video_play_toolbar_title)
+         mBinding.includeVideoToolbar.baseTvTitle.setTextColor(Color.WHITE)
+         mBinding.includeVideoToolbar.baseCompatToolbar.setBackgroundResource(android.R.color.transparent)
 
     }
 
@@ -46,5 +52,8 @@ class VideoPlayListActivity : BaseActivity<VideoPlayListActivityBinding,EmptyVie
 
     override fun VideoPlayListActivityBinding.initView() {
         supportFragmentManager.beginTransaction().add(R.id.video_framelayout,VideoPlayFragment(curPos)).commit()
+        includeVideoToolbar.baseIvBack.setOnClick {
+            finish()
+        }
     }
 }
