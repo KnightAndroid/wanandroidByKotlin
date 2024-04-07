@@ -19,7 +19,7 @@ class AppContentProvider : ContentProvider() {
         var context: Context = context ?: return false
         context = context.getApplicationContext()
         return if (context is Application) {
-            ApplicationProvider.init(context as Application)
+            ApplicationProvider.init(context)
             true
         } else {
             false

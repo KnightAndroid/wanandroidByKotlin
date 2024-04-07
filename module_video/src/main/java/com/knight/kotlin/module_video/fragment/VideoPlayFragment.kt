@@ -18,6 +18,7 @@ import com.knight.kotlin.module_video.databinding.VideoPlayFragmentBinding
 import com.knight.kotlin.module_video.dialog.VideoCommentDialog
 import com.knight.kotlin.module_video.player.VideoPlayer
 import com.knight.kotlin.module_video.utils.OnVideoControllerListener
+import com.knight.kotlin.module_video.utils.precache.PreloadManager
 import com.knight.kotlin.module_video.view.ControllerView
 import com.knight.kotlin.module_video.view.LikeView
 
@@ -174,8 +175,10 @@ class VideoPlayFragment(curPlayPos : Int) : BaseFragment<VideoPlayFragmentBindin
      * 自动播放视频
      */
     private fun autoPlayVideo(position: Int, ivCover: ImageView) {
-        videoView.playVideo(adapter!!.getDatas()[position].mediaSource!!)
-
+      //  videoView.playVideo(adapter!!.getDatas()[position].mediaSource!!)
+        //使用预加载的缓存路径
+        val proxyUrl: String? = PreloadManager.getInstance(requireContext()).getPlayUrl(adapter!!.getDatas()[position].videoUrl)
+        proxyUrl?.let { videoView.playVideo(it) }
         videoView.getplayer()?.addListener(object: Player.Listener {
             override fun onPlaybackStateChanged(state: Int) {
                 // 播放状态发生变化时的回调

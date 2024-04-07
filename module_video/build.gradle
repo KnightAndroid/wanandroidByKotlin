@@ -15,4 +15,5 @@ dependencies {
     implementation Dependencies.Android.ExoPlayerRtmp
     implementation Dependencies.Android.ExoPlayerUi
     implementation Dependencies.OtherUtils.Lottle
+    implementation Dependencies.OtherUtils.slf4j
 }

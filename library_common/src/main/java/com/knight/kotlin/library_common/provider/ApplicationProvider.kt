@@ -16,11 +16,10 @@ class ApplicationProvider constructor(app: Application?) {
     }
 
     companion object {
-        private var instance: ApplicationProvider? = null
+        @Volatile
+        private var instance: ApplicationProvider?=null
         fun init(app: Application) {
-            if (instance == null) {
-                instance = ApplicationProvider(app)
-            }
+            instance = ApplicationProvider(app)
         }
 
         /**
@@ -28,16 +27,11 @@ class ApplicationProvider constructor(app: Application?) {
          * 获取本App的application
          * @return
          */
-        fun getInstance(): ApplicationProvider? {
-            if (instance == null) {
-                synchronized(ApplicationProvider::class.java) {
-                    if (null == instance) {
-                        instance = ApplicationProvider(AppBridge.getApplicationByReflect())
-                    }
-                }
+        fun getInstance() =
+            instance ?: synchronized(this) {
+                instance ?: ApplicationProvider(AppBridge.getApplicationByReflect()).also { instance = it }
             }
-            return instance
-        }
+
     }
 
 

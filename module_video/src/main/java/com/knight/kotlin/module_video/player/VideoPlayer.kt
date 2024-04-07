@@ -11,16 +11,14 @@ import com.google.android.exoplayer2.DefaultLoadControl
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.Player
-import com.google.android.exoplayer2.database.StandaloneDatabaseProvider
 import com.google.android.exoplayer2.source.BaseMediaSource
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
 import com.google.android.exoplayer2.trackselection.TrackSelector
 import com.google.android.exoplayer2.upstream.DefaultDataSource
 import com.google.android.exoplayer2.upstream.cache.CacheDataSource
-import com.google.android.exoplayer2.upstream.cache.LeastRecentlyUsedCacheEvictor
-import com.google.android.exoplayer2.upstream.cache.SimpleCache
 import com.knight.kotlin.module_video.databinding.VideoPlayviewBinding
+import com.knight.kotlin.module_video.utils.VideoCache
 
 /**
  * Author:Knight
@@ -95,10 +93,10 @@ class VideoPlayer @JvmOverloads constructor(context: Context, attrs : AttributeS
 
     }
 
-    val cache : SimpleCache by lazy {
-        val cacheFile = context.cacheDir.resolve("video_cache_file")
-        SimpleCache(cacheFile,LeastRecentlyUsedCacheEvictor(MAX_CACHE_BYTE),StandaloneDatabaseProvider(context))
-    }
+//    val cache : SimpleCache by lazy {
+//        val cacheFile = context.cacheDir.resolve("video_cache_file")
+//        SimpleCache(cacheFile,LeastRecentlyUsedCacheEvictor(MAX_CACHE_BYTE),StandaloneDatabaseProvider(context))
+//    }
 
     /**
      *
@@ -112,7 +110,7 @@ class VideoPlayer @JvmOverloads constructor(context: Context, attrs : AttributeS
         }
 
         val mediaItem = MediaItem.fromUri(url)
-        val dataSourceFactory = CacheDataSource.Factory().setCache(cache).setUpstreamDataSourceFactory(DefaultDataSource.Factory(context))
+        val dataSourceFactory = CacheDataSource.Factory().setCache(VideoCache.getInstance(context)).setUpstreamDataSourceFactory(DefaultDataSource.Factory(context))
         val mediaSource = ProgressiveMediaSource.Factory(dataSourceFactory).createMediaSource(mediaItem)
         mPlayer.setMediaSource(mediaSource)
         mPlayer.prepare()

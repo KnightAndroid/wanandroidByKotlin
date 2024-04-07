@@ -95,6 +95,7 @@ object Dependencies {
 
        const val ExoPlayerVersion = "2.17.0"                //视频播放器版本
        const val lottileVersion =  "2.8.0"                  //lottie 动画版本
+       const val slf4jVersion = "1.7.21"                    //slf4j版本
 
     }
     /**
@@ -263,6 +264,7 @@ object Dependencies {
         //bugly https://bugly.qq.com/docs/release-notes/release-android-bugly
         const val Bugly = "com.tencent.bugly:crashreport:${Version.BuglyVersion}"
         const val Lottle = "com.airbnb.android:lottie:${Version.lottileVersion}"
+        const val slf4j = "org.slf4j:slf4j-android:${Version.slf4jVersion}"
     }
 
 

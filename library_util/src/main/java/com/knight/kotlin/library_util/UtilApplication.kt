@@ -92,7 +92,6 @@ class UtilApplication:ApplicationLifecycle {
      */
     private fun initToast():String {
         //初始化Toast
-        //初始化Toast
         setInterceptor(ToastInterceptor())
         init(BaseApp.application)
         return  "Toast -->> init Toast"
