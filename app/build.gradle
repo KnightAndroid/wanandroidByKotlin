@@ -158,7 +158,7 @@ dependencies {
     implementation project(path:":module_course")
     implementation project(path:":module_message")
     implementation project(path: ':module_video')
-    implementation Dependencies.JetPack.HiltCore
-    kapt Dependencies.JetPack.HiltApt
-    kapt Dependencies.JetPack.HiltAndroidx
+    implementation Dependencies.JetPack.HILT_CORE
+    kapt Dependencies.JetPack.HILT_APT
+    kapt Dependencies.JetPack.HILT_ANDROIDX
 }

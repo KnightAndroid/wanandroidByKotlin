@@ -11,8 +11,8 @@ object ProjectPluginDencies {
     const val KotlinPlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Dependencies.Version.KOTLIN_GRADLE_PLUGIN_VERSION}"
     const val GoRouterRegister = "com.github.wyjsonGo.GoRouter:GoRouter-Gradle-Plugin:${Dependencies.Version.GO_ROUTER}"
     const val HiltPlugin = "com.google.dagger:hilt-android-gradle-plugin:${Dependencies.Version.HILT}"
-    const val AndroidAop = "io.github.FlyJingFish.AndroidAop:android-aop-plugin:${Dependencies.Version.AndroidAop}"
-    const val AndroidKsp = "com.google.devtools.ksp:${Dependencies.Version.AndroidKspVersion}"
+    const val AndroidAop = "io.github.FlyJingFish.AndroidAop:android-aop-plugin:${Dependencies.Version.ANDROID_AOP}"
+    const val AndroidKsp = "com.google.devtools.ksp:${Dependencies.Version.ANDROID_KSP_VERSION}"
 }
 
 

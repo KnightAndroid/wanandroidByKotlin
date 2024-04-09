@@ -80,7 +80,7 @@ class ControllerView @JvmOverloads constructor(context: Context, attrs: Attribut
                 listener?.onLikeClick()
                 like()
             }
-            R.id.ivComment -> listener?.onCommentClick(videoData.jokeId ?: 0L)
+            R.id.ivComment -> listener?.onCommentClick(videoData)
             R.id.ivShare -> listener?.onShareClick()
             R.id.ivFocus -> if (!videoData.isAttention) {
                 videoData.isLike = true

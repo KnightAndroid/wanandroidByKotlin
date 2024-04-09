@@ -8,12 +8,12 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation Dependencies.Android.ExoPlayer
-    implementation Dependencies.Android.ExoPlayerCore
-    implementation Dependencies.Android.ExoPlayerDash
-    implementation Dependencies.Android.ExoPlayerHls
-    implementation Dependencies.Android.ExoPlayerRtmp
-    implementation Dependencies.Android.ExoPlayerUi
-    implementation Dependencies.OtherUtils.Lottle
-    implementation Dependencies.OtherUtils.slf4j
+    implementation Dependencies.Android.EXOPLAYER
+    implementation Dependencies.Android.EXOPLAYER_CORE
+    implementation Dependencies.Android.EXOPLAYER_DASH
+    implementation Dependencies.Android.EXOPLAYER_HLS
+    implementation Dependencies.Android.EXOPLAYER_RTMP
+    implementation Dependencies.Android.EXOPLAYER_UI
+    implementation Dependencies.OtherUtils.LOTTIE
+    implementation Dependencies.OtherUtils.SLF4J
 }

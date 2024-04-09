@@ -61,8 +61,8 @@ kapt {
 }
 
 dependencies {
-    testImplementation Dependencies.Android.Junit
-    androidTestImplementation Dependencies.Androidx.TestExtJunit
-    androidTestImplementation Dependencies.Androidx.TestEspresso
+    testImplementation Dependencies.Android.JUNIT
+    androidTestImplementation Dependencies.Androidx.TEST_EXT_JUNIT
+    androidTestImplementation Dependencies.Androidx.TEST_ESPRESSO
 }
 

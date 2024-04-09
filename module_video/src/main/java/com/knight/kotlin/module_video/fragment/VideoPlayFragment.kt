@@ -16,6 +16,7 @@ import com.knight.kotlin.module_video.R
 import com.knight.kotlin.module_video.adapter.VideoPlayAdapter
 import com.knight.kotlin.module_video.databinding.VideoPlayFragmentBinding
 import com.knight.kotlin.module_video.dialog.VideoCommentDialog
+import com.knight.kotlin.module_video.entity.VideoPlayEntity
 import com.knight.kotlin.module_video.player.VideoPlayer
 import com.knight.kotlin.module_video.utils.OnVideoControllerListener
 import com.knight.kotlin.module_video.utils.precache.PreloadManager
@@ -214,8 +215,8 @@ class VideoPlayFragment(curPlayPos : Int) : BaseFragment<VideoPlayFragmentBindin
             }
 
             override fun onLikeClick() {}
-            override fun onCommentClick(jokeId:Long) {
-                val commentDialog = VideoCommentDialog(jokeId,videoView)
+            override fun onCommentClick(videoData: VideoPlayEntity) {
+                val commentDialog = VideoCommentDialog(videoData,videoView)
                 commentDialog.show(childFragmentManager, "")
             }
 

@@ -15,44 +15,44 @@ android {
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    api Dependencies.Androidx.CoreKts
-    api Dependencies.Androidx.AppCompat
-    api Dependencies.Androidx.ConstraintLayout
-    api Dependencies.Androidx.ActivityKtx
-    api Dependencies.Androidx.FragmentKtx
-    api Dependencies.Android.Material
-    api Dependencies.Androidx.MultiDex
+    api Dependencies.Androidx.CORE_KTS
+    api Dependencies.Androidx.APP_COMPAT
+    api Dependencies.Androidx.CONSTRAINTLAYOUT
+    api Dependencies.Androidx.ACTIVITY_KTX
+    api Dependencies.Androidx.FRAGMENT_KTX
+    api Dependencies.Android.MATERIAL
+    api Dependencies.Androidx.MULTIDEX
 
-    api Dependencies.Kotlin.Kotlin
-    api Dependencies.Kotlin.CoroutinesCore
-    api Dependencies.Kotlin.CoroutinesAndroid
+    api Dependencies.Kotlin.KOTLIN
+    api Dependencies.Kotlin.COROUTINES_CORE
+    api Dependencies.Kotlin.COROUTINES_ANDROID
 
-    api Dependencies.JetPack.ViewModel
-    api Dependencies.JetPack.ViewModelSavedState
-    api Dependencies.JetPack.LiveData
-    api Dependencies.JetPack.Lifecycle
-    api Dependencies.JetPack.HiltCore
-    kapt Dependencies.JetPack.HiltApt
-    kapt Dependencies.JetPack.HiltAndroidx
-    kapt Dependencies.JetPack.LifecycleCompilerAPT
-    api Dependencies.GitHub.GoRouter
-    api Dependencies.GitHub.EventBus
-    kapt Dependencies.GitHub.EventBusAPT
-    kapt Dependencies.GitHub.GoRouteCompiler
-    api Dependencies.GitHub.AutoSize
+    api Dependencies.JetPack.VIEWMODEL
+    api Dependencies.JetPack.VIEWMODEL_SAVEDSTATE
+    api Dependencies.JetPack.LIVEDATA
+    api Dependencies.JetPack.LIFECYCLE
+    api Dependencies.JetPack.HILT_CORE
+    kapt Dependencies.JetPack.HILT_APT
+    kapt Dependencies.JetPack.HILT_ANDROIDX
+    kapt Dependencies.JetPack.LIFECYCLE_COMPILER_APT
+    api Dependencies.GitHub.GO_ROUTER
+    api Dependencies.GitHub.EVENTBUS
+    kapt Dependencies.GitHub.EVENTBUS_APT
+    kapt Dependencies.GitHub.GO_ROUTER_COMPILER
+    api Dependencies.GitHub.AUTO_SIZE
 
-    api Dependencies.GitHub.AutoService
-    kapt Dependencies.GitHub.AutoServiceAnnotations
+    api Dependencies.GitHub.AUTO_SERVICE
+    kapt Dependencies.GitHub.AUTO_SERVICE_ANNOTATIONS
 
-    debugApi Dependencies.GitHub.LeakCanary
+    debugApi Dependencies.GitHub.LEAK_CANARY
 
     implementation Dependencies.GitHub.MMKV
-    implementation Dependencies.GitHub.Gson
-    api Dependencies.GitHub.LoadSir
-    api Dependencies.OtherUtils.Bugly
+    implementation Dependencies.GitHub.GSON
+    api Dependencies.GitHub.LOAD_SIR
+    api Dependencies.OtherUtils.BUGLY
     //必须项
-    api Dependencies.GitHub.AndroidAop
-    api Dependencies.GitHub.AndroidAopAnnotation
+    api Dependencies.GitHub.ANDROID_AOP
+    api Dependencies.GitHub.ANDROID_AOP_ANNOTATION
 
 
 }

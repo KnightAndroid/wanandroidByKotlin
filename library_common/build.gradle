@@ -12,8 +12,8 @@ android {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation project(path: ':library_base')
-    implementation Dependencies.JetPack.HiltCore
-    kapt Dependencies.JetPack.HiltApt
-    kapt Dependencies.JetPack.HiltAndroidx
+    implementation Dependencies.JetPack.HILT_CORE
+    kapt Dependencies.JetPack.HILT_APT
+    kapt Dependencies.JetPack.HILT_ANDROIDX
 
 }

@@ -21,7 +21,7 @@ android {
         targetSdkVersion ProjectBuildDencies.targetSdkVersion
         versionCode ProjectBuildDencies.versionCode
         versionName ProjectBuildDencies.versionName
-        testInstrumentationRunner Dependencies.Androidx.AndroidJUnitRunner
+        testInstrumentationRunner Dependencies.Androidx.ANDROID_JUNIT_RUNNER
 
         ndk {
             // 设置支持的SO库架构
@@ -116,17 +116,17 @@ dependencies {
     api project(path: ':library_permiss')
   //  api project(path: ':library_crypt')
     api project(path: ':module_aar:aar')
-    testImplementation Dependencies.Android.Junit
-    androidTestImplementation Dependencies.Androidx.TestExtJunit
-    androidTestImplementation Dependencies.Androidx.TestEspresso
-    implementation Dependencies.JetPack.HiltCore
+    testImplementation Dependencies.Android.JUNIT
+    androidTestImplementation Dependencies.Androidx.TEST_EXT_JUNIT
+    androidTestImplementation Dependencies.Androidx.TEST_ESPRESSO
+    implementation Dependencies.JetPack.HILT_CORE
 
-    kapt Dependencies.GitHub.GoRouteCompiler
-    kapt Dependencies.GitHub.EventBusAPT
-    kapt Dependencies.GitHub.AutoServiceAnnotations
-    kapt Dependencies.JetPack.HiltApt
-    kapt Dependencies.JetPack.HiltAndroidx
-    kapt Dependencies.JetPack.LifecycleCompilerAPT
+    kapt Dependencies.GitHub.GO_ROUTER_COMPILER
+    kapt Dependencies.GitHub.EVENTBUS_APT
+    kapt Dependencies.GitHub.AUTO_SERVICE_ANNOTATIONS
+    kapt Dependencies.JetPack.HILT_APT
+    kapt Dependencies.JetPack.HILT_ANDROIDX
+    kapt Dependencies.JetPack.LIFECYCLE_COMPILER_APT
 
 
 

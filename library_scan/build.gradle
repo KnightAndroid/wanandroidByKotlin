@@ -14,14 +14,14 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
 //    implementation project(path: ':library_common')
     implementation project(path: ':library_base')
-    implementation Dependencies.JetPack.HiltCore
-    kapt Dependencies.JetPack.HiltApt
-    kapt Dependencies.JetPack.HiltAndroidx
-    kapt Dependencies.GitHub.AutoServiceAnnotations
+    implementation Dependencies.JetPack.HILT_CORE
+    kapt Dependencies.JetPack.HILT_APT
+    kapt Dependencies.JetPack.HILT_ANDROIDX
+    kapt Dependencies.GitHub.AUTO_SERVICE_ANNOTATIONS
 
-    implementation Dependencies.JetPack.CameraCore
-    implementation Dependencies.JetPack.CameraCamera2
-    implementation Dependencies.JetPack.CameraLifecycle
-    implementation Dependencies.JetPack.CameraView
-    implementation Dependencies.JetPack.Zxing
+    implementation Dependencies.JetPack.CAMERA_CORE
+    implementation Dependencies.JetPack.CAMERA2
+    implementation Dependencies.JetPack.CAMERA_LIFECYCLE
+    implementation Dependencies.JetPack.CAMERA_VIEW
+    implementation Dependencies.JetPack.ZXNG
 }

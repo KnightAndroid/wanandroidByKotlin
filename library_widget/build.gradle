@@ -11,22 +11,22 @@ android {
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation Dependencies.JetPack.HiltCore
-    kapt Dependencies.JetPack.HiltApt
-    kapt Dependencies.JetPack.HiltAndroidx
+    implementation Dependencies.JetPack.HILT_CORE
+    kapt Dependencies.JetPack.HILT_APT
+    kapt Dependencies.JetPack.HILT_ANDROIDX
 
     implementation project(path: ':library_util')
     implementation project(path: ':library_base')
     implementation project(path: ':library_common')
-    api Dependencies.GitHub.SwipeRecyclerView
-    api Dependencies.GitHub.BaseAdapterHelper
-    api Dependencies.GitHub.SmartKernel
-    api Dependencies.GitHub.SmartHeader
-    api Dependencies.GitHub.SmartFooter
-    api Dependencies.GitHub.SmartHeaderTwoLevel
-    api Dependencies.GitHub.MagicIndicator
-    api Dependencies.Android.FlexLayout
-    implementation Dependencies.GitHub.ShimmerLayout
+    api Dependencies.GitHub.SWIPE_RECYCLERVIEW
+    api Dependencies.GitHub.BASE_ADAPTER_HELPER
+    api Dependencies.GitHub.SMART_KERNEL
+    api Dependencies.GitHub.SMART_HEADER
+    api Dependencies.GitHub.SMART_FOOTER
+    api Dependencies.GitHub.SMART_HEADER_TWO_LEVEL
+    api Dependencies.GitHub.MAGIC_INDICATOR
+    api Dependencies.Android.FLEXLAYOUT
+    implementation Dependencies.GitHub.SHIMMER_LAYOUT
 
 
 }

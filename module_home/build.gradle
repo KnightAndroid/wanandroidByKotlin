@@ -11,5 +11,5 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(path: ':library_scan')
     implementation project(path: ':library_biometric')
-    implementation Dependencies.GitHub.Banner
+    implementation Dependencies.GitHub.BANNER
 }

@@ -8,7 +8,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation Dependencies.GitHub.AgentWeb
-    implementation Dependencies.GitHub.SketchPhoto
+    implementation Dependencies.GitHub.AGENT_WEB
+    implementation Dependencies.GitHub.SKETCH_PHOTO
 }
 

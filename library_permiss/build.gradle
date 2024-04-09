@@ -5,12 +5,12 @@ android {
     namespace = "com.knight.kotlin.library_permiss"
 }
 dependencies {
-    implementation Dependencies.JetPack.HiltCore
+    implementation Dependencies.JetPack.HILT_CORE
     //依赖Util
     implementation project(path: ':library_util')
     implementation project(path: ':library_base')
-    kapt Dependencies.JetPack.HiltApt
-    kapt Dependencies.JetPack.HiltAndroidx
-    kapt Dependencies.GitHub.AutoServiceAnnotations
-    kapt Dependencies.GitHub.GoRouteCompiler
+    kapt Dependencies.JetPack.HILT_APT
+    kapt Dependencies.JetPack.HILT_ANDROIDX
+    kapt Dependencies.GitHub.AUTO_SERVICE_ANNOTATIONS
+    kapt Dependencies.GitHub.GO_ROUTER_COMPILER
 }

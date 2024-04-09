@@ -16,6 +16,7 @@ import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.library_widget.BaseBottomSheetDialog
 import com.knight.kotlin.module_video.adapter.VideoCommentAdapter
 import com.knight.kotlin.module_video.databinding.VideoDialogCommentBinding
+import com.knight.kotlin.module_video.entity.VideoPlayEntity
 import com.knight.kotlin.module_video.player.VideoPlayer
 import com.knight.kotlin.module_video.vm.VideoVm
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,7 +28,7 @@ import dagger.hilt.android.AndroidEntryPoint
  * Description:VideoCommentDialog
  */
 @AndroidEntryPoint
-class VideoCommentDialog(val jokeId:Long,val videoView: VideoPlayer) :  BaseBottomSheetDialog() {
+class VideoCommentDialog(val videoData: VideoPlayEntity, val videoView: VideoPlayer) :  BaseBottomSheetDialog() {
 
     private val videoVm by lazy{ ViewModelProvider(this)[VideoVm::class.java] }
 
@@ -56,6 +57,7 @@ class VideoCommentDialog(val jokeId:Long,val videoView: VideoPlayer) :  BaseBott
             override fun changedState(bottomSheet: View?, state: Int) {
                 val width: Float = activity?.screenWidth?.toFloat() ?: 0f
                 val height: Float = activity?.screenHeight?.toFloat() ?: 0f
+                val videoSize :List<String> = videoData.videoSize.split(",")
                 if (state == BottomSheetBehavior.STATE_EXPANDED) {
                     val x = width / 2f
                     //我在这里默认给了dialog的高度是500dp，也就是用屏幕高度-dialog高度就是视频的最小高度
@@ -89,7 +91,7 @@ class VideoCommentDialog(val jokeId:Long,val videoView: VideoPlayer) :  BaseBott
     }
 
     private fun loadData() {
-        videoVm.getVideoCommentList(jokeId,1,successCallBack ={
+        videoVm.getVideoCommentList(videoData.jokeId,1,successCallBack ={
             binding.tvTitle.setText(it.comments.size.toString().plus("条评论"))
             mVideoCommentAdapter.setNewInstance(it.comments)
 
