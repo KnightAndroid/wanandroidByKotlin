@@ -12,15 +12,15 @@ apply plugin: 'android.aop'//最好放在最后一行
 
 android {
     namespace = "com.knight.kotlin.wanandroid"
-    compileSdk ProjectBuildDencies.compileSdkVersion
-    buildToolsVersion = ProjectBuildDencies.buildToolsVersion
+    compileSdk ProjectBuildDencies.COMPILE_SDK_VERSION
+    buildToolsVersion = ProjectBuildDencies.BUILD_TOOLS_VERSION
 
     defaultConfig {
-        applicationId ProjectBuildDencies.applicationId
-        minSdkVersion ProjectBuildDencies.minSdkVersion
-        targetSdkVersion ProjectBuildDencies.targetSdkVersion
-        versionCode ProjectBuildDencies.versionCode
-        versionName ProjectBuildDencies.versionName
+        applicationId ProjectBuildDencies.APPLICATION_ID
+        minSdkVersion ProjectBuildDencies.MIN_SDK_VERSION
+        targetSdkVersion ProjectBuildDencies.TARGET_SDK_VERSION
+        versionCode ProjectBuildDencies.VERSION_CODE
+        versionName ProjectBuildDencies.VERSION_NAME
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -92,9 +92,9 @@ android {
     android.applicationVariants.all { variant ->
         variant.outputs.all { output ->
             if (outputFileName != null && outputFileName.endsWith('.apk')) {
-                outputFileName = "${ProjectBuildDencies.applicationId}" +
-                        "_${ProjectBuildDencies.versionCode}" +
-                        "(${ProjectBuildDencies.versionName})" +
+                outputFileName = "${ProjectBuildDencies.APPLICATION_ID}" +
+                        "_${ProjectBuildDencies.VERSION_CODE}" +
+                        "(${ProjectBuildDencies.VERSION_NAME})" +
                         "_${variant.buildType.name}" +
                         ".apk"
             }

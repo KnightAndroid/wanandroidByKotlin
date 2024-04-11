@@ -12,11 +12,11 @@ buildscript {
         gradlePluginPortal()
     }
     dependencies {
-        classpath(com.knight.wanandroid.buildsrc.ProjectPluginDencies.AndroidToolsPlugin)
-        classpath(com.knight.wanandroid.buildsrc.ProjectPluginDencies.KotlinPlugin)
-        classpath(com.knight.wanandroid.buildsrc.ProjectPluginDencies.GoRouterRegister)
-        classpath(com.knight.wanandroid.buildsrc.ProjectPluginDencies.HiltPlugin)
-        classpath(com.knight.wanandroid.buildsrc.ProjectPluginDencies.AndroidAop)
+        classpath(com.knight.wanandroid.buildsrc.ProjectPluginDencies.ANDROID_TOOLS_PLUGIN)
+        classpath(com.knight.wanandroid.buildsrc.ProjectPluginDencies.KOTLIN_PLUGIN)
+        classpath(com.knight.wanandroid.buildsrc.ProjectPluginDencies.GO_ROUTER_REGISTER)
+        classpath(com.knight.wanandroid.buildsrc.ProjectPluginDencies.HILT_PLUGIN)
+        classpath(com.knight.wanandroid.buildsrc.ProjectPluginDencies.ANDROID_AOP)
     }
 }
 

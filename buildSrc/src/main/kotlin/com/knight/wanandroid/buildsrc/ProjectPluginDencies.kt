@@ -7,12 +7,12 @@ package com.knight.wanandroid.buildsrc
  * @since 14/14/21 14:53 PM
  */
 object ProjectPluginDencies {
-    const val AndroidToolsPlugin = "com.android.tools.build:gradle:${Dependencies.Version.TOOL_BUILD_VERSION}"
-    const val KotlinPlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Dependencies.Version.KOTLIN_GRADLE_PLUGIN_VERSION}"
-    const val GoRouterRegister = "com.github.wyjsonGo.GoRouter:GoRouter-Gradle-Plugin:${Dependencies.Version.GO_ROUTER}"
-    const val HiltPlugin = "com.google.dagger:hilt-android-gradle-plugin:${Dependencies.Version.HILT}"
-    const val AndroidAop = "io.github.FlyJingFish.AndroidAop:android-aop-plugin:${Dependencies.Version.ANDROID_AOP}"
-    const val AndroidKsp = "com.google.devtools.ksp:${Dependencies.Version.ANDROID_KSP_VERSION}"
+    const val ANDROID_TOOLS_PLUGIN = "com.android.tools.build:gradle:${Dependencies.Version.TOOL_BUILD_VERSION}"
+    const val KOTLIN_PLUGIN = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Dependencies.Version.KOTLIN_GRADLE_PLUGIN_VERSION}"
+    const val GO_ROUTER_REGISTER = "com.github.wyjsonGo.GoRouter:GoRouter-Gradle-Plugin:${Dependencies.Version.GO_ROUTER}"
+    const val HILT_PLUGIN = "com.google.dagger:hilt-android-gradle-plugin:${Dependencies.Version.HILT}"
+    const val ANDROID_AOP = "io.github.FlyJingFish.AndroidAop:android-aop-plugin:${Dependencies.Version.ANDROID_AOP}"
+    const val ANDROID_KSP = "com.google.devtools.ksp:${Dependencies.Version.ANDROID_KSP_VERSION}"
 }
 
 

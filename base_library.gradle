@@ -7,14 +7,14 @@ apply plugin: 'dagger.hilt.android.plugin'
 apply plugin: 'kotlin-parcelize'
 
 android {
-    compileSdkVersion ProjectBuildDencies.compileSdkVersion
-    buildToolsVersion ProjectBuildDencies.buildToolsVersion
+    compileSdkVersion ProjectBuildDencies.COMPILE_SDK_VERSION
+    buildToolsVersion ProjectBuildDencies.BUILD_TOOLS_VERSION
 
     defaultConfig {
-        minSdkVersion ProjectBuildDencies.minSdkVersion
-        targetSdkVersion ProjectBuildDencies.targetSdkVersion
-        versionCode ProjectBuildDencies.versionCode
-        versionName ProjectBuildDencies.versionName
+        minSdkVersion ProjectBuildDencies.MIN_SDK_VERSION
+        targetSdkVersion ProjectBuildDencies.TARGET_SDK_VERSION
+        versionCode ProjectBuildDencies.VERSION_CODE
+        versionName ProjectBuildDencies.VERSION_NAME
         consumerProguardFiles "consumer-rules.pro"
         ndk {
             // 设置支持的SO库架构

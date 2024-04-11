@@ -1,7 +1,7 @@
 //********* Base module 模块的公共脚本配置 **********
 import com.knight.wanandroid.buildsrc.*
 
-if (ProjectBuildDencies.isAppMode) {
+if (ProjectBuildDencies.APP_MODE) {
     apply plugin: 'com.android.application'
 } else {
     apply plugin: 'com.android.library'
@@ -13,14 +13,14 @@ apply plugin: 'dagger.hilt.android.plugin'
 apply plugin: 'kotlin-parcelize'
 
 android {
-    compileSdkVersion ProjectBuildDencies.compileSdkVersion
-    buildToolsVersion ProjectBuildDencies.buildToolsVersion
+    compileSdkVersion ProjectBuildDencies.COMPILE_SDK_VERSION
+    buildToolsVersion ProjectBuildDencies.BUILD_TOOLS_VERSION
 
     defaultConfig {
-        minSdkVersion ProjectBuildDencies.minSdkVersion
-        targetSdkVersion ProjectBuildDencies.targetSdkVersion
-        versionCode ProjectBuildDencies.versionCode
-        versionName ProjectBuildDencies.versionName
+        minSdkVersion ProjectBuildDencies.MIN_SDK_VERSION
+        targetSdkVersion ProjectBuildDencies.TARGET_SDK_VERSION
+        versionCode ProjectBuildDencies.VERSION_CODE
+        versionName ProjectBuildDencies.VERSION_NAME
         testInstrumentationRunner Dependencies.Androidx.ANDROID_JUNIT_RUNNER
 
         ndk {
@@ -45,7 +45,7 @@ android {
 
     sourceSets {
         main {
-            if(ProjectBuildDencies.isAppMode){
+            if(ProjectBuildDencies.APP_MODE){
                 manifest.srcFile 'src/main/manifest/AndroidManifest.xml'
             } else {
                 manifest.srcFile 'src/main/AndroidManifest.xml'
@@ -99,7 +99,7 @@ android {
 kapt {
     arguments {
         arg("GOROUTER_MODULE_NAME", project.name)
-        arg("eventBusIndex", "${ProjectBuildDencies.applicationId}.eventbus.index.${project.name}EventIndex")
+        arg("eventBusIndex", "${ProjectBuildDencies.APPLICATION_ID}.eventbus.index.${project.name}EventIndex")
     }
 }
 

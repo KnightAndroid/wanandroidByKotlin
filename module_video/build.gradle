@@ -1,5 +1,4 @@
 import com.knight.wanandroid.buildsrc.Dependencies
-
 apply from: '../base_module.gradle'
 android {
     resourcePrefix "video_"

@@ -6,14 +6,14 @@ package com.knight.wanandroid.buildsrc
  *Description:ProjectBuildDencies
  */
 object ProjectBuildDencies {
-    const val compileSdkVersion = 34
-    const val buildToolsVersion = "34.0.0"
-    const val applicationId = "com.knight.kotlin.wanandroid"
-    const val minSdkVersion = 21
-    const val targetSdkVersion = 34
-    const val versionCode = 5
-    const val versionName = "1.1.0"
-    const val isAppMode = false
+    const val COMPILE_SDK_VERSION = 34
+    const val BUILD_TOOLS_VERSION = "34.0.0"
+    const val APPLICATION_ID = "com.knight.kotlin.wanandroid"
+    const val MIN_SDK_VERSION = 21
+    const val TARGET_SDK_VERSION = 34
+    const val VERSION_CODE = 5
+    const val VERSION_NAME = "1.1.0"
+    const val APP_MODE = false
 
 
     /**
