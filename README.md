@@ -88,7 +88,7 @@
 | ![4.gif](https://github.com/KnightAndroid/wanandroid_server/blob/main/wanandroid_gif/home_04.gif)          |![5.gif](https://github.com/KnightAndroid/wanandroid_server/blob/main/wanandroid_gif/home_05.gif) | ![6.gif](https://github.com/KnightAndroid/wanandroid_server/blob/main/wanandroid_gif/home_06.gif) |
 | ![7.gif](https://github.com/KnightAndroid/wanandroid_server/blob/main/wanandroid_gif/home_07.gif)          |![8.gif](https://github.com/KnightAndroid/wanandroid_server/blob/main/wanandroid_gif/home_08.gif) |![9.gif](https://github.com/KnightAndroid/wanandroid_server/blob/main/wanandroid_gif/home_09.gif) |
 | ![10.gif](https://github.com/KnightAndroid/wanandroid_server/blob/main/wanandroid_gif/home_10.gif)         |![11.gif](https://github.com/KnightAndroid/wanandroid_server/blob/main/wanandroid_gif/home_skeleton.gif)|![12.gif](https://github.com/KnightAndroid/wanandroid_server/blob/main/wanandroid_gif/home_icon_animate.gif)|
-| ![11.gif](https://github.com/KnightAndroid/wanandroid_server/blob/main/wanandroid_gif/recommend_video.gif) |
+| ![13.gif](https://github.com/KnightAndroid/wanandroid_server/blob/main/wanandroid_gif/recommend_video.gif) |
 ## 主要开源框架
 
 - [GoRouter](https://github.com/wyjsonGo/GoRouter)
