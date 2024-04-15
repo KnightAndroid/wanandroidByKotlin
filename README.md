@@ -1,7 +1,7 @@
 ## WanAndroid
 这是一个不断迭代，功能全面，简单易用的wanandroid APP
 
-**Java MVP版：**[https://github.com/KnightAndroid/wanandroid](https://github.com/KnightAndroid/wanandroid)
+**Java MVP版：**~~[https://github.com/KnightAndroid/wanandroid](https://github.com/KnightAndroid/wanandroid)~~ 不再维护
 
 ## 前言
 
@@ -17,7 +17,7 @@
 
 ## 主要功能
 
-- 首页、广场、导航、项目，我的五大模块
+- 首页、广场、导航、项目、公众号、我的、课程、推荐视频等模块
 - 登录注册
 - 搜索功能：热门查询，搜索历史
 - 收藏：文章添加收藏，取消收藏
@@ -41,6 +41,7 @@
 - 横屏适配
 - 手势密码解锁
 - 内存泄漏检测
+- 推荐视频
 - 自动夜间模式切换
 
 
@@ -82,12 +83,12 @@
 | ![landscape_square.png](https://gitee.com/MengSuiXinSuoYuan/wanandroid_server/raw/master/wanandroid_picture/wanandroid_landscape_square.png) | ![landscape_wechat.png](https://gitee.com/MengSuiXinSuoYuan/wanandroid_server/raw/master/wanandroid_picture/wanandroid_landscape_wechat.png) |
 
 ## 主要GIF展示
-| ![1.gif](https://github.com/KnightAndroid/wanandroid_server/blob/main/wanandroid_gif/home_01.gif) | ![2.gif](https://github.com/KnightAndroid/wanandroid_server/blob/main/wanandroid_gif/home_02.gif) | ![3.gif](https://github.com/KnightAndroid/wanandroid_server/blob/main/wanandroid_gif/home_03.gif) |
-| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| ![4.gif](https://github.com/KnightAndroid/wanandroid_server/blob/main/wanandroid_gif/home_04.gif) |![5.gif](https://github.com/KnightAndroid/wanandroid_server/blob/main/wanandroid_gif/home_05.gif) | ![6.gif](https://github.com/KnightAndroid/wanandroid_server/blob/main/wanandroid_gif/home_06.gif) |
-| ![7.gif](https://github.com/KnightAndroid/wanandroid_server/blob/main/wanandroid_gif/home_07.gif) |![8.gif](https://github.com/KnightAndroid/wanandroid_server/blob/main/wanandroid_gif/home_08.gif) |![9.gif](https://github.com/KnightAndroid/wanandroid_server/blob/main/wanandroid_gif/home_09.gif) |
-| ![10.gif](https://github.com/KnightAndroid/wanandroid_server/blob/main/wanandroid_gif/home_10.gif) |![11.gif](https://github.com/KnightAndroid/wanandroid_server/blob/main/wanandroid_gif/home_skeleton.gif)|![12.gif](https://github.com/KnightAndroid/wanandroid_server/blob/main/wanandroid_gif/home_icon_animate.gif)|
-
+| ![1.gif](https://github.com/KnightAndroid/wanandroid_server/blob/main/wanandroid_gif/home_01.gif)          | ![2.gif](https://github.com/KnightAndroid/wanandroid_server/blob/main/wanandroid_gif/home_02.gif) | ![3.gif](https://github.com/KnightAndroid/wanandroid_server/blob/main/wanandroid_gif/home_03.gif) |
+|------------------------------------------------------------------------------------------------------------| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| ![4.gif](https://github.com/KnightAndroid/wanandroid_server/blob/main/wanandroid_gif/home_04.gif)          |![5.gif](https://github.com/KnightAndroid/wanandroid_server/blob/main/wanandroid_gif/home_05.gif) | ![6.gif](https://github.com/KnightAndroid/wanandroid_server/blob/main/wanandroid_gif/home_06.gif) |
+| ![7.gif](https://github.com/KnightAndroid/wanandroid_server/blob/main/wanandroid_gif/home_07.gif)          |![8.gif](https://github.com/KnightAndroid/wanandroid_server/blob/main/wanandroid_gif/home_08.gif) |![9.gif](https://github.com/KnightAndroid/wanandroid_server/blob/main/wanandroid_gif/home_09.gif) |
+| ![10.gif](https://github.com/KnightAndroid/wanandroid_server/blob/main/wanandroid_gif/home_10.gif)         |![11.gif](https://github.com/KnightAndroid/wanandroid_server/blob/main/wanandroid_gif/home_skeleton.gif)|![12.gif](https://github.com/KnightAndroid/wanandroid_server/blob/main/wanandroid_gif/home_icon_animate.gif)|
+| ![11.gif](https://github.com/KnightAndroid/wanandroid_server/blob/main/wanandroid_gif/recommend_video.gif) |
 ## 主要开源框架
 
 - [GoRouter](https://github.com/wyjsonGo/GoRouter)
@@ -109,7 +110,7 @@
 - [LeakCanary](https://github.com/square/leakcanary)
 
 ## 本项目开发环境
-- 基于Android Studio Giraffe
+- 基于Android Studio Iguana
 - Android Gradle Plugin 8.0
 - Android Gradle插件8.0.0
 
@@ -126,6 +127,13 @@
 ![wanandroid_normal_release.png](https://gitee.com/MengSuiXinSuoYuan/wanandroid_server/raw/master/wanandroid_picture/wanandroid_normal_release.png)
 
 ## 更新日志
+### 1.2.0(6)
+-  wanandroid 第六版发布
+-  规范代码命名
+-  新增我的-推荐视频模仿抖音划一划功能  
+-  修改一些问题
+-  发布时间：2024/04/15
+
 
 ### 1.1.0(5)
 -  wanandroid 第五版发布
