@@ -15,7 +15,7 @@ interface AppUpdateRecordService {
     /**
      * 查看更新日志记录
      */
-    @Headers("BaseUrlName:gitee")
+    @Headers("Domain-Name:gitee")
     @GET("MengSuiXinSuoYuan/wanandroid_server/raw/master/wanandroid_config/kotlin/versionrecord.json")
     suspend fun checkAppUpdateRecord(): BaseResponse<VersionRecordListEntity>
 

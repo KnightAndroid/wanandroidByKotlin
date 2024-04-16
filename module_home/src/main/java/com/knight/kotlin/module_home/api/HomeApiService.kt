@@ -20,7 +20,7 @@ interface HomeApiService {
     /**
      * 获取每日推荐文章
      */
-    @Headers("BaseUrlName:gitee")
+    @Headers("Domain-Name:gitee")
     @GET("MengSuiXinSuoYuan/wanandroid_server/raw/master/wanandroid_config/advert/dailyPushArticles.json")
     suspend fun getEveryDayPushArticle(): BaseResponse<EveryDayPushArticlesBean>
 
@@ -28,7 +28,7 @@ interface HomeApiService {
     /**
      * 版本更新接口
      */
-    @Headers("BaseUrlName:gitee")
+    @Headers("Domain-Name:gitee")
     @GET("MengSuiXinSuoYuan/wanandroid_server/raw/master/wanandroid_config/kotlin/update.json")
     suspend fun checkAppUpdateMessage(): BaseResponse<AppUpdateBean>
 

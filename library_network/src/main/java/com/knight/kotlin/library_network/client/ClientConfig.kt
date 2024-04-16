@@ -1,26 +1,23 @@
 package com.knight.kotlin.library_network.client
 
-import androidx.annotation.Nullable
 import com.knight.kotlin.library_base.BaseApp
 import com.knight.kotlin.library_network.BuildConfig
 import com.knight.kotlin.library_network.config.BaseUrlConfig
 import com.knight.kotlin.library_network.cookie.InMemoryCookieStore
 import com.knight.kotlin.library_network.cookie.JavaNetCookieJar
 import com.knight.kotlin.library_network.cookie.SharedPreferencesCookieStore
+import com.knight.kotlin.library_network.domain.addDomain
+import com.knight.kotlin.library_network.domain.setDomain
 import com.knight.kotlin.library_network.interceptor.CacheInterceptor
 import com.knight.kotlin.library_network.interceptor.HttpInterceptor
 import com.knight.kotlin.library_network.interceptor.NetworkInterceptor
 import com.knight.kotlin.library_network.log.LoggingInterceptor
-import com.knight.kotlin.library_network.util.ReplaceUrlCallFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import okhttp3.Cache
-import okhttp3.HttpUrl
-import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.OkHttpClient
-import okhttp3.Request
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.File
@@ -70,7 +67,6 @@ class ClientConfig {
             .response()
             .responseTag("Response")
             .build()
-
         return OkHttpClient.Builder()
             .connectTimeout(15L * 1000L, TimeUnit.MILLISECONDS)
             .readTimeout(20L * 1000L,TimeUnit.MILLISECONDS)
@@ -81,6 +77,9 @@ class ClientConfig {
             .cache(cache)
             .retryOnConnectionFailure(true)
             .cookieJar(JavaNetCookieJar(cookieManager))
+            .addDomain(BaseUrlConfig.WANDROID_URL)
+            .setDomain("gitee",BaseUrlConfig.GITEE_RUL)
+            .setDomain("jokes",BaseUrlConfig.JOKES_URL)
             .build()
     }
 
@@ -95,35 +94,36 @@ class ClientConfig {
 
         return Retrofit.Builder()
             .baseUrl(BaseUrlConfig.WANDROID_URL)
-            .callFactory(object :
-                ReplaceUrlCallFactory(okHttpClient) {
-                @Nullable
-                override fun getNewUrl(baseUrlName: String?, request: Request?): HttpUrl? {
-                    //这里其实通过头部注解@Headers("BaseUrlName:gitee") 来说明这个链接使用 "https://gitee.com/"
-                    val oldUrl: String = request?.url.toString()
-                    var newUrl : String
-                    if (baseUrlName == "gitee") {
-                        if (oldUrl.contains(BaseUrlConfig.WANDROID_URL)) {
-                           newUrl =
-                                oldUrl.replace(BaseUrlConfig.WANDROID_URL, BaseUrlConfig.GITEE_RUL)
-                        }  else  {
-                           newUrl =
-                                oldUrl.replace(BaseUrlConfig.VIDEO_URL, BaseUrlConfig.GITEE_RUL)
-                        }
-                        return newUrl.toHttpUrl()
-                    } else if (baseUrlName == "Video") {
-                        if (oldUrl.contains(BaseUrlConfig.WANDROID_URL)) {
-                            newUrl =
-                                oldUrl.replace(BaseUrlConfig.WANDROID_URL, BaseUrlConfig.VIDEO_URL)
-                        }  else  {
-                            newUrl =
-                                oldUrl.replace(BaseUrlConfig.GITEE_RUL, BaseUrlConfig.VIDEO_URL)
-                        }
-                        return newUrl.toHttpUrl()
-                    }
-                    return null
-                }
-            })
+            .client(okHttpClient)
+//            .callFactory(object :
+//                ReplaceUrlCallFactory(okHttpClient) {
+//                @Nullable
+//                override fun getNewUrl(baseUrlName: String?, request: Request?): HttpUrl? {
+//                    //这里其实通过头部注解@Headers("BaseUrlName:gitee") 来说明这个链接使用 "https://gitee.com/"
+//                    val oldUrl: String = request?.url.toString()
+//                    var newUrl : String
+//                    if (baseUrlName == "gitee") {
+//                        if (oldUrl.contains(BaseUrlConfig.WANDROID_URL)) {
+//                           newUrl =
+//                                oldUrl.replace(BaseUrlConfig.WANDROID_URL, BaseUrlConfig.GITEE_RUL)
+//                        }  else  {
+//                           newUrl =
+//                                oldUrl.replace(BaseUrlConfig.VIDEO_URL, BaseUrlConfig.GITEE_RUL)
+//                        }
+//                        return newUrl.toHttpUrl()
+//                    } else if (baseUrlName == "Video") {
+//                        if (oldUrl.contains(BaseUrlConfig.WANDROID_URL)) {
+//                            newUrl =
+//                                oldUrl.replace(BaseUrlConfig.WANDROID_URL, BaseUrlConfig.VIDEO_URL)
+//                        }  else  {
+//                            newUrl =
+//                                oldUrl.replace(BaseUrlConfig.GITEE_RUL, BaseUrlConfig.VIDEO_URL)
+//                        }
+//                        return newUrl.toHttpUrl()
+//                    }
+//                    return null
+//                }
+//            })
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 

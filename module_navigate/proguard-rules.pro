@@ -19,3 +19,7 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+-dontwarn com.knight.kotlin.library_base.R$drawable
+-dontwarn com.knight.kotlin.library_base.R$id
+-dontwarn com.knight.kotlin.library_base.R$layout
+-dontwarn java.lang.invoke.StringConcatFactory

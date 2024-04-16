@@ -14,7 +14,7 @@ import retrofit2.http.Query
  */
 interface VideoApiService {
 
-    @Headers("BaseUrlName:Video","project_token:AD9D5C1ADEF444DAAB430A3DB71B94CC")
+    @Headers("Domain-Name:jokes","project_token:AD9D5C1ADEF444DAAB430A3DB71B94CC")
     @POST("douyin/list")
     suspend fun getDouyinVideos(): BaseResponse<MutableList<VideoListEntity>>
 
@@ -25,7 +25,7 @@ interface VideoApiService {
      *
      * 获取视频评论
      */
-    @Headers("BaseUrlName:Video","project_token:AD9D5C1ADEF444DAAB430A3DB71B94CC")
+    @Headers("Domain-Name:jokes","project_token:AD9D5C1ADEF444DAAB430A3DB71B94CC")
     @POST("/jokes/comment/list")
     suspend fun getVideoCommentList(@Query("jokeId") jokeId:Long,@Query("page") page:Long):BaseResponse<VideoCommentList>
 }

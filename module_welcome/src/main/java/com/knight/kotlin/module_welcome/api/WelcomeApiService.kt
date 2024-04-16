@@ -13,7 +13,7 @@ import retrofit2.http.Headers
  */
 interface WelcomeApiService {
 
-    @Headers("BaseUrlName:gitee")
+    @Headers("Domain-Name:gitee")
     @GET("MengSuiXinSuoYuan/wanandroid_server/raw/master/wanandroid_config/config/themeColor.json")
     suspend fun getAppTheme():BaseResponse<AppThemeBean>
 }

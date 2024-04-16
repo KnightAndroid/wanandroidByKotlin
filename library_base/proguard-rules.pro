@@ -53,3 +53,7 @@
 # 错误日志收集
 -dontwarn com.tencent.bugly.**
 -keep public class com.tencent.bugly.**{*;}
+
+# https://stackoverflow.com/questions/77143071/r8-and-proguard-missing-class-error-in-data-class-that-is-using-keep-annotatio
+-dontwarn java.lang.invoke.StringConcatFactory
+-dontwarn com.knight.kotlin.library_base.R$anim

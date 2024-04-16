@@ -15,7 +15,7 @@ interface AboutApiService {
     /**
      * 版本更新接口
      */
-    @Headers("BaseUrlName:gitee")
+    @Headers("Domain-Name:gitee")
     @GET("MengSuiXinSuoYuan/wanandroid_server/raw/master/wanandroid_config/kotlin/update.json")
     suspend fun checkAppUpdateMessage(): BaseResponse<AppUpdateBean>
 }

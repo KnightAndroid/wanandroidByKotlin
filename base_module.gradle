@@ -22,7 +22,6 @@ android {
         versionCode ProjectBuildDencies.VERSION_CODE
         versionName ProjectBuildDencies.VERSION_NAME
         testInstrumentationRunner Dependencies.Androidx.ANDROID_JUNIT_RUNNER
-
         ndk {
             // 设置支持的SO库架构
             //abiFilters 'armeabi', 'x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a'
@@ -73,17 +72,18 @@ android {
         debug {
             buildConfigField "String","TYPE","\"${ProjectBuildDencies.Variants.DEVELOP}\""
             minifyEnabled false
-            consumerProguardFiles 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         release {
             buildConfigField "String","TYPE","\"${ProjectBuildDencies.Variants.RELEASE}\""
             minifyEnabled true
-            consumerProguardFiles 'proguard-rules.pro'
+           // consumerProguardFiles 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         master {
             buildConfigField "String","TYPE","\"${ProjectBuildDencies.Variants.MASTER}\""
             minifyEnabled true
-            consumerProguardFiles 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
 
     }
@@ -94,6 +94,7 @@ android {
 
 
 }
+
 
 
 kapt {
