@@ -19,5 +19,7 @@
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
     <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
     <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
+    <!-- 震动 -->
+    <uses-permission android:name="android.permission.VIBRATE"/>
 
 </manifest>

@@ -3,7 +3,6 @@ package com.knight.kotlin.module_home.api
 import com.knight.kotlin.library_base.entity.UserInfoEntity
 import com.knight.kotlin.library_common.entity.AppUpdateBean
 import com.knight.kotlin.library_network.bean.BaseResponse
-import com.knight.kotlin.module_home.entity.EveryDayPushArticlesBean
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
@@ -17,12 +16,7 @@ import retrofit2.http.POST
  */
 interface HomeApiService {
 
-    /**
-     * 获取每日推荐文章
-     */
-    @Headers("Domain-Name:gitee")
-    @GET("MengSuiXinSuoYuan/wanandroid_server/raw/master/wanandroid_config/advert/dailyPushArticles.json")
-    suspend fun getEveryDayPushArticle(): BaseResponse<EveryDayPushArticlesBean>
+
 
 
     /**
@@ -32,14 +26,6 @@ interface HomeApiService {
     @GET("MengSuiXinSuoYuan/wanandroid_server/raw/master/wanandroid_config/kotlin/update.json")
     suspend fun checkAppUpdateMessage(): BaseResponse<AppUpdateBean>
 
-
-    /**
-     * 登录接口
-     *
-     */
-    @FormUrlEncoded
-    @POST("user/login")
-    suspend fun login(@Field("username") userName:String, @Field("password") passWord:String): BaseResponse<UserInfoEntity>
 
 
 

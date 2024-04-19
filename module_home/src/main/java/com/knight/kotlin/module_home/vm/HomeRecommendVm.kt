@@ -2,10 +2,15 @@ package com.knight.kotlin.module_home.vm
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.knight.kotlin.library_base.entity.UserInfoEntity
 import com.knight.kotlin.library_base.vm.BaseViewModel
 import com.knight.kotlin.library_common.entity.OfficialAccountEntity
+import com.knight.kotlin.library_database.db.AppDataBase
+import com.knight.kotlin.library_database.entity.PushDateEntity
+import com.knight.kotlin.library_database.repository.PushArticlesDataRepository
 import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_home.entity.BannerBean
+import com.knight.kotlin.module_home.entity.EveryDayPushArticlesBean
 import com.knight.kotlin.module_home.entity.HomeArticleListBean
 import com.knight.kotlin.module_home.entity.TopArticleBean
 import com.knight.kotlin.module_home.repo.HomeRecommendRepo
@@ -27,6 +32,18 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class HomeRecommendVm @Inject constructor(private val mRepo: HomeRecommendRepo) : BaseViewModel() {
+
+    val everyDayPushArticles = MutableLiveData<EveryDayPushArticlesBean>()
+
+    private val repository: PushArticlesDataRepository
+
+
+    init {
+        val mDao =  AppDataBase.getInstance()?.mPushDateDao()!!
+        repository = PushArticlesDataRepository(mDao)
+    }
+    //获取每日推荐文章结果
+    val articles = MutableLiveData<List<PushDateEntity>>()
     //获取置顶文章数据结果
     val topArticles = MutableLiveData<MutableList<TopArticleBean>>()
     //首页文章数据结果
@@ -42,7 +59,91 @@ class HomeRecommendVm @Inject constructor(private val mRepo: HomeRecommendRepo) 
     val unCollectArticle = MutableLiveData<Boolean>()
     //获取未读消息
     val unReadMessageNumber = MutableLiveData<Int>()
+    //登录信息
+    val userInfo = MutableLiveData<UserInfoEntity>()
 
+
+    /**
+     * 获取每天推送文章
+     */
+    fun getEveryDayPushArticle() {
+        viewModelScope.launch {
+            mRepo.getEveryDayPushArticle()
+                //指定线程
+                .flowOn(Dispatchers.IO)
+                .onStart {
+                    //开始
+                }
+                .onEach {
+                    everyDayPushArticles.postValue(it)
+                }
+                .onCompletion {
+                    //结束
+                }
+                .catch { toast(it.message ?: "") }
+                .collect()
+
+        }
+    }
+
+    /**
+     *
+     * 查询本地历史记录
+     */
+    fun queryPushDate(){
+        viewModelScope.launch {
+            repository.findPushArticlesDate()
+                //指定线程
+                .flowOn(Dispatchers.IO)
+                .onStart {
+                    //开始
+                }
+                .onEach {
+                    articles.postValue(it)
+                }
+                .onCompletion {
+                    //结束
+                }
+                .catch { toast(it.message ?: "") }
+                .collect()
+
+        }
+
+    }
+
+
+    /**
+     * 更新
+     */
+    fun updatePushArticlesDate(pushDateEntity: PushDateEntity) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.updatePushArticlesDate(pushDateEntity)
+        }
+
+    }
+
+    /**
+     *
+     * 插入
+     */
+    fun insertPushArticlesDate(pushDateEntity: PushDateEntity){
+        viewModelScope.launch {
+            repository.insertPushArticlesDate(pushDateEntity)
+                //指定线程
+                .flowOn(Dispatchers.IO)
+                .onStart {
+                    //开始
+                }
+                .onEach {
+                }
+                .onCompletion {
+                    //结束
+                }
+                .catch { toast(it.message ?: "") }
+                .collect()
+
+        }
+    }
 
     /**
      *
@@ -204,6 +305,32 @@ class HomeRecommendVm @Inject constructor(private val mRepo: HomeRecommendRepo) 
                 .collect()
         }
 
+
+    }
+
+
+
+    /**
+     * 登录
+     */
+    fun login(userName:String,passWord:String) {
+        viewModelScope.launch {
+            mRepo.login(userName, passWord)
+                //指定线程
+                .flowOn(Dispatchers.IO)
+                .onStart {
+                    //开始
+                }
+                .onEach {
+                    userInfo.postValue(it)
+                }
+                .onCompletion {
+                    //结束
+                }
+                .catch { toast(it.message ?: "") }
+                .collect()
+
+        }
 
     }
 

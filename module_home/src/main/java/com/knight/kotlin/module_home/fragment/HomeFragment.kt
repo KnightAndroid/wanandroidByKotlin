@@ -1,64 +1,24 @@
 package com.knight.kotlin.module_home.fragment
 
-import android.app.Activity
-import android.content.Intent
-import android.graphics.Color
-import android.graphics.drawable.GradientDrawable
-import android.os.Build
-import android.util.Base64
 import android.view.View
+import android.view.ViewGroup
+import android.widget.FrameLayout
 import androidx.fragment.app.Fragment
-import com.flyjingfish.android_aop_core.annotations.SingleClick
-import com.google.common.reflect.TypeToken
-import com.knight.kotlin.library_base.annotation.EventBusRegister
-import com.knight.kotlin.library_base.config.Appconfig
-import com.knight.kotlin.library_base.config.CacheKey
-import com.knight.kotlin.library_base.entity.LoginEntity
-import com.knight.kotlin.library_base.entity.UserInfoEntity
+import androidx.viewpager2.widget.ViewPager2
 import com.knight.kotlin.library_base.event.MessageEvent
 import com.knight.kotlin.library_base.fragment.BaseFragment
-import com.knight.kotlin.library_base.ktx.getUser
 import com.knight.kotlin.library_base.ktx.observeLiveData
-import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.route.RouteFragment
-import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_base.util.EventBusUtils
-import com.knight.kotlin.library_base.util.GsonUtils
-import com.knight.kotlin.library_base.util.dp2px
 import com.knight.kotlin.library_common.entity.AppUpdateBean
 import com.knight.kotlin.library_common.fragment.UpdateAppDialogFragment
-import com.knight.kotlin.library_database.entity.PushDateEntity
-import com.knight.kotlin.library_permiss.XXPermissions
-import com.knight.kotlin.library_permiss.listener.OnPermissionCallback
-import com.knight.kotlin.library_permiss.permissions.Permission
-import com.knight.kotlin.library_permiss.utils.PermissionUtils
-import com.knight.kotlin.library_scan.activity.ScanCodeActivity
-import com.knight.kotlin.library_scan.annoation.ScanStyle
-import com.knight.kotlin.library_scan.decode.ScanCodeConfig
-import com.knight.kotlin.library_util.DateUtils
-import com.knight.kotlin.library_util.JsonUtils.getJson
 import com.knight.kotlin.library_util.SystemUtils
 import com.knight.kotlin.library_util.ViewInitUtils
-import com.knight.kotlin.library_util.bindViewPager2
-import com.knight.kotlin.library_util.startPage
-import com.knight.kotlin.library_util.startPageWithStringArrayListParams
-import com.knight.kotlin.library_util.toast.ToastUtils
-import com.knight.kotlin.module_home.R
-import com.knight.kotlin.module_home.constants.HomeConstants
 import com.knight.kotlin.module_home.databinding.HomeFragmentBinding
-import com.knight.kotlin.module_home.dialog.HomePushArticleFragment
-import com.knight.kotlin.module_home.entity.EveryDayPushArticlesBean
+import com.knight.kotlin.module_home.view.TwoLevelTransformer
 import com.knight.kotlin.module_home.vm.HomeVm
-import com.knight.library_biometric.control.BiometricControl
-import com.knight.library_biometric.listener.BiometricStatusCallback
 import com.wyjson.router.annotation.Route
 import dagger.hilt.android.AndroidEntryPoint
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
-import java.lang.reflect.Type
-import javax.crypto.BadPaddingException
-import javax.crypto.Cipher
-import javax.crypto.IllegalBlockSizeException
 
 
 /**
@@ -66,7 +26,7 @@ import javax.crypto.IllegalBlockSizeException
  * Time:2021/12/22 19:33
  * Description:HomeFragment
  */
-@EventBusRegister
+
 @AndroidEntryPoint
 @Route(path = RouteFragment.Home.HomeFragment)
 class HomeFragment : BaseFragment<HomeFragmentBinding, HomeVm>() {
@@ -76,25 +36,14 @@ class HomeFragment : BaseFragment<HomeFragmentBinding, HomeVm>() {
      * 首页Fragment
      */
     private var mFragments = mutableListOf<Fragment>()
-    /**
-     * 知识标签
-     */
-    private var knowledgeLabelList = mutableListOf<String>()
-    /**
-     * 获取推送文章
-     */
-    private lateinit var mEveryDayPushData: EveryDayPushArticlesBean
+
+
 
     override fun HomeFragmentBinding.initView() {
         initMagicIndicator()
-        setOnClickListener(homeIncludeToolbar.homeScanIcon,homeIncludeToolbar.homeTvLoginname,
-            homeIncludeToolbar.homeIvEveryday,
-            homeIncludeToolbar.homeIvAdd,homeIncludeToolbar.homeRlSearch,homeIvLabelmore)
-        getUser()?.let {
-            homeIncludeToolbar.homeTvLoginname.text = it.username
-        } ?: kotlin.run {
-            homeIncludeToolbar.homeTvLoginname.text = getString(R.string.home_tv_login)
-        }
+
+        //,homeIvLabelmore
+
 
     }
 
@@ -103,51 +52,18 @@ class HomeFragment : BaseFragment<HomeFragmentBinding, HomeVm>() {
      * 订阅LiveData
      */
     override fun initObserver() {
-        observeLiveData(mViewModel.everyDayPushArticles, ::setEveryDayPushArticle)
-        observeLiveData(mViewModel.articles, ::processPushArticle)
         observeLiveData(mViewModel.appUpdateMessage,::checkAppMessage)
-        observeLiveData(mViewModel.userInfo,::setUserInfo)
     }
 
     override fun initRequestData() {
-        mViewModel.getEveryDayPushArticle()
         mViewModel.checkAppUpdateMessage()
     }
 
     override fun setThemeColor(isDarkMode: Boolean) {
-       if (!isDarkMode) {
-           isWithStatusTheme(CacheUtils.getStatusBarIsWithTheme())
-       }
-    }
-
-    /**
-     * 获取推送文章具体数据
-     */
-    private fun setEveryDayPushArticle(data: EveryDayPushArticlesBean) {
-        mEveryDayPushData = data
-        if (data.pushStatus && DateUtils.isToday(data.time)) {
-            //查询本地推送文章时间 进行判断
-            mViewModel.queryPushDate()
-        }
 
     }
 
-    //处理是否进行弹窗
-    private fun processPushArticle(datas: List<PushDateEntity>) {
-        if (datas != null && datas.isNotEmpty()) {
-            var pushDateEntity = datas[0]
-            if (pushDateEntity.time == mEveryDayPushData.time) {
-                pushDateEntity.time = mEveryDayPushData.time
-                mViewModel.updatePushArticlesDate(pushDateEntity)
-                HomePushArticleFragment.newInstance(mEveryDayPushData.datas).showAllowingStateLoss(parentFragmentManager,"dialog_everydaypush")
-            }
-        } else {
-            val pushTempDateEntity = PushDateEntity()
-            pushTempDateEntity.time = mEveryDayPushData.time
-            mViewModel.insertPushArticlesDate(pushTempDateEntity)
-            HomePushArticleFragment.newInstance(mEveryDayPushData.datas).showAllowingStateLoss(parentFragmentManager,"dialog_everydaypush")
-        }
-    }
+
 
     /**
      *
@@ -165,259 +81,94 @@ class HomeFragment : BaseFragment<HomeFragmentBinding, HomeVm>() {
     }
 
 
-    /**
-     *
-     * 登录
-     */
-    private fun setUserInfo(userInfoEntity: UserInfoEntity){
-        CacheUtils.saveDataInfo(CacheKey.USER,userInfoEntity)
-        Appconfig.user = userInfoEntity
-        EventBusUtils.postEvent(MessageEvent(MessageEvent.MessageType.LoginSuccess))
-    }
 
     /**
      * 初始化指示器
      */
     private fun initMagicIndicator() {
-        knowledgeLabelList = CacheUtils.getDataInfo(
-            "knowledgeLabel",
-            object : TypeToken<List<String>>() {}.type
-        )
-        if (knowledgeLabelList.isNullOrEmpty()) {
-            val type: Type = object : TypeToken<List<String>>() {}.type
-            val jsonData = getJson(requireActivity(), "searchkeywords.json")
-            knowledgeLabelList = GsonUtils.getList(jsonData, type)
-        }
-        mFragments.clear()
-        for (i in knowledgeLabelList.indices) {
-            if (i == 0) {
-                mFragments.add(HomeRecommendFragment())
-            } else {
-                mFragments.add(HomeArticleFragment())
-            }
-        }
+//        knowledgeLabelList = CacheUtils.getDataInfo(
+//            "knowledgeLabel",
+//            object : TypeToken<List<String>>() {}.type
+//        )
+//        if (knowledgeLabelList.isNullOrEmpty()) {
+//            val type: Type = object : TypeToken<List<String>>() {}.type
+//            val jsonData = getJson(requireActivity(), "searchkeywords.json")
+//            knowledgeLabelList = GsonUtils.getList(jsonData, type)
+//        }
+//        mFragments.clear()
+//        for (i in knowledgeLabelList.indices) {
+//            if (i == 0) {
+//                mFragments.add(HomeRecommendFragment())
+//            } else {
+//                mFragments.add(HomeArticleFragment())
+//            }
+//        }
 
+        mFragments.add(HomeRecommendFragment())
+        mFragments.add(HomeClassifyFragment())
         ViewInitUtils.setViewPager2Init(requireActivity(),mBinding.viewPager,mFragments,
-            isOffscreenPageLimit = true,
-            isUserInputEnabled = false
+            isOffscreenPageLimit = false,
+            isUserInputEnabled = true
         )
-        mBinding.magicIndicator.bindViewPager2(mBinding.viewPager,knowledgeLabelList) {
-            HomeConstants.ARTICLE_TYPE = knowledgeLabelList[it]
-        }
+
+//        mBinding.magicIndicator.bindViewPager2(mBinding.viewPager,knowledgeLabelList) {
+//            HomeConstants.ARTICLE_TYPE = knowledgeLabelList[it]
+//        }
+        initViewPagerListener()
+
+
 
     }
-    @SingleClick
-    override fun onClick(v: View) {
-        when (v) {
-           mBinding.homeIncludeToolbar.homeScanIcon->{
-               XXPermissions.with(this@HomeFragment)
-                   ?.permission(Permission.CAMERA)
-                   ?.request(object :OnPermissionCallback{
-                       override fun onGranted(permissions: List<String>, all: Boolean) {
-                           if (all) {
-                               ScanCodeConfig.Builder()
-                                   .setFragment(this@HomeFragment)
-                                   .setActivity(activity)
-                                   .setPlayAudio(true)
-                                   .setStyle(ScanStyle.FULL_SCREEN)
-                                   .build().start(ScanCodeActivity::class.java)
-                           }
-                       }
 
-                       override fun onDenied(permissions: List<String>, doNotAskAgain: Boolean) {
-                           super.onDenied(permissions, doNotAskAgain)
-                           activity?.let {
-                               PermissionUtils.showPermissionSettingDialog(it,permissions,permissions,object :OnPermissionCallback{
-                                   override fun onGranted(permissions: List<String>, all: Boolean) {
 
-                                   }
-                               })
-                           }
-                       }
-                   })
-           }
-           mBinding.homeIncludeToolbar.homeIvEveryday->{
-               HomePushArticleFragment.newInstance(mEveryDayPushData.datas).showAllowingStateLoss(parentFragmentManager,"dialog_everydaypush")
-           }
+    private fun initViewPagerListener() {
+        val transformer = TwoLevelTransformer(mBinding.viewPager, mBinding.headerView)
+        val lp = FrameLayout.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
 
-           mBinding.homeIncludeToolbar.homeIvAdd->{
-               startPage(RouteActivity.Square.SquareShareArticleActivity)
-           }
-           mBinding.homeIncludeToolbar.homeTvLoginname -> {
-               if (mBinding.homeIncludeToolbar.homeTvLoginname.text.toString().equals(getString(R.string.home_tv_login))) {
-                    if (CacheUtils.getGestureLogin()) {
-                        startPage(RouteActivity.Mine.QuickLoginActivity)
-                    } else if (CacheUtils.getFingerLogin()) {
-                        loginBiomtric()
-                    } else {
-                        startPage(RouteActivity.Mine.LoginActivity)
+        mBinding.viewPager.setRotation(180f)
+        mBinding.viewPager.setOverScrollMode(View.OVER_SCROLL_NEVER)
+        mBinding.viewPager.setOrientation(ViewPager2.ORIENTATION_VERTICAL)
+        mBinding.viewPager.setPageTransformer(transformer)
+        mBinding.viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageScrollStateChanged(state: Int) {
+                super.onPageScrollStateChanged(state)
+                if (state == ViewPager2.SCROLL_STATE_IDLE) {
+                    if (mBinding.viewPager.getCurrentItem() == 1) {
+                        EventBusUtils.postEvent(MessageEvent(MessageEvent.MessageType.ChangeBottomNavigate).put(true))
+                    } else if (mBinding.viewPager.getCurrentItem() == 0) {
+
+                        transformer.setFromFloorPage(true)
+                        EventBusUtils.postEvent(MessageEvent(MessageEvent.MessageType.ChangeBottomNavigate).put(false))
                     }
-               }
-           }
-
-            mBinding.homeIncludeToolbar.homeRlSearch ->{
-                startPage(RouteActivity.Home.HomeSearchActivity)
-            }
-
-            mBinding.homeIvLabelmore -> {
-                startPageWithStringArrayListParams(RouteActivity.Home.HomeKnowLedgeLabelActivity,"data" to ArrayList(knowledgeLabelList))
-            }
-        }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        //接收扫码结果
-        if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == ScanCodeConfig.QUESTCODE && data != null) {
-                val extras = data.extras
-                if (extras != null) {
-                    val result = extras.getString(ScanCodeConfig.CODE_KEY)
-                    ToastUtils.show(result)
                 }
             }
-        }
+
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+            ) {
+                super.onPageScrolled(position, positionOffset, positionOffsetPixels)
+                //小程序页面出现：偏移值有0->1 偏移像素有0->页面高度
+                //小程序页面消失：偏移值->0 偏移像素页面高度->0
+                if (position == 1) {
+                    transformer.setFromFloorPage(false)
+
+                }
+                lp.height = positionOffsetPixels
+                mBinding.headerView.setLayoutParams(lp)
+                mBinding.headerView.setPercent(positionOffset)
+            }
+        })
+
     }
+
 
     override fun reLoadData() {
 
     }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onMessageEvent(event:MessageEvent) {
-        when (event.type) {
-            MessageEvent.MessageType.LoginSuccess -> {
-                //登录成功
-                mBinding.homeIncludeToolbar.homeTvLoginname.text = getUser()?.username
-            }
-
-            MessageEvent.MessageType.LogoutSuccess -> {
-                //退出登录成功
-                mBinding.homeIncludeToolbar.homeTvLoginname.setText(getString(R.string.home_tv_login))
-            }
-
-            //更改标签
-            MessageEvent.MessageType.ChangeLabel -> {
-                knowledgeLabelList.clear()
-                knowledgeLabelList.addAll(event.getStringList())
-                mFragments.clear()
-                for (i in knowledgeLabelList.indices) {
-                    if (i == 0) {
-                        mFragments.add(HomeRecommendFragment())
-                    } else {
-                        mFragments.add(HomeArticleFragment())
-                    }
-                }
-                mBinding.magicIndicator.navigator.notifyDataSetChanged()
-                mBinding.viewPager.adapter?.notifyDataSetChanged()
-                ViewInitUtils.setViewPager2Init(requireActivity(),mBinding.viewPager,mFragments,
-                    isOffscreenPageLimit = true,
-                    isUserInputEnabled = false
-                )
-            }
-
-            //改变状态栏颜色
-            MessageEvent.MessageType.ChangeStatusTheme -> {
-                isWithStatusTheme(event.getBoolean())
-            }
-
-            else -> {}
-        }
-
-    }
-
-    /**
-     * 指纹登录
-     */
-    private fun loginBiomtric() {
-        BiometricControl.setStatusCallback(object : BiometricStatusCallback{
-            override fun onUsePassword() {
-                startPage(RouteActivity.Mine.LoginActivity)
-            }
-
-            override fun onVerifySuccess(cipher: Cipher?) {
-                try {
-                    val text = CacheUtils.getEncryptLoginMessage()
-                    val input = Base64.decode(text, Base64.URL_SAFE)
-                    val bytes = cipher?.doFinal(input)
-
-                    /**
-                     * 然后这里用原密码(当然是加密过的)调登录接口
-                     */
-                    val loginEntity: LoginEntity? =
-                        GsonUtils.get(String(bytes ?: ByteArray(0)), LoginEntity::class.java)
-                    val iv = cipher?.iv
-
-                    //走登录接口
-                    loginEntity?.let {
-                        mViewModel.login(it.loginName,it.loginPassword)
-                    }
-
-                } catch (e: BadPaddingException) {
-                    e.printStackTrace()
-                } catch (e: IllegalBlockSizeException) {
-                    e.printStackTrace()
-                }
-            }
-
-            override fun onFailed() {
-                startPage(RouteActivity.Mine.LoginActivity)
-            }
-
-            override fun error(code: Int, reason: String?) {
-                ToastUtils.show("$code,$reason")
-                startPage(RouteActivity.Mine.LoginActivity)
-            }
-
-            override fun onCancel() {
-                ToastUtils.show(R.string.home_biometric_cancel)
-                startPage(RouteActivity.Mine.LoginActivity)
-            }
-        }).loginBlomtric(requireActivity())
-
-
-
-
-
-    }
-
-
-    /**
-     * 状态栏是否跟随主题色变化
-     *
-     */
-    private fun isWithStatusTheme(statusWIthTheme:Boolean) {
-        if (!CacheUtils.getNightModeStatus()) {
-            val gradientDrawable = GradientDrawable()
-            gradientDrawable.shape = GradientDrawable.RECTANGLE
-            gradientDrawable.cornerRadius = 45.dp2px().toFloat()
-            if (statusWIthTheme) {
-                gradientDrawable.setColor(Color.WHITE)
-                mBinding.homeIncludeToolbar.homeTvLoginname.setTextColor(Color.WHITE)
-                mBinding.homeIncludeToolbar.homeIvAdd.setBackgroundResource(R.drawable.home_icon_add_white)
-                mBinding.homeIncludeToolbar.homeIvEveryday.setBackgroundResource(R.drawable.home_icon_everyday_white)
-                mBinding.homeIncludeToolbar.toolbar.setBackgroundColor(CacheUtils.getThemeColor())
-            } else {
-                gradientDrawable.setColor(Color.parseColor("#1f767680"))
-                mBinding.homeIncludeToolbar.homeTvLoginname.setTextColor(Color.parseColor("#333333"))
-                mBinding.homeIncludeToolbar.homeIvEveryday.setBackgroundResource(R.drawable.home_icon_everyday)
-                mBinding.homeIncludeToolbar.homeIvAdd.setBackgroundResource(R.drawable.home_icon_add)
-                mBinding.homeIncludeToolbar.toolbar.setBackgroundColor(Color.WHITE)
-            }
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                mBinding.homeIncludeToolbar.homeRlSearch.background = gradientDrawable
-            } else {
-                mBinding.homeIncludeToolbar.homeRlSearch.setBackgroundDrawable(gradientDrawable)
-            }
-
-
-        }
-
-    }
-
-
-
-
 
 }

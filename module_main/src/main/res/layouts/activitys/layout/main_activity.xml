@@ -10,7 +10,7 @@
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/main_viewpager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content" />
 
     <com.yh.bottomnavigationex.BottomNavigationViewEx
         android:id="@+id/btn_nav"
@@ -22,5 +22,7 @@
         app:layout_behavior="com.knight.kotlin.library_widget.BottomNavigationBehavior"
         app:menu="@menu/main_menu_main"
         />
+
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

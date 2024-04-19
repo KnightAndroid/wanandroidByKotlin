@@ -37,6 +37,7 @@ object ViewInitUtils {
             override fun getItemCount(): Int {
                 return fragments.size
             }
+
         }
     }
 

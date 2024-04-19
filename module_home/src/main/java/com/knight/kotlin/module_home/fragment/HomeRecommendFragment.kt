@@ -3,7 +3,12 @@ package com.knight.kotlin.module_home.fragment
 import android.animation.Animator
 import android.animation.AnimatorSet
 import android.animation.ValueAnimator
+import android.app.Activity
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
+import android.os.Build
+import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.animation.DecelerateInterpolator
@@ -20,6 +25,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.common.reflect.TypeToken
 import com.knight.kotlin.library_aop.loginintercept.LoginCheck
 import com.knight.kotlin.library_base.annotation.EventBusRegister
+import com.knight.kotlin.library_base.config.Appconfig
+import com.knight.kotlin.library_base.config.CacheKey
+import com.knight.kotlin.library_base.entity.LoginEntity
+import com.knight.kotlin.library_base.entity.UserInfoEntity
 import com.knight.kotlin.library_base.event.MessageEvent
 import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.knight.kotlin.library_base.ktx.getUser
@@ -29,12 +38,23 @@ import com.knight.kotlin.library_base.ktx.toHtml
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.route.RouteFragment
 import com.knight.kotlin.library_base.util.ArouteUtils
+import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_base.util.ColorUtils
+import com.knight.kotlin.library_base.util.EventBusUtils
 import com.knight.kotlin.library_base.util.GsonUtils
 import com.knight.kotlin.library_base.util.LanguageFontSizeUtils
 import com.knight.kotlin.library_base.util.dp2px
 import com.knight.kotlin.library_common.entity.OfficialAccountEntity
+import com.knight.kotlin.library_database.entity.PushDateEntity
+import com.knight.kotlin.library_permiss.XXPermissions
+import com.knight.kotlin.library_permiss.listener.OnPermissionCallback
+import com.knight.kotlin.library_permiss.permissions.Permission
+import com.knight.kotlin.library_permiss.utils.PermissionUtils
+import com.knight.kotlin.library_scan.activity.ScanCodeActivity
+import com.knight.kotlin.library_scan.annoation.ScanStyle
+import com.knight.kotlin.library_scan.decode.ScanCodeConfig
 import com.knight.kotlin.library_util.BlurBuilderUtils
+import com.knight.kotlin.library_util.DateUtils
 import com.knight.kotlin.library_util.JsonUtils
 import com.knight.kotlin.library_util.SystemUtils
 import com.knight.kotlin.library_util.image.ImageLoader
@@ -52,12 +72,16 @@ import com.knight.kotlin.module_home.adapter.OfficialAccountAdapter
 import com.knight.kotlin.module_home.adapter.OpenSourceAdapter
 import com.knight.kotlin.module_home.adapter.TopArticleAdapter
 import com.knight.kotlin.module_home.databinding.HomeRecommendFragmentBinding
+import com.knight.kotlin.module_home.dialog.HomePushArticleFragment
 import com.knight.kotlin.module_home.entity.BannerBean
+import com.knight.kotlin.module_home.entity.EveryDayPushArticlesBean
 import com.knight.kotlin.module_home.entity.HomeArticleListBean
 import com.knight.kotlin.module_home.entity.OpenSourceBean
 import com.knight.kotlin.module_home.entity.TopArticleBean
 import com.knight.kotlin.module_home.utils.HomeAnimUtils
 import com.knight.kotlin.module_home.vm.HomeRecommendVm
+import com.knight.library_biometric.control.BiometricControl
+import com.knight.library_biometric.listener.BiometricStatusCallback
 import com.scwang.smart.refresh.layout.api.RefreshHeader
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.constant.RefreshState
@@ -74,6 +98,9 @@ import com.youth.banner.indicator.CircleIndicator
 import dagger.hilt.android.AndroidEntryPoint
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import javax.crypto.BadPaddingException
+import javax.crypto.Cipher
+import javax.crypto.IllegalBlockSizeException
 
 /**
  * Author:Knight
@@ -120,7 +147,10 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
     private val topArticleFootView: View by lazy {
         LayoutInflater.from(requireActivity()).inflate(R.layout.home_toparticle_foot, null)
     }
-
+    /**
+     * 获取推送文章
+     */
+    private lateinit var mEveryDayPushData: EveryDayPushArticlesBean
     //Banner布局
     private lateinit var mBanner: Banner<BannerBean, BannerImageAdapter<BannerBean>>
 
@@ -150,10 +180,18 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
     //FloatingActionButton宽度和高度，宽高一样
     private var width: Int = 0
 
+    /**
+     * 知识标签
+     */
+    private var knowledgeLabelList = mutableListOf<String>()
     override fun setThemeColor(isDarkMode: Boolean) {
+        if (!isDarkMode) {
+            isWithStatusTheme(CacheUtils.getStatusBarIsWithTheme())
+        }
     }
 
     override fun HomeRecommendFragmentBinding.initView() {
+        mBinding.root.rotation = 180f
         mSkeletonScreen = Skeleton.bind(mBinding.rlHome)
             .load(R.layout.home_skeleton_activity)
             .duration(1200)
@@ -164,7 +202,14 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
         initOfficialListener()
         initArticleListener()
         initTwoLevel()
-        setOnClickListener(homeIconFab,homeIconCourse!!,homeIconUtils!!,homeIconScrollUp!!)
+        setOnClickListener(homeIncludeToolbar!!.homeScanIcon,homeIncludeToolbar.homeTvLoginname,
+            homeIncludeToolbar.homeIvEveryday,
+            homeIncludeToolbar.homeIvAdd,homeIncludeToolbar.homeRlSearch,homeIconFab,homeIconCourse!!,homeIconUtils!!,homeIconScrollUp!!)
+        getUser()?.let {
+            homeIncludeToolbar.homeTvLoginname.text = it.username
+        } ?: kotlin.run {
+            homeIncludeToolbar.homeTvLoginname.text = getString(R.string.home_tv_login)
+        }
         homeIconFab.backgroundTintList = ColorUtils.createColorStateList(themeColor, themeColor)
         homeIconCourse.backgroundTintList = ColorUtils.createColorStateList(themeColor, themeColor)
         homeIconUtils.backgroundTintList = ColorUtils.createColorStateList(themeColor, themeColor)
@@ -247,6 +292,7 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
 
     override fun initRequestData() {
         currentPage = 0
+        mViewModel.getEveryDayPushArticle()
         //未读信息请求
         getUser()?.let {
             mViewModel.getUnreadMessage()
@@ -260,6 +306,9 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
     }
 
     override fun initObserver() {
+        observeLiveData(mViewModel.everyDayPushArticles, ::setEveryDayPushArticle)
+        observeLiveData(mViewModel.userInfo,::setUserInfo)
+        observeLiveData(mViewModel.articles, ::processPushArticle)
         observeLiveData(mViewModel.topArticles, ::setTopArticle)
         observeLiveData(mViewModel.articleList, ::setArticles)
         observeLiveData(mViewModel.bannerList, ::setBanner)
@@ -403,6 +452,46 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
         }
 
 
+    }
+
+
+    /**
+     *
+     * 登录
+     */
+    private fun setUserInfo(userInfoEntity: UserInfoEntity){
+        CacheUtils.saveDataInfo(CacheKey.USER,userInfoEntity)
+        Appconfig.user = userInfoEntity
+        EventBusUtils.postEvent(MessageEvent(MessageEvent.MessageType.LoginSuccess))
+    }
+
+    /**
+     * 获取推送文章具体数据
+     */
+    private fun setEveryDayPushArticle(data: EveryDayPushArticlesBean) {
+        mEveryDayPushData = data
+        if (data.pushStatus && DateUtils.isToday(data.time)) {
+            //查询本地推送文章时间 进行判断
+            mViewModel.queryPushDate()
+        }
+
+    }
+
+    //处理是否进行弹窗
+    private fun processPushArticle(datas: List<PushDateEntity>) {
+        if (datas != null && datas.isNotEmpty()) {
+            var pushDateEntity = datas[0]
+            if (pushDateEntity.time == mEveryDayPushData.time) {
+                pushDateEntity.time = mEveryDayPushData.time
+                mViewModel.updatePushArticlesDate(pushDateEntity)
+                HomePushArticleFragment.newInstance(mEveryDayPushData.datas).showAllowingStateLoss(parentFragmentManager,"dialog_everydaypush")
+            }
+        } else {
+            val pushTempDateEntity = PushDateEntity()
+            pushTempDateEntity.time = mEveryDayPushData.time
+            mViewModel.insertPushArticlesDate(pushTempDateEntity)
+            HomePushArticleFragment.newInstance(mEveryDayPushData.datas).showAllowingStateLoss(parentFragmentManager,"dialog_everydaypush")
+        }
     }
 
     /**
@@ -637,8 +726,60 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
             mBinding.homeIconScrollUp -> {
                 scrollTop()
             }
+            mBinding.homeIncludeToolbar!!.homeScanIcon->{
+                XXPermissions.with(this@HomeRecommendFragment)
+                    ?.permission(Permission.CAMERA)
+                    ?.request(object : OnPermissionCallback {
+                        override fun onGranted(permissions: List<String>, all: Boolean) {
+                            if (all) {
+                                ScanCodeConfig.Builder()
+                                    .setFragment(this@HomeRecommendFragment)
+                                    .setActivity(activity)
+                                    .setPlayAudio(true)
+                                    .setStyle(ScanStyle.FULL_SCREEN)
+                                    .build().start(ScanCodeActivity::class.java)
+                            }
+                        }
 
+                        override fun onDenied(permissions: List<String>, doNotAskAgain: Boolean) {
+                            super.onDenied(permissions, doNotAskAgain)
+                            activity?.let {
+                                PermissionUtils.showPermissionSettingDialog(it,permissions,permissions,object :
+                                    OnPermissionCallback {
+                                    override fun onGranted(permissions: List<String>, all: Boolean) {
 
+                                    }
+                                })
+                            }
+                        }
+                    })
+            }
+            mBinding.homeIncludeToolbar!!.homeIvEveryday->{
+                HomePushArticleFragment.newInstance(mEveryDayPushData.datas).showAllowingStateLoss(parentFragmentManager,"dialog_everydaypush")
+            }
+
+            mBinding.homeIncludeToolbar!!.homeIvAdd->{
+                startPage(RouteActivity.Square.SquareShareArticleActivity)
+            }
+            mBinding.homeIncludeToolbar!!.homeTvLoginname -> {
+                if (mBinding.homeIncludeToolbar!!.homeTvLoginname.text.toString().equals(getString(R.string.home_tv_login))) {
+                    if (CacheUtils.getGestureLogin()) {
+                        startPage(RouteActivity.Mine.QuickLoginActivity)
+                    } else if (CacheUtils.getFingerLogin()) {
+                        loginBiomtric()
+                    } else {
+                        startPage(RouteActivity.Mine.LoginActivity)
+                    }
+                }
+            }
+
+            mBinding.homeIncludeToolbar!!.homeRlSearch ->{
+                startPage(RouteActivity.Home.HomeSearchActivity)
+            }
+
+//            mBinding.homeIvLabelmore -> {
+//                startPageWithStringArrayListParams(RouteActivity.Home.HomeKnowLedgeLabelActivity,"data" to ArrayList(knowledgeLabelList))
+//            }
         }
     }
 
@@ -652,11 +793,43 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
             //登录成功
             MessageEvent.MessageType.LoginSuccess -> {
                 initRequestData()
+                mBinding.homeIncludeToolbar!!.homeTvLoginname.text = getUser()?.username
             }
-            //登录失败
+            //退出登录
             MessageEvent.MessageType.LogoutSuccess -> {
                 home_rl_message.visibility = View.GONE
                 initRequestData()
+                //退出登录成功
+                mBinding.homeIncludeToolbar!!.homeTvLoginname.setText(getString(R.string.home_tv_login))
+            }
+
+            MessageEvent.MessageType.LogoutSuccess -> {
+
+            }
+
+            //更改标签
+            MessageEvent.MessageType.ChangeLabel -> {
+//                knowledgeLabelList.clear()
+//                knowledgeLabelList.addAll(event.getStringList())
+//                mFragments.clear()
+//                for (i in knowledgeLabelList.indices) {
+//                    if (i == 0) {
+//                        mFragments.add(HomeRecommendFragment())
+//                    } else {
+//                        mFragments.add(HomeArticleFragment())
+//                    }
+//                }
+//                mBinding.magicIndicator.navigator.notifyDataSetChanged()
+//                mBinding.viewPager.adapter?.notifyDataSetChanged()
+//                ViewInitUtils.setViewPager2Init(requireActivity(),mBinding.viewPager,mFragments,
+//                    isOffscreenPageLimit = true,
+//                    isUserInputEnabled = false
+//                )
+            }
+
+            //改变状态栏颜色
+            MessageEvent.MessageType.ChangeStatusTheme -> {
+                isWithStatusTheme(event.getBoolean())
             }
 
             else -> {}
@@ -750,6 +923,116 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
             animatorSet?.playSequentially(upScrollView, utils, course)
         }
         animatorSet?.start()
+    }
+
+    /**
+     * 指纹登录
+     */
+    private fun loginBiomtric() {
+        BiometricControl.setStatusCallback(object : BiometricStatusCallback {
+            override fun onUsePassword() {
+                startPage(RouteActivity.Mine.LoginActivity)
+            }
+
+            override fun onVerifySuccess(cipher: Cipher?) {
+                try {
+                    val text = CacheUtils.getEncryptLoginMessage()
+                    val input = Base64.decode(text, Base64.URL_SAFE)
+                    val bytes = cipher?.doFinal(input)
+
+                    /**
+                     * 然后这里用原密码(当然是加密过的)调登录接口
+                     */
+                    val loginEntity: LoginEntity? =
+                        GsonUtils.get(String(bytes ?: ByteArray(0)), LoginEntity::class.java)
+                    val iv = cipher?.iv
+
+                    //走登录接口
+                    loginEntity?.let {
+                        mViewModel.login(it.loginName,it.loginPassword)
+                    }
+
+                } catch (e: BadPaddingException) {
+                    e.printStackTrace()
+                } catch (e: IllegalBlockSizeException) {
+                    e.printStackTrace()
+                }
+            }
+
+            override fun onFailed() {
+                startPage(RouteActivity.Mine.LoginActivity)
+            }
+
+            override fun error(code: Int, reason: String?) {
+                ToastUtils.show("$code,$reason")
+                startPage(RouteActivity.Mine.LoginActivity)
+            }
+
+            override fun onCancel() {
+                ToastUtils.show(R.string.home_biometric_cancel)
+                startPage(RouteActivity.Mine.LoginActivity)
+            }
+        }).loginBlomtric(requireActivity())
+
+
+
+
+
+    }
+
+
+    /**
+     * 状态栏是否跟随主题色变化
+     *
+     */
+    private fun isWithStatusTheme(statusWIthTheme:Boolean) {
+        if (!CacheUtils.getNightModeStatus()) {
+            val gradientDrawable = GradientDrawable()
+            gradientDrawable.shape = GradientDrawable.RECTANGLE
+            gradientDrawable.cornerRadius = 45.dp2px().toFloat()
+            if (statusWIthTheme) {
+                gradientDrawable.setColor(Color.WHITE)
+                mBinding.homeIncludeToolbar?.run {
+                    homeTvLoginname.setTextColor(Color.WHITE)
+                    homeIvAdd.setBackgroundResource(R.drawable.home_icon_add_white)
+                    homeIvEveryday.setBackgroundResource(R.drawable.home_icon_everyday_white)
+                    toolbar.setBackgroundColor(CacheUtils.getThemeColor())
+                }
+
+            } else {
+                gradientDrawable.setColor(Color.parseColor("#1f767680"))
+                mBinding.homeIncludeToolbar?.run {
+                    homeTvLoginname.setTextColor(Color.parseColor("#333333"))
+                    homeIvEveryday.setBackgroundResource(R.drawable.home_icon_everyday)
+                    homeIvAdd.setBackgroundResource(R.drawable.home_icon_add)
+                    toolbar.setBackgroundColor(Color.WHITE)
+                }
+
+            }
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                mBinding.homeIncludeToolbar!!.homeRlSearch.background = gradientDrawable
+            } else {
+                mBinding.homeIncludeToolbar!!.homeRlSearch.setBackgroundDrawable(gradientDrawable)
+            }
+
+
+        }
+
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        //接收扫码结果
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == ScanCodeConfig.QUESTCODE && data != null) {
+                val extras = data.extras
+                if (extras != null) {
+                    val result = extras.getString(ScanCodeConfig.CODE_KEY)
+                    ToastUtils.show(result)
+                }
+            }
+        }
     }
 
 

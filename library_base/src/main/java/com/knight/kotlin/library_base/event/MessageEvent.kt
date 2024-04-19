@@ -171,8 +171,9 @@ data class MessageEvent(var type: MessageType) {
         //护眼模式
         EyeMode,
         //页面重建
-        RecreateMain
-
+        RecreateMain,
+        //底部导航栏动画
+        ChangeBottomNavigate
     }
 
 }

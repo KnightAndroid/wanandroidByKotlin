@@ -30,7 +30,6 @@ fun SwipeRecyclerView.init(
 }
 
 
-
 fun ViewPager2.init(
     mCompositePageTransformer: CompositePageTransformer,
     multiWidth:Int,

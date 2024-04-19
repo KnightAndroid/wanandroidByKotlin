@@ -24,3 +24,4 @@
 -dontwarn com.knight.kotlin.library_base.R$id
 -dontwarn com.knight.kotlin.library_base.R$layout
 -dontwarn com.knight.kotlin.library_base.R$string
+

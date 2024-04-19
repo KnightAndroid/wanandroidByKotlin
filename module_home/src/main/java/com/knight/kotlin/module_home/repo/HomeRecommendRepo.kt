@@ -1,11 +1,13 @@
 package com.knight.kotlin.module_home.repo
 
+import com.knight.kotlin.library_base.entity.UserInfoEntity
 import com.knight.kotlin.library_base.repository.BaseRepository
+import com.knight.kotlin.library_common.entity.OfficialAccountEntity
 import com.knight.kotlin.library_network.model.responseCodeExceptionHandler
 import com.knight.kotlin.module_home.api.HomeRecommendApiService
 import com.knight.kotlin.module_home.entity.BannerBean
+import com.knight.kotlin.module_home.entity.EveryDayPushArticlesBean
 import com.knight.kotlin.module_home.entity.HomeArticleListBean
-import com.knight.kotlin.library_common.entity.OfficialAccountEntity
 import com.knight.kotlin.module_home.entity.TopArticleBean
 import javax.inject.Inject
 
@@ -19,6 +21,15 @@ class HomeRecommendRepo @Inject constructor(): BaseRepository() {
     lateinit var mHomeRecommendApiService: HomeRecommendApiService
 
 
+    /**
+     * 获取推送文章信息接口
+     */
+    suspend fun getEveryDayPushArticle() = request<EveryDayPushArticlesBean>{
+        mHomeRecommendApiService.getEveryDayPushArticle().run {
+            responseCodeExceptionHandler(code, msg)
+            emit(data)
+        }
+    }
     /**
      * 获取未读消息
      */
@@ -94,6 +105,17 @@ class HomeRecommendRepo @Inject constructor(): BaseRepository() {
      */
     suspend fun unCollectArticle(unCollectArticleId:Int) = request<Any> {
         mHomeRecommendApiService.unCollectArticle(unCollectArticleId).run {
+            responseCodeExceptionHandler(code,msg)
+            emit(data)
+        }
+    }
+
+    /**
+     *
+     * 登录
+     */
+    suspend fun login(userName:String,passWord:String) = request<UserInfoEntity>{
+        mHomeRecommendApiService.login(userName,passWord).run {
             responseCodeExceptionHandler(code,msg)
             emit(data)
         }

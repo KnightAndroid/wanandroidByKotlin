@@ -1,6 +1,8 @@
 package com.knight.kotlin.module_main.activity
 
 import android.view.KeyEvent
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import androidx.fragment.app.Fragment
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.annotation.EventBusRegister
@@ -29,7 +31,13 @@ class MainActivity : BaseActivity<MainActivityBinding,MainViewModel>() {
     
     private var mExitAppTime: Long = 0
     val fragments:MutableList<Fragment> = mutableListOf()
+    private var anim_hide: Animation? =null
+    private var anim_show: Animation? =null
     override fun MainActivityBinding.initView() {
+        anim_hide = AnimationUtils.loadAnimation(this@MainActivity, R.anim.main_bottombar_hide_anim)
+        anim_show = AnimationUtils.loadAnimation(this@MainActivity, R.anim.main_bottombar_show_anim)
+        anim_hide?.fillAfter = true
+        anim_show?.fillAfter = true
         initFragments()
         ViewInitUtils.setViewPager2Init(this@MainActivity,mainViewpager,fragments,
             isOffscreenPageLimit = true,
@@ -115,6 +123,13 @@ class MainActivity : BaseActivity<MainActivityBinding,MainViewModel>() {
 
            MessageEvent.MessageType.EyeMode -> {
                 openOrCloseEye(event.getBoolean())
+           }
+           MessageEvent.MessageType.ChangeBottomNavigate -> {
+                 if (event.getBoolean()) {
+                     mBinding.btnNav.startAnimation(anim_hide)
+                 } else {
+                     mBinding.btnNav.startAnimation(anim_show)
+                 }
            }
 
             else -> {}

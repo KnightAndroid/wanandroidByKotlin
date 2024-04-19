@@ -1,11 +1,16 @@
 package com.knight.kotlin.module_home.api
 
+import com.knight.kotlin.library_base.entity.UserInfoEntity
 import com.knight.kotlin.library_common.entity.OfficialAccountEntity
 import com.knight.kotlin.library_network.bean.BaseResponse
 import com.knight.kotlin.module_home.entity.BannerBean
+import com.knight.kotlin.module_home.entity.EveryDayPushArticlesBean
 import com.knight.kotlin.module_home.entity.HomeArticleListBean
 import com.knight.kotlin.module_home.entity.TopArticleBean
+import retrofit2.http.Field
+import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
+import retrofit2.http.Headers
 import retrofit2.http.POST
 import retrofit2.http.Path
 
@@ -17,6 +22,12 @@ import retrofit2.http.Path
 interface HomeRecommendApiService {
 
 
+    /**
+     * 获取每日推荐文章
+     */
+    @Headers("Domain-Name:gitee")
+    @GET("MengSuiXinSuoYuan/wanandroid_server/raw/master/wanandroid_config/advert/dailyPushArticles.json")
+    suspend fun getEveryDayPushArticle(): BaseResponse<EveryDayPushArticlesBean>
     /**
      *
      * 获取置顶文章
@@ -67,6 +78,14 @@ interface HomeRecommendApiService {
      */
     @POST("lg/uncollect_originId/{unCollectArticleId}/json")
     suspend fun unCollectArticle(@Path("unCollectArticleId") unCollectArticleId:Int):BaseResponse<Any>
+
+    /**
+     * 登录接口
+     *
+     */
+    @FormUrlEncoded
+    @POST("user/login")
+    suspend fun login(@Field("username") userName:String, @Field("password") passWord:String): BaseResponse<UserInfoEntity>
 
 
 }
