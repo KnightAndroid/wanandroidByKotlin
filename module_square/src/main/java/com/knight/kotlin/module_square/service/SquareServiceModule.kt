@@ -1,6 +1,7 @@
 package com.knight.kotlin.module_square.service
 
 import com.knight.kotlin.module_square.api.SquareApi
+import com.knight.kotlin.module_square.api.SquareArticleApi
 import com.knight.kotlin.module_square.api.SquareShareArticleApi
 import dagger.Module
 import dagger.Provides
@@ -41,5 +42,18 @@ class SquareServiceModule {
     @Provides
     fun provideSquareService(retrofit: Retrofit) : SquareApi {
         return retrofit.create(SquareApi::class.java)
+    }
+
+
+    /**
+     * Square模块的[SquareArticleApi]依赖提供方法
+     *
+     * @param retrofit Retrofit
+     * @return SquareArticleApi
+     */
+    @Singleton
+    @Provides
+    fun provideSquarArticleService(retrofit: Retrofit) : SquareArticleApi {
+        return retrofit.create(SquareArticleApi::class.java)
     }
 }

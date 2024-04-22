@@ -1,4 +1,4 @@
-package com.knight.kotlin.module_home.fragment
+package com.knight.kotlin.module_square.fragment
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.knight.kotlin.library_aop.loginintercept.LoginCheck
@@ -12,12 +12,12 @@ import com.knight.kotlin.library_base.util.ArouteUtils
 import com.knight.kotlin.library_widget.ktx.init
 import com.knight.kotlin.library_widget.ktx.setItemChildClickListener
 import com.knight.kotlin.library_widget.ktx.setItemClickListener
-import com.knight.kotlin.module_home.R
-import com.knight.kotlin.module_home.adapter.HomeArticleAdapter
-import com.knight.kotlin.module_home.constants.HomeConstants
-import com.knight.kotlin.module_home.databinding.HomeArticleFragmentBinding
-import com.knight.kotlin.module_home.entity.HomeArticleListBean
-import com.knight.kotlin.module_home.vm.HomeArticleVm
+import com.knight.kotlin.module_square.R
+import com.knight.kotlin.module_square.adapter.SquareArticleAdapter
+import com.knight.kotlin.module_square.constants.SquareConstants
+import com.knight.kotlin.module_square.databinding.SquareArticleFragmentBinding
+import com.knight.kotlin.module_square.entity.SquareArticleListBean
+import com.knight.kotlin.module_square.vm.SquareArticleVm
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener
@@ -29,15 +29,16 @@ import org.greenrobot.eventbus.ThreadMode
 /**
  * Author:Knight
  * Time:2021/12/29 16:36
- * Description:HomeArticleFragment
+ * Description:SquareArticleFragment
  */
+
 @EventBusRegister
 @AndroidEntryPoint
-@Route(path = RouteFragment.Home.HomeArticleFragment)
-class HomeArticleFragment:BaseFragment<HomeArticleFragmentBinding,HomeArticleVm>(),OnLoadMoreListener,OnRefreshListener {
+@Route(path = RouteFragment.Square.SquareArticleFragment)
+class SquareArticleFragment:BaseFragment<SquareArticleFragmentBinding, SquareArticleVm>(),OnLoadMoreListener,OnRefreshListener {
 
     //推荐文章适配器
-    private val mHomeArticleAdapter: HomeArticleAdapter by lazy { HomeArticleAdapter(arrayListOf()) }
+    private val mSquareArticleAdapter: SquareArticleAdapter by lazy { SquareArticleAdapter(arrayListOf()) }
     private var currentPage = 0
     //选择收藏/取消收藏的Item项
     private var selectItem = -1
@@ -47,33 +48,33 @@ class HomeArticleFragment:BaseFragment<HomeArticleFragmentBinding,HomeArticleVm>
 
     }
 
-    override fun HomeArticleFragmentBinding.initView() {
-        includeArticleRecycleview.baseBodyRv.init(LinearLayoutManager(requireActivity()),mHomeArticleAdapter,true)
-        includeArticleRecycleview.baseFreshlayout.setOnLoadMoreListener(this@HomeArticleFragment)
-        includeArticleRecycleview.baseFreshlayout.setOnRefreshListener(this@HomeArticleFragment)
-        mHomeArticleAdapter.run {
+    override fun SquareArticleFragmentBinding.initView() {
+        includeArticleRecycleview.baseBodyRv.init(LinearLayoutManager(requireActivity()),mSquareArticleAdapter,true)
+        includeArticleRecycleview.baseFreshlayout.setOnLoadMoreListener(this@SquareArticleFragment)
+        includeArticleRecycleview.baseFreshlayout.setOnRefreshListener(this@SquareArticleFragment)
+        mSquareArticleAdapter.run {
             setItemClickListener { adapter, view, position ->
                 ArouteUtils.startWebArticle(
-                    mHomeArticleAdapter.data[position].link,
-                    mHomeArticleAdapter.data[position].title,
-                    mHomeArticleAdapter.data[position].id,
-                    mHomeArticleAdapter.data[position].collect,
-                    mHomeArticleAdapter.data[position].envelopePic,
-                    mHomeArticleAdapter.data[position].desc,
-                    mHomeArticleAdapter.data[position].chapterName,
-                    mHomeArticleAdapter.data[position].author,
-                    mHomeArticleAdapter.data[position].shareUser
+                    mSquareArticleAdapter.data[position].link,
+                    mSquareArticleAdapter.data[position].title,
+                    mSquareArticleAdapter.data[position].id,
+                    mSquareArticleAdapter.data[position].collect,
+                    mSquareArticleAdapter.data[position].envelopePic,
+                    mSquareArticleAdapter.data[position].desc,
+                    mSquareArticleAdapter.data[position].chapterName,
+                    mSquareArticleAdapter.data[position].author,
+                    mSquareArticleAdapter.data[position].shareUser
                 )
             }
 
-            addChildClickViewIds(R.id.home_icon_collect)
+            addChildClickViewIds(R.id.square_icon_collect)
             setItemChildClickListener { adapter, view, position ->
                 when (view.id) {
-                    R.id.home_icon_collect -> {
+                    R.id.square_icon_collect -> {
                         selectItem = position
                         collectOrunCollect(
-                            mHomeArticleAdapter.data[position].collect,
-                            mHomeArticleAdapter.data[position].id
+                            mSquareArticleAdapter.data[position].collect,
+                            mSquareArticleAdapter.data[position].id
                         )
                     }
                 }
@@ -84,29 +85,29 @@ class HomeArticleFragment:BaseFragment<HomeArticleFragmentBinding,HomeArticleVm>
     }
 
     override fun initObserver() {
-        observeLiveData(mViewModel.collectArticle, ::collectSucess)
-        observeLiveData(mViewModel.unCollectArticle, ::unCollectSuccess)
+        observeLiveData(mViewModel.collectArticleStatus, ::collect)
+        observeLiveData(mViewModel.unCollectArticleStatus, ::unCollect)
         observeLiveDataWithError(mViewModel.articleList,mViewModel.articleListSuccess,::setArticleDatas,::setArticleDatasFailure)
 
     }
 
     override fun initRequestData() {
         requestLoading(mBinding.llHome)
-        mViewModel.getArticleByTag(currentPage, HomeConstants.ARTICLE_TYPE)
+        mViewModel.getArticleByTag(currentPage, SquareConstants.ARTICLE_TYPE)
     }
 
     override fun reLoadData() {
         currentPage = 0
-        mViewModel.getArticleByTag(currentPage, HomeConstants.ARTICLE_TYPE)
+        mViewModel.getArticleByTag(currentPage, SquareConstants.ARTICLE_TYPE)
     }
 
     override fun onLoadMore(refreshLayout: RefreshLayout) {
-        mViewModel.getArticleByTag(currentPage, HomeConstants.ARTICLE_TYPE)
+        mViewModel.getArticleByTag(currentPage, SquareConstants.ARTICLE_TYPE)
     }
 
     override fun onRefresh(refreshLayout: RefreshLayout) {
         currentPage = 0
-        mViewModel.getArticleByTag(currentPage, HomeConstants.ARTICLE_TYPE)
+        mViewModel.getArticleByTag(currentPage, SquareConstants.ARTICLE_TYPE)
     }
 
 
@@ -124,16 +125,16 @@ class HomeArticleFragment:BaseFragment<HomeArticleFragmentBinding,HomeArticleVm>
      *
      * 获取首页文章列表数据
      */
-    private fun setArticleDatas(data: HomeArticleListBean) {
+    private fun setArticleDatas(data: SquareArticleListBean) {
         requestSuccess()
         //这里获取currentPage自动会加1
         currentPage = data.curPage
         mBinding.includeArticleRecycleview.baseFreshlayout.finishRefresh()
         mBinding.includeArticleRecycleview.baseFreshlayout.finishLoadMore()
         if (currentPage > 1) {
-            mHomeArticleAdapter.addData(data.datas)
+            mSquareArticleAdapter.addData(data.datas)
         } else {
-            mHomeArticleAdapter.setNewInstance(data.datas)
+            mSquareArticleAdapter.setNewInstance(data.datas)
         }
 
         if (data.datas.size == 0) {
@@ -152,9 +153,12 @@ class HomeArticleFragment:BaseFragment<HomeArticleFragmentBinding,HomeArticleVm>
      *
      * 收藏成功
      */
-    private fun collectSucess(data: Boolean) {
-        mHomeArticleAdapter.data[selectItem].collect = true
-        mHomeArticleAdapter.notifyItemChanged(selectItem)
+    private fun collect(status: Boolean) {
+        if (status) {
+            mSquareArticleAdapter.data[selectItem].collect = true
+            mSquareArticleAdapter.notifyItemChanged(selectItem)
+        }
+
 
     }
 
@@ -162,9 +166,13 @@ class HomeArticleFragment:BaseFragment<HomeArticleFragmentBinding,HomeArticleVm>
      *
      * 取消收藏
      */
-    private fun unCollectSuccess(data: Boolean) {
-        mHomeArticleAdapter.data[selectItem].collect = false
-        mHomeArticleAdapter.notifyItemChanged(selectItem)
+    private fun unCollect(status: Boolean) {
+        if (status) {
+            mSquareArticleAdapter.data[selectItem].collect = false
+            mSquareArticleAdapter.notifyItemChanged(selectItem)
+        }
+
+
 
     }
 
@@ -173,7 +181,7 @@ class HomeArticleFragment:BaseFragment<HomeArticleFragmentBinding,HomeArticleVm>
         when (event.type) {
             MessageEvent.MessageType.CollectSuccess ->{
                 currentPage = 0
-                mViewModel.getArticleByTag(currentPage,HomeConstants.ARTICLE_TYPE)
+                mViewModel.getArticleByTag(currentPage,SquareConstants.ARTICLE_TYPE)
             }
 
             else -> {}

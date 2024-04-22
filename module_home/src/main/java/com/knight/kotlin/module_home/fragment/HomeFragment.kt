@@ -41,10 +41,6 @@ class HomeFragment : BaseFragment<HomeFragmentBinding, HomeVm>() {
 
     override fun HomeFragmentBinding.initView() {
         initMagicIndicator()
-
-        //,homeIvLabelmore
-
-
     }
 
     /**

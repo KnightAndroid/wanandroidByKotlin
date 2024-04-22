@@ -6,7 +6,7 @@ import com.knight.kotlin.library_base.ktx.appStr
 import com.knight.kotlin.library_base.vm.BaseViewModel
 import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_square.R
-import com.knight.kotlin.module_square.repo.SquareShareRepo
+import com.knight.kotlin.module_square.repo.SquareShareListRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
@@ -23,7 +23,7 @@ import javax.inject.Inject
  * Description:SquareShareArticleVm
  */
 @HiltViewModel
-class SquareShareArticleVm @Inject constructor (private val mRepo:SquareShareRepo) : BaseViewModel() {
+class SquareShareArticleVm @Inject constructor (private val mRepo:SquareShareListRepo) : BaseViewModel() {
 
     val shareArticleSuccess = MutableLiveData<Boolean>()
 

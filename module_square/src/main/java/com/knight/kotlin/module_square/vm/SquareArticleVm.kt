@@ -1,11 +1,11 @@
-package com.knight.kotlin.module_home.vm
+package com.knight.kotlin.module_square.vm
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.knight.kotlin.library_base.vm.BaseViewModel
 import com.knight.kotlin.library_util.toast
-import com.knight.kotlin.module_home.entity.HomeArticleListBean
-import com.knight.kotlin.module_home.repo.HomeArticleRepo
+import com.knight.kotlin.module_square.entity.SquareArticleListBean
+import com.knight.kotlin.module_square.repo.SquareArticleRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
@@ -19,23 +19,23 @@ import javax.inject.Inject
 /**
  * Author:Knight
  * Time:2022/4/11 11:21
- * Description:HomeArticleVm
+ * Description:SquareArticleVm
  */
 @HiltViewModel
-class HomeArticleVm @Inject constructor(private val mRepo: HomeArticleRepo) : BaseViewModel(){
-    //首页文章数据结果
-    val articleList = MutableLiveData<HomeArticleListBean>()
+class SquareArticleVm @Inject constructor(private val mRepo: SquareArticleRepo) : BaseViewModel(){
+    //文章列表数据结果
+    val articleList = MutableLiveData<SquareArticleListBean>()
     val articleListSuccess = MutableLiveData<Boolean>(true)
     //是否收藏成功
-    val collectArticle = MutableLiveData<Boolean>()
+    val collectArticleStatus = MutableLiveData<Boolean>()
     //是否取消收藏成功
-    val unCollectArticle = MutableLiveData<Boolean>()
+    val unCollectArticleStatus = MutableLiveData<Boolean>()
 
 
 
     /**
      *
-     * 获取广告数据
+     * 根据关键词获取文章列表
      *
      */
     fun getArticleByTag(page:Int,keyword:String) {
@@ -72,12 +72,15 @@ class HomeArticleVm @Inject constructor(private val mRepo: HomeArticleRepo) : Ba
                     //开始
                 }
                 .onEach {
-                    collectArticle.postValue(true)
+                    collectArticleStatus.postValue(true)
                 }
                 .onCompletion {
                     //结束
                 }
-                .catch { toast(it.message ?: "") }
+                .catch {
+                    toast(it.message ?: "")
+                    collectArticleStatus.postValue(false)
+                }
                 .collect()
         }
     }
@@ -93,12 +96,15 @@ class HomeArticleVm @Inject constructor(private val mRepo: HomeArticleRepo) : Ba
                     //开始
                 }
                 .onEach {
-                    unCollectArticle.postValue(true)
+                    unCollectArticleStatus.postValue(true)
                 }
                 .onCompletion {
                     //结束
                 }
-                .catch { toast(it.message ?: "") }
+                .catch {
+                    toast(it.message ?: "")
+                    unCollectArticleStatus.postValue(false)
+                }
                 .collect()
         }
 

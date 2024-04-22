@@ -18,7 +18,7 @@ import com.knight.kotlin.module_home.entity.HomeArticleEntity
  */
 class HomeArticleAdapter(data:MutableList<HomeArticleEntity>): BaseQuickAdapter<HomeArticleEntity, BaseViewHolder>(
     R.layout.home_article_item,data) {
-    override fun convert(holder: BaseViewHolder, item: HomeArticleEntity) {
+    override fun convert(holder: BaseViewHolder, item:HomeArticleEntity) {
         item.run {
             if (!author.isNullOrEmpty()) {
                 holder.setText(R.id.home_item_article_author,author)

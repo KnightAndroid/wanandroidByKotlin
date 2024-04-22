@@ -36,6 +36,8 @@ import com.knight.kotlin.module_mine.entity.UserInfoMessageEntity
 import com.knight.kotlin.module_mine.vm.MineViewModel
 import com.knight.library_biometric.control.BiometricControl
 import com.knight.library_biometric.listener.BiometricStatusCallback
+import com.scwang.smart.refresh.layout.api.RefreshLayout
+import com.scwang.smart.refresh.layout.listener.OnRefreshListener
 import com.wyjson.router.GoRouter
 import com.wyjson.router.annotation.Route
 import dagger.hilt.android.AndroidEntryPoint
@@ -53,7 +55,7 @@ import javax.crypto.IllegalBlockSizeException
 @EventBusRegister
 @AndroidEntryPoint
 @Route(path = RouteFragment.Mine.MineFragment)
-class MineFragment: BaseFragment<MineFragmentBinding, MineViewModel>() {
+class MineFragment: BaseFragment<MineFragmentBinding, MineViewModel>(),OnRefreshListener {
     override fun MineFragmentBinding.initView() {
          getUser()?.let {
              mineTvUsername.text = it.username
@@ -63,7 +65,7 @@ class MineFragment: BaseFragment<MineFragmentBinding, MineViewModel>() {
          }
 
         setOnClickListener(mineTvUsername,mineRlSetup,mineLlRank,mineRlPoint,mineRlVideo,mineRlCollect,mineRlShare,mineRlHistoryRecord,mineIvMessage)
-
+        mineRefreshLayout.setOnRefreshListener(this@MineFragment)
     }
 
     override fun initObserver() {
@@ -73,7 +75,7 @@ class MineFragment: BaseFragment<MineFragmentBinding, MineViewModel>() {
 
     override fun initRequestData() {
         getUser()?.let {
-            requestLoading(mBinding.mineSl)
+          //  requestLoading(mBinding.mineSl)
             mViewModel.getUserInfoCoin()
         }
     }
@@ -292,6 +294,10 @@ class MineFragment: BaseFragment<MineFragmentBinding, MineViewModel>() {
     override fun onDestroy() {
         super.onDestroy()
         BiometricControl.setunListener()
+    }
+
+    override fun onRefresh(refreshLayout: RefreshLayout) {
+       mBinding.mineRefreshLayout.finishRefresh()
     }
 
 

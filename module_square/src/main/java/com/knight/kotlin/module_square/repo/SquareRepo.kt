@@ -1,10 +1,8 @@
 package com.knight.kotlin.module_square.repo
 
-import com.knight.kotlin.library_base.entity.SearchHotKeyEntity
 import com.knight.kotlin.library_base.repository.BaseRepository
 import com.knight.kotlin.library_network.model.responseCodeExceptionHandler
 import com.knight.kotlin.module_square.api.SquareApi
-import com.knight.kotlin.module_square.entity.SquareArticleListBean
 import com.knight.kotlin.module_square.entity.SquareQuestionListBean
 import javax.inject.Inject
 
@@ -25,30 +23,6 @@ class SquareRepo @Inject constructor() : BaseRepository() {
             responseCodeExceptionHandler(code, msg)
             emit(data)
         }
-    }
-
-    /**
-     * 获取热词
-     *
-     */
-    suspend fun getHotKey() = request<MutableList<SearchHotKeyEntity>>{
-        mSquareApi.getHotKey().run{
-            responseCodeExceptionHandler(code, msg)
-            emit(data)
-        }
-
-    }
-
-    /**
-     *
-     * 获取广场文章列表数据
-     */
-    suspend fun getSquareArticles(page:Int) = request<SquareArticleListBean>{
-        mSquareApi.getSquareArticles(page).run{
-            responseCodeExceptionHandler(code, msg)
-            emit(data)
-        }
-
     }
 
     /**
@@ -73,5 +47,6 @@ class SquareRepo @Inject constructor() : BaseRepository() {
             emit(data)
         }
     }
+
 
 }

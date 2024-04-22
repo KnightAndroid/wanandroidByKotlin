@@ -21,6 +21,7 @@ import com.knight.kotlin.module_home.R
 import com.knight.kotlin.module_home.adapter.SearchResultAdapter
 import com.knight.kotlin.module_home.databinding.HomeSearchresultActivityBinding
 import com.knight.kotlin.module_home.entity.HomeArticleListBean
+
 import com.knight.kotlin.module_home.vm.HomeSearchResultVm
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener

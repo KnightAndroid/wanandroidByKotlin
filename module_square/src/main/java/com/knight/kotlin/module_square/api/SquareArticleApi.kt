@@ -1,7 +1,7 @@
-package com.knight.kotlin.module_home.api
+package com.knight.kotlin.module_square.api
 
 import com.knight.kotlin.library_network.bean.BaseResponse
-import com.knight.kotlin.module_home.entity.HomeArticleListBean
+import com.knight.kotlin.module_square.entity.SquareArticleListBean
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
@@ -10,9 +10,9 @@ import retrofit2.http.Path
 /**
  * Author:Knight
  * Time:2022/4/11 11:21
- * Description:HomeArticleApiService
+ * Description:SquareArticleApi
  */
-interface HomeArticleApiService {
+interface SquareArticleApi {
 
 
     /**
@@ -20,7 +20,7 @@ interface HomeArticleApiService {
      */
     @FormUrlEncoded
     @POST("article/query/{page}/json?page_size=10")
-    suspend fun getArticlebyTag(@Path("page") page:Int,@Field("k") keyword:String): BaseResponse<HomeArticleListBean>
+    suspend fun getArticlebyTag(@Path("page") page:Int,@Field("k") keyword:String): BaseResponse<SquareArticleListBean>
 
 
     /**

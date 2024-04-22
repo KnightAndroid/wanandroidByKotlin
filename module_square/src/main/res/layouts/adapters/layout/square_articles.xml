@@ -7,7 +7,7 @@
     android:foreground="?android:attr/selectableItemBackground"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context="com.knight.kotlin.module_square.adapter.SquareArticleAdapter">
+    tools:context="com.knight.kotlin.module_square.adapter.SquareShareArticleAdapter">
 
 
 

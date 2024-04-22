@@ -39,6 +39,20 @@
 
 
     <TextView
+        android:id="@+id/base_item_article_new_flag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/base_item_article_new_flag_margin_left"
+        android:background="@drawable/base_article_new_flag"
+        android:text="新"
+        android:textColor="@android:color/holo_red_light"
+        android:textSize="@dimen/base_item_article_new_flag_text_size"
+        app:layout_constraintBottom_toBottomOf="@id/base_item_article_author"
+        app:layout_constraintLeft_toRightOf="@id/base_tv_article_superchaptername"
+        app:layout_constraintTop_toTopOf="@id/base_item_article_author"
+        android:visibility="gone"/>
+
+    <TextView
         android:id="@+id/base_tv_articletitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

@@ -8,36 +8,6 @@
 
 
 
-    <RelativeLayout
-        android:id="@+id/home_rl_magicindicator"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/home_magic_height"
-        android:background="@color/home_magicindicator"
-        android:visibility="gone">
-
-
-        <net.lucode.hackware.magicindicator.MagicIndicator
-            android:id="@+id/magic_indicator"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/home_magic_height"
-            android:layout_marginRight="@dimen/home_magicindicator_marginright"
-            android:layout_toLeftOf="@+id/home_iv_labelmore"
-            android:minHeight="@dimen/home_magic_height"
-            />
-
-
-        <ImageView
-            android:id="@+id/home_iv_labelmore"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/home_label_margin_right"
-            android:background="@drawable/home_icon_flagmore"
-            />
-
-
-    </RelativeLayout>
 
 
          <androidx.viewpager2.widget.ViewPager2

@@ -2,11 +2,10 @@ package com.knight.kotlin.module_square.vm
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-
 import com.knight.kotlin.library_base.vm.BaseViewModel
 import com.knight.kotlin.library_util.toast
-import com.knight.kotlin.module_square.entity.SquareQuestionListBean
-import com.knight.kotlin.module_square.repo.SquareRepo
+import com.knight.kotlin.module_square.entity.SquareShareArticleListBean
+import com.knight.kotlin.module_square.repo.SquareShareListRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
@@ -19,29 +18,32 @@ import javax.inject.Inject
 
 /**
  * Author:Knight
- * Time:2024/4/22 11:06
- * Description:SquareVm
+ * Time:2022/4/27 17:05
+ * Description:SquareListVm
  */
 @HiltViewModel
-class SquareVm @Inject constructor(private val mRepo: SquareRepo) : BaseViewModel() {
-    //问答列表
-    val questionsList = MutableLiveData<SquareQuestionListBean>()
+class SquareListVm @Inject constructor(private val mRepo:SquareShareListRepo) : BaseViewModel() {
+
+    //广场数据
+    val squareArticleList = MutableLiveData<SquareShareArticleListBean>()
     //是否收藏成功
-    val collectQeArtStatus = MutableLiveData<Boolean>()
+    val collectArticleStatus = MutableLiveData<Boolean>()
     //是否取消收藏成功
-    val unCollectQeArtStatus = MutableLiveData<Boolean>()
+    val unCollectArticleStatus = MutableLiveData<Boolean>()
+
+
     /**
-     * 问答列表数据
+     *
+     * 请求广场文章列表
      */
-    fun getQuestion(page:Int) {
+    fun getSquareArticles(page:Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            mRepo.getQuestions(page)
+            mRepo.getSquareArticles(page)
                 .onStart {
 
                 }
                 .onEach {
-                    questionsList.postValue(it)
-                }
+                    squareArticleList .postValue(it) }
                 .onCompletion {
 
                 }
@@ -52,6 +54,7 @@ class SquareVm @Inject constructor(private val mRepo: SquareRepo) : BaseViewMode
                 .collect()
         }
     }
+
 
 
     /**
@@ -65,14 +68,14 @@ class SquareVm @Inject constructor(private val mRepo: SquareRepo) : BaseViewMode
                     //开始
                 }
                 .onEach {
-                    collectQeArtStatus.postValue(true)
+                    collectArticleStatus.postValue(true)
                 }
                 .onCompletion {
                     //结束
                 }
                 .catch {
                     toast(it.message ?: "")
-                    collectQeArtStatus.postValue(false)
+                    collectArticleStatus.postValue(false)
                 }
                 .collect()
         }
@@ -89,20 +92,18 @@ class SquareVm @Inject constructor(private val mRepo: SquareRepo) : BaseViewMode
                     //开始
                 }
                 .onEach {
-                    unCollectQeArtStatus.postValue(true)
+                    unCollectArticleStatus.postValue(true)
                 }
                 .onCompletion {
                     //结束
                 }
                 .catch {
                     toast(it.message ?: "")
-                    unCollectQeArtStatus.postValue(false)
+                    unCollectArticleStatus.postValue(false)
                 }
                 .collect()
         }
 
 
     }
-
-
 }

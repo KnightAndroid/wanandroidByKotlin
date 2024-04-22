@@ -90,4 +90,6 @@
     <dimen name="base_item_bottom_margin_top">16dp</dimen>
     <dimen name="base_tv_network_tip">50dp</dimen>
     <dimen name="base_tv_network_tip_text_size">16sp</dimen>
+    <dimen name="base_item_article_new_flag_margin_left">10dp</dimen>
+    <dimen name="base_item_article_new_flag_text_size">12sp</dimen>
 </resources>

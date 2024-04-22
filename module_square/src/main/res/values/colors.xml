@@ -17,4 +17,12 @@
     <color name="square_item_articledata_color">#999999</color>
     <color name="square_question_activity_bg">#ffffff</color>
     <color name="square_question_tv_title_text_color">#333333</color>
+    <color name="square_magicindicator">#ffffff</color>
+    <color name="square_bg_item_article">#ffffff</color>
+    <color name="square_article_author_color">#999999</color>
+    <color name="square_tv_article_superchaptername_color">#999999</color>
+    <color name="square_tv_article_title_color">#333333</color>
+    <color name="square_tv_articledesc_color">#999999</color>
+    <color name="square_item_article_data_color">#999999</color>
+    <color name="square_item_article_bottom_color">#EFF2F5</color>
 </resources>

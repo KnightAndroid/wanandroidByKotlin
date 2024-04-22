@@ -1,11 +1,11 @@
-package com.knight.kotlin.module_home.constants
+package com.knight.kotlin.module_square.constants
 
 /**
  * Author:Knight
- * Time:2024/4/22 15:52
- * Description:HomeConstants
+ * Time:2024/4/22 15:36
+ * Description:SquareConstants
  */
-object HomeConstants {
+object SquareConstants {
     /**
      *
      * 首页选了什么类型

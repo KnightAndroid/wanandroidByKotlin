@@ -15,7 +15,6 @@ object RouteFragment {
         private const val HOME = "/module_home"
         const val HomeFragment = "$HOME/HomeFragment"
         const val RecommendFragment = "$HOME/RecommendFragment"
-        const val HomeArticleFragment = "$HOME/ArticleFragment"
         const val HomeTopArticleFragment = "$HOME/TopArticleFragment"
         const val HomeClassifyFragment = "$HOME/ClassifyFragment"
     }
@@ -39,6 +38,8 @@ object RouteFragment {
     object Square {
         private const val SQUARE = "/module_square"
         const val SquareFragment = "$SQUARE/SquareFragment"
+        const val SquareShareListFragment = "$SQUARE/SquareShareListFragment"
+        const val SquareArticleFragment = "$SQUARE/ArticleFragment"
     }
 
 

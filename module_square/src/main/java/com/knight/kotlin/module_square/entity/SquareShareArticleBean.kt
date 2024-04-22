@@ -6,10 +6,10 @@ import kotlinx.parcelize.Parcelize
 /**
  * Author:Knight
  * Time:2022/4/26 15:55
- * Description:SquareArticleBean
+ * Description:SquareShareArticleBean
  */
 @Parcelize
-data class SquareArticleBean(
+data class SquareShareArticleBean(
     val apkLink:String,
     val audit:Int,
     val author:String,

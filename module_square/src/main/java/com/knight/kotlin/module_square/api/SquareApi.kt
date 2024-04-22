@@ -2,7 +2,6 @@ package com.knight.kotlin.module_square.api
 
 import com.knight.kotlin.library_base.entity.SearchHotKeyEntity
 import com.knight.kotlin.library_network.bean.BaseResponse
-import com.knight.kotlin.module_square.entity.SquareArticleListBean
 import com.knight.kotlin.module_square.entity.SquareQuestionListBean
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -29,11 +28,6 @@ interface SquareApi {
     @GET("hotkey/json")
     suspend fun getHotKey(): BaseResponse<MutableList<SearchHotKeyEntity>>
 
-    /**
-     * 获取广场文章数据
-     */
-    @GET("user_article/list/{page}/json?page_size=10")
-    suspend fun getSquareArticles(@Path("page") page:Int) : BaseResponse<SquareArticleListBean>
 
     /**
      *
@@ -49,5 +43,4 @@ interface SquareApi {
      */
     @POST("lg/uncollect_originId/{unCollectArticleId}/json")
     suspend fun unCollectArticle(@Path("unCollectArticleId") unCollectArticleId:Int):BaseResponse<Any>
-
 }
