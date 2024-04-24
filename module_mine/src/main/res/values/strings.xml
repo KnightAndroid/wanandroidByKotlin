@@ -58,5 +58,6 @@
     <string name="mine_confirm_cancel_share_article">是否删除此文章</string>
     <string name="mine_cleanall">清空</string>
     <string name="mine_cancel_all_historyrecord">是否要删除所有阅读历史记录</string>
+    <string name="mine_opensource_abroadlink">Github链接</string>
 
 </resources>

@@ -2,8 +2,7 @@
     <string name="home_app_name">module_home</string>
     <string name="home_tv_login">登录</string>
     <string name="home_hint_search">请输入关键字搜索</string>
-    <string name="home_opensource_internallink">国内代理链接</string>
-    <string name="home_opensource_abroadlink">Github链接</string>
+
     <string name="home_top_sticky">置顶</string>
     <string name="home_toparticle_foot">查看更多</string>
     <string name="home_biometric_cancel">取消</string>

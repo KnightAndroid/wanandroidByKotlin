@@ -29,34 +29,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
-
-                    <com.scwang.smart.refresh.header.TwoLevelHeader
-                        android:id="@+id/home_twoLevelHeader"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-
-                        <LinearLayout
-                            android:id="@+id/home_twoLevel_content"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:alpha="0"
-                            android:orientation="vertical">
-
-                            <com.yanzhenjie.recyclerview.SwipeRecyclerView
-                                android:id="@+id/second_openframe_rv"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="@dimen/home_second_level_margin_bottom" />
-
-
-                        </LinearLayout>
-
                         <com.scwang.smart.refresh.header.ClassicsHeader
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"/>
 
-                    </com.scwang.smart.refresh.header.TwoLevelHeader>
                     <!-- Viewpager2嵌套Recycleview解决滑动冲突 -->
                     <com.knight.kotlin.module_home.view.NestedScrollableHost
                         android:layout_width="match_parent"

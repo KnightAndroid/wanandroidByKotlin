@@ -41,7 +41,7 @@ class BottomNavigationBehavior:CoordinatorLayout.Behavior<View> {
         dy: Int,
         consumed: IntArray
     ) {
-        if (dy > 0) { // 上滑隐藏
+        if (dy > 0) { // 下滑隐藏
             outAnimator?.let {
                 if (!it.isRunning && child.translationY <= 0) {
                     it.start()
@@ -53,7 +53,7 @@ class BottomNavigationBehavior:CoordinatorLayout.Behavior<View> {
             }
 
 
-        } else if (dy < 0) { // 下滑显示
+        } else if (dy < 0) { // 上滑显示
             inAnimator?.let {
                 if (!it.isRunning && child.translationY >= child.height) {
                     it.start()

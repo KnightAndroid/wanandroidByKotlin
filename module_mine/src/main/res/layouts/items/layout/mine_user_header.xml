@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+
+        <ImageView
+            android:id="@+id/mine_iv_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/mine_icon_message_margin_top"
+            android:layout_marginRight="@dimen/mine_icon_message_margin_right"
+            android:background="@drawable/mine_icon_message"
+            android:layout_alignParentRight="true"
+            />
+
+        <RelativeLayout
+            android:id="@+id/mine_rl_user_head"
+            android:layout_width="@dimen/mine_rl_user_head_width"
+            android:layout_height="@dimen/mine_rl_user_head_height"
+            android:layout_marginTop="@dimen/mine_rl_user_head_margin_top"
+            android:layout_centerHorizontal="true">
+
+            <ImageView
+                android:id="@+id/mine_iv_head"
+                android:layout_width="@dimen/mine_iv_head_width"
+                android:layout_height="@dimen/mine_iv_head_height"
+                android:layout_centerVertical="true"
+                android:background="@drawable/mine_iv_default_head" />
+
+            <TextView
+                android:id="@+id/mine_tv_userabbr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/mine_tv_userabbr_textsize"
+                android:textStyle="bold" />
+
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/mine_tv_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/mine_tv_username_margin_top"
+            android:text="@string/mine_please_login"
+            android:textSize="@dimen/mine_tv_username_textsize"
+            android:textStyle="bold"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/mine_rl_user_head"/>
+
+
+        <LinearLayout
+            android:id="@+id/mine_ll_rank"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/mine_ll_rank_margin_top"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/mine_tv_username">
+
+
+            <TextView
+                android:id="@+id/mine_tv_level"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/mine_gradle_flag"
+                android:textSize="@dimen/mine_tv_level_textsize" />
+
+
+            <TextView
+                android:id="@+id/mine_tv_rank"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/mine_tv_rank_margin_left"
+                android:text="@string/mine_tv_rank"
+                android:textSize="@dimen/mine_tv_rank_textsize" />
+        </LinearLayout>
+</RelativeLayout>

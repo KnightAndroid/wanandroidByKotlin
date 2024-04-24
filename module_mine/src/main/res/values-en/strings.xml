@@ -59,4 +59,5 @@
     <string name="mine_confirm_cancel_share_article">Do you want to cancel the share of this article</string>
     <string name="mine_cleanall">Clear</string>
     <string name="mine_cancel_all_historyrecord">Do you want to delete all reading history</string>
+    <string name="mine_opensource_abroadlink">GitHub link</string>
 </resources>

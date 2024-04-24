@@ -2,7 +2,7 @@
   {
     "name" : "ARouter",
     "desc" : " 一个用于帮助 Android App 进行组件化改造的框架 —— 支持模块间的路由、通信、解耦",
-    "abroadlink" : "https://github.com/alibaba/ARouter",
+    "abroadlink" : "https://github.com/wyjsonGo/GoRouter",
     "internallink": "https://hub.fastgit.org/alibaba/ARouter"
   },
   {
@@ -46,12 +46,6 @@
     "desc" : "一个处理网络请求的开源项目,是安卓端最火热的轻量级框架",
     "abroadlink" : "https://github.com/square/okhttp",
     "internallink": "https://hub.fastgit.org/square/okhttp"
-  },
-  {
-    "name" : "PersistentCookieJar",
-    "desc" : "A persistent CookieJar implementation for OkHttp 3 based on SharedPreferences.（一个自动实现用户信息cookie持久化）",
-    "abroadlink" : "https://github.com/franmontiel/PersistentCookieJar",
-    "internallink": "https://hub.fastgit.org/franmontiel/PersistentCookieJar"
   },
   {
     "name" : "XXPermissions",
@@ -100,5 +94,23 @@
     "desc" : "A memory leak detection library for Android.",
     "abroadlink" : "https://github.com/square/leakcanary",
     "internallink": "https://hub.fastgit.org/square/leakcanary"
+  },
+  {
+    "name" : "AndroidAOP",
+    "desc" : "AndroidAOP 是专属于 Android 端 Aop 框架，只需一个注解就可以请求权限、切换线程、禁止多点、监测生命周期",
+    "abroadlink" : "https://github.com/FlyJingFish/AndroidAOP",
+    "internallink": "https://github.com/FlyJingFish/AndroidAOP"
+  },
+  {
+    "name" : "Banner",
+    "desc" : "只做一个可以自定义的轮播容器，不侵入UI ",
+    "abroadlink" : "https://github.com/youth5201314/banner",
+    "internallink": "https://github.com/youth5201314/banner"
+  },
+  {
+    "name" : "ShimmerLayout",
+    "desc" : "可以用于为您的Android应用程序添加骨架加载微光效果（如Facebook或LinkedIn上使用的效果）",
+    "abroadlink" : "https://github.com/team-supercharge/ShimmerLayout",
+    "internallink": "https://github.com/team-supercharge/ShimmerLayout"
   }
 ]

@@ -40,9 +40,6 @@
     <dimen name="square_searchhot_rv_margin_top">10dp</dimen>
     <dimen name="square_searchhot_rv_margin_right">10dp</dimen>
     <dimen name="square_tv_new_share_margin_left">16dp</dimen>
-    <dimen name="square_tv_new_share_text_size">18sp</dimen>
-    <dimen name="square_view_bottom_height">8dp</dimen>
-    <dimen name="square_view_bottom_margin_top">16dp</dimen>
     <dimen name="square_fab_up_margin_right">20dp</dimen>
     <dimen name="square_fab_up_margin_bottom">70dp</dimen>
     <dimen name="square_tv_hotkey_text_size">16sp</dimen>

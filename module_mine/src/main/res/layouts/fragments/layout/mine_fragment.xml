@@ -1,22 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.scwang.smart.refresh.layout.SmartRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.scwang.smart.refresh.layout.SmartRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mine_refreshLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.knight.kotlin.module_mine.fragment.MineFragment">
+    tools:context="com.knight.kotlin.module_mine.fragment.MineFragment"
+    >
 
-<!--    <ScrollView-->
-<!--        android:id="@+id/mine_sl"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent">-->
-    <com.scwang.smart.refresh.header.ClassicsHeader
+    <com.scwang.smart.refresh.header.TwoLevelHeader
+        android:id="@+id/mine_twoLevelHeader"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-        <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_height="wrap_content"
+        >
+
+
+        <RelativeLayout
+            android:id="@+id/mine_twoLevel_content"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:alpha="0"
+            android:orientation="vertical">
+
+            <com.yanzhenjie.recyclerview.SwipeRecyclerView
+                android:id="@+id/second_openframe_rv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/mine_second_level_margin_bottom"
+                android:layout_marginTop="@dimen/mine_second_level_margin_top"/>
+
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/mine_icon_fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/mine_icon_fab_margin_right"
+                android:layout_marginBottom="@dimen/mine_icon_fab_margin_bottom"
+                android:src="@drawable/base_icon_bottom"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:visibility="gone"
+
+                />
+
+        </RelativeLayout>
+
+
+    </com.scwang.smart.refresh.header.TwoLevelHeader>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
 
             <ImageView
                 android:id="@+id/mine_iv_message"
@@ -25,17 +63,15 @@
                 android:layout_marginTop="@dimen/mine_icon_message_margin_top"
                 android:layout_marginRight="@dimen/mine_icon_message_margin_right"
                 android:background="@drawable/mine_icon_message"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_alignParentRight="true"
+               />
 
             <RelativeLayout
                 android:id="@+id/mine_rl_user_head"
                 android:layout_width="@dimen/mine_rl_user_head_width"
                 android:layout_height="@dimen/mine_rl_user_head_height"
                 android:layout_marginTop="@dimen/mine_rl_user_head_margin_top"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:layout_centerHorizontal="true">
 
                 <ImageView
                     android:id="@+id/mine_iv_head"
@@ -64,9 +100,9 @@
                 android:text="@string/mine_please_login"
                 android:textSize="@dimen/mine_tv_username_textsize"
                 android:textStyle="bold"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/mine_rl_user_head" />
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/mine_rl_user_head"/>
+
 
             <LinearLayout
                 android:id="@+id/mine_ll_rank"
@@ -75,9 +111,8 @@
                 android:layout_marginTop="@dimen/mine_ll_rank_margin_top"
                 android:gravity="center"
                 android:orientation="horizontal"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/mine_tv_username">
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/mine_tv_username">
 
 
                 <TextView
@@ -97,223 +132,27 @@
                     android:textSize="@dimen/mine_tv_rank_textsize" />
             </LinearLayout>
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/mine_cv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/mine_cv_margin_left"
-                android:layout_marginTop="@dimen/mine_cv_margin_top"
-                android:layout_marginRight="@dimen/mine_cv_margin_right"
-                app:cardCornerRadius="@dimen/mine_cv_corner_radius"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/mine_ll_rank">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingLeft="@dimen/mine_ll_point_padding_left"
-                    android:paddingRight="@dimen/mine_ll_point_padding_right">
+        <com.yanzhenjie.recyclerview.SwipeRecyclerView
+            android:id="@+id/mine_rv_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/mine_ll_rank"
+            android:layout_marginLeft="@dimen/mine_rv_item_margin_left"
+            android:layout_marginRight="@dimen/mine_rv_item_margin_right"
+            android:layout_marginTop="@dimen/mine_rv_item_margin_top"
+            />
 
 
-                    <!-- 段子-->
-                    <RelativeLayout
-                        android:id="@+id/mine_rl_video"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/mine_rl_recommend_video_top"
-                        android:layout_marginBottom="@dimen/mine_rl_recommend_video_bottom">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/mine_me_video"
-                            android:textColor="@android:color/white"
-                            android:textSize="@dimen/mine_rv_video" />
-
-                        <ImageView
-                            android:id="@+id/mine_iv_video_arrow"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
-                            android:background="@drawable/mine_iv_arrow" />
-
-                    </RelativeLayout>
-                    <!--我的积分-->
-                    <RelativeLayout
-                        android:id="@+id/mine_rl_point"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/mine_rl_point_margin_top"
-                        android:layout_marginBottom="@dimen/mine_rl_point_margin_bottom">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/mine_me_points"
-                            android:textColor="@android:color/white"
-                            android:textSize="@dimen/mine_tv_point_flag" />
 
 
-                        <TextView
-                            android:id="@+id/mine_tv_points"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginRight="@dimen/mine_tv_points_margin_right"
-                            android:layout_toLeftOf="@+id/mine_iv_point_arrow"
-                            android:text="0"
-                            android:textColor="@android:color/white"
-                            android:textSize="@dimen/mine_tv_point_flag" />
-
-                        <ImageView
-                            android:id="@+id/mine_iv_point_arrow"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
-                            android:background="@drawable/mine_iv_arrow" />
-
-                    </RelativeLayout>
-
-                    <!--我的收藏-->
-                    <RelativeLayout
-                        android:id="@+id/mine_rl_collect"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/mine_rl_collect_margin_top"
-                        android:layout_marginBottom="@dimen/mine_rl_collect_margin_bottom">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/mine_me_collect"
-                            android:textColor="@android:color/white"
-                            android:textSize="@dimen/mine_tv_collect_textsize" />
+</RelativeLayout>
 
 
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:background="@drawable/mine_iv_arrow" />
 
-
-                    </RelativeLayout>
-
-                    <!--我的分享-->
-                    <RelativeLayout
-                        android:id="@+id/mine_rl_share"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/mine_rl_share_margin_top"
-                        android:layout_marginBottom="@dimen/mine_rl_share_margin_bottom">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/mine_me_share_articles"
-                            android:textColor="@android:color/white"
-                            android:textSize="@dimen/mine_tv_share_article_textsize" />
-
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:background="@drawable/mine_iv_arrow" />
-
-                    </RelativeLayout>
-
-                    <!--阅读历史-->
-                    <RelativeLayout
-                        android:id="@+id/mine_rl_history_record"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/mine_rl_history_records_margin_top"
-                        android:layout_marginBottom="@dimen/mine_rl_history_records_margin_bottom">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/mine_me_history_records"
-                            android:textColor="@android:color/white"
-                            android:textSize="@dimen/mine_tv_history_record_textsize" />
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:background="@drawable/mine_iv_arrow" />
-
-                    </RelativeLayout>
-
-
-                    <!--系统设置-->
-                    <RelativeLayout
-                        android:id="@+id/mine_rl_setup"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/mine_rl_system_set_margin_top"
-                        android:layout_marginBottom="@dimen/mine_rl_system_set_margin_bottom">
-
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/mine_me_system_setting"
-                            android:textColor="@android:color/white"
-                            android:textSize="@dimen/mine_tv_system_setting_textsize" />
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:background="@drawable/mine_iv_arrow" />
-                    </RelativeLayout>
-
-
-                </LinearLayout>
-
-
-            </androidx.cardview.widget.CardView>
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-<!--    </ScrollView>-->
 
 </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 
-    <!--                    <com.scwang.smart.refresh.header.TwoLevelHeader-->
-    <!--                        android:id="@+id/home_twoLevelHeader"-->
-    <!--                        android:layout_width="match_parent"-->
-    <!--                        android:layout_height="wrap_content">-->
 
-
-    <!--                        <LinearLayout-->
-    <!--                            android:id="@+id/home_twoLevel_content"-->
-    <!--                            android:layout_width="match_parent"-->
-    <!--                            android:layout_height="match_parent"-->
-    <!--                            android:alpha="0"-->
-    <!--                            android:orientation="vertical">-->
-
-    <!--                            <com.yanzhenjie.recyclerview.SwipeRecyclerView-->
-    <!--                                android:id="@+id/second_openframe_rv"-->
-    <!--                                android:layout_width="match_parent"-->
-    <!--                                android:layout_height="wrap_content"-->
-    <!--                                android:layout_marginBottom="@dimen/home_second_level_margin_bottom" />-->
-
-
-    <!--                        </LinearLayout>-->
-
-    <!--                        <com.scwang.smart.refresh.header.ClassicsHeader-->
-    <!--                            android:layout_width="match_parent"-->
-    <!--                            android:layout_height="wrap_content"/>-->
-
-    <!--                    </com.scwang.smart.refresh.header.TwoLevelHeader>-->
 
 

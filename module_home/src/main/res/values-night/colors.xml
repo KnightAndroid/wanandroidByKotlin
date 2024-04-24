@@ -7,9 +7,7 @@
     <color name="home_everypush_bottom_message">#303030</color>
     <color name="home_push_article_title">#D3D3D3</color>
     <color name="home_push_article_desc">#666666</color>
-    <color name="home_opensource_abroadlink_label">#D3D3D3</color>
-    <color name="home_opensource_internallink_label">#D3D3D3</color>
-    <color name="home_opensource_desc">#D3D3D3</color>
+
     <color name="home_top_article_title">#D3D3D3</color>
     <color name="home_rl_message">#303030</color>
     <color name="home_tv_unread_message">#D3D3D3</color>

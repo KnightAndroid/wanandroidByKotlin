@@ -54,7 +54,7 @@ object LanguageFontSizeUtils {
      *
      * @return
      */
-    private fun getSetLanguageLocale(): Locale {
+    fun getSetLanguageLocale(): Locale {
         return when (CacheUtils.getLanguageMode()) {
             "Auto" -> getSystemLocale()
             "简体中文" -> Locale.SIMPLIFIED_CHINESE

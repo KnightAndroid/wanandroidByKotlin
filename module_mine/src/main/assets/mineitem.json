@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "name_zh": "推荐视频",
+    "name_en": "Video"
+  },
+  {
+    "id": 2,
+    "name_zh": "我的积分",
+    "name_en": "Points"
+  },
+  {
+    "id": 3,
+    "name_zh": "我的收藏",
+    "name_en": "Collection"
+  },
+  {
+    "id": 4,
+    "name_zh": "我的分享",
+    "name_en": "Share"
+  },
+  {
+    "id": 5,
+    "name_zh": "阅读历史",
+    "name_en": "Reading history"
+  },
+  {
+    "id": 6,
+    "name_zh": "设置",
+    "name_en": "Setting"
+  }
+]

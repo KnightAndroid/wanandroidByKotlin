@@ -17,12 +17,10 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.Group
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.flyjingfish.android_aop_core.annotations.SingleClick
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.common.reflect.TypeToken
 import com.knight.kotlin.library_aop.loginintercept.LoginCheck
 import com.knight.kotlin.library_base.annotation.EventBusRegister
 import com.knight.kotlin.library_base.config.Appconfig
@@ -55,8 +53,6 @@ import com.knight.kotlin.library_scan.annoation.ScanStyle
 import com.knight.kotlin.library_scan.decode.ScanCodeConfig
 import com.knight.kotlin.library_util.BlurBuilderUtils
 import com.knight.kotlin.library_util.DateUtils
-import com.knight.kotlin.library_util.JsonUtils
-import com.knight.kotlin.library_util.SystemUtils
 import com.knight.kotlin.library_util.image.ImageLoader
 import com.knight.kotlin.library_util.startPage
 import com.knight.kotlin.library_util.toast.ToastUtils
@@ -69,25 +65,20 @@ import com.knight.kotlin.module_home.R
 import com.knight.kotlin.module_home.activity.HomeArticlesTabActivity
 import com.knight.kotlin.module_home.adapter.HomeArticleAdapter
 import com.knight.kotlin.module_home.adapter.OfficialAccountAdapter
-import com.knight.kotlin.module_home.adapter.OpenSourceAdapter
 import com.knight.kotlin.module_home.adapter.TopArticleAdapter
 import com.knight.kotlin.module_home.databinding.HomeRecommendFragmentBinding
 import com.knight.kotlin.module_home.dialog.HomePushArticleFragment
 import com.knight.kotlin.module_home.entity.BannerBean
 import com.knight.kotlin.module_home.entity.EveryDayPushArticlesBean
 import com.knight.kotlin.module_home.entity.HomeArticleListBean
-import com.knight.kotlin.module_home.entity.OpenSourceBean
 import com.knight.kotlin.module_home.entity.TopArticleBean
 import com.knight.kotlin.module_home.utils.HomeAnimUtils
 import com.knight.kotlin.module_home.vm.HomeRecommendVm
 import com.knight.library_biometric.control.BiometricControl
 import com.knight.library_biometric.listener.BiometricStatusCallback
-import com.scwang.smart.refresh.layout.api.RefreshHeader
 import com.scwang.smart.refresh.layout.api.RefreshLayout
-import com.scwang.smart.refresh.layout.constant.RefreshState
 import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener
-import com.scwang.smart.refresh.layout.simple.SimpleMultiListener
 import com.wyjson.router.GoRouter
 import com.wyjson.router.annotation.Route
 import com.yanzhenjie.recyclerview.SwipeRecyclerView
@@ -102,6 +93,7 @@ import javax.crypto.BadPaddingException
 import javax.crypto.Cipher
 import javax.crypto.IllegalBlockSizeException
 
+
 /**
  * Author:Knight
  * Time:2021/12/29 15:46
@@ -113,8 +105,7 @@ import javax.crypto.IllegalBlockSizeException
 class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRecommendVm>(),
     OnRefreshListener, OnLoadMoreListener {
 
-    //开源库适配器
-    private val mOpenSourceAdapter: OpenSourceAdapter by lazy { OpenSourceAdapter(arrayListOf()) }
+
 
     //置顶文章适配器
     private val mTopArticleAdapter: TopArticleAdapter by lazy { TopArticleAdapter(arrayListOf()) }
@@ -160,8 +151,7 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
     //选择收藏/取消收藏的Item项
     private var selectItem = -1
 
-    //是否打开了二楼
-    private var openTwoLevel = false
+
 
     //置顶文章是否展开
     private var isShowOnlythree = false
@@ -201,7 +191,6 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
         initTopAdapter()
         initOfficialListener()
         initArticleListener()
-        initTwoLevel()
         setOnClickListener(homeIncludeToolbar!!.homeScanIcon,homeIncludeToolbar.homeTvLoginname,
             homeIncludeToolbar.homeIvEveryday,
             homeIncludeToolbar.homeIvAdd,homeIncludeToolbar.homeRlSearch,homeIconFab,homeIconCourse!!,homeIconUtils!!,homeIconScrollUp!!)
@@ -220,61 +209,10 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
             mHomeArticleAdapter,
             true
         )
-        homeTwoLevelHeader.setEnablePullToCloseTwoLevel(false)
+
         recommendRefreshLayout.setOnLoadMoreListener(this@HomeRecommendFragment)
         recommendRefreshLayout.setOnRefreshListener(this@HomeRecommendFragment)
-        recommendRefreshLayout.setOnMultiListener(object : SimpleMultiListener() {
-            override fun onHeaderMoving(
-                header: RefreshHeader?,
-                isDragging: Boolean,
-                percent: Float,
-                offset: Int,
-                headerHeight: Int,
-                maxDragHeight: Int
-            ) {
-            }
 
-            override fun onRefresh(refreshLayout: RefreshLayout) {
-                //initRequestData()
-            }
-
-            override fun onStateChanged(
-                refreshLayout: RefreshLayout,
-                oldState: RefreshState,
-                newState: RefreshState
-            ) {
-                when (oldState) {
-                    RefreshState.TwoLevel -> {
-                        homeTwoLevelContent.animate().alpha(0f).setDuration(0)
-                    }
-                    RefreshState.TwoLevelReleased -> {
-                        openTwoLevel = true
-                        homeIconFab.setImageDrawable(
-                            ContextCompat.getDrawable(
-                                requireActivity(),
-                                com.knight.kotlin.library_base.R.drawable.base_icon_bottom
-                            )
-                        )
-                    }
-                    RefreshState.TwoLevelFinish -> {
-                        openTwoLevel = false
-                        homeIconFab.setImageDrawable(
-                            ContextCompat.getDrawable(
-                                requireActivity(),
-                                R.drawable.home_icon_show_icon
-                            )
-                        )
-                    }
-
-                    else -> {}
-                }
-            }
-        })
-
-        homeTwoLevelHeader.setOnTwoLevelListener {
-            homeTwoLevelContent.animate().alpha(1f).duration = 1000
-            true
-        }
 
 
         setViewVisible(false)
@@ -384,75 +322,6 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
 
     }
 
-    /**
-     *
-     * 初始化二楼
-     */
-    private fun initTwoLevel() {
-        mBinding.secondOpenframeRv.init(LinearLayoutManager(requireActivity()), mOpenSourceAdapter)
-        //初始化标签
-        val type = object : TypeToken<List<OpenSourceBean>>() {}.type
-        val jsonData: String = JsonUtils.getJson(requireActivity(), "opensourceproject.json")
-        val mDataList: MutableList<OpenSourceBean> = GsonUtils.getList(jsonData, type)
-        mOpenSourceAdapter.setNewInstance(mDataList)
-
-        mOpenSourceAdapter.run {
-            //子view点击事件
-            addChildClickViewIds(
-                R.id.home_opensource_abroadlink,
-                R.id.home_opensource_internallink,
-                R.id.home_iv_abroadcopy,
-                R.id.home_iv_internalcopy
-            )
-            setItemChildClickListener { adapter, view, position ->
-                when (view.id) {
-                    R.id.home_opensource_abroadlink -> {
-                        GoRouter.getInstance().build(RouteActivity.Web.WebPager)
-                            .withString("webUrl", mOpenSourceAdapter.data[position].abroadlink)
-                            .withString("webTitle", mOpenSourceAdapter.data[position].name)
-                            .go()
-                    }
-
-                    R.id.home_opensource_internallink -> {
-                        GoRouter.getInstance().build(RouteActivity.Web.WebPager)
-                            .withString("webUrl", mOpenSourceAdapter.data[position].internallink)
-                            .withString("webTitle", mOpenSourceAdapter.data[position].name)
-                            .go()
-                    }
-
-                    R.id.home_iv_abroadcopy -> {
-                        SystemUtils.copyContent(
-                            requireActivity(),
-                            mOpenSourceAdapter.data[position].abroadlink
-                        )
-                        ToastUtils.show(com.knight.kotlin.library_base.R.string.base_success_copylink)
-                    }
-                    else -> {
-                        SystemUtils.copyContent(
-                            requireActivity(),
-                            mOpenSourceAdapter.data[position].internallink
-                        )
-                        ToastUtils.show(com.knight.kotlin.library_base.R.string.base_success_copylink)
-                    }
-
-                }
-
-
-            }
-
-            //Item点击事件
-            setItemClickListener { adapter, view, position ->
-                //跳到webview
-                GoRouter.getInstance().build(RouteActivity.Web.WebPager)
-                    .withString("webUrl", mOpenSourceAdapter.data[position].abroadlink)
-                    .withString("webTitle", mOpenSourceAdapter.data[position].name)
-                    .go()
-
-            }
-        }
-
-
-    }
 
 
     /**
@@ -636,6 +505,7 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
         }).addBannerLifecycleObserver(this).indicator = CircleIndicator(activity)
         //请求首页文章
         mViewModel.getHomeArticle(currentPage)
+
     }
 
     /**
@@ -708,11 +578,7 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
     override fun onClick(v: View) {
         when (v) {
             mBinding.homeIconFab -> {
-                if (openTwoLevel) {
-                    mBinding.homeTwoLevelHeader.finishTwoLevel()
-                } else {
-                    showAnimation()
-                }
+                showAnimation()
             }
 
             mBinding.homeIconUtils -> {

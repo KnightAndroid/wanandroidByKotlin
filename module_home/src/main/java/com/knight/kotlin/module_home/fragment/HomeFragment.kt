@@ -5,11 +5,9 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
-import com.knight.kotlin.library_base.event.MessageEvent
 import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.knight.kotlin.library_base.ktx.observeLiveData
 import com.knight.kotlin.library_base.route.RouteFragment
-import com.knight.kotlin.library_base.util.EventBusUtils
 import com.knight.kotlin.library_common.entity.AppUpdateBean
 import com.knight.kotlin.library_common.fragment.UpdateAppDialogFragment
 import com.knight.kotlin.library_util.SystemUtils
@@ -36,7 +34,8 @@ class HomeFragment : BaseFragment<HomeFragmentBinding, HomeVm>() {
      * 首页Fragment
      */
     private var mFragments = mutableListOf<Fragment>()
-
+    private val mHomeRecommendFragment by lazy { HomeRecommendFragment() }
+    private val mHomeClassifyFragment by lazy { HomeClassifyFragment() }
 
 
     override fun HomeFragmentBinding.initView() {
@@ -82,34 +81,12 @@ class HomeFragment : BaseFragment<HomeFragmentBinding, HomeVm>() {
      * 初始化指示器
      */
     private fun initMagicIndicator() {
-//        knowledgeLabelList = CacheUtils.getDataInfo(
-//            "knowledgeLabel",
-//            object : TypeToken<List<String>>() {}.type
-//        )
-//        if (knowledgeLabelList.isNullOrEmpty()) {
-//            val type: Type = object : TypeToken<List<String>>() {}.type
-//            val jsonData = getJson(requireActivity(), "searchkeywords.json")
-//            knowledgeLabelList = GsonUtils.getList(jsonData, type)
-//        }
-//        mFragments.clear()
-//        for (i in knowledgeLabelList.indices) {
-//            if (i == 0) {
-//                mFragments.add(HomeRecommendFragment())
-//            } else {
-//                mFragments.add(HomeArticleFragment())
-//            }
-//        }
-
-        mFragments.add(HomeRecommendFragment())
-        mFragments.add(HomeClassifyFragment())
+        mFragments.add(mHomeRecommendFragment)
+        mFragments.add(mHomeClassifyFragment)
         ViewInitUtils.setViewPager2Init(requireActivity(),mBinding.viewPager,mFragments,
             isOffscreenPageLimit = false,
             isUserInputEnabled = true
         )
-
-//        mBinding.magicIndicator.bindViewPager2(mBinding.viewPager,knowledgeLabelList) {
-//            HomeConstants.ARTICLE_TYPE = knowledgeLabelList[it]
-//        }
         initViewPagerListener()
 
 
@@ -132,12 +109,8 @@ class HomeFragment : BaseFragment<HomeFragmentBinding, HomeVm>() {
             override fun onPageScrollStateChanged(state: Int) {
                 super.onPageScrollStateChanged(state)
                 if (state == ViewPager2.SCROLL_STATE_IDLE) {
-                    if (mBinding.viewPager.getCurrentItem() == 1) {
-                        EventBusUtils.postEvent(MessageEvent(MessageEvent.MessageType.ChangeBottomNavigate).put(true))
-                    } else if (mBinding.viewPager.getCurrentItem() == 0) {
-
+                     if (mBinding.viewPager.getCurrentItem() == 0) {
                         transformer.setFromFloorPage(true)
-                        EventBusUtils.postEvent(MessageEvent(MessageEvent.MessageType.ChangeBottomNavigate).put(false))
                     }
                 }
             }

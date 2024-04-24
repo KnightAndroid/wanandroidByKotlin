@@ -18,27 +18,8 @@
     <dimen name="mine_cv_margin_top">20dp</dimen>
     <dimen name="mine_cv_margin_right">20dp</dimen>
     <dimen name="mine_cv_corner_radius">6dp</dimen>
-    <dimen name="mine_ll_point_padding_left">16dp</dimen>
-    <dimen name="mine_ll_point_padding_right">16dp</dimen>
-    <dimen name="mine_rl_point_margin_top">20dp</dimen>
-    <dimen name="mine_rl_point_margin_bottom">20dp</dimen>
-    <dimen name="mine_rl_recommend_video_top">20dp</dimen>
-    <dimen name="mine_rl_recommend_video_bottom">20dp</dimen>
-    <dimen name="mine_tv_point_flag">18sp</dimen>
-    <dimen name="mine_rv_video">18sp</dimen>
-    <dimen name="mine_tv_points_margin_right">2dp</dimen>
-    <dimen name="mine_rl_collect_margin_top">20dp</dimen>
-    <dimen name="mine_rl_collect_margin_bottom">20dp</dimen>
-    <dimen name="mine_tv_collect_textsize">18sp</dimen>
-    <dimen name="mine_rl_share_margin_top">20dp</dimen>
-    <dimen name="mine_rl_share_margin_bottom">20dp</dimen>
-    <dimen name="mine_tv_share_article_textsize">18sp</dimen>
-    <dimen name="mine_rl_history_records_margin_top">20dp</dimen>
-    <dimen name="mine_rl_history_records_margin_bottom">20dp</dimen>
-    <dimen name="mine_tv_history_record_textsize">18sp</dimen>
-    <dimen name="mine_rl_system_set_margin_top">20dp</dimen>
-    <dimen name="mine_rl_system_set_margin_bottom">20dp</dimen>
-    <dimen name="mine_tv_system_setting_textsize">18sp</dimen>
+
+
     <dimen name="mine_tv_gesture_time_margin_top">4dp</dimen>
     <dimen name="mine_tv_gesture_time_margin_left">20dp</dimen>
     <dimen name="mine_tv_gesture_time_text_size">18sp</dimen>
@@ -170,4 +151,37 @@
     <dimen name="mine_tv_share_articlechaptername_padding_bottom">2dp</dimen>
     <dimen name="mine_tv_share_articlechaptername_text_size">12sp</dimen>
     <dimen name="mine_iv_share_articles_delete_margin_right">16dp</dimen>
+    <dimen name="mine_second_level_margin_bottom">54dp</dimen>
+    <dimen name="mine_second_level_margin_top">15dp</dimen>
+    <dimen name="mine_opensource_margin_top">8dp</dimen>
+    <dimen name="mine_opensource_margin_left">16dp</dimen>
+    <dimen name="mine_opensource_margin_right">16dp</dimen>
+    <dimen name="mine_opensource_margin_bottom">6dp</dimen>
+    <dimen name="mine_opensource_cv_radius">6dp</dimen>
+    <dimen name="mine_opensource_cl_margin_bottom">8dp</dimen>
+    <dimen name="mine_opensource_title_margin_top">8dp</dimen>
+    <dimen name="mine_opensource_title_margin_left">8dp</dimen>
+    <dimen name="mine_opensource_title_padding_right">8dp</dimen>
+    <dimen name="mine_opensource_title_text_size">16sp</dimen>
+    <dimen name="mine_opensource_abroad_label_margin_top">8dp</dimen>
+    <dimen name="mine_opensource_abroad_label_text_size">16sp</dimen>
+    <dimen name="mine_opensource_abroad_margin_left">8dp</dimen>
+    <dimen name="mine_opensource_abroad_margin_top">8dp</dimen>
+    <dimen name="mine_opensource_abroadlink_text_size">16sp</dimen>
+    <dimen name="mine_opensource_desc_text_size">16sp</dimen>
+    <dimen name="mine_opensource_desc_margin_top">4dp</dimen>
+    <dimen name="mine_opensource_desc_margin_left">8dp</dimen>
+    <dimen name="mine_opensource_desc_margin_right">8dp</dimen>
+    <dimen name="mine_rv_item_margin_left">20dp</dimen>
+    <dimen name="mine_rv_item_margin_right">20dp</dimen>
+    <dimen name="mine_item_text_size">18sp</dimen>
+    <dimen name="mine_item_height">60dp</dimen>
+    <dimen name="mine_tv_tip_text_size">16sp</dimen>
+    <dimen name="mine_tv_tip_margin_right">10dp</dimen>
+    <dimen name="mine_item_margin_left">20dp</dimen>
+    <dimen name="mine_iv_arrow_margin_right">10dp</dimen>
+    <dimen name="mine_rv_item_margin_top">10dp</dimen>
+    <dimen name="mine_icon_fab_margin_right">20dp</dimen>
+    <dimen name="mine_icon_fab_margin_bottom">70dp</dimen>
+
 </resources>

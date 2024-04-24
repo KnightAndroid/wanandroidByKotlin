@@ -4,7 +4,9 @@ import android.content.Intent
 import android.graphics.drawable.GradientDrawable
 import android.util.Base64
 import android.view.View
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.flyjingfish.android_aop_core.annotations.SingleClick
+import com.google.common.reflect.TypeToken
 import com.knight.kotlin.library_aop.loginintercept.LoginCheck
 import com.knight.kotlin.library_base.annotation.EventBusRegister
 import com.knight.kotlin.library_base.config.Appconfig
@@ -24,20 +26,34 @@ import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_base.util.ColorUtils
 import com.knight.kotlin.library_base.util.EventBusUtils
 import com.knight.kotlin.library_base.util.GsonUtils
+import com.knight.kotlin.library_base.util.dp2px
+import com.knight.kotlin.library_util.JsonUtils
+import com.knight.kotlin.library_util.SystemUtils
 import com.knight.kotlin.library_util.image.ImageLoader
 import com.knight.kotlin.library_util.startPage
 import com.knight.kotlin.library_util.startPageWithParams
 import com.knight.kotlin.library_util.toast
+import com.knight.kotlin.library_util.toast.ToastUtils
+import com.knight.kotlin.library_widget.ktx.init
+import com.knight.kotlin.library_widget.ktx.setItemChildClickListener
+import com.knight.kotlin.library_widget.ktx.setItemClickListener
 import com.knight.kotlin.module_mine.R
 import com.knight.kotlin.module_mine.activity.LoginActivity
 import com.knight.kotlin.module_mine.activity.QuickLoginActivity
+import com.knight.kotlin.module_mine.adapter.MineItemAdapter
+import com.knight.kotlin.module_mine.adapter.OpenSourceAdapter
 import com.knight.kotlin.module_mine.databinding.MineFragmentBinding
+import com.knight.kotlin.module_mine.entity.MineItemEntity
+import com.knight.kotlin.module_mine.entity.OpenSourceBean
 import com.knight.kotlin.module_mine.entity.UserInfoMessageEntity
 import com.knight.kotlin.module_mine.vm.MineViewModel
 import com.knight.library_biometric.control.BiometricControl
 import com.knight.library_biometric.listener.BiometricStatusCallback
+import com.scwang.smart.refresh.layout.api.RefreshHeader
 import com.scwang.smart.refresh.layout.api.RefreshLayout
+import com.scwang.smart.refresh.layout.constant.RefreshState
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener
+import com.scwang.smart.refresh.layout.simple.SimpleMultiListener
 import com.wyjson.router.GoRouter
 import com.wyjson.router.annotation.Route
 import dagger.hilt.android.AndroidEntryPoint
@@ -56,17 +72,88 @@ import javax.crypto.IllegalBlockSizeException
 @AndroidEntryPoint
 @Route(path = RouteFragment.Mine.MineFragment)
 class MineFragment: BaseFragment<MineFragmentBinding, MineViewModel>(),OnRefreshListener {
+    //是否打开了二楼
+    private var openTwoLevel = false
+    //开源库适配器
+    private val mOpenSourceAdapter: OpenSourceAdapter by lazy { OpenSourceAdapter(arrayListOf()) }
+    //我的操作项
+    private val mMineItemAdapter : MineItemAdapter by lazy {MineItemAdapter(arrayListOf())}
+
+
     override fun MineFragmentBinding.initView() {
          getUser()?.let {
              mineTvUsername.text = it.username
+
              mineIvMessage.visibility = View.VISIBLE
          } ?: run {
              mineIvMessage.visibility = View.GONE
          }
 
-        setOnClickListener(mineTvUsername,mineRlSetup,mineLlRank,mineRlPoint,mineRlVideo,mineRlCollect,mineRlShare,mineRlHistoryRecord,mineIvMessage)
+        setOnClickListener(mineTvUsername,mineLlRank,mineIvMessage,mBinding.mineIconFab)
         mineRefreshLayout.setOnRefreshListener(this@MineFragment)
+        mineRefreshLayout.autoRefresh()
+        mineTwoLevelHeader.setEnablePullToCloseTwoLevel(true)
+        mineRefreshLayout.setOnMultiListener(object : SimpleMultiListener() {
+            override fun onHeaderMoving(
+                header: RefreshHeader?,
+                isDragging: Boolean,
+                percent: Float,
+                offset: Int,
+                headerHeight: Int,
+                maxDragHeight: Int
+            ) {
+            }
+
+            override fun onRefresh(refreshLayout: RefreshLayout) {
+                //initRequestData()
+            }
+
+            override fun onStateChanged(
+                refreshLayout: RefreshLayout,
+                oldState: RefreshState,
+                newState: RefreshState
+            ) {
+                when (oldState) {
+                    RefreshState.TwoLevel -> {
+                        mineTwoLevelContent.animate().alpha(0f).setDuration(0)
+                    }
+                    RefreshState.TwoLevelReleased -> {
+                        openTwoLevel = true
+                        mineIconFab.visibility = View.VISIBLE
+//                        homeIconFab.setImageDrawable(
+//                            ContextCompat.getDrawable(
+//                                requireActivity(),
+//                                com.knight.kotlin.library_base.R.drawable.base_icon_bottom
+//                            )
+//                        )
+                    }
+                    RefreshState.TwoLevelFinish -> {
+                        openTwoLevel = false
+                        mineIconFab.visibility = View.GONE
+//                        homeIconFab.setImageDrawable(
+//                            ContextCompat.getDrawable(
+//                                requireActivity(),
+//                                R.drawable.home_icon_show_icon
+//                            )
+//                        )
+                    }
+
+                    else -> {}
+                }
+            }
+        })
+
+
+//        mineRefreshLayout.finishRefresh()
+        mineTwoLevelHeader.setOnTwoLevelListener {
+            mineTwoLevelContent.animate().alpha(1f).duration = 1000
+            true
+        }
+        initTwoLevel()
+        initMineItemAdapter()
     }
+
+
 
     override fun initObserver() {
         observeLiveDataWithError(mViewModel.userInfoCoin,mViewModel.requestSuccessFlag,::setUserInfoCoin,::requestUserInfoCoinError)
@@ -75,7 +162,7 @@ class MineFragment: BaseFragment<MineFragmentBinding, MineViewModel>(),OnRefresh
 
     override fun initRequestData() {
         getUser()?.let {
-          //  requestLoading(mBinding.mineSl)
+            requestLoading(mBinding.mineRefreshLayout)
             mViewModel.getUserInfoCoin()
         }
     }
@@ -85,7 +172,12 @@ class MineFragment: BaseFragment<MineFragmentBinding, MineViewModel>(),OnRefresh
             mBinding.mineTvUsername.setTextColor(it)
             mBinding.mineTvLevel.setTextColor(it)
             mBinding.mineTvRank.setTextColor(it)
-            mBinding.mineCv.setCardBackgroundColor(it)
+            val gradientDrawable = GradientDrawable()
+            gradientDrawable.shape = GradientDrawable.RECTANGLE
+            gradientDrawable.cornerRadius = 10.dp2px().toFloat()
+            gradientDrawable.setColor(it)
+            mBinding.mineRvItem.background = gradientDrawable
+            mBinding.mineIconFab.backgroundTintList = ColorUtils.createColorStateList(themeColor, themeColor)
         }
     }
 
@@ -107,7 +199,6 @@ class MineFragment: BaseFragment<MineFragmentBinding, MineViewModel>(),OnRefresh
         mBinding.mineTvUsername.text = userInfoMessageEntity.coinInfo.username
         mBinding.mineTvLevel.text = getString(R.string.mine_gradle) + userInfoMessageEntity.coinInfo.level
         mBinding.mineTvRank.text = getString(R.string.mine_rank) +userInfoMessageEntity.coinInfo.rank
-        mBinding.mineTvPoints.text = if (userInfoMessageEntity.coinInfo.coinCount.toString().equals("")) "0" else  userInfoMessageEntity.coinInfo.coinCount.toString()
     }
 
 
@@ -155,39 +246,127 @@ class MineFragment: BaseFragment<MineFragmentBinding, MineViewModel>(),OnRefresh
                     }
                 }
             }
-            mBinding.mineRlSetup -> {
-                  GoRouter.getInstance().build(RouteActivity.Set.SetActivity).go()
-            }
+
 
             mBinding.mineLlRank -> {
                   startPage(RouteActivity.Mine.UserCoinRankActivity)
             }
 
-            mBinding.mineRlPoint -> {
-                goCoinsDetail()
-            }
-
-            mBinding.mineRlVideo -> {
-                goVideos()
-            }
-
-            mBinding.mineRlCollect -> {
-                goMyCollectArticles()
-            }
-
-            mBinding.mineRlShare -> {
-                goMyShareArticles()
-            }
-
-            mBinding.mineRlHistoryRecord -> {
-                startPage(RouteActivity.Mine.HistoryRecordActivity)
-            }
-
             mBinding.mineIvMessage -> {
                 startPage(RouteActivity.Message.MessageActivity)
             }
+            mBinding.mineIconFab -> {
+                mBinding.mineTwoLevelHeader.finishTwoLevel()
+            }
         }
     }
+
+    /**
+     * 初始化二楼
+     *
+     *
+     */
+    private fun initTwoLevel() {
+        mBinding.secondOpenframeRv.init(LinearLayoutManager(requireActivity()), mOpenSourceAdapter)
+        //初始化标签
+        val type = object : TypeToken<List<OpenSourceBean>>() {}.type
+        val jsonData: String = JsonUtils.getJson(requireActivity(), "opensourceproject.json")
+        val mDataList: MutableList<com.knight.kotlin.module_mine.entity.OpenSourceBean> =
+            GsonUtils.getList(jsonData, type)
+        mOpenSourceAdapter.setNewInstance(mDataList)
+
+        mOpenSourceAdapter.run {
+            //子view点击事件
+            addChildClickViewIds(
+                R.id.mine_opensource_abroadlink,
+                R.id.mine_iv_abroadcopy,
+            )
+            setItemChildClickListener { adapter, view, position ->
+                when (view.id) {
+                    R.id.mine_opensource_abroadlink -> {
+                        GoRouter.getInstance().build(RouteActivity.Web.WebPager)
+                            .withString("webUrl", mOpenSourceAdapter.data[position].abroadlink)
+                            .withString("webTitle", mOpenSourceAdapter.data[position].name)
+                            .go()
+                    }
+
+
+
+                    R.id.mine_iv_abroadcopy -> {
+                        SystemUtils.copyContent(
+                            requireActivity(),
+                            mOpenSourceAdapter.data[position].abroadlink
+                        )
+                        ToastUtils.show(com.knight.kotlin.library_base.R.string.base_success_copylink)
+                    }
+                    else -> {
+                        SystemUtils.copyContent(
+                            requireActivity(),
+                            mOpenSourceAdapter.data[position].internallink
+                        )
+                        ToastUtils.show(com.knight.kotlin.library_base.R.string.base_success_copylink)
+                    }
+
+                }
+
+
+            }
+
+            //Item点击事件
+            setItemClickListener { adapter, view, position ->
+                //跳到webview
+                GoRouter.getInstance().build(RouteActivity.Web.WebPager)
+                    .withString("webUrl", mOpenSourceAdapter.data[position].abroadlink)
+                    .withString("webTitle", mOpenSourceAdapter.data[position].name)
+                    .go()
+
+            }
+        }
+    }
+
+    /**
+     * 初始化我的页面操作项
+     *
+     *
+     */
+    private fun initMineItemAdapter() {
+        mBinding.mineRvItem.init(LinearLayoutManager(requireActivity()), mMineItemAdapter)
+        //初始化标签
+        val type = object : TypeToken<List<MineItemEntity>>() {}.type
+        val jsonData: String = JsonUtils.getJson(requireActivity(), "mineitem.json")
+        val mDataList: MutableList<MineItemEntity> =
+            GsonUtils.getList(jsonData, type)
+        mMineItemAdapter.setNewInstance(mDataList)
+        mMineItemAdapter.run {
+            //Item点击事件
+            setItemClickListener { adapter, view, position ->
+                when(data[position].id) {
+                    1 -> {
+                        goVideos()
+                    }
+                    2 -> {
+                        goCoinsDetail()
+                    }
+                    3 -> {
+                        goMyCollectArticles()
+                    }
+                    4 -> {
+                        goMyShareArticles()
+                    }
+                    5 -> {
+                        startPage(RouteActivity.Mine.HistoryRecordActivity)
+                    }
+                    6 -> {
+                        GoRouter.getInstance().build(RouteActivity.Set.SetActivity).go()
+                    }
+                }
+            }
+        }
+
+
+    }
+
+
 
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -198,6 +377,7 @@ class MineFragment: BaseFragment<MineFragmentBinding, MineViewModel>(),OnRefresh
                 showLoading(getString(R.string.mine_request_loading))
                 mViewModel.getUserInfoCoin()
                 mBinding.mineIvMessage.visibility = View.VISIBLE
+                mMineItemAdapter.notifyDataSetChanged()
 
             }
 
@@ -206,7 +386,8 @@ class MineFragment: BaseFragment<MineFragmentBinding, MineViewModel>(),OnRefresh
                 mBinding.mineTvUsername.setText(getString(R.string.mine_please_login))
                 mBinding.mineTvLevel.setText(getString(R.string.mine_nodata_gradle))
                 mBinding.mineTvRank.setText(getString(R.string.mine_nodata_rank))
-                mBinding.mineTvPoints.setText("0")
+                mMineItemAdapter.notifyDataSetChanged()
+               // mBinding.mineTvPoints.setText("0")
                 mBinding.mineIvMessage.setVisibility(View.GONE)
                 mBinding.mineIvHead.setBackground(null)
                 ImageLoader.loadCircleIntLocalPhoto(
@@ -214,9 +395,12 @@ class MineFragment: BaseFragment<MineFragmentBinding, MineViewModel>(),OnRefresh
                     R.drawable.mine_iv_default_head,
                     mBinding.mineIvHead
                 )
+
             }
 
-            else -> {}
+            else -> {
+
+            }
         }
 
     }
@@ -228,7 +412,8 @@ class MineFragment: BaseFragment<MineFragmentBinding, MineViewModel>(),OnRefresh
     }
     @LoginCheck
     private fun goCoinsDetail() {
-        startPageWithParams(RouteActivity.Mine.MyPointsActivity,"userCoin" to mBinding.mineTvPoints.text.toString())
+        val userCoins = getUser()?.coinCount ?: 0
+        startPageWithParams(RouteActivity.Mine.MyPointsActivity,"userCoin" to userCoins.toString())
     }
 
     @LoginCheck

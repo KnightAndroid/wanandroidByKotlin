@@ -35,4 +35,6 @@
     <color name="mine_tv_share_articleauthor_text_color">#999999</color>
     <color name="mine_tv_share_articledata_text_color">#999999</color>
     <color name="mine_tv_share_articletitle_text_color">#333333</color>
+    <color name="mine_opensource_abroadlink_label">#333333</color>
+    <color name="mine_opensource_desc">#333333</color>
 </resources>

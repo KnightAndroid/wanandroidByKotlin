@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/mine_item_height"
+   >
+
+    <TextView
+        android:id="@+id/mine_tv_item_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/mine_me_history_records"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/mine_item_text_size"
+        android:layout_marginLeft="@dimen/mine_item_margin_left"
+        android:layout_centerVertical="true"/>
+
+    <TextView
+        android:id="@+id/mine_tv_tip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/mine_tv_tip_margin_right"
+        android:text="0"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/mine_tv_tip_text_size"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/mine_iv_arrow"/>
+
+    <ImageView
+        android:id="@+id/mine_iv_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/mine_iv_arrow"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/mine_iv_arrow_margin_right"/>
+
+</RelativeLayout>
