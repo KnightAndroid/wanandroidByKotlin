@@ -10,6 +10,7 @@ import com.knight.kotlin.library_base.route.RouteFragment
 import com.knight.kotlin.library_base.util.ActivityManagerUtils
 import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_base.util.ColorUtils
+import com.knight.kotlin.library_base.util.StatusBarUtils
 import com.knight.kotlin.library_util.ViewInitUtils
 import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_main.R
@@ -115,6 +116,15 @@ class MainActivity : BaseActivity<MainActivityBinding,MainViewModel>() {
 
            MessageEvent.MessageType.EyeMode -> {
                 openOrCloseEye(event.getBoolean())
+           }
+           MessageEvent.MessageType.OpenEyepetizer ->{
+                if (event.getBoolean()) {
+                    StatusBarUtils.transparentStatusBarWithFont(this,false)
+
+                } else {
+                    StatusBarUtils.transparentStatusBarWithFont(this,true)
+                }
+
            }
             else -> {}
         }

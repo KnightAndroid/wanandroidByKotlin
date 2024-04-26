@@ -4,13 +4,10 @@
      <color name="home_login_tv_color">#333333</color>
      <color name="home_bar_search">#333333</color>
      <color name="home_bar_hint">#999999</color>
-
      <color name="home_everypush_author">#29000000</color>
      <color name="home_everypush_bottom_message">#ffffff</color>
      <color name="home_push_article_title">#333333</color>
      <color name="home_push_article_desc">#999999</color>
-
-
      <color name="home_top_article_title">#333333</color>
      <color name="home_top_article_label">#D35B5A</color>
      <color name="home_top_article_author">#999999</color>
@@ -46,4 +43,8 @@
      <color name="home_tv_morelabel_color">#333333</color>
      <color name="home_my_knowlwdge_hint_color">#999999</color>
      <color name="home_inputlabel_et_color">#333333</color>
+     <color name="home_eye_classify_bg_color">#202131</color>
+     <color name="home_eyepetizer_category_color">#83838E</color>
+
+
 </resources>

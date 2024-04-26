@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/home_cl_classify_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/home_eye_classify_bg_color"
+    >
+
+
+
+    <TextView
+        android:id="@+id/tv_eyepetizer_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/home_eyepetizer_title"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:textSize="@dimen/home_eyepetizer_title_text_size"
+        android:textColor="@android:color/white"
+        android:layout_marginTop="@dimen/home_eyepetizer_title_margin_top"
+        />
+
+    <TextView
+        android:id="@+id/tv_eyepetizer_category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/home_eyepetizer_category"
+        android:textColor="@color/home_eyepetizer_category_color"
+        android:textSize="@dimen/home_eyepetizer_category_text_size"
+        app:layout_constraintTop_toBottomOf="@id/tv_eyepetizer_title"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="@dimen/home_eyepetizer_category_margin_left"
+        />
+
+
+    <com.yanzhenjie.recyclerview.SwipeRecyclerView
+        android:id="@+id/rv_eyepetizer_category"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tv_eyepetizer_category"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="@dimen/home_rv_eyepetizer_category_margin_left"
+        android:layout_marginRight="@dimen/home_rv_eyepetizer_category_margin_right"
+        android:layout_marginTop="@dimen/home_rv_eyepetizer_category_margin_top"
+/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

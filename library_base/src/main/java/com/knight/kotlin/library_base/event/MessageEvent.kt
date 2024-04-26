@@ -171,7 +171,9 @@ data class MessageEvent(var type: MessageType) {
         //护眼模式
         EyeMode,
         //页面重建
-        RecreateMain
+        RecreateMain,
+        //开眼入口
+        OpenEyepetizer
     }
 
 }

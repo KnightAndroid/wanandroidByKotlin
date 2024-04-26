@@ -1,13 +1,14 @@
 package com.knight.kotlin.module_home.fragment
 
-import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
+import com.knight.kotlin.library_base.event.MessageEvent
 import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.knight.kotlin.library_base.ktx.observeLiveData
 import com.knight.kotlin.library_base.route.RouteFragment
+import com.knight.kotlin.library_base.util.EventBusUtils
 import com.knight.kotlin.library_common.entity.AppUpdateBean
 import com.knight.kotlin.library_common.fragment.UpdateAppDialogFragment
 import com.knight.kotlin.library_util.SystemUtils
@@ -35,7 +36,7 @@ class HomeFragment : BaseFragment<HomeFragmentBinding, HomeVm>() {
      */
     private var mFragments = mutableListOf<Fragment>()
     private val mHomeRecommendFragment by lazy { HomeRecommendFragment() }
-    private val mHomeClassifyFragment by lazy { HomeClassifyFragment() }
+    private val mHomeClassifyFragment by lazy { HomeEyeClassifyFragment() }
 
 
     override fun HomeFragmentBinding.initView() {
@@ -83,6 +84,8 @@ class HomeFragment : BaseFragment<HomeFragmentBinding, HomeVm>() {
     private fun initMagicIndicator() {
         mFragments.add(mHomeRecommendFragment)
         mFragments.add(mHomeClassifyFragment)
+
+
         ViewInitUtils.setViewPager2Init(requireActivity(),mBinding.viewPager,mFragments,
             isOffscreenPageLimit = false,
             isUserInputEnabled = true
@@ -102,36 +105,43 @@ class HomeFragment : BaseFragment<HomeFragmentBinding, HomeVm>() {
         )
 
         mBinding.viewPager.setRotation(180f)
-        mBinding.viewPager.setOverScrollMode(View.OVER_SCROLL_NEVER)
+  //      mBinding.viewPager.postDelayed(Runnable {
+        //    mBinding.viewPager.setOverScrollMode(View.OVER_SCROLL_NEVER)
         mBinding.viewPager.setOrientation(ViewPager2.ORIENTATION_VERTICAL)
-        mBinding.viewPager.setPageTransformer(transformer)
-        mBinding.viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-            override fun onPageScrollStateChanged(state: Int) {
-                super.onPageScrollStateChanged(state)
-                if (state == ViewPager2.SCROLL_STATE_IDLE) {
-                     if (mBinding.viewPager.getCurrentItem() == 0) {
-                        transformer.setFromFloorPage(true)
+            //mBinding.viewPager.offscreenPageLimit = 1
+            mBinding.viewPager.setPageTransformer(transformer)
+            mBinding.viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+                override fun onPageScrollStateChanged(state: Int) {
+                    super.onPageScrollStateChanged(state)
+                    if (state == ViewPager2.SCROLL_STATE_IDLE) {
+                        if (mBinding.viewPager.getCurrentItem() == 0) {
+                            transformer.setFromFloorPage(true)
+                            EventBusUtils.postEvent(MessageEvent(MessageEvent.MessageType.OpenEyepetizer).put(false))
+                        } else if (mBinding.viewPager.getCurrentItem()  == 1) {
+                            EventBusUtils.postEvent(MessageEvent(MessageEvent.MessageType.OpenEyepetizer).put(true))
+                        }
                     }
                 }
-            }
 
-            override fun onPageScrolled(
-                position: Int,
-                positionOffset: Float,
-                positionOffsetPixels: Int
-            ) {
-                super.onPageScrolled(position, positionOffset, positionOffsetPixels)
-                //小程序页面出现：偏移值有0->1 偏移像素有0->页面高度
-                //小程序页面消失：偏移值->0 偏移像素页面高度->0
-                if (position == 1) {
-                    transformer.setFromFloorPage(false)
+                override fun onPageScrolled(
+                    position: Int,
+                    positionOffset: Float,
+                    positionOffsetPixels: Int
+                ) {
+                    super.onPageScrolled(position, positionOffset, positionOffsetPixels)
+                    //小程序页面出现：偏移值有0->1 偏移像素有0->页面高度
+                    //小程序页面消失：偏移值->0 偏移像素页面高度->0
+                    if (position == 1) {
+                        transformer.setFromFloorPage(false)
 
+                    }
+                    lp.height = positionOffsetPixels
+                    mBinding.headerView.setLayoutParams(lp)
+                    mBinding.headerView.setPercent(positionOffset)
                 }
-                lp.height = positionOffsetPixels
-                mBinding.headerView.setLayoutParams(lp)
-                mBinding.headerView.setPercent(positionOffset)
-            }
-        })
+            })
+
+    //    },1000)
 
     }
 

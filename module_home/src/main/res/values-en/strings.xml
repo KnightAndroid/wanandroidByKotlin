@@ -26,4 +26,6 @@
     <string name="home_moreenough_tips">The maximum number of labels cannot exceed %d</string>
     <string name="home_inputlabel_tip">Please enter a custom label</string>
     <string name="home_input_label_empty">Please input label</string>
+    <string name="home_eyepetizer_title">Eyepetizer</string>
+    <string name="home_eyepetizer_category">category</string>
 </resources>

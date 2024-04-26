@@ -26,5 +26,8 @@
     <string name="home_moreenough_tips">最多不能超过%d个标签</string>
     <string name="home_inputlabel_tip">请输入自定义标签</string>
     <string name="home_input_label_empty">还没输入标签</string>
+    <string name="home_eyepetizer_title">开眼</string>
+    <string name="home_eyepetizer_category">分类</string>
+
 
 </resources>

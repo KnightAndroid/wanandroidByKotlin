@@ -1,0 +1,20 @@
+[
+  {
+    "categoryId": 1001,
+    "categoryName" : "日报",
+    "desc" : "每天新鲜事",
+    "categoryColor": "#99cc0000"
+  },
+  {
+    "categoryId" : 1002,
+    "categoryName":"发现",
+    "desc" : "世界的美好不止一点",
+    "categoryColor": "#99669900"
+  },
+  {
+    "categoryId" : 1003,
+    "categoryName":"热门",
+    "desc" : "大家都爱看",
+    "categoryColor": "#990099cc"
+  }
+]

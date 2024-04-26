@@ -271,7 +271,7 @@ class MineFragment: BaseFragment<MineFragmentBinding, MineViewModel>(),OnRefresh
         //初始化标签
         val type = object : TypeToken<List<OpenSourceBean>>() {}.type
         val jsonData: String = JsonUtils.getJson(requireActivity(), "opensourceproject.json")
-        val mDataList: MutableList<com.knight.kotlin.module_mine.entity.OpenSourceBean> =
+        val mDataList: MutableList<OpenSourceBean> =
             GsonUtils.getList(jsonData, type)
         mOpenSourceAdapter.setNewInstance(mDataList)
 
