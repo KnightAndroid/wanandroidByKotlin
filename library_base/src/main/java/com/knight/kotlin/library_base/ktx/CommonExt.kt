@@ -19,6 +19,7 @@ import com.knight.kotlin.library_base.util.ActivityManagerUtils
 import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_base.util.StatusBarUtils
 import com.knight.kotlin.library_base.vm.BaseViewModel
+import com.knight.kotlin.library_base.widget.loadcircleview.ProgressHud
 import java.lang.reflect.ParameterizedType
 import kotlin.reflect.KClass
 
@@ -157,6 +158,31 @@ internal fun BaseFragment<*, *>.subscribeData() {
         dismissLoading()
     }
 
+}
+
+var loadingDialog: ProgressHud? = null
+
+/**
+ * 弹窗
+ *
+ *
+ * @param msg
+ * @return
+ */
+@MainThread
+fun showLoadingDialog(msg:String = appStr(R.string.base_loading)) {
+    loadingDialog = ActivityManagerUtils.getInstance()?.getTopActivity()?.let { ProgressHud(it) }
+    loadingDialog?.run {
+        show(msg)
+    }
+}
+
+/**
+ * 消失弹窗
+ *
+ */
+fun dimissLoadingDialog() {
+    loadingDialog?.dismiss()
 }
 
 

@@ -3,11 +3,14 @@ package com.knight.kotlin.module_home.fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.reflect.TypeToken
 import com.knight.kotlin.library_base.fragment.BaseFragment
+import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.route.RouteFragment
 import com.knight.kotlin.library_base.util.GsonUtils
 import com.knight.kotlin.library_base.vm.EmptyViewModel
 import com.knight.kotlin.library_util.JsonUtils
+import com.knight.kotlin.library_util.startPage
 import com.knight.kotlin.library_widget.ktx.init
+import com.knight.kotlin.library_widget.ktx.setItemClickListener
 import com.knight.kotlin.module_home.adapter.EyepetizerCategoryAdapter
 import com.knight.kotlin.module_home.databinding.HomeEyeClassifyFragmentBinding
 import com.knight.kotlin.module_home.entity.EyeCategoryBean
@@ -55,6 +58,13 @@ class HomeEyeClassifyFragment : BaseFragment<HomeEyeClassifyFragmentBinding,Empt
         val mDataList: MutableList<EyeCategoryBean> =
             GsonUtils.getList(jsonData, type)
         mOpenSourceAdapter.setNewInstance(mDataList)
+
+        mOpenSourceAdapter.run {
+            setItemClickListener { adapter, view, position ->
+                startPage(RouteActivity.EyeDaily.DailyListActivity)
+
+            }
+        }
     }
 
 }

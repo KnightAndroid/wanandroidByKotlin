@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LiveData
 import androidx.viewbinding.ViewBinding
 import com.kingja.loadsir.core.LoadService
 import com.kingja.loadsir.core.LoadSir
@@ -127,6 +128,18 @@ abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel> : Fragment(), 
         return mBinding.root.findViewById(id)
     }
 
+    /**
+     * 回调vm调用api方法获取的数据
+     *
+     *
+     * @param T
+     * @param block
+     */
+    protected fun <T : Any> LiveData<T>.observerKt(block: (T) -> Unit) {
+        this.observe(viewLifecycleOwner) {
+            block(it)
+        }
+    }
     override fun isRecreate(): Boolean = mStatusHelper?.isRecreate ?: false
 
 

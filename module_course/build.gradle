@@ -1,5 +1,9 @@
 apply from: '../base_module.gradle'
 android {
+    //由于项目模块化后，每个模块之间是相互独立的，在合并打包生成apk过程中，如果资源名称相同，会造成相互覆盖，导致造成资源引用出现错误；
+    //例：
+    //模块A中有一张ic_photo，模块B中由于业务关系也有一张ic_photo。
+    //如果没有注意到这个问题，那么最终生成到apk中的图片要么是A模块的，要么是B模块的
     resourcePrefix "course_"
     namespace = "com.knight.kotlin.module_course"
 }

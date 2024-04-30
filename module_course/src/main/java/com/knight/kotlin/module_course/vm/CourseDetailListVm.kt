@@ -19,7 +19,7 @@ import javax.inject.Inject
 /**
  * Author:Knight
  * Time:2022/6/2 17:40
- * Description:CourseDetailListVm
+ * DBescription:CourseDetailListVm
  */
 @HiltViewModel
 class CourseDetailListVm @Inject constructor(private val mRepo: CourseDetailListRepo) : BaseViewModel() {

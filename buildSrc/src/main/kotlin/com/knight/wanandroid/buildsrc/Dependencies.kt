@@ -75,7 +75,7 @@ object Dependencies {
        const val AUTO_SERVICE = "1.0"                       // 自动生成SPI暴露服务文件
        const val EVENT_BUS = "3.3.1"                        // 事件总线
        const val AUTO_SIZE = "1.2.1"                        // 屏幕适配
-       const val BOTTOM_NAVIGATION = "2.0.0"                // 底部导航栏
+       const val BOTTOM_NAVIGATION = "2.1.0"                // 底部导航栏
        const val MAGIC_INDICATOR = "1.7.0"                  // 指示器
        const val AGENT = "v5.0.0-alpha.1-androidx"         // Android WebView
        const val SKETCH = "2.7.1"                          // 预览大图
@@ -218,7 +218,7 @@ object Dependencies {
         const val AUTO_SIZE = "me.jessyan:autosize:${Version.AUTO_SIZE}"
         //底部导航栏 https://github.com/CListery/BottomNavigationEx
         const val BOTTOM_NAVIGATE = "io.github.clistery:bottomnavigationex-ex:${Version.BOTTOM_NAVIGATION}"
-        const val BOTTOM_NAVIGATE_X = "io.github.clistery:bottomnavigationex-16x:${Version.BOTTOM_NAVIGATION}"
+        const val BOTTOM_NAVIGATE_X = "io.github.clistery:bottomnavigationex-15x:${Version.BOTTOM_NAVIGATION}"
         //MMKV https://github.com/Tencent/MMKV
         const val MMKV = "com.tencent:mmkv:${Version.MMKV}"
         //滑动切换 https://github.com/hackware1993/MagicIndicator

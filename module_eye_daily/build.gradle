@@ -1,0 +1,12 @@
+apply from: '../base_module.gradle'
+android {
+    resourcePrefix "eye_daily_"
+    namespace = "com.knight.kotlin.module_eye_daily"
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(path: ':library_scan')
+    implementation project(path: ':library_biometric')
+    implementation com.knight.wanandroid.buildsrc.Dependencies.GitHub.BANNER
+}

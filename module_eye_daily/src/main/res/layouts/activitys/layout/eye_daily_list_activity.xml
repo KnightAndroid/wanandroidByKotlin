@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/include_eye_daily_toolbar"
+        layout="@layout/base_include_toolbar"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <com.youth.banner.Banner
+        android:id="@+id/eye_daily_banner"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/eye_daily_banner_height"
+        app:layout_constraintTop_toBottomOf="@id/include_eye_daily_toolbar"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:banner_indicator_normal_color="@color/eye_daily_banner_normal_color"
+        app:banner_indicator_selected_color="@android:color/white"
+        app:banner_indicator_normal_width="@dimen/eye_daily_banner_normal_width"
+        app:banner_indicator_selected_width="@dimen/eye_daily_banner_selected_width"
+        />
+
+<!--    <com.scwang.smart.refresh.layout.SmartRefreshLayout-->
+<!--        android:id="@+id/daily_list_refreshLayout"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="0dp"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/include_eye_daily_toolbar"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent">-->
+
+<!--        <com.scwang.smart.refresh.header.ClassicsHeader-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"/>-->
+
+<!--            <com.yanzhenjie.recyclerview.SwipeRecyclerView-->
+<!--                android:id="@+id/rv_daily_list"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"/>-->
+
+<!--        <com.scwang.smart.refresh.footer.ClassicsFooter-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"/>-->
+
+<!--    </com.scwang.smart.refresh.layout.SmartRefreshLayout>-->
+</androidx.constraintlayout.widget.ConstraintLayout>

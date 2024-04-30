@@ -80,6 +80,7 @@ class ClientConfig {
             .addDomain(BaseUrlConfig.WANDROID_URL)
             .setDomain("gitee",BaseUrlConfig.GITEE_RUL)
             .setDomain("jokes",BaseUrlConfig.JOKES_URL)
+            .setDomain("eye",BaseUrlConfig.OPENEYE_URL)
             .build()
     }
 

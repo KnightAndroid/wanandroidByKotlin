@@ -165,5 +165,15 @@ object RouteActivity {
     }
 
 
+    /**
+     *
+     * 开眼 日常模块
+     */
+    object EyeDaily {
+        private const val Daily = "/module_eye_daily"
+        const val DailyListActivity = "$Daily/DailyListActivity"
+    }
+
+
 
 }

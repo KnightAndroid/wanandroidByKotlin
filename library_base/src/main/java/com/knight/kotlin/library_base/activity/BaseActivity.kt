@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.LiveData
 import androidx.viewbinding.ViewBinding
 import com.kingja.loadsir.core.LoadService
 import com.kingja.loadsir.core.LoadSir
@@ -275,6 +276,13 @@ abstract class BaseActivity<VB : ViewBinding,VM : BaseViewModel> : AppCompatActi
 
     override fun isRecreate(): Boolean = mStatusHelper?.isRecreate ?: false
 
+
+    //扩展liveData的observe函数
+    protected fun <T : Any> LiveData<T>.observerKt(block: (T) -> Unit) {
+        this.observe(this@BaseActivity) {
+            block(it)
+        }
+    }
     override fun onSaveInstanceState(outState: Bundle) {
         if (mStatusHelper == null) {
             //仅当触发重建需要保存状态时创建对象

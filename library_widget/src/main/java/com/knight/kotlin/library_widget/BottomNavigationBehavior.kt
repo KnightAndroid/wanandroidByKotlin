@@ -15,7 +15,7 @@ import androidx.core.view.ViewCompat
 class BottomNavigationBehavior:CoordinatorLayout.Behavior<View> {
 
     private var outAnimator: ObjectAnimator? = null
-    private  var inAnimator:ObjectAnimator? = null
+    private var inAnimator:ObjectAnimator? = null
     @JvmOverloads
     constructor(context: Context, attributeSet: AttributeSet? = null)
             : super(context, attributeSet) {
@@ -41,7 +41,7 @@ class BottomNavigationBehavior:CoordinatorLayout.Behavior<View> {
         dy: Int,
         consumed: IntArray
     ) {
-        if (dy > 0) { // 下滑隐藏
+        if (dy > 0) { // 上滑显示
             outAnimator?.let {
                 if (!it.isRunning && child.translationY <= 0) {
                     it.start()
@@ -53,7 +53,7 @@ class BottomNavigationBehavior:CoordinatorLayout.Behavior<View> {
             }
 
 
-        } else if (dy < 0) { // 上滑显示
+        } else if (dy < 0) { // 下滑隐藏
             inAnimator?.let {
                 if (!it.isRunning && child.translationY >= child.height) {
                     it.start()

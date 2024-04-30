@@ -1,5 +1,6 @@
 package com.knight.kotlin.module_main.activity
 
+import android.animation.ObjectAnimator
 import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import com.knight.kotlin.library_base.activity.BaseActivity
@@ -26,10 +27,10 @@ import org.greenrobot.eventbus.ThreadMode
 @AndroidEntryPoint
 @Route(path = RouteActivity.Main.MainActivity)
 class MainActivity : BaseActivity<MainActivityBinding,MainViewModel>() {
-
-    
     private var mExitAppTime: Long = 0
     val fragments:MutableList<Fragment> = mutableListOf()
+    private var outAnimator: ObjectAnimator? = null
+    private var inAnimator: ObjectAnimator? = null
     override fun MainActivityBinding.initView() {
         initFragments()
         ViewInitUtils.setViewPager2Init(this@MainActivity,mainViewpager,fragments,
@@ -119,10 +120,12 @@ class MainActivity : BaseActivity<MainActivityBinding,MainViewModel>() {
            }
            MessageEvent.MessageType.OpenEyepetizer ->{
                 if (event.getBoolean()) {
-                    StatusBarUtils.transparentStatusBarWithFont(this,false)
 
+                    StatusBarUtils.transparentStatusBarWithFont(this,false)
+                    bottomNavShowOrDimiss(true)
                 } else {
                     StatusBarUtils.transparentStatusBarWithFont(this,true)
+                    bottomNavShowOrDimiss(false)
                 }
 
            }
@@ -130,9 +133,42 @@ class MainActivity : BaseActivity<MainActivityBinding,MainViewModel>() {
         }
     }
 
+    /**
+     * 动画显示隐藏
+     *
+     *
+     * @param show
+     */
+    private fun bottomNavShowOrDimiss(show:Boolean) {
+        if (show) { // 上滑显示
+            outAnimator?.let {
+                if (!it.isRunning && mBinding.btnNav.realView.translationY <= 0) {
+                    it.start()
+                }
+            } ?:run{
+                outAnimator =
+                    ObjectAnimator.ofFloat(mBinding.btnNav.realView, "translationY", 0f, mBinding.btnNav.realView.height.toFloat())
+                outAnimator?.setDuration(200)
+                outAnimator?.start()
+            }
+
+
+        } else  { // 下滑隐藏
+            inAnimator?.let {
+                if (!it.isRunning && mBinding.btnNav.realView.translationY >= mBinding.btnNav.realView.height) {
+                    it.start()
+                }
+            } ?: run {
+                inAnimator =
+                    ObjectAnimator.ofFloat(mBinding.btnNav.realView, "translationY", mBinding.btnNav.realView.height.toFloat(), 0f)
+                inAnimator?.setDuration(200)
+                inAnimator?.start()
+            }
+        }
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         fragments.clear()
-
     }
 }
