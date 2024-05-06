@@ -77,7 +77,8 @@ class ToastImpl constructor(activity: Activity,toast:ToastInterface) {
         }
         //移除之前移除吐司的任务
         HANDLER.removeCallbacks(mCancelRunnable)
-        //HANDLER.post(mCancelRunnable)
+        //关闭显示特定时间后的toast
+        HANDLER.post(mCancelRunnable)
     }
 
     private val mShowRunnable = Runnable {

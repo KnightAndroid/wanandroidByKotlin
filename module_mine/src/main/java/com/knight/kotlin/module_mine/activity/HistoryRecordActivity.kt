@@ -3,12 +3,10 @@ package com.knight.kotlin.module_mine.activity
 import android.graphics.Point
 import android.view.MotionEvent
 import android.view.View
-import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.ktx.getUser
 import com.knight.kotlin.library_base.ktx.init
-import com.knight.kotlin.library_base.ktx.observeLiveData
 import com.knight.kotlin.library_base.ktx.setOnClick
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.util.ArouteUtils
@@ -54,7 +52,9 @@ class HistoryRecordActivity :BaseActivity<MineHistoryrecordActivityBinding,Histo
         includeHistoryrecordToolbar.baseTvRight.setOnClick {
             DialogUtils.getConfirmDialog(this@HistoryRecordActivity,getString(R.string.mine_cancel_all_historyrecord),
                 {dialog, which ->
-                    mViewModel.deleteAllHistoryRecord()
+                    mViewModel.deleteAllHistoryRecord().observerKt {
+                        deleteAllHistoryRecord()
+                    }
                 }){
                     dialog, which ->
             }
@@ -70,29 +70,35 @@ class HistoryRecordActivity :BaseActivity<MineHistoryrecordActivityBinding,Histo
     }
 
     override fun initObserver() {
-        observeLiveData(mViewModel.historyReadcords,::getHistoryRecords)
-        observeLiveData(mViewModel.deleteHistoryRecordSuccess,::deleteHistoryRecord)
-        observeLiveData(mViewModel.deleteAllHistoryRecordSuccess,::deleteAllHistoryRecord)
+
     }
 
     override fun initRequestData() {
-        mViewModel.queryPartHistoryRecords(startPosition,endStation, getUser()?.id ?: 0)
+        mViewModel.queryPartHistoryRecords(startPosition,endStation, getUser()?.id ?: 0).observerKt {
+            getHistoryRecords(it)
+        }
     }
 
     override fun reLoadData() {
         startPosition = 0
         endStation = 10
-        mViewModel.queryPartHistoryRecords(startPosition,endStation, getUser()?.id ?: 0)
+        mViewModel.queryPartHistoryRecords(startPosition,endStation, getUser()?.id ?: 0).observerKt {
+            getHistoryRecords(it)
+        }
     }
 
     override fun onLoadMore(refreshLayout: RefreshLayout) {
-        mViewModel.queryPartHistoryRecords(startPosition,endStation + 10,getUser()?.id ?: 0)
+        mViewModel.queryPartHistoryRecords(startPosition,endStation + 10,getUser()?.id ?: 0).observerKt {
+            getHistoryRecords(it)
+        }
     }
 
     override fun onRefresh(refreshLayout: RefreshLayout) {
         startPosition = 0
         endStation = 10
-        mViewModel.queryPartHistoryRecords(startPosition,endStation, getUser()?.id ?: 0)
+        mViewModel.queryPartHistoryRecords(startPosition,endStation, getUser()?.id ?: 0).observerKt {
+            getHistoryRecords(it)
+        }
     }
 
     private fun getHistoryRecords(data:MutableList<HistoryReadRecordsEntity>) {
@@ -148,7 +154,9 @@ class HistoryRecordActivity :BaseActivity<MineHistoryrecordActivityBinding,Histo
                 floatMenu.setOnItemClickListener(object:FloatMenu.OnItemClickListener{
                     override fun onClick(v: View?, itemPosition: Int) {
                         deleteSelectItem = position
-                        mViewModel.deleteHistoryRecord(data[position].id)
+                        mViewModel.deleteHistoryRecord(data[position].id).observerKt {
+                            deleteHistoryRecord()
+                        }
                     }
                 })
                 false
@@ -160,7 +168,7 @@ class HistoryRecordActivity :BaseActivity<MineHistoryrecordActivityBinding,Histo
      * 删除指定阅读历史记录成功
      *
      */
-    private fun deleteHistoryRecord(data:Boolean) {
+    private fun deleteHistoryRecord() {
         mHistoryRecordAdapter.data.removeAt(deleteSelectItem)
         mHistoryRecordAdapter.notifyItemRemoved(deleteSelectItem)
     }
@@ -170,7 +178,7 @@ class HistoryRecordActivity :BaseActivity<MineHistoryrecordActivityBinding,Histo
      *
      * 删除全部阅读历史数据
      */
-    private fun deleteAllHistoryRecord(data:Boolean) {
+    private fun deleteAllHistoryRecord() {
         onRefresh(mBinding.includeHistoryrecordRv.baseFreshlayout)
     }
 

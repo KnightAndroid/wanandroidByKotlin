@@ -36,7 +36,6 @@ open class BaseRepository {
                //结束
            }
            .catch {
-
            }
     }
 

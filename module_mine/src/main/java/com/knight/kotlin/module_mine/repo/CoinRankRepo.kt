@@ -2,6 +2,7 @@ package com.knight.kotlin.module_mine.repo
 
 import com.knight.kotlin.library_base.repository.BaseRepository
 import com.knight.kotlin.library_network.model.responseCodeExceptionHandler
+import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_mine.api.CoinRankApiService
 import com.knight.kotlin.module_mine.entity.CoinRankListEntity
 import javax.inject.Inject
@@ -19,10 +20,14 @@ class CoinRankRepo @Inject constructor() : BaseRepository() {
      *
      * 获取积分排行榜
      */
-    suspend fun getRankCoin(page:Int) = request<CoinRankListEntity>{
+    fun getRankCoin(page:Int) = request<CoinRankListEntity>({
         mCoinRankApiService.getRankCoin(page).run {
             responseCodeExceptionHandler(code,msg)
             emit(data)
+        }
+    }){
+        it?.run {
+            toast(it)
         }
     }
 }

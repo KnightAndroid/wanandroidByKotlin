@@ -2,6 +2,7 @@ package com.knight.kotlin.module_mine.repo
 
 import com.knight.kotlin.library_base.repository.BaseRepository
 import com.knight.kotlin.library_network.model.responseCodeExceptionHandler
+import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_mine.api.OtherShareApiService
 import com.knight.kotlin.module_mine.entity.OtherShareArticleListEntity
 import javax.inject.Inject
@@ -19,10 +20,14 @@ class OtherShareArticleRepo @Inject constructor() : BaseRepository() {
      *
      * 获取他人文章列表
      */
-    suspend fun getOtherShareArticle(uid:Int,page:Int) = request<OtherShareArticleListEntity>{
+    fun getOtherShareArticle(uid:Int,page:Int) = request<OtherShareArticleListEntity>({
         mOtherShareApiService.getOtherShareArticle(uid, page).run {
             responseCodeExceptionHandler(code,msg)
             emit(data)
+        }
+    }){
+        it?.run {
+            toast(it)
         }
     }
 
@@ -30,10 +35,14 @@ class OtherShareArticleRepo @Inject constructor() : BaseRepository() {
      *
      * 收藏文章
      */
-    suspend fun collectArticle(collectArticleId:Int) = request<Any>{
+    fun collectArticle(collectArticleId:Int) = request<Any>({
         mOtherShareApiService.collectArticle(collectArticleId).run {
             responseCodeExceptionHandler(code, msg)
             emit(data)
+        }
+    }){
+        it?.run {
+            toast(it)
         }
     }
 
@@ -41,10 +50,14 @@ class OtherShareArticleRepo @Inject constructor() : BaseRepository() {
      * 取消文章点赞/收藏
      *
      */
-    suspend fun cancelCollectArticle(unCollectArticleId:Int) = request<Any> {
+    fun cancelCollectArticle(unCollectArticleId:Int) = request<Any> ({
         mOtherShareApiService.unCollectArticle(unCollectArticleId).run {
             responseCodeExceptionHandler(code, msg)
             emit(data)
+        }
+    }){
+        it?.run {
+            toast(it)
         }
     }
 }

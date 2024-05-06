@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.knight.kotlin.library_aop.loginintercept.LoginCheck
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.config.Appconfig
-import com.knight.kotlin.library_base.ktx.observeLiveData
 import com.knight.kotlin.library_base.ktx.setOnClick
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.util.ArouteUtils
@@ -21,7 +20,6 @@ import com.knight.kotlin.module_home.R
 import com.knight.kotlin.module_home.adapter.SearchResultAdapter
 import com.knight.kotlin.module_home.databinding.HomeSearchresultActivityBinding
 import com.knight.kotlin.module_home.entity.HomeArticleListBean
-
 import com.knight.kotlin.module_home.vm.HomeSearchResultVm
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener
@@ -99,28 +97,33 @@ class SearchResultActivity : BaseActivity<HomeSearchresultActivityBinding, HomeS
     }
 
     override fun initObserver() {
-        observeLiveData(mViewModel.articleResultList, ::setSearchResultData)
-        observeLiveData(mViewModel.collectArticle, ::collectSucess)
-        observeLiveData(mViewModel.unCollectArticle, ::unCollectSuccess)
     }
 
     override fun initRequestData() {
-        mViewModel.searchArticleByKeyword(page, keyword)
+        mViewModel.searchArticleByKeyword(page, keyword).observerKt {
+            setSearchResultData(it)
+        }
     }
 
     override fun reLoadData() {
         mBinding.includeSearchresult.baseFreshlayout.setEnableLoadMore(true)
-        mViewModel.searchArticleByKeyword(page, keyword)
+        mViewModel.searchArticleByKeyword(page, keyword).observerKt {
+            setSearchResultData(it)
+        }
     }
 
     override fun onRefresh(refreshLayout: RefreshLayout) {
         page = 0
         mBinding.includeSearchresult.baseFreshlayout.setEnableLoadMore(true)
-        mViewModel.searchArticleByKeyword(page, keyword)
+        mViewModel.searchArticleByKeyword(page, keyword).observerKt {
+            setSearchResultData(it)
+        }
     }
 
     override fun onLoadMore(refreshLayout: RefreshLayout) {
-        mViewModel.searchArticleByKeyword(page, keyword)
+        mViewModel.searchArticleByKeyword(page, keyword).observerKt {
+            setSearchResultData(it)
+        }
     }
 
     private fun setSearchResultData(data: HomeArticleListBean) {
@@ -181,15 +184,21 @@ class SearchResultActivity : BaseActivity<HomeSearchresultActivityBinding, HomeS
         DataBaseUtils.saveSearchKeyword(keyword)
         Appconfig.search_keyword = keyword
         mBinding.includeSearchresult.baseFreshlayout.setEnableLoadMore(true)
-        mViewModel.searchArticleByKeyword(page, keyword)
+        mViewModel.searchArticleByKeyword(page, keyword).observerKt {
+            setSearchResultData(it)
+        }
     }
 
     @LoginCheck
     private fun collectOrunCollect(collect: Boolean, articleId: Int) {
         if (collect) {
-            mViewModel.unCollectArticle(articleId)
+            mViewModel.unCollectArticle(articleId).observerKt {
+                unCollectSuccess()
+            }
         } else {
-            mViewModel.collectArticle(articleId)
+            mViewModel.collectArticle(articleId).observerKt {
+                collectSucess()
+            }
         }
     }
 
@@ -197,7 +206,7 @@ class SearchResultActivity : BaseActivity<HomeSearchresultActivityBinding, HomeS
      *
      * 收藏成功
      */
-    private fun collectSucess(data: Boolean) {
+    private fun collectSucess() {
         mSearchResultAdapter.data[selectItem].collect = true
         mSearchResultAdapter.notifyItemChanged(selectItem)
 
@@ -207,7 +216,7 @@ class SearchResultActivity : BaseActivity<HomeSearchresultActivityBinding, HomeS
      *
      * 取消收藏
      */
-    private fun unCollectSuccess(data: Boolean) {
+    private fun unCollectSuccess() {
         mSearchResultAdapter.data[selectItem].collect = false
         mSearchResultAdapter.notifyItemChanged(selectItem)
 

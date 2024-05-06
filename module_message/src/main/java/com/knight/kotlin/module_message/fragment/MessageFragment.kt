@@ -3,7 +3,6 @@ package com.knight.kotlin.module_message.fragment
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.knight.kotlin.library_base.fragment.BaseFragment
-import com.knight.kotlin.library_base.ktx.observeLiveData
 import com.knight.kotlin.library_base.route.RouteFragment
 import com.knight.kotlin.library_widget.ktx.init
 import com.knight.kotlin.module_message.adapter.MessageAdapter
@@ -62,17 +61,19 @@ class MessageFragment : BaseFragment<MessageFragmentBinding,MessageVm>(), OnRefr
     }
 
     override fun initObserver() {
-        observeLiveData(mViewModel.mMessageReadedDatas,::setMessages)
-        observeLiveData(mViewModel.mMessageUnReadDatas,::setMessages)
 
     }
 
     override fun initRequestData() {
         requestLoading(mBinding.includeMessage.baseFreshlayout)
         if (readed) {
-            mViewModel.getMessageByReaded(page)
+            mViewModel.getMessageByReaded(page).observerKt {
+                setMessages(it)
+            }
         } else {
-            mViewModel.getMessageByUnReaded(page)
+            mViewModel.getMessageByUnReaded(page).observerKt {
+                setMessages(it)
+            }
         }
 
     }
@@ -105,9 +106,13 @@ class MessageFragment : BaseFragment<MessageFragmentBinding,MessageVm>(), OnRefr
     override fun reLoadData() {
         page = 1
         if (readed) {
-            mViewModel.getMessageByReaded(page)
+            mViewModel.getMessageByReaded(page).observerKt {
+                setMessages(it)
+            }
         } else {
-            mViewModel.getMessageByUnReaded(page)
+            mViewModel.getMessageByUnReaded(page).observerKt {
+                setMessages(it)
+            }
         }
     }
 
@@ -115,17 +120,25 @@ class MessageFragment : BaseFragment<MessageFragmentBinding,MessageVm>(), OnRefr
         page = 1
         mBinding.includeMessage.baseFreshlayout.setEnableLoadMore(true)
         if (readed) {
-            mViewModel.getMessageByReaded(page)
+            mViewModel.getMessageByReaded(page).observerKt {
+                setMessages(it)
+            }
         } else {
-            mViewModel.getMessageByUnReaded(page)
+            mViewModel.getMessageByUnReaded(page).observerKt {
+                setMessages(it)
+            }
         }
     }
 
     override fun onLoadMore(refreshLayout: RefreshLayout) {
         if (readed) {
-            mViewModel.getMessageByReaded(page)
+            mViewModel.getMessageByReaded(page).observerKt {
+                setMessages(it)
+            }
         } else {
-            mViewModel.getMessageByUnReaded(page)
+            mViewModel.getMessageByUnReaded(page).observerKt {
+                setMessages(it)
+            }
         }
     }
 }

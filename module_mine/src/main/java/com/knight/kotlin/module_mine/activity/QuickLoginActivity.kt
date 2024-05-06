@@ -8,8 +8,9 @@ import com.knight.kotlin.library_base.config.CacheKey
 import com.knight.kotlin.library_base.entity.LoginEntity
 import com.knight.kotlin.library_base.entity.UserInfoEntity
 import com.knight.kotlin.library_base.event.MessageEvent
-import com.knight.kotlin.library_base.ktx.observeLiveData
+import com.knight.kotlin.library_base.ktx.appStr
 import com.knight.kotlin.library_base.ktx.setOnClick
+import com.knight.kotlin.library_base.ktx.showLoading
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_base.util.EventBusUtils
@@ -63,7 +64,10 @@ class QuickLoginActivity :  BaseActivity<MineQuickloginActivityBinding,QuickLogi
             val localLoginMessage: String = CacheUtils.getLoginMessage()
             val loginEntity: LoginEntity? = GsonUtils.get(localLoginMessage, LoginEntity::class.java)
             loginEntity?.let {
-                mViewModel.login(it.loginName,it.loginPassword)
+                showLoading(appStr(R.string.mine_request_login))
+                mViewModel.login(it.loginName,it.loginPassword).observerKt {
+                    setUserInfo(it)
+                }
             } ?: run{
                 toast(R.string.mine_quick_gesture_login_failure)
             }
@@ -86,7 +90,6 @@ class QuickLoginActivity :  BaseActivity<MineQuickloginActivityBinding,QuickLogi
         mineGesturelock.setLineColor(themeColor)
         includeQuickLoginToolbar.baseIvBack.setOnClick { finish() }
         mineGesturelock.setOnCheckPasswordListener(onCheckPasswordListener)
-        observeLiveData(mViewModel.userInfo,::setUserInfo)
         tvGestureLockMore.setOnClick {
             mQuickBottomDialog = QuickBottomDialog()
             mQuickBottomDialog?.setFingureLoginListener(this@QuickLoginActivity)
@@ -130,7 +133,10 @@ class QuickLoginActivity :  BaseActivity<MineQuickloginActivityBinding,QuickLogi
                     val loginEntity = GsonUtils[String(bytes), LoginEntity::class.java]
                     val iv = cipher?.iv
                     loginEntity?.let {
-                        mViewModel.login(it.loginName,it.loginPassword)
+                        showLoading(appStr(R.string.mine_request_login))
+                        mViewModel.login(it.loginName,it.loginPassword).observerKt {
+                            setUserInfo(it)
+                        }
                     } ?: run {
                         toast(R.string.mine_quick_fingure_login_failure)
                     }

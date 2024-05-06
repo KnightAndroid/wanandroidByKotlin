@@ -3,7 +3,6 @@ package com.knight.kotlin.module_course.activity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.ktx.init
-import com.knight.kotlin.library_base.ktx.observeLiveData
 import com.knight.kotlin.library_base.ktx.setOnClick
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_util.startPageWithParams
@@ -52,25 +51,33 @@ class CourseDetailListActivity:BaseActivity<CourseDetailListActivityBinding,Cour
     }
 
     override fun initObserver() {
-        observeLiveData(mViewModel.courseDetailList,::setCourseDetailData)
+
     }
 
     override fun initRequestData() {
-        mViewModel.getDetailCourses(page,cid)
+        mViewModel.getDetailCourses(page,cid).observerKt {
+            setCourseDetailData(it)
+        }
     }
 
     override fun reLoadData() {
-        mViewModel.getDetailCourses(page,cid)
+        mViewModel.getDetailCourses(page,cid).observerKt {
+            setCourseDetailData(it)
+        }
     }
 
     override fun onRefresh(refreshLayout: RefreshLayout) {
         page = 0
         mBinding.includeCourseDetailRv.baseFreshlayout.setEnableLoadMore(true)
-        mViewModel.getDetailCourses(page, cid)
+        mViewModel.getDetailCourses(page, cid).observerKt {
+            setCourseDetailData(it)
+        }
     }
 
     override fun onLoadMore(refreshLayout: RefreshLayout) {
-        mViewModel.getDetailCourses(page, cid)
+        mViewModel.getDetailCourses(page, cid).observerKt {
+            setCourseDetailData(it)
+        }
     }
 
     private fun setCourseDetailData(data:CourseDetailListEntity){

@@ -1,8 +1,10 @@
 package com.knight.kotlin.module_mine.repo
 
 import com.knight.kotlin.library_base.entity.UserInfoEntity
+import com.knight.kotlin.library_base.ktx.dimissLoadingDialog
 import com.knight.kotlin.library_base.repository.BaseRepository
 import com.knight.kotlin.library_network.model.responseCodeExceptionHandler
+import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_mine.api.QuickLoginApiService
 import javax.inject.Inject
 
@@ -28,10 +30,16 @@ class QuickLoginRepo @Inject constructor() : BaseRepository() {
      *
      * 登录
      */
-    suspend fun login(userName:String,passWord:String) = request<UserInfoEntity>{
+    fun login(userName:String,passWord:String) = request<UserInfoEntity>({
         mQuickLoginApiService.login(userName,passWord).run {
             responseCodeExceptionHandler(code, msg)
             emit(data)
         }
+    }){
+        dimissLoadingDialog()
+        it?.run {
+            toast(it)
+        }
+
     }
 }

@@ -13,8 +13,6 @@ import com.google.android.flexbox.JustifyContent
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.config.Appconfig
 import com.knight.kotlin.library_base.entity.SearchHotKeyEntity
-import com.knight.kotlin.library_base.ktx.observeLiveData
-import com.knight.kotlin.library_base.ktx.observeLiveDataWithError
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.util.dp2px
 import com.knight.kotlin.library_database.entity.SearchHistroyKeywordEntity
@@ -95,22 +93,37 @@ class HomeSearchActivity : BaseActivity<HomeSearchActivityBinding,HomeSearchVm>(
     }
 
     override fun initObserver() {
-        observeLiveDataWithError(mViewModel.searchHotKeyList,mViewModel.requestSearchHotKeyFlag,::setSearchHotKey,::requestSeatchHotKeyFailure)
-        observeLiveData(mViewModel.localSearchwords,::setLocalSearchwords)
+
     }
 
     override fun initRequestData() {
-        mViewModel.getHotKey()
+        mViewModel.getHotKey(failureCallBack = {
+            it?.run {
+                toast(it)
+            }
+            requestSeatchHotKeyFailure()
+        }).observerKt {
+            setSearchHotKey(it)
+        }
 
     }
 
     override fun reLoadData() {
-        mViewModel.getHotKey()
+        mViewModel.getHotKey(failureCallBack = {
+            it?.run {
+                toast(it)
+            }
+            requestSeatchHotKeyFailure()
+        }).observerKt {
+            setSearchHotKey(it)
+        }
     }
 
     override fun onResume() {
         super.onResume()
-        mViewModel.getLocalSearchwords()
+        mViewModel.getLocalSearchwords().observerKt {
+            setLocalSearchwords(it)
+        }
     }
 
 
@@ -185,7 +198,9 @@ class HomeSearchActivity : BaseActivity<HomeSearchActivityBinding,HomeSearchVm>(
                     getString(R.string.home_clearall_searchrecord),
                     { dialog, which ->
                         HistroyKeywordsRepository.getInstance()?.deleteAllKeywords()
-                        mViewModel.getLocalSearchwords()
+                        mViewModel.getLocalSearchwords().observerKt {
+                            setLocalSearchwords(it)
+                        }
                     }) { dialog, which -> }
             }
 

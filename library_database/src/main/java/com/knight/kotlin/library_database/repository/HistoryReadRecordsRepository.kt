@@ -47,9 +47,13 @@ class HistoryReadRecordsRepository : BaseRepository(){
      *
      * 查询部分阅读历史
      */
-    suspend fun queryPartHistoryRecords(start:Int,end:Int,userId:Int) = request<MutableList<HistoryReadRecordsEntity>> {
+    fun queryPartHistoryRecords(start:Int,end:Int,userId:Int,failureCallBack:((String?) ->Unit) ?= null) = request<MutableList<HistoryReadRecordsEntity>> ({
         mDao.queryPartHistoryRecords(start, end, userId).run {
             emit(this)
+        }
+    }){
+        failureCallBack?.run {
+            this(it)
         }
     }
 
@@ -67,20 +71,28 @@ class HistoryReadRecordsRepository : BaseRepository(){
      *
      * 删除单个
      */
-    suspend fun deleteHistoryRecord(id:Long) = request<Unit> {
+    fun deleteHistoryRecord(id:Long,failureCallBack:((String?) ->Unit) ?= null) = request<Unit> ({
         mDao.deleteHistoryRecordsById(id).run {
             emit(Unit)
         }
 
+    }){
+        failureCallBack?.run {
+            this(it)
+        }
     }
 
     /**
      *
      * 删除全部
      */
-    suspend fun deleteAllHistoryRecord() = request<Unit> {
+    fun deleteAllHistoryRecord(failureCallBack:((String?) ->Unit) ?= null) = request<Unit> ({
         mDao.deleteAllHistoryRecords().run {
             emit(Unit)
+        }
+    }){
+        failureCallBack?.run {
+            this(it)
         }
     }
 

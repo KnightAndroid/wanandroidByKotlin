@@ -10,8 +10,10 @@ import com.knight.kotlin.library_base.config.CacheKey
 import com.knight.kotlin.library_base.entity.LoginEntity
 import com.knight.kotlin.library_base.entity.UserInfoEntity
 import com.knight.kotlin.library_base.event.MessageEvent
-import com.knight.kotlin.library_base.ktx.observeLiveData
+import com.knight.kotlin.library_base.ktx.appStr
+import com.knight.kotlin.library_base.ktx.dimissLoadingDialog
 import com.knight.kotlin.library_base.ktx.setOnClick
+import com.knight.kotlin.library_base.ktx.showLoadingDialog
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_base.util.EventBusUtils
@@ -24,7 +26,6 @@ import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_mine.R
 import com.knight.kotlin.module_mine.databinding.MineLoginActivityBinding
 import com.knight.kotlin.module_mine.vm.LoginViewModel
-import com.knight.library.cryption.AesUtils
 import com.knight.library_biometric.control.BiometricControl
 import com.knight.library_biometric.listener.BiometricStatusCallback
 import com.wyjson.router.annotation.Route
@@ -82,7 +83,16 @@ class LoginActivity : BaseActivity<MineLoginActivityBinding, LoginViewModel>(){
         }
         mineTvLogin.setOnClick {
             if (validateLoginMessage()) {
-                mViewModel.login(mineLoginUsername.text.toString().trim(),mineLoginPassword.text.toString().trim())
+                showLoadingDialog(appStr(R.string.mine_request_login))
+                mViewModel.login(mineLoginUsername.text.toString().trim(),mineLoginPassword.text.toString().trim(),failureCallBack = {
+                    dimissLoadingDialog()
+                    it?.run {
+                        toast(it)
+                    }
+                }).observerKt {
+                    dimissLoadingDialog()
+                    setUserInfo(it)
+                }
             }
 
         }
@@ -109,7 +119,6 @@ class LoginActivity : BaseActivity<MineLoginActivityBinding, LoginViewModel>(){
     }
 
     override fun initObserver() {
-        observeLiveData(mViewModel.userInfo,::setUserInfo)
     }
 
     override fun initRequestData() {

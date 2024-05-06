@@ -16,9 +16,13 @@ class PushArticlesDataRepository(private val mDao:PushArticlesDateDao): BaseRepo
      *
      * 查询本地历史记录
      */
-    suspend fun findPushArticlesDate() = request<List<PushDateEntity>>{
+    fun findPushArticlesDate(failureCallBack:((String?) ->Unit) ?= null) = request<List<PushDateEntity>>({
         mDao.queryPushDateEntity().run {
             emit(this)
+        }
+    }) {
+        failureCallBack?.run {
+            this(it)
         }
     }
 
@@ -35,9 +39,14 @@ class PushArticlesDataRepository(private val mDao:PushArticlesDateDao): BaseRepo
      *
      * 插入推送文章
      */
-    suspend fun insertPushArticlesDate(pushDateEntity: PushDateEntity) = request<Long>{
+    fun insertPushArticlesDate(pushDateEntity: PushDateEntity,failureCallBack:((String?) ->Unit) ?= null) = request<Long>({
         mDao.insertPushArticlesDate(pushDateEntity).run {
             emit(this)
+        }
+
+    }){
+        failureCallBack?.run {
+            this(it)
         }
 
     }

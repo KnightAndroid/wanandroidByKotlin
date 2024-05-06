@@ -2,6 +2,7 @@ package com.knight.kotlin.module_mine.repo
 
 import com.knight.kotlin.library_base.repository.BaseRepository
 import com.knight.kotlin.library_network.model.responseCodeExceptionHandler
+import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_mine.api.MyShareArticlesApiService
 import com.knight.kotlin.module_mine.entity.MyShareArticleEntity
 import javax.inject.Inject
@@ -19,12 +20,16 @@ class MyShareArticlesRepo @Inject constructor() : BaseRepository() {
      *
      * 获取自己分享文章
      */
-    suspend fun getMyShareArticles(page:Int) = request<MyShareArticleEntity>{
+    fun getMyShareArticles(page:Int) = request<MyShareArticleEntity>({
         mMyShareArticlesApiService.getMyShareArticles(page).run {
             responseCodeExceptionHandler(code,msg)
             emit(data)
         }
 
+    }){
+        it?.run {
+            toast(it)
+        }
     }
 
     /***
@@ -32,11 +37,15 @@ class MyShareArticlesRepo @Inject constructor() : BaseRepository() {
      * 删除自己分享的文章
      *
      */
-    suspend fun deleteMyShareArticles(articleId:Int)  = request<Any>{
+    fun deleteMyShareArticles(articleId:Int)  = request<Any>({
         mMyShareArticlesApiService.deleteMyShareArticles(articleId).run {
             responseCodeExceptionHandler(code,msg)
             emit(data)
         }
 
+    }){
+        it?.run{
+            toast(it)
+        }
     }
 }

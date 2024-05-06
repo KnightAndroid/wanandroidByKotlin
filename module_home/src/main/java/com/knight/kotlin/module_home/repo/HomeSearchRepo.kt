@@ -19,11 +19,15 @@ class HomeSearchRepo @Inject constructor() : BaseRepository() {
      * 获取热词
      *
      */
-    suspend fun getHotKey() = request<MutableList<SearchHotKeyEntity>>{
+    fun getHotKey(failureCallBack:((String?) ->Unit) ?= null) = request<MutableList<SearchHotKeyEntity>>({
         mHomeSearchApiService.getHotKey().run{
             responseCodeExceptionHandler(code, msg)
             emit(data)
         }
 
+    }){
+        failureCallBack?.run {
+            this(it)
+        }
     }
 }

@@ -1,21 +1,12 @@
 package com.knight.kotlin.module_mine.vm
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.asLiveData
 import com.knight.kotlin.library_base.entity.UserInfoEntity
 import com.knight.kotlin.library_base.vm.BaseViewModel
-import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_mine.entity.UserInfoMessageEntity
 import com.knight.kotlin.module_mine.repo.MineRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.onCompletion
-import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.onStart
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
@@ -27,58 +18,16 @@ import javax.inject.Inject
 class MineViewModel @Inject constructor(private val mRepo:MineRepo) : BaseViewModel(){
 
     /**
-     * 用户金币
-     */
-    val userInfoCoin = MutableLiveData<UserInfoMessageEntity>()
-    /**
-     * 用户信息
-     */
-    val userInfo = MutableLiveData<UserInfoEntity>()
-
-
-    /**
      * 获取用户金币
      */
-    fun getUserInfoCoin() {
-        viewModelScope.launch {
-            mRepo.getUserInfoCoin()
-                .flowOn(Dispatchers.IO)
-                .onStart {
-                    //开始
-                }
-                .onEach {
-                    userInfoCoin.postValue(it)
-                }
-                .onCompletion {
-                    //结束
-                }
-                .catch {
-                    toast(it.message ?: "")
-                    requestSuccessFlag.postValue(false)
-                }
-                .collect()
-        }
+    fun getUserInfoCoin(failureCallBack:((String?) ->Unit) ?= null): LiveData<UserInfoMessageEntity> {
+        return mRepo.getUserInfoCoin(failureCallBack).asLiveData()
     }
 
     /**
      * 登录
      */
-    fun login(userName:String,passWord:String) {
-        viewModelScope.launch {
-            mRepo.login(userName, passWord)
-                .flowOn(Dispatchers.IO)
-                .onStart {
-                    //开始
-                }
-                .onEach {
-                    userInfo.postValue(it)
-                }
-                .onCompletion {
-                    //结束
-                }
-                .catch { toast(it.message ?: "") }
-                .collect()
-
-        }
+    fun login(userName:String,passWord:String):LiveData<UserInfoEntity> {
+        return mRepo.login(userName, passWord).asLiveData()
     }
 }

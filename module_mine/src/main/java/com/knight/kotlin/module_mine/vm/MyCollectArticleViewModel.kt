@@ -1,20 +1,11 @@
 package com.knight.kotlin.module_mine.vm
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.asLiveData
 import com.knight.kotlin.library_base.vm.BaseViewModel
-import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_mine.entity.MyCollectArticleListEntity
 import com.knight.kotlin.module_mine.repo.MyCollectArticleRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.onCompletion
-import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.onStart
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
@@ -27,34 +18,10 @@ class MyCollectArticleViewModel @Inject constructor(private val mRepo: MyCollect
 
 
     /**
-     * 自己收藏文章
-     */
-    val myCollectArticleLists = MutableLiveData<MyCollectArticleListEntity>()
-    //是否取消收藏成功
-    val unCollectArticle = MutableLiveData<Boolean>()
-
-
-    /**
      * 获取用户金币
      */
-    fun getMyCollectArticles(page:Int) {
-        viewModelScope.launch {
-            mRepo.getMyCollectArticles(page)
-                .flowOn(Dispatchers.IO)
-                .onStart {
-                    //开始
-                }
-                .onEach {
-                    myCollectArticleLists.postValue(it)
-                }
-                .onCompletion {
-                    //结束
-                }
-                .catch {
-                    toast(it.message ?: "")
-                }
-                .collect()
-        }
+    fun getMyCollectArticles(page:Int): LiveData<MyCollectArticleListEntity> {
+        return mRepo.getMyCollectArticles(page).asLiveData()
     }
 
     /**
@@ -62,24 +29,8 @@ class MyCollectArticleViewModel @Inject constructor(private val mRepo: MyCollect
      * 取消收藏
      *
      */
-    fun unCollectArticle(unCollectArticleId:Int) {
-        viewModelScope.launch {
-            mRepo.cancelCollectArticle(unCollectArticleId)
-                .flowOn(Dispatchers.IO)
-                .onStart {
-                    //开始
-                }
-                .onEach {
-                    unCollectArticle.postValue(true)
-                }
-                .onCompletion {
-                    //结束
-                }
-                .catch {
-                    toast(it.message ?: "")
-                }
-                .collect()
-        }
+    fun unCollectArticle(unCollectArticleId:Int):LiveData<Any> {
+        return mRepo.cancelCollectArticle(unCollectArticleId).asLiveData()
     }
 
 

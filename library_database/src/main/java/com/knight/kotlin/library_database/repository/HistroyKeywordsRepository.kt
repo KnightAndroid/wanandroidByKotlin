@@ -39,9 +39,13 @@ class HistroyKeywordsRepository(private val mDao:SearchDayPushArticleDao = AppDa
      *
      * 查询本地历史记录
      */
-    suspend fun queryHistroyKeywords() = request<MutableList<SearchHistroyKeywordEntity>>{
+    fun queryHistroyKeywords(failureCallBack:((String?) ->Unit) ?= null) = request<MutableList<SearchHistroyKeywordEntity>>({
         mDao.queryAllHistroyWordkeys().run {
             emit(this)
+        }
+    }){
+        failureCallBack?.run {
+            this(it)
         }
     }
 

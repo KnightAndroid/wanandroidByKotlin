@@ -17,8 +17,6 @@ import com.knight.kotlin.library_base.event.MessageEvent
 import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.knight.kotlin.library_base.ktx.dismissLoading
 import com.knight.kotlin.library_base.ktx.getUser
-import com.knight.kotlin.library_base.ktx.observeLiveData
-import com.knight.kotlin.library_base.ktx.observeLiveDataWithError
 import com.knight.kotlin.library_base.ktx.showLoading
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.route.RouteFragment
@@ -156,14 +154,17 @@ class MineFragment: BaseFragment<MineFragmentBinding, MineViewModel>(),OnRefresh
 
 
     override fun initObserver() {
-        observeLiveDataWithError(mViewModel.userInfoCoin,mViewModel.requestSuccessFlag,::setUserInfoCoin,::requestUserInfoCoinError)
-        observeLiveData(mViewModel.userInfo,::setUserInfo)
+
     }
 
     override fun initRequestData() {
         getUser()?.let {
             requestLoading(mBinding.mineRefreshLayout)
-            mViewModel.getUserInfoCoin()
+            mViewModel.getUserInfoCoin(failureCallBack = {
+                requestUserInfoCoinError()
+            }).observerKt {
+                setUserInfoCoin(it)
+            }
         }
     }
 
@@ -207,7 +208,11 @@ class MineFragment: BaseFragment<MineFragmentBinding, MineViewModel>(),OnRefresh
      */
     private fun setUserInfo(userInfo:UserInfoEntity) {
 
-        mViewModel.getUserInfoCoin()
+        mViewModel.getUserInfoCoin(failureCallBack = {
+            requestUserInfoCoinError()
+        }).observerKt {
+            setUserInfoCoin(it)
+        }
         mBinding.mineIvMessage.visibility = View.VISIBLE
         Appconfig.user = userInfo
         //保存用户信息
@@ -226,7 +231,11 @@ class MineFragment: BaseFragment<MineFragmentBinding, MineViewModel>(),OnRefresh
 
     override fun reLoadData() {
         getUser()?.let {
-            mViewModel.getUserInfoCoin()
+            mViewModel.getUserInfoCoin(failureCallBack = {
+                requestUserInfoCoinError()
+            }).observerKt {
+                setUserInfoCoin(it)
+            }
         }
     }
 
@@ -375,7 +384,11 @@ class MineFragment: BaseFragment<MineFragmentBinding, MineViewModel>(),OnRefresh
             MessageEvent.MessageType.LoginSuccess ->{
                 //登录成功 请求金币信息
                 showLoading(getString(R.string.mine_request_loading))
-                mViewModel.getUserInfoCoin()
+                mViewModel.getUserInfoCoin(failureCallBack = {
+                    requestUserInfoCoinError()
+                }).observerKt {
+                    setUserInfoCoin(it)
+                }
                 mBinding.mineIvMessage.visibility = View.VISIBLE
                 mMineItemAdapter.notifyDataSetChanged()
 
@@ -450,7 +463,9 @@ class MineFragment: BaseFragment<MineFragmentBinding, MineViewModel>(),OnRefresh
                         GsonUtils.get(String(bytes ?: ByteArray(0)), LoginEntity::class.java)
                     val iv = cipher?.iv
                     loginEntity?.let {
-                        mViewModel.login(it.loginName,it.loginPassword)
+                        mViewModel.login(it.loginName,it.loginPassword).observerKt {
+                            setUserInfo(it)
+                        }
                     }
                 } catch (e: BadPaddingException) {
                     e.printStackTrace()

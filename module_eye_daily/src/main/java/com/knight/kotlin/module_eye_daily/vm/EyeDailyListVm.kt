@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
 import com.knight.kotlin.library_base.ktx.showLoadingDialog
 import com.knight.kotlin.library_base.vm.BaseViewModel
+import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_eye_daily.entity.EyeDailyListEntity
 import com.knight.kotlin.module_eye_daily.repo.EyeDailyListRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,6 +24,8 @@ class EyeDailyListVm @Inject constructor(private val mRepo:EyeDailyListRepo) : B
      */
     fun getDailyBanner():LiveData<EyeDailyListEntity> {
         showLoadingDialog()
-        return mRepo.getDailyBanner().asLiveData()
+        return mRepo.getDailyBanner(failureCallBack = {
+            it?.let { it1 -> toast(it1) }
+        }).asLiveData()
     }
 }

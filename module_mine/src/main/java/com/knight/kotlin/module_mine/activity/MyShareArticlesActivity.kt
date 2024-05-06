@@ -3,7 +3,6 @@ package com.knight.kotlin.module_mine.activity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.ktx.init
-import com.knight.kotlin.library_base.ktx.observeLiveData
 import com.knight.kotlin.library_base.ktx.setOnClick
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.util.ArouteUtils
@@ -51,21 +50,26 @@ class MyShareArticlesActivity : BaseActivity<MineMySharearticlesActivityBinding,
     }
 
     override fun initObserver() {
-        observeLiveData(mViewModel.myShareArticlesList,::getMyShareArticles)
-        observeLiveData(mViewModel.deleteMyArticleSuccess,::deleteArticle)
+
     }
 
     override fun initRequestData() {
-        mViewModel.getMyShareArticles(page)
+        mViewModel.getMyShareArticles(page).observerKt {
+            getMyShareArticles(it)
+        }
     }
 
     override fun reLoadData() {
-        mViewModel.getMyShareArticles(page)
+        mViewModel.getMyShareArticles(page).observerKt {
+            getMyShareArticles(it)
+        }
     }
 
     override fun onRefresh(refreshLayout: RefreshLayout) {
         page = 1
-        mViewModel.getMyShareArticles(page)
+        mViewModel.getMyShareArticles(page).observerKt {
+            getMyShareArticles(it)
+        }
         mBinding.includeMineSharearticlesRv.baseFreshlayout.setEnableLoadMore(true)
     }
 
@@ -89,14 +93,16 @@ class MyShareArticlesActivity : BaseActivity<MineMySharearticlesActivityBinding,
     }
 
 
-    private fun deleteArticle(data:Boolean) {
+    private fun deleteArticle() {
         mMyshareArticleAdater.data.removeAt(selectItem)
         mMyshareArticleAdater.notifyItemRemoved(selectItem)
 
     }
 
     override fun onLoadMore(refreshLayout: RefreshLayout) {
-        mViewModel.getMyShareArticles(page)
+        mViewModel.getMyShareArticles(page).observerKt {
+            getMyShareArticles(it)
+        }
     }
 
 
@@ -122,7 +128,9 @@ class MyShareArticlesActivity : BaseActivity<MineMySharearticlesActivityBinding,
                 DialogUtils.getConfirmDialog(this@MyShareArticlesActivity,getString(R.string.mine_confirm_cancel_share_article),
                     { dialog, which ->
                         selectItem = position
-                        mViewModel.deleteMyShareArticles(data[position].id)
+                        mViewModel.deleteMyShareArticles(data[position].id).observerKt {
+                            deleteArticle()
+                        }
                     }) {
                         dialog, which ->
                 }

@@ -2,6 +2,7 @@ package com.knight.kotlin.module_home.repo
 
 import com.knight.kotlin.library_base.repository.BaseRepository
 import com.knight.kotlin.library_network.model.responseCodeExceptionHandler
+import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_home.api.HomeSearchResultApiService
 import com.knight.kotlin.module_home.entity.HomeArticleListBean
 import javax.inject.Inject
@@ -19,12 +20,16 @@ class HomeSearchResultRepo @Inject constructor(): BaseRepository(){
      * 通过关键字搜索
      *
      */
-    suspend fun searchArticleByKeyword(page:Int,keyword:String) = request<HomeArticleListBean>{
+    fun searchArticleByKeyword(page:Int,keyword:String) = request<HomeArticleListBean>({
         mHomeSearchResultApiService.searchArticleByKeyword(page, keyword).run{
             responseCodeExceptionHandler(code, msg)
             emit(data)
         }
 
+    }){
+        it?.run {
+            toast(it)
+        }
     }
 
 
@@ -32,11 +37,13 @@ class HomeSearchResultRepo @Inject constructor(): BaseRepository(){
      * 收藏文章
      *
      */
-    suspend fun collectArticle(collectArticleId:Int) = request<Any>{
+    fun collectArticle(collectArticleId:Int) = request<Any>({
         mHomeSearchResultApiService.collectArticle(collectArticleId).run {
             responseCodeExceptionHandler(code,msg)
-            emit(data)
+            emit(true)
         }
+    }){
+        it?.run { toast(it) }
     }
 
 
@@ -44,11 +51,13 @@ class HomeSearchResultRepo @Inject constructor(): BaseRepository(){
      *
      * 取消收藏文章
      */
-    suspend fun unCollectArticle(unCollectArticleId:Int) = request<Any> {
+    fun unCollectArticle(unCollectArticleId:Int) = request<Any> ({
         mHomeSearchResultApiService.unCollectArticle(unCollectArticleId).run {
             responseCodeExceptionHandler(code,msg)
-            emit(data)
+            emit(true)
         }
+    }){
+        it?.run { toast(it) }
     }
 
 

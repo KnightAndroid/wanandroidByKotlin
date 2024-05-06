@@ -28,10 +28,14 @@ class LoginRepo @Inject constructor() : BaseRepository() {
      *
      * 登录
      */
-    suspend fun login(userName:String,passWord:String) = request<UserInfoEntity>{
+    fun login(userName:String,passWord:String,failureCallBack:((String?) ->Unit) ?= null) = request<UserInfoEntity>({
         mLoginApiService.login(userName,passWord).run {
             responseCodeExceptionHandler(code,msg)
             emit(data)
+        }
+    }){
+        failureCallBack?.run {
+            this(it)
         }
     }
 }

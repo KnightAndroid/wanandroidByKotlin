@@ -1,20 +1,11 @@
 package com.knight.kotlin.module_mine.vm
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.asLiveData
 import com.knight.kotlin.library_base.vm.BaseViewModel
-import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_mine.entity.OtherShareArticleListEntity
 import com.knight.kotlin.module_mine.repo.OtherShareArticleRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.onCompletion
-import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.onStart
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
@@ -25,41 +16,11 @@ import javax.inject.Inject
 @HiltViewModel
 class OtherShareArticleViewModel @Inject constructor(private val mRepo: OtherShareArticleRepo) : BaseViewModel(){
 
-
-
-
-    /**
-     *
-     * 他人文章数据列表
-     */
-    val otherShareArticles = MutableLiveData<OtherShareArticleListEntity>()
-
-
-    //是否收藏成功
-    val collectArticle = MutableLiveData<Boolean>()
-    //是否取消收藏成功
-    val unCollectArticle = MutableLiveData<Boolean>()
     /**
      * 获取他人分享文章
      */
-    fun getRankCoin(uid:Int,page:Int) {
-        viewModelScope.launch {
-            mRepo.getOtherShareArticle(uid,page)
-                .flowOn(Dispatchers.IO)
-                .onStart {
-                    //开始
-
-                }
-                .onEach {
-                    otherShareArticles.postValue(it)
-                }
-                .onCompletion {
-
-                }
-                .catch { toast(it.message ?: "") }
-                .collect()
-
-        }
+    fun getOtherShareArticle(uid:Int,page:Int): LiveData<OtherShareArticleListEntity> {
+        return mRepo.getOtherShareArticle(uid, page).asLiveData()
     }
 
     /**
@@ -67,24 +28,8 @@ class OtherShareArticleViewModel @Inject constructor(private val mRepo: OtherSha
      * 收藏本文章
      *
      */
-    fun collectArticle(collectArticleId:Int) {
-        viewModelScope.launch {
-            mRepo.collectArticle(collectArticleId)
-                .flowOn(Dispatchers.IO)
-                .onStart {
-                    //开始
-                }
-                .onEach {
-                    collectArticle.postValue(true)
-                }
-                .onCompletion {
-                    //结束
-                }
-                .catch {
-                    toast(it.message ?: "")
-                }
-                .collect()
-        }
+    fun collectArticle(collectArticleId:Int):LiveData<Any> {
+        return mRepo.collectArticle(collectArticleId).asLiveData()
     }
 
     /**
@@ -92,23 +37,7 @@ class OtherShareArticleViewModel @Inject constructor(private val mRepo: OtherSha
      * 取消收藏
      *
      */
-    fun unCollectArticle(unCollectArticleId:Int) {
-        viewModelScope.launch {
-            mRepo.cancelCollectArticle(unCollectArticleId)
-                .flowOn(Dispatchers.IO)
-                .onStart {
-                    //开始
-                }
-                .onEach {
-                    unCollectArticle.postValue(true)
-                }
-                .onCompletion {
-                    //结束
-                }
-                .catch {
-                    toast(it.message ?: "")
-                }
-                .collect()
-        }
+    fun unCollectArticle(unCollectArticleId:Int):LiveData<Any> {
+        return mRepo.cancelCollectArticle(unCollectArticleId).asLiveData()
     }
 }

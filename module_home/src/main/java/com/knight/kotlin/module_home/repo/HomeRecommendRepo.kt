@@ -4,6 +4,7 @@ import com.knight.kotlin.library_base.entity.UserInfoEntity
 import com.knight.kotlin.library_base.repository.BaseRepository
 import com.knight.kotlin.library_common.entity.OfficialAccountEntity
 import com.knight.kotlin.library_network.model.responseCodeExceptionHandler
+import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_home.api.HomeRecommendApiService
 import com.knight.kotlin.module_home.entity.BannerBean
 import com.knight.kotlin.module_home.entity.EveryDayPushArticlesBean
@@ -24,20 +25,24 @@ class HomeRecommendRepo @Inject constructor(): BaseRepository() {
     /**
      * 获取推送文章信息接口
      */
-    suspend fun getEveryDayPushArticle() = request<EveryDayPushArticlesBean>{
+    fun getEveryDayPushArticle(failureCallBack:((String?) ->Unit) ?= null) = request<EveryDayPushArticlesBean>({
         mHomeRecommendApiService.getEveryDayPushArticle().run {
             responseCodeExceptionHandler(code, msg)
             emit(data)
         }
+    }) {
+        it?.let { it1 -> toast(it1) }
     }
     /**
      * 获取未读消息
      */
-    suspend fun getUnreadMessage() = request<Int> {
+    fun getUnreadMessage() = request<Int> ({
         mHomeRecommendApiService.getUnreadMessage().run {
             responseCodeExceptionHandler(code, msg)
             emit(data)
         }
+    }){
+        it?.let { it1 -> toast(it1) }
     }
 
 
@@ -45,22 +50,26 @@ class HomeRecommendRepo @Inject constructor(): BaseRepository() {
      * 获取置顶文章数据
      *
      */
-    suspend fun getTopArticle() = request<MutableList<TopArticleBean>> {
+    fun getTopArticle() = request<MutableList<TopArticleBean>> ({
         mHomeRecommendApiService.getTopArticle().run {
             responseCodeExceptionHandler(code, msg)
             emit(data)
         }
+    }){
+        it?.let { it1 -> toast(it1) }
     }
 
 
     /**
      * 获取Banner数据
      */
-    suspend fun getBanner() = request<MutableList<BannerBean>> {
+    fun getBanner() = request<MutableList<BannerBean>> ({
         mHomeRecommendApiService.getBanner().run {
             responseCodeExceptionHandler(code,msg)
             emit(data)
         }
+    }){
+        it?.let { it1 -> toast(it1) }
     }
 
 
@@ -68,22 +77,26 @@ class HomeRecommendRepo @Inject constructor(): BaseRepository() {
      * 获取公众号数据
      *
      */
-    suspend fun getOfficialAccount() = request<MutableList<OfficialAccountEntity>> {
+    fun getOfficialAccount() = request<MutableList<OfficialAccountEntity>> ({
         mHomeRecommendApiService.getOfficialAccount().run {
             responseCodeExceptionHandler(code,msg)
             emit(data)
         }
+    }){
+        it?.let { it1 -> toast(it1) }
     }
 
 
     /**
      * 获取首页文章列表
      */
-    suspend fun getHomeArticle(page:Int) = request<HomeArticleListBean> {
+    fun getHomeArticle(page:Int) = request<HomeArticleListBean> ({
         mHomeRecommendApiService.getHomeArticle(page).run {
             responseCodeExceptionHandler(code,msg)
             emit(data)
         }
+    }){
+        it?.let { it1 -> toast(it1) }
     }
 
 
@@ -91,10 +104,14 @@ class HomeRecommendRepo @Inject constructor(): BaseRepository() {
      * 收藏文章
      *
      */
-    suspend fun collectArticle(collectArticleId:Int) = request<Any>{
+    fun collectArticle(collectArticleId:Int) = request<Any>({
         mHomeRecommendApiService.collectArticle(collectArticleId).run {
             responseCodeExceptionHandler(code,msg)
-            emit(data)
+            emit(true)
+        }
+    }){
+        it?.run {
+            toast(it)
         }
     }
 
@@ -103,22 +120,26 @@ class HomeRecommendRepo @Inject constructor(): BaseRepository() {
      *
      * 取消收藏文章
      */
-    suspend fun unCollectArticle(unCollectArticleId:Int) = request<Any> {
+    fun unCollectArticle(unCollectArticleId:Int) = request<Any> ({
         mHomeRecommendApiService.unCollectArticle(unCollectArticleId).run {
             responseCodeExceptionHandler(code,msg)
-            emit(data)
+            emit(true)
         }
+    }){
+        it?.let { it1 -> toast(it1) }
     }
 
     /**
      *
      * 登录
      */
-    suspend fun login(userName:String,passWord:String) = request<UserInfoEntity>{
+    fun login(userName:String,passWord:String) = request<UserInfoEntity>({
         mHomeRecommendApiService.login(userName,passWord).run {
             responseCodeExceptionHandler(code,msg)
             emit(data)
         }
+    }){
+        it?.let { it1 -> toast(it1) }
     }
 
 

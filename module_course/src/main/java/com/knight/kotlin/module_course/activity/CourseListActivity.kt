@@ -3,7 +3,6 @@ package com.knight.kotlin.module_course.activity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.ktx.init
-import com.knight.kotlin.library_base.ktx.observeLiveData
 import com.knight.kotlin.library_base.ktx.setOnClick
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_util.startPageWithParams
@@ -41,19 +40,24 @@ class CourseListActivity : BaseActivity<CourseListActivityBinding,CourseListVm>(
     }
 
     override fun initObserver() {
-        observeLiveData(mViewModel.courseLists,::setCourseData)
     }
 
     override fun initRequestData() {
-        mViewModel.getCourses()
+        mViewModel.getCourses().observerKt {
+            setCourseData(it)
+        }
     }
 
     override fun reLoadData() {
-        mViewModel.getCourses()
+        mViewModel.getCourses().observerKt {
+            setCourseData(it)
+        }
     }
 
     override fun onRefresh(refreshLayout: RefreshLayout) {
-        mViewModel.getCourses()
+        mViewModel.getCourses().observerKt {
+            setCourseData(it)
+        }
     }
 
     override fun onLoadMore(refreshLayout: RefreshLayout) {

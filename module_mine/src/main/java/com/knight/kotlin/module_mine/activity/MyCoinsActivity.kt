@@ -6,7 +6,6 @@ import android.widget.LinearLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.ktx.init
-import com.knight.kotlin.library_base.ktx.observeLiveData
 import com.knight.kotlin.library_base.ktx.setOnClick
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_widget.CountNumberView
@@ -62,25 +61,32 @@ class MyCoinsActivity : BaseActivity<MineCoinsActivityBinding,MyDetailCoinsViewM
     }
 
     override fun initObserver() {
-        observeLiveData(mViewModel.myDetailCoinList,::setUserDetailCoin)
     }
 
     override fun initRequestData() {
-        mViewModel.getMyDetailCoin(page)
+        mViewModel.getMyDetailCoin(page).observerKt {
+            setUserDetailCoin(it)
+        }
     }
 
     override fun reLoadData() {
-        mViewModel.getMyDetailCoin(page)
+        mViewModel.getMyDetailCoin(page).observerKt {
+            setUserDetailCoin(it)
+        }
     }
 
     override fun onRefresh(refreshLayout: RefreshLayout) {
         page = 1
-        mViewModel.getMyDetailCoin(page)
+        mViewModel.getMyDetailCoin(page).observerKt {
+            setUserDetailCoin(it)
+        }
         mBinding.includeMineDetailpoint.baseFreshlayout.setEnableLoadMore(true)
     }
 
     override fun onLoadMore(refreshLayout: RefreshLayout) {
-        mViewModel.getMyDetailCoin(page)
+        mViewModel.getMyDetailCoin(page).observerKt {
+            setUserDetailCoin(it)
+        }
     }
 
 

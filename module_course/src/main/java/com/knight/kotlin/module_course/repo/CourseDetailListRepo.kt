@@ -2,6 +2,7 @@ package com.knight.kotlin.module_course.repo
 
 import com.knight.kotlin.library_base.repository.BaseRepository
 import com.knight.kotlin.library_network.model.responseCodeExceptionHandler
+import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_course.api.CourseDetailListApi
 import com.knight.kotlin.module_course.entity.CourseDetailListEntity
 import javax.inject.Inject
@@ -18,10 +19,13 @@ class CourseDetailListRepo @Inject constructor() : BaseRepository() {
     /**
      * 获取课程列表
      */
-    suspend fun getDetailCourses(page:Int,cid:Int) = request<CourseDetailListEntity>{
+    fun getDetailCourses(page:Int,cid:Int,failureCallBack:((String?) ->Unit) ?= null) = request<CourseDetailListEntity>({
         mCourseDetailListApi.getDetailCourses(page, cid).run {
             responseCodeExceptionHandler(code, msg)
             emit(data)
         }
+    }){
+        it?.let { it1 -> toast(it1) }
     }
+
 }

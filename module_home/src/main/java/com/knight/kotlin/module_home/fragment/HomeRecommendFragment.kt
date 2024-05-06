@@ -30,7 +30,6 @@ import com.knight.kotlin.library_base.entity.UserInfoEntity
 import com.knight.kotlin.library_base.event.MessageEvent
 import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.knight.kotlin.library_base.ktx.getUser
-import com.knight.kotlin.library_base.ktx.observeLiveData
 import com.knight.kotlin.library_base.ktx.setOnClick
 import com.knight.kotlin.library_base.ktx.toHtml
 import com.knight.kotlin.library_base.route.RouteActivity
@@ -230,30 +229,30 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
 
     override fun initRequestData() {
         currentPage = 0
-        mViewModel.getEveryDayPushArticle()
+        mViewModel.getEveryDayPushArticle().observerKt {
+             setEveryDayPushArticle(it)
+        }
         //未读信息请求
         getUser()?.let {
-            mViewModel.getUnreadMessage()
+            mViewModel.getUnreadMessage().observerKt {
+                setUnreadMessage(it)
+            }
         }
         //获取置顶文章
-        mViewModel.getTopArticle()
+        mViewModel.getTopArticle().observerKt {
+            setTopArticle(it)
+        }
         //获取banner
-        mViewModel.getBanner()
+        mViewModel.getBanner().observerKt {
+            setBanner(it)
+        }
         //获取公众号
-        mViewModel.getOfficialAccount()
+        mViewModel.getOfficialAccount().observerKt {
+            setOfficialAccount(it)
+        }
     }
 
     override fun initObserver() {
-        observeLiveData(mViewModel.everyDayPushArticles, ::setEveryDayPushArticle)
-        observeLiveData(mViewModel.userInfo,::setUserInfo)
-        observeLiveData(mViewModel.articles, ::processPushArticle)
-        observeLiveData(mViewModel.topArticles, ::setTopArticle)
-        observeLiveData(mViewModel.articleList, ::setArticles)
-        observeLiveData(mViewModel.bannerList, ::setBanner)
-        observeLiveData(mViewModel.collectArticle, ::collectSucess)
-        observeLiveData(mViewModel.unCollectArticle, ::unCollectSuccess)
-        observeLiveData(mViewModel.unReadMessageNumber, ::setUnreadMessage)
-        observeLiveData(mViewModel.officialAccountList, ::setOfficialAccount)
 
     }
 
@@ -341,7 +340,9 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
         mEveryDayPushData = data
         if (data.pushStatus && DateUtils.isToday(data.time)) {
             //查询本地推送文章时间 进行判断
-            mViewModel.queryPushDate()
+            mViewModel.queryPushDate().observerKt {
+                processPushArticle(it)
+            }
         }
 
     }
@@ -504,7 +505,9 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
 
         }).addBannerLifecycleObserver(this).indicator = CircleIndicator(activity)
         //请求首页文章
-        mViewModel.getHomeArticle(currentPage)
+        mViewModel.getHomeArticle(currentPage).observerKt {
+            setArticles(it)
+        }
 
     }
 
@@ -536,16 +539,22 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
     }
 
     override fun onLoadMore(refreshLayout: RefreshLayout) {
-        mViewModel.getHomeArticle(currentPage)
+        mViewModel.getHomeArticle(currentPage).observerKt {
+            setArticles(it)
+        }
     }
 
 
     @LoginCheck
     private fun collectOrunCollect(collect: Boolean, articleId: Int) {
         if (collect) {
-            mViewModel.unCollectArticle(articleId)
+            mViewModel.unCollectArticle(articleId).observerKt {
+                unCollectSuccess()
+            }
         } else {
-            mViewModel.collectArticle(articleId)
+            mViewModel.collectArticle(articleId).observerKt {
+                collectSucess()
+            }
         }
     }
 
@@ -553,7 +562,7 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
      *
      * 收藏成功
      */
-    private fun collectSucess(data: Boolean) {
+    private fun collectSucess() {
         mHomeArticleAdapter.data[selectItem].collect = true
         mHomeArticleAdapter.notifyItemChanged(selectItem)
 
@@ -563,7 +572,7 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
      *
      * 取消收藏
      */
-    private fun unCollectSuccess(data: Boolean) {
+    private fun unCollectSuccess() {
         mHomeArticleAdapter.data[selectItem].collect = false
         mHomeArticleAdapter.notifyItemChanged(selectItem)
 
@@ -815,7 +824,9 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
 
                     //走登录接口
                     loginEntity?.let {
-                        mViewModel.login(it.loginName,it.loginPassword)
+                        mViewModel.login(it.loginName,it.loginPassword).observerKt {
+                            setUserInfo(it)
+                        }
                     }
 
                 } catch (e: BadPaddingException) {

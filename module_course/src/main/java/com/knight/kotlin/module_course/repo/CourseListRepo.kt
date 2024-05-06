@@ -2,6 +2,7 @@ package com.knight.kotlin.module_course.repo
 
 import com.knight.kotlin.library_base.repository.BaseRepository
 import com.knight.kotlin.library_network.model.responseCodeExceptionHandler
+import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_course.api.CourseListApi
 import com.knight.kotlin.module_course.entity.CourseEntity
 import javax.inject.Inject
@@ -18,10 +19,12 @@ class CourseListRepo @Inject constructor() : BaseRepository() {
     /**
      * 获取课程列表
      */
-    suspend fun getCourses() = request<MutableList<CourseEntity>>{
+    fun getCourses(failureCallBack:((String?) ->Unit) ?= null) = request<MutableList<CourseEntity>>({
         mCourseListApi.getCourses().run {
             responseCodeExceptionHandler(code, msg)
             emit(data)
         }
+    }) {
+        it?.let { it1 -> toast(it1) }
     }
 }

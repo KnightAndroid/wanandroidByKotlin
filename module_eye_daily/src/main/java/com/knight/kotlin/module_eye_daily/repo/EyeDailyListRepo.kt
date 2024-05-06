@@ -3,7 +3,6 @@ package com.knight.kotlin.module_eye_daily.repo
 import com.knight.kotlin.library_base.ktx.dimissLoadingDialog
 import com.knight.kotlin.library_base.repository.BaseRepository
 import com.knight.kotlin.library_network.model.responseCodeExceptionHandler
-import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_eye_daily.api.EyeDailyListApi
 import com.knight.kotlin.module_eye_daily.entity.EyeDailyListEntity
 import kotlinx.coroutines.flow.Flow
@@ -31,12 +30,11 @@ class EyeDailyListRepo @Inject constructor() : BaseRepository() {
                dimissLoadingDialog()
                emit(this)
           }
-     }, failureCallBack = {
+     }) {
           dimissLoadingDialog()
-          it?.let { it1 -> toast(it1) }
-          failureCallBack?.let {
-               it1 -> it1(it)
+          failureCallBack?.run {
+               this(it)
           }
-     })
+     }
 
 }

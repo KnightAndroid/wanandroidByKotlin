@@ -8,7 +8,6 @@ import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.event.MessageEvent
 import com.knight.kotlin.library_base.ktx.init
 import com.knight.kotlin.library_base.ktx.loadServiceInit
-import com.knight.kotlin.library_base.ktx.observeLiveData
 import com.knight.kotlin.library_base.ktx.setOnClick
 import com.knight.kotlin.library_base.loadsir.EmptyCallBack
 import com.knight.kotlin.library_base.loadsir.LoadCallBack
@@ -79,16 +78,15 @@ class OtherShareArticleActivity :BaseActivity<MineOthershareActivityBinding,Othe
         requestLoading(mineSlidupPanellayout)
         inculeOthermessageToolbar.baseTvTitle.setText(getString(R.string.mine_other_shareArticles))
         mViewLoadService = loadServiceInit(includeOtherSharearticle.baseFreshlayout,{
-            mViewModel.getRankCoin(uid, page)
+            mViewModel.getOtherShareArticle(uid, page).observerKt {
+                setOtherShareArticle(it)
+            }
         })
         mViewLoadService.showCallback(LoadCallBack::class.java)
         initListener()
     }
 
     override fun initObserver() {
-        observeLiveData(mViewModel.otherShareArticles,::setOtherShareArticle)
-        observeLiveData(mViewModel.collectArticle,::collectSucess)
-        observeLiveData(mViewModel.unCollectArticle,::unCollectSuccess)
     }
 
 
@@ -161,29 +159,41 @@ class OtherShareArticleActivity :BaseActivity<MineOthershareActivityBinding,Othe
 
     }
     override fun initRequestData() {
-        mViewModel.getRankCoin(uid, page)
+        mViewModel.getOtherShareArticle(uid, page).observerKt {
+            setOtherShareArticle(it)
+        }
     }
 
     override fun reLoadData() {
-        mViewModel.getRankCoin(uid, page)
+        mViewModel.getOtherShareArticle(uid, page).observerKt {
+            setOtherShareArticle(it)
+        }
     }
 
     override fun onRefresh(refreshLayout: RefreshLayout) {
         page = 1
-        mViewModel.getRankCoin(uid, page)
+        mViewModel.getOtherShareArticle(uid, page).observerKt {
+            setOtherShareArticle(it)
+        }
         mBinding.includeOtherSharearticle.baseFreshlayout.setEnableLoadMore(true)
     }
 
     override fun onLoadMore(refreshLayout: RefreshLayout) {
-        mViewModel.getRankCoin(uid, page)
+        mViewModel.getOtherShareArticle(uid, page).observerKt {
+            setOtherShareArticle(it)
+        }
     }
 
     @LoginCheck
     private fun collectOrunCollect(collect: Boolean, articleId: Int) {
         if (collect) {
-            mViewModel.unCollectArticle(articleId)
+            mViewModel.unCollectArticle(articleId).observerKt {
+                unCollectSuccess()
+            }
         } else {
-            mViewModel.collectArticle(articleId)
+            mViewModel.collectArticle(articleId).observerKt {
+                collectSucess()
+            }
         }
     }
 
@@ -191,7 +201,7 @@ class OtherShareArticleActivity :BaseActivity<MineOthershareActivityBinding,Othe
      *
      * 收藏成功
      */
-    private fun collectSucess(data: Boolean) {
+    private fun collectSucess() {
         mOtherShareArticleAdapter.data[selectItem].collect = true
         mOtherShareArticleAdapter.notifyItemChanged(selectItem)
 
@@ -201,7 +211,7 @@ class OtherShareArticleActivity :BaseActivity<MineOthershareActivityBinding,Othe
      *
      * 取消收藏
      */
-    private fun unCollectSuccess(data: Boolean) {
+    private fun unCollectSuccess() {
         mOtherShareArticleAdapter.data[selectItem].collect = false
         mOtherShareArticleAdapter.notifyItemChanged(selectItem)
 

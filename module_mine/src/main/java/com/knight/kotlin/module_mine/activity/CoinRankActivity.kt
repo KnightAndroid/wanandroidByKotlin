@@ -3,7 +3,6 @@ package com.knight.kotlin.module_mine.activity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.ktx.init
-import com.knight.kotlin.library_base.ktx.observeLiveData
 import com.knight.kotlin.library_base.ktx.setOnClick
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_util.startPageWithParams
@@ -49,26 +48,34 @@ class CoinRankActivity : BaseActivity<MineCoinRankActivityBinding,CoinRankViewMo
     }
 
     override fun initObserver() {
-        observeLiveData(mViewModel.coinRankData,::getRankData)
+
     }
 
     override fun initRequestData() {
-        mViewModel.getRankCoin(page)
+        mViewModel.getRankCoin(page).observerKt {
+            getRankData(it)
+        }
     }
 
     override fun reLoadData() {
         mBinding.includeMineCoinrank.baseFreshlayout.setEnableLoadMore(false)
-        mViewModel.getRankCoin(page)
+        mViewModel.getRankCoin(page).observerKt {
+            getRankData(it)
+        }
     }
 
     override fun onRefresh(refreshLayout: RefreshLayout) {
         page = 1
-        mViewModel.getRankCoin(page)
+        mViewModel.getRankCoin(page).observerKt {
+            getRankData(it)
+        }
         mBinding.includeMineCoinrank.baseFreshlayout.setEnableLoadMore(false)
     }
 
     override fun onLoadMore(refreshLayout: RefreshLayout) {
-        mViewModel.getRankCoin(page)
+        mViewModel.getRankCoin(page).observerKt {
+            getRankData(it)
+        }
     }
 
 

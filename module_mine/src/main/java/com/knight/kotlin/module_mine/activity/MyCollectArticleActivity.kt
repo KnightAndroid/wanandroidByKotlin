@@ -3,7 +3,6 @@ package com.knight.kotlin.module_mine.activity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.ktx.init
-import com.knight.kotlin.library_base.ktx.observeLiveData
 import com.knight.kotlin.library_base.ktx.setOnClick
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.util.ArouteUtils
@@ -54,27 +53,34 @@ class MyCollectArticleActivity : BaseActivity<MineCollectarticlesActivityBinding
     }
 
     override fun initObserver() {
-        observeLiveData(mViewModel.myCollectArticleLists,::setCollectArticles)
-        observeLiveData(mViewModel.unCollectArticle,::unCollectArticle)
+
     }
 
     override fun initRequestData() {
         mBinding.includeMineCollectfreshalayout.baseFreshlayout.setEnableLoadMore(true)
-        mViewModel.getMyCollectArticles(page)
+        mViewModel.getMyCollectArticles(page).observerKt {
+            setCollectArticles(it)
+        }
     }
 
     override fun reLoadData() {
-        mViewModel.getMyCollectArticles(page)
+        mViewModel.getMyCollectArticles(page).observerKt {
+            setCollectArticles(it)
+        }
     }
 
     override fun onRefresh(refreshLayout: RefreshLayout) {
         page = 0
         mBinding.includeMineCollectfreshalayout.baseFreshlayout.setEnableLoadMore(true)
-        mViewModel.getMyCollectArticles(page)
+        mViewModel.getMyCollectArticles(page).observerKt {
+            setCollectArticles(it)
+        }
     }
 
     override fun onLoadMore(refreshLayout: RefreshLayout) {
-        mViewModel.getMyCollectArticles(page)
+        mViewModel.getMyCollectArticles(page).observerKt {
+            setCollectArticles(it)
+        }
     }
 
 
@@ -99,7 +105,7 @@ class MyCollectArticleActivity : BaseActivity<MineCollectarticlesActivityBinding
     }
 
 
-    private fun unCollectArticle(data:Boolean) {
+    private fun unCollectArticle() {
         mMyCollectArticleAdapter.data.removeAt(selectItem)
         mMyCollectArticleAdapter.notifyItemRemoved(selectItem)
 
@@ -128,7 +134,9 @@ class MyCollectArticleActivity : BaseActivity<MineCollectarticlesActivityBinding
                         DialogUtils.getConfirmDialog(this@MyCollectArticleActivity,getString(R.string.mine_confirm_cancelarticle),
                             { dialog, which ->
                                 selectItem = position
-                            mViewModel.unCollectArticle(mMyCollectArticleAdapter.data[position].originId)
+                            mViewModel.unCollectArticle(mMyCollectArticleAdapter.data[position].originId).observerKt {
+                                unCollectArticle()
+                            }
                         }) {
                                 dialog, which ->
                         }

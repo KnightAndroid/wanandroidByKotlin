@@ -7,8 +7,9 @@ import android.util.Base64
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.entity.LoginEntity
 import com.knight.kotlin.library_base.entity.UserInfoEntity
-import com.knight.kotlin.library_base.ktx.observeLiveData
+import com.knight.kotlin.library_base.ktx.appStr
 import com.knight.kotlin.library_base.ktx.setOnClick
+import com.knight.kotlin.library_base.ktx.showLoading
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_base.util.GsonUtils
@@ -72,7 +73,11 @@ class RegisterActivity : BaseActivity<MineRegisterActivityBinding,RegisterViewMo
         mBinding.mineRegisterToolbar.baseIvBack.setOnClickListener { finish() }
         mBinding.mineTvRegister.setOnClick {
             if (validateRegisterMessage()) {
+                showLoading(appStr(R.string.mine_request_login))
                 mViewModel.register(mBinding.mineRegisterUsername.text.toString().trim(),mBinding.mineRegisterPassword.text.toString().trim(),mBinding.mineRegisterConfirmpassword.text.toString().trim())
+                    .observerKt {
+                        setUserInfo(it)
+                    }
             }
         }
 
@@ -109,7 +114,7 @@ class RegisterActivity : BaseActivity<MineRegisterActivityBinding,RegisterViewMo
     }
 
     override fun initObserver() {
-        observeLiveData(mViewModel.userInfo,::setUserInfo)
+
     }
 
     override fun initRequestData() {
