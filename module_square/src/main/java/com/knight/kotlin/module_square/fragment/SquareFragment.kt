@@ -15,7 +15,6 @@ import com.knight.kotlin.library_base.annotation.EventBusRegister
 import com.knight.kotlin.library_base.event.MessageEvent
 import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.knight.kotlin.library_base.ktx.loadServiceInit
-import com.knight.kotlin.library_base.ktx.observeLiveData
 import com.knight.kotlin.library_base.loadsir.LoadCallBack
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.route.RouteFragment
@@ -100,9 +99,7 @@ class SquareFragment : BaseFragment<SquareFragmentBinding, SquareVm>() {
     }
 
     override fun initObserver() {
-        observeLiveData(mViewModel.questionsList,::setSquareQuestionList)
-        observeLiveData(mViewModel.collectQeArtStatus,::collectQuestionArticle)
-        observeLiveData(mViewModel.unCollectQeArtStatus,::unCollectQuestionArticle)
+
     }
 
     override fun initRequestData() {
@@ -120,11 +117,15 @@ class SquareFragment : BaseFragment<SquareFragmentBinding, SquareVm>() {
         smartRefreshLayout.setOnRefreshListener(object : OnRefreshListener {
             override fun onRefresh(refreshLayout: RefreshLayout) {
                 questionPage = 1
-                mViewModel.getQuestion(questionPage)
+                mViewModel.getQuestion(questionPage).observerKt {
+                    setSquareQuestionList(it)
+                }
             }
         })
         smartRefreshLayout.setOnLoadMoreListener {
-            mViewModel.getQuestion(questionPage)
+            mViewModel.getQuestion(questionPage).observerKt {
+                setSquareQuestionList(it)
+            }
         }
         squareRoot.addView(mQuestionMenu)
         mViewLoadService = loadServiceInit(mQuestionMenu.findViewById<View>(R.id.include_square_question),{
@@ -138,13 +139,16 @@ class SquareFragment : BaseFragment<SquareFragmentBinding, SquareVm>() {
             .setGuillotineListener(object : RightLottieListener {
                 override fun onRightLottieOpened() {
                     mViewLoadService.showCallback(LoadCallBack::class.java)
-                    mViewModel.getQuestion(questionPage)
+                    mViewModel.getQuestion(questionPage).observerKt {
+                        setSquareQuestionList(it)
+                    }
                 }
 
                 override fun onRightLottieClosed() {
                     questionPage = 1
                 }
             })  .build()
+        initQuestionAdapterClickEvent()
         initSquareFragments()
     }
 
@@ -169,7 +173,7 @@ class SquareFragment : BaseFragment<SquareFragmentBinding, SquareVm>() {
             smartRefreshLayout.setEnableLoadMore(false)
         }
     }
-    private fun initAdapterClickListener() {
+    private fun initQuestionAdapterClickEvent() {
         mSquareQuestionAdapter.run {
             setItemClickListener { adapter, view, position ->
                 ArouteUtils.startWebArticle(data.get(position).link,data.get(position).title,
@@ -190,9 +194,13 @@ class SquareFragment : BaseFragment<SquareFragmentBinding, SquareVm>() {
     @LoginCheck
     private fun collectOrunCollect(collect: Boolean, articleId: Int) {
         if (collect) {
-            mViewModel.unCollectArticle(articleId)
+            mViewModel.unCollectArticle(articleId).observerKt {
+                unCollectQuestionArticleSuccess()
+            }
         } else {
-            mViewModel.collectArticle(articleId)
+            mViewModel.collectArticle(articleId).observerKt {
+                collectQuestionArticleSuccess()
+            }
         }
     }
 
@@ -201,11 +209,9 @@ class SquareFragment : BaseFragment<SquareFragmentBinding, SquareVm>() {
      *
      * 收藏文章成功
      */
-    private fun collectQuestionArticle(status: Boolean) {
-        if (status) {
-            mSquareQuestionAdapter.data[selectItem].collect = true
-            mSquareQuestionAdapter.notifyItemChanged(selectItem)
-        }
+    private fun collectQuestionArticleSuccess() {
+        mSquareQuestionAdapter.data[selectItem].collect = true
+        mSquareQuestionAdapter.notifyItemChanged(selectItem)
 
 
     }
@@ -214,12 +220,9 @@ class SquareFragment : BaseFragment<SquareFragmentBinding, SquareVm>() {
      *
      * 取消收藏文章成功
      */
-    private fun unCollectQuestionArticle(status: Boolean) {
-        if (status) {
-            mSquareQuestionAdapter.data[selectItem].collect = false
-            mSquareQuestionAdapter.notifyItemChanged(selectItem)
-        }
-
+    private fun unCollectQuestionArticleSuccess() {
+        mSquareQuestionAdapter.data[selectItem].collect = false
+        mSquareQuestionAdapter.notifyItemChanged(selectItem)
 
     }
 

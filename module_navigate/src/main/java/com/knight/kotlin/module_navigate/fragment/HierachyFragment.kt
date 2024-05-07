@@ -4,7 +4,6 @@ import android.view.View
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.knight.kotlin.library_base.fragment.BaseFragment
-import com.knight.kotlin.library_base.ktx.observeLiveData
 import com.knight.kotlin.library_base.route.RouteFragment
 import com.knight.kotlin.module_navigate.R
 import com.knight.kotlin.module_navigate.adapter.LeftBarAdapter
@@ -60,15 +59,19 @@ class HierachyFragment : BaseFragment<NavigateHierachyFragmentBinding, HierachyV
     }
 
     override fun initRequestData() {
-        mViewModel.getHierachyData()
+        mViewModel.getHierachyData().observerKt {
+            setHierachyData(it)
+        }
     }
 
     override fun reLoadData() {
-        mViewModel.getHierachyData()
+        mViewModel.getHierachyData().observerKt {
+            setHierachyData(it)
+        }
     }
 
     override fun initObserver() {
-        observeLiveData(mViewModel.hierachyList,::setHierachyData)
+
     }
 
     fun setHierachyData(datas:MutableList<HierachyListEntity>) {

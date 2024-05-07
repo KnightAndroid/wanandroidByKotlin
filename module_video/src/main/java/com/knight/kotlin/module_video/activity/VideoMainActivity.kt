@@ -3,7 +3,6 @@ import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import com.flyjingfish.android_aop_core.annotations.SingleClick
 import com.knight.kotlin.library_base.activity.BaseActivity
-import com.knight.kotlin.library_base.ktx.observeLiveData
 import com.knight.kotlin.library_base.ktx.setOnClick
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.util.CacheUtils
@@ -42,11 +41,13 @@ class VideoMainActivity : BaseActivity<VideoMainActivityBinding,VideoVm>(), OnRe
     }
 
     override fun initObserver() {
-        observeLiveData(mViewModel.videos, ::getDouyinVideos)
+
     }
 
     override fun initRequestData() {
-        mViewModel.getDouyinVideos()
+        mViewModel.getDouyinVideos().observerKt {
+            getDouyinVideos(it)
+        }
     }
 
     override fun reLoadData() {
@@ -97,7 +98,9 @@ class VideoMainActivity : BaseActivity<VideoMainActivityBinding,VideoVm>(), OnRe
         }
         if (DataConstant.videoDatas.size < 10) {
             //这里如果少于10个视频就继续调用接口补充视频数
-            mViewModel.getDouyinVideos()
+            mViewModel.getDouyinVideos().observerKt {
+                getDouyinVideos(it)
+            }
         } else {
             requestSuccess()
             mBinding.includeVideo.baseFreshlayout.finishLoadMore()
@@ -123,11 +126,15 @@ class VideoMainActivity : BaseActivity<VideoMainActivityBinding,VideoVm>(), OnRe
 
     override fun onRefresh(refreshLayout: RefreshLayout) {
         DataConstant.videoDatas.clear()
-        mViewModel.getDouyinVideos()
+        mViewModel.getDouyinVideos().observerKt {
+            getDouyinVideos(it)
+        }
     }
 
     override fun onLoadMore(refreshLayout: RefreshLayout) {
-        mViewModel.getDouyinVideos()
+        mViewModel.getDouyinVideos().observerKt {
+            getDouyinVideos(it)
+        }
     }
 
     @SingleClick

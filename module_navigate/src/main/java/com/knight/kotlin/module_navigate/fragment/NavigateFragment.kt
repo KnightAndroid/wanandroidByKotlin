@@ -4,7 +4,6 @@ import android.view.View
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.knight.kotlin.library_base.fragment.BaseFragment
-import com.knight.kotlin.library_base.ktx.observeLiveData
 import com.knight.kotlin.library_base.route.RouteFragment
 import com.knight.kotlin.module_navigate.R
 import com.knight.kotlin.module_navigate.adapter.LeftBarAdapter
@@ -56,15 +55,19 @@ class NavigateFragment : BaseFragment<NavigateFragmentBinding,NavigateVm>(),Chec
     }
 
     override fun initObserver() {
-        observeLiveData(mViewModel.navigateList,::setNavigateData)
+
     }
 
     override fun initRequestData() {
-        mViewModel.getNavigateData()
+        mViewModel.getNavigateData().observerKt {
+            setNavigateData(it)
+        }
     }
 
     override fun reLoadData() {
-        mViewModel.getNavigateData()
+        mViewModel.getNavigateData().observerKt {
+            setNavigateData(it)
+        }
     }
 
     override fun check(position: Int, isScroll: Boolean) {

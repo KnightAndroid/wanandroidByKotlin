@@ -6,7 +6,6 @@ import com.knight.kotlin.library_aop.loginintercept.LoginCheck
 import com.knight.kotlin.library_base.annotation.EventBusRegister
 import com.knight.kotlin.library_base.event.MessageEvent
 import com.knight.kotlin.library_base.fragment.BaseFragment
-import com.knight.kotlin.library_base.ktx.observeLiveData
 import com.knight.kotlin.library_base.ktx.setOnClick
 import com.knight.kotlin.library_base.route.RouteFragment
 import com.knight.kotlin.library_base.util.ArouteUtils
@@ -93,24 +92,31 @@ class ProjecArticleFragment:BaseFragment<ProjectArticleFragmentBinding, ProjectA
     }
 
     override fun initObserver() {
-        observeLiveData(mViewModel.collectArticle,::collectArticleSuccess)
-        observeLiveData(mViewModel.unCollectArticle,::unCollectArticleSuccess)
-        observeLiveData(mViewModel.projectArticle,::setProjectArticle)
+
+
     }
 
     override fun initRequestData() {
         if (isNewProject) {
-            mViewModel.getNewProjectArticle(page)
+            mViewModel.getNewProjectArticle(page).observerKt {
+                setProjectArticle(it)
+            }
         } else {
-            mViewModel.getProjectArticle(page, cid)
+            mViewModel.getProjectArticle(page, cid).observerKt {
+                setProjectArticle(it)
+            }
         }
     }
 
     override fun reLoadData() {
         if (isNewProject) {
-            mViewModel.getNewProjectArticle(page)
+            mViewModel.getNewProjectArticle(page).observerKt {
+                setProjectArticle(it)
+            }
         } else {
-            mViewModel.getProjectArticle(page, cid)
+            mViewModel.getProjectArticle(page, cid).observerKt {
+                setProjectArticle(it)
+            }
         }
     }
 
@@ -118,10 +124,14 @@ class ProjecArticleFragment:BaseFragment<ProjectArticleFragmentBinding, ProjectA
         mBinding.includeProject.baseFreshlayout.setEnableLoadMore(true)
         if (isNewProject) {
             page = 0
-            mViewModel.getNewProjectArticle(page)
+            mViewModel.getNewProjectArticle(page).observerKt {
+                setProjectArticle(it)
+            }
         } else {
             page = 1
-            mViewModel.getProjectArticle(page, cid)
+            mViewModel.getProjectArticle(page, cid).observerKt {
+                setProjectArticle(it)
+            }
         }
 
 
@@ -129,9 +139,13 @@ class ProjecArticleFragment:BaseFragment<ProjectArticleFragmentBinding, ProjectA
 
     override fun onLoadMore(refreshLayout: RefreshLayout) {
         if (isNewProject) {
-            mViewModel.getNewProjectArticle(page)
+            mViewModel.getNewProjectArticle(page).observerKt {
+                setProjectArticle(it)
+            }
         } else {
-            mViewModel.getProjectArticle(page,cid)
+            mViewModel.getProjectArticle(page,cid).observerKt {
+                setProjectArticle(it)
+            }
         }
     }
 
@@ -183,7 +197,7 @@ class ProjecArticleFragment:BaseFragment<ProjectArticleFragmentBinding, ProjectA
      *
      * 收藏文章成功
      */
-    private fun collectArticleSuccess(boolean: Boolean) {
+    private fun collectArticleSuccess() {
         mProjectArticleAdapter.data[selectItem].collect = true
         mProjectArticleAdapter.notifyItemChanged(selectItem)
     }
@@ -192,7 +206,7 @@ class ProjecArticleFragment:BaseFragment<ProjectArticleFragmentBinding, ProjectA
      *
      * 取消收藏文章成功
      */
-    private fun unCollectArticleSuccess(boolean: Boolean) {
+    private fun unCollectArticleSuccess() {
         mProjectArticleAdapter.data[selectItem].collect = false
         mProjectArticleAdapter.notifyItemChanged(selectItem)
     }
@@ -200,9 +214,13 @@ class ProjecArticleFragment:BaseFragment<ProjectArticleFragmentBinding, ProjectA
     @LoginCheck
     private fun collectOrunCollect(collect: Boolean, articleId: Int) {
         if (collect) {
-            mViewModel.unCollectArticle(articleId)
+            mViewModel.unCollectArticle(articleId).observerKt {
+                unCollectArticleSuccess()
+            }
         } else {
-            mViewModel.collectArticle(articleId)
+            mViewModel.collectArticle(articleId).observerKt {
+                collectArticleSuccess()
+            }
         }
     }
 

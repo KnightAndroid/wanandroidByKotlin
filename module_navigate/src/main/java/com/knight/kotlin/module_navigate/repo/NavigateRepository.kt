@@ -2,6 +2,7 @@ package com.knight.kotlin.module_navigate.repo
 
 import com.knight.kotlin.library_base.repository.BaseRepository
 import com.knight.kotlin.library_network.model.responseCodeExceptionHandler
+import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_navigate.api.NavigateApi
 import com.knight.kotlin.module_navigate.entity.NavigateListEntity
 import javax.inject.Inject
@@ -21,11 +22,16 @@ class NavigateRepository @Inject constructor(): BaseRepository() {
      *
      * 获取最新导航数据
      */
-    suspend fun getNavigateData() = request<MutableList<NavigateListEntity>> {
+    fun getNavigateData() = request<MutableList<NavigateListEntity>> ({
         mNavigateService.getNavigateData().run {
             responseCodeExceptionHandler(code, msg)
             emit(data)
         }
+    }){
+        it?.run {
+            toast(it)
+        }
     }
+
 
 }

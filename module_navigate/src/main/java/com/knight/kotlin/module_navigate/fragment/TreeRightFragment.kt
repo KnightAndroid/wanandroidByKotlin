@@ -7,7 +7,6 @@ import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
 import com.knight.kotlin.library_base.fragment.BaseFragment
-import com.knight.kotlin.library_base.ktx.observeLiveData
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.route.RouteFragment
 import com.knight.kotlin.library_base.util.ArouteUtils
@@ -100,23 +99,30 @@ class TreeRightFragment : BaseFragment<NavigateRightTreeFragmentBinding,Navigate
     }
 
     override fun initObserver() {
-        observeLiveData(mViewModel.hierachyTreeList,::setHierachyData)
-        observeLiveData(mViewModel.navigateTreeList,::setNavigateData)
+
     }
 
     override fun initRequestData() {
         if (isNavigate) {
-            mViewModel.getTreeNavigateData()
+            mViewModel.getTreeNavigateData().observerKt {
+                setNavigateData(it)
+            }
         } else {
-            mViewModel.getTreeHierachyData()
+            mViewModel.getTreeHierachyData().observerKt {
+                setHierachyData(it)
+            }
         }
     }
 
     override fun reLoadData() {
         if (isNavigate) {
-            mViewModel.getTreeNavigateData()
+            mViewModel.getTreeNavigateData().observerKt {
+                setNavigateData(it)
+            }
         } else {
-            mViewModel.getTreeHierachyData()
+            mViewModel.getTreeHierachyData().observerKt {
+                setHierachyData(it)
+            }
         }
     }
 

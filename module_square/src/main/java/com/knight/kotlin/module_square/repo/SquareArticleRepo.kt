@@ -2,6 +2,7 @@ package com.knight.kotlin.module_square.repo
 
 import com.knight.kotlin.library_base.repository.BaseRepository
 import com.knight.kotlin.library_network.model.responseCodeExceptionHandler
+import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_square.api.SquareArticleApi
 import com.knight.kotlin.module_square.entity.SquareArticleListBean
 import javax.inject.Inject
@@ -19,10 +20,17 @@ class SquareArticleRepo @Inject constructor(): BaseRepository() {
     /**
      * 获取首页文章列表
      */
-    suspend fun getArticleByTag(page:Int,keyword:String) = request<SquareArticleListBean> {
+    fun getArticleByTag(page:Int,keyword:String,failureCallBack:((String?) ->Unit) ?= null) = request<SquareArticleListBean> ({
         mSquareArticleApi.getArticlebyTag(page,keyword).run {
             responseCodeExceptionHandler(code,msg)
             emit(data)
+        }
+    }){
+       it?.run {
+           toast(it)
+       }
+        failureCallBack?.run {
+            this(it)
         }
     }
 
@@ -30,10 +38,14 @@ class SquareArticleRepo @Inject constructor(): BaseRepository() {
      * 收藏文章
      *
      */
-    suspend fun collectArticle(collectArticleId:Int) = request<Any>{
+    fun collectArticle(collectArticleId:Int) = request<Any>({
         mSquareArticleApi.collectArticle(collectArticleId).run {
             responseCodeExceptionHandler(code,msg)
-            emit(data)
+            emit(true)
+        }
+    }){
+        it?.run {
+            toast(it)
         }
     }
 
@@ -42,10 +54,14 @@ class SquareArticleRepo @Inject constructor(): BaseRepository() {
      *
      * 取消收藏文章
      */
-    suspend fun unCollectArticle(unCollectArticleId:Int) = request<Any> {
+    fun unCollectArticle(unCollectArticleId:Int) = request<Any> ({
         mSquareArticleApi.unCollectArticle(unCollectArticleId).run {
             responseCodeExceptionHandler(code,msg)
-            emit(data)
+            emit(true)
+        }
+    }){
+        it?.run {
+            toast(it)
         }
     }
 }

@@ -5,7 +5,6 @@ import com.knight.kotlin.library_aop.loginintercept.LoginCheck
 import com.knight.kotlin.library_base.annotation.EventBusRegister
 import com.knight.kotlin.library_base.event.MessageEvent
 import com.knight.kotlin.library_base.fragment.BaseFragment
-import com.knight.kotlin.library_base.ktx.observeLiveData
 import com.knight.kotlin.library_base.route.RouteFragment
 import com.knight.kotlin.library_base.util.ArouteUtils
 import com.knight.kotlin.library_widget.ktx.init
@@ -58,14 +57,13 @@ class SquareShareListFragment:BaseFragment<SquareListFragmentBinding, SquareList
     }
 
     override fun initObserver() {
-        observeLiveData(mViewModel.squareArticleList,::setSquareList)
 
-        observeLiveData(mViewModel.collectArticleStatus,::collectArticle)
-        observeLiveData(mViewModel.unCollectArticleStatus,::unCollectArticle)
     }
 
     override fun initRequestData() {
-        mViewModel.getSquareArticles(page)
+        mViewModel.getSquareArticles(page).observerKt {
+            setSquareList(it)
+        }
     }
 
     override fun setThemeColor(isDarkMode: Boolean) {
@@ -76,7 +74,9 @@ class SquareShareListFragment:BaseFragment<SquareListFragmentBinding, SquareList
     }
 
     override fun reLoadData() {
-        mViewModel.getSquareArticles(page)
+        mViewModel.getSquareArticles(page).observerKt {
+            setSquareList(it)
+        }
     }
 
     /**
@@ -129,11 +129,9 @@ class SquareShareListFragment:BaseFragment<SquareListFragmentBinding, SquareList
      *
      * 收藏文章成功
      */
-    private fun collectArticle(status: Boolean) {
-        if (status) {
-            mSquareShareArticleAdapter.data[selectItem].collect = true
-            mSquareShareArticleAdapter.notifyItemChanged(selectItem)
-        }
+    private fun collectArticleSuccess() {
+        mSquareShareArticleAdapter.data[selectItem].collect = true
+        mSquareShareArticleAdapter.notifyItemChanged(selectItem)
 
 
     }
@@ -142,11 +140,9 @@ class SquareShareListFragment:BaseFragment<SquareListFragmentBinding, SquareList
      *
      * 取消收藏文章成功
      */
-    private fun unCollectArticle(status: Boolean) {
-        if (status) {
-            mSquareShareArticleAdapter.data[selectItem].collect = false
-            mSquareShareArticleAdapter.notifyItemChanged(selectItem)
-        }
+    private fun unCollectArticleSuccess() {
+        mSquareShareArticleAdapter.data[selectItem].collect = false
+        mSquareShareArticleAdapter.notifyItemChanged(selectItem)
 
     }
 
@@ -156,20 +152,28 @@ class SquareShareListFragment:BaseFragment<SquareListFragmentBinding, SquareList
     @LoginCheck
     private fun collectOrunCollect(collect: Boolean, articleId: Int) {
         if (collect) {
-            mViewModel.unCollectArticle(articleId)
+            mViewModel.unCollectArticle(articleId).observerKt {
+                unCollectArticleSuccess()
+            }
         } else {
-            mViewModel.collectArticle(articleId)
+            mViewModel.collectArticle(articleId).observerKt {
+                collectArticleSuccess()
+            }
         }
     }
 
     override fun onLoadMore(refreshLayout: RefreshLayout) {
-        mViewModel.getSquareArticles(page)
+        mViewModel.getSquareArticles(page).observerKt {
+            setSquareList(it)
+        }
     }
 
     override fun onRefresh(refreshLayout: RefreshLayout) {
         page = 0
         mBinding.squareSharearticleFreshlayout.setEnableLoadMore(true)
-        mViewModel.getSquareArticles(page)
+        mViewModel.getSquareArticles(page).observerKt {
+            setSquareList(it)
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -182,7 +186,9 @@ class SquareShareListFragment:BaseFragment<SquareListFragmentBinding, SquareList
             //登录成功,登出成功
             MessageEvent.MessageType.LoginSuccess,MessageEvent.MessageType.LogoutSuccess -> {
                 page = 0
-                mViewModel.getSquareArticles(page)
+                mViewModel.getSquareArticles(page).observerKt {
+                    setSquareList(it)
+                }
             }
 
             else -> {}

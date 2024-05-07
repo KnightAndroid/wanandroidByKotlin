@@ -5,8 +5,6 @@ import com.knight.kotlin.library_aop.loginintercept.LoginCheck
 import com.knight.kotlin.library_base.annotation.EventBusRegister
 import com.knight.kotlin.library_base.event.MessageEvent
 import com.knight.kotlin.library_base.fragment.BaseFragment
-import com.knight.kotlin.library_base.ktx.observeLiveData
-import com.knight.kotlin.library_base.ktx.observeLiveDataWithError
 import com.knight.kotlin.library_base.route.RouteFragment
 import com.knight.kotlin.library_base.util.ArouteUtils
 import com.knight.kotlin.library_widget.ktx.init
@@ -85,38 +83,57 @@ class SquareArticleFragment:BaseFragment<SquareArticleFragmentBinding, SquareArt
     }
 
     override fun initObserver() {
-        observeLiveData(mViewModel.collectArticleStatus, ::collect)
-        observeLiveData(mViewModel.unCollectArticleStatus, ::unCollect)
-        observeLiveDataWithError(mViewModel.articleList,mViewModel.articleListSuccess,::setArticleDatas,::setArticleDatasFailure)
+
 
     }
 
     override fun initRequestData() {
         requestLoading(mBinding.llHome)
-        mViewModel.getArticleByTag(currentPage, SquareConstants.ARTICLE_TYPE)
+        mViewModel.getArticleByTag(currentPage, SquareConstants.ARTICLE_TYPE,failureCallBack = {
+            setArticleDatasFailure()
+        }).observerKt {
+            setArticleDatas(it)
+        }
     }
 
     override fun reLoadData() {
         currentPage = 0
-        mViewModel.getArticleByTag(currentPage, SquareConstants.ARTICLE_TYPE)
+        mViewModel.getArticleByTag(currentPage, SquareConstants.ARTICLE_TYPE,failureCallBack = {
+            setArticleDatasFailure()
+        }).observerKt {
+            setArticleDatas(it)
+        }
     }
 
     override fun onLoadMore(refreshLayout: RefreshLayout) {
-        mViewModel.getArticleByTag(currentPage, SquareConstants.ARTICLE_TYPE)
+        mViewModel.getArticleByTag(currentPage, SquareConstants.ARTICLE_TYPE, failureCallBack = {
+            setArticleDatasFailure()
+        }).observerKt {
+            setArticleDatas(it)
+        }
+
     }
 
     override fun onRefresh(refreshLayout: RefreshLayout) {
         currentPage = 0
-        mViewModel.getArticleByTag(currentPage, SquareConstants.ARTICLE_TYPE)
+        mViewModel.getArticleByTag(currentPage, SquareConstants.ARTICLE_TYPE, failureCallBack = {
+            setArticleDatasFailure()
+        }).observerKt {
+            setArticleDatas(it)
+        }
     }
 
 
     @LoginCheck
     private fun collectOrunCollect(collect: Boolean, articleId: Int) {
         if (collect) {
-            mViewModel.unCollectArticle(articleId)
+            mViewModel.unCollectArticle(articleId).observerKt {
+                unCollectSuccess()
+            }
         } else {
-            mViewModel.collectArticle(articleId)
+            mViewModel.collectArticle(articleId).observerKt {
+                collectSuccess()
+            }
         }
     }
 
@@ -153,27 +170,18 @@ class SquareArticleFragment:BaseFragment<SquareArticleFragmentBinding, SquareArt
      *
      * 收藏成功
      */
-    private fun collect(status: Boolean) {
-        if (status) {
-            mSquareArticleAdapter.data[selectItem].collect = true
-            mSquareArticleAdapter.notifyItemChanged(selectItem)
-        }
-
-
+    private fun collectSuccess() {
+        mSquareArticleAdapter.data[selectItem].collect = true
+        mSquareArticleAdapter.notifyItemChanged(selectItem)
     }
 
     /**
      *
      * 取消收藏
      */
-    private fun unCollect(status: Boolean) {
-        if (status) {
-            mSquareArticleAdapter.data[selectItem].collect = false
-            mSquareArticleAdapter.notifyItemChanged(selectItem)
-        }
-
-
-
+    private fun unCollectSuccess() {
+        mSquareArticleAdapter.data[selectItem].collect = false
+        mSquareArticleAdapter.notifyItemChanged(selectItem)
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -181,7 +189,11 @@ class SquareArticleFragment:BaseFragment<SquareArticleFragmentBinding, SquareArt
         when (event.type) {
             MessageEvent.MessageType.CollectSuccess ->{
                 currentPage = 0
-                mViewModel.getArticleByTag(currentPage,SquareConstants.ARTICLE_TYPE)
+                mViewModel.getArticleByTag(currentPage,SquareConstants.ARTICLE_TYPE,failureCallBack = {
+                    setArticleDatasFailure()
+                }).observerKt {
+                    setArticleDatas(it)
+                }
             }
 
             else -> {}

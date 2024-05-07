@@ -24,6 +24,13 @@
         app:banner_indicator_normal_width="@dimen/eye_daily_banner_normal_width"
         app:banner_indicator_selected_width="@dimen/eye_daily_banner_selected_width"
         />
+    <com.knight.kotlin.module_eye_daily.view.MyCustomBannerIndicator
+        android:id="@+id/indicator"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/eye_daily_banner_indicator_height"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/eye_daily_banner" />
+
 
 <!--    <com.scwang.smart.refresh.layout.SmartRefreshLayout-->
 <!--        android:id="@+id/daily_list_refreshLayout"-->

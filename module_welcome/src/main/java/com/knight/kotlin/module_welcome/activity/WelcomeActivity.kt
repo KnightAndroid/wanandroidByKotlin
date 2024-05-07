@@ -4,7 +4,6 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.config.Appconfig
-import com.knight.kotlin.library_base.ktx.observeLiveData
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_base.util.ColorUtils
@@ -42,7 +41,7 @@ class WelcomeActivity : BaseActivity<WelcomeActivityBinding, WelcomeVm>() {
      * 订阅LiveData
      */
     override fun initObserver() {
-        observeLiveData(mViewModel.themeData, ::setAppThemeData)
+
     }
 
     /**
@@ -50,7 +49,9 @@ class WelcomeActivity : BaseActivity<WelcomeActivityBinding, WelcomeVm>() {
      *
      */
     override fun initRequestData() {
-        mViewModel.getAppTheme()
+        mViewModel.getAppTheme().observerKt {
+            setAppThemeData(it)
+        }
     }
 
 

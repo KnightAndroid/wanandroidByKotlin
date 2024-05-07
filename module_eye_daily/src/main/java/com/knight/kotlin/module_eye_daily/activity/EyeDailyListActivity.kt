@@ -1,16 +1,16 @@
 package com.knight.kotlin.module_eye_daily.activity
 
+import androidx.core.content.ContextCompat
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_util.image.ImageLoader
+import com.knight.kotlin.module_eye_daily.R
 import com.knight.kotlin.module_eye_daily.databinding.EyeDailyListActivityBinding
 import com.knight.kotlin.module_eye_daily.entity.EyeDailyItemEntity
 import com.knight.kotlin.module_eye_daily.vm.EyeDailyListVm
 import com.wyjson.router.annotation.Route
 import com.youth.banner.adapter.BannerImageAdapter
-import com.youth.banner.config.IndicatorConfig
 import com.youth.banner.holder.BannerImageHolder
-import com.youth.banner.indicator.CircleIndicator
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -81,8 +81,8 @@ class EyeDailyListActivity:BaseActivity<EyeDailyListActivityBinding,EyeDailyList
                  }
 
              })
-             indicator = (CircleIndicator(this@EyeDailyListActivity))
-             setIndicatorGravity(IndicatorConfig.Direction.RIGHT)
+             setIndicator(mBinding.indicator, false)
+             indicator.indicatorView.setBackgroundColor(ContextCompat.getColor(this@EyeDailyListActivity,R.color.eye_daily_banner_indicator_bg))
 
          }
 

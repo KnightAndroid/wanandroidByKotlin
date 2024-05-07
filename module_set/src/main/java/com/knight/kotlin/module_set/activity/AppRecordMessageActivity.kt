@@ -1,10 +1,8 @@
 package com.knight.kotlin.module_set.activity
 
-import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.ktx.init
-import com.knight.kotlin.library_base.ktx.observeLiveData
 import com.knight.kotlin.library_base.ktx.setOnClick
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.module_set.R
@@ -42,11 +40,13 @@ class AppRecordMessageActivity : BaseActivity<SetVersionRecordActivityBinding,Ap
     }
 
     override fun initObserver() {
-        observeLiveData(mViewModel.appUpdateRecordMessage,::getAppRecordMessage)
+
     }
 
     override fun initRequestData() {
-        mViewModel.checkAppUpdateMessage()
+        mViewModel.checkAppUpdateMessage().observerKt {
+            getAppRecordMessage(it)
+        }
     }
 
     override fun reLoadData() {
@@ -54,7 +54,9 @@ class AppRecordMessageActivity : BaseActivity<SetVersionRecordActivityBinding,Ap
     }
 
     override fun onRefresh(refreshLayout: RefreshLayout) {
-        mViewModel.checkAppUpdateMessage()
+        mViewModel.checkAppUpdateMessage().observerKt {
+            getAppRecordMessage(it)
+        }
     }
 
     private fun getAppRecordMessage(data: VersionRecordListEntity) {

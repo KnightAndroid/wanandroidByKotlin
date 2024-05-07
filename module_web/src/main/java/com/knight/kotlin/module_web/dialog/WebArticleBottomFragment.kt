@@ -8,7 +8,6 @@ import com.flyjingfish.android_aop_core.annotations.SingleClick
 import com.knight.kotlin.library_aop.loginintercept.LoginCheck
 import com.knight.kotlin.library_base.event.MessageEvent
 import com.knight.kotlin.library_base.fragment.BaseDialogFragment
-import com.knight.kotlin.library_base.ktx.observeLiveData
 import com.knight.kotlin.library_base.util.EventBusUtils
 import com.knight.kotlin.library_util.SystemUtils
 import com.knight.kotlin.library_util.toast
@@ -125,7 +124,7 @@ class WebArticleBottomFragment constructor(
     }
 
     override fun initObserver() {
-        observeLiveData(mViewModel.collectSucess,::collectSuccess)
+
     }
 
 
@@ -133,14 +132,16 @@ class WebArticleBottomFragment constructor(
      *
      * 收藏成功
      */
-    private fun collectSuccess(data:Boolean) {
+    private fun collectSuccess() {
         ToastUtils.show(R.string.web_success_collect)
         EventBusUtils.postEvent(MessageEvent(MessageEvent.MessageType.CollectSuccess))
     }
 
     @LoginCheck
     private fun collectArticle() {
-        mViewModel.collectArticle(articleId)
+        mViewModel.collectArticle(articleId).observe(this) {
+            collectSuccess()
+        }
     }
 
     override fun initRequestData() {

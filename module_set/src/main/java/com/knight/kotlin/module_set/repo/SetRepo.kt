@@ -1,7 +1,9 @@
 package com.knight.kotlin.module_set.repo
 
+import com.knight.kotlin.library_base.ktx.dimissLoadingDialog
 import com.knight.kotlin.library_base.repository.BaseRepository
 import com.knight.kotlin.library_network.model.responseCodeExceptionHandler
+import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_set.api.SetApiService
 import javax.inject.Inject
 
@@ -19,10 +21,15 @@ class SetRepo @Inject constructor(): BaseRepository() {
      * 获取微信文章数据
      *
      */
-    suspend fun logout() = request<Any> {
+    fun logout() = request<Any> ({
         mSetApiService.logout().run {
             responseCodeExceptionHandler(code, msg)
-            emit(data)
+            emit(true)
+        }
+    }){
+        dimissLoadingDialog()
+        it?.run {
+            toast(it)
         }
     }
 }

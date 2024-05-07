@@ -3,7 +3,6 @@ package com.knight.kotlin.module_utils.activity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.ktx.init
-import com.knight.kotlin.library_base.ktx.observeLiveData
 import com.knight.kotlin.library_base.ktx.setOnClick
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_util.startPageWithParams
@@ -42,11 +41,13 @@ class UtilsActivity : BaseActivity<UtilsActivityBinding,UtilsVm>(),OnRefreshList
     }
 
     override fun initObserver() {
-        observeLiveData(mViewModel.utilsList,::setUtils)
+
     }
 
     override fun initRequestData() {
-        mViewModel.getUtils()
+        mViewModel.getUtils().observerKt {
+            setUtils(it)
+        }
     }
 
     override fun reLoadData() {
@@ -54,7 +55,9 @@ class UtilsActivity : BaseActivity<UtilsActivityBinding,UtilsVm>(),OnRefreshList
     }
 
     override fun onRefresh(refreshLayout: RefreshLayout) {
-        mViewModel.getUtils()
+        mViewModel.getUtils().observerKt {
+            setUtils(it)
+        }
     }
 
     override fun onLoadMore(refreshLayout: RefreshLayout) {

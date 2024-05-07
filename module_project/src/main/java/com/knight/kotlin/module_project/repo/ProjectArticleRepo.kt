@@ -2,6 +2,7 @@ package com.knight.kotlin.module_project.repo
 
 import com.knight.kotlin.library_base.repository.BaseRepository
 import com.knight.kotlin.library_network.model.responseCodeExceptionHandler
+import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_project.api.ProjectArticleApi
 import com.knight.kotlin.module_project.entity.ProjectArticleListBean
 import javax.inject.Inject
@@ -18,10 +19,14 @@ class ProjectArticleRepo @Inject constructor() : BaseRepository() {
     /**
      * 获取项目文章列表
      */
-    suspend fun getProjectArticle(page:Int,cid:Int) = request<ProjectArticleListBean>{
+    fun getProjectArticle(page:Int,cid:Int) = request<ProjectArticleListBean>({
         mProjectViewPagerApi.getProjectArticle(page,cid).run {
             responseCodeExceptionHandler(code, msg)
             emit(data)
+        }
+    }){
+        it?.run {
+            toast(it)
         }
     }
 
@@ -29,10 +34,14 @@ class ProjectArticleRepo @Inject constructor() : BaseRepository() {
      *
      * 获取最新项目文章列表
      */
-    suspend fun getNewProjectArticle(page:Int) = request<ProjectArticleListBean> {
+    fun getNewProjectArticle(page:Int) = request<ProjectArticleListBean> ({
         mProjectViewPagerApi.getNewProjectArticle(page).run {
             responseCodeExceptionHandler(code, msg)
             emit(data)
+        }
+    }){
+        it?.run {
+            toast(it)
         }
     }
 
@@ -41,10 +50,14 @@ class ProjectArticleRepo @Inject constructor() : BaseRepository() {
      * 收藏文章
      *
      */
-    suspend fun collectArticle(collectArticleId:Int) = request<Any>{
+    fun collectArticle(collectArticleId:Int) = request<Any>({
         mProjectViewPagerApi.collectArticle(collectArticleId).run {
             responseCodeExceptionHandler(code,msg)
-            emit(data)
+            emit(true)
+        }
+    }){
+        it?.run {
+            toast(it)
         }
     }
 
@@ -53,10 +66,14 @@ class ProjectArticleRepo @Inject constructor() : BaseRepository() {
      *
      * 取消收藏文章
      */
-    suspend fun unCollectArticle(unCollectArticleId:Int) = request<Any> {
+    fun unCollectArticle(unCollectArticleId:Int) = request<Any> ({
         mProjectViewPagerApi.unCollectArticle(unCollectArticleId).run {
             responseCodeExceptionHandler(code,msg)
             emit(data)
+        }
+    }){
+        it?.run {
+            toast(it)
         }
     }
 }

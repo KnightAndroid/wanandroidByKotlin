@@ -2,6 +2,7 @@ package com.knight.kotlin.module_navigate.repo
 
 import com.knight.kotlin.library_base.repository.BaseRepository
 import com.knight.kotlin.library_network.model.responseCodeExceptionHandler
+import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_navigate.api.NavigateRightTreeApi
 import com.knight.kotlin.module_navigate.entity.HierachyListEntity
 import com.knight.kotlin.module_navigate.entity.NavigateListEntity
@@ -20,10 +21,14 @@ class NavigateTreeRightRepository @Inject constructor(): BaseRepository() {
      *
      * 获取导航数据
      */
-    suspend fun getTreeNavigateData() = request<MutableList<NavigateListEntity>> {
+    fun getTreeNavigateData() = request<MutableList<NavigateListEntity>> ({
         mNavigateRightTreeApi.getTreeNavigateData().run {
             responseCodeExceptionHandler(code, msg)
             emit(data)
+        }
+    }){
+        it?.run {
+            toast(it)
         }
     }
 
@@ -31,10 +36,14 @@ class NavigateTreeRightRepository @Inject constructor(): BaseRepository() {
      *
      * 获取体系数据
      */
-    suspend fun getTreeHierachyData() = request<MutableList<HierachyListEntity>> {
+    fun getTreeHierachyData() = request<MutableList<HierachyListEntity>> ({
         mNavigateRightTreeApi.getTreeHierachyData().run {
             responseCodeExceptionHandler(code, msg)
             emit(data)
+        }
+    }){
+        it?.run {
+            toast(it)
         }
     }
 }

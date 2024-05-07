@@ -2,6 +2,7 @@ package com.knight.kotlin.module_navigate.repo
 
 import com.knight.kotlin.library_base.repository.BaseRepository
 import com.knight.kotlin.library_network.model.responseCodeExceptionHandler
+import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_navigate.api.HierachyArticleApi
 import com.knight.kotlin.module_navigate.entity.HierachyTabArticleListEntity
 import javax.inject.Inject
@@ -20,10 +21,14 @@ class HierachyArticleRepository @Inject constructor(): BaseRepository() {
      *
      * 获取体系文章页码
      */
-    suspend fun getHierachyArticle(page:Int,cid:Int) = request<HierachyTabArticleListEntity> {
+    fun getHierachyArticle(page:Int,cid:Int) = request<HierachyTabArticleListEntity> ({
         mHierachyArticleApi.getHierachyArticle(page,cid).run {
             responseCodeExceptionHandler(code, msg)
             emit(data)
+        }
+    }){
+        it?.run {
+            toast(it)
         }
     }
 
@@ -31,10 +36,14 @@ class HierachyArticleRepository @Inject constructor(): BaseRepository() {
      *
      * 收藏文章
      */
-    suspend fun collectArticle(collectArticleId:Int) = request<Any>{
+    fun collectArticle(collectArticleId:Int) = request<Any>({
         mHierachyArticleApi.collectArticle(collectArticleId).run {
             responseCodeExceptionHandler(code, msg)
-            emit(data)
+            emit(true)
+        }
+    }){
+        it?.run {
+            toast(it)
         }
     }
 
@@ -42,10 +51,14 @@ class HierachyArticleRepository @Inject constructor(): BaseRepository() {
      * 取消文章点赞/收藏
      *
      */
-    suspend fun cancelCollectArticle(unCollectArticleId:Int) = request<Any> {
+    fun cancelCollectArticle(unCollectArticleId:Int) = request<Any> ({
         mHierachyArticleApi.unCollectArticle(unCollectArticleId).run {
             responseCodeExceptionHandler(code, msg)
             emit(data)
+        }
+    }){
+        it?.run {
+            toast(it)
         }
     }
 }

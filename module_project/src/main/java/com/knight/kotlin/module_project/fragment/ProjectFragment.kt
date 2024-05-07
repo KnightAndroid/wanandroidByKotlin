@@ -1,7 +1,6 @@
 package com.knight.kotlin.module_project.fragment
 
 import com.knight.kotlin.library_base.fragment.BaseFragment
-import com.knight.kotlin.library_base.ktx.observeLiveData
 import com.knight.kotlin.library_base.ktx.toHtml
 import com.knight.kotlin.library_base.route.RouteFragment
 import com.knight.kotlin.library_util.ViewInitUtils
@@ -30,11 +29,12 @@ class ProjectFragment:BaseFragment<ProjectActivityBinding, ProjectVm>() {
     }
 
     override fun initObserver() {
-        observeLiveData(mViewModel.projectTitles,::setProjectTypes)
     }
 
     override fun initRequestData() {
-        mViewModel.getProjectTitle()
+        mViewModel.getProjectTitle().observerKt {
+            setProjectTypes(it)
+        }
     }
 
     override fun setThemeColor(isDarkMode: Boolean) {

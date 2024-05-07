@@ -2,6 +2,7 @@ package com.knight.kotlin.module_welcome.repo
 
 import com.knight.kotlin.library_base.repository.BaseRepository
 import com.knight.kotlin.library_network.model.responseCodeExceptionHandler
+import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_welcome.api.WelcomeApiService
 import com.knight.kotlin.module_welcome.entity.AppThemeBean
 import javax.inject.Inject
@@ -19,10 +20,14 @@ class WelcomeRepo @Inject constructor() : BaseRepository(){
     @Inject
     lateinit var mWelcomeApi:WelcomeApiService
 
-    suspend fun getAppTheme() = request<AppThemeBean>{
+    fun getAppTheme() = request<AppThemeBean>({
         mWelcomeApi.getAppTheme().run {
             responseCodeExceptionHandler(code, msg)
             emit(data)
+        }
+    }){
+        it?.run {
+            toast(it)
         }
     }
 }

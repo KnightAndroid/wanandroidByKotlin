@@ -12,7 +12,6 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.knight.kotlin.library_base.ktx.init
 import com.knight.kotlin.library_base.ktx.screenHeight
 import com.knight.kotlin.library_base.ktx.screenWidth
-import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.library_widget.BaseBottomSheetDialog
 import com.knight.kotlin.module_video.adapter.VideoCommentAdapter
 import com.knight.kotlin.module_video.databinding.VideoDialogCommentBinding
@@ -91,14 +90,10 @@ class VideoCommentDialog(val videoData: VideoPlayEntity, val videoView: VideoPla
     }
 
     private fun loadData() {
-        videoVm.getVideoCommentList(videoData.jokeId,1,successCallBack ={
+        videoVm.getVideoCommentList(videoData.jokeId,1).observe(this) {
             binding.tvTitle.setText(it.comments.size.toString().plus("条评论"))
             mVideoCommentAdapter.setNewInstance(it.comments)
-
-
-        },failureCallBack = {
-            toast(it ?: getString(com.knight.kotlin.library_base.R.string.base_request_failure))
-        })
+        }
     }
 
     protected override val height: Int

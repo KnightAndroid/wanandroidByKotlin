@@ -2,6 +2,7 @@ package com.knight.kotlin.module_web.repo
 
 import com.knight.kotlin.library_base.repository.BaseRepository
 import com.knight.kotlin.library_network.model.responseCodeExceptionHandler
+import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_web.api.WebApiService
 import javax.inject.Inject
 
@@ -15,10 +16,14 @@ class WebRepo @Inject constructor() : BaseRepository() {
     @Inject
     lateinit var mWebApiService:WebApiService
 
-    suspend fun collectArticle(collectArticleId:Int) = request<Any>{
+    fun collectArticle(collectArticleId:Int) = request<Any>({
         mWebApiService.collectArticle(collectArticleId).run {
             responseCodeExceptionHandler(code, msg)
             emit(data)
+        }
+    }){
+        it?.run {
+            toast(it)
         }
     }
 }

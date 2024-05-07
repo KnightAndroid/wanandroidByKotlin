@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.knight.kotlin.library_aop.loginintercept.LoginCheck
 import com.knight.kotlin.library_base.fragment.BaseFragment
-import com.knight.kotlin.library_base.ktx.observeLiveData
 import com.knight.kotlin.library_base.route.RouteFragment
 import com.knight.kotlin.library_base.util.ArouteUtils
 import com.knight.kotlin.library_widget.ktx.init
@@ -13,7 +12,7 @@ import com.knight.kotlin.library_widget.ktx.setItemClickListener
 import com.knight.kotlin.module_navigate.adapter.HierachyArticleAdapter
 import com.knight.kotlin.module_navigate.databinding.NavigateHierachyArticleFragmentBinding
 import com.knight.kotlin.module_navigate.entity.HierachyTabArticleListEntity
-import com.knight.kotlin.module_navigate.vm.HIerachyArticleVm
+import com.knight.kotlin.module_navigate.vm.HierachyArticleVm
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener
@@ -28,7 +27,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 @Route(path = RouteFragment.Navigate.HierachyTabArticleFragment)
-class HierachyTabArticleFragment:BaseFragment<NavigateHierachyArticleFragmentBinding,HIerachyArticleVm>(),OnLoadMoreListener,OnRefreshListener {
+class HierachyTabArticleFragment:BaseFragment<NavigateHierachyArticleFragmentBinding, HierachyArticleVm>(),OnLoadMoreListener,OnRefreshListener {
 
 
 
@@ -101,9 +100,13 @@ class HierachyTabArticleFragment:BaseFragment<NavigateHierachyArticleFragmentBin
     @LoginCheck
     private fun collectOrunCollect(collect: Boolean, articleId: Int) {
         if (collect) {
-            mViewModel.unCollectArticle(articleId)
+            mViewModel.unCollectArticle(articleId).observerKt {
+                unCollectSuccess()
+            }
         } else {
-            mViewModel.collectArticle(articleId)
+            mViewModel.collectArticle(articleId).observerKt {
+                collectSucess()
+            }
         }
     }
 
@@ -111,7 +114,7 @@ class HierachyTabArticleFragment:BaseFragment<NavigateHierachyArticleFragmentBin
      *
      * 收藏成功
      */
-    private fun collectSucess(data: Boolean) {
+    private fun collectSucess() {
         mHierachyArticleAdapter.data[selectItem].collect = true
         mHierachyArticleAdapter.notifyItemChanged(selectItem)
 
@@ -121,7 +124,7 @@ class HierachyTabArticleFragment:BaseFragment<NavigateHierachyArticleFragmentBin
      *
      * 取消收藏
      */
-    private fun unCollectSuccess(data: Boolean) {
+    private fun unCollectSuccess() {
         mHierachyArticleAdapter.data[selectItem].collect = false
         mHierachyArticleAdapter.notifyItemChanged(selectItem)
 
@@ -132,9 +135,7 @@ class HierachyTabArticleFragment:BaseFragment<NavigateHierachyArticleFragmentBin
 
 
     override fun initObserver() {
-        observeLiveData(mViewModel.hierachyArticleList,::setHierachyArticles)
-        observeLiveData(mViewModel.collectArticle,::collectSucess)
-        observeLiveData(mViewModel.unCollectArticle,::unCollectSuccess)
+
     }
 
 
@@ -163,21 +164,29 @@ class HierachyTabArticleFragment:BaseFragment<NavigateHierachyArticleFragmentBin
 
     override fun initRequestData() {
         page = 0
-        mViewModel.getHierachyArticle(page, cid)
+        mViewModel.getHierachyArticle(page, cid).observerKt {
+            setHierachyArticles(it)
+        }
     }
 
     override fun reLoadData() {
         page = 0
-        mViewModel.getHierachyArticle(page, cid)
+        mViewModel.getHierachyArticle(page, cid).observerKt {
+            setHierachyArticles(it)
+        }
     }
 
     override fun onLoadMore(refreshLayout: RefreshLayout) {
-        mViewModel.getHierachyArticle(page, cid)
+        mViewModel.getHierachyArticle(page, cid).observerKt {
+            setHierachyArticles(it)
+        }
     }
 
     override fun onRefresh(refreshLayout: RefreshLayout) {
         page = 0
         mBinding.includeTabarticle.baseFreshlayout.setEnableLoadMore(true)
-        mViewModel.getHierachyArticle(page, cid)
+        mViewModel.getHierachyArticle(page, cid).observerKt {
+            setHierachyArticles(it)
+        }
     }
 }

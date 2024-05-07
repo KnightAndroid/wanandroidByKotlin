@@ -59,7 +59,7 @@ class AboutActivity:BaseActivity<SetAboutActivityBinding,AboutVm>() {
                 startPage(RouteActivity.Set.AppRecordMessageActivity)
             }
             mBinding.setRlCheckUpdate -> {
-                mViewModel.checkAppUpdateMessage(successCallBack = {
+                mViewModel.checkAppUpdateMessage().observerKt {
                     //如果本地安装包大于远端 证明本地安装的说测试包 无需更新
                     if (SystemUtils.getAppVersionCode(this)  < it.versionCode ) {
                         if (it.versionName != SystemUtils.getAppVersionName(this) ) {
@@ -69,9 +69,7 @@ class AboutActivity:BaseActivity<SetAboutActivityBinding,AboutVm>() {
                     } else {
                         toast(getString(R.string.set_no_update_version))
                     }
-                }, failureCallBack = {
-                    toast(it ?: getString(com.knight.kotlin.library_base.R.string.base_request_failure))
-                })
+                }
             }
 
             mBinding.tvServiceProtocol -> {

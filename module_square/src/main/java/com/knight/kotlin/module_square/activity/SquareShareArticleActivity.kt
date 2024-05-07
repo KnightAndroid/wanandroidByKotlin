@@ -4,8 +4,9 @@ import android.text.TextUtils
 import com.knight.kotlin.library_aop.loginintercept.LoginCheck
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.event.MessageEvent
-import com.knight.kotlin.library_base.ktx.observeLiveData
+import com.knight.kotlin.library_base.ktx.appStr
 import com.knight.kotlin.library_base.ktx.setOnClick
+import com.knight.kotlin.library_base.ktx.showLoadingDialog
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.util.EventBusUtils
 import com.knight.kotlin.library_util.toast
@@ -43,7 +44,7 @@ class SquareShareArticleActivity :BaseActivity<SquareShareArticleActivityBinding
     }
 
     override fun initObserver() {
-        observeLiveData(mViewModel.shareArticleSuccess,::successShareArticle)
+
     }
 
     override fun initRequestData() {
@@ -54,7 +55,7 @@ class SquareShareArticleActivity :BaseActivity<SquareShareArticleActivityBinding
 
     }
 
-    private fun successShareArticle(successShare:Boolean){
+    private fun successShareArticle(){
         toast(R.string.square_share_success)
         EventBusUtils.postEvent(MessageEvent(MessageEvent.MessageType.ShareArticleSuccess))
         finish()
@@ -86,7 +87,10 @@ class SquareShareArticleActivity :BaseActivity<SquareShareArticleActivityBinding
     @LoginCheck
     private fun submitArticle() {
         if (validateArticleMessage()) {
-            mViewModel.shareArticle(title, link)
+            showLoadingDialog(msg = appStr(R.string.square_share_article_loading))
+            mViewModel.shareArticle(title, link).observerKt {
+                successShareArticle()
+            }
         }
     }
 }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="eye_daily_banner_height">160dp</dimen>
-    <dimen name="eye_daily_banner_normal_width">8dp</dimen>
+    <dimen name="eye_daily_banner_normal_width">6dp</dimen>
     <dimen name="eye_daily_banner_selected_width">10dp</dimen>
+    <dimen name="eye_daily_banner_indicator_height">26dp</dimen>
 </resources>

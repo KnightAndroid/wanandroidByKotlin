@@ -2,6 +2,7 @@ package com.knight.kotlin.module_wechat.repo
 
 import com.knight.kotlin.library_base.repository.BaseRepository
 import com.knight.kotlin.library_network.model.responseCodeExceptionHandler
+import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_wechat.api.WechatApiService
 import com.knight.kotlin.module_wechat.entity.WechatArticleListEntity
 import javax.inject.Inject
@@ -29,10 +30,17 @@ class WechatRepo @Inject constructor(): BaseRepository() {
      * 获取微信文章数据
      *
      */
-    suspend fun getWechatArticle(cid:Int,page:Int) = request<WechatArticleListEntity> {
+    fun getWechatArticle(cid:Int,page:Int,failureCallBack:((String?) ->Unit) ?= null) = request<WechatArticleListEntity> ({
         mWechatApiService.getWechatArticle(cid,page).run {
             responseCodeExceptionHandler(code, msg)
             emit(data)
+        }
+    }){
+        it?.run {
+            toast(it)
+        }
+        failureCallBack?.run {
+            this(it)
         }
     }
 
@@ -40,10 +48,14 @@ class WechatRepo @Inject constructor(): BaseRepository() {
      *
      * 收藏文章
      */
-    suspend fun collectArticle(collectArticleId:Int) = request<Any>{
+    fun collectArticle(collectArticleId:Int) = request<Any>({
         mWechatApiService.collectArticle(collectArticleId).run {
             responseCodeExceptionHandler(code, msg)
-            emit(data)
+            emit(true)
+        }
+    }){
+        it?.run {
+            toast(it)
         }
     }
 
@@ -51,10 +63,14 @@ class WechatRepo @Inject constructor(): BaseRepository() {
      * 取消文章点赞/收藏
      *
      */
-    suspend fun cancelCollectArticle(unCollectArticleId:Int) = request<Any> {
+    fun cancelCollectArticle(unCollectArticleId:Int) = request<Any> ({
         mWechatApiService.uncollectArticle(unCollectArticleId).run {
             responseCodeExceptionHandler(code, msg)
             emit(data)
+        }
+    }){
+        it?.run {
+            toast(it)
         }
     }
 
@@ -62,10 +78,14 @@ class WechatRepo @Inject constructor(): BaseRepository() {
      * 根据关键词搜索公众号
      *
      */
-    suspend fun getWechatArticleByKeyWords(cid:Int,page:Int,keyword:String) = request<WechatArticleListEntity> {
+    fun getWechatArticleByKeyWords(cid:Int,page:Int,keyword:String) = request<WechatArticleListEntity> ({
         mWechatApiService.getWechatArticleByKeywords(cid,page,keyword).run {
             responseCodeExceptionHandler(code, msg)
             emit(data)
+        }
+    }){
+        it?.run {
+            toast(it)
         }
     }
 

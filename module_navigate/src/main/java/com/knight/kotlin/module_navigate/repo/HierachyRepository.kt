@@ -2,6 +2,7 @@ package com.knight.kotlin.module_navigate.repo
 
 import com.knight.kotlin.library_base.repository.BaseRepository
 import com.knight.kotlin.library_network.model.responseCodeExceptionHandler
+import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_navigate.api.HierachyApi
 import com.knight.kotlin.module_navigate.entity.HierachyListEntity
 import javax.inject.Inject
@@ -19,10 +20,14 @@ class HierachyRepository @Inject constructor(): BaseRepository() {
      *
      * 获取最新导航数据
      */
-    suspend fun getHierachyData() = request<MutableList<HierachyListEntity>> {
+    fun getHierachyData() = request<MutableList<HierachyListEntity>> ({
         mHierachyApi.getHierachyData().run {
             responseCodeExceptionHandler(code, msg)
             emit(data)
+        }
+    }){
+        it?.run {
+            toast(it)
         }
     }
 }

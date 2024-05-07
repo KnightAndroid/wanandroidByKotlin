@@ -1,15 +1,11 @@
 package com.knight.kotlin.module_welcome.vm
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.asLiveData
 import com.knight.kotlin.library_base.vm.BaseViewModel
 import com.knight.kotlin.module_welcome.entity.AppThemeBean
 import com.knight.kotlin.module_welcome.repo.WelcomeRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
@@ -21,23 +17,12 @@ import javax.inject.Inject
 @HiltViewModel
 class WelcomeVm @Inject constructor(private val mRepo:WelcomeRepo) :BaseViewModel(){
 
-    val themeData = MutableLiveData<AppThemeBean>()
-
-
     /**
      *
      * 获取App Theme
      *
      */
-    fun getAppTheme() {
-       viewModelScope.launch(Dispatchers.IO) {
-           mRepo.getAppTheme()
-               .catch {
-
-               }
-               .collect {
-                   themeData.postValue(it)
-               }
-       }
+    fun getAppTheme() : LiveData<AppThemeBean> {
+        return mRepo.getAppTheme().asLiveData()
     }
 }

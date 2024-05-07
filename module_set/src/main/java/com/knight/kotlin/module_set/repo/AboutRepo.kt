@@ -22,10 +22,14 @@ class AboutRepo @Inject constructor() : BaseRepository(){
      *
      * 检查APP版本更新接口
      */
-    suspend fun checkAppUpdateMessage() = request<AppUpdateBean>{
+    fun checkAppUpdateMessage(failureCallBack:((String?) ->Unit) ?= null) = request<AppUpdateBean>({
         mAboutApiService.checkAppUpdateMessage().run {
             responseCodeExceptionHandler(code, msg)
             emit(data)
+        }
+    }){
+        failureCallBack?.run {
+            this(it)
         }
     }
 }

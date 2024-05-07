@@ -7,8 +7,10 @@ import com.flyjingfish.android_aop_core.annotations.SingleClick
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.config.Appconfig
 import com.knight.kotlin.library_base.event.MessageEvent
+import com.knight.kotlin.library_base.ktx.appStr
+import com.knight.kotlin.library_base.ktx.dimissLoadingDialog
 import com.knight.kotlin.library_base.ktx.getUser
-import com.knight.kotlin.library_base.ktx.observeLiveData
+import com.knight.kotlin.library_base.ktx.showLoadingDialog
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_base.util.ColorUtils
@@ -110,7 +112,7 @@ class SetActivity : BaseActivity<SetActivityBinding, SetVm>(){
     }
 
     override fun initObserver() {
-         observeLiveData(mViewModel.logoutStatus,::logoutSuccess)
+
     }
 
     override fun initRequestData() {
@@ -121,8 +123,7 @@ class SetActivity : BaseActivity<SetActivityBinding, SetVm>(){
 
     }
 
-    private fun logoutSuccess(logout:Boolean) {
-       // dismissLoading()
+    private fun logoutSuccess() {
         mBinding.setRlLogout.visibility = View.GONE
         mBinding.setRlGesturePassword.visibility = View.GONE
         CacheUtils.loginOut()
@@ -154,8 +155,11 @@ class SetActivity : BaseActivity<SetActivityBinding, SetVm>(){
                     this@SetActivity,
                     resources.getString(R.string.set_confirm_logout),
                     { _, _ ->
-                    //    showLoading(getString(R.string.set_logout))
-                        mViewModel.logout()
+                        showLoadingDialog(msg = appStr(R.string.set_logout))
+                        mViewModel.logout().observerKt {
+                            dimissLoadingDialog()
+                            logoutSuccess()
+                        }
                     }) { dialog, which -> }
             }
 

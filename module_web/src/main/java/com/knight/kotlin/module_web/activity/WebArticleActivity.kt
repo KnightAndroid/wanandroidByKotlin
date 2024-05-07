@@ -18,7 +18,6 @@ import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.entity.WebDataEntity
 import com.knight.kotlin.library_base.event.MessageEvent
 import com.knight.kotlin.library_base.ktx.getUser
-import com.knight.kotlin.library_base.ktx.observeLiveData
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_base.util.EventBusUtils
@@ -152,7 +151,7 @@ class WebArticleActivity :BaseActivity<WebArticleActivityBinding,WebVm>(),LoveAn
 
 
     override fun initObserver() {
-        observeLiveData(mViewModel.collectSucess,::collectSuccess)
+
     }
 
     override fun initRequestData() {
@@ -163,7 +162,9 @@ class WebArticleActivity :BaseActivity<WebArticleActivityBinding,WebVm>(),LoveAn
     override fun onCollect() {
         if (webDataEntity?.isCollect == false) {
             webDataEntity?.let {
-                mViewModel.collectArticle(it.articleId)
+                mViewModel.collectArticle(it.articleId).observerKt {
+                    collectSuccess()
+                }
             }
         }
     }
@@ -172,7 +173,7 @@ class WebArticleActivity :BaseActivity<WebArticleActivityBinding,WebVm>(),LoveAn
      *
      * 收藏成功
      */
-    private fun collectSuccess(data:Boolean) {
+    private fun collectSuccess() {
          webDataEntity?.isCollect = true
          ToastUtils.show(R.string.web_success_collect)
          EventBusUtils.postEvent(MessageEvent(MessageEvent.MessageType.CollectSuccess))

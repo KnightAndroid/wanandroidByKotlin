@@ -5,8 +5,6 @@ import android.text.TextUtils
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.knight.kotlin.library_aop.loginintercept.LoginCheck
 import com.knight.kotlin.library_base.fragment.BaseFragment
-import com.knight.kotlin.library_base.ktx.observeLiveData
-import com.knight.kotlin.library_base.ktx.observeLiveDataWithError
 import com.knight.kotlin.library_base.ktx.setOnClick
 import com.knight.kotlin.library_base.route.RouteFragment
 import com.knight.kotlin.library_base.util.ArouteUtils
@@ -84,15 +82,16 @@ class WechatOfficialAccountFragment:BaseFragment<WechatOfficialaccountFragmentBi
     }
 
     override fun initObserver() {
-        observeLiveDataWithError(mViewModel.wechatArticle,mViewModel.requestSuccessFlag,::setWechatArticle,::setWechatArticleFailure)
-        observeLiveData(mViewModel.wechatArticleKeyword,::setWechatArticle)
-        observeLiveData(mViewModel.collectSucess,::collectSuccess)
-        observeLiveData(mViewModel.uncollectSuccess,::unCollectSuccess)
+
     }
 
     override fun initRequestData() {
         requestLoading(mBinding.includeWechatArticles.baseFreshlayout)
-        mViewModel.getWechatArticle(cid,page)
+        mViewModel.getWechatArticle(cid,page, failureCallBack = {
+            setWechatArticleFailure()
+        }).observerKt {
+            setWechatArticle(it)
+        }
     }
 
     fun initListener() {
@@ -129,7 +128,11 @@ class WechatOfficialAccountFragment:BaseFragment<WechatOfficialaccountFragmentBi
         page = 1
         keyWords = ""
         mBinding.includeWechatArticles.baseFreshlayout.setEnableLoadMore(true)
-        mViewModel.getWechatArticle(cid,page)
+        mViewModel.getWechatArticle(cid,page, failureCallBack = {
+            setWechatArticleFailure()
+        }).observerKt {
+            setWechatArticle(it)
+        }
 
     }
 
@@ -165,7 +168,9 @@ class WechatOfficialAccountFragment:BaseFragment<WechatOfficialaccountFragmentBi
     fun searchArticlesByKeyWords(keywords:String) {
         page = 1
         this.keyWords = keywords
-        mViewModel.getWechatArticleBykeywords(cid,page,keywords)
+        mViewModel.getWechatArticleBykeywords(cid,page,keywords).observerKt {
+            setWechatArticle(it)
+        }
         mBinding.includeWechatArticles.baseFreshlayout.setEnableLoadMore(true)
         mBinding.includeWechatArticles.baseFreshlayout.autoRefresh()
     }
@@ -183,7 +188,7 @@ class WechatOfficialAccountFragment:BaseFragment<WechatOfficialaccountFragmentBi
      *
      * 收藏成功
      */
-    private fun collectSuccess(data: Boolean) {
+    private fun collectSuccess() {
         mWechatArticleAdapter.data[selectItemPosition].collect = true
         mWechatArticleAdapter.notifyItemChanged(selectItemPosition)
     }
@@ -192,7 +197,7 @@ class WechatOfficialAccountFragment:BaseFragment<WechatOfficialaccountFragmentBi
      *
      * 取消收藏成功
      */
-    private fun unCollectSuccess(data: Boolean) {
+    private fun unCollectSuccess() {
         mWechatArticleAdapter.data[selectItemPosition].collect = false
         mWechatArticleAdapter.notifyItemChanged(selectItemPosition)
     }
@@ -201,24 +206,38 @@ class WechatOfficialAccountFragment:BaseFragment<WechatOfficialaccountFragmentBi
 
     override fun onLoadMore(refreshLayout: RefreshLayout) {
         if (!TextUtils.isEmpty(keyWords)) {
-            mViewModel.getWechatArticleBykeywords(cid,page,keyWords)
+            mViewModel.getWechatArticleBykeywords(cid,page,keyWords).observerKt {
+                setWechatArticle(it)
+            }
         } else {
-            mViewModel.getWechatArticle(cid,page)
+            mViewModel.getWechatArticle(cid,page, failureCallBack = {
+                setWechatArticleFailure()
+            }).observerKt {
+                setWechatArticle(it)
+            }
         }
     }
 
     override fun reLoadData() {
         page = 1
-        mViewModel.getWechatArticle(cid,page)
+        mViewModel.getWechatArticle(cid,page, failureCallBack = {
+            setWechatArticleFailure()
+        }).observerKt {
+            setWechatArticle(it)
+        }
     }
 
 
     @LoginCheck
     private fun collectOrunCollect(collect: Boolean, articleId: Int){
         if(collect) {
-            mViewModel.unCollectArticle(articleId)
+            mViewModel.unCollectArticle(articleId).observerKt {
+                unCollectSuccess()
+            }
         } else {
-            mViewModel.collectArticle(articleId)
+            mViewModel.collectArticle(articleId).observerKt {
+                collectSuccess()
+            }
         }
     }
 }
