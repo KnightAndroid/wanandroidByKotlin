@@ -3,6 +3,7 @@ package com.knight.kotlin.module_eye_daily.repo
 import com.knight.kotlin.library_base.ktx.dimissLoadingDialog
 import com.knight.kotlin.library_base.repository.BaseRepository
 import com.knight.kotlin.library_network.model.responseCodeExceptionHandler
+import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_eye_daily.api.EyeDailyListApi
 import com.knight.kotlin.module_eye_daily.entity.EyeDailyListEntity
 import kotlinx.coroutines.flow.Flow
@@ -35,6 +36,25 @@ class EyeDailyListRepo @Inject constructor() : BaseRepository() {
           failureCallBack?.run {
                this(it)
           }
+     }
+
+     /**
+      * 日报数据
+      *
+      *
+      * @param url
+      * @return
+      */
+     fun getDailyList(url : String) : Flow<EyeDailyListEntity> = request<EyeDailyListEntity> ({
+         mEyeDailyListApi.getDailyList(url).run {
+              responseCodeExceptionHandler(errorCode, errorMessage)
+              emit(this)
+         }
+
+     }){
+         it?.run {
+              toast(it)
+         }
      }
 
 }

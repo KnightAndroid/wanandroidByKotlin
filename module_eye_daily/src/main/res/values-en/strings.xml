@@ -1,3 +1,4 @@
 <resources>
-    <string name="eye_daily_app_name">eye_daily</string>
+    <string name="eye_daily_app_name">Eye_daily</string>
+    <string name="eye_daily_toolbar_title">Daily</string>
 </resources>

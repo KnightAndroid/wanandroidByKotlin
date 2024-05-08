@@ -1,3 +1,4 @@
 <resources>
     <string name="eye_daily_app_name">开眼日报</string>
+    <string name="eye_daily_toolbar_title">日报</string>
 </resources>

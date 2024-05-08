@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/eye_daily_image_item_height">
+    
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:cardBackgroundColor="@android:color/transparent"
+        app:cardCornerRadius="@dimen/base_dimen_8"
+        app:cardUseCompatPadding="false"
+        android:layout_marginLeft="@dimen/eye_daily_image_item_cv_margin_left"
+        android:layout_marginRight="@dimen/eye_daily_image_item_cv_margin_right"
+        android:layout_marginBottom="@dimen/eye_daily_image_item_cv_margin_bottom">
+
+        <ImageView
+            android:id="@+id/iv_daily_cover"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"/>
+
+
+    </androidx.cardview.widget.CardView>
+    
+    
+</androidx.constraintlayout.widget.ConstraintLayout>

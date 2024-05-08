@@ -1,11 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
 
+        <com.youth.banner.Banner
+            android:id="@+id/eye_daily_banner"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/eye_daily_banner_height"
+            app:banner_indicator_normal_color="@color/eye_daily_banner_normal_color"
+            app:banner_indicator_normal_width="@dimen/eye_daily_banner_normal_width"
+            app:banner_indicator_selected_color="@android:color/white"
+            app:banner_indicator_selected_width="@dimen/eye_daily_banner_selected_width"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginLeft="@dimen/eye_daily_banner_margin_left"
+            android:layout_marginRight="@dimen/eye_daily_banner_margin_right"
+            app:banner_radius="@dimen/base_dimen_8"
+            android:layout_marginTop="@dimen/eye_daily_banner_margin_top"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

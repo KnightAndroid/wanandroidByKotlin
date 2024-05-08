@@ -3,6 +3,8 @@ package com.knight.kotlin.module_eye_daily.view
 import android.content.Context
 import android.graphics.Canvas
 import android.util.AttributeSet
+import com.knight.kotlin.library_base.ktx.screenWidth
+import com.knight.kotlin.library_base.util.dp2px
 import com.youth.banner.indicator.BaseIndicator
 import kotlin.math.max
 
@@ -39,10 +41,11 @@ class MyCustomBannerIndicator @JvmOverloads constructor(
         //间距*（总数-1）+选中宽度+默认宽度*（总数-1）
         indicatorWidth =
             (count - 1) * config.getIndicatorSpace() + config.getSelectedWidth() + config.getNormalWidth() * (count - 1)
-        setMeasuredDimension(
-            getWidth(),
-            height
-        )
+//        setMeasuredDimension(
+//            getWidth(),
+//            height
+//        )
+        setMeasuredDimension(context.screenWidth,26.dp2px())
     }
 
     override fun onDraw(canvas: Canvas) {
