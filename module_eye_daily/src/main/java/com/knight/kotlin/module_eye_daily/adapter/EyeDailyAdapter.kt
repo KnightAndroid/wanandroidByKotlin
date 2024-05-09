@@ -38,10 +38,25 @@ class EyeDailyAdapter(data : MutableList<EyeDailyItemEntity>):
                    }
 
                    EyeDailyConstants.IMAGE_TYPE -> {
+                       //加载封面
                        data.content.data.cover?.feed?.let {
-                           ImageLoader.loadStringPhoto(context,
-                               it,holder.getView(R.id.iv_daily_cover))
+                           ImageLoader.loadStringPhoto(
+                               context,
+                               it, holder.getView(R.id.iv_daily_cover)
+                           )
                        }
+                       //加载栏目
+                       holder.setText(R.id.tv_daily_category,data.content.data.category)
+                       //加载头像
+                       data.content.data.author?.run {
+                           ImageLoader.loadStringPhoto(context,icon,holder.getView(R.id.eye_iv_daily_author))
+                           holder.setText(R.id.tv_desc_name,name)
+                       } ?:run {
+                           ImageLoader.loadStringPhoto(context,data.content.data.tags[0].headerImage,holder.getView(R.id.eye_iv_daily_author))
+                           holder.setText(R.id.tv_desc_name,data.content.data.tags[0].name)
+                       }
+                       //加载标题
+                       holder.setText(R.id.tv_daily_title,data.content.data.title)
                    }
 
                    else -> {}

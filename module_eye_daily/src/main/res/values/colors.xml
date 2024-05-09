@@ -10,4 +10,7 @@
     <color name="eye_daily_banner_normal_color">#D1D1D1</color>
     <color name="eye_daily_banner_indicator_bg">#33FFFFFF</color>
     <color name="eye_daily_text_title">#333333</color>
+    <color name="eye_daily_item_message_bg">#33FFFFFF</color>
+    <color name="eye_daily_item_title_text_color">#FFFFFF</color>
+    <color name="eye_daily_item_desc_text_color">#CCFFFFFF</color>
 </resources>

@@ -33,7 +33,11 @@
 
     <style name="base_AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.DayNight"/>
 
+    <!--圆形图片样式-->
+    <style name="base_circleStyle">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
 
-
+    </style>
 
 </resources>

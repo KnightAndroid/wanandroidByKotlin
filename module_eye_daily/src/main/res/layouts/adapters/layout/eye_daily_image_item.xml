@@ -1,28 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout 
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="@dimen/eye_daily_image_item_height">
-    
+
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:cardBackgroundColor="@android:color/transparent"
-        app:cardCornerRadius="@dimen/base_dimen_8"
-        app:cardUseCompatPadding="false"
         android:layout_marginLeft="@dimen/eye_daily_image_item_cv_margin_left"
         android:layout_marginRight="@dimen/eye_daily_image_item_cv_margin_right"
-        android:layout_marginBottom="@dimen/eye_daily_image_item_cv_margin_bottom">
+        android:layout_marginBottom="@dimen/eye_daily_image_item_cv_margin_bottom"
+        app:cardBackgroundColor="@android:color/transparent"
+        app:cardCornerRadius="@dimen/base_dimen_8"
+        app:cardUseCompatPadding="false">
 
         <ImageView
             android:id="@+id/iv_daily_cover"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="fitXY"/>
+            android:scaleType="fitXY" />
 
+
+        <TextView
+            android:id="@+id/tv_daily_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/eye_daily_type_icon"
+            android:gravity="center"
+            android:shadowColor="@android:color/black"
+            android:shadowDx="2"
+            android:shadowDy="2"
+            android:shadowRadius="1"
+            android:textColor="@android:color/white"
+            android:textStyle="bold" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/eye_daily_item_message_height"
+            android:layout_gravity="bottom"
+            android:background="@color/eye_daily_item_message_bg">
+
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/eye_iv_daily_author"
+                android:layout_width="@dimen/eye_daily_item_iv_author_height"
+                android:layout_height="@dimen/eye_daily_item_iv_author_width"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/eye_daily_item_iv_author_margin_left"
+                app:shapeAppearance="@style/base_circleStyle" />
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/eye_daily_item_title_margin_left"
+                android:layout_toRightOf="@id/eye_iv_daily_author">
+
+
+                <com.knight.kotlin.library_widget.OutlinedTextView
+                    android:id="@+id/tv_daily_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:shadowColor="@android:color/black"
+                    android:shadowDx="1"
+                    android:shadowDy="1"
+                    android:shadowRadius="1"
+                    android:textColor="@color/eye_daily_item_title_text_color"
+                    android:textSize="@dimen/eye_daily_item_title_text_size"
+                    app:stroke_color="@android:color/black"
+                    app:stroke_width="1dp" />
+
+                <com.knight.kotlin.library_widget.OutlinedTextView
+                    android:id="@+id/tv_desc_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_daily_title"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:shadowColor="@android:color/black"
+                    android:shadowDx="1"
+                    android:shadowDy="1"
+                    android:shadowRadius="1"
+                    android:textColor="@color/eye_daily_item_desc_text_color"
+                    android:textSize="@dimen/eye_daily_item_desc_text_size"
+                    app:stroke_color="@android:color/black"
+                    app:stroke_width="1dp" />
+
+
+            </RelativeLayout>
+
+        </RelativeLayout>
 
     </androidx.cardview.widget.CardView>
-    
-    
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

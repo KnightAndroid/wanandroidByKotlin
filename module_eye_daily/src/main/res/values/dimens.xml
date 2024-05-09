@@ -4,7 +4,7 @@
     <dimen name="eye_daily_banner_normal_width">6dp</dimen>
     <dimen name="eye_daily_banner_selected_width">10dp</dimen>
     <dimen name="eye_daily_banner_indicator_height">26dp</dimen>
-    <dimen name="eye_daily_image_item_height">180dp</dimen>
+    <dimen name="eye_daily_image_item_height">200dp</dimen>
     <dimen name="eye_daily_text_item_height">52dp</dimen>
     <dimen name="eye_daily_text_item_title_margin_left">10dp</dimen>
     <dimen name="eye_daily_text_item_image_margin_left">10dp</dimen>
@@ -15,4 +15,11 @@
     <dimen name="eye_daily_banner_margin_left">10dp</dimen>
     <dimen name="eye_daily_banner_margin_right">10dp</dimen>
     <dimen name="eye_daily_banner_margin_top">10dp</dimen>
+    <dimen name="eye_daily_item_message_height">60dp</dimen>
+    <dimen name="eye_daily_item_iv_author_width">40dp</dimen>
+    <dimen name="eye_daily_item_iv_author_height">40dp</dimen>
+    <dimen name="eye_daily_item_iv_author_margin_left">10dp</dimen>
+    <dimen name="eye_daily_item_title_margin_left">10dp</dimen>
+    <dimen name="eye_daily_item_title_text_size">16sp</dimen>
+    <dimen name="eye_daily_item_desc_text_size">14sp</dimen>
 </resources>

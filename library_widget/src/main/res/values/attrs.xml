@@ -92,4 +92,10 @@
             <enum name="rectangle" value="2" />
         </attr>
     </declare-styleable>
+
+    <!--边框文字-->
+    <declare-styleable name="OutlinedTextView">
+        <attr name="stroke_color" format="color" />
+        <attr name="stroke_width" format="dimension|reference"/>
+    </declare-styleable>
 </resources>
