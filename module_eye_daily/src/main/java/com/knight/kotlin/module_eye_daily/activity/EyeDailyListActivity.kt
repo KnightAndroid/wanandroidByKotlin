@@ -6,9 +6,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.ktx.setOnClick
 import com.knight.kotlin.library_base.route.RouteActivity
-import com.knight.kotlin.library_util.image.ImageLoader
 import com.knight.kotlin.library_widget.ktx.init
 import com.knight.kotlin.module_eye_daily.R
+import com.knight.kotlin.module_eye_daily.adapter.EyeBannerAdapter
 import com.knight.kotlin.module_eye_daily.adapter.EyeDailyAdapter
 import com.knight.kotlin.module_eye_daily.constants.EyeDailyConstants
 import com.knight.kotlin.module_eye_daily.databinding.EyeDailyListActivityBinding
@@ -20,9 +20,7 @@ import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener
 import com.wyjson.router.annotation.Route
-import com.youth.banner.adapter.BannerImageAdapter
 import com.youth.banner.config.IndicatorConfig
-import com.youth.banner.holder.BannerImageHolder
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -69,11 +67,11 @@ class EyeDailyListActivity:BaseActivity<EyeDailyListActivityBinding,EyeDailyList
     override fun initRequestData() {
           mViewModel.getDailyBanner().observerKt{
               mNextPageUrl = it.nextPageUrl
-              //去除标识为文本卡片的
-              it.itemList.removeAll{
+              val (textCardList, followCardList) = it.itemList.partition {
                   it.type == EyeDailyConstants.TEXT_HEAD_TYPE
               }
-              setDailyBanner(it.itemList)
+              //去除标识为文本卡片的
+              setDailyBanner(textCardList,followCardList)
           }
     }
 
@@ -98,26 +96,14 @@ class EyeDailyListActivity:BaseActivity<EyeDailyListActivityBinding,EyeDailyList
      * 设置广告数据
      * @param data
      */
-    private fun setDailyBanner(data:MutableList<EyeDailyItemEntity>) {
+    private fun setDailyBanner(textCardList:List<EyeDailyItemEntity>,followCardList:List<EyeDailyItemEntity>) {
+        if (textCardList.size > 0) {
+            bannerHeadView.tvEyeDailyBannerHead.text = textCardList[0].data.text
+        } else {
+            bannerHeadView.tvEyeDailyBannerHead.text = getString(R.string.eye_daily_today_recommend)
+        }
         bannerHeadView.eyeDailyBanner.apply {
-             setAdapter(object: BannerImageAdapter<EyeDailyItemEntity>(data) {
-                 override fun onBindView(
-                     holder: BannerImageHolder,
-                     data: EyeDailyItemEntity,
-                     position: Int,
-                     size: Int
-                 ) {
-                     data.data.content.data.cover?.let {
-                         ImageLoader.loadStringPhoto(
-                             this@EyeDailyListActivity,
-                             it.feed,
-                             holder.imageView
-                         )
-                     }
-                 }
-
-             })
-
+            setAdapter(EyeBannerAdapter(followCardList))
              indicator = MyCustomBannerIndicator(this@EyeDailyListActivity)
              indicatorConfig.margins = IndicatorConfig.Margins(0,0,0,0)
              indicator.indicatorView.setBackgroundColor(ContextCompat.getColor(this@EyeDailyListActivity,R.color.eye_daily_banner_indicator_bg))

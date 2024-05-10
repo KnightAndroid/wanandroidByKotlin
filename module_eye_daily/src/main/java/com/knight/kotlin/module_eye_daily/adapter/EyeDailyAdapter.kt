@@ -6,6 +6,7 @@ import android.widget.ImageView
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.knight.kotlin.library_base.util.CacheUtils
+import com.knight.kotlin.library_util.DateUtils
 import com.knight.kotlin.library_util.image.ImageLoader
 import com.knight.kotlin.module_eye_daily.R
 import com.knight.kotlin.module_eye_daily.constants.EyeDailyConstants
@@ -38,25 +39,31 @@ class EyeDailyAdapter(data : MutableList<EyeDailyItemEntity>):
                    }
 
                    EyeDailyConstants.IMAGE_TYPE -> {
-                       //加载封面
-                       data.content.data.cover?.feed?.let {
-                           ImageLoader.loadStringPhoto(
-                               context,
-                               it, holder.getView(R.id.iv_daily_cover)
-                           )
+                       data.content.data?.run {
+                           //加载封面
+                           cover?.feed?.let {
+                               ImageLoader.loadStringPhoto(
+                                   context,
+                                   it, holder.getView(R.id.iv_daily_cover)
+                               )
+                           }
+
+                           //加载栏目
+                           holder.setText(R.id.tv_daily_category,category)
+                           //加载时间
+                           holder.setText(R.id.tv_daily_item_video_time,DateUtils.formatDateMsByMS(duration * 1000))
+
+                           //加载头像
+                           author?.run {
+                               ImageLoader.loadStringPhoto(context,icon,holder.getView(R.id.eye_iv_daily_author))
+                               holder.setText(R.id.tv_desc_name,name)
+                           } ?:run {
+                               ImageLoader.loadStringPhoto(context,tags[0].headerImage,holder.getView(R.id.eye_iv_daily_author))
+                               holder.setText(R.id.tv_desc_name,tags[0].name)
+                           }
+                           //加载标题
+                           holder.setText(R.id.tv_daily_title,title)
                        }
-                       //加载栏目
-                       holder.setText(R.id.tv_daily_category,data.content.data.category)
-                       //加载头像
-                       data.content.data.author?.run {
-                           ImageLoader.loadStringPhoto(context,icon,holder.getView(R.id.eye_iv_daily_author))
-                           holder.setText(R.id.tv_desc_name,name)
-                       } ?:run {
-                           ImageLoader.loadStringPhoto(context,data.content.data.tags[0].headerImage,holder.getView(R.id.eye_iv_daily_author))
-                           holder.setText(R.id.tv_desc_name,data.content.data.tags[0].name)
-                       }
-                       //加载标题
-                       holder.setText(R.id.tv_daily_title,data.content.data.title)
                    }
 
                    else -> {}

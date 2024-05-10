@@ -2,7 +2,8 @@ package com.knight.kotlin.library_util
 
 import java.text.ParseException
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Date
 
 /**
  * Author:Knight
@@ -102,5 +103,40 @@ object DateUtils {
         return if (a in 19..24) {
             "晚上好"
         } else "您好"
+    }
+
+    /**
+     * 时间格式转成分秒
+     *
+     * @param milliseconds
+     * @return
+     */
+    fun formatDateMsByMS(milliseconds: Long): String {
+        val simpleDateFormat = SimpleDateFormat("mm:ss")
+        return simpleDateFormat.format(Date(milliseconds))
+    }
+
+    /**
+     * 时间格式转成年月日
+     *
+     *
+     * @param milliseconds
+     * @return
+     */
+    fun formatDateMsByYMD(milliseconds: Long): String {
+        val simpleDateFormat = SimpleDateFormat("yyyy/MM/dd")
+        return simpleDateFormat.format(Date(milliseconds))
+    }
+
+    /**
+     *
+     * 时间格式转成年月日 时分
+     *
+     * @param milliseconds
+     * @return
+     */
+    fun formatDateMsByYMDHM(milliseconds: Long): String {
+        val simpleDateFormat = SimpleDateFormat("yyyy/MM/dd HH:mm")
+        return simpleDateFormat.format(Date(milliseconds))
     }
 }

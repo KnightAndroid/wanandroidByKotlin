@@ -34,6 +34,9 @@
             android:textColor="@android:color/white"
             android:textStyle="bold" />
 
+
+
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/eye_daily_item_message_height"
@@ -59,7 +62,7 @@
                 android:layout_toRightOf="@id/eye_iv_daily_author">
 
 
-                <com.knight.kotlin.library_widget.OutlinedTextView
+                <TextView
                     android:id="@+id/tv_daily_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -70,11 +73,9 @@
                     android:shadowDy="1"
                     android:shadowRadius="1"
                     android:textColor="@color/eye_daily_item_title_text_color"
-                    android:textSize="@dimen/eye_daily_item_title_text_size"
-                    app:stroke_color="@android:color/black"
-                    app:stroke_width="1dp" />
+                    android:textSize="@dimen/eye_daily_item_title_text_size" />
 
-                <com.knight.kotlin.library_widget.OutlinedTextView
+                <TextView
                     android:id="@+id/tv_desc_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -87,8 +88,22 @@
                     android:shadowRadius="1"
                     android:textColor="@color/eye_daily_item_desc_text_color"
                     android:textSize="@dimen/eye_daily_item_desc_text_size"
-                    app:stroke_color="@android:color/black"
-                    app:stroke_width="1dp" />
+                />
+
+                <TextView
+                    android:id="@+id/tv_daily_item_video_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:gravity="right|center_vertical"
+                    android:shadowColor="@android:color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold"
+                    android:layout_marginRight="@dimen/eye_daily_tv_item_video_time_margin_right"
+                    android:layout_below="@id/tv_daily_title" />
 
 
             </RelativeLayout>

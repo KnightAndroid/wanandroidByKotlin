@@ -59,7 +59,7 @@ data class EyeData(
     val description: String,
     val text: String,
     val descriptionEditor: String,
-    val duration: Int,
+    val duration: Long,
     val header: EyeHeader,
     val id: Int,
     val idx: Int,

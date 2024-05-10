@@ -12,7 +12,7 @@ import android.widget.TextView
 /**
  * Author:Knight
  * Time:2024/5/9 10:48
- * Description:OutlinedTextView 边框 TextView
+ * Description:OutlinedTextView 给TextView添加描边
  */
 class OutlinedTextView@JvmOverloads constructor(
     context: Context,

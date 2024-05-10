@@ -1,29 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-
-        <com.youth.banner.Banner
-            android:id="@+id/eye_daily_banner"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/eye_daily_banner_height"
-            app:banner_indicator_normal_color="@color/eye_daily_banner_normal_color"
-            app:banner_indicator_normal_width="@dimen/eye_daily_banner_normal_width"
-            app:banner_indicator_selected_color="@android:color/white"
-            app:banner_indicator_selected_width="@dimen/eye_daily_banner_selected_width"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
+        <TextView
+            android:id="@+id/tv_eye_daily_banner_head"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/eye_daily_head_banner_text_title"
+            android:textStyle="bold"
+            android:textSize="@dimen/eye_daily_tv_head_banner_text_size"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginLeft="@dimen/eye_daily_banner_margin_left"
-            android:layout_marginRight="@dimen/eye_daily_banner_margin_right"
-            app:banner_radius="@dimen/base_dimen_8"
-            android:layout_marginTop="@dimen/eye_daily_banner_margin_top"/>
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginLeft="@dimen/eye_daily_tv_head_banner_text_size_margin_left"
+            android:layout_marginTop="@dimen/eye_daily_tv_head_banner_text_size_margin_top"
+            android:drawableRight="@drawable/eye_daily_head_icon"
+            android:drawablePadding="@dimen/eye_daily_tv_eye_banner_head_drawable_padding"
+            />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</RelativeLayout>
+
+
+    <com.youth.banner.Banner
+        android:id="@+id/eye_daily_banner"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/eye_daily_banner_height"
+        android:layout_marginLeft="@dimen/eye_daily_banner_margin_left"
+        android:layout_marginTop="@dimen/eye_daily_banner_margin_top"
+        android:layout_marginRight="@dimen/eye_daily_banner_margin_right"
+        app:banner_indicator_normal_color="@color/eye_daily_banner_normal_color"
+        app:banner_indicator_normal_width="@dimen/eye_daily_banner_normal_width"
+        app:banner_indicator_selected_color="@android:color/white"
+        app:banner_indicator_selected_width="@dimen/eye_daily_banner_selected_width"
+        app:banner_radius="@dimen/base_dimen_8"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_eye_daily_banner_head" />
+</androidx.constraintlayout.widget.ConstraintLayout>

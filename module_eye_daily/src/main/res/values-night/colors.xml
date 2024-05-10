@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="eye_daily_text_title">#D3D3D3</color>
+    <color name="eye_daily_head_banner_text_title">#D3D3D3</color>
 </resources>
