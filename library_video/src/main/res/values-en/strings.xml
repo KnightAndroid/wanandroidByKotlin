@@ -1,0 +1,10 @@
+<resources>
+    <string name="vi_app_name">Library Video</string>
+    <string name="vi_tips_not_wifi">You are currently using the mobile network, the player will continue to consume traffic</string>
+    <string name="vi_tips_not_wifi_confirm">Resume</string>
+    <string name="vi_tips_not_wifi_cancel">Stop play</string>
+    <string name="vi_no_url">No url</string>
+    <string name="vi_replay">Replay</string>
+    <string name="vi_click_to_restart">Click to try again</string>
+    <string name="vi_video_loading_failed">Video loading failed</string>
+</resources>

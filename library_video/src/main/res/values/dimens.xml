@@ -1,0 +1,4 @@
+<resources>
+    <dimen name="vi_start_button_w_h_normal">45dp</dimen>
+    <dimen name="vi_start_button_w_h_fullscreen">62dp</dimen>
+</resources>

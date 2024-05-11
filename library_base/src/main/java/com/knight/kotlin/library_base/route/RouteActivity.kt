@@ -172,6 +172,7 @@ object RouteActivity {
     object EyeDaily {
         private const val Daily = "/module_eye_daily"
         const val DailyListActivity = "$Daily/DailyListActivity"
+        const val DailyVideoActivity = "$Daily/VideoActivity"
     }
 
 

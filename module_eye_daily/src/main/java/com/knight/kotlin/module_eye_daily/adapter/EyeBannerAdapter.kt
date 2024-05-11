@@ -6,8 +6,11 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.knight.kotlin.library_base.ktx.setOnClick
+import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_util.DateUtils
 import com.knight.kotlin.library_util.image.ImageLoader
+import com.knight.kotlin.library_util.startPage
 import com.knight.kotlin.module_eye_daily.R
 import com.knight.kotlin.module_eye_daily.databinding.EyeDailyBannerItemBinding
 import com.knight.kotlin.module_eye_daily.entity.EyeDailyItemEntity
@@ -48,6 +51,12 @@ class EyeBannerAdapter(data:List<EyeDailyItemEntity>) : BannerAdapter<EyeDailyIt
             )
 
         }
+
+        holder.eye_daily_iv_banner.setOnClick {
+            startPage(RouteActivity.EyeDaily.DailyVideoActivity)
+        }
+
+
         //标题
         holder.tv_daily_banner_title.setText(data.data.content.data.title)
         //栏目

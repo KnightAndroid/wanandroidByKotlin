@@ -13,7 +13,9 @@
         android:networkSecurityConfig="@xml/network_security_config"
         tools:ignore="Instantiatable"
         android:theme="@style/base_AppTheme"
-        tools:targetApi="n">
+        tools:targetApi="n"
+        android:enableOnBackInvokedCallback="true"> <!-- 启用手势-->
+
 
         <meta-data
             android:name="android.max_aspect"

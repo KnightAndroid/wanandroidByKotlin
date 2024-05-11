@@ -6,7 +6,6 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation project(path: ':library_scan')
-    implementation project(path: ':library_biometric')
+    implementation project(path: ':library_video')
     implementation com.knight.wanandroid.buildsrc.Dependencies.GitHub.BANNER
 }

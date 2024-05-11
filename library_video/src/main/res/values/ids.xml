@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item type="id" name="vi_layout_bottom"/>
+    <item type="id" name="vi_current"/>
+    <item type="id" name="vi_bottom_seek_progress"/>
+    <item type="id" name="vi_total"/>
+    <item type="id" name="vi_clarity"/>
+    <item type="id" name="vi_fullscreen"/>
+    <item type="id" name="vi_back_tiny"/>
+    <item type="id" name="vi_layout_top"/>
+    <item type="id" name="vi_back"/>
+    <item type="id" name="vi_title"/>
+    <item type="id" name="vi_battery_time_layout"/>
+    <item type="id" name="vi_battery_level"/>
+    <item type="id" name="vi_video_current_time"/>
+    <item type="id" name="vi_retry_layout"/>
+    <item type="id" name="vi_retry_btn"/>
+    <item type="id" name="vi_replay_text"/>
+    <item type="id" name="vi_bottom_progress"/>
+    <item type="id" name="vi_loading"/>
+    <item type="id" name="vi_start_layout"/>
+    <item type="id" name="vi_start"/>
+</resources>
