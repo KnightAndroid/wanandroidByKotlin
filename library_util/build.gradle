@@ -4,6 +4,7 @@ import com.knight.wanandroid.buildsrc.*
 android {
     buildFeatures {
         viewBinding = true
+        dataBinding true
     }
     namespace = "com.knight.kotlin.library_util"
 

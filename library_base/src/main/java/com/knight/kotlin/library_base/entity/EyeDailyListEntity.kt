@@ -1,8 +1,6 @@
-package com.knight.kotlin.module_eye_daily.entity
+package com.knight.kotlin.library_base.entity
 
 import android.os.Parcelable
-import com.chad.library.adapter.base.entity.MultiItemEntity
-import com.knight.kotlin.module_eye_daily.constants.EyeDailyConstants
 import kotlinx.parcelize.Parcelize
 
 /**
@@ -14,6 +12,8 @@ import kotlinx.parcelize.Parcelize
 data class EyeDailyListEntity(
     val itemList: MutableList<EyeDailyItemEntity>,
     val nextPageUrl: String?,
+    val count:Int = 0,
+    val total:Int = 0,
     val errorCode:Int,
     val errorMessage:String
 ) : Parcelable
@@ -22,12 +22,8 @@ data class EyeDailyListEntity(
 data class EyeDailyItemEntity(
     val type: String,
     val data: EyeDailyItemData,
-) : Parcelable, MultiItemEntity {
-    override val itemType: Int
-        get() = if (type == EyeDailyConstants.TEXT_HEAD_TYPE) {
-            EyeDailyConstants.TEXT_TYPE
-        } else EyeDailyConstants.IMAGE_TYPE
-}
+) : Parcelable
+
 @Parcelize
 data class EyeDailyItemData(
     val text: String,

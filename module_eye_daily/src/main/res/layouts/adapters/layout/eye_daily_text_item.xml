@@ -1,33 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="@dimen/eye_daily_text_item_height">
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+
+        <variable
+            name="imageLocal"
+            type="int" />
+        <variable
+            name="colorStateList"
+            type="android.content.res.ColorStateList" />
+        <variable
+            name="model"
+            type="com.knight.kotlin.library_base.entity.EyeDailyItemData" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:bind="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/eye_daily_text_item_height">
 
 
-    <TextView
-        android:id="@+id/tv_eye_daily_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/eye_daily_text_title"
-        android:textStyle="bold"
-        android:textSize="@dimen/eye_daily_text_item_title_text_size"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginLeft="@dimen/eye_daily_text_item_title_margin_left"
-        />
+        <TextView
+            android:id="@+id/tv_eye_daily_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/eye_daily_text_item_title_margin_left"
+            android:textColor="@color/eye_daily_text_title"
+            android:textSize="@dimen/eye_daily_text_item_title_text_size"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="@{model.text}"/>
 
-    <ImageView
-        android:id="@+id/iv_eye_daily"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/tv_eye_daily_title"
-        android:layout_marginLeft="@dimen/eye_daily_text_item_image_margin_left"
-        />
+        <ImageView
+            android:id="@+id/iv_eye_daily"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/eye_daily_text_item_image_margin_left"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/tv_eye_daily_title"
+            app:layout_constraintTop_toTopOf="parent"
+            app:imageLocal="@{imageLocal}"
+            app:tintList="@{colorStateList}"
+            />
+<!--        app:imageTint="@color/base_color_theme"-->
+<!--      //  bind:imageLocal="@{@drawable/eye_daily_title_icon}"-->
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

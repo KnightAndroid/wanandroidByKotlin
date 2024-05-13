@@ -156,7 +156,7 @@ object RouteActivity {
 
     /**
      *
-     * 视频模块
+     * 普通视频模块
      */
     object Video {
         private const val Video = "/module_video"
@@ -172,7 +172,16 @@ object RouteActivity {
     object EyeDaily {
         private const val Daily = "/module_eye_daily"
         const val DailyListActivity = "$Daily/DailyListActivity"
-        const val DailyVideoActivity = "$Daily/VideoActivity"
+    }
+
+
+    /**
+     *
+     * 开眼 视频详情模块
+     */
+    object EyeVideo {
+        private const val EyeVideo = "/module_eye_video"
+        const val EyeVideoDetail = "$EyeVideo/EyeDetailActivity"
     }
 
 

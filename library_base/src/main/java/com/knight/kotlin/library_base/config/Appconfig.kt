@@ -48,4 +48,5 @@ object Appconfig {
       */
      var user:UserInfoEntity?=null
 
+
 }

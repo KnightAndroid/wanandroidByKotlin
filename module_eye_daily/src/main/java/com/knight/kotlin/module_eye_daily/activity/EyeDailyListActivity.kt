@@ -2,18 +2,21 @@ package com.knight.kotlin.module_eye_daily.activity
 
 import android.view.LayoutInflater
 import androidx.core.content.ContextCompat
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.knight.kotlin.library_base.activity.BaseActivity
+import com.knight.kotlin.library_base.entity.EyeDailyItemEntity
 import com.knight.kotlin.library_base.ktx.setOnClick
 import com.knight.kotlin.library_base.route.RouteActivity
+import com.knight.kotlin.library_util.startPageWithAnimate
 import com.knight.kotlin.library_widget.ktx.init
 import com.knight.kotlin.module_eye_daily.R
 import com.knight.kotlin.module_eye_daily.adapter.EyeBannerAdapter
 import com.knight.kotlin.module_eye_daily.adapter.EyeDailyAdapter
 import com.knight.kotlin.module_eye_daily.constants.EyeDailyConstants
+import com.knight.kotlin.module_eye_daily.databinding.EyeDailyBannerItemBinding
 import com.knight.kotlin.module_eye_daily.databinding.EyeDailyListActivityBinding
 import com.knight.kotlin.module_eye_daily.databinding.EyeDailyListHeadBinding
-import com.knight.kotlin.module_eye_daily.entity.EyeDailyItemEntity
 import com.knight.kotlin.module_eye_daily.view.MyCustomBannerIndicator
 import com.knight.kotlin.module_eye_daily.vm.EyeDailyListVm
 import com.scwang.smart.refresh.layout.api.RefreshLayout
@@ -32,7 +35,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 @Route(path = RouteActivity.EyeDaily.DailyListActivity)
-class EyeDailyListActivity:BaseActivity<EyeDailyListActivityBinding,EyeDailyListVm>(),
+class EyeDailyListActivity : BaseActivity<EyeDailyListActivityBinding, EyeDailyListVm>(),
     OnRefreshListener, OnLoadMoreListener {
 
     /**
@@ -49,12 +52,12 @@ class EyeDailyListActivity:BaseActivity<EyeDailyListActivityBinding,EyeDailyList
 
     //头部广告View
     private val bannerHeadView: EyeDailyListHeadBinding by lazy {
-        EyeDailyListHeadBinding.inflate(LayoutInflater.from(this),mBinding.root,false)
+        EyeDailyListHeadBinding.inflate(LayoutInflater.from(this), mBinding.root, false)
 
     }
 
     //日报适配器
-    private val mEyeDailyAdapter: EyeDailyAdapter by lazy { EyeDailyAdapter(arrayListOf()) }
+    private val mEyeDailyAdapter: EyeDailyAdapter by lazy { EyeDailyAdapter() }
 
     override fun setThemeColor(isDarkMode: Boolean) {
 
@@ -65,14 +68,14 @@ class EyeDailyListActivity:BaseActivity<EyeDailyListActivityBinding,EyeDailyList
     }
 
     override fun initRequestData() {
-          mViewModel.getDailyBanner().observerKt{
-              mNextPageUrl = it.nextPageUrl
-              val (textCardList, followCardList) = it.itemList.partition {
-                  it.type == EyeDailyConstants.TEXT_HEAD_TYPE
-              }
-              //去除标识为文本卡片的
-              setDailyBanner(textCardList,followCardList)
-          }
+        mViewModel.getDailyBanner().observerKt {
+            mNextPageUrl = it.nextPageUrl
+            val (textCardList, followCardList) = it.itemList.partition {
+                it.type == EyeDailyConstants.TEXT_HEAD_TYPE
+            }
+            //去除标识为文本卡片的
+            setDailyBanner(textCardList, followCardList)
+        }
     }
 
     override fun reLoadData() {
@@ -96,22 +99,55 @@ class EyeDailyListActivity:BaseActivity<EyeDailyListActivityBinding,EyeDailyList
      * 设置广告数据
      * @param data
      */
-    private fun setDailyBanner(textCardList:List<EyeDailyItemEntity>,followCardList:List<EyeDailyItemEntity>) {
+    private fun setDailyBanner(
+        textCardList: List<EyeDailyItemEntity>,
+        followCardList: List<EyeDailyItemEntity>
+    ) {
         if (textCardList.size > 0) {
             bannerHeadView.tvEyeDailyBannerHead.text = textCardList[0].data.text
         } else {
             bannerHeadView.tvEyeDailyBannerHead.text = getString(R.string.eye_daily_today_recommend)
         }
         bannerHeadView.eyeDailyBanner.apply {
-            setAdapter(EyeBannerAdapter(followCardList))
-             indicator = MyCustomBannerIndicator(this@EyeDailyListActivity)
-             indicatorConfig.margins = IndicatorConfig.Margins(0,0,0,0)
-             indicator.indicatorView.setBackgroundColor(ContextCompat.getColor(this@EyeDailyListActivity,R.color.eye_daily_banner_indicator_bg))
+          //  setAdapter(EyeBannerAdapter(followCardList))
+                        setAdapter(object : EyeBannerAdapter(this@EyeDailyListActivity,followCardList) {
+                override fun onBindView(
+                    holder: BannerViewHolder,
+                    data: EyeDailyItemEntity,
+                    position: Int,
+                    size: Int
+                ) {
+
+                    holder.binding.eyeDailyIvBanner.setOnClick {
+                        startPageWithAnimate(this@EyeDailyListActivity,RouteActivity.EyeVideo.EyeVideoDetail,holder.binding.eyeDailyIvBanner,getString(R.string.eye_daily_share_image))
+                    }
+//
+//
+//                    //标题
+//                    holder.tv_daily_banner_title.setText(data.data.content.data.title)
+//                    //栏目
+//                    holder.tv_daily_banner_category.setText(data.data.content.data.category)
+                    //视频时间
+                  //  holder.tv_daily_banner_video_time.setText(DateUtils.formatDateMsByMS(data.data.content.data.duration * 1000))
+                            val binding = DataBindingUtil.getBinding<EyeDailyBannerItemBinding>(holder.itemView)
+                      binding?.model = data.data?.content
+                }
+
+            })
+
+            indicator = MyCustomBannerIndicator(this@EyeDailyListActivity)
+            indicatorConfig.margins = IndicatorConfig.Margins(0, 0, 0, 0)
+            indicator.indicatorView.setBackgroundColor(
+                ContextCompat.getColor(
+                    this@EyeDailyListActivity,
+                    R.color.eye_daily_banner_indicator_bg
+                )
+            )
             if (mBinding.rvDailyList.headerCount == 0) {
                 mBinding.rvDailyList.addHeaderView(bannerHeadView.root)
             }
             setDailyList()
-         }.addBannerLifecycleObserver(this)
+        }.addBannerLifecycleObserver(this)
 
     }
 

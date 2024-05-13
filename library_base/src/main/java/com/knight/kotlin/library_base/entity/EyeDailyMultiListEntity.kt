@@ -1,4 +1,4 @@
-package com.knight.kotlin.module_eye_daily.entity
+package com.knight.kotlin.library_base.entity
 
 import androidx.annotation.IntDef
 

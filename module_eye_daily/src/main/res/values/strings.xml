@@ -2,4 +2,5 @@
     <string name="eye_daily_app_name">开眼日报</string>
     <string name="eye_daily_toolbar_title">日报</string>
     <string name="eye_daily_today_recommend">今日精选</string>
+    <string name="eye_daily_share_image">share_image</string>
 </resources>

@@ -7,7 +7,7 @@ buildscript {
         google()
         jcenter()
         mavenCentral()
-        maven( url="https://jitpack.io")
+        maven(url="https://jitpack.io")
         maven(url = "https://dl.google.com/dl/android/maven2/")
         gradlePluginPortal()
     }

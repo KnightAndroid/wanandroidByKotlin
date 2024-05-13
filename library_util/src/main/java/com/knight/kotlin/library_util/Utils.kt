@@ -1,8 +1,11 @@
 package com.knight.kotlin.library_util
 
+import android.app.Activity
 import android.os.Bundle
 import android.os.Parcelable
+import android.view.View
 import android.widget.Toast
+import androidx.core.app.ActivityOptionsCompat
 import com.knight.kotlin.library_util.toast.ToastUtils
 import com.wyjson.router.GoRouter
 import com.wyjson.router.model.Card
@@ -45,6 +48,55 @@ fun toast(msgId:Int,duration:Int = Toast.LENGTH_SHORT) {
  */
 fun startPage(activity:String) {
     GoRouter.getInstance().build(activity).go()
+}
+
+/**
+ * 共享元素转场动画跳转
+ *
+ *
+ * @param activity
+ * @param path
+ * @param view
+ */
+fun startPageWithAnimate(activity: Activity,path:String,view: View?,sharedElementName:String) {
+    GoRouter.getInstance().build(path)
+        .also { postcard ->
+            view?.let { shareView ->
+                postcard.withActivityOptionsCompat(
+                    ActivityOptionsCompat.makeSceneTransitionAnimation(
+                        activity,
+                        shareView,
+                        sharedElementName
+                    )
+                )
+            }
+        }
+        .go(activity)
+}
+
+/**
+ * 共享元素转场动画跳转
+ *
+ *
+ * @param activity
+ * @param path
+ * @param view
+ */
+fun startPageWithAnimate(activity: Activity,path:String,view: View?,sharedElementName:String,vararg params:Pair<String,Any>) {
+    GoRouter.getInstance().build(path)
+        .also { postcard ->
+            view?.let { shareView ->
+                postcard.withActivityOptionsCompat(
+                    ActivityOptionsCompat.makeSceneTransitionAnimation(
+                        activity,
+                        shareView,
+                        sharedElementName
+                    )
+                )
+            }
+        }
+        .putExtras(*params)
+        .go(activity)
 }
 
 /**

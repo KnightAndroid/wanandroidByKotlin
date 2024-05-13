@@ -1,0 +1,10 @@
+apply from: '../base_module.gradle'
+android {
+    resourcePrefix "eye_video_"
+    namespace = "com.knight.kotlin.module_eye_video_detail"
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(path: ':library_video')
+}

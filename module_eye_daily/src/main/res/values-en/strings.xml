@@ -2,4 +2,5 @@
     <string name="eye_daily_app_name">Eye_daily</string>
     <string name="eye_daily_toolbar_title">Daily</string>
     <string name="eye_daily_today_recommend">Today Selection</string>
+    <string name="eye_daily_share_image">share_image</string>
 </resources>
