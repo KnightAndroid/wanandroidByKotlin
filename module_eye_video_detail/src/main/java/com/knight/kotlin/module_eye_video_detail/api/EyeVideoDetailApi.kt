@@ -13,7 +13,7 @@ import retrofit2.http.Query
 interface EyeVideoDetailApi {
 
     /**
-     * 获取日报广告
+     * 获取视频详情
      *
      *
      * @return
