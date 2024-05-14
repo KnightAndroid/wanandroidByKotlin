@@ -20,5 +20,5 @@ interface EyeVideoDetailApi {
      */
     @Headers("Domain-Name:eye")
     @POST("v4/video/related")
-    suspend fun getVideoDetail(@Query("id") id: Int): EyeDailyListEntity
+    suspend fun getVideoDetail(@Query("id") id: Long): EyeDailyListEntity
 }
