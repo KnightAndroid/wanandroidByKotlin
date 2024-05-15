@@ -34,7 +34,7 @@ data class EyeDailyItemData(
 data class EyeItemEntity(
     val adIndex: Int,
     val `data`: EyeData,
-    val id: Int,
+    val id: Long,
     val type: String,
     var itemType: Int
 ): Parcelable
@@ -57,7 +57,7 @@ data class EyeData(
     val descriptionEditor: String,
     val duration: Long,
     val header: EyeHeader,
-    val id: Int,
+    val id: Long,
     val idx: Int,
     val ifLimitVideo: Boolean,
     val image: String,

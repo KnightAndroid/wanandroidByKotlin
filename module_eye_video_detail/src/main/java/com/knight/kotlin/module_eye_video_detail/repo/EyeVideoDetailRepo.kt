@@ -8,7 +8,7 @@ import com.knight.kotlin.module_eye_video_detail.api.EyeVideoDetailApi
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class EveVideoDetailRepo @Inject constructor() : BaseRepository() {
+class EyeVideoDetailRepo @Inject constructor() : BaseRepository() {
 
     @Inject
     lateinit var mEyeVideoDetailAPi: EyeVideoDetailApi

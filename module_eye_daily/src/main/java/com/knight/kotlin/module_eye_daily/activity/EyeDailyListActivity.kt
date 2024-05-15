@@ -119,7 +119,11 @@ class EyeDailyListActivity : BaseActivity<EyeDailyListActivityBinding, EyeDailyL
                 ) {
 
                     holder.binding.eyeDailyIvBanner.setOnClick {
-                        startPageWithAnimate(this@EyeDailyListActivity,RouteActivity.EyeVideo.EyeVideoDetail,holder.binding.eyeDailyIvBanner,getString(R.string.eye_daily_share_image))
+                        startPageWithAnimate(this@EyeDailyListActivity,
+                            RouteActivity.EyeVideo.EyeVideoDetail,holder.binding.eyeDailyIvBanner,
+                            getString(R.string.eye_daily_share_image),
+                            "videoId" to data.data.content.data.id)
+
                     }
 //
 //

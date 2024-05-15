@@ -7,11 +7,15 @@ import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import com.knight.kotlin.library_base.activity.BaseActivity
+import com.knight.kotlin.library_base.ktx.showLoadingDialog
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.vm.EmptyViewModel
+import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.library_video.play.OkPlayer
 import com.knight.kotlin.module_eye_video_detail.R
 import com.knight.kotlin.module_eye_video_detail.databinding.EyeVideoDetailActivityBinding
+import com.knight.kotlin.module_eye_video_detail.vm.EyeVideoDetailVm
+import com.wyjson.router.annotation.Param
 import com.wyjson.router.annotation.Route
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -22,9 +26,13 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 @AndroidEntryPoint
 @Route(path = RouteActivity.EyeVideo.EyeVideoDetail)
-class EyeVideoDetailActivity : BaseActivity<EyeVideoDetailActivityBinding,EmptyViewModel>() {
+class EyeVideoDetailActivity : BaseActivity<EyeVideoDetailActivityBinding,EyeVideoDetailVm>() {
     private var mTransition: Transition? = null
 
+
+    @JvmField
+    @Param(name = "videoId")
+    var videoId:Long = 0L
     override fun setThemeColor(isDarkMode: Boolean) {
 
     }
@@ -34,7 +42,10 @@ class EyeVideoDetailActivity : BaseActivity<EyeVideoDetailActivityBinding,EmptyV
     }
 
     override fun initRequestData() {
-
+        showLoadingDialog()
+        mViewModel.getVideoDetail(videoId).observerKt {
+            toast("请求成功")
+        }
     }
 
     override fun reLoadData() {
