@@ -24,6 +24,7 @@ class EyeVideoDetailRepo @Inject constructor() : BaseRepository() {
         mEyeVideoDetailAPi.getVideoDetail(id).run{
             responseCodeExceptionHandler(errorCode, errorMessage)
             dimissLoadingDialog()
+            emit(this)
         }
 
     }){

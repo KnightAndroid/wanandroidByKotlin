@@ -5,8 +5,10 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.knight.kotlin.library_base.activity.BaseActivity
+import com.knight.kotlin.library_base.config.Appconfig
 import com.knight.kotlin.library_base.entity.EyeDailyItemEntity
 import com.knight.kotlin.library_base.ktx.setOnClick
+import com.knight.kotlin.library_base.ktx.toJson
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_util.startPageWithAnimate
 import com.knight.kotlin.library_widget.ktx.init
@@ -122,18 +124,13 @@ class EyeDailyListActivity : BaseActivity<EyeDailyListActivityBinding, EyeDailyL
                         startPageWithAnimate(this@EyeDailyListActivity,
                             RouteActivity.EyeVideo.EyeVideoDetail,holder.binding.eyeDailyIvBanner,
                             getString(R.string.eye_daily_share_image),
-                            "videoId" to data.data.content.data.id)
+                            Appconfig.EYE_VIDEO_PARAM_KEY to toJson(data.data.content.data))
+
+                       // "videoId" to data.data.content.data.id
 
                     }
-//
-//
-//                    //标题
-//                    holder.tv_daily_banner_title.setText(data.data.content.data.title)
-//                    //栏目
-//                    holder.tv_daily_banner_category.setText(data.data.content.data.category)
-                    //视频时间
-                  //  holder.tv_daily_banner_video_time.setText(DateUtils.formatDateMsByMS(data.data.content.data.duration * 1000))
-                            val binding = DataBindingUtil.getBinding<EyeDailyBannerItemBinding>(holder.itemView)
+
+                      val binding = DataBindingUtil.getBinding<EyeDailyBannerItemBinding>(holder.itemView)
                       binding?.model = data.data?.content
                 }
 

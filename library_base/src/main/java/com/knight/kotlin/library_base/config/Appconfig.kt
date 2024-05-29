@@ -48,5 +48,11 @@ object Appconfig {
       */
      var user:UserInfoEntity?=null
 
+     /**
+      *
+      * 开眼模块跳转视频播放页接受字段Key
+      */
+     const val EYE_VIDEO_PARAM_KEY = "eye_video_param"
+
 
 }

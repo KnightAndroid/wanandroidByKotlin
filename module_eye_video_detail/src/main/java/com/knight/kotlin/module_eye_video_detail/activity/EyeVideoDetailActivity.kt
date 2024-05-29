@@ -3,10 +3,14 @@ package com.knight.kotlin.module_eye_video_detail.activity
 import android.os.Build
 import android.transition.Transition
 import android.transition.TransitionListenerAdapter
+import android.util.Log
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import com.knight.kotlin.library_base.activity.BaseActivity
+import com.knight.kotlin.library_base.config.Appconfig
+import com.knight.kotlin.library_base.entity.EyeData
+import com.knight.kotlin.library_base.ktx.fromJson
 import com.knight.kotlin.library_base.ktx.showLoadingDialog
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.vm.EmptyViewModel
@@ -29,10 +33,15 @@ import dagger.hilt.android.AndroidEntryPoint
 class EyeVideoDetailActivity : BaseActivity<EyeVideoDetailActivityBinding,EyeVideoDetailVm>() {
     private var mTransition: Transition? = null
 
+    /**
+     *
+     * 开眼播放视频详情实体
+     */
+    private lateinit var videoEyeData:EyeData
 
     @JvmField
-    @Param(name = "videoId")
-    var videoId:Long = 0L
+    @Param(name = Appconfig.EYE_VIDEO_PARAM_KEY)
+    var videoJson:String = ""
     override fun setThemeColor(isDarkMode: Boolean) {
 
     }
@@ -43,8 +52,9 @@ class EyeVideoDetailActivity : BaseActivity<EyeVideoDetailActivityBinding,EyeVid
 
     override fun initRequestData() {
         showLoadingDialog()
-        mViewModel.getVideoDetail(videoId).observerKt {
+        mViewModel.getVideoDetail(videoEyeData.id).observerKt {
             toast("请求成功")
+            Log.d("dsd","dsdd")
         }
     }
 
@@ -53,8 +63,10 @@ class EyeVideoDetailActivity : BaseActivity<EyeVideoDetailActivityBinding,EyeVid
     }
 
     override fun EyeVideoDetailActivityBinding.initView() {
-        jzVideo.setUp("https://vdept3.bdstatic.com/mda-qdqxj7s4d6njpv18/sc/cae_h264/1714101678770158964/mda-qdqxj7s4d6njpv18.mp4?v_from_s=hkapp-haokan-hnb&auth_key=1715433807-0-0-85b634c6d2299b728862cb308cbfe6d5&bcevod_channel=searchbox_feed&pd=1&cr=2&cd=0&pt=3&logid=1407077959&vid=12292776055750791018&klogid=1407077959&abtest="
-            , "权力、统治、战争、生死——「权力的游戏」混剪")
+        videoEyeData = fromJson(videoJson)
+        videoEntity = videoEyeData
+        jzVideo.setUp(videoEyeData.playUrl
+            , videoEyeData.title)
         jzVideo.startVideo()
         initTransition()
         onBackPressed(true){

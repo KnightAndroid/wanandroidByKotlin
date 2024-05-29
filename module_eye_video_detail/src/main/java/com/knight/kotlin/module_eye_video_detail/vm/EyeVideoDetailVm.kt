@@ -19,7 +19,6 @@ class EyeVideoDetailVm @Inject constructor(private val mRepo: EyeVideoDetailRepo
      * 获取视频详情数据
      */
     fun getVideoDetail(id:Long,failureCallBack:((String?) ->Unit) ?= null):LiveData<EyeDailyListEntity> {
-        showLoadingDialog()
         return mRepo.getVideoDetail(id,failureCallBack).asLiveData()
     }
 
