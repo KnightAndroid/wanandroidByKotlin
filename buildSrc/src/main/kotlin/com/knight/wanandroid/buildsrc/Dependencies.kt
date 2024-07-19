@@ -18,7 +18,7 @@ object Dependencies {
        const val TOOL_BUILD_VERSION= "8.0.0"
        const val KOTLIN_GRADLE_PLUGIN_VERSION = "1.8.10"
        //AndroidX----------------------------------------------
-       const val APPCOMPAT_VERSION = "1.3.0"
+       const val APPCOMPAT_VERSION = "1.7.0"
        //核心依赖
        const val CORE_KTX_VERSION = "1.7.0"
        //约束布局

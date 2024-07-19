@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="eye_video_detail_tv_title_margin_start">10dp</dimen>
+    <dimen name="eye_video_detail_tv_title_margin_top">10dp</dimen>
+    <dimen name="eye_video_detail_tv_title_text_size">18sp</dimen>
+</resources>

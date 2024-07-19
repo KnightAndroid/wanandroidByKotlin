@@ -12,6 +12,7 @@ import com.knight.kotlin.library_base.ktx.toJson
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_util.startPageWithAnimate
 import com.knight.kotlin.library_widget.ktx.init
+import com.knight.kotlin.library_widget.ktx.setItemClickListener
 import com.knight.kotlin.module_eye_daily.R
 import com.knight.kotlin.module_eye_daily.adapter.EyeBannerAdapter
 import com.knight.kotlin.module_eye_daily.adapter.EyeDailyAdapter
@@ -94,6 +95,7 @@ class EyeDailyListActivity : BaseActivity<EyeDailyListActivityBinding, EyeDailyL
         )
         dailyListRefreshLayout.setOnLoadMoreListener(this@EyeDailyListActivity)
         dailyListRefreshLayout.setOnRefreshListener(this@EyeDailyListActivity)
+        initDailyAdapterListener()
     }
 
 
@@ -111,8 +113,7 @@ class EyeDailyListActivity : BaseActivity<EyeDailyListActivityBinding, EyeDailyL
             bannerHeadView.tvEyeDailyBannerHead.text = getString(R.string.eye_daily_today_recommend)
         }
         bannerHeadView.eyeDailyBanner.apply {
-          //  setAdapter(EyeBannerAdapter(followCardList))
-                        setAdapter(object : EyeBannerAdapter(this@EyeDailyListActivity,followCardList) {
+            setAdapter(object : EyeBannerAdapter(this@EyeDailyListActivity, followCardList) {
                 override fun onBindView(
                     holder: BannerViewHolder,
                     data: EyeDailyItemEntity,
@@ -121,17 +122,18 @@ class EyeDailyListActivity : BaseActivity<EyeDailyListActivityBinding, EyeDailyL
                 ) {
 
                     holder.binding.eyeDailyIvBanner.setOnClick {
-                        startPageWithAnimate(this@EyeDailyListActivity,
-                            RouteActivity.EyeVideo.EyeVideoDetail,holder.binding.eyeDailyIvBanner,
+                        startPageWithAnimate(
+                            this@EyeDailyListActivity,
+                            RouteActivity.EyeVideo.EyeVideoDetail, holder.binding.eyeDailyIvBanner,
                             getString(R.string.eye_daily_share_image),
-                            Appconfig.EYE_VIDEO_PARAM_KEY to toJson(data.data.content.data))
-
-                       // "videoId" to data.data.content.data.id
+                            Appconfig.EYE_VIDEO_PARAM_KEY to toJson(data.data.content.data)
+                        )
 
                     }
 
-                      val binding = DataBindingUtil.getBinding<EyeDailyBannerItemBinding>(holder.itemView)
-                      binding?.model = data.data?.content
+                    val binding =
+                        DataBindingUtil.getBinding<EyeDailyBannerItemBinding>(holder.itemView)
+                    binding?.model = data.data?.content
                 }
 
             })
@@ -150,6 +152,26 @@ class EyeDailyListActivity : BaseActivity<EyeDailyListActivityBinding, EyeDailyL
             setDailyList()
         }.addBannerLifecycleObserver(this)
 
+    }
+
+    /**
+     *
+     * 绑定日报适配器点击事件
+     */
+    private fun initDailyAdapterListener() {
+       mEyeDailyAdapter.run {
+           setItemClickListener{adapter, view, position ->
+                if (data[position].type != EyeDailyConstants.TEXT_HEAD_TYPE) {
+                    startPageWithAnimate(
+                        this@EyeDailyListActivity,
+                        RouteActivity.EyeVideo.EyeVideoDetail, view,
+                        getString(R.string.eye_daily_share_image),
+                        Appconfig.EYE_VIDEO_PARAM_KEY to toJson(data[position].data.content.data)
+                    )
+                }
+           }
+
+       }
     }
 
     /**

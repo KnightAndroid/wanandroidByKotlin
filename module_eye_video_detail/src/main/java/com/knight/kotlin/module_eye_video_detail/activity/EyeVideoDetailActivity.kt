@@ -3,7 +3,6 @@ package com.knight.kotlin.module_eye_video_detail.activity
 import android.os.Build
 import android.transition.Transition
 import android.transition.TransitionListenerAdapter
-import android.util.Log
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -13,8 +12,6 @@ import com.knight.kotlin.library_base.entity.EyeData
 import com.knight.kotlin.library_base.ktx.fromJson
 import com.knight.kotlin.library_base.ktx.showLoadingDialog
 import com.knight.kotlin.library_base.route.RouteActivity
-import com.knight.kotlin.library_base.vm.EmptyViewModel
-import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.library_video.play.OkPlayer
 import com.knight.kotlin.module_eye_video_detail.R
 import com.knight.kotlin.module_eye_video_detail.databinding.EyeVideoDetailActivityBinding
@@ -53,8 +50,6 @@ class EyeVideoDetailActivity : BaseActivity<EyeVideoDetailActivityBinding,EyeVid
     override fun initRequestData() {
         showLoadingDialog()
         mViewModel.getVideoDetail(videoEyeData.id).observerKt {
-            toast("请求成功")
-            Log.d("dsd","dsdd")
         }
     }
 
@@ -71,7 +66,7 @@ class EyeVideoDetailActivity : BaseActivity<EyeVideoDetailActivityBinding,EyeVid
         initTransition()
         onBackPressed(true){
             OkPlayer.backPress()
-            finish()
+            finishAfterTransition()
         }
     }
 
@@ -112,10 +107,12 @@ class EyeVideoDetailActivity : BaseActivity<EyeVideoDetailActivityBinding,EyeVid
 
             }
         })
+
     }
 
     override fun onPause() {
         super.onPause()
         OkPlayer.releaseAllVideos()
     }
+
 }
