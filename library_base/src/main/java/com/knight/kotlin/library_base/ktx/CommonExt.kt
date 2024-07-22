@@ -5,9 +5,11 @@ import android.content.Context
 import android.text.Html
 import android.text.Spanned
 import android.view.View
+import android.view.WindowManager
 import androidx.annotation.MainThread
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
+import com.knight.kotlin.library_base.BaseApp
 import com.knight.kotlin.library_base.R
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.config.Appconfig
@@ -94,6 +96,35 @@ val Context.screenWidth
  */
 val Context.screenHeight
     get() = resources.displayMetrics.heightPixels
+
+
+/**
+ * 获取屏幕高度
+ *
+ * @return
+ */
+fun getScreenHeight():Int {
+    val wm = BaseApp.application.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+    return if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
+        wm.currentWindowMetrics.bounds.width()
+    } else {
+        wm.defaultDisplay.width
+    }
+}
+
+/**
+ * 获取屏幕宽度
+ *
+ * @return
+ */
+fun getScreenWidth():Int {
+    val wm = BaseApp.application.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+    return if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
+        wm.currentWindowMetrics.bounds.width()
+    } else {
+        wm.defaultDisplay.width
+    }
+}
 
 
 /**

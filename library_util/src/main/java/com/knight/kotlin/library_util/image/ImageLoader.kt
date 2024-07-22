@@ -100,6 +100,16 @@ class ImageLoader {
         /**
          *
          * 通过String方式加载图片到ImageView
+         * @param context
+         * @param uri
+         * @param imageView
+         */
+        fun loadStringPhoto(context: Context, uri: String, imageView: ImageView,callback: ((Boolean) -> Unit)?) {
+            mImageLoaderProxy.loadStringPhoto(context, uri, imageView,callback)
+        }
+        /**
+         *
+         * 通过String方式加载图片到ImageView
          * @param mFragment
          * @param uri
          * @param imageView

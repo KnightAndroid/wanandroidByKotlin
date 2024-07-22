@@ -10,6 +10,7 @@ import android.graphics.drawable.Drawable
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import com.knight.kotlin.library_base.util.CacheUtils
+import com.knight.kotlin.library_base.util.ColorUtils
 
 
 //1、isNullOrEmpty : 为空指针或者字串长度为0时返回true，非空串与可空串均可调用。
@@ -27,7 +28,12 @@ fun ImageView.loadUrl(url:String?){
       ImageLoader.loadStringPhoto(
          context,
          url,
-         this
+         this,
+         callback = {
+             if (!it) {
+                this.setBackgroundColor(ColorUtils.getRandColorCode())
+             }
+         }
       )
    }
 }

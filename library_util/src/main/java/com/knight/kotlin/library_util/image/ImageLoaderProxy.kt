@@ -69,6 +69,16 @@ interface ImageLoaderProxy {
      */
     fun loadUriPhoto(mFragment: Fragment, uri: Uri, imageView: ImageView)
 
+
+    /**
+     * 通过Uri加载图片到ImageView
+     *
+     * @param context
+     * @param uri
+     * @param imageView
+     * @param callback
+     */
+    fun loadUriPhoto(context:Context,uri:Uri,imageView : ImageView,callback:((Boolean) -> Unit) ?= null)
     /**
      *
      * 通过String方式加载图片到ImageView
@@ -96,6 +106,15 @@ interface ImageLoaderProxy {
      */
     fun loadStringPhoto(mActivity: FragmentActivity, uri: String, imageView: ImageView)
 
+
+    /**
+     *
+     * 通过String方式加载图片到ImageView
+     * @param context
+     * @param uri
+     * @param imageView
+     */
+    fun loadStringPhoto(context: Context, uri: String, imageView: ImageView,callback:((Boolean) -> Unit) ?= null)
     /**
      * 加载String方式的圆形图片
      * @param context

@@ -59,6 +59,7 @@ class EyeVideoDetailActivity : BaseActivity<EyeVideoDetailActivityBinding,EyeVid
 
     override fun EyeVideoDetailActivityBinding.initView() {
         videoEyeData = fromJson(videoJson)
+        //注入xml中
         videoEntity = videoEyeData
         jzVideo.setUp(videoEyeData.playUrl
             , videoEyeData.title)

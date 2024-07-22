@@ -67,6 +67,51 @@ class DefaultImageLoaderProxy :ImageLoaderProxy {
             .into(imageView)
     }
 
+    override fun loadUriPhoto(
+        context: Context,
+        uri: Uri,
+        imageView: ImageView,
+        callback: ((Boolean) -> Unit)?
+    ) {
+        Glide.with(context).load(uri)
+            .listener(object : RequestListener<Drawable> {
+                override fun onLoadFailed(
+                    e: GlideException?,
+                    model: Any?,
+                    target: Target<Drawable>?,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    callback?.run {
+                        false
+                    }
+                    return false
+                }
+
+                override fun onResourceReady(
+                    resource: Drawable?,
+                    model: Any?,
+                    target: Target<Drawable>?,
+                    dataSource: DataSource?,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    callback?.run {
+                        true
+                    }
+                    return true
+                }
+
+            })
+            .transition(DrawableTransitionOptions.withCrossFade())
+            .into(imageView)
+
+
+
+
+
+
+
+    }
+
     override fun loadStringPhoto(context: Context, uri: String, imageView: ImageView) {
         Glide.with(context).load(uri).transition(DrawableTransitionOptions.withCrossFade())
             .into(imageView)
@@ -80,6 +125,46 @@ class DefaultImageLoaderProxy :ImageLoaderProxy {
     override fun loadStringPhoto(mActivity: FragmentActivity, uri: String, imageView: ImageView) {
         Glide.with(mActivity).load(uri).transition(DrawableTransitionOptions.withCrossFade())
             .into(imageView)
+    }
+
+    override fun loadStringPhoto(
+        context: Context,
+        uri: String,
+        imageView: ImageView,
+        callback: ((Boolean) -> Unit)?
+    ) {
+        Glide.with(context).load(uri)
+            .listener(object : RequestListener<Drawable> {
+                override fun onLoadFailed(
+                    e: GlideException?,
+                    model: Any?,
+                    target: Target<Drawable>?,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    callback?.run {
+                        this(false)
+                    }
+                    return false
+                }
+
+                override fun onResourceReady(
+                    resource: Drawable?,
+                    model: Any?,
+                    target: Target<Drawable>?,
+                    dataSource: DataSource?,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    callback?.run {
+                        this(true)
+                    }
+                    imageView.setImageDrawable(resource)
+                    return true
+                }
+
+            })
+            .transition(DrawableTransitionOptions.withCrossFade())
+            .into(imageView)
+
     }
 
     override fun loadCirCleStringPhoto(context: Context, uri: String, imageView: ImageView) {

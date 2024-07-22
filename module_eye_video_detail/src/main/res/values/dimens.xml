@@ -3,4 +3,11 @@
     <dimen name="eye_video_detail_tv_title_margin_start">10dp</dimen>
     <dimen name="eye_video_detail_tv_title_margin_top">10dp</dimen>
     <dimen name="eye_video_detail_tv_title_text_size">18sp</dimen>
+    <dimen name="eye_video_detail_tv_category_margin_start">10dp</dimen>
+    <dimen name="eye_video_detail_tv_category_margin_top">10dp</dimen>
+    <dimen name="eye_video_detail_tv_category_text_size">12sp</dimen>
+    <dimen name="eye_video_detail_tv_desc_margin_start">10dp</dimen>
+    <dimen name="eye_video_detail_tv_desc_margin_top">10dp</dimen>
+    <dimen name="eye_video_detail_tv_desc_margin_end">10dp</dimen>
+    <dimen name="eye_video_detail_tv_desc_text_size">14sp</dimen>
 </resources>
