@@ -10,8 +10,10 @@
         <variable
             name="videoEntity"
             type="com.knight.kotlin.library_base.entity.EyeData" />
-        <import type="com.knight.kotlin.library_util.DateUtils"/>
-       <import type="com.knight.kotlin.module_eye_video_detail.util.BlurredLoadUrlUtils"/>
+
+        <import type="com.knight.kotlin.library_util.DateUtils" />
+
+        <import type="com.knight.kotlin.module_eye_video_detail.util.BlurredLoadUrlUtils" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -23,80 +25,125 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
-            bind:imageUrl="@{BlurredLoadUrlUtils.INSTANCE.loadBlurredUrl(videoEntity.cover.blurred)}"/>
-
-
+            bind:imageUrl="@{BlurredLoadUrlUtils.INSTANCE.loadBlurredUrl(videoEntity.cover.blurred)}" />
 
 
         <com.knight.kotlin.library_video.play.OkPlayerStd
             android:id="@+id/jz_video"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"/>
-
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
         <com.scwang.smart.refresh.layout.SmartRefreshLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintTop_toBottomOf="@id/jz_video"
             app:layout_constraintBottom_toBottomOf="parent"
-            >
+            app:layout_constraintTop_toBottomOf="@id/jz_video">
 
             <com.scwang.smart.refresh.header.ClassicsHeader
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
 
-                <androidx.core.widget.NestedScrollView
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+
+                    <com.knight.kotlin.library_widget.SlowShowTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/eye_video_detail_tv_title_margin_start"
+                        android:layout_marginTop="@dimen/eye_video_detail_tv_title_margin_top"
+                        android:text="@{videoEntity.title}"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/eye_video_detail_tv_title_text_size"
+                        android:textStyle="bold" />
+
+
+                    <com.knight.kotlin.library_widget.SlowShowTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/eye_video_detail_tv_category_margin_start"
+                        android:layout_marginTop="@dimen/eye_video_detail_tv_category_margin_top"
+                        android:text="@{`#` + videoEntity.category + ` / ` + DateUtils.INSTANCE.formatDateMsByYMDHM(videoEntity.author.latestReleaseTime)}"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/eye_video_detail_tv_category_text_size" />
+
+
+                    <com.knight.kotlin.library_widget.ExpandableTextView
+                        android:id="@+id/expand_text_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/eye_video_detail_tv_desc_margin_start"
+                        android:layout_marginTop="@dimen/eye_video_detail_tv_desc_margin_top"
+                        android:layout_marginEnd="@dimen/eye_video_detail_tv_desc_margin_end"
+                        android:text="@{videoEntity.description}"
+                        app:etv_animationTime="30"
+                        app:etv_expandLines="3"
+                        app:etv_showLine="false"
+                        app:etv_textContentSize="@dimen/eye_video_detail_tv_desc_text_size"></com.knight.kotlin.library_widget.ExpandableTextView>
 
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center">
 
-
-                        <com.knight.kotlin.library_widget.SlowShowTextView
-                            android:layout_width="wrap_content"
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/eye_video_detail_tv_title_margin_start"
-                            android:layout_marginTop="@dimen/eye_video_detail_tv_title_margin_top"
-                            android:text="@{videoEntity.title}"
+                            android:text="@{String.valueOf(videoEntity.consumption.collectionCount)}"
                             android:textColor="@android:color/white"
-                            android:textSize="@dimen/eye_video_detail_tv_title_text_size"
-                            android:textStyle="bold" />
-
-
-
-                        <com.knight.kotlin.library_widget.SlowShowTextView
-                            android:layout_width="wrap_content"
+                            android:textSize="@dimen/eye_video_detail_tv_give_text_size"
+                            android:drawableTop="@drawable/eye_video_icon_give"
+                            android:gravity="center"/>
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/eye_video_detail_tv_category_margin_start"
-                            android:layout_marginTop="@dimen/eye_video_detail_tv_category_margin_top"
-                            android:text="@{`#` + videoEntity.category + ` / ` + DateUtils.INSTANCE.formatDateMsByYMDHM(videoEntity.author.latestReleaseTime)}"
+                            android:text="收藏"
                             android:textColor="@android:color/white"
-                            android:textSize="@dimen/eye_video_detail_tv_category_text_size" />
+                            android:drawableTop="@drawable/eye_video_icon_collect"
+                            android:textSize="@dimen/eye_video_detail_tv_collect_text_size"
+                            android:gravity="center"/>
 
-                        <com.knight.kotlin.library_widget.SlowShowTextView
-                            android:layout_width="wrap_content"
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/eye_video_detail_tv_desc_margin_start"
-                            android:layout_marginTop="@dimen/eye_video_detail_tv_desc_margin_top"
-                            android:layout_marginEnd="@dimen/eye_video_detail_tv_desc_margin_end"
-                            android:text="@{videoEntity.description}"
+                            android:text="@{String.valueOf(videoEntity.consumption.replyCount)}"
                             android:textColor="@android:color/white"
-                            android:textSize="@dimen/eye_video_detail_tv_desc_text_size" />
+                            android:drawableTop="@drawable/eye_video_icon_comment"
+                            android:textSize="@dimen/eye_video_detail_tv_comment_text_size"
+                            android:gravity="center"/>
+
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:text="@{String.valueOf(videoEntity.consumption.shareCount)}"
+                            android:textColor="@android:color/white"
+                            android:drawableTop="@drawable/eye_video_icon_share"
+                            android:textSize="@dimen/eye_video_detail_tv_share_text_size"
+                            android:gravity="center"/>
                     </LinearLayout>
+                </LinearLayout>
 
 
-                </androidx.core.widget.NestedScrollView>
-
-
-
+            </androidx.core.widget.NestedScrollView>
 
 
         </com.scwang.smart.refresh.layout.SmartRefreshLayout>

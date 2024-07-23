@@ -61,9 +61,17 @@ class EyeVideoDetailActivity : BaseActivity<EyeVideoDetailActivityBinding,EyeVid
         videoEyeData = fromJson(videoJson)
         //注入xml中
         videoEntity = videoEyeData
+        expandTextView.resetState(true)
         jzVideo.setUp(videoEyeData.playUrl
             , videoEyeData.title)
         jzVideo.startVideo()
+
+        jzVideo.setNormalBackListener(object : OkPlayer.NormalBackListener{
+            override fun backFinifsh() {
+                finishAfterTransition()
+            }
+
+        })
         initTransition()
         onBackPressed(true){
             OkPlayer.backPress()

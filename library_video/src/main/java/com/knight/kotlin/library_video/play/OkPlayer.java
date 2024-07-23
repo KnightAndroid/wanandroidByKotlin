@@ -145,6 +145,13 @@ public abstract class OkPlayer extends FrameLayout implements View.OnClickListen
     protected int blockWidth;
     protected int blockHeight;
 
+
+    private NormalBackListener normalBackListener;
+
+    public NormalBackListener getNormalBackListener() {
+        return normalBackListener;
+    }
+
     public OkPlayer(Context context) {
         super(context);
         init(context);
@@ -236,12 +243,14 @@ public abstract class OkPlayer extends FrameLayout implements View.OnClickListen
     }
 
     public static boolean backPress() {
-        Log.i(TAG, "backPress");
         if (CONTAINER_LIST.size() != 0 && CURRENT_JZVD != null) {//判断条件，因为当前所有goBack都是回到普通窗口
             CURRENT_JZVD.gotoNormalScreen();
             return true;
         } else if (CONTAINER_LIST.size() == 0 && CURRENT_JZVD != null && CURRENT_JZVD.screen != SCREEN_NORMAL) {//退出直接进入的全屏
             CURRENT_JZVD.clearFloatScreen();
+            return true;
+        } else if (CONTAINER_LIST.size() == 0 && CURRENT_JZVD != null && CURRENT_JZVD.screen == SCREEN_NORMAL) {
+            CURRENT_JZVD.releaseFinishPlayer();
             return true;
         }
         return false;
@@ -319,6 +328,10 @@ public abstract class OkPlayer extends FrameLayout implements View.OnClickListen
 
     public void setUp(String url, String title) {
         setUp(new VideoDataSource(url, title), SCREEN_NORMAL);
+    }
+
+    public void setNormalBackListener(NormalBackListener normalBackListener) {
+        this.normalBackListener = normalBackListener;
     }
 
     public void setUp(String url, String title, int screen) {
@@ -843,6 +856,21 @@ public abstract class OkPlayer extends FrameLayout implements View.OnClickListen
         CURRENT_JZVD = null;
     }
 
+
+    public void releaseFinishPlayer() {
+        VideoUtils.showStatusBar(getContext());
+        VideoUtils.setRequestedOrientation(getContext(), NORMAL_ORIENTATION);
+        VideoUtils.showSystemUI(getContext());
+
+        ViewGroup vg = (ViewGroup) (VideoUtils.scanForActivity(getContext())).getWindow().getDecorView();
+        vg.removeView(this);
+        if (mediaInterface != null) mediaInterface.release();
+        if (CURRENT_JZVD.getNormalBackListener() != null) {
+            CURRENT_JZVD.getNormalBackListener().backFinifsh();
+        }
+        CURRENT_JZVD = null;
+    }
+
     public void onVideoSizeChanged(int width, int height) {
         Log.i(TAG, "onVideoSizeChanged " + " [" + this.hashCode() + "] ");
         if (textureView != null) {
@@ -1138,4 +1166,11 @@ public abstract class OkPlayer extends FrameLayout implements View.OnClickListen
             }
         }
     }
+
+
+
+    public interface NormalBackListener {
+        void backFinifsh();
+    }
+
 }

@@ -107,14 +107,15 @@
     <RelativeLayout
         android:id="@+id/layout_top"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="66dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:background="@drawable/vi_title_bg"
         android:paddingStart="10dp"
         android:paddingLeft="10dp"
-        android:visibility="gone">
+        android:visibility="gone"
+        >
 
         <ImageView
             android:id="@+id/back"
@@ -122,9 +123,7 @@
             android:layout_height="26dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="12dp"
-            android:padding="3dp"
+            android:layout_centerVertical="true"
             android:scaleType="centerInside"
             android:src="@drawable/vi_click_back_selector" />
 
@@ -139,9 +138,10 @@
             android:layout_toEndOf="@+id/back"
             android:layout_toRightOf="@+id/back"
             android:ellipsize="end"
-            android:maxLines="2"
+            android:maxLines="1"
             android:textColor="#ffffff"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            />
 
         <LinearLayout
             android:id="@+id/battery_time_layout"

@@ -12,6 +12,7 @@ import com.knight.kotlin.library_base.ktx.toJson
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_util.startPageWithAnimate
 import com.knight.kotlin.library_widget.ktx.init
+import com.knight.kotlin.library_widget.ktx.setItemChildClickListener
 import com.knight.kotlin.library_widget.ktx.setItemClickListener
 import com.knight.kotlin.module_eye_daily.R
 import com.knight.kotlin.module_eye_daily.adapter.EyeBannerAdapter
@@ -60,7 +61,7 @@ class EyeDailyListActivity : BaseActivity<EyeDailyListActivityBinding, EyeDailyL
     }
 
     //日报适配器
-    private val mEyeDailyAdapter: EyeDailyAdapter by lazy { EyeDailyAdapter() }
+    private val mEyeDailyAdapter: EyeDailyAdapter by lazy { EyeDailyAdapter(this) }
 
     override fun setThemeColor(isDarkMode: Boolean) {
 
@@ -95,7 +96,6 @@ class EyeDailyListActivity : BaseActivity<EyeDailyListActivityBinding, EyeDailyL
         )
         dailyListRefreshLayout.setOnLoadMoreListener(this@EyeDailyListActivity)
         dailyListRefreshLayout.setOnRefreshListener(this@EyeDailyListActivity)
-        initDailyAdapterListener()
     }
 
 
@@ -152,26 +152,6 @@ class EyeDailyListActivity : BaseActivity<EyeDailyListActivityBinding, EyeDailyL
             setDailyList()
         }.addBannerLifecycleObserver(this)
 
-    }
-
-    /**
-     *
-     * 绑定日报适配器点击事件
-     */
-    private fun initDailyAdapterListener() {
-       mEyeDailyAdapter.run {
-           setItemClickListener{adapter, view, position ->
-                if (data[position].type != EyeDailyConstants.TEXT_HEAD_TYPE) {
-                    startPageWithAnimate(
-                        this@EyeDailyListActivity,
-                        RouteActivity.EyeVideo.EyeVideoDetail, view,
-                        getString(R.string.eye_daily_share_image),
-                        Appconfig.EYE_VIDEO_PARAM_KEY to toJson(data[position].data.content.data)
-                    )
-                }
-           }
-
-       }
     }
 
     /**

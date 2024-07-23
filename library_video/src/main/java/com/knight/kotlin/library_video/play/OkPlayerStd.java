@@ -339,7 +339,7 @@ public class OkPlayerStd extends OkPlayer {
                 clarityPopWindow.dismiss();
             }
         } else if (i == R.id.back) {
-            clickBack();
+           clickBack();
         } else if (i == R.id.back_tiny) {
             clickBackTiny();
         } else if (i == R.id.clarity) {
@@ -448,7 +448,7 @@ public class OkPlayerStd extends OkPlayer {
     public void setScreenNormal() {
         super.setScreenNormal();
         fullscreenButton.setImageResource(R.drawable.vi_enlarge);
-        backButton.setVisibility(GONE);
+        //backButton.setVisibility(GONE);
         tinyBackImageView.setVisibility(INVISIBLE);
         changeStartButtonSize((int) getResources().getDimension(R.dimen.vi_start_button_w_h_normal));
         batteryTimeLayout.setVisibility(GONE);
