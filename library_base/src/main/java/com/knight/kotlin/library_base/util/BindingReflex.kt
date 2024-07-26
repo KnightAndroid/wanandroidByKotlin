@@ -45,12 +45,15 @@ object BindingReflex {
             return reflexViewBinding(aClass.superclass,from)
         } catch (e: NoSuchMethodException) {
             e.printStackTrace()
+            throw RuntimeException(e.message)
         } catch (e: IllegalAccessException) {
             e.printStackTrace()
+            throw RuntimeException(e.message)
         } catch (e: InvocationTargetException) {
             e.printStackTrace()
+            throw RuntimeException(e.targetException.message)
         }
-        throw RuntimeException("ViewBinding初始化失败")
+
     }
 
 

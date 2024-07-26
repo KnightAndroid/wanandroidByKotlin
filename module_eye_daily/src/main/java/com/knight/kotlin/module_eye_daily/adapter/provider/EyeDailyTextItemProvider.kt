@@ -4,10 +4,10 @@ import android.content.res.ColorStateList
 import androidx.databinding.DataBindingUtil
 import com.chad.library.adapter.base.provider.BaseItemProvider
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
+import com.knight.kotlin.library_base.config.EyeTypeConstants
 import com.knight.kotlin.library_base.entity.EyeDailyItemEntity
 import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.module_eye_daily.R
-import com.knight.kotlin.module_eye_daily.constants.EyeDailyConstants
 import com.knight.kotlin.module_eye_daily.databinding.EyeDailyTextItemBinding
 
 /**
@@ -17,7 +17,7 @@ import com.knight.kotlin.module_eye_daily.databinding.EyeDailyTextItemBinding
  */
 class EyeDailyTextItemProvider: BaseItemProvider<EyeDailyItemEntity>() {
     override val itemViewType: Int
-        get() = EyeDailyConstants.TEXT_TYPE
+        get() = EyeTypeConstants.TEXT_TYPE
     override val layoutId: Int
         get() = R.layout.eye_daily_text_item
 

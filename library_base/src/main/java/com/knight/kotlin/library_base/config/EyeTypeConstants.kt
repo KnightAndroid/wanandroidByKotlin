@@ -1,11 +1,11 @@
-package com.knight.kotlin.module_eye_daily.constants
+package com.knight.kotlin.library_base.config
 
 /**
  * Author:Knight
  * Time:2024/5/8 16:18
- * Description:EyeDailyConstants
+ * Description:EyeTypeConstants
  */
-object EyeDailyConstants {
+object EyeTypeConstants {
 
     /**
      *
@@ -19,6 +19,10 @@ object EyeDailyConstants {
      */
     const val IMAGE_CONTENT_TYPE = "followCard"
 
+    /**
+     * 关联视频图像卡片
+     */
+    const val VIDEO_SMALL_TYPE = "videoSmallCard"
 
     /**
      *

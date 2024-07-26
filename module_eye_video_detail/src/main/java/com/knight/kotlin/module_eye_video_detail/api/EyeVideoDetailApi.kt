@@ -1,6 +1,6 @@
 package com.knight.kotlin.module_eye_video_detail.api
 
-import com.knight.kotlin.library_base.entity.EyeDailyListEntity
+import com.knight.kotlin.module_eye_video_detail.entity.EyeRelateListEntity
 import retrofit2.http.Headers
 import retrofit2.http.POST
 import retrofit2.http.Query
@@ -20,5 +20,5 @@ interface EyeVideoDetailApi {
      */
     @Headers("Domain-Name:eye")
     @POST("v4/video/related")
-    suspend fun getVideoDetail(@Query("id") id: Long): EyeDailyListEntity
+    suspend fun getVideoDetail(@Query("id") id: Long): EyeRelateListEntity
 }

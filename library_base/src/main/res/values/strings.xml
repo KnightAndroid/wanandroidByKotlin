@@ -6,4 +6,5 @@
     <string name="base_loading">请求中...</string>
     <string name="base_unavailable_text">网络连接不可用,请检查网络设置</string>
     <string name="base_request_failure">请求失败,请稍后尝试</string>
+    <string name="base_daily_share_image">share_image</string>
 </resources>

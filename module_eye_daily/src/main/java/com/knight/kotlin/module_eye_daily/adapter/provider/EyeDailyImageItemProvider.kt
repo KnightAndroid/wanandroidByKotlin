@@ -5,13 +5,13 @@ import androidx.databinding.DataBindingUtil
 import com.chad.library.adapter.base.provider.BaseItemProvider
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.knight.kotlin.library_base.config.Appconfig
+import com.knight.kotlin.library_base.config.EyeTypeConstants
 import com.knight.kotlin.library_base.entity.EyeDailyItemEntity
 import com.knight.kotlin.library_base.ktx.setOnClick
 import com.knight.kotlin.library_base.ktx.toJson
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_util.startPageWithAnimate
 import com.knight.kotlin.module_eye_daily.R
-import com.knight.kotlin.module_eye_daily.constants.EyeDailyConstants
 import com.knight.kotlin.module_eye_daily.databinding.EyeDailyImageItemBinding
 
 /**
@@ -22,7 +22,7 @@ import com.knight.kotlin.module_eye_daily.databinding.EyeDailyImageItemBinding
 class EyeDailyImageItemProvider(private val activity: Activity):
     BaseItemProvider<EyeDailyItemEntity>() {
     override val itemViewType: Int
-        get() = EyeDailyConstants.IMAGE_TYPE
+        get() = EyeTypeConstants.IMAGE_TYPE
     override val layoutId: Int
         get() = R.layout.eye_daily_image_item
 
@@ -37,7 +37,7 @@ class EyeDailyImageItemProvider(private val activity: Activity):
             startPageWithAnimate(
                 activity,
                 RouteActivity.EyeVideo.EyeVideoDetail, binding.root,
-                activity.getString(R.string.eye_daily_share_image),
+                activity.getString(com.knight.kotlin.library_base.R.string.base_daily_share_image),
                 Appconfig.EYE_VIDEO_PARAM_KEY to toJson(item.data.content.data)
             )
         }

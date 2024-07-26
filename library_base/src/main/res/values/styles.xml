@@ -37,7 +37,13 @@
     <style name="base_circleStyle">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item>
+    </style>
 
+
+    <!--圆角图片样式-->
+    <style name="base_roundedCornerStyle">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/base_dimen_4</item>
     </style>
 
 </resources>

@@ -25,9 +25,11 @@ import com.knight.kotlin.library_base.util.ColorUtils
 )
 fun ImageView.loadUrl(url:String?){
    if (!url.isNullOrEmpty()) {
+      //这里后台返回数据部分多了ali 需要替换
+      val loadImage = url.replace("ali-ali","ali")
       ImageLoader.loadStringPhoto(
          context,
-         url,
+         loadImage,
          this,
          callback = {
              if (!it) {

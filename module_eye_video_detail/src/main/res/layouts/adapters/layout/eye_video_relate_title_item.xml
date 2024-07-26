@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="model"
+            type="com.knight.kotlin.library_base.entity.EyeItemEntity" />
+    </data>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp_10"
+        android:text="@{model.data.text}"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/eye_video_detail_relate_title_text_size"
+        android:textStyle="bold" />
+</layout>
+

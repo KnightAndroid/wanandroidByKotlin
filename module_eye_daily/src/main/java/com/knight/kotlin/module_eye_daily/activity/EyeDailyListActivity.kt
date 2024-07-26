@@ -6,18 +6,16 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.config.Appconfig
+import com.knight.kotlin.library_base.config.EyeTypeConstants
 import com.knight.kotlin.library_base.entity.EyeDailyItemEntity
 import com.knight.kotlin.library_base.ktx.setOnClick
 import com.knight.kotlin.library_base.ktx.toJson
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_util.startPageWithAnimate
 import com.knight.kotlin.library_widget.ktx.init
-import com.knight.kotlin.library_widget.ktx.setItemChildClickListener
-import com.knight.kotlin.library_widget.ktx.setItemClickListener
 import com.knight.kotlin.module_eye_daily.R
 import com.knight.kotlin.module_eye_daily.adapter.EyeBannerAdapter
 import com.knight.kotlin.module_eye_daily.adapter.EyeDailyAdapter
-import com.knight.kotlin.module_eye_daily.constants.EyeDailyConstants
 import com.knight.kotlin.module_eye_daily.databinding.EyeDailyBannerItemBinding
 import com.knight.kotlin.module_eye_daily.databinding.EyeDailyListActivityBinding
 import com.knight.kotlin.module_eye_daily.databinding.EyeDailyListHeadBinding
@@ -75,7 +73,7 @@ class EyeDailyListActivity : BaseActivity<EyeDailyListActivityBinding, EyeDailyL
         mViewModel.getDailyBanner().observerKt {
             mNextPageUrl = it.nextPageUrl
             val (textCardList, followCardList) = it.itemList.partition {
-                it.type == EyeDailyConstants.TEXT_HEAD_TYPE
+                it.type == EyeTypeConstants.TEXT_HEAD_TYPE
             }
             //去除标识为文本卡片的
             setDailyBanner(textCardList, followCardList)
@@ -125,7 +123,7 @@ class EyeDailyListActivity : BaseActivity<EyeDailyListActivityBinding, EyeDailyL
                         startPageWithAnimate(
                             this@EyeDailyListActivity,
                             RouteActivity.EyeVideo.EyeVideoDetail, holder.binding.eyeDailyIvBanner,
-                            getString(R.string.eye_daily_share_image),
+                            getString(com.knight.kotlin.library_base.R.string.base_daily_share_image),
                             Appconfig.EYE_VIDEO_PARAM_KEY to toJson(data.data.content.data)
                         )
 

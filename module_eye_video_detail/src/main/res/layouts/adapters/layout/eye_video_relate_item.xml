@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="com.knight.kotlin.library_util.DateUtils" />
+
+        <variable
+            name="model"
+            type="com.knight.kotlin.library_base.entity.EyeData" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_relate_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/eye_video_detail_relate_cl_margin_start"
+        android:layout_marginBottom="@dimen/eye_video_detail_relate_cl_margin_bottom">
+
+        <FrameLayout
+            android:id="@+id/fl_cover"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/iv_cover"
+                android:layout_width="@dimen/eye_video_detail_relate_iv_cover_width"
+                android:layout_height="@dimen/eye_video_detail_relate_iv_cover_height"
+                android:scaleType="centerCrop"
+                app:shapeAppearance="@style/base_roundedCornerStyle"
+                bind:imageUrl="@{model.component9().feed}" />
+
+
+            <com.google.android.material.button.MaterialButton
+                android:theme="@style/Theme.MaterialComponents.NoActionBar"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="@dimen/eye_video_detail_relate_tv_time_width"
+                android:layout_height="@dimen/eye_video_detail_relate_tv_time_height"
+                android:layout_gravity="end|bottom"
+                android:layout_marginEnd="@dimen/eye_video_detail_relate_tv_time_margin_end"
+                android:layout_marginBottom="@dimen/eye_video_detail_relate_tv_time_margin_bottom"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:padding="0dp"
+                android:text="@{DateUtils.INSTANCE.formatDateMsByMS(model.duration * 1000)}"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/eye_video_detail_relate_tv_time_text_size"
+                app:backgroundTint="@color/eye_video_detail_relate_tv_time_background_tint"
+                app:cornerRadius="@dimen/eye_video_detail_relate_tv_time_corner_radius"
+                app:layout_constraintBottom_toTopOf="@id/iv_author"
+                app:layout_constraintRight_toRightOf="parent" />
+
+        </FrameLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/eye_video_detail_relate_tv_title_margin_left"
+            android:gravity="start"
+            android:text="@{model.title}"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/eye_video_detail_relate_tv_title_text_size"
+            android:textStyle="bold"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintLeft_toRightOf="@id/fl_cover"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/eye_video_detail_relate_tv_category_margin_start"
+            android:layout_marginTop="@dimen/eye_video_detail_relate_tv_category_margin_top"
+            android:gravity="center"
+            android:text="@{`#` + model.category +` / ` + (model.author == null ? `` : model.author.name)}"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/eye_video_detail_relate_tv_category_text_size"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toRightOf="@id/fl_cover"
+            app:layout_constraintTop_toBottomOf="@id/tv_title" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

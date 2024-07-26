@@ -1,4 +1,5 @@
 <resources>
     <string name="eye_video_app_name">My Application</string>
     <string name="eye_video_share_image">share_image</string>
+    <string name="eye_video_follow">关注</string>
 </resources>
