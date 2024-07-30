@@ -38,7 +38,7 @@ class MyCoinsActivity : BaseActivity<MineCoinsActivityBinding,MyDetailCoinsViewM
 
 
     private val userInfoCoinHeadView: View by lazy{ LayoutInflater.from(this@MyCoinsActivity).inflate(R.layout.mine_coints_detail, null) }
-    private val mUserDetailCoinAdapter:MyCointsAdapter by lazy{MyCointsAdapter(arrayListOf())}
+    private val mUserDetailCoinAdapter:MyCointsAdapter by lazy{MyCointsAdapter()}
     override fun setThemeColor(isDarkMode: Boolean) {
 
     }
@@ -100,12 +100,12 @@ class MyCoinsActivity : BaseActivity<MineCoinsActivityBinding,MyDetailCoinsViewM
         mBinding.includeMineDetailpoint.baseFreshlayout.finishRefresh()
         if (data.datas.size > 0) {
             if (page == 1) {
-                mUserDetailCoinAdapter.setNewInstance(data.datas)
+                mUserDetailCoinAdapter.submitList(data.datas)
                 if (mBinding.includeMineDetailpoint.baseBodyRv.headerCount == 0) {
                     mBinding.includeMineDetailpoint.baseBodyRv.addHeaderView(userInfoCoinHeadView)
                 }
             } else {
-                mUserDetailCoinAdapter.addData(data.datas)
+                mUserDetailCoinAdapter.addAll(data.datas)
             }
             page ++
 

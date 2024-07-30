@@ -1,12 +1,18 @@
 package com.knight.kotlin.module_mine.adapter
 
+import android.content.Context
 import android.graphics.drawable.GradientDrawable
 import android.os.Build
 import android.text.TextUtils
-import android.widget.TextView
-import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
-import com.chad.library.adapter.base.viewholder.BaseViewHolder
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import com.chad.library.adapter4.BaseMultiItemAdapter
 import com.knight.kotlin.library_base.config.Appconfig
+import com.knight.kotlin.library_base.config.EyeTypeConstants
+import com.knight.kotlin.library_base.databinding.BaseArticleItemBinding
+import com.knight.kotlin.library_base.databinding.BaseTextItemBinding
 import com.knight.kotlin.library_base.ktx.toHtml
 import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_util.image.ImageLoader
@@ -18,93 +24,127 @@ import com.knight.kotlin.module_mine.entity.MyCollectArticleEntity
  * Time:2022/5/13 10:51
  * Description:MyCollectArticleAdapter
  */
-class MyCollectArticleAdapter(data:MutableList<MyCollectArticleEntity>) :
-    BaseMultiItemQuickAdapter<MyCollectArticleEntity, BaseViewHolder>() {
+class MyCollectArticleAdapter(data:List<MyCollectArticleEntity>) :
+    BaseMultiItemAdapter<MyCollectArticleEntity>(data) {
 
+
+    // 标题 的 viewholder
+    class MineArticleTextVH(val viewBinding: BaseTextItemBinding) : RecyclerView.ViewHolder(viewBinding.root)
+
+    // 正文视频 的 viewholder
+    class MineArticleImageVH(val viewBinding: BaseArticleItemBinding) : RecyclerView.ViewHolder(viewBinding.root)
+
+    // 在 init 初始化的时候，添加多类型
     init {
-        addItemType(Appconfig.ARTICLE_TEXT_TYPE, com.knight.kotlin.library_base.R.layout.base_text_item)
-        addItemType(Appconfig.ARTICLE_PICTURE_TYPE, com.knight.kotlin.library_base.R.layout.base_article_item)
+        addItemType(EyeTypeConstants.TEXT_TYPE, object : OnMultiItemAdapterListener<MyCollectArticleEntity,MineArticleTextVH> { // 类型 1
+            override fun onCreate(context: Context, parent: ViewGroup, viewType: Int): MineArticleTextVH {
+                // 创建 viewholder
+                val viewBinding = BaseTextItemBinding.inflate(LayoutInflater.from(context), parent, false)
+                return MineArticleTextVH(viewBinding)
+            }
 
-    }
-
-    override fun convert(holder: BaseViewHolder, item: MyCollectArticleEntity) {
-        item.run {
-            when (holder.itemViewType) {
-                Appconfig.ARTICLE_TEXT_TYPE -> {
+            override fun onBind(holder: MineArticleTextVH, position: Int, item: MyCollectArticleEntity?) {
+                // 绑定 item 数据
+                val binding = BaseTextItemBinding.bind(holder.itemView)
+                item?.run {
                     //作者
                     if (author.isNullOrEmpty()) {
-                        holder.setText(com.knight.kotlin.library_base.R.id.base_item_article_author,"不详")
+                        binding.baseItemArticleAuthor.setText("不详")
                     } else {
-                        holder.setText(com.knight.kotlin.library_base.R.id.base_item_article_author,author)
+                        binding.baseItemArticleAuthor.setText(author)
                     }
 
                     //一级分类
                     if (!TextUtils.isEmpty(item.chapterName)) {
-                        holder.setVisible(com.knight.kotlin.library_base.R.id.base_tv_article_superchaptername,true)
-                        holder.setText(com.knight.kotlin.library_base.R.id.base_tv_article_superchaptername,chapterName)
-                        holder.setTextColor(com.knight.kotlin.library_base.R.id.base_tv_article_superchaptername,CacheUtils.getThemeColor())
+                        binding.baseTvArticleSuperchaptername.visibility = View.VISIBLE
+                        binding.baseTvArticleSuperchaptername.setText(chapterName)
+                        binding.baseTvArticleSuperchaptername.setTextColor(CacheUtils.getThemeColor())
                         val gradientDrawable = GradientDrawable()
                         gradientDrawable.shape = GradientDrawable.RECTANGLE
                         gradientDrawable.setStroke(2,CacheUtils.getThemeColor())
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                            holder.getView<TextView>(com.knight.kotlin.library_base.R.id.base_tv_article_superchaptername).background = gradientDrawable
+                            binding.baseTvArticleSuperchaptername.background = gradientDrawable
                         } else {
-                            holder.getView<TextView>(com.knight.kotlin.library_base.R.id.base_tv_article_superchaptername).setBackgroundDrawable(gradientDrawable)
+                            binding.baseTvArticleSuperchaptername.setBackgroundDrawable(gradientDrawable)
                         }
                     } else {
-                        holder.setGone(com.knight.kotlin.library_base.R.id.base_tv_article_superchaptername,true)
+                        binding.baseTvArticleSuperchaptername.visibility = View.GONE
                     }
 
-                    //时间赋值
                     if (!TextUtils.isEmpty(niceDate)) {
-                        holder.setText(com.knight.kotlin.library_base.R.id.base_item_articledata,niceDate)
+                        binding.baseItemArticledate.setText(niceDate)
                     } else {
-                        holder.setGone(com.knight.kotlin.library_base.R.id.base_item_articledata,true)
+                        binding.baseItemArticledate.visibility = View.GONE
                     }
                     //标题
-                    holder.setText(com.knight.kotlin.library_base.R.id.base_tv_articletitle,title.toHtml())
+                    binding.baseTvArticletitle.setText(title.toHtml())
                     //是否收藏
-                    holder.setBackgroundResource(com.knight.kotlin.library_base.R.id.base_icon_collect,R.drawable.mine_icon_delete)
+                    binding.baseIconCollect.setBackgroundResource(R.drawable.mine_icon_delete)
                 }
 
-                Appconfig.ARTICLE_PICTURE_TYPE ->{
+
+
+            }
+        }).addItemType(EyeTypeConstants.IMAGE_TYPE, object : OnMultiItemAdapterListener<MyCollectArticleEntity, MineArticleImageVH> { // 类型 2
+            override fun onCreate(context: Context, parent: ViewGroup, viewType: Int):MineArticleImageVH {
+                // 创建 viewholder
+                val viewBinding = BaseArticleItemBinding.inflate(LayoutInflater.from(context), parent, false)
+                return MineArticleImageVH(viewBinding)
+            }
+
+            override fun onBind(holder: MineArticleImageVH, position: Int, item: MyCollectArticleEntity?) {
+                // 绑定 item 数据
+                val binding = BaseArticleItemBinding.bind(holder.itemView)
+                item?.run {
                     //项目图片
-                    ImageLoader.loadStringPhoto(context,envelopePic,holder.getView(com.knight.kotlin.library_base.R.id.base_item_imageview))
+                    ImageLoader.loadStringPhoto(context,envelopePic,binding.baseItemImageview)
                     //作者
                     if (author.isNullOrEmpty()) {
-                        holder.setText(com.knight.kotlin.library_base.R.id.base_item_tv_author,"不详")
+                        binding.baseItemTvAuthor.setText("不详")
                     } else {
-                        holder.setText(com.knight.kotlin.library_base.R.id.base_item_tv_author,author)
+                        binding.baseItemTvAuthor.setText(author)
                     }
 
                     //时间赋值
                     if (!TextUtils.isEmpty(niceDate)) {
-                        holder.setVisible(com.knight.kotlin.library_base.R.id.base_item_tv_time,true)
-                        holder.setText(com.knight.kotlin.library_base.R.id.base_item_tv_time,niceDate)
+                        binding.baseItemTvTime.visibility = View.VISIBLE
+                        binding.baseItemTvTime.setText(niceDate)
                     } else {
-                        holder.setGone(com.knight.kotlin.library_base.R.id.base_item_tv_time,true)
+                        binding.baseItemTvTime.visibility = View.GONE
                     }
                     //标题
-                    holder.setText(com.knight.kotlin.library_base.R.id.base_tv_title,title.toHtml())
+                    binding.baseTvTitle.setText(title.toHtml())
 
                     //描述
                     if (!TextUtils.isEmpty(desc)) {
-                        holder.setVisible(com.knight.kotlin.library_base.R.id.base_tv_project_desc,true)
-                        holder.setText(com.knight.kotlin.library_base.R.id.base_tv_project_desc,desc.toHtml())
+                        binding.baseTvProjectDesc.visibility = View.VISIBLE
+                        binding.baseTvProjectDesc.setText(desc.toHtml())
                     } else {
-                        holder.setGone(com.knight.kotlin.library_base.R.id.base_tv_project_desc,true)
+                        binding.baseTvProjectDesc.visibility = View.GONE
                     }
 
                     //分类
                     if (!TextUtils.isEmpty(chapterName)) {
-                        holder.setVisible(com.knight.kotlin.library_base.R.id.base_tv_superchapter,true)
-                        holder.setText(com.knight.kotlin.library_base.R.id.base_tv_superchapter,chapterName)
+                        binding.baseTvSuperchapter.visibility = View.VISIBLE
+                        binding.baseTvSuperchapter.setText(chapterName)
                     } else {
-                        holder.setGone(com.knight.kotlin.library_base.R.id.base_tv_superchapter,true)
+                        binding.baseTvSuperchapter.visibility = View.GONE
                     }
                 }
-                else -> {}
             }
+
+            override fun isFullSpanItem(itemType: Int): Boolean {
+                // 使用GridLayoutManager时，此类型的 item 是否是满跨度
+                return true
+            }
+
+        }).onItemViewType { position, list -> // 根据数据，返回对应的 ItemViewType
+
+           if (TextUtils.isEmpty(list[position].envelopePic)) {
+                Appconfig.ARTICLE_TEXT_TYPE
+            } else Appconfig.ARTICLE_PICTURE_TYPE
         }
     }
+
+
 }

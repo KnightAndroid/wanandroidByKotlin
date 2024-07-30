@@ -1,13 +1,19 @@
 package com.knight.kotlin.module_mine.adapter
 
+import android.content.Context
 import android.graphics.drawable.GradientDrawable
 import android.os.Build
+import android.view.LayoutInflater
 import android.view.View
-import com.chad.library.adapter.base.BaseQuickAdapter
-import com.chad.library.adapter.base.viewholder.BaseViewHolder
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import com.chad.library.adapter4.BaseMultiItemAdapter
+import com.chad.library.adapter4.BaseQuickAdapter
 import com.knight.kotlin.library_base.ktx.toHtml
 import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.module_mine.R
+import com.knight.kotlin.module_mine.databinding.MineItemBinding
+import com.knight.kotlin.module_mine.databinding.MineSharearticlesItemBinding
 import com.knight.kotlin.module_mine.entity.MyArticleEntity
 
 /**
@@ -15,39 +21,51 @@ import com.knight.kotlin.module_mine.entity.MyArticleEntity
  * Time:2022/5/17 11:17
  * Description:MyShareArticleAdapter
  */
-class MyShareArticleAdapter(data:MutableList<MyArticleEntity>) :
-    BaseQuickAdapter<MyArticleEntity, BaseViewHolder>(R.layout.mine_sharearticles_item,data) {
-    override fun convert(holder: BaseViewHolder, item: MyArticleEntity) {
-        item.run {
+class MyShareArticleAdapter:
+    BaseQuickAdapter<MyArticleEntity, MyShareArticleAdapter.VH>() {
+
+    class VH(
+        parent: ViewGroup,
+        val binding: MineSharearticlesItemBinding = MineSharearticlesItemBinding.inflate(
+            LayoutInflater.from(parent.context), parent, false
+        ),
+    ) : RecyclerView.ViewHolder(binding.root)
+
+
+    override fun onBindViewHolder(holder: VH, position: Int, item: MyArticleEntity?) {
+        item?.run {
             //作者
-            holder.setText(R.id.mine_tv_share_articleauthor,shareUser)
+            holder.binding.mineTvShareArticleauthor.setText(shareUser)
             //时间
-            holder.setText(R.id.mine_tv_share_articledata,niceDate)
+            holder.binding.mineTvShareArticledate.setText(niceDate)
             //标题
-            holder.setText(R.id.mine_tv_share_articletitle,title.toHtml())
+            holder.binding.mineTvShareArticletitle.setText(title.toHtml())
             //文章类别
             if (chapterName.isNullOrEmpty()) {
-                holder.setText(R.id.mine_tv_share_articlechaptername,superChapterName)
+                holder.binding.mineTvShareArticlechaptername.setText(superChapterName)
             } else {
-                holder.setText(R.id.mine_tv_share_articlechaptername, "$superChapterName/$chapterName")
+                holder.binding.mineTvShareArticlechaptername.setText("$superChapterName/$chapterName")
 
             }
             val gradientDrawable = GradientDrawable()
             gradientDrawable.shape = GradientDrawable.RECTANGLE
             gradientDrawable.setStroke(2, CacheUtils.getThemeColor())
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                holder.getView<View>(R.id.mine_tv_share_articlechaptername).setBackground(gradientDrawable)
+                holder.binding.mineTvShareArticlechaptername.setBackground(gradientDrawable)
             } else {
-                holder.getView<View>(R.id.mine_tv_share_articlechaptername).setBackgroundDrawable(gradientDrawable)
+                holder.binding.mineTvShareArticlechaptername.setBackgroundDrawable(gradientDrawable)
             }
-            holder.setTextColor(R.id.mine_tv_share_articlechaptername,CacheUtils.getThemeColor())
+            holder.binding.mineTvShareArticlechaptername.setTextColor(CacheUtils.getThemeColor())
             //是否是新文章
             if (fresh) {
-                holder.setVisible(R.id.mine_tv_share_articlenew,true)
+                holder.binding.mineTvShareArticlenew.visibility = View.VISIBLE
             } else {
-                holder.setGone(R.id.mine_tv_share_articlenew,true)
+                holder.binding.mineTvShareArticlenew.visibility = View.GONE
             }
         }
+    }
 
+    override fun onCreateViewHolder(context: Context, parent: ViewGroup, viewType: Int): VH {
+        return VH(parent)
     }
 }

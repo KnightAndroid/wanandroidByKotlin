@@ -7,8 +7,6 @@ import com.knight.kotlin.library_base.ktx.setOnClick
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.util.ArouteUtils
 import com.knight.kotlin.library_util.DialogUtils
-import com.knight.kotlin.library_widget.ktx.setItemChildClickListener
-import com.knight.kotlin.library_widget.ktx.setItemClickListener
 import com.knight.kotlin.module_mine.R
 import com.knight.kotlin.module_mine.adapter.MyShareArticleAdapter
 import com.knight.kotlin.module_mine.databinding.MineMySharearticlesActivityBinding
@@ -32,7 +30,7 @@ class MyShareArticlesActivity : BaseActivity<MineMySharearticlesActivityBinding,
 
 
     private var page:Int = 1
-    private val mMyshareArticleAdater:MyShareArticleAdapter by lazy {MyShareArticleAdapter(arrayListOf())}
+    private val mMyshareArticleAdater:MyShareArticleAdapter by lazy {MyShareArticleAdapter()}
     //删除我的分享的Item项
     private var selectItem = -1
     override fun setThemeColor(isDarkMode: Boolean) {
@@ -79,9 +77,9 @@ class MyShareArticlesActivity : BaseActivity<MineMySharearticlesActivityBinding,
         mBinding.includeMineSharearticlesRv.baseFreshlayout.finishRefresh()
         if (data.shareArticles.datas.size > 0) {
             if (page == 1) {
-                mMyshareArticleAdater.setNewInstance(data.shareArticles.datas)
+                mMyshareArticleAdater.submitList(data.shareArticles.datas)
             } else {
-                mMyshareArticleAdater.addData(data.shareArticles.datas)
+                mMyshareArticleAdater.addAll(data.shareArticles.datas)
             }
             page ++
         } else {
@@ -94,7 +92,7 @@ class MyShareArticlesActivity : BaseActivity<MineMySharearticlesActivityBinding,
 
 
     private fun deleteArticle() {
-        mMyshareArticleAdater.data.removeAt(selectItem)
+        mMyshareArticleAdater.removeAt(selectItem)
         mMyshareArticleAdater.notifyItemRemoved(selectItem)
 
     }
@@ -108,27 +106,27 @@ class MyShareArticlesActivity : BaseActivity<MineMySharearticlesActivityBinding,
 
     private fun initListener() {
         mMyshareArticleAdater.run {
-            setItemClickListener { adapter, view, position ->
+            setOnItemClickListener { adapter, view, position ->
                 ArouteUtils.startWebArticle(
-                    data[position].link,
-                    data[position].title,
-                    data[position].id,
-                    data[position].collect,
-                    data[position].envelopePic,
-                    data[position].desc,
-                    data[position].chapterName,
-                    data[position].author,
-                    data[position].shareUser
+                    items[position].link,
+                    items[position].title,
+                    items[position].id,
+                    items[position].collect,
+                    items[position].envelopePic,
+                    items[position].desc,
+                    items[position].chapterName,
+                    items[position].author,
+                    items[position].shareUser
                 )
             }
 
-            addChildClickViewIds(R.id.mine_iv_share_articles_delete)
-            setItemChildClickListener { adapter, view, position ->
+
+            addOnItemChildClickListener(R.id.mine_iv_share_articles_delete) { adapter, view, position ->
                 selectItem = position
                 DialogUtils.getConfirmDialog(this@MyShareArticlesActivity,getString(R.string.mine_confirm_cancel_share_article),
                     { dialog, which ->
                         selectItem = position
-                        mViewModel.deleteMyShareArticles(data[position].id).observerKt {
+                        mViewModel.deleteMyShareArticles(items[position].id).observerKt {
                             deleteArticle()
                         }
                     }) {

@@ -1,9 +1,6 @@
 package com.knight.kotlin.module_mine.entity
 
 import android.os.Parcelable
-import android.text.TextUtils
-import com.chad.library.adapter.base.entity.MultiItemEntity
-import com.knight.kotlin.library_base.config.Appconfig
 import kotlinx.parcelize.Parcelize
 
 /**
@@ -30,9 +27,4 @@ data class MyCollectArticleEntity(
     val visible: Int,
     val zan: Int,
     val shareUser: String,
-) : Parcelable, MultiItemEntity {
-    override val itemType: Int
-        get() = if (TextUtils.isEmpty(envelopePic)) {
-            Appconfig.ARTICLE_TEXT_TYPE
-        } else Appconfig.ARTICLE_PICTURE_TYPE
-}
+) : Parcelable

@@ -35,7 +35,7 @@ class MessageFragment : BaseFragment<MessageFragmentBinding,MessageVm>(), OnRefr
      */
     private var readed:Boolean = false
 
-    private val mMessageAdapter:MessageAdapter by lazy {MessageAdapter(arrayListOf())}
+    private val mMessageAdapter:MessageAdapter by lazy {MessageAdapter()}
 
 
     companion object {
@@ -86,13 +86,13 @@ class MessageFragment : BaseFragment<MessageFragmentBinding,MessageVm>(), OnRefr
         mBinding.includeMessage.baseFreshlayout.finishLoadMore()
         if (page == 1) {
             if (data.datas.size > 0) {
-                mMessageAdapter.setNewInstance(data.datas)
+                mMessageAdapter.submitList(data.datas)
             } else {
                 requestEmptyData()
             }
 
         } else {
-            mMessageAdapter.addData(data.datas)
+            mMessageAdapter.addAll(data.datas)
         }
         if (data.datas.size < 10) {
             mBinding.includeMessage.baseFreshlayout.setEnableLoadMore(false)

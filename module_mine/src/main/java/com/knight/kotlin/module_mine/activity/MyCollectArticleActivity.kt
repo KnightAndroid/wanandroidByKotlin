@@ -7,8 +7,6 @@ import com.knight.kotlin.library_base.ktx.setOnClick
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.util.ArouteUtils
 import com.knight.kotlin.library_util.DialogUtils
-import com.knight.kotlin.library_widget.ktx.setItemChildClickListener
-import com.knight.kotlin.library_widget.ktx.setItemClickListener
 import com.knight.kotlin.module_mine.R
 import com.knight.kotlin.module_mine.adapter.MyCollectArticleAdapter
 import com.knight.kotlin.module_mine.databinding.MineCollectarticlesActivityBinding
@@ -90,9 +88,9 @@ class MyCollectArticleActivity : BaseActivity<MineCollectarticlesActivityBinding
         mBinding.includeMineCollectfreshalayout.baseFreshlayout.finishLoadMore()
         if (myCollectArticles.datas.size > 0) {
             if (page == 0) {
-                mMyCollectArticleAdapter.setNewInstance(myCollectArticles.datas)
+                mMyCollectArticleAdapter.submitList(myCollectArticles.datas)
             } else {
-                mMyCollectArticleAdapter.addData(myCollectArticles.datas)
+                mMyCollectArticleAdapter.addAll(myCollectArticles.datas)
             }
             page ++
         } else {
@@ -106,43 +104,59 @@ class MyCollectArticleActivity : BaseActivity<MineCollectarticlesActivityBinding
 
 
     private fun unCollectArticle() {
-        mMyCollectArticleAdapter.data.removeAt(selectItem)
+        mMyCollectArticleAdapter.removeAt(selectItem)
         mMyCollectArticleAdapter.notifyItemRemoved(selectItem)
 
     }
     private fun initListener() {
         mMyCollectArticleAdapter.run {
-            setItemClickListener { adapter, view, position ->
+            setOnItemClickListener { adapter, view, position ->
                 ArouteUtils.startWebArticle(
-                    data[position].link,
-                    data[position].title,
-                    data[position].id,
+                    items[position].link,
+                    items[position].title,
+                    items[position].id,
                     true,
-                    data[position].envelopePic,
-                    data[position].desc,
-                    data[position].chapterName,
-                    data[position].author,
-                    data[position].shareUser
+                    items[position].envelopePic,
+                    items[position].desc,
+                    items[position].chapterName,
+                    items[position].author,
+                    items[position].shareUser
                 )
             }
 
-            addChildClickViewIds(com.knight.kotlin.library_base.R.id.base_icon_collect,com.knight.kotlin.library_base.R.id.base_article_collect)
-            setItemChildClickListener { adapter, view, position ->
-                when (view.id) {
-                    com.knight.kotlin.library_base.R.id.base_icon_collect,com.knight.kotlin.library_base.R.id.base_article_collect -> {
+            addOnItemChildClickListener(com.knight.kotlin.library_base.R.id.base_icon_collect) { adapter, view, position ->
+
+
                         selectItem = position
                         DialogUtils.getConfirmDialog(this@MyCollectArticleActivity,getString(R.string.mine_confirm_cancelarticle),
                             { dialog, which ->
                                 selectItem = position
-                            mViewModel.unCollectArticle(mMyCollectArticleAdapter.data[position].originId).observerKt {
+                            mViewModel.unCollectArticle(mMyCollectArticleAdapter.items[position].originId).observerKt {
                                 unCollectArticle()
                             }
                         }) {
                                 dialog, which ->
                         }
 
-                    }
-                }
+
+
+            }
+
+            addOnItemChildClickListener(com.knight.kotlin.library_base.R.id.base_article_collect) { adapter, view, position ->
+
+                        selectItem = position
+                        DialogUtils.getConfirmDialog(this@MyCollectArticleActivity,getString(R.string.mine_confirm_cancelarticle),
+                            { dialog, which ->
+                                selectItem = position
+                                mViewModel.unCollectArticle(mMyCollectArticleAdapter.items[position].originId).observerKt {
+                                    unCollectArticle()
+                                }
+                            }) {
+                                dialog, which ->
+                        }
+
+
+
             }
         }
     }

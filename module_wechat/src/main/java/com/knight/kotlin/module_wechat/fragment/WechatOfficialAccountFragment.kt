@@ -11,8 +11,6 @@ import com.knight.kotlin.library_base.util.ArouteUtils
 import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_base.util.ColorUtils
 import com.knight.kotlin.library_widget.ktx.init
-import com.knight.kotlin.library_widget.ktx.setItemChildClickListener
-import com.knight.kotlin.library_widget.ktx.setItemClickListener
 import com.knight.kotlin.module_wechat.adapter.WechatArticleAdapter
 import com.knight.kotlin.module_wechat.databinding.WechatOfficialaccountFragmentBinding
 import com.knight.kotlin.module_wechat.entity.WechatArticleListEntity
@@ -53,7 +51,7 @@ class WechatOfficialAccountFragment:BaseFragment<WechatOfficialaccountFragmentBi
     private var keyWords:String = ""
 
     //微信文章列表适配器
-    private val mWechatArticleAdapter:WechatArticleAdapter by lazy {WechatArticleAdapter(arrayListOf())}
+    private val mWechatArticleAdapter:WechatArticleAdapter by lazy {WechatArticleAdapter()}
     private var cid:Int = 0
     companion object {
 
@@ -96,23 +94,23 @@ class WechatOfficialAccountFragment:BaseFragment<WechatOfficialaccountFragmentBi
 
     fun initListener() {
         mWechatArticleAdapter.run {
-            setItemClickListener { adapter, view, position ->
+            setOnItemClickListener { adapter, view, position ->
                 ArouteUtils.startWebArticle(
-                    data[position].link,
-                    data[position].title,
-                    data[position].id,
-                    data[position].collect,
-                    data[position].envelopePic,
-                    data[position].desc,
-                    data[position].chapterName,
-                    data[position].author,
-                    data[position].shareUser
+                    items[position].link,
+                    items[position].title,
+                    items[position].id,
+                    items[position].collect,
+                    items[position].envelopePic,
+                    items[position].desc,
+                    items[position].chapterName,
+                    items[position].author,
+                    items[position].shareUser
                 )
             }
-            addChildClickViewIds(com.knight.kotlin.library_base.R.id.base_icon_collect)
-            setItemChildClickListener { adapter, view, position ->
+
+            addOnItemChildClickListener(com.knight.kotlin.library_base.R.id.base_icon_collect) { adapter, view, position ->
                 selectItemPosition = position
-                collectOrunCollect(data[position].collect,data[position].id)
+                collectOrunCollect(items[position].collect,items[position].id)
             }
 
         }
@@ -143,13 +141,13 @@ class WechatOfficialAccountFragment:BaseFragment<WechatOfficialaccountFragmentBi
         mBinding.includeWechatArticles.baseFreshlayout.finishLoadMore()
         if (page == 1) {
             if (data.datas.size > 0) {
-                mWechatArticleAdapter.setNewInstance(data.datas)
+                mWechatArticleAdapter.submitList(data.datas)
             } else {
                 requestEmptyData()
             }
 
         } else {
-            mWechatArticleAdapter.addData(data.datas)
+            mWechatArticleAdapter.addAll(data.datas)
         }
         if (data.datas.size < 10) {
             mBinding.includeWechatArticles.baseFreshlayout.setEnableLoadMore(false)
@@ -189,7 +187,7 @@ class WechatOfficialAccountFragment:BaseFragment<WechatOfficialaccountFragmentBi
      * 收藏成功
      */
     private fun collectSuccess() {
-        mWechatArticleAdapter.data[selectItemPosition].collect = true
+        mWechatArticleAdapter.items[selectItemPosition].collect = true
         mWechatArticleAdapter.notifyItemChanged(selectItemPosition)
     }
 
@@ -198,7 +196,7 @@ class WechatOfficialAccountFragment:BaseFragment<WechatOfficialaccountFragmentBi
      * 取消收藏成功
      */
     private fun unCollectSuccess() {
-        mWechatArticleAdapter.data[selectItemPosition].collect = false
+        mWechatArticleAdapter.items[selectItemPosition].collect = false
         mWechatArticleAdapter.notifyItemChanged(selectItemPosition)
     }
 

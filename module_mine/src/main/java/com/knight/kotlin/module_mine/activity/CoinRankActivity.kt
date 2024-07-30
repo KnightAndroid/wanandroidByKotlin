@@ -6,7 +6,6 @@ import com.knight.kotlin.library_base.ktx.init
 import com.knight.kotlin.library_base.ktx.setOnClick
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_util.startPageWithParams
-import com.knight.kotlin.library_widget.ktx.setItemClickListener
 import com.knight.kotlin.module_mine.R
 import com.knight.kotlin.module_mine.adapter.RankCoinAdapter
 import com.knight.kotlin.module_mine.databinding.MineCoinRankActivityBinding
@@ -29,7 +28,7 @@ class CoinRankActivity : BaseActivity<MineCoinRankActivityBinding,CoinRankViewMo
 
 
 
-    private val mRankCoinAdapter : RankCoinAdapter by lazy {RankCoinAdapter(mutableListOf())}
+    private val mRankCoinAdapter : RankCoinAdapter by lazy {RankCoinAdapter()}
     private var page = 1
 
     override fun setThemeColor(isDarkMode: Boolean) {
@@ -89,9 +88,9 @@ class CoinRankActivity : BaseActivity<MineCoinRankActivityBinding,CoinRankViewMo
         mBinding.includeMineCoinrank.baseFreshlayout.finishLoadMore()
         if (data.datas.size > 0) {
             if (page == 1) {
-                mRankCoinAdapter.setNewInstance(data.datas)
+                mRankCoinAdapter.submitList(data.datas)
             } else {
-                mRankCoinAdapter.addData(data.datas)
+                mRankCoinAdapter.addAll(data.datas)
             }
             page++
         } else {
@@ -102,8 +101,8 @@ class CoinRankActivity : BaseActivity<MineCoinRankActivityBinding,CoinRankViewMo
 
     fun initListener() {
         mRankCoinAdapter.run {
-            setItemClickListener { adapter, view, position ->
-              startPageWithParams(RouteActivity.Mine.OtherShareArticleActivity,"uid" to data[position].userId)
+            setOnItemClickListener { adapter, view, position ->
+              startPageWithParams(RouteActivity.Mine.OtherShareArticleActivity,"uid" to items[position].userId)
             }
         }
     }

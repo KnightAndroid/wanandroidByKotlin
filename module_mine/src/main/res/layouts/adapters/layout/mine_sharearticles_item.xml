@@ -37,7 +37,7 @@
         app:layout_constraintTop_toTopOf="@+id/mine_tv_share_articleauthor" />
 
     <TextView
-        android:id="@+id/mine_tv_share_articledata"
+        android:id="@+id/mine_tv_share_articledate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="@dimen/mine_tv_share_articledata_margin_right"

@@ -1,10 +1,14 @@
 package com.knight.kotlin.module_mine.adapter
 
-import com.chad.library.adapter.base.BaseQuickAdapter
-import com.chad.library.adapter.base.viewholder.BaseViewHolder
+import android.content.Context
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import com.chad.library.adapter4.BaseQuickAdapter
 import com.knight.kotlin.library_base.ktx.getUser
 import com.knight.kotlin.library_base.util.LanguageFontSizeUtils
-import com.knight.kotlin.module_mine.R
+import com.knight.kotlin.module_mine.databinding.MineItemBinding
 import com.knight.kotlin.module_mine.entity.MineItemEntity
 import java.util.Locale
 
@@ -13,24 +17,15 @@ import java.util.Locale
  * Time:2024/4/23 15:18
  * Description:MineItemAdapter
  */
-class MineItemAdapter(data:MutableList<MineItemEntity>) : BaseQuickAdapter<MineItemEntity,BaseViewHolder>(
-    R.layout.mine_item,data) {
-    override fun convert(holder: BaseViewHolder, item: MineItemEntity) {
-        item.run {
-            holder.setText(R.id.mine_tv_item_name,getLanguageMode(item))
-            if (id == 2) {
-               holder.setVisible(R.id.mine_tv_tip,true)
-               getUser()?.run {
-                   holder.setText(R.id.mine_tv_tip, coinCount.toString())
-               } ?: {
-                   holder.setText(R.id.mine_tv_tip, "0")
-               }
+class MineItemAdapter : BaseQuickAdapter<MineItemEntity, MineItemAdapter.VH>(
+ ) {
 
-            } else {
-                holder.setGone(R.id.mine_tv_tip,true)
-            }
-        }
-    }
+    class VH(
+        parent: ViewGroup,
+        val binding: MineItemBinding = MineItemBinding.inflate(
+            LayoutInflater.from(parent.context), parent, false
+        ),
+    ) : RecyclerView.ViewHolder(binding.root)
 
     /**
      * 判断当前系统是英文还是中文
@@ -46,5 +41,26 @@ class MineItemAdapter(data:MutableList<MineItemEntity>) : BaseQuickAdapter<MineI
         } else {
             mineItem.name_en
         }
+    }
+
+    override fun onBindViewHolder(holder: VH, position: Int, item: MineItemEntity?) {
+        item?.run {
+            holder.binding.mineTvItemName.setText(getLanguageMode(item))
+            if (id == 2) {
+                holder.binding.mineTvTip.visibility = View.VISIBLE
+                getUser()?.run {
+                    holder.binding.mineTvTip.setText(coinCount.toString())
+                } ?: {
+                    holder.binding.mineTvTip.setText( "0")
+                }
+
+            } else {
+                holder.binding.mineTvTip.visibility = View.GONE
+            }
+        }
+    }
+
+    override fun onCreateViewHolder(context: Context, parent: ViewGroup, viewType: Int): VH {
+        return VH(parent)
     }
 }

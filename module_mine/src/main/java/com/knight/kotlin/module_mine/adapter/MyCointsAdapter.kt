@@ -1,9 +1,12 @@
 package com.knight.kotlin.module_mine.adapter
 
-import com.chad.library.adapter.base.BaseQuickAdapter
-import com.chad.library.adapter.base.viewholder.BaseViewHolder
+import android.content.Context
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import com.chad.library.adapter4.BaseQuickAdapter
 import com.knight.kotlin.library_base.util.CacheUtils
-import com.knight.kotlin.module_mine.R
+import com.knight.kotlin.module_mine.databinding.MineCoindetailItemBinding
 import com.knight.kotlin.module_mine.entity.MyDetailCoinEntity
 
 /**
@@ -11,14 +14,26 @@ import com.knight.kotlin.module_mine.entity.MyDetailCoinEntity
  * Time:2022/5/11 10:20
  * Description:MyCointsAdapter
  */
-class MyCointsAdapter(data:MutableList<MyDetailCoinEntity>):
-    BaseQuickAdapter<MyDetailCoinEntity, BaseViewHolder>(R.layout.mine_coindetail_item,data)  {
-    override fun convert(holder: BaseViewHolder, item: MyDetailCoinEntity) {
-        item.run {
-            holder.setText(R.id.mine_tv_detailpointtitle,reason)
-            holder.setText(R.id.mine_tv_coincount, "+$coinCount")
-            holder.setTextColor(R.id.mine_tv_coincount,CacheUtils.getThemeColor())
-            holder.setText(R.id.mine_tv_timereason,desc)
+class MyCointsAdapter:
+    BaseQuickAdapter<MyDetailCoinEntity, MyCointsAdapter.VH>()  {
+
+    class VH(
+        parent: ViewGroup,
+        val binding: MineCoindetailItemBinding= MineCoindetailItemBinding.inflate(
+            LayoutInflater.from(parent.context), parent, false
+        ),
+    ) : RecyclerView.ViewHolder(binding.root)
+
+    override fun onBindViewHolder(holder: VH, position: Int, item: MyDetailCoinEntity?) {
+        item?.run {
+            holder.binding.mineTvDetailpointtitle.setText(reason)
+            holder.binding.mineTvCoincount.setText( "+$coinCount")
+            holder.binding.mineTvCoincount.setTextColor(CacheUtils.getThemeColor())
+            holder.binding.mineTvTimereason.setText(desc)
         }
+    }
+
+    override fun onCreateViewHolder(context: Context, parent: ViewGroup, viewType: Int): VH {
+        return VH(parent)
     }
 }

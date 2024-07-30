@@ -1,11 +1,16 @@
 package com.knight.kotlin.module_wechat.adapter
 
+import android.content.Context
 import android.graphics.drawable.GradientDrawable
 import android.os.Build
 import android.text.TextUtils
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.TextView
-import com.chad.library.adapter.base.BaseQuickAdapter
-import com.chad.library.adapter.base.viewholder.BaseViewHolder
+import androidx.recyclerview.widget.RecyclerView
+import com.chad.library.adapter4.BaseQuickAdapter
+import com.knight.kotlin.library_base.databinding.BaseTextItemBinding
 import com.knight.kotlin.library_base.ktx.toHtml
 import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.module_wechat.entity.WechatArticleEntity
@@ -24,67 +29,86 @@ import com.knight.kotlin.module_wechat.entity.WechatArticleEntity
  * @Version:        1.0
  */
 
-class WechatArticleAdapter(data:MutableList<WechatArticleEntity>) :
-    BaseQuickAdapter<WechatArticleEntity, BaseViewHolder>(com.knight.kotlin.library_base.R.layout.base_text_item,data) {
-    override fun convert(holder: BaseViewHolder, item: WechatArticleEntity) {
-        item.run {
+class WechatArticleAdapter :
+    BaseQuickAdapter<WechatArticleEntity, WechatArticleAdapter.VH>() {
 
-            if(!author.isNullOrEmpty()){
-                holder.setText(com.knight.kotlin.library_base.R.id.base_item_article_author,author)
+    class VH(
+        parent: ViewGroup,
+        val binding: BaseTextItemBinding = BaseTextItemBinding.inflate(
+            LayoutInflater.from(parent.context), parent, false
+        ),
+    ) : RecyclerView.ViewHolder(binding.root)
+
+
+
+    override fun onBindViewHolder(holder: VH, position: Int, item: WechatArticleEntity?) {
+        item?.run {
+
+            if (!author.isNullOrEmpty()) {
+                holder.binding.baseItemArticleAuthor.setText( author)
             } else {
-                holder.setText(com.knight.kotlin.library_base.R.id.base_item_article_author,shareUser)
+                holder.binding.baseItemArticleAuthor.setText(shareUser)
             }
 
             //一级分类
-            if (!TextUtils.isEmpty(superChapterName) || !TextUtils.isEmpty(chapterName) ) {
-                holder.setVisible(com.knight.kotlin.library_base.R.id.base_tv_article_superchaptername,true)
+            if (!TextUtils.isEmpty(superChapterName) || !TextUtils.isEmpty(chapterName)) {
+                holder.binding.baseTvArticleSuperchaptername.visibility = View.VISIBLE
                 val gradientDrawable = GradientDrawable()
                 gradientDrawable.shape = GradientDrawable.RECTANGLE
                 gradientDrawable.setStroke(2, CacheUtils.getThemeColor())
                 if (!TextUtils.isEmpty(superChapterName)) {
                     if (!TextUtils.isEmpty(chapterName)) {
-                        holder.setText(com.knight.kotlin.library_base.R.id.base_tv_article_superchaptername,
-                            "$superChapterName/$chapterName"
-                        )
+                        holder.binding.baseTvArticleSuperchaptername.setText("$superChapterName/$chapterName")
                     } else {
-                        holder.setText(com.knight.kotlin.library_base.R.id.base_tv_article_superchaptername,superChapterName)
+                        holder.binding.baseTvArticleSuperchaptername.setText(superChapterName)
                     }
                 } else {
                     if (!TextUtils.isEmpty(chapterName)) {
-                        holder.setText(com.knight.kotlin.library_base.R.id.base_tv_article_superchaptername,chapterName)
+                        holder.binding.baseTvArticleSuperchaptername.setText(chapterName)
                     } else {
-                        holder.setText(com.knight.kotlin.library_base.R.id.base_tv_article_superchaptername,"")
+                        holder.binding.baseTvArticleSuperchaptername.setText("")
                     }
                 }
 
-                holder.setTextColor(com.knight.kotlin.library_base.R.id.base_tv_article_superchaptername,CacheUtils.getThemeColor())
+                holder.binding.baseTvArticleSuperchaptername.setTextColor(
+                    CacheUtils.getThemeColor()
+                )
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                    (holder.getView(com.knight.kotlin.library_base.R.id.base_tv_article_superchaptername) as TextView).background = gradientDrawable
+                     holder.binding.baseTvArticleSuperchaptername.background =
+                        gradientDrawable
                 } else {
-                    (holder.getView(com.knight.kotlin.library_base.R.id.base_tv_article_superchaptername) as TextView).setBackgroundDrawable(gradientDrawable)
+                    holder.binding.baseTvArticleSuperchaptername.setBackgroundDrawable(
+                        gradientDrawable
+                    )
                 }
             } else {
-                holder.setGone(com.knight.kotlin.library_base.R.id.base_tv_article_superchaptername,true)
+                holder.binding.baseTvArticleSuperchaptername.visibility = View.GONE
             }
 
             //时间赋值
             if (!niceDate.isNullOrEmpty()) {
-                holder.setText(com.knight.kotlin.library_base.R.id.base_item_articledata,niceDate)
+                holder.binding.baseItemArticledate.setText(niceDate)
             } else {
-                holder.setText(com.knight.kotlin.library_base.R.id.base_item_articledata,niceShareDate)
+                holder.binding.baseItemArticledate.setText(niceShareDate)
             }
 
             //标题
-            holder.setText(com.knight.kotlin.library_base.R.id.base_tv_articletitle,title.toHtml())
+            holder.binding.baseTvArticletitle.setText(title.toHtml())
 
             //是否收藏
             if (collect) {
-                holder.setBackgroundResource(com.knight.kotlin.library_base.R.id.base_icon_collect,com.knight.kotlin.library_base.R.drawable.base_icon_collect)
+                holder.binding.baseIconCollect.setBackgroundResource(
+                    com.knight.kotlin.library_base.R.drawable.base_icon_collect
+                )
             } else {
-                holder.setBackgroundResource(com.knight.kotlin.library_base.R.id.base_icon_collect,com.knight.kotlin.library_base.R.drawable.base_icon_nocollect)
+                holder.binding.baseIconCollect.setBackgroundResource(
+                    com.knight.kotlin.library_base.R.drawable.base_icon_nocollect
+                )
             }
-
-
         }
+    }
+
+    override fun onCreateViewHolder(context: Context, parent: ViewGroup, viewType: Int): VH {
+        return VH(parent)
     }
 }

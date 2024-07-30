@@ -13,7 +13,7 @@ import com.knight.kotlin.library_base.util.ArouteUtils
 import com.knight.kotlin.library_database.entity.HistoryReadRecordsEntity
 import com.knight.kotlin.library_util.DialogUtils
 import com.knight.kotlin.library_widget.floatmenu.FloatMenu
-import com.knight.kotlin.library_widget.ktx.setItemClickListener
+
 import com.knight.kotlin.module_mine.R
 import com.knight.kotlin.module_mine.adapter.HistoryRecordAdapter
 import com.knight.kotlin.module_mine.databinding.MineHistoryrecordActivityBinding
@@ -42,7 +42,7 @@ class HistoryRecordActivity :BaseActivity<MineHistoryrecordActivityBinding,Histo
 
     }
 
-    private val mHistoryRecordAdapter:HistoryRecordAdapter by lazy { HistoryRecordAdapter(arrayListOf()) }
+    private val mHistoryRecordAdapter:HistoryRecordAdapter by lazy { HistoryRecordAdapter() }
 
     override fun MineHistoryrecordActivityBinding.initView() {
         includeHistoryrecordToolbar.baseTvTitle.setText(getString(R.string.mine_me_history_records))
@@ -109,7 +109,7 @@ class HistoryRecordActivity :BaseActivity<MineHistoryrecordActivityBinding,Histo
             if (data.size == 0) {
                 requestEmptyData()
             } else {
-                mHistoryRecordAdapter.setNewInstance(data)
+                mHistoryRecordAdapter.submitList(data)
                 if (data.size == 10) {
                     mBinding.includeHistoryrecordRv.baseFreshlayout.setEnableLoadMore(true)
                     startPosition = endStation
@@ -118,7 +118,7 @@ class HistoryRecordActivity :BaseActivity<MineHistoryrecordActivityBinding,Histo
                 }
             }
         } else {
-            mHistoryRecordAdapter.addData(data)
+            mHistoryRecordAdapter.addAll(data)
             if (data.size == 10) {
                 mBinding.includeHistoryrecordRv.baseFreshlayout.setEnableLoadMore(true)
                 startPosition = endStation
@@ -132,16 +132,16 @@ class HistoryRecordActivity :BaseActivity<MineHistoryrecordActivityBinding,Histo
 
     private fun initListener() {
         mHistoryRecordAdapter.run {
-            setItemClickListener { adapter, view, position ->
+            setOnItemClickListener { adapter, view, position ->
                 ArouteUtils.startWebArticle(
-                    data[position].webUrl,
-                    data[position].title,
-                    data[position].articleId,
-                    data[position].isCollect,
-                    data[position].envelopePic,
-                    data[position].articledesc,
-                    data[position].chapterName,
-                    data[position].author,
+                    items[position].webUrl,
+                    items[position].title,
+                    items[position].articleId,
+                    items[position].isCollect,
+                    items[position].envelopePic,
+                    items[position].articledesc,
+                    items[position].chapterName,
+                    items[position].author,
                     ""
                 )
 
@@ -154,7 +154,7 @@ class HistoryRecordActivity :BaseActivity<MineHistoryrecordActivityBinding,Histo
                 floatMenu.setOnItemClickListener(object:FloatMenu.OnItemClickListener{
                     override fun onClick(v: View?, itemPosition: Int) {
                         deleteSelectItem = position
-                        mViewModel.deleteHistoryRecord(data[position].id).observerKt {
+                        mViewModel.deleteHistoryRecord(items[position].id).observerKt {
                             deleteHistoryRecord()
                         }
                     }
@@ -169,7 +169,7 @@ class HistoryRecordActivity :BaseActivity<MineHistoryrecordActivityBinding,Histo
      *
      */
     private fun deleteHistoryRecord() {
-        mHistoryRecordAdapter.data.removeAt(deleteSelectItem)
+        mHistoryRecordAdapter.removeAt(deleteSelectItem)
         mHistoryRecordAdapter.notifyItemRemoved(deleteSelectItem)
     }
 

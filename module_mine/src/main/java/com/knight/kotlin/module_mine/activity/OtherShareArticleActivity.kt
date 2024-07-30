@@ -14,8 +14,6 @@ import com.knight.kotlin.library_base.loadsir.LoadCallBack
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.util.ArouteUtils
 import com.knight.kotlin.library_base.util.ColorUtils
-import com.knight.kotlin.library_widget.ktx.setItemChildClickListener
-import com.knight.kotlin.library_widget.ktx.setItemClickListener
 import com.knight.kotlin.library_widget.slidinglayout.SlidingUpPanelLayout
 import com.knight.kotlin.module_mine.R
 import com.knight.kotlin.module_mine.adapter.OtherShareArticleAdapter
@@ -53,8 +51,7 @@ class OtherShareArticleActivity :BaseActivity<MineOthershareActivityBinding,Othe
 
     private var page = 1
 
-    private val mOtherShareArticleAdapter:OtherShareArticleAdapter by lazy{OtherShareArticleAdapter(
-        mutableListOf())}
+    private val mOtherShareArticleAdapter:OtherShareArticleAdapter by lazy{OtherShareArticleAdapter()}
 
     override fun setThemeColor(isDarkMode: Boolean) {
         mBinding.mineTvUsername.setTextColor(themeColor)
@@ -115,9 +112,9 @@ class OtherShareArticleActivity :BaseActivity<MineOthershareActivityBinding,Othe
         mBinding.includeOtherSharearticle.baseFreshlayout.finishLoadMore()
         if (data.shareArticles.datas.size > 0) {
             if (page == 1) {
-                mOtherShareArticleAdapter.setNewInstance(data.shareArticles.datas)
+                mOtherShareArticleAdapter.submitList(data.shareArticles.datas)
             } else {
-                mOtherShareArticleAdapter.addData(data.shareArticles.datas)
+                mOtherShareArticleAdapter.addAll(data.shareArticles.datas)
             }
             page++
         } else {
@@ -129,27 +126,27 @@ class OtherShareArticleActivity :BaseActivity<MineOthershareActivityBinding,Othe
 
     private fun initListener() {
         mOtherShareArticleAdapter.run {
-            setItemClickListener { adapter, view, position ->
+            setOnItemClickListener { adapter, view, position ->
                 ArouteUtils.startWebArticle(
-                    data[position].link,
-                    data[position].title,
-                    data[position].id,
-                    data[position].collect,
-                    data[position].envelopePic,
-                    data[position].desc,
-                    data[position].chapterName,
-                    data[position].author,
-                    data[position].shareUser
+                    items[position].link,
+                    items[position].title,
+                    items[position].id,
+                    items[position].collect,
+                    items[position].envelopePic,
+                    items[position].desc,
+                    items[position].chapterName,
+                    items[position].author,
+                    items[position].shareUser
                 )
             }
-            addChildClickViewIds(com.knight.kotlin.library_base.R.id.base_icon_collect)
-            setItemChildClickListener { adapter, view, position ->
+
+            addOnItemChildClickListener(com.knight.kotlin.library_base.R.id.base_icon_collect) { adapter, view, position ->
                 when (view.id) {
                     com.knight.kotlin.library_base.R.id.base_icon_collect -> {
                         selectItem = position
                         collectOrunCollect(
-                            data[position].collect,
-                            data[position].id
+                            items[position].collect,
+                            items[position].id
                         )
                     }
                 }
@@ -202,7 +199,7 @@ class OtherShareArticleActivity :BaseActivity<MineOthershareActivityBinding,Othe
      * 收藏成功
      */
     private fun collectSucess() {
-        mOtherShareArticleAdapter.data[selectItem].collect = true
+        mOtherShareArticleAdapter.items[selectItem].collect = true
         mOtherShareArticleAdapter.notifyItemChanged(selectItem)
 
     }
@@ -212,7 +209,7 @@ class OtherShareArticleActivity :BaseActivity<MineOthershareActivityBinding,Othe
      * 取消收藏
      */
     private fun unCollectSuccess() {
-        mOtherShareArticleAdapter.data[selectItem].collect = false
+        mOtherShareArticleAdapter.items[selectItem].collect = false
         mOtherShareArticleAdapter.notifyItemChanged(selectItem)
 
     }
