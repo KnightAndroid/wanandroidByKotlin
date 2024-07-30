@@ -6,7 +6,7 @@ import com.knight.kotlin.library_base.ktx.init
 import com.knight.kotlin.library_base.ktx.setOnClick
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_util.startPageWithParams
-import com.knight.kotlin.library_widget.ktx.setItemClickListener
+
 import com.knight.kotlin.module_course.R
 import com.knight.kotlin.module_course.adapter.CourseListAdapter
 import com.knight.kotlin.module_course.databinding.CourseListActivityBinding
@@ -24,7 +24,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class CourseListActivity : BaseActivity<CourseListActivityBinding,CourseListVm>(),OnRefreshListener,OnLoadMoreListener {
 
     //工具类适配器
-    private val mCourseListAdapter:CourseListAdapter by lazy {CourseListAdapter(arrayListOf())}
+    private val mCourseListAdapter:CourseListAdapter by lazy {CourseListAdapter()}
     override fun setThemeColor(isDarkMode: Boolean) {
 
     }
@@ -67,16 +67,16 @@ class CourseListActivity : BaseActivity<CourseListActivityBinding,CourseListVm>(
     private fun setCourseData(data:MutableList<CourseEntity>) {
         requestSuccess()
         mBinding.includeCourseRv.baseFreshlayout.finishRefresh()
-        mCourseListAdapter.setNewInstance(data)
+        mCourseListAdapter.submitList(data)
 
     }
 
     private fun initListener() {
         mCourseListAdapter.run {
-            setItemClickListener { adapter, view, position ->
+            setOnItemClickListener { adapter, view, position ->
                 startPageWithParams(
                     RouteActivity.Course.CourseDetailListActivity,
-                    "cid" to data[position].id)
+                    "cid" to items[position].id)
             }
         }
     }

@@ -5,7 +5,8 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
-import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter4.BaseQuickAdapter
+
 import com.knight.kotlin.library_widget.pagetransformer.CardPagerTransfromer
 import com.yanzhenjie.recyclerview.SwipeRecyclerView
 
@@ -61,7 +62,7 @@ fun ViewPager2.init(
 
 //扩展adapter 点击本身防止短时间内重复点击Item
 var adapterLastClickTime = 0L
-fun BaseQuickAdapter<*, *>.setItemClickListener(interval:Long = 1000,action:(adapter:BaseQuickAdapter<*,*>, view: View, position:Int) -> Unit) {
+fun BaseQuickAdapter<*, *>.setOnItemClickListener(interval:Long = 1000, action:(adapter:BaseQuickAdapter<*,*>, view: View, position:Int) -> Unit) {
     setOnItemClickListener { adapter, view, position ->
         val currentTime = System.currentTimeMillis()
         if (adapterLastClickTime != 0L && (currentTime - adapterLastClickTime < interval)) {
@@ -74,11 +75,11 @@ fun BaseQuickAdapter<*, *>.setItemClickListener(interval:Long = 1000,action:(ada
 
 //扩展adapter 点击子child防止短时间内重复点击
 var adapterChildLastClickTime = 0L
-fun BaseQuickAdapter<*,*>.setItemChildClickListener(interval: Long = 1000, action: (adapter: BaseQuickAdapter<*, *>, view: View, position: Int) -> Unit) {
-    setOnItemChildClickListener { adapter, view, position ->
+fun BaseQuickAdapter<*, *>.addOnItemChildClickListener(interval: Long = 1000, action: (adapter: BaseQuickAdapter<*, *>, view: View, position: Int) -> Unit) {
+    addOnItemChildClickListener{ adapter, view, position ->
         val currentTime = System.currentTimeMillis()
         if (adapterChildLastClickTime != 0L && (currentTime - adapterChildLastClickTime < interval)) {
-            return@setOnItemChildClickListener
+            return@addOnItemChildClickListener
         }
         adapterChildLastClickTime = currentTime
         action(adapter, view, position)

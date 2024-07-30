@@ -112,7 +112,7 @@
 
 
         <TextView
-            android:id="@+id/home_item_articledata"
+            android:id="@+id/home_item_articledate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/home_article_data_margin_top"

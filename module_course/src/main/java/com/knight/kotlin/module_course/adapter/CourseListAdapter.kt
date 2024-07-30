@@ -1,32 +1,50 @@
 package com.knight.kotlin.module_course.adapter
 
+import android.content.Context
 import android.text.TextUtils
-import com.chad.library.adapter.base.BaseQuickAdapter
-import com.chad.library.adapter.base.viewholder.BaseViewHolder
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import com.chad.library.adapter4.BaseQuickAdapter
 import com.knight.kotlin.library_util.image.ImageLoader
-import com.knight.kotlin.module_course.R
+import com.knight.kotlin.module_course.databinding.CourseListItemBinding
 import com.knight.kotlin.module_course.entity.CourseEntity
 
 /**
  * Author:Knight
  * Time:2022/6/2 15:58
- * Description:CourseListAdapter
+ * Description:CourseListAdapter      CourseEntity
  */
-class CourseListAdapter (data:MutableList<CourseEntity>):
-    BaseQuickAdapter<CourseEntity, BaseViewHolder>( R.layout.course_list_item,data) {
-    override fun convert(holder: BaseViewHolder, item: CourseEntity) {
-        item.run {
-            ImageLoader.loadStringPhoto(context, cover, holder.getView(R.id.course_list_iv_cover))
+class CourseListAdapter:
+    BaseQuickAdapter<CourseEntity,CourseListAdapter.VH>() {
+
+
+
+    class VH(
+        parent: ViewGroup,
+        val binding: CourseListItemBinding = CourseListItemBinding.inflate(
+            LayoutInflater.from(parent.context), parent, false
+        ),
+    ) : RecyclerView.ViewHolder(binding.root)
+
+    override fun onBindViewHolder(holder: VH, position: Int, item: CourseEntity?) {
+        item?.run {
+            ImageLoader.loadStringPhoto(context, cover, holder.binding.courseListIvCover)
             //作者
             if (!TextUtils.isEmpty(author)) {
-                holder.setText(R.id.course_list_tv_author, author)
+                holder.binding.courseListTvAuthor.setText( author)
             } else {
-                holder.setText(R.id.course_list_tv_author, "不详")
+                holder.binding.courseListTvAuthor.setText( "不详")
             }
             //标题
-            holder.setText(R.id.course_tv_title, name)
-            holder.setText(R.id.course_list_tv_desc, desc)
+            holder.binding.courseTvTitle.setText(name)
+            holder.binding.courseListTvDesc.setText(desc)
 
         }
     }
+
+    override fun onCreateViewHolder(context: Context, parent: ViewGroup, viewType: Int): VH {
+        return VH(parent)
+    }
+
 }

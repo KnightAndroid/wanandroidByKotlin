@@ -46,7 +46,9 @@ class EyeVideoDetailActivity : BaseActivity<EyeVideoDetailActivityBinding,EyeVid
     var videoJson:String = ""
 
     //日报适配器
-    private val mEyeVideoRelateAdapter: EyeVideoRelateAdapter by lazy { EyeVideoRelateAdapter(this) }
+    private val mEyeVideoRelateAdapter: EyeVideoRelateAdapter by lazy { EyeVideoRelateAdapter(
+        mutableListOf(),
+        this) }
     override fun setThemeColor(isDarkMode: Boolean) {
 
     }
@@ -142,8 +144,10 @@ class EyeVideoDetailActivity : BaseActivity<EyeVideoDetailActivityBinding,EyeVid
 
     private fun getRelateVideoList() {
         mViewModel.getVideoDetail(videoEyeData.id).observerKt {
-            mEyeVideoRelateAdapter.setNewInstance(it.itemList)
             mBinding.eyeDetailRefreshLayout.finishRefresh()
+            mEyeVideoRelateAdapter.submitList(it.itemList)
+
+
         }
     }
 

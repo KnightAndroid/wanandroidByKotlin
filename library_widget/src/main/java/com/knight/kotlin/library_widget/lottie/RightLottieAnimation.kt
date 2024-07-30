@@ -7,7 +7,8 @@ import android.animation.TimeInterpolator
 import android.os.Build
 import android.view.View
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
-import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter4.BaseQuickAdapter
+
 
 /**
  * Author:Knight
@@ -83,7 +84,7 @@ class RightLottieAnimation constructor(builder:GuillotineBuilder) {
         objectAnimator.duration = (mDuration * RightLottieInterpolator.ROTATION_TIME).toLong()
         objectAnimator.addListener(object : Animator.AnimatorListener {
             override fun onAnimationStart(animation: Animator) {
-                mBaseQuickAdapter!!.data.clear()
+                mBaseQuickAdapter.removeAtRange(IntRange(0,mBaseQuickAdapter.items.size - 1))
                 mBaseQuickAdapter.notifyDataSetChanged()
                 isClosing = true
                 mGuillotineView.visibility = View.VISIBLE

@@ -59,7 +59,7 @@ class EyeDailyListActivity : BaseActivity<EyeDailyListActivityBinding, EyeDailyL
     }
 
     //日报适配器
-    private val mEyeDailyAdapter: EyeDailyAdapter by lazy { EyeDailyAdapter(this) }
+    private val mEyeDailyAdapter: EyeDailyAdapter by lazy { EyeDailyAdapter(mutableListOf(),this) }
 
     override fun setThemeColor(isDarkMode: Boolean) {
 
@@ -163,9 +163,9 @@ class EyeDailyListActivity : BaseActivity<EyeDailyListActivityBinding, EyeDailyL
             mBinding.dailyListRefreshLayout.finishLoadMore()
             mBinding.dailyListRefreshLayout.finishRefresh()
             if (loadDailyList) {
-                mEyeDailyAdapter.addData(it.itemList)
+                mEyeDailyAdapter.addAll(it.itemList)
             } else {
-                mEyeDailyAdapter.setNewInstance(it.itemList)
+                mEyeDailyAdapter.submitList(it.itemList)
             }
 
         }

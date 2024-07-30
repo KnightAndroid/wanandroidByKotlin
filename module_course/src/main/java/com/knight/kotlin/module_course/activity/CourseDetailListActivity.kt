@@ -6,7 +6,7 @@ import com.knight.kotlin.library_base.ktx.init
 import com.knight.kotlin.library_base.ktx.setOnClick
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_util.startPageWithParams
-import com.knight.kotlin.library_widget.ktx.setItemClickListener
+
 import com.knight.kotlin.module_course.R
 import com.knight.kotlin.module_course.adapter.CourseDetailListAdapter
 import com.knight.kotlin.module_course.databinding.CourseDetailListActivityBinding
@@ -35,7 +35,7 @@ class CourseDetailListActivity:BaseActivity<CourseDetailListActivityBinding,Cour
     private var page:Int = 0
 
     //课程列表类适配器
-    private val mCourseDetailListAdapter: CourseDetailListAdapter by lazy { CourseDetailListAdapter(arrayListOf()) }
+    private val mCourseDetailListAdapter: CourseDetailListAdapter by lazy { CourseDetailListAdapter() }
     override fun setThemeColor(isDarkMode: Boolean) {
 
     }
@@ -86,9 +86,9 @@ class CourseDetailListActivity:BaseActivity<CourseDetailListActivityBinding,Cour
         mBinding.includeCourseDetailRv.baseFreshlayout.finishLoadMore()
         if (data.datas.size > 0) {
             if (page == 0) {
-                mCourseDetailListAdapter.setNewInstance(data.datas)
+                mCourseDetailListAdapter.submitList(data.datas)
             } else {
-                mCourseDetailListAdapter.addData(data.datas)
+                mCourseDetailListAdapter.addAll(data.datas)
             }
 
             if (data.datas.size == 0) {
@@ -103,11 +103,11 @@ class CourseDetailListActivity:BaseActivity<CourseDetailListActivityBinding,Cour
 
     private fun initListener() {
         mCourseDetailListAdapter.run {
-            setItemClickListener { adapter, view, position ->
+            setOnItemClickListener { adapter, view, position ->
                 startPageWithParams(
                     RouteActivity.Web.WebPager,
-                    "webUrl" to data[position].link,
-                    "webTitle" to data[position].title)
+                    "webUrl" to items[position].link,
+                    "webTitle" to items[position].title)
             }
         }
     }

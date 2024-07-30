@@ -1,14 +1,16 @@
 package com.knight.kotlin.module_home.adapter
 
+import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
-import android.widget.ImageView
-import androidx.constraintlayout.widget.ConstraintLayout
-import com.chad.library.adapter.base.BaseQuickAdapter
-import com.chad.library.adapter.base.viewholder.BaseViewHolder
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import com.chad.library.adapter4.BaseQuickAdapter
 import com.knight.kotlin.library_base.util.dp2px
 import com.knight.kotlin.library_util.image.ImageLoader
 import com.knight.kotlin.module_home.R
+import com.knight.kotlin.module_home.databinding.HomeEyepetizerCategoryBinding
 import com.knight.kotlin.module_home.entity.EyeCategoryBean
 
 /**
@@ -16,27 +18,34 @@ import com.knight.kotlin.module_home.entity.EyeCategoryBean
  * Time:2024/4/26 16:01
  * Description:EyepetizerCategoryAdapter
  */
-class EyepetizerCategoryAdapter(data:MutableList<EyeCategoryBean>):
-    BaseQuickAdapter<EyeCategoryBean, BaseViewHolder>(R.layout.home_eyepetizer_category,data) {
+
+//EyeCategoryBean
+class EyepetizerCategoryAdapter:
+    BaseQuickAdapter<EyeCategoryBean, EyepetizerCategoryAdapter.VH>() {
 
     private val colorArray = mutableListOf(
         android.R.color.holo_red_dark,
         android.R.color.holo_green_dark,
         android.R.color.holo_blue_dark
     )
+    // 自定义ViewHolder类
+    class VH(
+        parent: ViewGroup,
+        val binding: HomeEyepetizerCategoryBinding = HomeEyepetizerCategoryBinding.inflate(
+            LayoutInflater.from(parent.context), parent, false
+        ),
+    ) : RecyclerView.ViewHolder(binding.root)
 
-
-
-    override fun convert(holder: BaseViewHolder, item: EyeCategoryBean) {
-        item.run {
+    override fun onBindViewHolder(holder: VH, position: Int, item: EyeCategoryBean?) {
+        item?.run {
             val gradientDrawable = GradientDrawable()
             gradientDrawable.shape = GradientDrawable.RECTANGLE
             gradientDrawable.cornerRadius = 10.dp2px().toFloat()
             gradientDrawable.setColor(Color.parseColor(categoryColor))
-            holder.getView<ConstraintLayout>(R.id.cl_eyepetizer_category_item).background = gradientDrawable
-            holder.setText(R.id.tv_eyepetizer_category_item_title, "#$categoryName")
-            holder.setText(R.id.tv_eyepetizer_category_item_desc,desc)
-            val iv_eyepetizer_category = holder.getView<ImageView>(R.id.iv_eyepetizer_category)
+            holder.binding.clEyepetizerCategoryItem.background = gradientDrawable
+            holder.binding.tvEyepetizerCategoryItemTitle.setText("#$categoryName")
+            holder.binding.tvEyepetizerCategoryItemDesc.setText(desc)
+            val iv_eyepetizer_category =holder.binding.ivEyepetizerCategory
             if (item.categoryName.equals("日报")) {
                 ImageLoader.loadLocalPhoto(
                     context,
@@ -57,6 +66,8 @@ class EyepetizerCategoryAdapter(data:MutableList<EyeCategoryBean>):
                 )
             }
         }
-
+    }
+    override fun onCreateViewHolder(context: Context, parent: ViewGroup, viewType: Int): VH {
+        return VH(parent)
     }
 }

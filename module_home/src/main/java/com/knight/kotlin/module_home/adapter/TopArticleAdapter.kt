@@ -1,10 +1,13 @@
 package com.knight.kotlin.module_home.adapter
 
+import android.content.Context
 import android.os.Build
 import android.text.Html
-import com.chad.library.adapter.base.BaseQuickAdapter
-import com.chad.library.adapter.base.viewholder.BaseViewHolder
-import com.knight.kotlin.module_home.R
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import com.chad.library.adapter4.BaseQuickAdapter
+import com.knight.kotlin.module_home.databinding.HomeTopArticleItemBinding
 import com.knight.kotlin.module_home.entity.TopArticleBean
 
 /**
@@ -12,31 +15,20 @@ import com.knight.kotlin.module_home.entity.TopArticleBean
  * Time:2022/2/17 10:43
  * Description:TopArticleAdapter
  */
-class TopArticleAdapter(data:MutableList<TopArticleBean>) : BaseQuickAdapter<TopArticleBean,BaseViewHolder>(
-    R.layout.home_top_article_item,data) {
+class TopArticleAdapter : BaseQuickAdapter<TopArticleBean, TopArticleAdapter.VH>() {
+
+
+    // 自定义ViewHolder类
+    class VH(
+        parent: ViewGroup,
+        val binding: HomeTopArticleItemBinding = HomeTopArticleItemBinding.inflate(
+            LayoutInflater.from(parent.context), parent, false
+        ),
+    ) : RecyclerView.ViewHolder(binding.root)
+
 
     private var mIsShowOnlyCount = false
     private var mCount = 3 //设置最多展示几条数据
-
-    override fun convert(holder: BaseViewHolder, item: TopArticleBean) {
-        item.run {
-            //设置标题
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                holder.setText(R.id.home_tv_top_article_title, Html.fromHtml(title, Html.FROM_HTML_MODE_LEGACY))
-            } else {
-                holder.setText(R.id.home_tv_top_article_title,Html.fromHtml(title))
-            }
-
-            if (!author.isNullOrEmpty()) {
-                //设置作者
-                holder.setText(R.id.tv_top_article_author,author)
-            } else {
-                holder.setText(R.id.tv_top_article_author,shareUser)
-            }
-
-
-        }
-    }
 
     /**
      * 设置是否仅显示的条数         * 默认全部显示
@@ -54,7 +46,35 @@ class TopArticleAdapter(data:MutableList<TopArticleBean>) : BaseQuickAdapter<Top
         notifyDataSetChanged()
     }
 
-    override fun getItemCount(): Int {
+    override fun getItemCount(items: List<TopArticleBean>): Int {
         return if (mIsShowOnlyCount) if (super.getItemCount() > mCount) mCount else super.getItemCount() else super.getItemCount()
+    }
+
+    override fun onBindViewHolder(holder: VH, position: Int, item: TopArticleBean?) {
+
+
+          item?.run {
+            //设置标题
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                holder.binding.homeTvTopArticleTitle.setText(Html.fromHtml(title, Html.FROM_HTML_MODE_LEGACY))
+            } else {
+                holder.binding.homeTvTopArticleTitle.setText( Html.fromHtml(title))
+            }
+
+            if (!author.isNullOrEmpty()) {
+                //设置作者
+                holder.binding.tvTopArticleAuthor.setText(author)
+            } else {
+                holder.binding.tvTopArticleAuthor.setText(shareUser)
+            }
+
+
+        }
+
+
+    }
+
+    override fun onCreateViewHolder(context: Context, parent: ViewGroup, viewType: Int): VH {
+        return VH(parent)
     }
 }

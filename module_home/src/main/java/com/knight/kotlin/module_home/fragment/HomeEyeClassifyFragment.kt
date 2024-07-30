@@ -10,7 +10,6 @@ import com.knight.kotlin.library_base.vm.EmptyViewModel
 import com.knight.kotlin.library_util.JsonUtils
 import com.knight.kotlin.library_util.startPage
 import com.knight.kotlin.library_widget.ktx.init
-import com.knight.kotlin.library_widget.ktx.setItemClickListener
 import com.knight.kotlin.module_home.adapter.EyepetizerCategoryAdapter
 import com.knight.kotlin.module_home.databinding.HomeEyeClassifyFragmentBinding
 import com.knight.kotlin.module_home.entity.EyeCategoryBean
@@ -26,7 +25,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @Route(path = RouteFragment.Home.HomeEyeClassifyFragment)
 class HomeEyeClassifyFragment : BaseFragment<HomeEyeClassifyFragmentBinding,EmptyViewModel>() {
 
-    private val mOpenSourceAdapter: EyepetizerCategoryAdapter by lazy { EyepetizerCategoryAdapter(arrayListOf()) }
+    private val mOpenSourceAdapter: EyepetizerCategoryAdapter by lazy { EyepetizerCategoryAdapter() }
 
     override fun setThemeColor(isDarkMode: Boolean) {
 
@@ -57,10 +56,10 @@ class HomeEyeClassifyFragment : BaseFragment<HomeEyeClassifyFragmentBinding,Empt
         val jsonData: String = JsonUtils.getJson(requireActivity(), "eyecategory.json")
         val mDataList: MutableList<EyeCategoryBean> =
             GsonUtils.getList(jsonData, type)
-        mOpenSourceAdapter.setNewInstance(mDataList)
+        mOpenSourceAdapter.submitList(mDataList)
 
         mOpenSourceAdapter.run {
-            setItemClickListener { adapter, view, position ->
+            setOnItemClickListener { adapter, view, position ->
                 startPage(RouteActivity.EyeDaily.DailyListActivity)
 
             }

@@ -1,16 +1,23 @@
 package com.knight.kotlin.module_home.adapter
 
+import android.content.Context
 import android.graphics.drawable.GradientDrawable
 import android.os.Build
 import android.text.Html
 import android.text.TextUtils
+import android.view.LayoutInflater
 import android.view.View
-import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
-import com.chad.library.adapter.base.viewholder.BaseViewHolder
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import com.chad.library.adapter4.BaseMultiItemAdapter
 import com.knight.kotlin.library_base.config.Appconfig
+import com.knight.kotlin.library_base.config.EyeTypeConstants
+import com.knight.kotlin.library_base.databinding.BaseArticleItemBinding
+import com.knight.kotlin.library_base.databinding.BaseTextItemBinding
 import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_util.StringUtils
 import com.knight.kotlin.library_util.image.ImageLoader
+import com.knight.kotlin.module_home.constants.HomeConstants
 import com.knight.kotlin.module_home.entity.HomeArticleEntity
 
 /**
@@ -18,86 +25,77 @@ import com.knight.kotlin.module_home.entity.HomeArticleEntity
  * Time:2022/4/20 13:44
  * Description:SearchResultAdapter
  */
-class SearchResultAdapter(data:MutableList<HomeArticleEntity>):BaseMultiItemQuickAdapter<HomeArticleEntity,BaseViewHolder>() {
+class SearchResultAdapter(data:MutableList<HomeArticleEntity>):BaseMultiItemAdapter<HomeArticleEntity>(data) {
+
+    // 标题 的 viewholder
+    class SearchArticleTextVH(val viewBinding: BaseTextItemBinding) : RecyclerView.ViewHolder(viewBinding.root)
+
+    // 正文视频 的 viewholder
+    class SearchArticleImageItemVH(val viewBinding: BaseArticleItemBinding) : RecyclerView.ViewHolder(viewBinding.root)
 
 
+
+    // 在 init 初始化的时候，添加多类型
     init {
-        addItemType(Appconfig.ARTICLE_TEXT_TYPE, com.knight.kotlin.library_base.R.layout.base_text_item)
-        addItemType(Appconfig.ARTICLE_PICTURE_TYPE, com.knight.kotlin.library_base.R.layout.base_article_item)
+        addItemType(Appconfig.ARTICLE_TEXT_TYPE, object :
+            OnMultiItemAdapterListener<HomeArticleEntity, SearchArticleTextVH> {
+            override fun onBind(
+                holder: SearchArticleTextVH,
+                position: Int,
+                item: HomeArticleEntity?
+            ) {
+                // 绑定 item 数据
+                val binding = BaseTextItemBinding.bind(holder.itemView)
 
-    }
-
-    override fun convert(holder: BaseViewHolder, item: HomeArticleEntity) {
-        item.run {
-            when(holder.itemViewType) {
-                Appconfig.ARTICLE_TEXT_TYPE ->{
+                item?.run{
                     //作者
                     if (author.isNullOrEmpty()) {
-                        holder.setText(com.knight.kotlin.library_base.R.id.base_item_article_author, StringUtils.getStyle(context, shareUser, Appconfig.search_keyword))
+                        binding.baseItemArticleAuthor.setText(StringUtils.getStyle(context, shareUser, Appconfig.search_keyword))
                     } else {
-                        holder.setText(com.knight.kotlin.library_base.R.id.base_item_article_author, StringUtils.getStyle(context, author, Appconfig.search_keyword))
+                        binding.baseItemArticleAuthor.setText(StringUtils.getStyle(context, author, Appconfig.search_keyword))
                     }
 
                     if (!TextUtils.isEmpty(superChapterName) || !TextUtils.isEmpty(chapterName)) {
-                        holder.setVisible(com.knight.kotlin.library_base.R.id.base_tv_article_superchaptername,true)
+                        binding.baseTvArticleSuperchaptername.visibility = View.VISIBLE
                         val gradientDrawable = GradientDrawable()
                         gradientDrawable.shape = GradientDrawable.RECTANGLE
                         gradientDrawable.setStroke(2, CacheUtils.getThemeColor())
                         if (!TextUtils.isEmpty(superChapterName)) {
                             if (!TextUtils.isEmpty(chapterName)) {
-                                holder.setText(
-                                    com.knight.kotlin.library_base.R.id.base_tv_article_superchaptername,
-                                    "$superChapterName/$chapterName"
-                                )
+                                binding.baseTvArticleSuperchaptername.setText("$superChapterName/$chapterName")
                             } else {
-                                holder.setText(
-                                    com.knight.kotlin.library_base.R.id.base_tv_article_superchaptername,
-                                    superChapterName
-                                )
+                                binding.baseTvArticleSuperchaptername.setText(superChapterName)
                             }
                         } else {
                             if (!TextUtils.isEmpty(chapterName)) {
-                                holder.setText(
-                                    com.knight.kotlin.library_base.R.id.base_tv_article_superchaptername,
-                                    chapterName
-                                )
+                                binding.baseTvArticleSuperchaptername.setText(chapterName)
                             } else {
-                                holder.setText(com.knight.kotlin.library_base.R.id.base_tv_article_superchaptername, "")
+                                binding.baseTvArticleSuperchaptername.setText("")
                             }
                         }
-                        holder.setTextColor(
-                            com.knight.kotlin.library_base.R.id.base_tv_article_superchaptername,
-                            CacheUtils.getThemeColor()
-                        )
+                        binding.baseTvArticleSuperchaptername.setTextColor(CacheUtils.getThemeColor())
 
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                            holder.getView<View>(com.knight.kotlin.library_base.R.id.base_tv_article_superchaptername).background =
+                            binding.baseTvArticleSuperchaptername.background =
                                 gradientDrawable
                         } else {
-                            holder.getView<View>(com.knight.kotlin.library_base.R.id.base_tv_article_superchaptername)
+                            binding.baseTvArticleSuperchaptername
                                 .setBackgroundDrawable(gradientDrawable)
                         }
                     } else {
-                        holder.setGone(com.knight.kotlin.library_base.R.id.base_tv_article_superchaptername, true)
+                        binding.baseTvArticleSuperchaptername.visibility =View.GONE
                     }
 
                     //时间赋值
                     if (!TextUtils.isEmpty(niceDate)) {
-                        holder.setText(
-                            com.knight.kotlin.library_base.R.id.base_item_articledata,
-                            niceDate
-                        )
+                        binding.baseItemArticledate.setText(niceDate)
                     } else {
-                        holder.setText(
-                            com.knight.kotlin.library_base.R.id.base_item_articledata,
-                            niceShareDate
-                        )
+                        binding.baseItemArticledate.setText(niceShareDate)
                     }
 
                     //标题
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                        holder.setText(
-                            com.knight.kotlin.library_base.R.id.base_tv_articletitle,
+                       binding.baseTvArticletitle.setText(
                             StringUtils.getStyle(
                                 context,
                                 Html.fromHtml(
@@ -108,8 +106,7 @@ class SearchResultAdapter(data:MutableList<HomeArticleEntity>):BaseMultiItemQuic
                             )
                         )
                     } else {
-                        holder.setText(
-                            com.knight.kotlin.library_base.R.id.base_tv_articletitle,
+                        binding.baseTvArticletitle.setText(
                             StringUtils.getStyle(
                                 context,
                                 Html.fromHtml(title).toString(),
@@ -119,99 +116,119 @@ class SearchResultAdapter(data:MutableList<HomeArticleEntity>):BaseMultiItemQuic
                     }
                     //是否收藏
                     if (collect) {
-                        holder.setBackgroundResource(
-                            com.knight.kotlin.library_base.R.id.base_icon_collect,
+                        binding.baseIconCollect.setBackgroundResource(
                             com.knight.kotlin.library_base.R.drawable.base_icon_collect
                         )
                     } else {
-                        holder.setBackgroundResource(
-                            com.knight.kotlin.library_base.R.id.base_icon_collect,
+                        binding.baseIconCollect.setBackgroundResource(
                             com.knight.kotlin.library_base.R.drawable.base_icon_nocollect
                         )
                     }
 
                 }
-                Appconfig.ARTICLE_PICTURE_TYPE ->{
+
+
+
+
+
+
+
+
+            } // 类型 1
+            override fun onCreate(context: Context, parent: ViewGroup, viewType: Int): SearchArticleTextVH {
+                // 创建 viewholder
+                val viewBinding = BaseTextItemBinding.inflate(LayoutInflater.from(context), parent, false)
+                return SearchArticleTextVH(viewBinding)
+            }
+
+
+        }).addItemType(EyeTypeConstants.IMAGE_TYPE, object :
+           OnMultiItemAdapterListener<HomeArticleEntity, SearchArticleImageItemVH> { // 类型 2
+            override fun onCreate(context: Context, parent: ViewGroup, viewType: Int):SearchArticleImageItemVH {
+                // 创建 viewholder
+                val viewBinding = BaseArticleItemBinding.inflate(LayoutInflater.from(context), parent, false)
+                return SearchArticleImageItemVH(viewBinding)
+            }
+
+            override fun onBind(holder: SearchArticleImageItemVH, position: Int, item: HomeArticleEntity?) {
+                // 绑定 item 数据
+                val binding = BaseArticleItemBinding.bind(holder.itemView)
+                item?.run {
                     //项目图片
                     ImageLoader.loadStringPhoto(
                         context,
                         envelopePic ?:"",
-                        holder.getView(com.knight.kotlin.library_base.R.id.base_item_imageview)
+                        binding.baseItemImageview
                     )
 
                     //作者
                     if (!TextUtils.isEmpty(author)) {
-                        holder.setText(com.knight.kotlin.library_base.R.id.base_item_tv_author, StringUtils.getStyle(context, author, Appconfig.search_keyword))
+                        binding.baseItemTvAuthor.setText(StringUtils.getStyle(context, author, Appconfig.search_keyword))
                     } else {
-                        holder.setText(com.knight.kotlin.library_base.R.id.base_item_tv_author, StringUtils.getStyle(context, shareUser, Appconfig.search_keyword))
+                        binding.baseItemTvAuthor.setText( StringUtils.getStyle(context, shareUser, Appconfig.search_keyword))
                     }
                     //时间赋值
                     if (!TextUtils.isEmpty(niceDate)) {
-                        holder.setText(com.knight.kotlin.library_base.R.id.base_item_tv_time, niceDate)
+                        binding.baseItemTvTime.setText( niceDate)
                     } else {
-                        holder.setText(com.knight.kotlin.library_base.R.id.base_item_tv_time, niceShareDate)
+                        binding.baseItemTvTime.setText(niceShareDate)
                     }
 
                     //标题
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                        holder.setText(
-                            com.knight.kotlin.library_base.R.id.base_tv_title,
+                        binding.baseTvTitle.setText(
                             StringUtils.getStyle(context, Html.fromHtml(title, Html.FROM_HTML_MODE_LEGACY).toString(), Appconfig.search_keyword))
                     } else {
-                        holder.setText(
-                            com.knight.kotlin.library_base.R.id.base_tv_title,
+                        binding.baseTvTitle.setText(
                             StringUtils.getStyle(context, Html.fromHtml(title).toString(), Appconfig.search_keyword))
                     }
 
 
                     //描述
                     if (!TextUtils.isEmpty(desc)) {
-                        holder.setVisible(com.knight.kotlin.library_base.R.id.base_tv_project_desc, true)
+                        binding.baseTvProjectDesc.visibility = View.VISIBLE
                         //标题
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                            holder.setText(
-                                com.knight.kotlin.library_base.R.id.base_tv_project_desc,
+                            binding.baseTvProjectDesc.setText(
                                 StringUtils.getStyle(context, Html.fromHtml(desc, Html.FROM_HTML_MODE_LEGACY).toString(), Appconfig.search_keyword))
                         } else {
-                            holder.setText(com.knight.kotlin.library_base.R.id.base_tv_project_desc,
+                            binding.baseTvProjectDesc.setText(
                                 StringUtils.getStyle(context, Html.fromHtml(desc).toString(), Appconfig.search_keyword))
                         }
                     } else {
-                        holder.setGone(com.knight.kotlin.library_base.R.id.base_tv_project_desc, true)
+                        binding.baseTvProjectDesc.visibility = View.GONE
                     }
 
                     //分类
                     if (!TextUtils.isEmpty(superChapterName)) {
-                        holder.setVisible(com.knight.kotlin.library_base.R.id.base_tv_superchapter, true)
-                        holder.setText(
-                            com.knight.kotlin.library_base.R.id.base_tv_superchapter,
-                            superChapterName
-                        )
+                        binding.baseTvSuperchapter.visibility = View.VISIBLE
+                        binding.baseTvSuperchapter.setText(superChapterName)
                     } else {
-                        holder.setGone(com.knight.kotlin.library_base.R.id.base_tv_superchapter, true)
+                        binding.baseTvSuperchapter.visibility = View.GONE
                     }
 
                     //是否收藏
                     if (collect) {
-                        holder.setBackgroundResource(
-                            com.knight.kotlin.library_base.R.id.base_article_collect,
-                            com.knight.kotlin.library_base.R.drawable.base_icon_collect
-                        )
+                        binding.baseArticleCollect.setBackgroundResource(com.knight.kotlin.library_base.R.drawable.base_icon_collect)
                     } else {
-                        holder.setBackgroundResource(
-                            com.knight.kotlin.library_base.R.id.base_article_collect,
-                            com.knight.kotlin.library_base.R.drawable.base_icon_nocollect
-                        )
+                        binding.baseArticleCollect.setBackgroundResource(com.knight.kotlin.library_base.R.drawable.base_icon_nocollect)
                     }
-
-                }
-
-                else ->{
-
                 }
             }
-        }
 
+            override fun isFullSpanItem(itemType: Int): Boolean {
+                // 使用GridLayoutManager时，此类型的 item 是否是满跨度
+                return true
+            }
+
+        }).onItemViewType { position, list -> // 根据数据，返回对应的 ItemViewType
+            if (TextUtils.isEmpty(list[position].envelopePic)) {
+                HomeConstants.ARTICLE_TEXT_TYPE
+            } else HomeConstants.ARTICLE_PICTURE_TYPE
+        }
     }
+
+
+
 
 }

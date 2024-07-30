@@ -83,7 +83,7 @@ object Dependencies {
        const val COOKIE = "v1.0.0"                         // Cookie管理
        const val GLIDE = "4.11.0"                          // Glide图像版本
        const val SMART_REFRESH = "2.0.3"                    // 智能刷新库
-       const val BASE_ADAPTER = "3.0.4"                     // Base适配器
+       const val BASE_ADAPTER = "4.1.4"                     // Base适配器
        const val RECYCLEVIEW_VERSION = "1.3.2"              // recycleview
        const val BANNER_VERSION = "2.2.2"                   // Banner
        const val SHIMMER_LAYOUT_VERSION = "2.1.0"            // shimmerLayout
@@ -241,7 +241,7 @@ object Dependencies {
         //智能刷新库 二级刷新头
         const val SMART_HEADER_TWO_LEVEL = "com.scwang.smart:refresh-header-two-level:${Version.SMART_REFRESH}"
         //BaseAdapter https://github.com/CymChad/BaseRecyclerViewAdapterHelper
-        const val BASE_ADAPTER_HELPER = "com.github.CymChad:BaseRecyclerViewAdapterHelper:${Version.BASE_ADAPTER}"
+        const val BASE_ADAPTER_HELPER = "io.github.cymchad:BaseRecyclerViewAdapterHelper4:${Version.BASE_ADAPTER}"
         //SwipeRecycleview https://github.com/yanzhenjie/SwipeRecyclerView
         const val SWIPE_RECYCLERVIEW = "com.yanzhenjie.recyclerview:x:${Version.RECYCLEVIEW_VERSION}"
         //Banner https://github.com/youth5201314/banner

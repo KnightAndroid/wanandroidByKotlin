@@ -20,8 +20,7 @@ import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.library_util.toast.ToastUtils
 import com.knight.kotlin.library_widget.flowlayout.OnTagClickListener
 import com.knight.kotlin.library_widget.flowlayout.TagInfo
-import com.knight.kotlin.library_widget.ktx.setItemChildClickListener
-import com.knight.kotlin.library_widget.ktx.setItemClickListener
+
 import com.knight.kotlin.module_home.R
 import com.knight.kotlin.module_home.adapter.KnowLedgeAdapter
 import com.knight.kotlin.module_home.databinding.HomeLabelActivityBinding
@@ -59,7 +58,7 @@ class KnowLedgeLabelActivity : BaseActivity<HomeLabelActivityBinding, EmptyViewM
         object : TypeToken<List<TagInfo>>() {}.type
     )
 
-    private val mMoreKnowLedgeAdapter: KnowLedgeAdapter by lazy { KnowLedgeAdapter(arrayListOf()) }
+    private val mMoreKnowLedgeAdapter: KnowLedgeAdapter by lazy { KnowLedgeAdapter() }
     private var isEdit = false
     override fun setThemeColor(isDarkMode: Boolean) {
         mBinding.homeLabelEdit.setTextColor(themeColor)
@@ -93,14 +92,14 @@ class KnowLedgeLabelActivity : BaseActivity<HomeLabelActivityBinding, EmptyViewM
             override fun onTagDelete(tagInfo: TagInfo?) {
                 //删除标签 回调这里
                 tagInfo?.let {
-                    mMoreKnowLedgeAdapter.data.add(it)
-                    mMoreKnowLedgeAdapter.notifyItemInserted(mMoreKnowLedgeAdapter.data.size - 1)
+                    mMoreKnowLedgeAdapter.add(it)
+                    mMoreKnowLedgeAdapter.notifyItemInserted(mMoreKnowLedgeAdapter.items.size - 1)
                     homeTvMylabel.setText(
                         getString(R.string.home_knowledge_label) + "(" + homeKnowledgetTag.getTagInfos()
                             .size + "/10)"
                     )
                     homeTvMorelabel.setText(
-                        getString(R.string.home_more_knowledge) + "(" + mMoreKnowLedgeAdapter.data
+                        getString(R.string.home_more_knowledge) + "(" + mMoreKnowLedgeAdapter.items
                             .size + "/10)"
                     )
                 }
@@ -131,9 +130,9 @@ class KnowLedgeLabelActivity : BaseActivity<HomeLabelActivityBinding, EmptyViewM
         }
 
         mBinding.homeMoreknowledgeRv.adapter = mMoreKnowLedgeAdapter
-        mMoreKnowLedgeAdapter.setNewInstance(mMoreKnowLedgeList.toMutableList())
+        mMoreKnowLedgeAdapter.submitList(mMoreKnowLedgeList.toMutableList())
         mBinding.homeTvMorelabel.setText(
-            getString(R.string.home_more_knowledge) + "(" + mMoreKnowLedgeAdapter.data
+            getString(R.string.home_more_knowledge) + "(" + mMoreKnowLedgeAdapter.items
                 .size + "/10)"
         )
         initListener()
@@ -141,10 +140,10 @@ class KnowLedgeLabelActivity : BaseActivity<HomeLabelActivityBinding, EmptyViewM
 
     private fun initListener() {
         mMoreKnowLedgeAdapter.run {
-            setItemClickListener { adapter, view, position ->
+            setOnItemClickListener { adapter, view, position ->
                 if (isEdit) {
                     for (i in 0 until mBinding.homeKnowledgetTag.getTagInfos().size) {
-                        if (mMoreKnowLedgeAdapter.data.get(position).tagName.equals(
+                        if (mMoreKnowLedgeAdapter.items.get(position).tagName.equals(
                                 mBinding.homeKnowledgetTag.getTagInfos().get(i).tagName
                             )
                         ) {
@@ -153,33 +152,32 @@ class KnowLedgeLabelActivity : BaseActivity<HomeLabelActivityBinding, EmptyViewM
                         }
                     }
                     mBinding.homeKnowledgetTag.addTag(
-                        mMoreKnowLedgeAdapter.data.get(position),
+                        mMoreKnowLedgeAdapter.items.get(position),
                         isEdit
                     )
                     mBinding.homeTvMylabel.setText(
                         getString(R.string.home_knowledge_label) + "(" + mBinding.homeKnowledgetTag.getTagInfos()
                             .size + "/10)"
                     )
-                    mMoreKnowLedgeAdapter.data.removeAt(position)
+                    mMoreKnowLedgeAdapter.removeAt(position)
                     mMoreKnowLedgeAdapter.notifyItemRemoved(position)
                     mBinding.homeTvMorelabel.setText(
-                        getString(R.string.home_more_knowledge) + "(" + mMoreKnowLedgeAdapter.data
+                        getString(R.string.home_more_knowledge) + "(" + mMoreKnowLedgeAdapter.items
                             .size + "/10)"
                     )
 
                 }
 
             }
-            addChildClickViewIds(R.id.home_iv_moreknowledge_delete)
-            setItemChildClickListener { adapter, view, position ->
+            addOnItemChildClickListener(R.id.home_iv_moreknowledge_delete) { adapter, view, position ->
                 when (view.id) {
                     R.id.home_iv_moreknowledge_delete -> {
 
                         //删除
-                        mMoreKnowLedgeAdapter.data.removeAt(position)
+                        mMoreKnowLedgeAdapter.removeAt(position)
                         mMoreKnowLedgeAdapter.notifyItemRemoved(position)
                         mBinding.homeTvMorelabel.setText(
-                            getString(R.string.home_more_knowledge) + "(" + mMoreKnowLedgeAdapter.data.size + "/10)"
+                            getString(R.string.home_more_knowledge) + "(" + mMoreKnowLedgeAdapter.items.size + "/10)"
                         )
                     }
                 }
@@ -257,7 +255,7 @@ class KnowLedgeLabelActivity : BaseActivity<HomeLabelActivityBinding, EmptyViewM
                         //保存我的标签
                         CacheUtils.saveDataInfo("knowledgeLabel", mKnowledgeLabelList)
                         //保存更多标签
-                        CacheUtils.saveDataInfo("moreknowledgeLabel", mMoreKnowLedgeAdapter.data)
+                        CacheUtils.saveDataInfo("moreknowledgeLabel", mMoreKnowLedgeAdapter.items)
                         initTagDefault()
                         EventBusUtils.postEvent(
                             MessageEvent(MessageEvent.MessageType.ChangeLabel).putStringList(
@@ -269,7 +267,7 @@ class KnowLedgeLabelActivity : BaseActivity<HomeLabelActivityBinding, EmptyViewM
             }
             mBinding.homeIvAddlabel -> {
 //                startActivity(Intent(this,AddKnowLedgeLabelActivity::class.java))
-                if (mMoreKnowLedgeAdapter.data.size < 10) {
+                if (mMoreKnowLedgeAdapter.items.size < 10) {
                     ActivityMessenger.startActivityForResult<AddKnowLedgeLabelActivity>(this@KnowLedgeLabelActivity) {
                         if (it != null) {
                             //未成功处理，即（ResultCode != RESULT_OK）
@@ -277,8 +275,8 @@ class KnowLedgeLabelActivity : BaseActivity<HomeLabelActivityBinding, EmptyViewM
                             it.extras?.let {
                                 val result: String = it.getString("label_data") ?: ""
                                 if (!TextUtils.isEmpty(result)) {
-                                    for (i in 0 until mMoreKnowLedgeAdapter.data.size) {
-                                        if (result == mMoreKnowLedgeAdapter.data.get(i).tagName) {
+                                    for (i in 0 until mMoreKnowLedgeAdapter.items.size) {
+                                        if (result == mMoreKnowLedgeAdapter.items.get(i).tagName) {
                                             ToastUtils.show(R.string.home_same_label_tip)
                                             return@let
                                         }
@@ -287,12 +285,12 @@ class KnowLedgeLabelActivity : BaseActivity<HomeLabelActivityBinding, EmptyViewM
                                     tagInfo.type = TagInfo.TYPE_TAG_USER
                                     tagInfo.tagName = result
                                     tagInfo.tagId = "moreknowledgeLabel" + Random(1).nextInt(100)
-                                    mMoreKnowLedgeAdapter.data.add(tagInfo)
+                                    mMoreKnowLedgeAdapter.add(tagInfo)
                                     mMoreKnowLedgeAdapter.notifyItemInserted(
-                                        mMoreKnowLedgeAdapter.data.size - 1
+                                        mMoreKnowLedgeAdapter.items.size - 1
                                     )
                                     mBinding.homeTvMorelabel.setText(
-                                        getString(R.string.home_more_knowledge) + "(" + mMoreKnowLedgeAdapter.data.size + "/10)"
+                                        getString(R.string.home_more_knowledge) + "(" + mMoreKnowLedgeAdapter.items.size + "/10)"
                                     )
                                 }
                             }

@@ -24,8 +24,7 @@ import com.knight.kotlin.library_util.startPage
 import com.knight.kotlin.library_util.startPageWithParams
 import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.library_widget.ktx.init
-import com.knight.kotlin.library_widget.ktx.setItemChildClickListener
-import com.knight.kotlin.library_widget.ktx.setItemClickListener
+
 import com.knight.kotlin.module_home.R
 import com.knight.kotlin.module_home.adapter.HomeHotKeyAdapter
 import com.knight.kotlin.module_home.adapter.SearchRecordAdapter
@@ -44,9 +43,9 @@ import dagger.hilt.android.AndroidEntryPoint
 class HomeSearchActivity : BaseActivity<HomeSearchActivityBinding,HomeSearchVm>(){
 
     //热词适配器
-    private val mHomeHotKeyAdapter: HomeHotKeyAdapter by lazy { HomeHotKeyAdapter(arrayListOf()) }
+    private val mHomeHotKeyAdapter: HomeHotKeyAdapter by lazy { HomeHotKeyAdapter() }
     //搜索记录
-    private val mSearchRecordAdapter:SearchRecordAdapter by lazy {SearchRecordAdapter(arrayListOf())}
+    private val mSearchRecordAdapter:SearchRecordAdapter by lazy {SearchRecordAdapter()}
 
     private var keyword: String = ""
     override fun setThemeColor(isDarkMode: Boolean) {
@@ -133,7 +132,7 @@ class HomeSearchActivity : BaseActivity<HomeSearchActivityBinding,HomeSearchVm>(
      */
     private fun setSearchHotKey(data:MutableList<SearchHotKeyEntity>) {
         requestSuccess()
-        mHomeHotKeyAdapter.setNewInstance(data)
+        mHomeHotKeyAdapter.submitList(data)
     }
 
 
@@ -141,7 +140,7 @@ class HomeSearchActivity : BaseActivity<HomeSearchActivityBinding,HomeSearchVm>(
         if (data.size > 0) {
             mBinding.homeSearchkeywordHeadRl.visibility = View.VISIBLE
             mBinding.homeSearchhistroyKeywordRv.visibility = View.VISIBLE
-            mSearchRecordAdapter.setNewInstance(data)
+            mSearchRecordAdapter.submitList(data)
         } else {
             mBinding.homeSearchkeywordHeadRl.visibility = View.GONE
             mBinding.homeSearchhistroyKeywordRv.visibility = View.GONE
@@ -151,20 +150,18 @@ class HomeSearchActivity : BaseActivity<HomeSearchActivityBinding,HomeSearchVm>(
 
     private fun initClickListener() {
           mSearchRecordAdapter.run {
-            setItemClickListener { adapter, view, position ->
-              keyword = data[position].name ?: ""
+            setOnItemClickListener { adapter, view, position ->
+              keyword = items[position].name ?: ""
               Appconfig.search_keyword = keyword
               startPageWithParams(RouteActivity.Home.HomeSearchResultActivity,"keyword" to keyword)
             }
               //子view点击事件
-              addChildClickViewIds(
-                  R.id.iv_searchkeyword_delete
-              )
-              setItemChildClickListener { adapter, view, position ->
-                  HistroyKeywordsRepository.getInstance()?.deleteHistroyKeyword(data[position].id)
-                  mSearchRecordAdapter.data.removeAt(position)
+
+              addOnItemChildClickListener(R.id.iv_searchkeyword_delete) { adapter, view, position ->
+                  HistroyKeywordsRepository.getInstance()?.deleteHistroyKeyword(items[position].id)
+                  mSearchRecordAdapter.removeAt(position)
                   mSearchRecordAdapter.notifyItemRemoved(position)
-                  if (data.size == 0) {
+                  if (items.size == 0) {
                       mBinding.homeSearchkeywordHeadRl.visibility = View.GONE
                   }
 
@@ -172,8 +169,8 @@ class HomeSearchActivity : BaseActivity<HomeSearchActivityBinding,HomeSearchVm>(
         }
 
         mHomeHotKeyAdapter.run {
-            setItemClickListener { adapter, view, position ->
-                keyword = data[position].name
+            setOnItemClickListener { adapter, view, position ->
+                keyword = items[position].name
                 Appconfig.search_keyword = keyword
                 DataBaseUtils.saveSearchKeyword(keyword)
                 startPageWithParams(RouteActivity.Home.HomeSearchResultActivity,"keyword" to keyword)

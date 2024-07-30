@@ -68,7 +68,7 @@
         app:layout_constraintTop_toBottomOf="@id/base_item_article_author"/>
 
     <TextView
-        android:id="@+id/base_item_articledata"
+        android:id="@+id/base_item_articledate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/base_item_articledata_margin_left"
@@ -85,7 +85,7 @@
         android:background="@color/base_item_bottomview_color"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/base_item_articledata"/>
+        app:layout_constraintTop_toBottomOf="@id/base_item_articledate"/>
 
 
     <ImageView

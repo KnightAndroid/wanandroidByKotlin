@@ -14,7 +14,7 @@ import com.knight.kotlin.library_base.vm.EmptyViewModel
 import com.knight.kotlin.library_util.BlurBuilderUtils
 import com.knight.kotlin.library_util.ViewInitUtils
 import com.knight.kotlin.library_widget.ktx.init
-import com.knight.kotlin.library_widget.ktx.setItemClickListener
+
 import com.knight.kotlin.module_home.adapter.TopArticleAroundAdapter
 import com.knight.kotlin.module_home.databinding.HomeArticlesTabActivityBinding
 import com.knight.kotlin.module_home.entity.TopArticleBean
@@ -38,9 +38,7 @@ class HomeArticlesTabActivity : BaseActivity<HomeArticlesTabActivityBinding, Emp
 
     //圆圈适配器
     private val mTopArticleAroundAdapter: TopArticleAroundAdapter by lazy {
-        TopArticleAroundAdapter(
-            arrayListOf()
-        )
+        TopArticleAroundAdapter()
     }
 
     private val mCompositePageTransformer: CompositePageTransformer = CompositePageTransformer()
@@ -56,9 +54,9 @@ class HomeArticlesTabActivity : BaseActivity<HomeArticlesTabActivityBinding, Emp
         for (topArticleEntity in datas) {
             mHomeTopTabsFragments.add(HomeTopTabsFragment.newInstance(topArticleEntity))
         }
-        mTopArticleAroundAdapter.setNewInstance(datas)
+        mTopArticleAroundAdapter.submitList(datas)
         mTopArticleAroundAdapter.run {
-            setItemClickListener { adapter, view, position ->
+            setOnItemClickListener { adapter, view, position ->
                 setSelectItem(position)
                 notifyDataSetChanged()
                 homeArticleViewpager.setCurrentItem(position)

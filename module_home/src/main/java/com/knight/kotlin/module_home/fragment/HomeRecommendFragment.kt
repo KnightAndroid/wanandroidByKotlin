@@ -56,8 +56,6 @@ import com.knight.kotlin.library_util.image.ImageLoader
 import com.knight.kotlin.library_util.startPage
 import com.knight.kotlin.library_util.toast.ToastUtils
 import com.knight.kotlin.library_widget.ktx.init
-import com.knight.kotlin.library_widget.ktx.setItemChildClickListener
-import com.knight.kotlin.library_widget.ktx.setItemClickListener
 import com.knight.kotlin.library_widget.skeleton.Skeleton
 import com.knight.kotlin.library_widget.skeleton.SkeletonScreen
 import com.knight.kotlin.module_home.R
@@ -107,16 +105,14 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
 
 
     //置顶文章适配器
-    private val mTopArticleAdapter: TopArticleAdapter by lazy { TopArticleAdapter(arrayListOf()) }
+    private val mTopArticleAdapter: TopArticleAdapter by lazy { TopArticleAdapter() }
 
     //推荐文章适配器
-    private val mHomeArticleAdapter: HomeArticleAdapter by lazy { HomeArticleAdapter(arrayListOf()) }
+    private val mHomeArticleAdapter: HomeArticleAdapter by lazy { HomeArticleAdapter() }
 
     //公众号适配器
     private val mOfficialAccountAdapter: OfficialAccountAdapter by lazy {
-        OfficialAccountAdapter(
-            arrayListOf()
-        )
+        OfficialAccountAdapter()
     }
 
     //头部View
@@ -263,17 +259,17 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
      */
     private fun initTopAdapter() {
         mTopArticleAdapter.run {
-            setItemClickListener { adapter, view, position ->
+            setOnItemClickListener { adapter, view, position ->
                 ArouteUtils.startWebArticle(
-                    data[position].link,
-                    data[position].title,
-                    data[position].id,
-                    data[position].collect,
-                    data[position].envelopePic,
-                    data[position].desc,
-                    data[position].chapterName,
-                    data[position].author,
-                    data[position].shareUser
+                    items[position].link,
+                    items[position].title,
+                    items[position].id,
+                    items[position].collect,
+                    items[position].envelopePic,
+                    items[position].desc,
+                    items[position].chapterName,
+                    items[position].author,
+                    items[position].shareUser
                 )
 
             }
@@ -282,7 +278,7 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
                 BlurBuilderUtils.snapShotWithoutStatusBar(requireActivity())
                 startActivity(
                     Intent(activity, HomeArticlesTabActivity::class.java)
-                        .putParcelableArrayListExtra("toparticles", ArrayList(data))
+                        .putParcelableArrayListExtra("toparticles", ArrayList(items))
                 )
                 activity?.overridePendingTransition(
                     com.knight.kotlin.library_base.R.anim.base_scalealpha_in,
@@ -390,7 +386,7 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
      * 获取置顶文章数据
      */
     private fun setTopArticle(data: MutableList<TopArticleBean>) {
-        mTopArticleAdapter.setNewInstance(data)
+        mTopArticleAdapter.submitList(data)
         if (data.size > 3) {
             mTopArticleAdapter.setShowOnlyThree(true)
         } else {
@@ -412,7 +408,7 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
      *
      */
     private fun setOfficialAccount(data: MutableList<OfficialAccountEntity>) {
-        mOfficialAccountAdapter.setNewInstance(data)
+        mOfficialAccountAdapter.submitList(data)
     }
 
 
@@ -430,9 +426,9 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
 
         mOfficialAccountAdapter.run {
             //Item点击事件
-            setItemClickListener { adapter, view, position ->
+            setOnItemClickListener { adapter, view, position ->
                 GoRouter.getInstance().build(RouteActivity.Wechat.WechatTabActivity)
-                    .withParcelableArrayList("data", ArrayList(data))
+                    .withParcelableArrayList("data", ArrayList(items))
                     .withInt("position", position)
                     .go()
             }
@@ -445,27 +441,27 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
      */
     private fun initArticleListener() {
         mHomeArticleAdapter.run {
-            setItemClickListener { adapter, view, position ->
+            setOnItemClickListener { adapter, view, position ->
                 ArouteUtils.startWebArticle(
-                    mHomeArticleAdapter.data[position - 1].link,
-                    mHomeArticleAdapter.data[position - 1].title,
-                    mHomeArticleAdapter.data[position - 1].id,
-                    mHomeArticleAdapter.data[position - 1].collect,
-                    mHomeArticleAdapter.data[position - 1].envelopePic,
-                    mHomeArticleAdapter.data[position - 1].desc,
-                    mHomeArticleAdapter.data[position - 1].chapterName,
-                    mHomeArticleAdapter.data[position - 1].author,
-                    mHomeArticleAdapter.data[position - 1].shareUser
+                    mHomeArticleAdapter.items[position - 1].link,
+                    mHomeArticleAdapter.items[position - 1].title,
+                    mHomeArticleAdapter.items[position - 1].id,
+                    mHomeArticleAdapter.items[position - 1].collect,
+                    mHomeArticleAdapter.items[position - 1].envelopePic,
+                    mHomeArticleAdapter.items[position - 1].desc,
+                    mHomeArticleAdapter.items[position - 1].chapterName,
+                    mHomeArticleAdapter.items[position - 1].author,
+                    mHomeArticleAdapter.items[position - 1].shareUser
                 )
             }
-            addChildClickViewIds(R.id.home_icon_collect)
-            setItemChildClickListener { adapter, view, position ->
+
+            addOnItemChildClickListener(R.id.home_icon_collect) { adapter, view, position ->
                 when (view.id) {
                     R.id.home_icon_collect -> {
                         selectItem = position - 1
                         collectOrunCollect(
-                            mHomeArticleAdapter.data[position - 1].collect,
-                            mHomeArticleAdapter.data[position - 1].id
+                            mHomeArticleAdapter.items[position - 1].collect,
+                            mHomeArticleAdapter.items[position - 1].id
                         )
                     }
                 }
@@ -522,9 +518,9 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
         mBinding.recommendRefreshLayout.finishLoadMore()
         mBinding.recommendRefreshLayout.finishRefresh()
         if (currentPage > 1) {
-            mHomeArticleAdapter.addData(data.datas)
+            mHomeArticleAdapter.addAll(data.datas)
         } else {
-            mHomeArticleAdapter.setNewInstance(data.datas)
+            mHomeArticleAdapter.submitList(data.datas)
             if (mBinding.homeRecommendArticleBody.headerCount == 0) {
                 mBinding.homeRecommendArticleBody.addHeaderView(recommendHeadView)
             }
@@ -563,7 +559,7 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
      * 收藏成功
      */
     private fun collectSucess() {
-        mHomeArticleAdapter.data[selectItem].collect = true
+        mHomeArticleAdapter.items[selectItem].collect = true
         mHomeArticleAdapter.notifyItemChanged(selectItem)
 
     }
@@ -573,7 +569,7 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
      * 取消收藏
      */
     private fun unCollectSuccess() {
-        mHomeArticleAdapter.data[selectItem].collect = false
+        mHomeArticleAdapter.items[selectItem].collect = false
         mHomeArticleAdapter.notifyItemChanged(selectItem)
 
     }

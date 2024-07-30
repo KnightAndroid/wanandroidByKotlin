@@ -14,8 +14,6 @@ import com.knight.kotlin.library_util.DataBaseUtils
 import com.knight.kotlin.library_util.SystemUtils
 import com.knight.kotlin.library_util.toast.ToastUtils
 import com.knight.kotlin.library_widget.ktx.init
-import com.knight.kotlin.library_widget.ktx.setItemChildClickListener
-import com.knight.kotlin.library_widget.ktx.setItemClickListener
 import com.knight.kotlin.module_home.R
 import com.knight.kotlin.module_home.adapter.SearchResultAdapter
 import com.knight.kotlin.module_home.databinding.HomeSearchresultActivityBinding
@@ -131,12 +129,12 @@ class SearchResultActivity : BaseActivity<HomeSearchresultActivityBinding, HomeS
         mBinding.includeSearchresult.baseFreshlayout.finishLoadMore()
         mBinding.includeSearchresult.baseFreshlayout.finishRefresh()
         if (page == 0) {
-            mSearchResultAdapter.setNewInstance(data.datas)
+            mSearchResultAdapter.submitList(data.datas)
             if (data.datas.size === 0) {
                 requestEmptyData()
             }
         } else {
-            mSearchResultAdapter.addData(data.datas)
+            mSearchResultAdapter.addAll(data.datas)
         }
         if (data.datas.size === 0) {
             mBinding.includeSearchresult.baseFreshlayout.setEnableLoadMore(false)
@@ -149,31 +147,38 @@ class SearchResultActivity : BaseActivity<HomeSearchresultActivityBinding, HomeS
 
     private fun initListener() {
         mSearchResultAdapter.run {
-            setItemClickListener { adapter, view, position ->
+            setOnItemClickListener { adapter, view, position ->
                 ArouteUtils.startWebArticle(
-                    data[position].link,
-                    data[position].title,
-                    data[position].id,
-                    data[position].collect,
-                    data[position].envelopePic,
-                    data[position].desc,
-                    data[position].chapterName,
-                    data[position].author,
-                    data[position].shareUser
+                    items[position].link,
+                    items[position].title,
+                    items[position].id,
+                    items[position].collect,
+                    items[position].envelopePic,
+                    items[position].desc,
+                    items[position].chapterName,
+                    items[position].author,
+                    items[position].shareUser
                 )
             }
 
-            addChildClickViewIds(com.knight.kotlin.library_base.R.id.base_icon_collect, com.knight.kotlin.library_base.R.id.base_article_collect)
-            setItemChildClickListener { adapter, view, position ->
-                if (view.id == com.knight.kotlin.library_base.R.id.base_icon_collect || view.id == com.knight.kotlin.library_base.R.id.base_article_collect) {
-                    selectItem = position
-                    collectOrunCollect(
-                        data[position].collect,
-                        data[position].id
-                    )
-                }
+            addOnItemChildClickListener(com.knight.kotlin.library_base.R.id.base_icon_collect) { adapter, view, position ->
+                selectItem = position
+                collectOrunCollect(
+                    items[position].collect,
+                    items[position].id
+                )
+
 
             }
+
+            addOnItemChildClickListener(com.knight.kotlin.library_base.R.id.base_article_collect) { adapter, view, position ->
+                selectItem = position
+                collectOrunCollect(
+                    items[position].collect,
+                    items[position].id
+                )
+            }
+
         }
     }
 
@@ -207,7 +212,7 @@ class SearchResultActivity : BaseActivity<HomeSearchresultActivityBinding, HomeS
      * 收藏成功
      */
     private fun collectSucess() {
-        mSearchResultAdapter.data[selectItem].collect = true
+        mSearchResultAdapter.items[selectItem].collect = true
         mSearchResultAdapter.notifyItemChanged(selectItem)
 
     }
@@ -217,7 +222,7 @@ class SearchResultActivity : BaseActivity<HomeSearchresultActivityBinding, HomeS
      * 取消收藏
      */
     private fun unCollectSuccess() {
-        mSearchResultAdapter.data[selectItem].collect = false
+        mSearchResultAdapter.items[selectItem].collect = false
         mSearchResultAdapter.notifyItemChanged(selectItem)
 
     }

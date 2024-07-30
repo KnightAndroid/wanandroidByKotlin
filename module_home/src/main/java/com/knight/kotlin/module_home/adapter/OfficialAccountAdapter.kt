@@ -1,28 +1,43 @@
 package com.knight.kotlin.module_home.adapter
 
+import android.content.Context
 import android.graphics.drawable.GradientDrawable
-import android.widget.ImageView
-import com.chad.library.adapter.base.BaseQuickAdapter
-import com.chad.library.adapter.base.viewholder.BaseViewHolder
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import com.chad.library.adapter4.BaseQuickAdapter
 import com.knight.kotlin.library_base.util.ColorUtils
-import com.knight.kotlin.module_home.R
 import com.knight.kotlin.library_common.entity.OfficialAccountEntity
+import com.knight.kotlin.module_home.databinding.HomeOfficialAccountsItemBinding
 
 /**
  * Author:Knight
  * Time:2022/3/11 16:32
  * Description:OfficialAccountAdapter
  */
-class OfficialAccountAdapter(data:MutableList<OfficialAccountEntity>) : BaseQuickAdapter<OfficialAccountEntity,BaseViewHolder>(
-    R.layout.home_official_accounts_item,data) {
-    override fun convert(holder: BaseViewHolder, item: OfficialAccountEntity) {
-       item.run {
+class OfficialAccountAdapter : BaseQuickAdapter<OfficialAccountEntity, OfficialAccountAdapter.VH>() {
+
+    // 自定义ViewHolder类
+    class VH(
+        parent: ViewGroup,
+        val binding: HomeOfficialAccountsItemBinding = HomeOfficialAccountsItemBinding.inflate(
+            LayoutInflater.from(parent.context), parent, false
+        ),
+    ) : RecyclerView.ViewHolder(binding.root)
+
+    override fun onBindViewHolder(holder: VH, position: Int, item: OfficialAccountEntity?) {
+        item?.run {
            val gradientDrawable = GradientDrawable()
            gradientDrawable.shape = GradientDrawable.OVAL
            gradientDrawable.setColor(ColorUtils.getRandColorCode())
-           (holder.getView(R.id.home_iv_official_account) as ImageView).background = gradientDrawable
-           holder.setText(R.id.home_tv_officialaccount_name,name)
-           holder.setText(R.id.tv_head_username,name.substring(0,1))
-       }
+           holder.binding.homeIvOfficialAccount.background = gradientDrawable
+           holder.binding.homeTvOfficialaccountName.setText(name)
+           holder.binding.tvHeadUsername.setText(name.substring(0,1))
+        }
     }
+
+    override fun onCreateViewHolder(context: Context, parent: ViewGroup, viewType: Int): VH {
+        return VH(parent)
+    }
+
 }
