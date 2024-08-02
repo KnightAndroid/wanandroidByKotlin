@@ -37,18 +37,25 @@ class CustomNestedScrollView : NestedScrollView {
             return
         }
         super.onNestedPreScroll(target, dx, dy, consumed)
+
+        // 当scrollY还没到最大值时，先滑动ScrollView dy距离
+//        if (scrollY + dy < remainingHeight) {
+//            val consumedDy = min(dy, remainingHeight - scrollY)
+//            scrollBy(0, consumedDy)
+//            consumed[1] = consumedDy
+//        }
     }
 
-    override fun onNestedPreFling(target: View, velX: Float, velY: Float): Boolean {
-        val rv = target as RecyclerView
-        if ((velY < 0 && isRvScrolledToTop(rv)) || (velY > 0 && !isNsvScrolledToBottom(this))) {
-            // 处理NestedScrollView的fling，并return true，
-            //同样的RecyclerView也会收到通知，不用处理这次的Fling事件了
-            fling(velY.toInt())
-            return true
-        }
-        return super.onNestedPreFling(target, velX, velY)
-    }
+//    override fun onNestedPreFling(target: View, velX: Float, velY: Float): Boolean {
+//        val rv = target as RecyclerView
+//        if ((velY < 0 && isRvScrolledToTop(rv)) || (velY > 0 && !isNsvScrolledToBottom(this))) {
+//            // 处理NestedScrollView的fling，并return true，
+//            //同样的RecyclerView也会收到通知，不用处理这次的Fling事件了
+//            fling(velY.toInt())
+//            return true
+//        }
+//        return super.onNestedPreFling(target, velX, velY)
+//    }
 
     /**
      * 判断NestedScrollView是否滑动到底部。
