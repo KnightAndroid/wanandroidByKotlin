@@ -33,8 +33,7 @@ import com.knight.kotlin.library_util.startPageWithParams
 import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.library_util.toast.ToastUtils
 import com.knight.kotlin.library_widget.ktx.init
-import com.knight.kotlin.library_widget.ktx.setItemChildClickListener
-import com.knight.kotlin.library_widget.ktx.setItemClickListener
+
 import com.knight.kotlin.module_mine.R
 import com.knight.kotlin.module_mine.activity.LoginActivity
 import com.knight.kotlin.module_mine.activity.QuickLoginActivity
@@ -73,9 +72,9 @@ class MineFragment: BaseFragment<MineFragmentBinding, MineViewModel>(),OnRefresh
     //是否打开了二楼
     private var openTwoLevel = false
     //开源库适配器
-    private val mOpenSourceAdapter: OpenSourceAdapter by lazy { OpenSourceAdapter(arrayListOf()) }
+    private val mOpenSourceAdapter: OpenSourceAdapter by lazy { OpenSourceAdapter() }
     //我的操作项
-    private val mMineItemAdapter : MineItemAdapter by lazy {MineItemAdapter(arrayListOf())}
+    private val mMineItemAdapter : MineItemAdapter by lazy {MineItemAdapter()}
 
 
     override fun MineFragmentBinding.initView() {
@@ -282,51 +281,32 @@ class MineFragment: BaseFragment<MineFragmentBinding, MineViewModel>(),OnRefresh
         val jsonData: String = JsonUtils.getJson(requireActivity(), "opensourceproject.json")
         val mDataList: MutableList<OpenSourceBean> =
             GsonUtils.getList(jsonData, type)
-        mOpenSourceAdapter.setNewInstance(mDataList)
+        mOpenSourceAdapter.submitList(mDataList)
 
         mOpenSourceAdapter.run {
             //子view点击事件
-            addChildClickViewIds(
-                R.id.mine_opensource_abroadlink,
-                R.id.mine_iv_abroadcopy,
-            )
-            setItemChildClickListener { adapter, view, position ->
-                when (view.id) {
-                    R.id.mine_opensource_abroadlink -> {
-                        GoRouter.getInstance().build(RouteActivity.Web.WebPager)
-                            .withString("webUrl", mOpenSourceAdapter.data[position].abroadlink)
-                            .withString("webTitle", mOpenSourceAdapter.data[position].name)
-                            .go()
-                    }
-
-
-
-                    R.id.mine_iv_abroadcopy -> {
-                        SystemUtils.copyContent(
-                            requireActivity(),
-                            mOpenSourceAdapter.data[position].abroadlink
-                        )
-                        ToastUtils.show(com.knight.kotlin.library_base.R.string.base_success_copylink)
-                    }
-                    else -> {
-                        SystemUtils.copyContent(
-                            requireActivity(),
-                            mOpenSourceAdapter.data[position].internallink
-                        )
-                        ToastUtils.show(com.knight.kotlin.library_base.R.string.base_success_copylink)
-                    }
-
-                }
-
+            addOnItemChildClickListener(R.id.mine_opensource_abroadlink) { adapter, view, position ->
+                GoRouter.getInstance().build(RouteActivity.Web.WebPager)
+                    .withString("webUrl", mOpenSourceAdapter.items[position].abroadlink)
+                    .withString("webTitle", mOpenSourceAdapter.items[position].name)
+                    .go()
 
             }
 
+            addOnItemChildClickListener(R.id.mine_iv_abroadcopy) { adapter, view, position ->
+                SystemUtils.copyContent(
+                    requireActivity(),
+                    mOpenSourceAdapter.items[position].abroadlink
+                )
+                ToastUtils.show(com.knight.kotlin.library_base.R.string.base_success_copylink)
+            }
+
             //Item点击事件
-            setItemClickListener { adapter, view, position ->
+            setOnItemClickListener { adapter, view, position ->
                 //跳到webview
                 GoRouter.getInstance().build(RouteActivity.Web.WebPager)
-                    .withString("webUrl", mOpenSourceAdapter.data[position].abroadlink)
-                    .withString("webTitle", mOpenSourceAdapter.data[position].name)
+                    .withString("webUrl", mOpenSourceAdapter.items[position].abroadlink)
+                    .withString("webTitle", mOpenSourceAdapter.items[position].name)
                     .go()
 
             }
@@ -345,11 +325,11 @@ class MineFragment: BaseFragment<MineFragmentBinding, MineViewModel>(),OnRefresh
         val jsonData: String = JsonUtils.getJson(requireActivity(), "mineitem.json")
         val mDataList: MutableList<MineItemEntity> =
             GsonUtils.getList(jsonData, type)
-        mMineItemAdapter.setNewInstance(mDataList)
+        mMineItemAdapter.submitList(mDataList)
         mMineItemAdapter.run {
             //Item点击事件
-            setItemClickListener { adapter, view, position ->
-                when(data[position].id) {
+            setOnItemClickListener { adapter, view, position ->
+                when(items[position].id) {
                     1 -> {
                         goVideos()
                     }

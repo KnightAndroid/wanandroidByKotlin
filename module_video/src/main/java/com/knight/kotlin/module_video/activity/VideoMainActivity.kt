@@ -11,7 +11,6 @@ import com.knight.kotlin.library_base.util.dp2px
 import com.knight.kotlin.library_util.startPageWithParams
 import com.knight.kotlin.library_widget.SpacesItemDecoration
 import com.knight.kotlin.library_widget.ktx.init
-import com.knight.kotlin.library_widget.ktx.setItemClickListener
 import com.knight.kotlin.module_video.DataConstant
 import com.knight.kotlin.module_video.adapter.VideoMainAdapter
 import com.knight.kotlin.module_video.databinding.VideoMainActivityBinding
@@ -32,7 +31,7 @@ class VideoMainActivity : BaseActivity<VideoMainActivityBinding,VideoVm>(), OnRe
     OnLoadMoreListener {
 
     //视频列表适配器
-    private val mVideoMainAdapter:VideoMainAdapter by lazy { VideoMainAdapter(mutableListOf())}
+    private val mVideoMainAdapter:VideoMainAdapter by lazy { VideoMainAdapter()}
 
 
 
@@ -105,7 +104,7 @@ class VideoMainActivity : BaseActivity<VideoMainActivityBinding,VideoVm>(), OnRe
             requestSuccess()
             mBinding.includeVideo.baseFreshlayout.finishLoadMore()
             mBinding.includeVideo.baseFreshlayout.finishRefresh()
-            mVideoMainAdapter.setNewInstance(DataConstant.videoDatas)
+            mVideoMainAdapter.submitList(DataConstant.videoDatas)
         }
 
 
@@ -113,7 +112,7 @@ class VideoMainActivity : BaseActivity<VideoMainActivityBinding,VideoVm>(), OnRe
 
     fun initListener() {
         mVideoMainAdapter.run {
-            setItemClickListener { adapter, view, position ->
+            setOnItemClickListener { adapter, view, position ->
                 startPageWithParams(RouteActivity.Video.VideoPlayListActivity,
                     "curPos" to position
                 )

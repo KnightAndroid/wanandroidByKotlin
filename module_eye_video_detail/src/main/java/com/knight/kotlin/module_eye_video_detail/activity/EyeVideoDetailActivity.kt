@@ -3,6 +3,7 @@ package com.knight.kotlin.module_eye_video_detail.activity
 import android.os.Build
 import android.transition.Transition
 import android.transition.TransitionListenerAdapter
+import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -11,6 +12,7 @@ import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.config.Appconfig
 import com.knight.kotlin.library_base.entity.EyeData
 import com.knight.kotlin.library_base.ktx.fromJson
+import com.knight.kotlin.library_base.ktx.getScreenHeight
 import com.knight.kotlin.library_base.ktx.init
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_video.play.OkPlayer
@@ -69,7 +71,7 @@ class EyeVideoDetailActivity : BaseActivity<EyeVideoDetailActivityBinding,EyeVid
         rvRelateVideo.init(
             LinearLayoutManager(this@EyeVideoDetailActivity),
             mEyeVideoRelateAdapter,
-            false
+            true
         )
         eyeDetailRefreshLayout.setOnRefreshListener(this@EyeVideoDetailActivity)
         videoEyeData = fromJson(videoJson)
@@ -145,10 +147,28 @@ class EyeVideoDetailActivity : BaseActivity<EyeVideoDetailActivityBinding,EyeVid
     private fun getRelateVideoList() {
         mViewModel.getVideoDetail(videoEyeData.id).observerKt {
             mBinding.eyeDetailRefreshLayout.finishRefresh()
+            setRvListHeight(it.itemList.size)
             mEyeVideoRelateAdapter.submitList(it.itemList)
 
 
         }
     }
+
+
+    private fun setRvListHeight(size: Int) {
+
+        if (size >= 10) {//size大小自行调节
+            val lp: ViewGroup.LayoutParams = mBinding.rvRelateVideo.layoutParams
+            // 获取屏幕高度
+            val screenHeight = getScreenHeight()
+            lp.height = screenHeight
+            mBinding.rvRelateVideo.layoutParams = lp
+        } else {
+            val lp: ViewGroup.LayoutParams = mBinding.rvRelateVideo.layoutParams
+            lp.height = ViewGroup.LayoutParams.MATCH_PARENT
+            mBinding.rvRelateVideo.layoutParams = lp
+        }
+    }
+
 
 }

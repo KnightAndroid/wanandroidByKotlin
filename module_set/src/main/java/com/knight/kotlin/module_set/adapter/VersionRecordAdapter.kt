@@ -1,9 +1,12 @@
 package com.knight.kotlin.module_set.adapter
 
-import com.chad.library.adapter.base.BaseQuickAdapter
-import com.chad.library.adapter.base.viewholder.BaseViewHolder
+import android.content.Context
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import com.chad.library.adapter4.BaseQuickAdapter
 import com.knight.kotlin.library_base.util.CacheUtils
-import com.knight.kotlin.module_set.R
+import com.knight.kotlin.module_set.databinding.SetVersionRecordItemBinding
 import com.knight.kotlin.module_set.entity.VersionRecordEntity
 
 /**
@@ -11,15 +14,25 @@ import com.knight.kotlin.module_set.entity.VersionRecordEntity
  * Time:2022/8/26 10:29
  * Description:VersionRecordAdapter
  */
-class VersionRecordAdapter(data:MutableList<VersionRecordEntity>) : BaseQuickAdapter<VersionRecordEntity,BaseViewHolder>(
-    R.layout.set_version_record_item,data){
-    override fun convert(holder: BaseViewHolder, item: VersionRecordEntity) {
-        item.run {
-            holder.setText(R.id.tv_appupdate_title,title)
-            holder.setTextColor(R.id.tv_appupdate_title,CacheUtils.getThemeColor())
-            holder.setText(R.id.tv_appupdate_time,item.publishTime)
-            holder.setText(R.id.tv_appupdate_desc,desc)
+class VersionRecordAdapter : BaseQuickAdapter<VersionRecordEntity, VersionRecordAdapter.VH>(){
+    class VH(
+        parent: ViewGroup,
+        val binding: SetVersionRecordItemBinding = SetVersionRecordItemBinding.inflate(
+            LayoutInflater.from(parent.context), parent, false
+        ),
+    ) : RecyclerView.ViewHolder(binding.root)
+
+    override fun onBindViewHolder(holder: VH, position: Int, item: VersionRecordEntity?) {
+        item?.run {
+            holder.binding.tvAppupdateTitle.setText(title)
+            holder.binding.tvAppupdateTitle.setTextColor(CacheUtils.getThemeColor())
+            holder.binding.tvAppupdateTime.setText(item.publishTime)
+            holder.binding.tvAppupdateDesc.setText(desc)
         }
+    }
+
+    override fun onCreateViewHolder(context: Context, parent: ViewGroup, viewType: Int): VH {
+        return VH(parent)
     }
 
 }

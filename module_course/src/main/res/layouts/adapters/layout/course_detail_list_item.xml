@@ -75,5 +75,5 @@
         android:background="@color/base_item_bottom_view"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/course_item_articledata" />
+        app:layout_constraintTop_toBottomOf="@id/course_item_articledate" />
 </androidx.constraintlayout.widget.ConstraintLayout>

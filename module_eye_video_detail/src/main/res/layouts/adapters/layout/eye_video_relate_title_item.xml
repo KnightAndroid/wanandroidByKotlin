@@ -11,7 +11,7 @@
     <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/dp_10"
+        android:padding="@dimen/base_dimen_10"
         android:text="@{model.data.text}"
         android:textColor="@android:color/white"
         android:textSize="@dimen/eye_video_detail_relate_title_text_size"

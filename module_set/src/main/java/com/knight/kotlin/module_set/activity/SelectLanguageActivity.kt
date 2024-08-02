@@ -13,7 +13,6 @@ import com.knight.kotlin.library_base.util.LanguageFontSizeUtils
 import com.knight.kotlin.library_base.vm.EmptyViewModel
 import com.knight.kotlin.library_util.JsonUtils
 import com.knight.kotlin.library_util.SystemUtils
-import com.knight.kotlin.library_widget.ktx.setItemClickListener
 import com.knight.kotlin.module_set.R
 import com.knight.kotlin.module_set.adapter.SelectLanguageAdapter
 import com.knight.kotlin.module_set.databinding.SetLanguageActivityBinding
@@ -84,12 +83,12 @@ class SelectLanguageActivity : BaseActivity<SetLanguageActivityBinding, EmptyVie
                 break
             }
         }
-        mSelectLanguageAdapter.setNewInstance(mLanguageList)
+        mSelectLanguageAdapter.submitList(mLanguageList)
     }
 
     private fun initListener() {
         mSelectLanguageAdapter.run {
-            setItemClickListener { adapter, view, position ->
+            setOnItemClickListener { adapter, view, position ->
                 for (i in mLanguageList.indices) {
                     mLanguageList.get(i).select = false
                 }

@@ -26,7 +26,7 @@ class AppRecordMessageActivity : BaseActivity<SetVersionRecordActivityBinding,Ap
     OnRefreshListener {
 
 
-    private val mVersionRecordAdapter:VersionRecordAdapter by lazy {VersionRecordAdapter(arrayListOf())}
+    private val mVersionRecordAdapter:VersionRecordAdapter by lazy {VersionRecordAdapter()}
     override fun setThemeColor(isDarkMode: Boolean) {
 
     }
@@ -63,7 +63,7 @@ class AppRecordMessageActivity : BaseActivity<SetVersionRecordActivityBinding,Ap
         requestSuccess()
         mBinding.includeVersionRecordCollectfreshalayout.baseFreshlayout.finishRefresh()
         if (data.datas.size > 0) {
-            mVersionRecordAdapter.setNewInstance(data.datas)
+            mVersionRecordAdapter.submitList(data.datas)
         } else {
             requestEmptyData()
         }

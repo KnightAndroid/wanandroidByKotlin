@@ -27,8 +27,6 @@ import com.knight.kotlin.library_util.bindViewPager2
 import com.knight.kotlin.library_util.startPage
 import com.knight.kotlin.library_util.startPageWithStringArrayListParams
 import com.knight.kotlin.library_widget.ktx.init
-import com.knight.kotlin.library_widget.ktx.setItemChildClickListener
-import com.knight.kotlin.library_widget.ktx.setItemClickListener
 import com.knight.kotlin.library_widget.lottie.RightLottieAnimation
 import com.knight.kotlin.library_widget.lottie.RightLottieListener
 import com.knight.kotlin.module_square.R
@@ -73,7 +71,7 @@ class SquareFragment : BaseFragment<SquareFragmentBinding, SquareVm>() {
     val tv_question_title: TextView by lazy { mQuestionMenu.findViewById(R.id.square_question_tv_title) }
 
     //问题适配器
-    private val mSquareQuestionAdapter: SquareQuestionAdapter by lazy { SquareQuestionAdapter(arrayListOf()) }
+    private val mSquareQuestionAdapter: SquareQuestionAdapter by lazy { SquareQuestionAdapter() }
 
 
     private lateinit var mViewLoadService: LoadService<Any>
@@ -164,9 +162,9 @@ class SquareFragment : BaseFragment<SquareFragmentBinding, SquareVm>() {
         smartRefreshLayout.finishLoadMore()
         if (data.datas.size > 0) {
             if (questionPage == 1) {
-                mSquareQuestionAdapter.setNewInstance(data.datas)
+                mSquareQuestionAdapter.submitList(data.datas)
             } else {
-                mSquareQuestionAdapter.addData(data.datas)
+                mSquareQuestionAdapter.addAll(data.datas)
             }
             questionPage++
         } else {
@@ -175,16 +173,16 @@ class SquareFragment : BaseFragment<SquareFragmentBinding, SquareVm>() {
     }
     private fun initQuestionAdapterClickEvent() {
         mSquareQuestionAdapter.run {
-            setItemClickListener { adapter, view, position ->
-                ArouteUtils.startWebArticle(data.get(position).link,data.get(position).title,
-                    data.get(position).id,data.get(position).collect,data.get(position).envelopePic,
-                    data.get(position).desc,data.get(position).chapterName,data[position].author,data[position].shareUser)
+            setOnItemClickListener { adapter, view, position ->
+                ArouteUtils.startWebArticle(items.get(position).link,items.get(position).title,
+                    items.get(position).id,items.get(position).collect,items.get(position).envelopePic,
+                    items.get(position).desc,items.get(position).chapterName,items[position].author,items[position].shareUser)
             }
 
-            addChildClickViewIds(com.knight.kotlin.library_base.R.id.base_icon_collect)
-            setItemChildClickListener { adapter, view, position ->
+
+            addOnItemChildClickListener(com.knight.kotlin.library_base.R.id.base_icon_collect) { adapter, view, position ->
                 selectItem = position
-                collectOrunCollect(data[position].collect,data[position].id)
+                collectOrunCollect(items[position].collect,items[position].id)
 
             }
 
@@ -210,7 +208,7 @@ class SquareFragment : BaseFragment<SquareFragmentBinding, SquareVm>() {
      * 收藏文章成功
      */
     private fun collectQuestionArticleSuccess() {
-        mSquareQuestionAdapter.data[selectItem].collect = true
+        mSquareQuestionAdapter.items[selectItem].collect = true
         mSquareQuestionAdapter.notifyItemChanged(selectItem)
 
 
@@ -221,7 +219,7 @@ class SquareFragment : BaseFragment<SquareFragmentBinding, SquareVm>() {
      * 取消收藏文章成功
      */
     private fun unCollectQuestionArticleSuccess() {
-        mSquareQuestionAdapter.data[selectItem].collect = false
+        mSquareQuestionAdapter.items[selectItem].collect = false
         mSquareQuestionAdapter.notifyItemChanged(selectItem)
 
     }

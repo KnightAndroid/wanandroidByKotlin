@@ -6,7 +6,6 @@ import com.knight.kotlin.library_base.ktx.init
 import com.knight.kotlin.library_base.ktx.setOnClick
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_util.startPageWithParams
-import com.knight.kotlin.library_widget.ktx.setItemClickListener
 import com.knight.kotlin.module_utils.R
 import com.knight.kotlin.module_utils.adapter.UtilItemAdapter
 import com.knight.kotlin.module_utils.databinding.UtilsActivityBinding
@@ -25,7 +24,7 @@ class UtilsActivity : BaseActivity<UtilsActivityBinding,UtilsVm>(),OnRefreshList
 
 
     //工具类适配器
-    private val mUtilItemAdapter:UtilItemAdapter by lazy {UtilItemAdapter(arrayListOf())}
+    private val mUtilItemAdapter:UtilItemAdapter by lazy {UtilItemAdapter()}
     override fun setThemeColor(isDarkMode: Boolean) {
 
     }
@@ -68,16 +67,16 @@ class UtilsActivity : BaseActivity<UtilsActivityBinding,UtilsVm>(),OnRefreshList
     private fun setUtils(data:MutableList<UtilsEntity>) {
         requestSuccess()
         mBinding.includeUtilsRv.baseFreshlayout.finishRefresh()
-        mUtilItemAdapter.setNewInstance(data)
+        mUtilItemAdapter.submitList(data)
 
     }
 
     private fun initListener() {
         mUtilItemAdapter.run {
-            setItemClickListener { adapter, view, position ->
+            setOnItemClickListener { adapter, view, position ->
                 startPageWithParams(RouteActivity.Web.WebPager,
-                    "webUrl" to data[position].link,
-                    "webTitle" to data[position].tabName)
+                    "webUrl" to items[position].link,
+                    "webTitle" to items[position].tabName)
             }
         }
     }

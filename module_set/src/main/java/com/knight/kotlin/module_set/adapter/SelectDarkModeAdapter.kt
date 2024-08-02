@@ -1,11 +1,14 @@
 package com.knight.kotlin.module_set.adapter
 
-import android.widget.ImageView
-import com.chad.library.adapter.base.BaseQuickAdapter
-import com.chad.library.adapter.base.viewholder.BaseViewHolder
+import android.content.Context
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import com.chad.library.adapter4.BaseQuickAdapter
 import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_base.util.LanguageFontSizeUtils
-import com.knight.kotlin.module_set.R
+import com.knight.kotlin.module_set.databinding.SetSelectDarkItemBinding
 import com.knight.kotlin.module_set.entity.DarkSelectEntity
 
 /**
@@ -13,28 +16,41 @@ import com.knight.kotlin.module_set.entity.DarkSelectEntity
  * Time:2022/5/20 17:29
  * Description:SelectDarkModeAdapter
  */
-class SelectDarkModeAdapter (data:MutableList<DarkSelectEntity>):
-    BaseQuickAdapter<DarkSelectEntity, BaseViewHolder>( R.layout.set_select_dark_item,data)  {
-    override fun convert(holder: BaseViewHolder, item: DarkSelectEntity) {
-        item.run {
+class SelectDarkModeAdapter :
+    BaseQuickAdapter<DarkSelectEntity, SelectDarkModeAdapter.VH>()  {
+
+    class VH(
+        parent: ViewGroup,
+        val binding: SetSelectDarkItemBinding = SetSelectDarkItemBinding.inflate(
+            LayoutInflater.from(parent.context), parent, false
+        ),
+    ) : RecyclerView.ViewHolder(binding.root)
+
+
+    override fun onBindViewHolder(holder: VH, position: Int, item: DarkSelectEntity?) {
+        item?.run {
             if (LanguageFontSizeUtils.isChinese()) {
-                holder.setText(R.id.set_tv_dark_name,name)
+                holder.binding.setTvDarkName.setText(name)
             } else {
-                holder.setText(R.id.set_tv_dark_name,englishNamn)
+                holder.binding.setTvDarkName.setText(englishNamn)
             }
 
             if (select) {
-                holder.setVisible(R.id.set_iv_select_darkmodel,true)
-                (holder.getView(R.id.set_iv_select_darkmodel) as ImageView).setColorFilter(CacheUtils.getThemeColor())
+                holder.binding.setIvSelectDarkmodel.visibility = View.VISIBLE
+                holder.binding.setIvSelectDarkmodel.setColorFilter(CacheUtils.getThemeColor())
             } else {
-                holder.setVisible(R.id.set_iv_select_darkmodel,false)
+                holder.binding.setIvSelectDarkmodel.visibility = View.INVISIBLE
             }
 
             if (showLine) {
-                holder.setVisible(R.id.set_tv_darkmodel_line,true)
+                holder.binding.setTvDarkmodelLine.visibility = View.VISIBLE
             } else {
-                holder.setVisible(R.id.set_tv_darkmodel_line,false)
+                holder.binding.setTvDarkmodelLine.visibility = View.INVISIBLE
             }
         }
+    }
+
+    override fun onCreateViewHolder(context: Context, parent: ViewGroup, viewType: Int): VH {
+        return VH(parent)
     }
 }

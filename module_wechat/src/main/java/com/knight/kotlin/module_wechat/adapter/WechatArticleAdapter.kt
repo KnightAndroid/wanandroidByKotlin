@@ -7,7 +7,6 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter4.BaseQuickAdapter
 import com.knight.kotlin.library_base.databinding.BaseTextItemBinding
@@ -45,7 +44,7 @@ class WechatArticleAdapter :
         item?.run {
 
             if (!author.isNullOrEmpty()) {
-                holder.binding.baseItemArticleAuthor.setText( author)
+                holder.binding.baseItemArticleAuthor.setText(author)
             } else {
                 holder.binding.baseItemArticleAuthor.setText(shareUser)
             }

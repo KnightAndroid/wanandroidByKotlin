@@ -75,4 +75,8 @@
         <item name="android:windowEnterAnimation">@anim/widget_dialog_enter</item>
         <item name="android:windowExitAnimation">@anim/widget_dialog_exit</item>
     </style>
+
+    <declare-styleable name="MaxHeightRecyclerView">
+        <attr name="max_height" format="dimension"/>
+    </declare-styleable>
 </resources>

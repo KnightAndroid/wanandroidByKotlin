@@ -1,9 +1,6 @@
 package com.knight.kotlin.module_square.entity
 
 import android.os.Parcelable
-import android.text.TextUtils
-import com.chad.library.adapter.base.entity.MultiItemEntity
-import com.knight.kotlin.module_square.constants.SquareConstants
 import kotlinx.parcelize.Parcelize
 
 /**
@@ -59,13 +56,7 @@ data class SquareArticleEntity(
     val visible: Int?,
     val zan: Int?,
     var top: Boolean?
-) : Parcelable, MultiItemEntity {
-
-    override val itemType: Int
-        get() = if (TextUtils.isEmpty(envelopePic)) {
-            SquareConstants.ARTICLE_TEXT_TYPE
-        } else SquareConstants.ARTICLE_PICTURE_TYPE
-}
+) : Parcelable
 
 @Parcelize
 data class Tag(

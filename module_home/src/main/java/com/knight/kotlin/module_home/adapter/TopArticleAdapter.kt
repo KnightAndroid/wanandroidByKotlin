@@ -47,7 +47,7 @@ class TopArticleAdapter : BaseQuickAdapter<TopArticleBean, TopArticleAdapter.VH>
     }
 
     override fun getItemCount(items: List<TopArticleBean>): Int {
-        return if (mIsShowOnlyCount) if (super.getItemCount() > mCount) mCount else super.getItemCount() else super.getItemCount()
+        return if (mIsShowOnlyCount) if (super.getItemCount(items) > mCount) mCount else super.getItemCount(items) else super.getItemCount(items)
     }
 
     override fun onBindViewHolder(holder: VH, position: Int, item: TopArticleBean?) {

@@ -1,14 +1,17 @@
 package com.knight.kotlin.module_square.adapter
 
+import android.content.Context
 import android.graphics.drawable.GradientDrawable
 import android.os.Build
 import android.text.TextUtils
+import android.view.LayoutInflater
 import android.view.View
-import com.chad.library.adapter.base.BaseQuickAdapter
-import com.chad.library.adapter.base.viewholder.BaseViewHolder
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import com.chad.library.adapter4.BaseQuickAdapter
 import com.knight.kotlin.library_base.ktx.toHtml
 import com.knight.kotlin.library_base.util.CacheUtils
-import com.knight.kotlin.module_square.R
+import com.knight.kotlin.module_square.databinding.SquareArticlesBinding
 import com.knight.kotlin.module_square.entity.SquareShareArticleBean
 
 /**
@@ -16,56 +19,68 @@ import com.knight.kotlin.module_square.entity.SquareShareArticleBean
  * Time:2022/4/26 15:53
  * Description:SquareShareArticleAdapter
  */
-class SquareShareArticleAdapter(data:MutableList<SquareShareArticleBean>):BaseQuickAdapter<SquareShareArticleBean,BaseViewHolder>(
-    R.layout.square_articles,data) {
-    override fun convert(holder: BaseViewHolder, item: SquareShareArticleBean) {
-        item.run {
+class SquareShareArticleAdapter:
+    BaseQuickAdapter<SquareShareArticleBean, SquareShareArticleAdapter.VH>() {
+
+
+    class VH(
+        parent: ViewGroup,
+        val binding: SquareArticlesBinding = SquareArticlesBinding.inflate(
+            LayoutInflater.from(parent.context), parent, false
+        ),
+    ) : RecyclerView.ViewHolder(binding.root)
+
+    override fun onBindViewHolder(holder: VH, position: Int, item: SquareShareArticleBean?) {
+        item?.run {
             //作者
             if (!TextUtils.isEmpty(item.author)) {
-                holder.setText(R.id.square_item_articleauthor,author)
+                holder.binding.squareItemArticleauthor.setText(author)
             } else {
-                holder.setText(R.id.square_item_articleauthor,shareUser)
+                holder.binding.squareItemArticleauthor.setText(shareUser)
             }
             val gradientDrawable = GradientDrawable()
             gradientDrawable.shape = GradientDrawable.RECTANGLE
             gradientDrawable.setStroke(2, CacheUtils.getThemeColor())
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                holder.getView<View>(R.id.square_item_articlechaptername).background = gradientDrawable
+                holder.binding.squareItemArticlechaptername.background = gradientDrawable
             } else {
-                holder.getView<View>(R.id.square_item_articlechaptername).setBackgroundDrawable(gradientDrawable)
+                holder.binding.squareItemArticlechaptername.setBackgroundDrawable(gradientDrawable)
             }
 
             //二级分类
             if (!TextUtils.isEmpty(chapterName)) {
-                holder.setVisible(R.id.square_item_articlechaptername,true)
-                holder.setText(R.id.square_item_articlechaptername,chapterName)
-                holder.setTextColor(R.id.square_item_articlechaptername,CacheUtils.getThemeColor())
+                holder.binding.squareItemArticlechaptername.visibility = View.VISIBLE
+                holder.binding.squareItemArticlechaptername.setText(chapterName)
+                holder.binding.squareItemArticlechaptername.setTextColor(CacheUtils.getThemeColor())
             } else {
-                holder.setGone(R.id.square_item_articlechaptername,true)
+                holder.binding.squareItemArticlechaptername.visibility = View.GONE
             }
 
             //时间赋值
             if (!TextUtils.isEmpty(niceDate)) {
-                holder.setText(R.id.square_item_articledata,niceDate)
+                holder.binding.squareItemArticledate.setText(niceDate)
             } else {
-                holder.setText(R.id.square_item_articledata,niceShareDate)
+                holder.binding.squareItemArticledate.setText(niceShareDate)
             }
 
             //标题
-            holder.setText(R.id.square_tv_articletitle,title.toHtml())
+            holder.binding.squareTvArticletitle.setText(title.toHtml())
             if (collect) {
-                holder.setBackgroundResource(R.id.square_icon_collect, com.knight.kotlin.library_base.R.drawable.base_icon_collect)
+                holder.binding.squareIconCollect.setBackgroundResource(com.knight.kotlin.library_base.R.drawable.base_icon_collect)
             } else {
-                holder.setBackgroundResource(R.id.square_icon_collect, com.knight.kotlin.library_base.R.drawable.base_icon_nocollect)
+                holder.binding.squareIconCollect.setBackgroundResource(com.knight.kotlin.library_base.R.drawable.base_icon_nocollect)
             }
 
             //是否是新文章
             if (fresh) {
-                holder.setVisible(R.id.square_item_articlenew,true)
+                holder.binding.squareItemArticlenew.visibility = View.VISIBLE
             } else {
-                holder.setGone(R.id.square_item_articlenew,true)
+                holder.binding.squareItemArticlenew.visibility = View.GONE
             }
         }
+    }
 
+    override fun onCreateViewHolder(context: Context, parent: ViewGroup, viewType: Int): VH {
+        return VH(parent)
     }
 }

@@ -7,8 +7,6 @@ import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.knight.kotlin.library_base.route.RouteFragment
 import com.knight.kotlin.library_base.util.ArouteUtils
 import com.knight.kotlin.library_widget.ktx.init
-import com.knight.kotlin.library_widget.ktx.setItemChildClickListener
-import com.knight.kotlin.library_widget.ktx.setItemClickListener
 import com.knight.kotlin.module_navigate.adapter.HierachyArticleAdapter
 import com.knight.kotlin.module_navigate.databinding.NavigateHierachyArticleFragmentBinding
 import com.knight.kotlin.module_navigate.entity.HierachyTabArticleListEntity
@@ -65,33 +63,40 @@ class HierachyTabArticleFragment:BaseFragment<NavigateHierachyArticleFragmentBin
 
     fun initListener() {
         mHierachyArticleAdapter.run {
-            setItemClickListener { adapter, view, position ->
+            setOnItemClickListener { adapter, view, position ->
                 ArouteUtils.startWebArticle(
-                    data[position].link,
-                    data[position].title,
-                    data[position].id,
-                    data[position].collect,
-                    data[position].envelopePic,
-                    data[position].desc,
-                    data[position].chapterName,
-                    data[position].author,
-                    data[position].shareUser
+                    items[position].link,
+                    items[position].title,
+                    items[position].id,
+                    items[position].collect,
+                    items[position].envelopePic,
+                    items[position].desc,
+                    items[position].chapterName,
+                    items[position].author,
+                    items[position].shareUser
                 )
             }
 
-            addChildClickViewIds(com.knight.kotlin.library_base.R.id.base_icon_collect,com.knight.kotlin.library_base.R.id.base_article_collect)
-            setItemChildClickListener { adapter, view, position ->
-                when (view.id) {
-                    com.knight.kotlin.library_base.R.id.base_icon_collect,com.knight.kotlin.library_base.R.id.base_article_collect -> {
+            addOnItemChildClickListener(com.knight.kotlin.library_base.R.id.base_icon_collect) { adapter, view, position ->
+
                         selectItem = position
                         collectOrunCollect(
-                            data[position].collect,
-                            data[position].id
+                            items[position].collect,
+                            items[position].id
                         )
-                    }
-                }
-            }
 
+
+            }
+            addOnItemChildClickListener(com.knight.kotlin.library_base.R.id.base_article_collect) { adapter, view, position ->
+
+                        selectItem = position
+                        collectOrunCollect(
+                            items[position].collect,
+                            items[position].id
+                        )
+
+
+            }
 
         }
     }
@@ -115,7 +120,7 @@ class HierachyTabArticleFragment:BaseFragment<NavigateHierachyArticleFragmentBin
      * 收藏成功
      */
     private fun collectSucess() {
-        mHierachyArticleAdapter.data[selectItem].collect = true
+        mHierachyArticleAdapter.items[selectItem].collect = true
         mHierachyArticleAdapter.notifyItemChanged(selectItem)
 
     }
@@ -125,7 +130,7 @@ class HierachyTabArticleFragment:BaseFragment<NavigateHierachyArticleFragmentBin
      * 取消收藏
      */
     private fun unCollectSuccess() {
-        mHierachyArticleAdapter.data[selectItem].collect = false
+        mHierachyArticleAdapter.items[selectItem].collect = false
         mHierachyArticleAdapter.notifyItemChanged(selectItem)
 
     }
@@ -145,9 +150,9 @@ class HierachyTabArticleFragment:BaseFragment<NavigateHierachyArticleFragmentBin
         mBinding.includeTabarticle.baseFreshlayout.finishLoadMore()
         if (data.datas.size > 0) {
             if (page == 0) {
-                mHierachyArticleAdapter.setNewInstance(data.datas)
+                mHierachyArticleAdapter.submitList(data.datas)
             } else {
-                mHierachyArticleAdapter.addData(data.datas)
+                mHierachyArticleAdapter.addAll(data.datas)
             }
 
             if (data.datas.size == 0) {

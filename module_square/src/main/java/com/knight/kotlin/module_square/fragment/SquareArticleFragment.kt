@@ -8,8 +8,6 @@ import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.knight.kotlin.library_base.route.RouteFragment
 import com.knight.kotlin.library_base.util.ArouteUtils
 import com.knight.kotlin.library_widget.ktx.init
-import com.knight.kotlin.library_widget.ktx.setItemChildClickListener
-import com.knight.kotlin.library_widget.ktx.setItemClickListener
 import com.knight.kotlin.module_square.R
 import com.knight.kotlin.module_square.adapter.SquareArticleAdapter
 import com.knight.kotlin.module_square.constants.SquareConstants
@@ -51,28 +49,27 @@ class SquareArticleFragment:BaseFragment<SquareArticleFragmentBinding, SquareArt
         includeArticleRecycleview.baseFreshlayout.setOnLoadMoreListener(this@SquareArticleFragment)
         includeArticleRecycleview.baseFreshlayout.setOnRefreshListener(this@SquareArticleFragment)
         mSquareArticleAdapter.run {
-            setItemClickListener { adapter, view, position ->
+            setOnItemClickListener { adapter, view, position ->
                 ArouteUtils.startWebArticle(
-                    mSquareArticleAdapter.data[position].link,
-                    mSquareArticleAdapter.data[position].title,
-                    mSquareArticleAdapter.data[position].id,
-                    mSquareArticleAdapter.data[position].collect,
-                    mSquareArticleAdapter.data[position].envelopePic,
-                    mSquareArticleAdapter.data[position].desc,
-                    mSquareArticleAdapter.data[position].chapterName,
-                    mSquareArticleAdapter.data[position].author,
-                    mSquareArticleAdapter.data[position].shareUser
+                    mSquareArticleAdapter.items[position].link,
+                    mSquareArticleAdapter.items[position].title,
+                    mSquareArticleAdapter.items[position].id,
+                    mSquareArticleAdapter.items[position].collect,
+                    mSquareArticleAdapter.items[position].envelopePic,
+                    mSquareArticleAdapter.items[position].desc,
+                    mSquareArticleAdapter.items[position].chapterName,
+                    mSquareArticleAdapter.items[position].author,
+                    mSquareArticleAdapter.items[position].shareUser
                 )
             }
 
-            addChildClickViewIds(R.id.square_icon_collect)
-            setItemChildClickListener { adapter, view, position ->
+            addOnItemChildClickListener(R.id.square_icon_collect) { adapter, view, position ->
                 when (view.id) {
                     R.id.square_icon_collect -> {
                         selectItem = position
                         collectOrunCollect(
-                            mSquareArticleAdapter.data[position].collect,
-                            mSquareArticleAdapter.data[position].id
+                            mSquareArticleAdapter.items[position].collect,
+                            mSquareArticleAdapter.items[position].id
                         )
                     }
                 }
@@ -149,9 +146,9 @@ class SquareArticleFragment:BaseFragment<SquareArticleFragmentBinding, SquareArt
         mBinding.includeArticleRecycleview.baseFreshlayout.finishRefresh()
         mBinding.includeArticleRecycleview.baseFreshlayout.finishLoadMore()
         if (currentPage > 1) {
-            mSquareArticleAdapter.addData(data.datas)
+            mSquareArticleAdapter.addAll(data.datas)
         } else {
-            mSquareArticleAdapter.setNewInstance(data.datas)
+            mSquareArticleAdapter.submitList(data.datas)
         }
 
         if (data.datas.size == 0) {
@@ -171,7 +168,7 @@ class SquareArticleFragment:BaseFragment<SquareArticleFragmentBinding, SquareArt
      * 收藏成功
      */
     private fun collectSuccess() {
-        mSquareArticleAdapter.data[selectItem].collect = true
+        mSquareArticleAdapter.items[selectItem].collect = true
         mSquareArticleAdapter.notifyItemChanged(selectItem)
     }
 
@@ -180,7 +177,7 @@ class SquareArticleFragment:BaseFragment<SquareArticleFragmentBinding, SquareArt
      * 取消收藏
      */
     private fun unCollectSuccess() {
-        mSquareArticleAdapter.data[selectItem].collect = false
+        mSquareArticleAdapter.items[selectItem].collect = false
         mSquareArticleAdapter.notifyItemChanged(selectItem)
     }
 

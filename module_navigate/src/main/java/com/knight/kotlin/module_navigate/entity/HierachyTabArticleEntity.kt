@@ -1,9 +1,6 @@
 package com.knight.kotlin.module_navigate.entity
 
 import android.os.Parcelable
-import android.text.TextUtils
-import com.chad.library.adapter.base.entity.MultiItemEntity
-import com.knight.kotlin.library_base.config.Appconfig
 import kotlinx.parcelize.Parcelize
 
 /**
@@ -44,10 +41,4 @@ data class HierachyTabArticleEntity(
     val userId: Int,
     val visible: Int,
     val zan: Int,
-
-    ) : Parcelable, MultiItemEntity {
-    override val itemType: Int
-        get() = if (TextUtils.isEmpty(envelopePic)) {
-            Appconfig.ARTICLE_TEXT_TYPE
-        } else Appconfig.ARTICLE_PICTURE_TYPE
-}
+    ): Parcelable

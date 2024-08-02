@@ -1,11 +1,14 @@
 package com.knight.kotlin.module_set.adapter
 
-import android.widget.ImageView
-import com.chad.library.adapter.base.BaseQuickAdapter
-import com.chad.library.adapter.base.viewholder.BaseViewHolder
+import android.content.Context
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import com.chad.library.adapter4.BaseQuickAdapter
 import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_base.util.LanguageFontSizeUtils
-import com.knight.kotlin.module_set.R
+import com.knight.kotlin.module_set.databinding.SetLanguageItemBinding
 import com.knight.kotlin.module_set.entity.LanguageEntity
 
 /**
@@ -14,28 +17,39 @@ import com.knight.kotlin.module_set.entity.LanguageEntity
  * Description:SelectLanguageAdapter
  */
 class SelectLanguageAdapter(data:MutableList<LanguageEntity>):
-    BaseQuickAdapter<LanguageEntity, BaseViewHolder>( R.layout.set_language_item,data) {
-    override fun convert(holder: BaseViewHolder, item: LanguageEntity) {
-        item.run {
+    BaseQuickAdapter<LanguageEntity,SelectLanguageAdapter.VH>() {
+
+    class VH(
+        parent: ViewGroup,
+        val binding: SetLanguageItemBinding = SetLanguageItemBinding.inflate(
+            LayoutInflater.from(parent.context), parent, false
+        ),
+    ) : RecyclerView.ViewHolder(binding.root)
+
+    override fun onBindViewHolder(holder: VH, position: Int, item: LanguageEntity?) {
+        item?.run {
             if (LanguageFontSizeUtils.isChinese()) {
-                holder.setText(R.id.set_tv_language_name,languageName)
+                holder.binding.setTvLanguageName.setText(languageName)
             } else {
-                holder.setText(R.id.set_tv_language_name,englishName)
+                holder.binding.setTvLanguageName.setText(englishName)
             }
 
             if (select) {
-                holder.setVisible(R.id.set_iv_select_language,true)
-                (holder.getView(R.id.set_iv_select_language) as ImageView).setColorFilter(CacheUtils.getThemeColor())
+                holder.binding.setIvSelectLanguage.visibility = View.VISIBLE
+                holder.binding.setIvSelectLanguage.setColorFilter(CacheUtils.getThemeColor())
             } else {
-                holder.setVisible(R.id.set_iv_select_language,false)
+                holder.binding.setIvSelectLanguage.visibility = View.INVISIBLE
             }
 
             if (showLine) {
-                holder.setVisible(R.id.set_tv_language_line,true)
+                holder.binding.setTvLanguageLine.visibility = View.VISIBLE
             } else {
-                holder.setVisible(R.id.set_tv_language_line,false)
+                holder.binding.setTvLanguageLine.visibility = View.INVISIBLE
             }
         }
+    }
 
+    override fun onCreateViewHolder(context: Context, parent: ViewGroup, viewType: Int): VH {
+        return VH(parent)
     }
 }

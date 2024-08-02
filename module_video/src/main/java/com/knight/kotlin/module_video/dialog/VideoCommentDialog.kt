@@ -32,7 +32,7 @@ class VideoCommentDialog(val videoData: VideoPlayEntity, val videoView: VideoPla
     private val videoVm by lazy{ ViewModelProvider(this)[VideoVm::class.java] }
 
     //视频列表适配器
-    private val mVideoCommentAdapter: VideoCommentAdapter by lazy { VideoCommentAdapter(mutableListOf()) }
+    private val mVideoCommentAdapter: VideoCommentAdapter by lazy { VideoCommentAdapter() }
     private lateinit var binding: VideoDialogCommentBinding
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = VideoDialogCommentBinding.inflate(inflater, container, false)
@@ -92,7 +92,7 @@ class VideoCommentDialog(val videoData: VideoPlayEntity, val videoView: VideoPla
     private fun loadData() {
         videoVm.getVideoCommentList(videoData.jokeId,1).observe(this) {
             binding.tvTitle.setText(it.comments.size.toString().plus("条评论"))
-            mVideoCommentAdapter.setNewInstance(it.comments)
+            mVideoCommentAdapter.submitList(it.comments)
         }
     }
 

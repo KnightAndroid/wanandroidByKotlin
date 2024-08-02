@@ -1,9 +1,12 @@
 package com.knight.kotlin.module_video.adapter
 
-import android.widget.ImageView
-import com.chad.library.adapter.base.BaseQuickAdapter
-import com.chad.library.adapter.base.viewholder.BaseViewHolder
+import android.content.Context
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import com.chad.library.adapter4.BaseQuickAdapter
 import com.knight.kotlin.library_util.image.ImageLoader
+import com.knight.kotlin.module_video.databinding.VideoMainItemBinding
 import com.knight.kotlin.module_video.entity.VideoPlayEntity
 
 /**
@@ -11,15 +14,23 @@ import com.knight.kotlin.module_video.entity.VideoPlayEntity
  * Time:2024/2/26 14:43
  * Description:VideoMainAdapter
  */
-class VideoMainAdapter(data:MutableList<VideoPlayEntity>) : BaseQuickAdapter<VideoPlayEntity,BaseViewHolder>(
-    com.knight.kotlin.module_video.R.layout.video_main_item,data) {
-    override fun convert(holder: BaseViewHolder, item: VideoPlayEntity) {
-        item.run {
-            val videoImage :ImageView = holder.getView(com.knight.kotlin.module_video.R.id.iv_video)
-            ImageLoader.loadRoundedCornerPhoto(context,thumbUrl,videoImage,10)
+class VideoMainAdapter : BaseQuickAdapter<VideoPlayEntity, VideoMainAdapter.VH>() {
+    class VH(
+        parent: ViewGroup,
+        val binding: VideoMainItemBinding = VideoMainItemBinding.inflate(
+            LayoutInflater.from(parent.context), parent, false
+        ),
+    ) : RecyclerView.ViewHolder(binding.root)
+
+    override fun onBindViewHolder(holder: VH, position: Int, item: VideoPlayEntity?) {
+        item?.run {
+            ImageLoader.loadRoundedCornerPhoto(context,thumbUrl,holder.binding.ivVideo,10)
         }
 
+    }
 
+    override fun onCreateViewHolder(context: Context, parent: ViewGroup, viewType: Int): VH {
+        return VH(parent)
     }
 
 

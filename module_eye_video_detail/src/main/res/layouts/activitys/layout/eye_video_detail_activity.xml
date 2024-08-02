@@ -49,7 +49,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <androidx.core.widget.NestedScrollView
+            <com.knight.kotlin.library_widget.CustomNestedScrollView
+                android:id="@+id/eye_detail_nest"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
@@ -217,15 +218,17 @@
                         android:background="@android:color/white" />
 
 
+                       <androidx.recyclerview.widget.RecyclerView
+                           android:id="@+id/rv_relate_video"
+                           android:layout_width="match_parent"
+                           android:layout_height="match_parent" />
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rv_relate_video"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+
+
                 </LinearLayout>
 
 
-            </androidx.core.widget.NestedScrollView>
+            </com.knight.kotlin.library_widget.CustomNestedScrollView>
 
 
         </com.scwang.smart.refresh.layout.SmartRefreshLayout>

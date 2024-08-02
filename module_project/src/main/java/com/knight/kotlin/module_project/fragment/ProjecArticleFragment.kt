@@ -36,7 +36,7 @@ class ProjecArticleFragment:BaseFragment<ProjectArticleFragmentBinding, ProjectA
 
 
     //文章适配器列表
-    private val mProjectArticleAdapter:ProjectArticleAdapter by lazy { ProjectArticleAdapter(mutableListOf())}
+    private val mProjectArticleAdapter:ProjectArticleAdapter by lazy { ProjectArticleAdapter()}
 
     /**
      * 页码
@@ -159,9 +159,9 @@ class ProjecArticleFragment:BaseFragment<ProjectArticleFragmentBinding, ProjectA
         mBinding.includeProject.baseFreshlayout.finishRefresh()
         if (data.datas.size > 0) {
             if (data.curPage == 1) {
-                mProjectArticleAdapter.setNewInstance(data.datas)
+                mProjectArticleAdapter.submitList(data.datas)
             } else {
-                mProjectArticleAdapter.addData(data.datas)
+                mProjectArticleAdapter.addAll(data.datas)
             }
 
             if (data.datas.size == 0) {
@@ -177,16 +177,16 @@ class ProjecArticleFragment:BaseFragment<ProjectArticleFragmentBinding, ProjectA
 
     private fun initListener() {
         mProjectArticleAdapter.run {
-            addChildClickViewIds(com.knight.kotlin.library_base.R.id.base_article_collect)
-            setOnItemChildClickListener { adapter, view, position ->
+
+            addOnItemChildClickListener(com.knight.kotlin.library_base.R.id.base_article_collect) { adapter, view, position ->
                 selectItem = position
-                collectOrunCollect(data[position].collect,data[position].id)
+                collectOrunCollect(items[position].collect,items[position].id)
             }
 
             setOnItemClickListener { adapter, view, position ->
-                ArouteUtils.startWebArticle(data.get(position).link,data.get(position).title,
-                    data.get(position).id,data.get(position).collect,data.get(position).envelopePic,
-                    data.get(position).desc,data.get(position).chapterName,data[position].author,data[position].shareUser)
+                ArouteUtils.startWebArticle(items.get(position).link,items.get(position).title,
+                    items.get(position).id,items.get(position).collect,items.get(position).envelopePic,
+                    items.get(position).desc,items.get(position).chapterName,items[position].author,items[position].shareUser)
             }
 
 
@@ -198,7 +198,7 @@ class ProjecArticleFragment:BaseFragment<ProjectArticleFragmentBinding, ProjectA
      * 收藏文章成功
      */
     private fun collectArticleSuccess() {
-        mProjectArticleAdapter.data[selectItem].collect = true
+        mProjectArticleAdapter.items[selectItem].collect = true
         mProjectArticleAdapter.notifyItemChanged(selectItem)
     }
 
@@ -207,7 +207,7 @@ class ProjecArticleFragment:BaseFragment<ProjectArticleFragmentBinding, ProjectA
      * 取消收藏文章成功
      */
     private fun unCollectArticleSuccess() {
-        mProjectArticleAdapter.data[selectItem].collect = false
+        mProjectArticleAdapter.items[selectItem].collect = false
         mProjectArticleAdapter.notifyItemChanged(selectItem)
     }
 

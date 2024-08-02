@@ -8,8 +8,6 @@ import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.knight.kotlin.library_base.route.RouteFragment
 import com.knight.kotlin.library_base.util.ArouteUtils
 import com.knight.kotlin.library_widget.ktx.init
-import com.knight.kotlin.library_widget.ktx.setItemChildClickListener
-import com.knight.kotlin.library_widget.ktx.setItemClickListener
 import com.knight.kotlin.module_square.R
 import com.knight.kotlin.module_square.adapter.SquareShareArticleAdapter
 import com.knight.kotlin.module_square.databinding.SquareListFragmentBinding
@@ -39,7 +37,7 @@ class SquareShareListFragment:BaseFragment<SquareListFragmentBinding, SquareList
     private var selectItem = -1
 
     //广场文章适配器
-    private val mSquareShareArticleAdapter: SquareShareArticleAdapter by lazy { SquareShareArticleAdapter(arrayListOf()) }
+    private val mSquareShareArticleAdapter: SquareShareArticleAdapter by lazy { SquareShareArticleAdapter() }
 
     override fun SquareListFragmentBinding.initView() {
         requestLoading(squareSharearticleFreshlayout)
@@ -89,9 +87,9 @@ class SquareShareListFragment:BaseFragment<SquareListFragmentBinding, SquareList
         mBinding.squareSharearticleFreshlayout.finishRefresh()
         if (data.datas.size > 0) {
             if (page == 0) {
-                mSquareShareArticleAdapter.setNewInstance(data.datas)
+                mSquareShareArticleAdapter.submitList(data.datas)
             } else {
-                mSquareShareArticleAdapter.addData(data.datas)
+                mSquareShareArticleAdapter.addAll(data.datas)
             }
             page++
         } else {
@@ -106,15 +104,15 @@ class SquareShareListFragment:BaseFragment<SquareListFragmentBinding, SquareList
      */
     private fun initAdapterClickListener() {
         mSquareShareArticleAdapter.run {
-            setItemClickListener { adapter, view, position ->
-                ArouteUtils.startWebArticle(data.get(position).link,data.get(position).title,
-                    data.get(position).id,data.get(position).collect,data.get(position).envelopePic,
-                    data.get(position).desc,data.get(position).chapterName,data[position].author,data[position].shareUser)
+            setOnItemClickListener { adapter, view, position ->
+                ArouteUtils.startWebArticle(items.get(position).link,items.get(position).title,
+                    items.get(position).id,items.get(position).collect,items.get(position).envelopePic,
+                    items.get(position).desc,items.get(position).chapterName,items[position].author,items[position].shareUser)
             }
-            addChildClickViewIds(R.id.square_icon_collect)
-            setItemChildClickListener { adapter, view, position ->
+
+            addOnItemChildClickListener(R.id.square_icon_collect) { adapter, view, position ->
                 selectItem = position
-                collectOrunCollect(data[position].collect,data[position].id)
+                collectOrunCollect(items[position].collect,items[position].id)
             }
 
 
@@ -130,7 +128,7 @@ class SquareShareListFragment:BaseFragment<SquareListFragmentBinding, SquareList
      * 收藏文章成功
      */
     private fun collectArticleSuccess() {
-        mSquareShareArticleAdapter.data[selectItem].collect = true
+        mSquareShareArticleAdapter.items[selectItem].collect = true
         mSquareShareArticleAdapter.notifyItemChanged(selectItem)
 
 
@@ -141,7 +139,7 @@ class SquareShareListFragment:BaseFragment<SquareListFragmentBinding, SquareList
      * 取消收藏文章成功
      */
     private fun unCollectArticleSuccess() {
-        mSquareShareArticleAdapter.data[selectItem].collect = false
+        mSquareShareArticleAdapter.items[selectItem].collect = false
         mSquareShareArticleAdapter.notifyItemChanged(selectItem)
 
     }
