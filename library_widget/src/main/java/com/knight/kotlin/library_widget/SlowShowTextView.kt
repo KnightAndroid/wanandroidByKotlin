@@ -8,6 +8,7 @@ import android.os.Looper
 import android.os.Message
 import android.util.AttributeSet
 import androidx.core.content.ContextCompat
+import com.knight.kotlin.library_util.LogUtils
 
 
 /**
@@ -63,10 +64,10 @@ class SlowShowTextView : androidx.appcompat.widget.AppCompatTextView {
         mStringList =
             mOriginalText.split("".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
         mCurrentIndex = 0
-        super.setTextColor(transparent)
+        //super.setTextColor(transparent)
         mDuration = DEFAULT_DURATION
         mHandler = BeanShowingHandler()
-        mHandler.sendEmptyMessage(EVENT_BEAN_START)
+     //   mHandler.sendEmptyMessage(EVENT_BEAN_START)
     }
 
 
@@ -110,5 +111,12 @@ class SlowShowTextView : androidx.appcompat.widget.AppCompatTextView {
         mStringList =
             mOriginalText.split("".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
         mHandler.sendEmptyMessage(EVENT_BEAN_START)
+    }
+
+
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        mHandler.removeMessages(EVENT_BEAN_SHOW)
+        mHandler.removeMessages(EVENT_BEAN_START)
     }
 }

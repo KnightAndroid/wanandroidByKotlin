@@ -3,10 +3,13 @@ package com.knight.kotlin.module_eye_video_detail.activity
 import android.os.Build
 import android.transition.Transition
 import android.transition.TransitionListenerAdapter
+import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.config.Appconfig
@@ -19,6 +22,8 @@ import com.knight.kotlin.library_video.play.OkPlayer
 import com.knight.kotlin.module_eye_video_detail.R
 import com.knight.kotlin.module_eye_video_detail.adapter.EyeVideoRelateAdapter
 import com.knight.kotlin.module_eye_video_detail.databinding.EyeVideoDetailActivityBinding
+import com.knight.kotlin.module_eye_video_detail.databinding.EyeVideoDetailHeadBinding
+import com.knight.kotlin.module_eye_video_detail.databinding.EyeVideoRelateTitleItemBinding
 import com.knight.kotlin.module_eye_video_detail.vm.EyeVideoDetailVm
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener
@@ -51,6 +56,11 @@ class EyeVideoDetailActivity : BaseActivity<EyeVideoDetailActivityBinding,EyeVid
     private val mEyeVideoRelateAdapter: EyeVideoRelateAdapter by lazy { EyeVideoRelateAdapter(
         mutableListOf(),
         this) }
+
+
+    private lateinit var mHeaderBinding: EyeVideoDetailHeadBinding
+
+
     override fun setThemeColor(isDarkMode: Boolean) {
 
     }
@@ -77,7 +87,6 @@ class EyeVideoDetailActivity : BaseActivity<EyeVideoDetailActivityBinding,EyeVid
         videoEyeData = fromJson(videoJson)
         //注入xml中
         videoEntity = videoEyeData
-        expandTextView.resetState(true)
         jzVideo.setUp(videoEyeData.playUrl
             , videoEyeData.title)
         jzVideo.startVideo()
@@ -107,7 +116,7 @@ class EyeVideoDetailActivity : BaseActivity<EyeVideoDetailActivityBinding,EyeVid
             mTransition?.addListener(object : TransitionListenerAdapter() {
                 override fun onTransitionEnd(transition: Transition?) {
                     mBinding.eyeDetailRefreshLayout.autoRefresh()
-                    //getRelateVideoList()
+                   // getRelateVideoList()
                     //移除共享元素动画监听事件
                     mTransition?.removeListener(this)
                 }
@@ -115,6 +124,25 @@ class EyeVideoDetailActivity : BaseActivity<EyeVideoDetailActivityBinding,EyeVid
         }
         //开始动画执行
         startPostponedEnterTransition()
+    }
+
+
+    /**
+     * 初始化头像
+     */
+    private fun initHeaderView () {
+        if (mBinding.rvRelateVideo.headerCount == 0) {
+            if (!::mHeaderBinding.isInitialized) {
+                mHeaderBinding =
+                    EyeVideoDetailHeadBinding.inflate(LayoutInflater.from(this@EyeVideoDetailActivity))
+                mBinding.rvRelateVideo.addHeaderView(mHeaderBinding.root)
+                mHeaderBinding.videoEntity = videoEyeData
+            } else {
+                mHeaderBinding.videoEntity = videoEyeData
+            }
+
+            mHeaderBinding.expandTextView.resetState(true)
+        }
     }
 
 
@@ -147,7 +175,7 @@ class EyeVideoDetailActivity : BaseActivity<EyeVideoDetailActivityBinding,EyeVid
     private fun getRelateVideoList() {
         mViewModel.getVideoDetail(videoEyeData.id).observerKt {
             mBinding.eyeDetailRefreshLayout.finishRefresh()
-            setRvListHeight(it.itemList.size)
+            initHeaderView()
             mEyeVideoRelateAdapter.submitList(it.itemList)
 
 

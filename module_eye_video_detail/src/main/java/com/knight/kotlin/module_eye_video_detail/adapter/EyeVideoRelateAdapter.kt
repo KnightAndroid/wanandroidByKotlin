@@ -76,9 +76,16 @@ class EyeVideoRelateAdapter(data: List<EyeItemEntity>,activity: Activity) : Base
             }
 
         }).onItemViewType { position, list -> // 根据数据，返回对应的 ItemViewType
-            if (list[position].type == EyeTypeConstants.TEXT_HEAD_TYPE) {
-                EyeTypeConstants.TEXT_TYPE
-            } else EyeTypeConstants.IMAGE_TYPE
+            if (position == list.size) {
+                if (list[position - 1].type == EyeTypeConstants.TEXT_HEAD_TYPE) {
+                    EyeTypeConstants.TEXT_TYPE
+                } else EyeTypeConstants.IMAGE_TYPE
+            } else {
+                if (list[position].type == EyeTypeConstants.TEXT_HEAD_TYPE) {
+                    EyeTypeConstants.TEXT_TYPE
+                } else EyeTypeConstants.IMAGE_TYPE
+            }
+
         }
     }
 
