@@ -184,6 +184,15 @@ object RouteActivity {
         const val EyeVideoDetail = "$EyeVideo/EyeDetailActivity"
     }
 
+    /**
+     *
+     * 开眼 发现模块
+     */
+    object EyeDiscover {
+        private const val EyeDiscover = "/module_eye_discover"
+        const val EyeDiscoverActivity = "$EyeDiscover/EyeDetailActivity"
+    }
+
 
 
 }

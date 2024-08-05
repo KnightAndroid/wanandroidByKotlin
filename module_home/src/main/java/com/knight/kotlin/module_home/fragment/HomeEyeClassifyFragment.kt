@@ -25,7 +25,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @Route(path = RouteFragment.Home.HomeEyeClassifyFragment)
 class HomeEyeClassifyFragment : BaseFragment<HomeEyeClassifyFragmentBinding,EmptyViewModel>() {
 
-    private val mOpenSourceAdapter: EyepetizerCategoryAdapter by lazy { EyepetizerCategoryAdapter() }
+    private val mEyepetizerCategoryAdapter: EyepetizerCategoryAdapter by lazy { EyepetizerCategoryAdapter() }
 
     override fun setThemeColor(isDarkMode: Boolean) {
 
@@ -50,17 +50,24 @@ class HomeEyeClassifyFragment : BaseFragment<HomeEyeClassifyFragmentBinding,Empt
     }
 
     private fun initEyeCategoryAdapter() {
-        mBinding.rvEyepetizerCategory.init(LinearLayoutManager(requireActivity()), mOpenSourceAdapter,false)
+        mBinding.rvEyepetizerCategory.init(LinearLayoutManager(requireActivity()), mEyepetizerCategoryAdapter,false)
         //初始化标签
         val type = object : TypeToken<List<EyeCategoryBean>>() {}.type
         val jsonData: String = JsonUtils.getJson(requireActivity(), "eyecategory.json")
         val mDataList: MutableList<EyeCategoryBean> =
             GsonUtils.getList(jsonData, type)
-        mOpenSourceAdapter.submitList(mDataList)
+        mEyepetizerCategoryAdapter.submitList(mDataList)
 
-        mOpenSourceAdapter.run {
+        mEyepetizerCategoryAdapter.run {
             setOnItemClickListener { adapter, view, position ->
-                startPage(RouteActivity.EyeDaily.DailyListActivity)
+                if (position === 0) {
+                    startPage(RouteActivity.EyeDaily.DailyListActivity)
+                } else if (position === 1) {
+                    startPage(RouteActivity.EyeDiscover.EyeDiscoverActivity)
+                } else {
+
+                }
+
 
             }
         }
