@@ -2,8 +2,9 @@ package com.knight.kotlin.module_eye_discover.activity
 
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.route.RouteActivity
-import com.knight.kotlin.library_base.vm.EmptyViewModel
+import com.knight.kotlin.library_util.LogUtils
 import com.knight.kotlin.module_eye_discover.databinding.EyeDiscoverActivityBinding
+import com.knight.kotlin.module_eye_discover.vm.EyeDiscoverVm
 import com.wyjson.router.annotation.Route
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -16,7 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 @AndroidEntryPoint
 @Route(path = RouteActivity.EyeDiscover.EyeDiscoverActivity)
-class EyeDiscoverActivity : BaseActivity<EyeDiscoverActivityBinding, EmptyViewModel>(){
+class EyeDiscoverActivity : BaseActivity<EyeDiscoverActivityBinding, EyeDiscoverVm>(){
     override fun setThemeColor(isDarkMode: Boolean) {
 
     }
@@ -26,7 +27,9 @@ class EyeDiscoverActivity : BaseActivity<EyeDiscoverActivityBinding, EmptyViewMo
     }
 
     override fun initRequestData() {
-
+        mViewModel.getDiscoverData().observerKt {
+            LogUtils.d(it.size.toString())
+        }
     }
 
     override fun reLoadData() {
