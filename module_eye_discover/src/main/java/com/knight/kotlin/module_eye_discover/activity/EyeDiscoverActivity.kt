@@ -4,6 +4,7 @@ import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_util.LogUtils
 import com.knight.kotlin.module_eye_discover.databinding.EyeDiscoverActivityBinding
+import com.knight.kotlin.module_eye_discover.entity.EyeDiscoverBannerEntity
 import com.knight.kotlin.module_eye_discover.vm.EyeDiscoverVm
 import com.wyjson.router.annotation.Route
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,7 +29,7 @@ class EyeDiscoverActivity : BaseActivity<EyeDiscoverActivityBinding, EyeDiscover
 
     override fun initRequestData() {
         mViewModel.getDiscoverData().observerKt {
-            LogUtils.d(it.size.toString())
+            LogUtils.d((it.get(0) as EyeDiscoverBannerEntity).data.itemList.size.toString()+"数量")
         }
     }
 

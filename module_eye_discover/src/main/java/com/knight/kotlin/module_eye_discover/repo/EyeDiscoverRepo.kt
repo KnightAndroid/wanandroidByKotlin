@@ -1,8 +1,13 @@
 package com.knight.kotlin.module_eye_discover.repo
 
+import com.google.gson.JsonArray
+import com.google.gson.JsonElement
 import com.knight.kotlin.library_base.ktx.dimissLoadingDialog
 import com.knight.kotlin.library_base.ktx.fromJson
 import com.knight.kotlin.library_base.repository.BaseRepository
+import com.knight.kotlin.library_network.enum.ResponseExceptionEnum
+import com.knight.kotlin.library_network.exception.ResponseException
+import com.knight.kotlin.library_network.model.responseCodeExceptionHandler
 import com.knight.kotlin.module_eye_discover.api.EyeDiscoverApi
 import com.knight.kotlin.module_eye_discover.entity.BaseEyeDiscoverEntity
 import com.knight.kotlin.module_eye_discover.entity.EyeDiscoverBannerEntity
@@ -26,76 +31,81 @@ class EyeDiscoverRepo @Inject constructor() : BaseRepository(){
      */
     fun getDiscoverData (failureCallBack:((String?) ->Unit) ?= null) = request<List<BaseEyeDiscoverEntity>>({
         mEyeDiscoverApi.getDiscoverData().run {
-//            val jsonObject: JSONObject = JSONObject(this)
-//            val errorCode:Int = jsonObject.optInt("errorCode")
-//            val errorMessage:String = jsonObject.optString("errorMessage")
-//            responseCodeExceptionHandler(errorCode, errorMessage)
-//            dimissLoadingDialog()
-            val discoverLists = mutableListOf<BaseEyeDiscoverEntity>()
-            //val jsonObject: JSONObject = JSONObject(this)
+            val jsonErrorCodeElement  =  this.get("errorCode")
+            val jsonErrorMsgElement = this.get("errorMessage")
+            jsonErrorCodeElement?.run {
 
-            val itemList = this.getAsJsonArray("itemList")
-            for (i in 0 until itemList.size()) {
-                val ccurrentObject = itemList.get(i)
-                when (ccurrentObject.asString("type")) {
-                    "horizontalScrollCard" -> {
-                        val topBannerBean: EyeDiscoverBannerEntity = fromJson(ccurrentObject.toString())
-                       // val topBannerViewModel: TopBannerViewModel = TopBannerViewModel()
-                      //  topBannerViewModel.bannerUrl = topBannerBean.getData().getItemList().get(0).getData().getImage()
-                        discoverLists.add(topBannerBean)
-                    }
+                    throw ResponseException(
+                        ResponseExceptionEnum.ERROR,
+                        jsonErrorMsgElement.asString
+                    )
 
-                    "specialSquareCardCollection" -> {
+
+            } ?: run {
+                dimissLoadingDialog()
+                val discoverLists = mutableListOf<BaseEyeDiscoverEntity>()
+                //val jsonObject: JSONObject = JSONObject(this)
+
+                val itemList = this.getAsJsonArray("itemList")
+
+                for (i in 0 until itemList.size()) {
+                    val ccurrentObject = itemList.get(i).asJsonObject
+                    when (ccurrentObject.get("type").asString) {
+                        "horizontalScrollCard" -> {
+                            val topBannerBean: EyeDiscoverBannerEntity = fromJson(ccurrentObject.toString())
+                            discoverLists.add(topBannerBean)
+                        }
+
+                        "specialSquareCardCollection" -> {
 //                        val categoryCardBean: CategoryCardBean = GsonUtils.fromLocalJson(ccurrentObject.toString(), CategoryCardBean::class.java)
 //                        viewModels.add(categoryCardBean)
-                    }
+                        }
 
-                    "columnCardList" -> {
+                        "columnCardList" -> {
 //                        val subjectCardBean: SubjectCardBean = GsonUtils.fromLocalJson(ccurrentObject.toString(), SubjectCardBean::class.java)
 //                        viewModels.add(subjectCardBean)
-                    }
+                        }
 
-                    "textCard" -> {
+                        "textCard" -> {
 //                        val textCardbean: TextCardbean = GsonUtils.fromLocalJson(ccurrentObject.toString(), TextCardbean::class.java)
 //                        val titleViewModel: TitleViewModel = TitleViewModel()
 //                        titleViewModel.title = textCardbean.getData().getText()
 //                        titleViewModel.actionTitle = textCardbean.getData().getRightText()
 //                        viewModels.add(titleViewModel)
-                    }
+                        }
 
-                    "banner" -> {
+                        "banner" -> {
 //                        val bannerBean: BannerBean = GsonUtils.fromLocalJson(ccurrentObject.toString(), BannerBean::class.java)
 //                        val bannerViewModel: ContentBannerViewModel = ContentBannerViewModel()
 //                        bannerViewModel.bannerUrl = bannerBean.getData().getImage()
 //                        viewModels.add(bannerViewModel)
-                    }
+                        }
 
-                    "videoSmallCard" -> {
+                        "videoSmallCard" -> {
 //                        val videoSmallCardBean: VideoSmallCardBean = GsonUtils
 //                            .fromLocalJson(
 //                                ccurrentObject.toString(),
 //                                VideoSmallCardBean::class.java
 //                            )
 //                        paresVideoCard(viewModels, videoSmallCardBean)
-                    }
+                        }
 
-                    "briefCard" -> {
+                        "briefCard" -> {
 //                        val briefCard: BriefCard = GsonUtils.fromLocalJson(ccurrentObject.toString(), BriefCard::class.java)
 //                        val briefCardViewModel: BriefCardViewModel = BriefCardViewModel()
 //                        briefCardViewModel.coverUrl = briefCard.getData().getIcon()
 //                        briefCardViewModel.title = briefCard.getData().getTitle()
 //                        briefCardViewModel.description = briefCard.getData().getDescription()
 //                        viewModels.add(briefCardViewModel)
-                    }
+                        }
 
-                    else -> {}
+                        else -> {}
+                    }
                 }
+
+                emit(discoverLists)
             }
 
-
-
-
-            emit(discoverLists)
         }
     }){
         dimissLoadingDialog()
