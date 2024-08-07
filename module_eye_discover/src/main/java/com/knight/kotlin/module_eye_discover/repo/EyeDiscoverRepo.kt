@@ -1,16 +1,18 @@
 package com.knight.kotlin.module_eye_discover.repo
 
-import com.google.gson.JsonArray
-import com.google.gson.JsonElement
 import com.knight.kotlin.library_base.ktx.dimissLoadingDialog
 import com.knight.kotlin.library_base.ktx.fromJson
 import com.knight.kotlin.library_base.repository.BaseRepository
 import com.knight.kotlin.library_network.enum.ResponseExceptionEnum
 import com.knight.kotlin.library_network.exception.ResponseException
-import com.knight.kotlin.library_network.model.responseCodeExceptionHandler
 import com.knight.kotlin.module_eye_discover.api.EyeDiscoverApi
 import com.knight.kotlin.module_eye_discover.entity.BaseEyeDiscoverEntity
-import com.knight.kotlin.module_eye_discover.entity.EyeDiscoverBannerEntity
+import com.knight.kotlin.module_eye_discover.entity.EyeCategoryCardEntity
+import com.knight.kotlin.module_eye_discover.entity.EyeDiscoverBriefCardEntity
+import com.knight.kotlin.module_eye_discover.entity.EyeDiscoverMiddleBannerEntity
+import com.knight.kotlin.module_eye_discover.entity.EyeDiscoverTopBannerEntity
+import com.knight.kotlin.module_eye_discover.entity.EyeDiscoverVideoSmallCardEntity
+import com.knight.kotlin.module_eye_discover.entity.EyeTextCardEntity
 import javax.inject.Inject
 
 
@@ -44,59 +46,40 @@ class EyeDiscoverRepo @Inject constructor() : BaseRepository(){
             } ?: run {
                 dimissLoadingDialog()
                 val discoverLists = mutableListOf<BaseEyeDiscoverEntity>()
-                //val jsonObject: JSONObject = JSONObject(this)
-
                 val itemList = this.getAsJsonArray("itemList")
-
                 for (i in 0 until itemList.size()) {
                     val ccurrentObject = itemList.get(i).asJsonObject
                     when (ccurrentObject.get("type").asString) {
                         "horizontalScrollCard" -> {
-                            val topBannerBean: EyeDiscoverBannerEntity = fromJson(ccurrentObject.toString())
+                            val topBannerBean: EyeDiscoverTopBannerEntity = fromJson(ccurrentObject.toString())
                             discoverLists.add(topBannerBean)
                         }
 
-                        "specialSquareCardCollection" -> {
-//                        val categoryCardBean: CategoryCardBean = GsonUtils.fromLocalJson(ccurrentObject.toString(), CategoryCardBean::class.java)
-//                        viewModels.add(categoryCardBean)
+                        "specialSquareCardCollection","columnCardList" -> {
+                            val categoryCardBean: EyeCategoryCardEntity = fromJson(ccurrentObject.toString())
+                            discoverLists.add(categoryCardBean)
                         }
 
-                        "columnCardList" -> {
-//                        val subjectCardBean: SubjectCardBean = GsonUtils.fromLocalJson(ccurrentObject.toString(), SubjectCardBean::class.java)
-//                        viewModels.add(subjectCardBean)
-                        }
 
                         "textCard" -> {
-//                        val textCardbean: TextCardbean = GsonUtils.fromLocalJson(ccurrentObject.toString(), TextCardbean::class.java)
-//                        val titleViewModel: TitleViewModel = TitleViewModel()
-//                        titleViewModel.title = textCardbean.getData().getText()
-//                        titleViewModel.actionTitle = textCardbean.getData().getRightText()
-//                        viewModels.add(titleViewModel)
+                            val textCardbean: EyeTextCardEntity = fromJson(ccurrentObject.toString())
+                            discoverLists.add(textCardbean)
                         }
 
                         "banner" -> {
-//                        val bannerBean: BannerBean = GsonUtils.fromLocalJson(ccurrentObject.toString(), BannerBean::class.java)
-//                        val bannerViewModel: ContentBannerViewModel = ContentBannerViewModel()
-//                        bannerViewModel.bannerUrl = bannerBean.getData().getImage()
-//                        viewModels.add(bannerViewModel)
+                            val middleBannerBean : EyeDiscoverMiddleBannerEntity = fromJson(ccurrentObject.toString())
+                            discoverLists.add(middleBannerBean)
                         }
 
                         "videoSmallCard" -> {
-//                        val videoSmallCardBean: VideoSmallCardBean = GsonUtils
-//                            .fromLocalJson(
-//                                ccurrentObject.toString(),
-//                                VideoSmallCardBean::class.java
-//                            )
-//                        paresVideoCard(viewModels, videoSmallCardBean)
+
+                            val videoSmallCardEntity : EyeDiscoverVideoSmallCardEntity = fromJson(ccurrentObject.toString())
+                            discoverLists.add(videoSmallCardEntity)
                         }
 
                         "briefCard" -> {
-//                        val briefCard: BriefCard = GsonUtils.fromLocalJson(ccurrentObject.toString(), BriefCard::class.java)
-//                        val briefCardViewModel: BriefCardViewModel = BriefCardViewModel()
-//                        briefCardViewModel.coverUrl = briefCard.getData().getIcon()
-//                        briefCardViewModel.title = briefCard.getData().getTitle()
-//                        briefCardViewModel.description = briefCard.getData().getDescription()
-//                        viewModels.add(briefCardViewModel)
+                            val briefCardEntity : EyeDiscoverBriefCardEntity = fromJson(ccurrentObject.toString())
+                            discoverLists.add(briefCardEntity)
                         }
 
                         else -> {}

@@ -20,6 +20,6 @@ interface EyeDiscoverApi {
      *
      */
     @Headers("Domain-Name:eye")
-    @GET("v7/index/tab/discovery")
+    @GET("v7/index/tab/discovery?udid=fa53872206ed42e3857755c2756ab683f22d64a&vc=591&vn=6.2.1&size=720X1280&deviceModel=Che1-CL20")
     suspend fun getDiscoverData() : JsonObject
 }

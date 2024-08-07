@@ -11,9 +11,9 @@ import kotlinx.parcelize.Parcelize
  * @descript:发现广告
  */
 
-data class EyeDiscoverBannerEntity(
+data class EyeDiscoverTopBannerEntity(
   val type:String,
-  val data:EyeDiscoverBannerListData,
+  val data:EyeDiscoverTopBannerListData,
   val tag:String,
   val id:Int,
   val adIndex:Int
@@ -22,26 +22,26 @@ data class EyeDiscoverBannerEntity(
 
 
 @Parcelize
-data class EyeDiscoverBannerListData (
+data class EyeDiscoverTopBannerListData (
     val dataType:String,
     val count:Int,
-    val itemList:List<EyeDiscoverBannerItemListData>
+    val itemList:List<EyeDiscoverTopBannerItemListData>
 ) : Parcelable
 
 
 
 
 @Parcelize
-data class EyeDiscoverBannerItemListData(
+data class EyeDiscoverTopBannerItemListData(
     val type:String,
-    val data:EyeDiscoverBannerData,
+    val data:EyeDiscoverTopBannerData,
     val tag:String,
     val id:Int,
     val adIndex:Int
 ): Parcelable
 
 @Parcelize
-data class EyeDiscoverBannerData(
+data class EyeDiscoverTopBannerData(
     val actionUrl: String,
     val adTrack: List<String>,
     val autoPlay: Boolean,
