@@ -25,7 +25,7 @@ data class EyeDiscoverTopBannerEntity(
 data class EyeDiscoverTopBannerListData (
     val dataType:String,
     val count:Int,
-    val itemList:List<EyeDiscoverTopBannerItemListData>
+    val itemList:MutableList<EyeDiscoverTopBannerItemListData>
 ) : Parcelable
 
 

@@ -10,7 +10,7 @@ import kotlinx.parcelize.Parcelize
  * @Date 2024/8/7 15:52
  * @descript:文字卡片实体
  */
-data class EyeTextCardEntity (
+data class EyeSubTitleEntity (
    val type : String,
    val data : EyeTextCardDataEntity,
    val tag:String?,

@@ -12,7 +12,7 @@ import com.knight.kotlin.module_eye_discover.entity.EyeDiscoverBriefCardEntity
 import com.knight.kotlin.module_eye_discover.entity.EyeDiscoverMiddleBannerEntity
 import com.knight.kotlin.module_eye_discover.entity.EyeDiscoverTopBannerEntity
 import com.knight.kotlin.module_eye_discover.entity.EyeDiscoverVideoSmallCardEntity
-import com.knight.kotlin.module_eye_discover.entity.EyeTextCardEntity
+import com.knight.kotlin.module_eye_discover.entity.EyeSubTitleEntity
 import javax.inject.Inject
 
 
@@ -36,13 +36,10 @@ class EyeDiscoverRepo @Inject constructor() : BaseRepository(){
             val jsonErrorCodeElement  =  this.get("errorCode")
             val jsonErrorMsgElement = this.get("errorMessage")
             jsonErrorCodeElement?.run {
-
                     throw ResponseException(
                         ResponseExceptionEnum.ERROR,
                         jsonErrorMsgElement.asString
                     )
-
-
             } ?: run {
                 dimissLoadingDialog()
                 val discoverLists = mutableListOf<BaseEyeDiscoverEntity>()
@@ -62,8 +59,8 @@ class EyeDiscoverRepo @Inject constructor() : BaseRepository(){
 
 
                         "textCard" -> {
-                            val textCardbean: EyeTextCardEntity = fromJson(ccurrentObject.toString())
-                            discoverLists.add(textCardbean)
+                            val subTitleBean: EyeSubTitleEntity = fromJson(ccurrentObject.toString())
+                            discoverLists.add(subTitleBean)
                         }
 
                         "banner" -> {

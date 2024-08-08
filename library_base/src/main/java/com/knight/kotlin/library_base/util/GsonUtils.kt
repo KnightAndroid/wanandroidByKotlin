@@ -42,6 +42,7 @@ object GsonUtils {
             t = gson.fromJson(jsonString, cls)
         } catch (e: Exception) {
             e.printStackTrace()
+            throw Exception(e.message)
         }
         return t
     }

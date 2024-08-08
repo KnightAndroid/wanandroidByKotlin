@@ -11,6 +11,7 @@ import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_base.util.ColorUtils
+import com.knight.kotlin.library_util.splitString
 
 
 //1、isNullOrEmpty : 为空指针或者字串长度为0时返回true，非空串与可空串均可调用。
@@ -25,8 +26,16 @@ import com.knight.kotlin.library_base.util.ColorUtils
 )
 fun ImageView.loadUrl(url:String?){
    if (!url.isNullOrEmpty()) {
+      var loadImage = ""
       //这里后台返回数据部分多了ali 需要替换
-      val loadImage = url.replace("ali-ali","ali")
+      if (url.contains("ali-ali")) {
+         loadImage = url.replace("ali-ali","ali")
+      } else  {
+         if (!url.contains("//ali")) {
+            loadImage = "http://ali-" + url.splitString("http://").get(0)
+         }
+      }
+
       ImageLoader.loadStringPhoto(
          context,
          loadImage,

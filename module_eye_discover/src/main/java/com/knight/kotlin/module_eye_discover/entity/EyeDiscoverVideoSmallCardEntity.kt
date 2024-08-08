@@ -13,14 +13,14 @@ import kotlinx.parcelize.Parcelize
 
 data class EyeDiscoverVideoSmallCardEntity(
     val adIndex: Int,
-    val `data`: Data,
+    val data: EyeDiscoverVideoSmallCardData,
     val id: Int,
-    val tag: Any,
-    val trackingData: Any,
+    val tag: String?,
+    val trackingData: String?,
     val type: String
 ): BaseEyeDiscoverEntity()
 @Parcelize
-data class Data(
+data class EyeDiscoverVideoSmallCardData(
     val ad: Boolean,
     val adTrack: List<String?>,
     val author: Author,
@@ -44,7 +44,7 @@ data class Data(
     val labelList: List<String?>,
     val lastViewTime: String?,
     val library: String,
-    val playInfo: List<String?>,
+    val playInfo: List<EyeDiscoverPlayInfoEntity?>,
     val playUrl: String,
     val played: Boolean,
     val playlists: String?,
@@ -66,7 +66,7 @@ data class Data(
     val title: String,
     val titlePgc: String,
     val type: String,
-    val videoPosterBean: String?,
+    val videoPosterBean: EyeDiscoverVideoPosterEntity,
     val waterMarks: String?,
     val webAdTrack: String?,
     val webUrl: WebUrl
@@ -142,6 +142,29 @@ data class Shield(
     val itemId: Int,
     val itemType: String,
     val shielded: Boolean
+): Parcelable
+
+@Parcelize
+data class EyeDiscoverVideoPosterEntity(
+    val fileSizeStr: String,
+    val scale: Double,
+    val url: String
+): Parcelable
+
+@Parcelize
+data class EyeDiscoverPlayInfoEntity(
+    val height: Int,
+    val name: String,
+    val type: String,
+    val url: String,
+    val urlList: List<EyeDiscoverPlayUrl>,
+    val width: Int
+): Parcelable
+@Parcelize
+data class EyeDiscoverPlayUrl(
+    val name: String,
+    val size: Int,
+    val url: String
 ): Parcelable
 
 
