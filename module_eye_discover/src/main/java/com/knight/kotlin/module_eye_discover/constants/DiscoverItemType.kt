@@ -20,4 +20,9 @@ internal object DiscoverItemType {
      * 热门分类
      */
     const val CATEGORYVIEW = 3
+    /**
+     * 专题策划
+     */
+    const val SUBJECTVIEW = 4
+
 }

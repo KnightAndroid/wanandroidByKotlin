@@ -13,6 +13,7 @@ import com.knight.kotlin.module_eye_discover.entity.EyeDiscoverMiddleBannerEntit
 import com.knight.kotlin.module_eye_discover.entity.EyeDiscoverTopBannerEntity
 import com.knight.kotlin.module_eye_discover.entity.EyeDiscoverVideoSmallCardEntity
 import com.knight.kotlin.module_eye_discover.entity.EyeSubTitleEntity
+import com.knight.kotlin.module_eye_discover.entity.EyeSubjectCardEntity
 import javax.inject.Inject
 
 
@@ -52,11 +53,15 @@ class EyeDiscoverRepo @Inject constructor() : BaseRepository(){
                             discoverLists.add(topBannerBean)
                         }
 
-                        "specialSquareCardCollection","columnCardList" -> {
+                        "specialSquareCardCollection" -> {
                             val categoryCardBean: EyeCategoryCardEntity = fromJson(ccurrentObject.toString())
                             discoverLists.add(categoryCardBean)
                         }
 
+                        "columnCardList" -> {
+                            val subjectCardBean: EyeSubjectCardEntity = fromJson(ccurrentObject.toString())
+                            discoverLists.add(subjectCardBean)
+                        }
 
                         "textCard" -> {
                             val subTitleBean: EyeSubTitleEntity = fromJson(ccurrentObject.toString())

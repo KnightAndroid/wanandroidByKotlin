@@ -13,10 +13,12 @@ import com.knight.kotlin.library_widget.RecyclerItemDecoration
 import com.knight.kotlin.module_eye_discover.constants.DiscoverItemType
 import com.knight.kotlin.module_eye_discover.databinding.EyeDiscoverCategoryItemBinding
 import com.knight.kotlin.module_eye_discover.databinding.EyeDiscoverSubTitleItemBinding
+import com.knight.kotlin.module_eye_discover.databinding.EyeDiscoverSubjectItemBinding
 import com.knight.kotlin.module_eye_discover.databinding.EyeDiscoverTopBannerItemBinding
 import com.knight.kotlin.module_eye_discover.entity.BaseEyeDiscoverEntity
 import com.knight.kotlin.module_eye_discover.entity.EyeCategoryCardEntity
 import com.knight.kotlin.module_eye_discover.entity.EyeDiscoverTopBannerEntity
+import com.knight.kotlin.module_eye_discover.entity.EyeSubjectCardEntity
 import com.knight.kotlin.module_eye_discover.entity.SquareCard
 import com.youth.banner.indicator.CircleIndicator
 
@@ -35,6 +37,8 @@ class EyeDiscoverAdapter(activity : FragmentActivity, data:List<BaseEyeDiscoverE
     class EyeDiscoverSubTitleVH(viewBinding : EyeDiscoverSubTitleItemBinding) : RecyclerView.ViewHolder(viewBinding.root)
     //类型 3 热门分类 viewHolder
     class EyeDiscoverCategoryVH(viewBinding: EyeDiscoverCategoryItemBinding) : RecyclerView.ViewHolder(viewBinding.root)
+    //类型 4
+    class EyeDiscoverSubjectVH(viewBinding:EyeDiscoverSubjectItemBinding) : RecyclerView.ViewHolder(viewBinding.root)
     init {
         addItemType(DiscoverItemType.TOPBANNERVIEW,object:OnMultiItemAdapterListener<BaseEyeDiscoverEntity,EyeDiscoverTopBannerVH>{
             override fun onBind(holder: EyeDiscoverTopBannerVH, position: Int, item: BaseEyeDiscoverEntity?) {
@@ -61,12 +65,10 @@ class EyeDiscoverAdapter(activity : FragmentActivity, data:List<BaseEyeDiscoverE
                     for (i in 0 until cardBean.data.itemList.size) {
                         dataList.add(cardBean.data.itemList.get(i).data)
                     }
-                    val adapter: EyeDiscoverSubCategoryAdapter = EyeDiscoverSubCategoryAdapter()
+                    val adapter = EyeDiscoverSubCategoryAdapter()
                     binding.rvCategoryView.adapter = adapter
                     adapter.submitList(dataList)
                 }
-
-
 
             }
 
@@ -90,12 +92,61 @@ class EyeDiscoverAdapter(activity : FragmentActivity, data:List<BaseEyeDiscoverE
                 return EyeDiscoverCategoryVH(viewBinding)
             }
 
-        }).onItemViewType { position, list -> // 根据数据，返回对应的 ItemViewType
+        })
+            .addItemType(DiscoverItemType.SUBJECTVIEW,object : OnMultiItemAdapterListener<BaseEyeDiscoverEntity,EyeDiscoverSubjectVH>{
+            override fun onBind(holder: EyeDiscoverSubjectVH, position: Int, item: BaseEyeDiscoverEntity?) {
+                val binding = DataBindingUtil.getBinding<EyeDiscoverSubjectItemBinding>(holder.itemView)
+                val cardBean = item as EyeSubjectCardEntity
+                binding?.run {
+                    tvTitle.setText(cardBean.data.header.title)
+                    tvActionTitle
+                        .setText(cardBean.data.header.rightText)
+                    val dataList: ArrayList<SquareCard> = ArrayList<SquareCard>()
+                    for (i in 0 until cardBean.data.itemList.size) {
+                        dataList.add(cardBean.data.itemList.get(i).data)
+                    }
+                    val adapter = EyeDiscoverSubSubjectAdapter()
+                    binding.rvSubjectView.adapter = adapter
+                    adapter.submitList(dataList)
+                }
+            }
+
+            override fun onCreate(context: Context, parent: ViewGroup, viewType: Int): EyeDiscoverSubjectVH {
+                //创建 viewholder
+                val viewBinding =  EyeDiscoverSubjectItemBinding.inflate(LayoutInflater.from(context), parent, false)
+                viewBinding.rvSubjectView.setHasFixedSize(true)
+                val gridLayoutManager =
+                    GridLayoutManager(activity, 2)
+                viewBinding.rvSubjectView.setLayoutManager(gridLayoutManager)
+                viewBinding.rvSubjectView.addItemDecoration(
+                    RecyclerItemDecoration(
+                        0,
+                        0, 5.dp2px(), 5.dp2px()
+                    )
+                )
+                return EyeDiscoverSubjectVH(viewBinding)
+            }
+        }).addItemType(DiscoverItemType.SUBTITLEVIEW,object : OnMultiItemAdapterListener<BaseEyeDiscoverEntity,EyeDiscoverSubTitleVH>{
+                override fun onBind(holder: EyeDiscoverSubTitleVH, position: Int, item: BaseEyeDiscoverEntity?) {
+
+                }
+
+                override fun onCreate(context: Context, parent: ViewGroup, viewType: Int): EyeDiscoverSubTitleVH {
+                    //创建 viewholder
+                    val viewBinding =  EyeDiscoverSubTitleItemBinding.inflate(LayoutInflater.from(context), parent, false)
+                    return EyeDiscoverSubTitleVH(viewBinding)
+                }
+            })
+
+            .onItemViewType { position, list -> // 根据数据，返回对应的 ItemViewType
             if (list[position] is EyeDiscoverTopBannerEntity) {
                 DiscoverItemType.TOPBANNERVIEW
             } else if (list[position] is EyeCategoryCardEntity) {
                 DiscoverItemType.CATEGORYVIEW
-            } else DiscoverItemType.SUBTITLEVIEW
+            } else if (list[position] is EyeSubjectCardEntity)  {
+                DiscoverItemType.SUBJECTVIEW
+            }
+            else DiscoverItemType.SUBTITLEVIEW
         }
     }
 }

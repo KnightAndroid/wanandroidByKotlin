@@ -10,36 +10,37 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="110dp"
-        android:layout_height="110dp">
+        android:layout_width="match_parent"
+        android:layout_height="95dp">
 
         <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/iv_category_bg"
+            android:id="@+id/iv_subject_bg"
             android:layout_width="0dp"
             android:layout_height="0dp"
             imageUrl="@{viewModel.image}"
             app:shapeAppearance="@style/base_roundedCornerStyle"
             android:scaleType="fitXY"
-            android:adjustViewBounds="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-         />
+             />
 
         <TextView
             android:id="@+id/tv_label"
-            android:textSize="15sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:textSize="13sp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:maxLines="2"
+            android:gravity="center"
             android:ellipsize="end"
+            android:background="@android:color/transparent"
             android:textColor="@android:color/white"
-            app:layout_constraintBottom_toBottomOf="@id/iv_category_bg"
-            app:layout_constraintEnd_toEndOf="@+id/iv_category_bg"
-            app:layout_constraintStart_toStartOf="@id/iv_category_bg"
-            app:layout_constraintTop_toTopOf="@+id/iv_category_bg"
-            tools:text="#广告"
+            app:layout_constraintBottom_toBottomOf="@id/iv_subject_bg"
+            app:layout_constraintEnd_toEndOf="@+id/iv_subject_bg"
+            app:layout_constraintStart_toStartOf="@id/iv_subject_bg"
+            app:layout_constraintTop_toTopOf="@+id/iv_subject_bg"
+            tools:text="异地恋也可以很甜"
             android:text="@{viewModel.title}"
             />
 
