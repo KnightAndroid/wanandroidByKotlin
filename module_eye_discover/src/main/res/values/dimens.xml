@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="eye_discover_top_banner_height">160dp</dimen>
+    <dimen name="eye_discover_video_card_mb_time_width">38dp</dimen>
+    <dimen name="eye_discover_video_card_mb_time_height">20dp</dimen>
+    <dimen name="eye_discover_video_card_mb_time_margin_end">5dp</dimen>
+    <dimen name="eye_discover_video_card_mb_time_margin_bottom">5dp</dimen>
+    <dimen name="eye_discover_video_card_mb_time_text_size">10sp</dimen>
+    <dimen name="eye_discover_video_card_mb_time_corner_radius">5dp</dimen>
 </resources>

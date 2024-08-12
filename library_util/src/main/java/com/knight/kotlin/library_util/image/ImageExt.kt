@@ -33,6 +33,8 @@ fun ImageView.loadUrl(url:String?){
       } else  {
          if (!url.contains("//ali")) {
             loadImage = "http://ali-" + url.splitString("http://").get(0)
+         } else {
+            loadImage = url
          }
       }
 
@@ -42,7 +44,7 @@ fun ImageView.loadUrl(url:String?){
          this,
          callback = {
              if (!it) {
-                this.setBackgroundColor(ColorUtils.getRandColorCode())
+                this.setBackgroundColor(ColorUtils.alphaColor(ColorUtils.getRandColorCode(),0.6f))
              }
          }
       )

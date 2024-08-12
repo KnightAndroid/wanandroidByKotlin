@@ -11,13 +11,18 @@ import com.chad.library.adapter4.BaseMultiItemAdapter
 import com.knight.kotlin.library_base.util.dp2px
 import com.knight.kotlin.library_widget.RecyclerItemDecoration
 import com.knight.kotlin.module_eye_discover.constants.DiscoverItemType
+import com.knight.kotlin.module_eye_discover.databinding.EyeDiscoverBriefCardItemBinding
 import com.knight.kotlin.module_eye_discover.databinding.EyeDiscoverCategoryItemBinding
 import com.knight.kotlin.module_eye_discover.databinding.EyeDiscoverSubTitleItemBinding
 import com.knight.kotlin.module_eye_discover.databinding.EyeDiscoverSubjectItemBinding
 import com.knight.kotlin.module_eye_discover.databinding.EyeDiscoverTopBannerItemBinding
+import com.knight.kotlin.module_eye_discover.databinding.EyeDiscoverVideoCardItemBinding
 import com.knight.kotlin.module_eye_discover.entity.BaseEyeDiscoverEntity
 import com.knight.kotlin.module_eye_discover.entity.EyeCategoryCardEntity
+import com.knight.kotlin.module_eye_discover.entity.EyeDiscoverBriefCardEntity
 import com.knight.kotlin.module_eye_discover.entity.EyeDiscoverTopBannerEntity
+import com.knight.kotlin.module_eye_discover.entity.EyeDiscoverVideoSmallCardEntity
+import com.knight.kotlin.module_eye_discover.entity.EyeSubTitleEntity
 import com.knight.kotlin.module_eye_discover.entity.EyeSubjectCardEntity
 import com.knight.kotlin.module_eye_discover.entity.SquareCard
 import com.youth.banner.indicator.CircleIndicator
@@ -39,6 +44,10 @@ class EyeDiscoverAdapter(activity : FragmentActivity, data:List<BaseEyeDiscoverE
     class EyeDiscoverCategoryVH(viewBinding: EyeDiscoverCategoryItemBinding) : RecyclerView.ViewHolder(viewBinding.root)
     //类型 4
     class EyeDiscoverSubjectVH(viewBinding:EyeDiscoverSubjectItemBinding) : RecyclerView.ViewHolder(viewBinding.root)
+    //类型 5
+    class EyeDiscoverVideoSmallVH(viewBinding:EyeDiscoverVideoCardItemBinding) : RecyclerView.ViewHolder(viewBinding.root)
+    //类型 6
+    class EyeDiscoverBriefVH(viewBinding : EyeDiscoverBriefCardItemBinding) :   RecyclerView.ViewHolder(viewBinding.root)
     init {
         addItemType(DiscoverItemType.TOPBANNERVIEW,object:OnMultiItemAdapterListener<BaseEyeDiscoverEntity,EyeDiscoverTopBannerVH>{
             override fun onBind(holder: EyeDiscoverTopBannerVH, position: Int, item: BaseEyeDiscoverEntity?) {
@@ -128,7 +137,8 @@ class EyeDiscoverAdapter(activity : FragmentActivity, data:List<BaseEyeDiscoverE
             }
         }).addItemType(DiscoverItemType.SUBTITLEVIEW,object : OnMultiItemAdapterListener<BaseEyeDiscoverEntity,EyeDiscoverSubTitleVH>{
                 override fun onBind(holder: EyeDiscoverSubTitleVH, position: Int, item: BaseEyeDiscoverEntity?) {
-
+                  val binding = DataBindingUtil.getBinding<EyeDiscoverSubTitleItemBinding>(holder.itemView)
+                    binding?.viewModel = (item as EyeSubTitleEntity).data
                 }
 
                 override fun onCreate(context: Context, parent: ViewGroup, viewType: Int): EyeDiscoverSubTitleVH {
@@ -136,17 +146,44 @@ class EyeDiscoverAdapter(activity : FragmentActivity, data:List<BaseEyeDiscoverE
                     val viewBinding =  EyeDiscoverSubTitleItemBinding.inflate(LayoutInflater.from(context), parent, false)
                     return EyeDiscoverSubTitleVH(viewBinding)
                 }
-            })
+            }).addItemType(DiscoverItemType.VIDEOVIEW,object : OnMultiItemAdapterListener<BaseEyeDiscoverEntity,EyeDiscoverVideoSmallVH> {
+                override fun onBind(holder: EyeDiscoverVideoSmallVH, position: Int, item: BaseEyeDiscoverEntity?) {
+                    val binding = DataBindingUtil.getBinding<EyeDiscoverVideoCardItemBinding>(holder.itemView)
+                    binding?.viewModel = (item as EyeDiscoverVideoSmallCardEntity).data
+                }
 
-            .onItemViewType { position, list -> // 根据数据，返回对应的 ItemViewType
+                override fun onCreate(context: Context, parent: ViewGroup, viewType: Int): EyeDiscoverVideoSmallVH {
+                    //创建 viewholder
+                    val viewBinding =  EyeDiscoverVideoCardItemBinding.inflate(LayoutInflater.from(context), parent, false)
+                    return EyeDiscoverVideoSmallVH(viewBinding)
+                }
+
+            }).addItemType(DiscoverItemType.BRIEFVIEW,object : OnMultiItemAdapterListener<BaseEyeDiscoverEntity,EyeDiscoverBriefVH>{
+                override fun onBind(holder: EyeDiscoverBriefVH, position: Int, item: BaseEyeDiscoverEntity?) {
+                    val binding = DataBindingUtil.getBinding<EyeDiscoverBriefCardItemBinding>(holder.itemView)
+                    binding?.viewModel = (item as EyeDiscoverBriefCardEntity).data
+                }
+
+                override fun onCreate(context: Context, parent: ViewGroup, viewType: Int): EyeDiscoverBriefVH {
+                    //创建 viewholder
+                    val viewBinding =  EyeDiscoverBriefCardItemBinding.inflate(LayoutInflater.from(context), parent, false)
+                    return EyeDiscoverBriefVH(viewBinding)
+                }
+            }).onItemViewType { position, list -> // 根据数据，返回对应的 ItemViewType
             if (list[position] is EyeDiscoverTopBannerEntity) {
                 DiscoverItemType.TOPBANNERVIEW
             } else if (list[position] is EyeCategoryCardEntity) {
                 DiscoverItemType.CATEGORYVIEW
             } else if (list[position] is EyeSubjectCardEntity)  {
                 DiscoverItemType.SUBJECTVIEW
+            } else if (list[position] is EyeDiscoverVideoSmallCardEntity) {
+                DiscoverItemType.VIDEOVIEW
+            } else if (list[position] is EyeDiscoverBriefCardEntity) {
+                DiscoverItemType.BRIEFVIEW
+            } else {
+                DiscoverItemType.SUBTITLEVIEW
             }
-            else DiscoverItemType.SUBTITLEVIEW
+
         }
     }
 }

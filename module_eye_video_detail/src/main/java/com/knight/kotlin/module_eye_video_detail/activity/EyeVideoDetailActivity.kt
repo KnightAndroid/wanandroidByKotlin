@@ -78,6 +78,7 @@ class EyeVideoDetailActivity : BaseActivity<EyeVideoDetailActivityBinding,EyeVid
             mEyeVideoRelateAdapter,
             true
         )
+        ((rvRelateVideo.layoutManager) as LinearLayoutManager).initialPrefetchItemCount = 3
         eyeDetailRefreshLayout.setOnRefreshListener(this@EyeVideoDetailActivity)
         videoEyeData = fromJson(videoJson)
         //注入xml中

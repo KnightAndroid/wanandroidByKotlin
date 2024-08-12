@@ -24,5 +24,13 @@ internal object DiscoverItemType {
      * 专题策划
      */
     const val SUBJECTVIEW = 4
-
+    /**
+     * 本周榜单 视频卡片
+     */
+    const val VIDEOVIEW = 5
+    /**
+     *
+     * 可关注列表
+     */
+    const val BRIEFVIEW = 6
 }

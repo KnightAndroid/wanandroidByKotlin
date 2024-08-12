@@ -52,6 +52,7 @@ fun RecyclerView.init(
     isScroll:Boolean = true
 ): RecyclerView{
     setLayoutManager(layoutManager)
+    //设置 setHasFixedSize(true) 后，RecyclerView会假设所有的Item的高度是固定的，不会因为Item的变化而触发重新计算布局，避免requestLayout导致的资源浪费。
     setHasFixedSize(true)
     adapter = bindAdapter
     isNestedScrollingEnabled = isScroll

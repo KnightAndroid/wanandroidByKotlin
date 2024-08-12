@@ -20,13 +20,13 @@
             android:layout_marginStart="10dp"
             android:textColor="@android:color/black"
             android:textSize="18sp"
-            android:text="每日开眼精选"
+            android:text="@{viewModel.text}"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="每日开眼精选" />
-<!--        android:text="@{viewModel.text}"-->
+            />
+
         <TextView
             android:id="@+id/tv_action_title"
             android:layout_width="wrap_content"
@@ -35,11 +35,10 @@
             android:drawableEnd="@drawable/eye_discover_right_arrow_icon"
             android:textColor="@android:color/darker_gray"
             android:textSize="13sp"
-            android:text="查看往期"
+            android:text="@{viewModel.rightText}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="查看往期" />
-<!--        android:text="@{viewModel.rightText}"-->
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
