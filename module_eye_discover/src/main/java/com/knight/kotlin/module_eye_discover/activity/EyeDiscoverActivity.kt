@@ -1,5 +1,7 @@
 package com.knight.kotlin.module_eye_discover.activity
 
+import android.view.LayoutInflater
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.ktx.init
@@ -8,6 +10,7 @@ import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.module_eye_discover.R
 import com.knight.kotlin.module_eye_discover.adapter.EyeDiscoverAdapter
 import com.knight.kotlin.module_eye_discover.databinding.EyeDiscoverActivityBinding
+import com.knight.kotlin.module_eye_discover.databinding.EyeDiscoverListFooterItemBinding
 import com.knight.kotlin.module_eye_discover.vm.EyeDiscoverVm
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener
@@ -42,7 +45,11 @@ class EyeDiscoverActivity : BaseActivity<EyeDiscoverActivityBinding, EyeDiscover
     override fun initRequestData() {
         mViewModel.getDiscoverData().observerKt {
             mBinding.discoverListRefreshLayout.finishRefresh()
+
             mEyeDiscoverAdapter.submitList(it)
+            if (mBinding.rvDiscoverList.footerCount == 0) {
+                mBinding.rvDiscoverList.addFooterView(getFootView())
+            }
         }
     }
 
@@ -53,17 +60,29 @@ class EyeDiscoverActivity : BaseActivity<EyeDiscoverActivityBinding, EyeDiscover
     override fun EyeDiscoverActivityBinding.initView() {
         includeEyeDiscoverToolbar.baseTvTitle.text = getString(R.string.eye_discover_toolbar_name)
         discoverListRefreshLayout.setOnRefreshListener(this@EyeDiscoverActivity)
+        discoverListRefreshLayout.setEnableLoadMore(false)
         includeEyeDiscoverToolbar.baseIvBack.setOnClick {
             finish()
         }
+      //  rvDiscoverList.addFooterView(getFootView())
         rvDiscoverList.init(
             LinearLayoutManager(this@EyeDiscoverActivity),
             mEyeDiscoverAdapter,
             true
         )
+
+
     }
 
     override fun onRefresh(refreshLayout: RefreshLayout) {
         initRequestData()
+    }
+
+    /**
+     * 脚步View
+     */
+    private fun getFootView(): View {
+        return EyeDiscoverListFooterItemBinding.inflate(LayoutInflater.from(this@EyeDiscoverActivity)).root
+
     }
 }

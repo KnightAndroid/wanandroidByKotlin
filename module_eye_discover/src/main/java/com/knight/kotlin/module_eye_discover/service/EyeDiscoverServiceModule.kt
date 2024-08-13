@@ -1,6 +1,7 @@
 package com.knight.kotlin.module_eye_discover.service
 
 import com.knight.kotlin.module_eye_discover.api.EyeDiscoverApi
+import com.knight.kotlin.module_eye_discover.api.EyeDiscoverCategoryDetailApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -28,6 +29,13 @@ class EyeDiscoverServiceModule {
     @Provides
     fun provideDiscoverApiService(retrofit: Retrofit) : EyeDiscoverApi {
         return retrofit.create(EyeDiscoverApi::class.java)
+    }
+
+
+    @Singleton
+    @Provides
+    fun provideDiscoverCategoryDetailApiService(retrofit: Retrofit) : EyeDiscoverCategoryDetailApi {
+        return retrofit.create(EyeDiscoverCategoryDetailApi::class.java)
     }
 
 }

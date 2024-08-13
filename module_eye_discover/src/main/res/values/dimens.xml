@@ -7,4 +7,7 @@
     <dimen name="eye_discover_video_card_mb_time_margin_bottom">5dp</dimen>
     <dimen name="eye_discover_video_card_mb_time_text_size">10sp</dimen>
     <dimen name="eye_discover_video_card_mb_time_corner_radius">5dp</dimen>
+    <dimen name="eye_discover_list_footer_ll_height">100dp</dimen>
+    <dimen name="eye_discover_list_footer_tv_text_size">18sp</dimen>
+    <dimen name="eye_discover_detail_app_bar_height">250dp</dimen>
 </resources>
