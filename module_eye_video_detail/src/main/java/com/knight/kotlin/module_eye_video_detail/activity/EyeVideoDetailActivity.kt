@@ -1,12 +1,9 @@
 package com.knight.kotlin.module_eye_video_detail.activity
 
-import android.os.Build
 import android.transition.Transition
-import android.transition.TransitionListenerAdapter
 import android.view.LayoutInflater
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.config.Appconfig
@@ -15,6 +12,7 @@ import com.knight.kotlin.library_base.ktx.fromJson
 import com.knight.kotlin.library_base.ktx.init
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_video.play.OkPlayer
+import com.knight.kotlin.library_widget.ktx.transformShareElementConfig
 import com.knight.kotlin.module_eye_video_detail.R
 import com.knight.kotlin.module_eye_video_detail.adapter.EyeVideoRelateAdapter
 import com.knight.kotlin.module_eye_video_detail.databinding.EyeVideoDetailActivityBinding
@@ -100,26 +98,9 @@ class EyeVideoDetailActivity : BaseActivity<EyeVideoDetailActivityBinding,EyeVid
     }
 
     private fun initTransition() {
-        //因为进入视频详情页面后还需请求数据，所以在过渡动画完成后在请求数据
-        //延迟动画执行
-        postponeEnterTransition()
-        //设置共用元素对应的View
-        ViewCompat.setTransitionName(mBinding.jzVideo, getString(R.string.eye_video_share_image))
-        //获取共享元素进入转场对象
-        mTransition = window.sharedElementEnterTransition
-        //设置共享元素动画执行完成的回调事件
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            mTransition?.addListener(object : TransitionListenerAdapter() {
-                override fun onTransitionEnd(transition: Transition?) {
-                    mBinding.eyeDetailRefreshLayout.autoRefresh()
-                   // getRelateVideoList()
-                    //移除共享元素动画监听事件
-                    mTransition?.removeListener(this)
-                }
-            })
-        }
-        //开始动画执行
-        startPostponedEnterTransition()
+        transformShareElementConfig(mBinding.jzVideo, getString(R.string.eye_video_share_image),{
+            mBinding.eyeDetailRefreshLayout.autoRefresh()
+        })
     }
 
 

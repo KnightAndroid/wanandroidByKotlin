@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="com.knight.kotlin.library_util.DateUtils" />
+
+        <variable
+            name="viewModel"
+            type="com.knight.kotlin.library_base.entity.EyeItemEntity" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:bind="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/eye_discover_detail_item_cl_margin_left"
+        android:layout_marginTop="@dimen/eye_discover_detail_item_cl_margin_top"
+        android:layout_marginRight="@dimen/eye_discover_detail_item_cl_margin_right"
+        android:layout_marginBottom="@dimen/eye_discover_detail_item_cl_margin_bottom"
+        android:orientation="vertical">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/iv_cover"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/eye_discover_detail_item_iv_height"
+            android:scaleType="centerCrop"
+            android:transitionName="@string/eye_discover_share_element_container"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearance="@style/base_roundedCornerStyle"
+            bind:url="@{model.data.component9().feed}" />
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="@dimen/eye_discover_detail_item_mb_category_width"
+            android:layout_height="@dimen/eye_discover_detail_item_mb_category_height"
+            android:layout_marginStart="@dimen/eye_discover_detail_item_mb_category_margin_start"
+            android:layout_marginTop="@dimen/eye_discover_detail_item_mb_category_margin_top"
+            android:text="@{model.data.category}"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/eye_discover_detail_item_mb_category_text_size"
+            app:backgroundTint="@color/eye_discover_item_detail_mb_category_color"
+            app:cornerRadius="@dimen/eye_discover_detail_item_mb_category_radius"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="@dimen/eye_discover_detail_item_mb_video_time_width"
+            android:layout_height="@dimen/eye_discover_detail_item_mb_video_time_height"
+            android:layout_marginEnd="@dimen/eye_discover_detail_item_mb_video_time_margin_end"
+            android:layout_marginBottom="@dimen/eye_discover_detail_item_mb_video_time_margin_bottom"
+            android:text="@{DateUtils.INSTANCE.formatDateMsByMS(model.data.duration * 1000)}"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/eye_discover_detail_item_mb_video_time_text_size"
+            app:backgroundTint="@color/eye_discover_item_detail_mb_video_time_color"
+            app:cornerRadius="@dimen/eye_discover_detail_item_mb_video_time_corner_radius"
+            app:layout_constraintBottom_toTopOf="@id/iv_author"
+            app:layout_constraintRight_toRightOf="parent" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/iv_author"
+            android:layout_width="@dimen/eye_discover_detail_item_iv_author_width"
+            android:layout_height="@dimen/eye_discover_detail_item_iv_author_height"
+            android:layout_marginTop="@dimen/eye_discover_detail_item_iv_author_margin_top"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_cover"
+            app:shapeAppearance="@style/base_circleStyle"
+            app:url="@{model.data.author == null ? model.data.tags[0].headerImage : model.data.author.icon}" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/eye_discover_detail_item_tv_title_margin_start"
+            android:layout_marginTop="@dimen/eye_discover_detail_item_tv_title_margin_start"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@{model.data.title}"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/eye_discover_detail_item_tv_title_text_size"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toRightOf="@id/iv_author"
+            app:layout_constraintTop_toBottomOf="@id/iv_cover" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/eye_discover_detail_item_tv_author_margin_start"
+            android:layout_marginTop="@dimen/eye_discover_detail_item_tv_author_margin_top"
+            android:text="@{model.data.author == null ? model.data.tags[0].name : model.data.author.name}"
+            android:textColor="@color/eye_discover_item_detail_tv_author_color"
+            android:textSize="@dimen/eye_discover_detail_item_tv_author_text_size"
+            app:layout_constraintLeft_toRightOf="@id/iv_author"
+            app:layout_constraintTop_toBottomOf="@id/tv_title" />
+
+        <ImageView
+            android:id="@+id/tv_share"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/eye_discover_share_icon"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_cover" />
+
+<!--        <View-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="@dimen/dp_0_5"-->
+<!--            android:layout_marginTop="@dimen/dp_10"-->
+<!--            android:background="@color/common_divider_line_color"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/iv_author" />-->
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

@@ -159,9 +159,6 @@ abstract class BaseActivity<VB : ViewBinding,VM : BaseViewModel> : AppCompatActi
         StatusBarUtils.transparentStatusBar(this)
     }
 
-
-
-
     /**
      *
      * 默认加载

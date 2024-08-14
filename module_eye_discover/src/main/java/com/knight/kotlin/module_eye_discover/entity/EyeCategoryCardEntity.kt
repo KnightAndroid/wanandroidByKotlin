@@ -40,6 +40,7 @@ data class EyeCategoryItemEntity(
 
 @Parcelize
 data class SquareCard(
+    val id:Long,
     val title:String,
     val image:String,
     val actionUrl:String

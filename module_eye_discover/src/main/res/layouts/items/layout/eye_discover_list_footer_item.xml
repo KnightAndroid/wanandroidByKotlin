@@ -7,7 +7,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/eye_discover_list_footer_cl_height"
+        android:layout_height="@dimen/eye_discover_list_footer_ll_height"
         android:gravity="center">
 
         <com.knight.kotlin.library_widget.IconFontTextView

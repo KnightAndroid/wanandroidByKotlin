@@ -79,9 +79,14 @@ class EyeDailyAdapter(data: List<EyeDailyItemEntity>,activity: Activity):
             }
 
         }).onItemViewType { position, list -> // 根据数据，返回对应的 ItemViewType
-            if (list[position].type == EyeTypeConstants.TEXT_HEAD_TYPE) {
+            var index = position
+            if (position == list.size) {
+                index = index - 1
+            }
+            if (list[index].type == EyeTypeConstants.TEXT_HEAD_TYPE) {
                 EyeTypeConstants.TEXT_TYPE
             } else EyeTypeConstants.IMAGE_TYPE
+
         }
     }
 }

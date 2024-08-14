@@ -4,4 +4,7 @@
       <color name="eye_discover_video_card_tv_desc_text_color">#9d9f9f</color>
       <color name="eye_discover_brief_follow_stroke">#363636</color>
       <color name="eye_discover_list_footer_tv_text_color">#333333</color>
+      <color name="eye_discover_item_detail_tv_author_color">#9a9a9a</color>
+      <color name="eye_discover_item_detail_mb_category_color">#8A000000</color>
+       <color name="eye_discover_item_detail_mb_video_time_color">#8A000000</color>
   </resources>

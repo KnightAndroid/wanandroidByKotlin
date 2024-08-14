@@ -8,8 +8,11 @@ import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter4.BaseMultiItemAdapter
+import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.util.dp2px
+import com.knight.kotlin.library_util.startPageWithAnimate
 import com.knight.kotlin.library_widget.RecyclerItemDecoration
+import com.knight.kotlin.module_eye_discover.R
 import com.knight.kotlin.module_eye_discover.constants.DiscoverItemType
 import com.knight.kotlin.module_eye_discover.databinding.EyeDiscoverBriefCardItemBinding
 import com.knight.kotlin.module_eye_discover.databinding.EyeDiscoverCategoryItemBinding
@@ -75,6 +78,14 @@ class EyeDiscoverAdapter(activity : FragmentActivity, data:List<BaseEyeDiscoverE
                         dataList.add(cardBean.data.itemList.get(i).data)
                     }
                     val adapter = EyeDiscoverSubCategoryAdapter()
+                    adapter.run {
+                        setOnItemClickListener { adapter, view, position ->
+                            startPageWithAnimate(activity, RouteActivity.EyeDiscover.EyeCategoryDetailActivity,view,activity.getString(R.string.eye_discover_share_element_container),
+                                "id" to dataList[position].id,
+                                "name" to dataList[position].title,
+                                "headImage" to dataList[position].image)
+                        }
+                    }
                     binding.rvCategoryView.adapter = adapter
                     adapter.submitList(dataList)
                 }
