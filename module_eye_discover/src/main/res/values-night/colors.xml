@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
       <color name="eye_discover_list_footer_tv_text_color">#666666</color>
+       <color name="eye_discover_item_detail_tv_video_time_text_color">#D3D3D3</color>
+      <color name="eye_discover_item_detail_tv_title_text_color">#D3D3D3</color>
 </resources>

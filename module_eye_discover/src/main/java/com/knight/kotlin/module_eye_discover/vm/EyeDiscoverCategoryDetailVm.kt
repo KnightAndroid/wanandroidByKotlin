@@ -20,15 +20,26 @@ import javax.inject.Inject
 @HiltViewModel
 class EyeDiscoverCategoryDetailVm @Inject constructor(private val mRepo: EyeDiscoverCategoryDetailRepo) : BaseViewModel(){
 
+
     /**
      *
      * 获取发现分类详细数据
      */
-    fun getDiscoverData(id:Long): LiveData<EyeCategoryDetailEntity> {
+    fun getDiscoverCategoryDetailData(id:Long): LiveData<EyeCategoryDetailEntity> {
         showLoadingDialog()
         return mRepo.getCategoryDetailData(id,failureCallBack = {
             it?.let { it1 -> toast(it1) }
         }).asLiveData()
+
+    }
+
+    /**
+     *
+     * 获取更多分类详细数据
+     */
+    fun getLoadMoreCategoryDetailData(url:String) : LiveData<EyeCategoryDetailEntity> {
+           return  mRepo.getLoadMoreCategoryDetailData(url).asLiveData()
+
     }
 
 

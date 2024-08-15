@@ -10,9 +10,7 @@
     <dimen name="eye_discover_list_footer_ll_height">100dp</dimen>
     <dimen name="eye_discover_list_footer_tv_text_size">18sp</dimen>
     <dimen name="eye_discover_detail_app_bar_height">250dp</dimen>
-    <dimen name="eye_discover_detail_item_cl_margin_left">15dp</dimen>
     <dimen name="eye_discover_detail_item_cl_margin_top">5dp</dimen>
-    <dimen name="eye_discover_detail_item_cl_margin_right">15dp</dimen>
     <dimen name="eye_discover_detail_item_cl_margin_bottom">10dp</dimen>
     <dimen name="eye_discover_detail_item_iv_height">200dp</dimen>
     <dimen name="eye_discover_detail_item_tv_author_margin_top">2dp</dimen>
@@ -24,16 +22,11 @@
     <dimen name="eye_discover_detail_item_iv_author_height">40dp</dimen>
     <dimen name="eye_discover_detail_item_iv_author_width">40dp</dimen>
     <dimen name="eye_discover_detail_item_iv_author_margin_top">10dp</dimen>
-    <dimen name="eye_discover_detail_item_mb_category_width">44dp</dimen>
-    <dimen name="eye_discover_detail_item_mb_category_height">44dp</dimen>
-    <dimen name="eye_discover_detail_item_mb_category_margin_top">10dp</dimen>
-    <dimen name="eye_discover_detail_item_mb_category_margin_start">10dp</dimen>
-    <dimen name="eye_discover_detail_item_mb_category_text_size">14sp</dimen>
-    <dimen name="eye_discover_detail_item_mb_category_radius">22dp</dimen>
-    <dimen name="eye_discover_detail_item_mb_video_time_width">44dp</dimen>
-    <dimen name="eye_discover_detail_item_mb_video_time_height">25dp</dimen>
-    <dimen name="eye_discover_detail_item_mb_video_time_margin_end">15dp</dimen>
-    <dimen name="eye_discover_detail_item_mb_video_time_margin_bottom">18dp</dimen>
-    <dimen name="eye_discover_detail_item_mb_video_time_text_size">12sp</dimen>
-    <dimen name="eye_discover_detail_item_mb_video_time_corner_radius">5dp</dimen>
+    <dimen name="eye_discover_detail_item_iv_author_margin_start">10dp</dimen>
+    <dimen name="eye_discover_detail_item_tv_share_margin_end">10dp</dimen>
+    <dimen name="eye_discover_detail_item_tv_video_time_margin_start">10dp</dimen>
+    <dimen name="eye_discover_detail_item_tv_video_time_drawable_padding">5dp</dimen>
+    <dimen name="eye_discover_detail_item_tv_category_padding_right">10dp</dimen>
+    <dimen name="eye_discover_detail_item_tv_category_padding_bottom">2dp</dimen>
+    <dimen name="eye_discover_detail_item_tv_category_padding_start">2dp</dimen>
 </resources>

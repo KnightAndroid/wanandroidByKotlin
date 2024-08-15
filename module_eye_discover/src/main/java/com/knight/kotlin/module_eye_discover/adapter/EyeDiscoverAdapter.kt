@@ -82,7 +82,7 @@ class EyeDiscoverAdapter(activity : FragmentActivity, data:List<BaseEyeDiscoverE
                         setOnItemClickListener { adapter, view, position ->
                             startPageWithAnimate(activity, RouteActivity.EyeDiscover.EyeCategoryDetailActivity,view,activity.getString(R.string.eye_discover_share_element_container),
                                 "id" to dataList[position].id,
-                                "name" to dataList[position].title,
+                                "name" to dataList[position].title.replace("#",""),
                                 "headImage" to dataList[position].image)
                         }
                     }

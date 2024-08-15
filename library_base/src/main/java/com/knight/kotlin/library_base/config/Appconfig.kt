@@ -54,5 +54,10 @@ object Appconfig {
       */
      const val EYE_VIDEO_PARAM_KEY = "eye_video_param"
 
+     /**
+      * 开眼模块uuid
+      *
+      */
+     const val EYE_UUID = "d2807c895f0348a180148c9dfa6f2feeac0781b5"
 
 }
