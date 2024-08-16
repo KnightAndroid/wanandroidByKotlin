@@ -117,8 +117,6 @@ class EyeVideoDetailActivity : BaseActivity<EyeVideoDetailActivityBinding,EyeVid
             } else {
                 mHeaderBinding.videoEntity = videoEyeData
             }
-
-            mHeaderBinding.expandTextView.resetState(true)
         }
     }
 

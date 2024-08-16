@@ -1,457 +1,289 @@
-package com.knight.kotlin.library_widget;
+package com.knight.kotlin.library_widget
 
-import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
-import android.content.Context;
-import android.content.res.Resources;
-import android.content.res.TypedArray;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
-import android.text.TextUtils;
-import android.util.AttributeSet;
-import android.util.SparseBooleanArray;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.view.animation.Transformation;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
+import android.annotation.TargetApi
+import android.content.Context
+import android.graphics.Color
+import android.os.Build
+import android.text.TextUtils
+import android.util.AttributeSet
+import android.util.TypedValue
+import android.view.Gravity
+import android.view.LayoutInflater
+import android.view.MotionEvent
+import android.view.View
+import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.Transformation
+import android.widget.LinearLayout
+import android.widget.TextView
 
-import androidx.annotation.DrawableRes;
-import androidx.annotation.IdRes;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 
 /**
- * Author:Knight
- * Time:2024/7/23 10:52
- * Description:ExpandableTextView
+ * @author created by luguian
+ * @organize
+ * @Date 2024/8/16 11:38
+ * @descript:https://github.com/shengwang520/ExpandableTextView 折叠view
  */
-public class ExpandableTextView extends LinearLayout implements View.OnClickListener {
+class ExpandableTextView : LinearLayout, View.OnClickListener {
+    private var mTv: SlowShowTextView? = null
+    private var mStateTv: TextView? = null// TextView to expand/collapse
+    private var mRelayout = false
+    private var mCollapsed = true // Show short version as default.
+    private var mCollapsedHeight = 0
+    private var mTextHeightWithMaxLines = 0
+    private var mMaxCollapsedLines = 0
+    private var mMarginBetweenTxtAndBottom = 0
+    private var mStateTvGravity = 0
+    private var mCollapsedString: String? = null
+    private var mExpandString: String? = null
+    private var mAnimationDuration = 0
+    private var mContentTextSize = 0
+    private var mContentTextColor = 0
+    private var mContentLineSpacingMultiplier = 0f
+    private var mStateTextColor = 0
+    private var mAnimating = false
+    private var mVisible = 0
 
-    /**
-     * <br>handler signal
-     */
-    private final int WHAT = 2;
-    /**
-     * <br>animation end signal of handler
-     */
-    private final int WHAT_ANIMATION_END = 3;
-    /**
-     * <br>animation end and expand only,but not disappear
-     */
-    private final int WHAT_EXPAND_ONLY = 4;
-    public OnStateChangeListener onStateChangeListener;
-    /**
-     * TextView
-     */
-    private TextView textView;
-    /**
-     * <br>shrink/expand TextView
-     */
-    private TextView tvState;
-    /**
-     * <br>shrink/expand icon
-     */
-    private ImageView ivExpandOrShrink;
-    /**
-     * <br>shrink/expand layout parent
-     */
-    private RelativeLayout rlToggleLayout;
-    /**
-     * <br>shrink drawable
-     */
-    private Drawable drawableShrink;
-    /**
-     * <br>expand drawable
-     */
-    private Drawable drawableExpand;
-    /**
-     * <br>color of shrink/expand text
-     */
-    private int textViewStateColor;
-    /**
-     * <br>expand text
-     */
-    private String textExpand;
-    /**
-     * <br>shrink text
-     */
-    private String textShrink;
+    /* Listener for callback */
+    private var mListener: OnExpandStateChangeListener? = null
+    private val mRunnable = Runnable { mMarginBetweenTxtAndBottom = height - mTv!!.height }
 
-    /**
-     * <br>flag of shrink/expand
-     */
-    private boolean isShrink = false;
-    /**
-     * <br>flag of expand needed
-     */
-    private boolean isExpandNeeded = false;
-    /**
-     * <br>flag of TextView Initialization
-     */
-    private boolean isInitTextView = true;
-    /**
-     * <br>number of lines to expand
-     */
-    private int expandLines;
-    /**
-     * <br>Original number of lines
-     */
-    private int textLines;
-    /**
-     * <br>content text
-     */
-    private CharSequence textContent;
-    /**
-     * <br>content color
-     */
-    private int textContentColor;
-    /**
-     * <br>content text size, default = 14sp
-     */
-    private float textContentSize = 14;
-    /**
-     * <br>thread
-     */
-    private Thread thread;
-    /**
-     * <br>animation interval, default = 10
-     */
-    private int sleepTime = 10;
-
-    /**
-     * Show line at bottom text, default = true
-     */
-    private boolean showLine = true;
-
-    @SuppressLint("HandlerLeak") private Handler handler = new Handler(Looper.getMainLooper()) {
-
-        @Override public void handleMessage(Message msg) {
-            if (WHAT == msg.what) {
-                textView.setMaxLines(msg.arg1);
-                textView.invalidate();
-            } else if (WHAT_ANIMATION_END == msg.what) {
-                setExpandState(msg.arg1);
-            } else if (WHAT_EXPAND_ONLY == msg.what) {
-                changeExpandState(msg.arg1);
-            }
-            super.handleMessage(msg);
-        }
-    };
-
-    public ExpandableTextView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        initValue(context, attrs);
-        initView(context);
-        initClick();
+    @JvmOverloads
+    constructor(context: Context, attrs: AttributeSet? = null) : super(context, attrs) {
+        init(context, attrs)
     }
 
-    private void initValue(Context context, AttributeSet attrs) {
-        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.ExpandableTextView);
-
-        expandLines = ta.getInteger(R.styleable.ExpandableTextView_etv_expandLines, 5);
-
-        drawableShrink = ta.getDrawable(R.styleable.ExpandableTextView_etv_shrinkBitmap);
-        drawableExpand = ta.getDrawable(R.styleable.ExpandableTextView_etv_expandBitmap);
-
-        textViewStateColor = ta.getColor(R.styleable.ExpandableTextView_etv_textStateColor,
-                ContextCompat.getColor(context, android.R.color.darker_gray));
-
-        textShrink = ta.getString(R.styleable.ExpandableTextView_etv_textShrink);
-        textExpand = ta.getString(R.styleable.ExpandableTextView_etv_textExpand);
-
-        if (null == drawableShrink) {
-            drawableShrink =
-                    ContextCompat.getDrawable(context, R.drawable.widget_icon_up);
-        }
-
-        if (null == drawableExpand) {
-            drawableExpand =
-                    ContextCompat.getDrawable(context, R.drawable.widget_icon_arrow);
-        }
-
-        if (TextUtils.isEmpty(textShrink)) {
-            textShrink = " ";
-        }
-
-        if (TextUtils.isEmpty(textExpand)) {
-            textExpand = " ";
-        }
-
-        showLine = ta.getBoolean(R.styleable.ExpandableTextView_etv_showLine, showLine);
-
-        textContentColor = ta.getColor(R.styleable.ExpandableTextView_etv_textContentColor,
-                ContextCompat.getColor(context, android.R.color.white));
-        textContentSize = ta.getDimension(R.styleable.ExpandableTextView_etv_textContentSize,
-                textContentSize);
-
-        sleepTime = ta.getInt(R.styleable.ExpandableTextView_etv_animationTime, sleepTime);
-
-        ta.recycle();
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    constructor(context: Context, attrs: AttributeSet?, defStyle: Int) : super(context, attrs, defStyle) {
+        init(context, attrs)
     }
 
-    private void initView(Context context) {
-
-        LayoutInflater inflater =
-                (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        inflater.inflate(R.layout.layout_textview_expand_animation, this);
-
-        rlToggleLayout =
-                (RelativeLayout) findViewById(R.id.rl_expand_text_view_animation_toggle_layout);
-
-        textView = (TextView) findViewById(R.id.tv_expand_text_view_animation);
-        textView.setTextColor(textContentColor);
-        textView.getPaint().setTextSize(textContentSize);
-
-        ivExpandOrShrink = (ImageView) findViewById(R.id.iv_expand_text_view_animation_toggle);
-
-        tvState = (TextView) findViewById(R.id.tv_expand_text_view_animation_hint);
-        tvState.setTextColor(textViewStateColor);
-
+    override fun setOrientation(orientation: Int) {
+        require(HORIZONTAL != orientation) { "ExpandableTextView only supports Vertical Orientation." }
+        super.setOrientation(orientation)
     }
 
-    private void initClick() {
-        textView.setOnClickListener(this);
-        rlToggleLayout.setOnClickListener(this);
-    }
-
-    public void setText(CharSequence charSequence) {
-
-        textContent = charSequence;
-
-        textView.setText(charSequence.toString());
-
-        ViewTreeObserver viewTreeObserver = textView.getViewTreeObserver();
-        viewTreeObserver.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-
-            @Override public boolean onPreDraw() {
-                if (!isInitTextView) {
-                    return true;
-                }
-                textLines = textView.getLineCount();
-                isExpandNeeded = textLines > expandLines;
-                isInitTextView = false;
-                if (isExpandNeeded) {
-                    isShrink = true;
-                    doAnimation(expandLines, expandLines, WHAT_ANIMATION_END);
-                } else {
-                    isShrink = false;
-                    doNotExpand();
-                }
-                return true;
-            }
-        });
-
-        if (!isInitTextView) {
-            textLines = textView.getLineCount();
+    override fun onClick(view: View) {
+        if (mStateTv!!.visibility != VISIBLE) {
+            return
         }
-    }
-
-    /**
-     * @param startIndex <br> start index of animation
-     * @param endIndex  <br> end index of animation
-     * @param what handler <br> signal of animation end
-     */
-    private void doAnimation(final int startIndex, final int endIndex, final int what) {
-
-        thread = new Thread(new Runnable() {
-
-            @Override public void run() {
-
-                if (startIndex < endIndex) {
-                    // if start index smaller than end index ,do expand action
-                    int count = startIndex;
-                    while (count++ < endIndex) {
-                        Message msg = handler.obtainMessage(WHAT, count, 0);
-
-                        try {
-                            Thread.sleep(sleepTime);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-
-                        handler.sendMessage(msg);
-                    }
-                } else if (startIndex > endIndex) {
-                    // if start index bigger than end index ,do shrink action
-                    int count = startIndex;
-                    while (count-- > endIndex) {
-                        Message msg = handler.obtainMessage(WHAT, count, 0);
-                        try {
-                            Thread.sleep(sleepTime);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-
-                        handler.sendMessage(msg);
-                    }
-                }
-
-                // animation end,send signal
-                Message msg = handler.obtainMessage(what, endIndex, 0);
-                handler.sendMessage(msg);
-            }
-        });
-
-        thread.start();
-    }
-
-    /**
-     * change shrink/expand state(only change state,but not hide shrink/expand icon)
-     */
-    @SuppressWarnings("deprecation") private void changeExpandState(int endIndex) {
-        rlToggleLayout.setVisibility(View.VISIBLE);
-        if (endIndex < textLines) {
-            ivExpandOrShrink.setBackgroundDrawable(drawableExpand);
-            tvState.setText(textExpand);
+        mCollapsed = !mCollapsed
+        //mStateTv!!.text = if (mCollapsed) mExpandString else mCollapsedString
+        mStateTv!!.setBackgroundResource(if (mCollapsed) R.drawable.widget_tv_bitmap_arrow else R.drawable.widget_tv_bitmap_up)
+        // mark that the animation is in progress
+        mAnimating = true
+        val animation: Animation = if (mCollapsed) {
+            ExpandCollapseAnimation(this, height, mTv!!.lineHeight().toInt() * mMaxCollapsedLines  + mTextHeightWithMaxLines)
         } else {
-            ivExpandOrShrink.setBackgroundDrawable(drawableShrink);
-            tvState.setText(textShrink);
+            ExpandCollapseAnimation(
+                this, height, height + (measuredHeight *  2 / 3) + mTv!!.height
+            )
         }
-    }
+        animation.fillAfter = true
+        animation.setAnimationListener(object : Animation.AnimationListener {
+            override fun onAnimationStart(animation: Animation) {}
+            override fun onAnimationEnd(animation: Animation) {
+                // clear animation here to avoid repeated applyTransformation() calls
+                clearAnimation()
+                // clear the animation flag
+                mAnimating = false
 
-    /**
-     * change shrink/expand state(if number of expand lines bigger than original text lines,hide
-     * shrink/expand icon,and TextView will always be at expand state)
-     */
-    @SuppressWarnings("deprecation") private void setExpandState(int endIndex) {
-
-        if (endIndex < textLines) {
-            isShrink = true;
-            rlToggleLayout.setVisibility(View.VISIBLE);
-            ivExpandOrShrink.setBackgroundDrawable(drawableExpand);
-            textView.setOnClickListener(this);
-            tvState.setText(textExpand);
-        } else {
-            isShrink = false;
-            rlToggleLayout.setVisibility(View.GONE);
-            ivExpandOrShrink.setBackgroundDrawable(drawableShrink);
-            textView.setOnClickListener(null);
-            tvState.setText(textShrink);
-        }
-    }
-
-    /**
-     * do not expand
-     */
-    private void doNotExpand() {
-        textView.setMaxLines(expandLines);
-        rlToggleLayout.setVisibility(View.GONE);
-        textView.setOnClickListener(null);
-    }
-
-    @Override public void onClick(View v) {
-        if (v.getId() == R.id.rl_expand_text_view_animation_toggle_layout
-                || v.getId() == R.id.tv_expand_text_view_animation) {
-            clickImageToggle();
-            if (null != onStateChangeListener) onStateChangeListener.onStateChange(isShrink);
-        }
-    }
-
-    private void clickImageToggle() {
-        if (isShrink) {
-            // do shrink action
-            doAnimation(expandLines, textLines, WHAT_EXPAND_ONLY);
-        } else {
-            // do expand action
-            doAnimation(textLines, expandLines, WHAT_EXPAND_ONLY);
-        }
-        // set flag
-        isShrink = !isShrink;
-    }
-
-    public void resetState(boolean isShrink) {
-
-        this.isShrink = isShrink;
-        if (textLines > expandLines) {
-            int sdk = android.os.Build.VERSION.SDK_INT;
-            if (isShrink) {
-                rlToggleLayout.setVisibility(View.VISIBLE);
-                if (sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
-                    ivExpandOrShrink.setBackgroundDrawable(drawableExpand);
-                } else {
-                    ivExpandOrShrink.setBackground(drawableExpand);
+                // notify the listener
+                if (mListener != null) {
+                    mListener!!.onExpandStateChanged(mTv, !mCollapsed)
                 }
-                textView.setOnClickListener(this);
-                textView.setMaxLines(expandLines);
-                tvState.setText(textExpand);
-            } else {
-                rlToggleLayout.setVisibility(View.VISIBLE);
-                if (sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
-                    ivExpandOrShrink.setBackgroundDrawable(drawableShrink);
-                } else {
-                    ivExpandOrShrink.setBackground(drawableShrink);
-                }
-                textView.setOnClickListener(this);
-                textView.setMaxLines(textLines);
-                tvState.setText(textShrink);
             }
-        } else {
-            doNotExpand();
+
+            override fun onAnimationRepeat(animation: Animation) {}
+        })
+        clearAnimation()
+        startAnimation(animation)
+    }
+
+    override fun onInterceptTouchEvent(ev: MotionEvent): Boolean {
+        // while an animation is in progress, intercept all the touch events to children to
+        // prevent extra clicks during the animation
+        return mAnimating
+    }
+
+    override fun onFinishInflate() {
+        super.onFinishInflate()
+        findViews()
+    }
+
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        // If no change, measure and return
+        if (!mRelayout || visibility == GONE) {
+            super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+            return
+        }
+        mRelayout = false
+
+        // Setup with optimistic case
+        // i.e. Everything fits. No button needed
+        mStateTv!!.visibility = if (mVisible == 0) GONE else INVISIBLE
+        mTv!!.maxLines = Int.MAX_VALUE
+
+        // Measure
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+
+        // If the text fits in collapsed mode, we are done.
+//        if (mTv!!.lineCount() <= mMaxCollapsedLines) {
+//            return
+//        }
+
+        // Saves the text height w/ max lines
+        mTextHeightWithMaxLines = getRealTextViewHeight(mTv!!)
+
+        // Doesn't fit in collapsed mode. Collapse text view as needed. Show
+        // button.
+        if (mCollapsed) {
+            mTv!!.maxLines = mMaxCollapsedLines
+        }
+        mStateTv!!.visibility = VISIBLE
+
+        // Re-measure with new setup
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+        if (mCollapsed) {
+            // Gets the margin between the TextView's bottom and the ViewGroup's bottom
+            mTv!!.post(mRunnable)
+            // Saves the collapsed height of this ViewGroup
+            mCollapsedHeight = measuredHeight
         }
     }
 
-    public Drawable getDrawableShrink() {
-        return drawableShrink;
+    fun setOnExpandStateChangeListener(listener: OnExpandStateChangeListener?) {
+        mListener = listener
     }
 
-    public void setDrawableShrink(Drawable drawableShrink) {
-        this.drawableShrink = drawableShrink;
+    fun setText(charSequence: CharSequence?, isCollapsed: Boolean) {
+        clearAnimation()
+        mCollapsed = isCollapsed
+        //mStateTv!!.text = if (mCollapsed) mExpandString else mCollapsedString
+        mStateTv!!.setBackgroundResource(if (mCollapsed) R.drawable.widget_tv_bitmap_arrow else R.drawable.widget_tv_bitmap_up)
+
+        text = charSequence
+        layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT
+        requestLayout()
     }
 
-    public Drawable getDrawableExpand() {
-        return drawableExpand;
+    var text: CharSequence?
+        get() = if (mTv == null) {
+            ""
+        } else mTv!!.text
+        set(text) {
+            mRelayout = true
+            mTv!!.setDynamicText(text.toString())
+            visibility = if (TextUtils.isEmpty(text)) GONE else VISIBLE
+        }
+
+    private fun init(context: Context, attrs: AttributeSet?) {
+        LayoutInflater.from(context).inflate(R.layout.view_expandable_textview, this, true)
+        // enforces vertical orientation
+        orientation = VERTICAL
+
+        // default visibility is gone
+        visibility = GONE
+        val typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.ExpandableTextView)
+        mMaxCollapsedLines = typedArray.getInt(R.styleable.ExpandableTextView_maxCollapsedLines, MAX_COLLAPSED_LINES)
+        mAnimationDuration = typedArray.getInt(R.styleable.ExpandableTextView_animDuration, DEFAULT_ANIM_DURATION)
+        mContentTextSize = typedArray.getDimensionPixelSize(R.styleable.ExpandableTextView_contentTextSize, DEFAULT_CONTENT_TEXT_SIZE)
+        mContentLineSpacingMultiplier =
+            typedArray.getFloat(R.styleable.ExpandableTextView_contentLineSpacingMultiplier, DEFAULT_CONTENT_TEXT_LINE_SPACING_MULTIPLIER)
+        mContentTextColor = typedArray.getColor(R.styleable.ExpandableTextView_contentTextColor, Color.BLACK)
+        mStateTvGravity = typedArray.getInt(R.styleable.ExpandableTextView_expandCollapseTextGravity, STATE_TV_GRAVITY_RIGHT)
+        mExpandString = typedArray.getString(R.styleable.ExpandableTextView_expandText)
+        mCollapsedString = typedArray.getString(R.styleable.ExpandableTextView_collapseText)
+        mStateTextColor = typedArray.getColor(R.styleable.ExpandableTextView_expandCollapseTextColor, Color.BLACK)
+        mVisible = typedArray.getInt(R.styleable.ExpandableTextView_expandCollapseTextVisible, STATE_TV_VISIBLE_GONE)
+        if (mExpandString == null) {
+            mExpandString = context.getString(R.string.widget_expand_hint)
+        }
+        if (mCollapsedString == null) {
+            mCollapsedString = context.getString(R.string.widget_shrink_hint)
+        }
+        typedArray.recycle()
     }
 
-    public void setDrawableExpand(Drawable drawableExpand) {
-        this.drawableExpand = drawableExpand;
+    private fun findViews() {
+        mTv = findViewById<View>(R.id.expandable_text) as SlowShowTextView
+        mTv!!.setTextColor(mContentTextColor)
+        mTv!!.setTextSize(TypedValue.COMPLEX_UNIT_PX, mContentTextSize.toFloat())
+        mTv!!.setLineSpacing(0f, mContentLineSpacingMultiplier)
+        mTv!!.setOnClickListener(this)
+        mStateTv = findViewById<View>(R.id.expand_collapse) as TextView
+        val params = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
+        when (mStateTvGravity) {
+            STATE_TV_GRAVITY_LEFT -> {
+                params.gravity = Gravity.START
+            }
+            STATE_TV_GRAVITY_CENTER -> {
+                params.gravity = Gravity.CENTER_HORIZONTAL
+            }
+            STATE_TV_GRAVITY_RIGHT -> {
+                params.gravity = Gravity.END
+            }
+        }
+        mStateTv!!.layoutParams = params
+      //  mStateTv!!.text = if (mCollapsed) mExpandString else mCollapsedString
+        mStateTv!!.setTextColor(mStateTextColor)
+        mStateTv!!.compoundDrawablePadding = 10
+
+        mStateTv!!.setBackgroundResource(if (mCollapsed) R.drawable.widget_tv_bitmap_arrow else R.drawable.widget_tv_bitmap_up)
+
+        mStateTv!!.setOnClickListener(this)
     }
 
-    public int getExpandLines() {
-        return expandLines;
+    internal inner class ExpandCollapseAnimation(private val mTargetView: View, private val mStartHeight: Int, private val mEndHeight: Int) :
+        Animation() {
+        override fun applyTransformation(interpolatedTime: Float, t: Transformation) {
+            val newHeight = ((mEndHeight - mStartHeight) * interpolatedTime + mStartHeight).toInt()
+            mTv!!.maxHeight = newHeight - mMarginBetweenTxtAndBottom
+            mTargetView.layoutParams.height = newHeight
+            mTargetView.requestLayout()
+        }
+
+        override fun willChangeBounds(): Boolean {
+            return true
+        }
+
+        init {
+            duration = mAnimationDuration.toLong()
+        }
     }
 
-    public void setExpandLines(int newExpandLines) {
-        int start = isShrink ? this.expandLines : textLines;
-        int end = textLines < newExpandLines ? textLines : newExpandLines;
-        doAnimation(start, end, WHAT_ANIMATION_END);
-        this.expandLines = newExpandLines;
+    interface OnExpandStateChangeListener {
+        /**
+         * Called when the expand/collapse animation has been finished
+         *
+         * @param textView   - TextView being expanded/collapsed
+         * @param isExpanded - true if the TextView has been expanded
+         */
+        fun onExpandStateChanged(textView: TextView?, isExpanded: Boolean)
     }
 
-    /**
-     * get content text
-     *
-     * @return content text
-     */
-    public CharSequence getTextContent() {
-        return textContent;
-    }
+    companion object {
+        /* The default number of lines */ //默认显示行数
+        private const val MAX_COLLAPSED_LINES = 3
 
-    public int getSleepTime() {
-        return sleepTime;
-    }
+        /* The default animation duration  动画时间*/
+        private const val DEFAULT_ANIM_DURATION = 300
 
-    public void setSleepTime(int sleepTime) {
-        this.sleepTime = sleepTime;
-    }
+        /* The default content text size 字体大小*/
+        private const val DEFAULT_CONTENT_TEXT_SIZE = 16
+        private const val DEFAULT_CONTENT_TEXT_LINE_SPACING_MULTIPLIER = 1.0f
+        private const val STATE_TV_GRAVITY_LEFT = 0
+        private const val STATE_TV_GRAVITY_CENTER = 1
+        private const val STATE_TV_GRAVITY_RIGHT = 2
 
-    public void setOnStateChangeListener(OnStateChangeListener onStateChangeListener) {
-        this.onStateChangeListener = onStateChangeListener;
-    }
+        /* 状态按钮的隐藏方式 */
+        private const val STATE_TV_VISIBLE_GONE = 0
+        private const val STATE_TV_VISIBLE_INVISIBLE = 1
 
-    public interface OnStateChangeListener {
-        void onStateChange(boolean isShrink);
+        private fun getRealTextViewHeight(textView: TextView): Int {
+            val textHeight = textView.layout.getLineTop(textView.lineCount)
+            val padding = textView.compoundPaddingTop + textView.compoundPaddingBottom
+            return textHeight + padding
+        }
     }
 }

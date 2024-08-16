@@ -6,4 +6,6 @@
     <string name="widget_gesture_password_error">Gesture password error</string>
     <string name="widget_gesture_password_again">Please enter the gesture password again</string>
     <string name="widget_gesture_password_success">Successfully set gesture password</string>
+    <string name="widget_expand_hint">Expand</string>
+    <string name="widget_shrink_hint">Shrink</string>
 </resources>

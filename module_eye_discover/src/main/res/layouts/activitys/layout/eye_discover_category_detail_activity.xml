@@ -50,9 +50,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
                     app:layout_collapseMode="pin"
-                    app:navigationIcon="@drawable/base_iv_left_arrow"
-                    app:title="@{title}" />
 
+                    app:title="@{title}" />
+<!--                app:navigationIcon="@drawable/base_iv_left_arrow"-->
             </com.google.android.material.appbar.CollapsingToolbarLayout>
         </com.google.android.material.appbar.AppBarLayout>
 

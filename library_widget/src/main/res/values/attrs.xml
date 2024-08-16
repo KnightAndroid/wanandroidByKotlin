@@ -98,17 +98,27 @@
         <attr name="stroke_color" format="color" />
         <attr name="stroke_width" format="dimension|reference"/>
     </declare-styleable>
-    <!--折叠TextView -->
+
+
     <declare-styleable name="ExpandableTextView">
-        <attr format="integer" name="etv_expandLines"/>
-        <attr format="reference" name="etv_shrinkBitmap"/>
-        <attr format="reference" name="etv_expandBitmap"/>
-        <attr format="color" name="etv_textStateColor"/>
-        <attr format="color" name="etv_textContentColor"/>
-        <attr format="dimension" name="etv_textContentSize"/>
-        <attr format="string" name="etv_textShrink"/>
-        <attr format="string" name="etv_textExpand"/>
-        <attr format="integer" name="etv_animationTime"/>
-        <attr format="boolean" name="etv_showLine"/>
+        <attr name="maxCollapsedLines" format="integer" />
+        <attr name="animDuration" format="integer" />
+        <attr name="contentTextSize" format="dimension" />
+        <attr name="contentTextColor" format="color" />
+        <attr name="contentLineSpacingMultiplier" format="float" />
+        <attr name="expandDrawable" format="reference" />
+        <attr name="expandText" format="string" />
+        <attr name="collapseDrawable" format="reference" />
+        <attr name="collapseText" format="string" />
+        <attr name="expandCollapseTextColor" format="color" />
+        <attr name="expandCollapseTextGravity" format="enum">
+            <enum name="left" value="0" />
+            <enum name="center" value="1" />
+            <enum name="right" value="2" />
+        </attr>
+        <attr name="expandCollapseTextVisible" format="enum">
+            <enum name="gone" value="0" />
+            <enum name="invisible" value="1" />
+        </attr>
     </declare-styleable>
 </resources>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<bitmap xmlns:android="http://schemas.android.com/apk/res/android"
+    android:gravity="top"
+    android:src="@drawable/widget_icon_arrow"
+    android:tileMode="disabled"></bitmap>
+<!-- 为了解决textview设置icon 变形 -->
+

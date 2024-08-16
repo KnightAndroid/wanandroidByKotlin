@@ -1,15 +1,19 @@
 package com.knight.kotlin.module_eye_discover.activity
 
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter4.QuickAdapterHelper
 import com.chad.library.adapter4.loadState.LoadState
 import com.chad.library.adapter4.loadState.trailing.TrailingLoadStateAdapter
+import com.google.android.material.appbar.AppBarLayout
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.config.Appconfig
 import com.knight.kotlin.library_base.ktx.init
+import com.knight.kotlin.library_base.ktx.toJson
 import com.knight.kotlin.library_base.route.RouteActivity
+import com.knight.kotlin.library_util.startPageWithAnimate
 import com.knight.kotlin.library_widget.ktx.transformShareElementConfig
-import com.knight.kotlin.module_eye_discover.R
+import com.knight.kotlin.library_widget.listener.AppBarStateChangeListener
 import com.knight.kotlin.module_eye_discover.adapter.EyeDiscoverCategoryDetailAdapter
 import com.knight.kotlin.module_eye_discover.databinding.EyeDiscoverCategoryDetailActivityBinding
 import com.knight.kotlin.module_eye_discover.vm.EyeDiscoverCategoryDetailVm
@@ -74,13 +78,28 @@ class EyeCategoryDetailActivity : BaseActivity<EyeDiscoverCategoryDetailActivity
         title = name
         headerImage = headImage
         discoverDetailMToolbar.setNavigationOnClickListener {
-            finish()
+            finishAfterTransition()
         }
-        transformShareElementConfig(discoverDetailImg,getString(R.string.eye_discover_share_element_container))
+        transformShareElementConfig(discoverDetailImg,getString(com.knight.kotlin.module_eye_discover.R.string.eye_discover_share_element_container))
         setLoadDataListener()
+        addItemClickListener()
+        discoverDetailAppBar.addOnOffsetChangedListener(object : AppBarStateChangeListener() {
+            override fun onStateChanged(appBarLayout: AppBarLayout?, state: State?) {
+                if (state == State.EXPANDED) {
+                    discoverDetailMToolbar.navigationIcon = ContextCompat.getDrawable(this@EyeCategoryDetailActivity, com.knight.kotlin.library_base.R.drawable.base_iv_white_left_arrow)
+
+                } else if (state == State.COLLAPSED) {
+                    discoverDetailMToolbar.navigationIcon = ContextCompat.getDrawable(this@EyeCategoryDetailActivity, com.knight.kotlin.library_base.R.drawable.base_iv_left_arrow)
+                } else {
+                    discoverDetailMToolbar.navigationIcon = ContextCompat.getDrawable(this@EyeCategoryDetailActivity, com.knight.kotlin.library_base.R.drawable.base_iv_white_left_arrow)
+                }
+            }
+        })
     }
 
-
+    /**
+     * 设置加载数据监听
+     */
     private fun setLoadDataListener() {
         helper = QuickAdapterHelper.Builder(mEyeDiscoverCategoryDetailAdapter)
             // 使用默认样式的尾部"加载更多"
@@ -138,5 +157,23 @@ class EyeCategoryDetailActivity : BaseActivity<EyeDiscoverCategoryDetailActivity
             true
         )
 
+    }
+
+    /**
+     *
+     *  设置item点击事件
+     */
+    private fun addItemClickListener() {
+        mEyeDiscoverCategoryDetailAdapter.run {
+            setOnItemClickListener {adapter, view, position ->
+                startPageWithAnimate(
+                    this@EyeCategoryDetailActivity,
+                    RouteActivity.EyeVideo.EyeVideoDetail,view,
+                    getString(com.knight.kotlin.library_base.R.string.base_daily_share_image),
+                    Appconfig.EYE_VIDEO_PARAM_KEY to toJson(adapter.items[position].data)
+                )
+
+            }
+        }
     }
 }
