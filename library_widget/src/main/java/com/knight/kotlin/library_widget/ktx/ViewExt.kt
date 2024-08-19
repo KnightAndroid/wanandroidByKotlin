@@ -6,7 +6,6 @@ import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
 import com.chad.library.adapter4.BaseQuickAdapter
-
 import com.knight.kotlin.library_widget.pagetransformer.CardPagerTransfromer
 import com.yanzhenjie.recyclerview.SwipeRecyclerView
 
@@ -85,4 +84,3 @@ fun BaseQuickAdapter<*, *>.addOnItemChildClickListener(interval: Long = 1000, ac
         action(adapter, view, position)
     }
 }
-

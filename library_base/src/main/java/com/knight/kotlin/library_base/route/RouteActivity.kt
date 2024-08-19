@@ -192,6 +192,7 @@ object RouteActivity {
         private const val EyeDiscover = "/module_eye_discover"
         const val EyeDiscoverActivity = "$EyeDiscover/EyeDetailActivity"
         const val EyeCategoryDetailActivity = "$EyeDiscover/EyeCategoryDetailActivity"
+        const val EyeSpecialTopicDetailActivity = "$EyeDiscover/EyeSpecialTopicDetailActivity"
     }
 
 

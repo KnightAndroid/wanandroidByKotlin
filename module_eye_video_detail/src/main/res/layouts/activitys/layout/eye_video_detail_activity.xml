@@ -49,37 +49,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-<!--            <com.knight.kotlin.library_widget.ScrollViewNestedRecyclerView-->
-<!--                android:id="@+id/eye_detail_nest"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="match_parent">-->
 
-
-<!--                <LinearLayout-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="match_parent"-->
-<!--                    android:orientation="vertical">-->
-
-
-<!--                    <TextView-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="400dp"-->
-<!--                        android:background="@color/base_color_theme"-->
-<!--                        android:textColor="#fff"-->
-<!--                        android:textSize="20sp"-->
-<!--                        android:gravity="center"-->
-<!--                        android:text="这是scrollview部分"/>-->
 
                        <com.yanzhenjie.recyclerview.SwipeRecyclerView
                            android:id="@+id/rv_relate_video"
                            android:layout_width="match_parent"
                            android:layout_height="match_parent" />
 
-
-<!--                </LinearLayout>-->
-
-
-<!--            </com.knight.kotlin.library_widget.ScrollViewNestedRecyclerView>-->
 
 
         </com.scwang.smart.refresh.layout.SmartRefreshLayout>

@@ -29,4 +29,17 @@
     <dimen name="eye_discover_detail_item_tv_category_padding_right">10dp</dimen>
     <dimen name="eye_discover_detail_item_tv_category_padding_bottom">2dp</dimen>
     <dimen name="eye_discover_detail_item_tv_category_padding_start">2dp</dimen>
+    <dimen name="eye_discover_special_topic_header_iv_height">250dp</dimen>
+    <dimen name="eye_discover_special_topic_header_tv_title_padding_top">40dp</dimen>
+    <dimen name="eye_discover_special_topic_header_tv_title_padding_start">20dp</dimen>
+    <dimen name="eye_discover_special_topic_header_tv_title_padding_end">20dp</dimen>
+    <dimen name="eye_discover_special_topic_header_tv_title_padding_bottom">10dp</dimen>
+    <dimen name="eye_discover_special_topic_header_tv_title_text_size">12sp</dimen>
+    <dimen name="eye_discover_special_topic_header_tv_desc_text_size">14sp</dimen>
+    <dimen name="eye_discover_special_topic_header_tv_desc_corner_radius">4dp</dimen>
+    <dimen name="eye_discover_special_topic_header_tv_desc_stroke_width">1dp</dimen>
+    <dimen name="eye_discover_special_topic_header_tv_desc_margin_top">230dp</dimen>
+    <dimen name="eye_discover_special_topic_header_tv_desc_margin_start">20dp</dimen>
+    <dimen name="eye_discover_special_topic_header_tv_desc_margin_end">20dp</dimen>
+    <dimen name="eye_discover_special_topic_header_tv_desc_height">50dp</dimen>
 </resources>

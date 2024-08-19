@@ -55,7 +55,9 @@
                 android:text="@{videoEntity.description}"
                 app:contentTextColor="@android:color/white"
                 app:contentTextSize="@dimen/eye_video_detail_tv_desc_text_size"
-                app:maxCollapsedLines="3" />
+                app:maxCollapsedLines="3"
+                app:DrawableAndTextGravity="right"
+                app:expandCollapseTextColor="@android:color/white"/>
 
             <LinearLayout
                 android:layout_width="match_parent"

@@ -25,9 +25,9 @@ class EyeDiscoverCategoryDetailVm @Inject constructor(private val mRepo: EyeDisc
      *
      * 获取发现分类详细数据
      */
-    fun getDiscoverCategoryDetailData(id:Long): LiveData<EyeCategoryDetailEntity> {
+    fun getDiscoverCategoryDetailData(id: Long): LiveData<EyeCategoryDetailEntity> {
         showLoadingDialog()
-        return mRepo.getCategoryDetailData(id,failureCallBack = {
+        return mRepo.getCategoryDetailData(id, failureCallBack = {
             it?.let { it1 -> toast(it1) }
         }).asLiveData()
 
@@ -37,8 +37,8 @@ class EyeDiscoverCategoryDetailVm @Inject constructor(private val mRepo: EyeDisc
      *
      * 获取更多分类详细数据
      */
-    fun getLoadMoreCategoryDetailData(url:String) : LiveData<EyeCategoryDetailEntity> {
-           return  mRepo.getLoadMoreCategoryDetailData(url).asLiveData()
+    fun getLoadMoreCategoryDetailData(url: String): LiveData<EyeCategoryDetailEntity> {
+        return mRepo.getLoadMoreCategoryDetailData(url).asLiveData()
 
     }
 

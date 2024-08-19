@@ -22,7 +22,7 @@ import dagger.hilt.android.AndroidEntryPoint
  * @author created by luguian
  * @organize
  * @Date 2024/8/5 17:53
- * @descript:开眼发现
+ * @descript:开眼发现首界面
  */
 @AndroidEntryPoint
 @Route(path = RouteActivity.EyeDiscover.EyeDiscoverActivity)

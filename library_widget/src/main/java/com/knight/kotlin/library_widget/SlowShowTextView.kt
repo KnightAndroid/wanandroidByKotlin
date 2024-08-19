@@ -50,10 +50,21 @@ class SlowShowTextView : androidx.appcompat.widget.AppCompatTextView {
      */
     private val EVENT_BEAN_START = 0
     private val EVENT_BEAN_SHOW = 1
+
+    private var openSlow:Boolean = true
+
     @JvmOverloads
     constructor(context: Context, attributeSet: AttributeSet? = null, defAttrStyle: Int = 0)
             : super(context, attributeSet, defAttrStyle) {
-                init()
+
+        val typedArray = getContext().obtainStyledAttributes(attributeSet, R.styleable.SlowTextView)
+        openSlow = typedArray.getBoolean(R.styleable.SlowTextView_openSlow,openSlow)
+        if (openSlow) {
+            init()
+        }
+
+
+        typedArray.recycle()
     }
 
 
@@ -104,14 +115,19 @@ class SlowShowTextView : androidx.appcompat.widget.AppCompatTextView {
      * @param text
      */
     fun setText(text: String) {
-        mHandler.removeMessages(EVENT_BEAN_SHOW)
-        mHandler.removeMessages(EVENT_BEAN_START)
-        mOriginalTextColor = currentTextColor
-        setTextColor(ContextCompat.getColor(context, transparent))
-        mOriginalText = text
-        mStringList =
-            mOriginalText.split("".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-        mHandler.sendEmptyMessage(EVENT_BEAN_START)
+        if (openSlow) {
+            mHandler.removeMessages(EVENT_BEAN_SHOW)
+            mHandler.removeMessages(EVENT_BEAN_START)
+            mOriginalTextColor = currentTextColor
+            setTextColor(ContextCompat.getColor(context, transparent))
+            mOriginalText = text
+            mStringList =
+                mOriginalText.split("".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+            mHandler.sendEmptyMessage(EVENT_BEAN_START)
+        } else {
+            super.setText(text)
+        }
+
     }
 
     /**
@@ -154,9 +170,19 @@ class SlowShowTextView : androidx.appcompat.widget.AppCompatTextView {
         return lineHeight
     }
 
+    fun getOpenSlow() : Boolean {
+        return openSlow
+    }
+
+
+
+
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
-        mHandler.removeMessages(EVENT_BEAN_SHOW)
-        mHandler.removeMessages(EVENT_BEAN_START)
+        if (::mHandler.isInitialized) {
+            mHandler?.removeMessages(EVENT_BEAN_SHOW)
+            mHandler?.removeMessages(EVENT_BEAN_START)
+        }
+
     }
 }

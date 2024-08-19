@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="title"
+            type="java.lang.String" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.knight.kotlin.library_widget.CompatToolBar
+            android:id="@+id/special_topic_detail_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            app:title="@{title}" />
+
+
+        <com.scwang.smart.refresh.layout.SmartRefreshLayout
+            android:id="@+id/special_topic_refresh_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+           >
+
+            <com.scwang.smart.refresh.header.ClassicsHeader
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+
+
+            <com.yanzhenjie.recyclerview.SwipeRecyclerView
+                android:id="@+id/rv_special_topic_video"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+
+        </com.scwang.smart.refresh.layout.SmartRefreshLayout>
+
+
+
+
+    </LinearLayout>
+
+</layout>
