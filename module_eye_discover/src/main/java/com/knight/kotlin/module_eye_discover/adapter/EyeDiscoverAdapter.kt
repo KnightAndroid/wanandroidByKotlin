@@ -11,6 +11,7 @@ import com.chad.library.adapter4.BaseMultiItemAdapter
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.util.dp2px
 import com.knight.kotlin.library_util.startPageWithAnimate
+import com.knight.kotlin.library_util.startPageWithParams
 import com.knight.kotlin.library_widget.RecyclerItemDecoration
 import com.knight.kotlin.module_eye_discover.R
 import com.knight.kotlin.module_eye_discover.constants.DiscoverItemType
@@ -126,6 +127,18 @@ class EyeDiscoverAdapter(activity : FragmentActivity, data:List<BaseEyeDiscoverE
                         dataList.add(cardBean.data.itemList.get(i).data)
                     }
                     val adapter = EyeDiscoverSubSubjectAdapter()
+
+
+                    adapter.run {
+                        setOnItemClickListener { adapter, view, position ->
+
+                            startPageWithParams(RouteActivity.EyeDiscover.EyeSpecialTopicDetailActivity,"id" to dataList[position].id)
+//                            startPageWithAnimate(activity, RouteActivity.EyeDiscover.EyeCategoryDetailActivity,view,activity.getString(R.string.eye_discover_share_element_container),
+//                                "id" to dataList[position].id,
+//                                "name" to dataList[position].title.replace("#",""),
+//                                "headImage" to dataList[position].image)
+                        }
+                    }
                     binding.rvSubjectView.adapter = adapter
                     adapter.submitList(dataList)
                 }

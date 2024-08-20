@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="name"
+            type="java.lang.String" />
+    </data>
+
+    <com.google.android.material.button.MaterialButton
+        android:theme="@style/Theme.MaterialComponents.NoActionBar"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:minWidth="@dimen/eye_discover_special_topic_item_tag_minwidth"
+        android:layout_height="@dimen/eye_discover_special_topic_item_tag_height"
+        android:layout_marginEnd="@dimen/eye_discover_special_topic_item_tag_margin_end"
+        android:paddingLeft="@dimen/eye_discover_special_topic_item_tag_padding_left"
+        android:paddingRight="@dimen/eye_discover_special_topic_item_tag_padding_right"
+        android:text="@{name}"
+        android:textColor="@android:color/holo_blue_light"
+        android:textSize="@dimen/eye_discover_special_topic_item_tag_text_size"
+        app:backgroundTint="@color/eye_discover_special_tag_background_tint"
+        app:cornerRadius="@dimen/eye_discover_special_topic_item_tag_corner_radius" />
+</layout>

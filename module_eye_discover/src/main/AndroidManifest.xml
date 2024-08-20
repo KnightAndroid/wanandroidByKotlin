@@ -1,16 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <application
-        >
-        <activity
-            android:name=".activity.EyeDiscoverActivity">
-
-        </activity>
-        <activity
-            android:name=".activity.EyeCategoryDetailActivity">
-
-        </activity>
+    <application>
+        <activity android:name=".activity.EyeDiscoverActivity" />
+        <activity android:name=".activity.EyeCategoryDetailActivity" />
+        <activity android:name=".activity.EyeSpecialTopicDetailActivity" />
     </application>
 
 </manifest>

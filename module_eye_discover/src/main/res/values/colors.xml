@@ -9,4 +9,11 @@
       <color name="eye_discover_item_detail_tv_title_text_color">#333333</color>
       <color name="eye_discover_special_topic_header_title_text_color">#9a9a9a</color>
       <color name="eye_discover_special_topic_header_desc_stroke_color">#FFF5F5F5</color>
+      <color name="eye_discover_special_topic_tv_publish_time_text_color">#9a9a9a</color>
+      <color name="eye_discover_special_topic_tv_des_text_color">#333333</color>
+      <color name="eye_discover_special_topic_tv_like_text_color">#dbdbdb</color>
+      <color name="eye_discover_special_topic_tv_comment_text_color">#dbdbdb</color>
+      <color name="eye_discover_special_topic_tv_collect_text_color">#dbdbdb</color>
+      <color name="eye_discover_special_topic_tv_share_text_color">#dbdbdb</color>
+      <color name="eye_discover_special_tag_background_tint">#3389b1e9</color>
   </resources>

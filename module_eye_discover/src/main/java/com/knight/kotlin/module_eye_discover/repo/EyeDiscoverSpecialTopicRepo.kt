@@ -1,5 +1,6 @@
 package com.knight.kotlin.module_eye_discover.repo
 
+import com.knight.kotlin.library_base.ktx.dimissLoadingDialog
 import com.knight.kotlin.library_base.repository.BaseRepository
 import com.knight.kotlin.library_network.model.responseCodeExceptionHandler
 import com.knight.kotlin.library_util.toast
@@ -27,11 +28,13 @@ class EyeDiscoverSpecialTopicRepo @Inject constructor() : BaseRepository() {
      */
     fun getDiscoverSpecialTopicalDetail(id:Long) = request<EyeSpecialTopicDetailEntity> ({
         mEyeDiscoverSpecialTopical.getSpecialTopicDetailData(id).run {
+            dimissLoadingDialog()
             responseCodeExceptionHandler(errorCode, errorMessage)
             emit(this)
         }
 
     }){
+        dimissLoadingDialog()
         it?.let { it1 -> toast(it1) }
     }
 }
