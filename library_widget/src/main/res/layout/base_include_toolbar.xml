@@ -1,52 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.knight.kotlin.library_widget.CompatToolBar
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/base_compat_toolbar"
-    app:contentInsetStart="0dp"
-    app:contentInsetEnd="0dp"
-    app:layout_collapseMode="pin"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    
-    
-    <ImageView
-        android:id="@+id/base_iv_back"
-        android:layout_width="@dimen/widget_compat_toolbar_width"
-        android:layout_height="@dimen/widget_compat_toolbar_height"
-        android:layout_marginLeft="@dimen/widget_compat_toolbar_left"
-        android:background="@drawable/base_iv_left_arrow"/>
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
 
-    <com.knight.kotlin.library_widget.MarqueeTextView
-        android:id="@+id/base_tv_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/widget_compat_toolbar_text_size"
-        android:gravity="center"
-        android:textColor="@color/widget_title_color"
-        android:singleLine="true"
-        android:scrollHorizontally="true"
-        android:ellipsize="marquee"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:layout_gravity="center"
-        android:maxEms="12"/>
+        <variable
+            name="title"
+            type="java.lang.String" />
+    </data>
 
-    <ImageView
-        android:id="@+id/base_iv_right"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/base_icon_more"
-        android:layout_gravity="right|center"
-        android:layout_marginRight="@dimen/widget_compat_toolbar_iv_right"
-        android:visibility="gone"/>
 
-    <TextView
-        android:id="@+id/base_tv_right"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right|center"
-        android:layout_marginRight="@dimen/widget_compat_toolbar_iv_right"
-        android:textColor="@color/widget_toolbar_text_right_color"
-        android:visibility="gone"/>
-</com.knight.kotlin.library_widget.CompatToolBar>
+    <com.knight.kotlin.library_widget.CompatToolBar
+        android:id="@+id/base_compat_toolbar"
+        app:contentInsetStart="0dp"
+        app:contentInsetEnd="0dp"
+        app:layout_collapseMode="pin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <ImageView
+            android:id="@+id/base_iv_back"
+            android:layout_width="@dimen/widget_compat_toolbar_width"
+            android:layout_height="@dimen/widget_compat_toolbar_height"
+            android:layout_marginLeft="@dimen/widget_compat_toolbar_left"
+            android:background="@drawable/base_iv_left_arrow"/>
+
+        <com.knight.kotlin.library_widget.MarqueeTextView
+            android:id="@+id/base_tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/widget_compat_toolbar_text_size"
+            android:gravity="center"
+            android:textColor="@color/widget_title_color"
+            android:singleLine="true"
+            android:scrollHorizontally="true"
+            android:text="@{title}"
+            android:ellipsize="marquee"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:layout_gravity="center"
+            android:maxEms="12"/>
+
+        <ImageView
+            android:id="@+id/base_iv_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/base_icon_more"
+            android:layout_gravity="right|center"
+            android:layout_marginRight="@dimen/widget_compat_toolbar_iv_right"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/base_tv_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center"
+            android:layout_marginRight="@dimen/widget_compat_toolbar_iv_right"
+            android:textColor="@color/widget_toolbar_text_right_color"
+            android:visibility="gone"/>
+    </com.knight.kotlin.library_widget.CompatToolBar>
+</layout>

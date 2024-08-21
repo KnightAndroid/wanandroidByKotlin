@@ -7,5 +7,5 @@
     <string name="widget_gesture_password_again">请再次录入手势密码</string>
     <string name="widget_gesture_password_success">成功设置手势密码</string>
     <string name="widget_expand_hint">展开</string>
-    <string name="widget_shrink_hint">收缩</string>
+    <string name="widget_shrink_hint">收起</string>
 </resources>

@@ -21,6 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/eye_discover_special_topic_item_cl_topic_margin_start"
         android:layout_marginTop="@dimen/eye_discover_special_topic_item_cl_topic_margin_top"
+        android:layout_marginBottom="@dimen/eye_discover_special_topic_item_cl_topic_margin_bottom"
         android:layout_marginEnd="@dimen/eye_discover_special_topic_item_cl_topic_margin_end">
 
         <com.google.android.material.imageview.ShapeableImageView
@@ -50,44 +51,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/eye_discover_special_topic_item_tv_publish_time_margin_start"
-            android:text="@{DateUtils.INSTANCE.formatDateMsByYMD(model.data.header.time) + @string/eye_discover_publish}"
+            android:text="@{DateUtils.INSTANCE.formatDateMsByYMD(model.data.header.time)}"
             android:textColor="@color/eye_discover_special_topic_tv_publish_time_text_color"
             android:textSize="@dimen/eye_discover_special_topic_item_tv_publish_time_text_size"
             app:layout_constraintLeft_toRightOf="@id/iv_author"
             app:layout_constraintTop_toBottomOf="@id/tv_issuer" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:text="@{model.data.content.data.title}"
-            android:textColor="@android:color/black"
-            android:textSize="@dimen/eye_discover_special_topic_item_tv_title_text_size"
-            android:textStyle="bold"
-            app:layout_constraintHorizontal_weight="1"
-            app:layout_constraintLeft_toRightOf="@id/tv_publish_time"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_issuer" />
-
-        <com.knight.kotlin.library_widget.ExpandableTextView
-            android:id="@+id/tv_des"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/eye_discover_special_topic_item_tv_des_margin_top"
-            android:text="@{model.data.content.data.description}"
-            android:textSize="@dimen/eye_discover_special_topic_item_tv_des_text_size"
-            app:layout_constraintLeft_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_publish_time"
-            app:contentTextColor="@color/eye_discover_special_topic_tv_des_text_color"
-            app:contentTextSize="@dimen/eye_discover_special_topic_item_tv_des_text_size"
-            app:maxCollapsedLines="3"
-            app:DrawableAndTextGravity="right"
-            app:expandCollapseTextColor="@android:color/holo_blue_light"
-
-
-
-            />
 
         <LinearLayout
             android:id="@+id/ll_tag"
@@ -98,100 +67,120 @@
             app:tagList="@{model.data.content.data.tags}"
             app:activity="@{activity}"
             app:layout_constraintLeft_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_des"
-             />
+            app:layout_constraintTop_toBottomOf="@id/tv_publish_time"
+            />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@{model.data.content.data.title}"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/eye_discover_special_topic_item_tv_title_text_size"
+            android:textStyle="bold"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ll_tag" />
+
+        <com.knight.kotlin.library_widget.ExpandableTextView
+            android:id="@+id/tv_des"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/eye_discover_special_topic_item_tv_des_margin_top"
+            android:text="@{model.data.content.data.description}"
+            android:textSize="@dimen/eye_discover_special_topic_item_tv_des_text_size"
+            app:layout_constraintLeft_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_title"
+            app:contentTextColor="@color/eye_discover_special_topic_tv_des_text_color"
+            app:contentTextSize="@dimen/eye_discover_special_topic_item_tv_des_text_size"
+            app:maxCollapsedLines="3"
+            app:DrawableAndTextGravity="right"
+            app:expandCollapseTextColor="@android:color/holo_blue_light"
+
+
+
+            />
+
 
         <FrameLayout
             android:id="@+id/surface_container"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:layout_marginTop="@dimen/eye_discover_special_topic_item_surface_container_margin_top"
-            app:layout_constraintTop_toBottomOf="@id/ll_tag" />
+            app:layout_constraintTop_toBottomOf="@id/tv_des" />
+
+
+
 
         <LinearLayout
-            android:id="@+id/ll_like"
-            android:layout_width="wrap_content"
+            android:id="@+id/ll_bottom"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            app:layout_constraintWidth_percent="0.7"
             android:layout_marginTop="@dimen/eye_discover_special_topic_item_ll_like_margin_top"
             android:gravity="center_vertical"
-            app:layout_constraintHorizontal_chainStyle="spread_inside"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/ll_comment"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/surface_container">
 
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_like"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
+                android:gravity="center_vertical"
                 android:layout_marginStart="@dimen/eye_discover_special_topic_item_tv_like_margin_start"
                 android:text="@{String.valueOf(model.data.content.data.consumption.collectionCount)}"
                 android:textColor="@color/eye_discover_special_topic_tv_like_text_color"
                 android:textSize="@dimen/eye_discover_special_topic_item_tv_like_text_size"
+                android:drawablePadding="@dimen/eye_discover_special_topic_item_tv_like_drawable_padding"
                 android:drawableLeft="@drawable/eye_discover_topic_love_icon"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_comment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/eye_discover_special_topic_item_ll_reply_margin_top"
-            android:gravity="center_vertical"
-            app:layout_constraintHorizontal_chainStyle="spread_inside"
-            app:layout_constraintLeft_toRightOf="@id/ll_like"
-            app:layout_constraintRight_toLeftOf="@id/ll_like"
-            app:layout_constraintTop_toBottomOf="@id/surface_container">
 
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_comment"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/eye_discover_special_topic_item_tv_comment_margin_start"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
                 android:text="@{String.valueOf(model.data.content.data.consumption.replyCount)}"
                 android:textColor="@color/eye_discover_special_topic_tv_comment_text_color"
                 android:textSize="@dimen/eye_discover_special_topic_item_tv_comment_text_size"
+                android:drawablePadding="@dimen/eye_discover_special_topic_item_tv_comment_drawable_padding"
                 android:drawableLeft="@drawable/eye_discover_topic_comment_icon"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_collect"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/eye_discover_special_topic_item_ll_collect_margin_top"
-            android:gravity="center_vertical"
-            app:layout_constraintHorizontal_chainStyle="spread_inside"
-            app:layout_constraintLeft_toRightOf="@id/ll_comment"
-            app:layout_constraintRight_toLeftOf="@id/tv_share"
-            app:layout_constraintTop_toBottomOf="@id/surface_container">
-
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_collect"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/eye_discover_special_topic_item_tv_collect_margin_start"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
                 android:text="@string/eye_discover_special_topic_collect"
                 android:textColor="@color/eye_discover_special_topic_tv_collect_text_color"
                 android:textSize="@dimen/eye_discover_special_topic_item_tv_collect_text_size"
                 android:drawableLeft="@drawable/eye_discover_topic_collect_icon"/>
 
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_share"
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="@string/eye_discover_special_topic_share"
+                android:textColor="@color/eye_discover_special_topic_tv_share_text_color"
+                android:textSize="@dimen/eye_discover_special_topic_item_tv_share_text_size"
+                android:drawableLeft="@drawable/eye_discover_topic_share_icon"
+                />
         </LinearLayout>
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_share"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/eye_discover_special_topic_item_tv_share_margin_top"
-            android:text="@string/eye_discover_special_topic_share"
-            android:textColor="@color/eye_discover_special_topic_tv_share_text_color"
-            android:textSize="@dimen/eye_discover_special_topic_item_tv_share_text_size"
-            app:layout_constraintHorizontal_chainStyle="spread_inside"
-            app:layout_constraintLeft_toRightOf="@id/ll_like"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/surface_container" />
+
+
+
+
 
 <!--        <View-->
 <!--            android:layout_width="match_parent"-->

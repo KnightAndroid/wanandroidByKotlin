@@ -17,7 +17,6 @@ class OkPlayerRv: OkPlayerStd {
 
     constructor(context: Context) : super(context) {}
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {}
-
     private var clickUi: ClickUi? = null
     var isAtList = false
         set(value) {
@@ -62,6 +61,11 @@ class OkPlayerRv: OkPlayerStd {
     override fun startVideo() {
         super.startVideo()
         clickUi?.onClickStart()
+    }
+
+    override fun setScreenNormal() {
+        super.setScreenNormal()
+        backButton.setVisibility(GONE)
     }
 
     interface ClickUi {

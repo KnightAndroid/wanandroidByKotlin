@@ -79,16 +79,20 @@ class RecyclerItemDecoration : RecyclerView.ItemDecoration {
         if (mPaint == null) {
             return
         }
+
+        val left = parent.paddingLeft //横线的左端必须是paddngleft,如果用left则横线过长（不显示）
+        val right = parent.width - parent.paddingRight //同上，getLeft()是控件左端距离屏幕左端的长度，right是控件右端距离屏幕左端的长度
         // 获取RecyclerView的child view的个数
         val childCount = parent.childCount
         // 遍历每个Item，分别获取它们的位置信息，然后再绘制对应的分割线
         for (i in 0 until childCount) {
             // 获取每个Item
             val child = parent.getChildAt(i)
-            val left = child.left
+            val params = child.layoutParams as RecyclerView.LayoutParams
+            //val left = child.left
             // 需要加上 margin的高度
-            val top = child.bottom + dividerMarginHeight
-            val right = child.right
+            val top = child.bottom + dividerMarginHeight  + params.bottomMargin
+            // val right = child.right
             val bottom = top + dividerHeight
             // 绘制分割线
             c.drawRect(left.toFloat(), top.toFloat(), right.toFloat(), bottom.toFloat(), mPaint!!)

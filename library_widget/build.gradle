@@ -5,6 +5,7 @@ apply plugin: 'dagger.hilt.android.plugin'
 android {
     buildFeatures {
         viewBinding = true
+        dataBinding true
     }
     namespace = "com.knight.kotlin.library_widget"
 }

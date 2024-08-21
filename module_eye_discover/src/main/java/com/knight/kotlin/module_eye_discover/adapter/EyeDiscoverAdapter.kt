@@ -12,7 +12,7 @@ import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.util.dp2px
 import com.knight.kotlin.library_util.startPageWithAnimate
 import com.knight.kotlin.library_util.startPageWithParams
-import com.knight.kotlin.library_widget.RecyclerItemDecoration
+import com.knight.kotlin.library_widget.SpacesItemDecoration
 import com.knight.kotlin.module_eye_discover.R
 import com.knight.kotlin.module_eye_discover.constants.DiscoverItemType
 import com.knight.kotlin.module_eye_discover.databinding.EyeDiscoverBriefCardItemBinding
@@ -103,10 +103,8 @@ class EyeDiscoverAdapter(activity : FragmentActivity, data:List<BaseEyeDiscoverE
                 gridLayoutManager.orientation = RecyclerView.HORIZONTAL
                 viewBinding.rvCategoryView.setLayoutManager(gridLayoutManager)
                 viewBinding.rvCategoryView.addItemDecoration(
-                    RecyclerItemDecoration(
-                        0,
-                        0, 5.dp2px(), 0
-                    )
+
+                            SpacesItemDecoration(10.dp2px())
                 )
 
 
@@ -152,10 +150,11 @@ class EyeDiscoverAdapter(activity : FragmentActivity, data:List<BaseEyeDiscoverE
                     GridLayoutManager(activity, 2)
                 viewBinding.rvSubjectView.setLayoutManager(gridLayoutManager)
                 viewBinding.rvSubjectView.addItemDecoration(
-                    RecyclerItemDecoration(
-                        0,
-                        0, 5.dp2px(), 5.dp2px()
-                    )
+//                    RecyclerItemDecoration(
+//                        0,
+//                        0, 5.dp2px(), 5.dp2px()
+//                    )
+                            SpacesItemDecoration(10.dp2px())
                 )
                 return EyeDiscoverSubjectVH(viewBinding)
             }

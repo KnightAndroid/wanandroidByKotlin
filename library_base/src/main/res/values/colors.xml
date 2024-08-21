@@ -2,7 +2,7 @@
 <resources>
     <color name="base_color_theme">#55aff4</color>
     <color name="base_filtrate_color">#1f767680</color>
-    <color name="base_line_color">#dddddd</color>
+    <color name="base_line_color">#e6e6e6</color>
     <color name="base_color_transparent">#00000000</color>
     <color name="base_text_item_color">#ffffff</color>
     <color name="base_item_article_author_color">#999999</color>

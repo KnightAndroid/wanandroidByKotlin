@@ -45,6 +45,7 @@
     <dimen name="eye_discover_special_topic_item_cl_topic_margin_start">20dp</dimen>
     <dimen name="eye_discover_special_topic_item_cl_topic_margin_top">20dp</dimen>
     <dimen name="eye_discover_special_topic_item_cl_topic_margin_end">20dp</dimen>
+    <dimen name="eye_discover_special_topic_item_cl_topic_margin_bottom">10dp</dimen>
     <dimen name="eye_discover_special_topic_item_iv_author_width">45dp</dimen>
     <dimen name="eye_discover_special_topic_item_iv_author_height">45dp</dimen>
     <dimen name="eye_discover_special_topic_item_tv_issuer_margin_start">10dp</dimen>
@@ -52,27 +53,25 @@
     <dimen name="eye_discover_special_topic_item_tv_issuer_text_size">14sp</dimen>
     <dimen name="eye_discover_special_topic_item_tv_publish_time_text_size">12sp</dimen>
     <dimen name="eye_discover_special_topic_item_tv_publish_time_margin_start">10dp</dimen>
-    <dimen name="eye_discover_special_topic_item_tv_title_text_size">12sp</dimen>
+    <dimen name="eye_discover_special_topic_item_tv_title_text_size">14sp</dimen>
     <dimen name="eye_discover_special_topic_item_tv_des_margin_top">10dp</dimen>
     <dimen name="eye_discover_special_topic_item_tv_des_text_size">14sp</dimen>
-    <dimen name="eye_discover_special_topic_item_ll_tag_margin_top">10dp</dimen>
+    <dimen name="eye_discover_special_topic_item_ll_tag_margin_top">5dp</dimen>
     <dimen name="eye_discover_special_topic_item_surface_container_margin_top">10dp</dimen>
     <dimen name="eye_discover_special_topic_item_ll_like_margin_top">20dp</dimen>
     <dimen name="eye_discover_special_topic_item_tv_like_margin_start">10dp</dimen>
     <dimen name="eye_discover_special_topic_item_tv_like_text_size">12sp</dimen>
-    <dimen name="eye_discover_special_topic_item_ll_reply_margin_top">20dp</dimen>
-    <dimen name="eye_discover_special_topic_item_tv_comment_margin_start">10dp</dimen>
+    <dimen name="eye_discover_special_topic_item_tv_like_drawable_padding">2dp</dimen>
+    <dimen name="eye_discover_special_topic_item_tv_comment_drawable_padding">2dp</dimen>
     <dimen name="eye_discover_special_topic_item_tv_comment_text_size">12sp</dimen>
-    <dimen name="eye_discover_special_topic_item_ll_collect_margin_top">20dp</dimen>
-    <dimen name="eye_discover_special_topic_item_tv_collect_margin_start">10dp</dimen>
     <dimen name="eye_discover_special_topic_item_tv_collect_text_size">12sp</dimen>
-    <dimen name="eye_discover_special_topic_item_tv_share_margin_top">20dp</dimen>
-    <dimen name="eye_discover_special_topic_item_tv_share_text_size">16sp</dimen>
+    <dimen name="eye_discover_special_topic_item_tv_share_text_size">12sp</dimen>
     <dimen name="eye_discover_special_topic_item_tag_minwidth">25dp</dimen>
-    <dimen name="eye_discover_special_topic_item_tag_height">20dp</dimen>
+    <dimen name="eye_discover_special_topic_item_tag_height">40dp</dimen>
     <dimen name="eye_discover_special_topic_item_tag_margin_end">5dp</dimen>
     <dimen name="eye_discover_special_topic_item_tag_padding_left">5dp</dimen>
     <dimen name="eye_discover_special_topic_item_tag_padding_right">5dp</dimen>
     <dimen name="eye_discover_special_topic_item_tag_text_size">12sp</dimen>
     <dimen name="eye_discover_special_topic_item_tag_corner_radius">4dp</dimen>
+
 </resources>

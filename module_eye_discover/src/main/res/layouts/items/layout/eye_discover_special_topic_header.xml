@@ -39,17 +39,15 @@
                 android:textColor="@color/eye_discover_special_topic_header_title_text_color"
                 android:textSize="@dimen/eye_discover_special_topic_header_tv_title_text_size" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/base_dimen_5"
-                android:background="@color/base_line_color" />
         </LinearLayout>
 
         <com.google.android.material.button.MaterialButton
             android:theme="@style/Theme.MaterialComponents.NoActionBar"
             style="@style/Widget.MaterialComponents.Button.TextButton"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_width="match_parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_width="0dp"
             android:layout_height="@dimen/eye_discover_special_topic_header_tv_desc_height"
             android:layout_marginStart="@dimen/eye_discover_special_topic_header_tv_desc_margin_start"
             android:layout_marginTop="@dimen/eye_discover_special_topic_header_tv_desc_margin_top"

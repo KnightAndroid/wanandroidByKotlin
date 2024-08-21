@@ -5,14 +5,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.OnChildAttachStateChangeListener
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.ktx.init
 import com.knight.kotlin.library_base.route.RouteActivity
+import com.knight.kotlin.library_base.util.dp2px
 import com.knight.kotlin.library_video.play.OkPlayer
 import com.knight.kotlin.library_video.play.OkPlayerStd
+import com.knight.kotlin.library_widget.RecyclerItemDecoration
 import com.knight.kotlin.module_eye_discover.R
 import com.knight.kotlin.module_eye_discover.adapter.EyeDiscoverSpecialTopicDetailAdapter
 import com.knight.kotlin.module_eye_discover.databinding.EyeDiscoverSpecialTopicActivityBinding
@@ -88,6 +91,12 @@ class EyeSpecialTopicDetailActivity : BaseActivity<EyeDiscoverSpecialTopicActivi
             layoutManager,
             mEyeDiscoverSpecialTopicDetailAdapter,
             true
+        )
+        mBinding.rvSpecialTopicVideo.addItemDecoration(
+            RecyclerItemDecoration(
+            0,
+            0, 0, 0,  ContextCompat.getColor(this, com.knight.kotlin.library_base.R.color.base_line_color),5.dp2px(),0
+        )
         )
         mBinding.rvSpecialTopicVideo.addOnChildAttachStateChangeListener(object :
             OnChildAttachStateChangeListener {
