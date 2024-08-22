@@ -21,7 +21,7 @@ class ActivityManagerUtils : Application.ActivityLifecycleCallbacks {
          * 双重校验锁
          * @return
          */
-        fun getInstance(): ActivityManagerUtils? {
+        fun getInstance(): ActivityManagerUtils {
             if (instance == null) {
                 synchronized(ActivityManagerUtils::class.java) {
                     if (instance == null) {
@@ -29,7 +29,7 @@ class ActivityManagerUtils : Application.ActivityLifecycleCallbacks {
                     }
                 }
             }
-            return instance
+            return instance!!
         }
     }
 

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/base_round">
+
+        <RelativeLayout
+            android:id="@+id/rl_share_head"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/share_rl_head"
+            android:layout_marginStart="@dimen/share_rl_head_margin_start"
+            android:layout_marginEnd="@dimen/share_rl_head_margin_end"
+            android:layout_marginTop="@dimen/share_rl_head_margin_top"
+            android:background="@android:color/white"
+            >
+
+
+
+
+            <TextView
+                android:id="@+id/tv_share_title"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:text="分享标题"
+                android:textColor="@color/share_tv_title_text_color"/>
+
+            <TextView
+                android:id="@+id/tv_share_desc"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:text="文字描述文字描述"
+                android:textColor="@color/share_tv_desc_text_color"
+                android:layout_below="@id/tv_share_title"/>
+
+
+            <ImageView
+                android:layout_width="@dimen/share_iv_code_width"
+                android:layout_height="@dimen/share_iv_code_height"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:scaleType="centerInside"
+                android:background="@drawable/share_qrcode"/>
+
+        </RelativeLayout>
+
+
+        <ImageView
+            android:id="@+id/iv_screen"
+            android:layout_width="match_parent"
+            android:layout_height="320dp"
+            android:layout_below="@id/rl_share_head"
+            android:scaleType="fitXY"/>
+        <TextView
+            android:id="@+id/tv_save"
+            android:layout_width="80dp"
+            android:layout_height="35dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="@string/share_tv_save"
+            android:textSize="14dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/iv_screen"
+            />
+
+    </RelativeLayout>
+
+ </RelativeLayout>
+
+
+
+

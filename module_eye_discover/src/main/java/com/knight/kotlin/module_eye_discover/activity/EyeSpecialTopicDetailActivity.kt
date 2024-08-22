@@ -92,6 +92,7 @@ class EyeSpecialTopicDetailActivity : BaseActivity<EyeDiscoverSpecialTopicActivi
             mEyeDiscoverSpecialTopicDetailAdapter,
             true
         )
+
         mBinding.rvSpecialTopicVideo.addItemDecoration(
             RecyclerItemDecoration(
             0,

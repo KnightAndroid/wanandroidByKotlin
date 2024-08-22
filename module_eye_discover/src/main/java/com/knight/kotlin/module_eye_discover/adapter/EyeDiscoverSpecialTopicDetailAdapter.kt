@@ -11,10 +11,13 @@ import android.widget.FrameLayout
 import android.widget.LinearLayout
 import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter4.BaseQuickAdapter
 import com.knight.kotlin.library_base.entity.EyeTag
+import com.knight.kotlin.library_base.ktx.setOnClick
 import com.knight.kotlin.library_base.util.dp2px
+import com.knight.kotlin.library_share.ShareDialog
 import com.knight.kotlin.library_util.image.ImageLoader
 import com.knight.kotlin.module_eye_discover.R
 import com.knight.kotlin.module_eye_discover.adapter.EyeDiscoverCategoryDetailAdapter.VH
@@ -32,7 +35,7 @@ import com.knight.kotlin.module_eye_discover.utils.AutoPlayUtils
  * @Date 2024/8/20 15:33
  * @descript:专题详细页面 适配器
  */
-class EyeDiscoverSpecialTopicDetailAdapter(private val mActivity: Activity, val mVideoClick: OnVideoClick) : BaseQuickAdapter<EyeSpecialTopicItemModel,EyeDiscoverSpecialTopicDetailAdapter.VH>() {
+class EyeDiscoverSpecialTopicDetailAdapter(private val mActivity: FragmentActivity, val mVideoClick: OnVideoClick) : BaseQuickAdapter<EyeSpecialTopicItemModel,EyeDiscoverSpecialTopicDetailAdapter.VH>() {
 
     class VH(
         parent: ViewGroup,
@@ -47,6 +50,9 @@ class EyeDiscoverSpecialTopicDetailAdapter(private val mActivity: Activity, val 
         binding?.activity = mActivity
 
         val container = binding!!.surfaceContainer
+        binding.tvShare.setOnClick {
+            ShareDialog().show(mActivity.supportFragmentManager, "dialog_share")
+        }
         dealJzvdStdRv(container, item!!)
     }
 
