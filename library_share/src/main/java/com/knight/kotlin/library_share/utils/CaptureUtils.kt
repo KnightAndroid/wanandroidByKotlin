@@ -43,4 +43,10 @@ object CaptureUtils {
 
         return bitmap
     }
+
+
+
+
+
+
 }

@@ -7,73 +7,146 @@
     android:layout_height="wrap_content"
     >
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:background="@drawable/base_round">
+        android:orientation="vertical"
+        android:background="@drawable/base_round"
+        >
+
+
 
         <RelativeLayout
-            android:id="@+id/rl_share_head"
+            android:id="@+id/rl_qrcode"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/share_rl_head"
-            android:layout_marginStart="@dimen/share_rl_head_margin_start"
-            android:layout_marginEnd="@dimen/share_rl_head_margin_end"
-            android:layout_marginTop="@dimen/share_rl_head_margin_top"
+            android:layout_height="wrap_content"
+            android:paddingEnd="@dimen/share_rl_code_padding_right"
+            android:paddingTop="@dimen/share_rl_code_padding_top"
+            android:layout_marginTop="@dimen/share_rl_code_margin_top"
+            android:paddingBottom="@dimen/share_rl_code_padding_bottom"
+            android:background="@color/share_rl_qrcode_background">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:text="扫描二维码  ->\n打开app查看详细信息"
+                android:layout_toLeftOf="@+id/iv_share_qrcode"
+                android:layout_alignBottom="@+id/iv_share_qrcode"
+                android:textColor="@color/share_tv_qrcode_desc_text_color"
+                android:layout_marginEnd="@dimen/share_tv_code_desc_margin_right"/>
+
+
+            <ImageView
+                android:id="@+id/iv_share_qrcode"
+                android:layout_width="@dimen/share_iv_code_width"
+                android:layout_height="@dimen/share_iv_code_height"
+                android:layout_alignParentEnd="true"
+                android:scaleType="centerInside"
+                android:background="@drawable/share_qrcode"/>
+
+
+        </RelativeLayout>
+
+
+        <ImageView
+            android:id="@+id/iv_photo"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/share_iv_photo_height"
+            android:scaleType="center"
+            android:adjustViewBounds="true"
+            android:layout_marginTop="@dimen/share_iv_photo_margin_top"/>
+
+        <RelativeLayout
+            android:id="@+id/rl_share_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/share_rl_share_padding_start"
+            android:paddingEnd="@dimen/share_rl_share_padding_end"
+            android:paddingBottom="@dimen/share_rl_share_padding_bottom"
+            android:paddingTop="@dimen/share_rl_share_padding_top"
             android:background="@android:color/white"
             >
 
 
 
 
-            <TextView
-                android:id="@+id/tv_share_title"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:text="分享标题"
-                android:textColor="@color/share_tv_title_text_color"/>
+               <TextView
+                   android:id="@+id/tv_share_title"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:textStyle="bold"
+                   android:textSize="@dimen/share_tv_title_text_size"
+                   android:textColor="@color/share_tv_title_text_color"
+                   />
 
-            <TextView
-                android:id="@+id/tv_share_desc"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:text="文字描述文字描述"
-                android:textColor="@color/share_tv_desc_text_color"
-                android:layout_below="@id/tv_share_title"/>
+               <TextView
+                   android:id="@+id/tv_share_desc"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:ellipsize="end"
+                   android:maxLines="3"
+                   android:textColor="@color/share_tv_desc_text_color"
+                   android:layout_marginTop="@dimen/share_tv_desc_margin_top"
+                   android:layout_below="@id/tv_share_title"/>
 
-
-            <ImageView
-                android:layout_width="@dimen/share_iv_code_width"
-                android:layout_height="@dimen/share_iv_code_height"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:scaleType="centerInside"
-                android:background="@drawable/share_qrcode"/>
 
         </RelativeLayout>
 
 
-        <ImageView
-            android:id="@+id/iv_screen"
-            android:layout_width="match_parent"
-            android:layout_height="320dp"
-            android:layout_below="@id/rl_share_head"
-            android:scaleType="fitXY"/>
-        <TextView
-            android:id="@+id/tv_save"
-            android:layout_width="80dp"
-            android:layout_height="35dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:text="@string/share_tv_save"
-            android:textSize="14dp"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@id/iv_screen"
-            />
 
-    </RelativeLayout>
+        <View
+            android:id="@+id/view_line"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:layout_marginTop="@dimen/share_view_line_margin_top"
+            android:background="@drawable/share_line_bg"/>
+
+
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_marginTop="@dimen/share_ll_channer_margin_top"
+           android:layout_marginBottom="@dimen/share_ll_channer_margin_bottom"
+           >
+
+
+           <TextView
+               android:layout_width="0dp"
+               android:layout_height="wrap_content"
+               android:layout_weight="1"
+               android:gravity="center"
+               android:drawableTop="@drawable/share_wechat_icon"
+               android:textSize="@dimen/share_tv_channer_wechat_text_size"
+               android:textColor="@color/share_tv_channel_wechat_text_color"
+               android:text="微信"/>
+
+           <TextView
+               android:layout_width="0dp"
+               android:layout_height="wrap_content"
+               android:layout_weight="1"
+               android:gravity="center"
+               android:drawableTop="@drawable/share_wechat_circle"
+               android:textSize="@dimen/share_tv_channer_wechat_circle_text_size"
+               android:text="朋友圈"
+               android:textColor="@color/share_tv_channel_wechat_circle_text_color"
+               />
+
+           <TextView
+               android:id="@+id/tv_save_local"
+               android:layout_width="0dp"
+               android:layout_height="wrap_content"
+               android:layout_weight="1"
+               android:gravity="center"
+               android:drawableTop="@drawable/share_download_local_icon"
+               android:text="下载本地"
+               android:textSize="@dimen/share_tv_save_local_text_size"
+               android:textColor="@color/share_tv_save_local_text_color"/>
+       </LinearLayout>
+
+    </LinearLayout>
 
  </RelativeLayout>
 

@@ -46,14 +46,16 @@ class EyeDiscoverSpecialTopicDetailAdapter(private val mActivity: FragmentActivi
 
     override fun onBindViewHolder(holder: VH, position: Int, item: EyeSpecialTopicItemModel?) {
         val binding = DataBindingUtil.getBinding<EyeDiscoverSpecialTopicItemBinding>(holder.itemView)
-        binding?.model = item
-        binding?.activity = mActivity
-
-        val container = binding!!.surfaceContainer
-        binding.tvShare.setOnClick {
-            ShareDialog().show(mActivity.supportFragmentManager, "dialog_share")
+        item?.run {
+            binding?.model = this
+            binding?.activity = mActivity
+            val container = binding!!.surfaceContainer
+            binding.tvShare.setOnClick {
+                ShareDialog.newInstance(data.content.data).show(mActivity.supportFragmentManager, "dialog_share")
+            }
+            dealJzvdStdRv(container, this)
         }
-        dealJzvdStdRv(container, item!!)
+
     }
 
     override fun onCreateViewHolder(context: Context, parent: ViewGroup, viewType: Int): VH {

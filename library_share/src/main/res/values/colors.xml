@@ -2,4 +2,9 @@
 <resources>
    <color name="share_tv_title_text_color">#333333</color>
    <color name="share_tv_desc_text_color">#666666</color>
+   <color name="share_tv_qrcode_desc_text_color">#909090</color>
+   <color name="share_tv_channel_wechat_text_color">#bfbfbf</color>
+   <color name="share_tv_channel_wechat_circle_text_color">#bfbfbf</color>
+   <color name="share_tv_save_local_text_color">#bfbfbf</color>
+  <color name="share_rl_qrcode_background">#ffffff</color>
 </resources>

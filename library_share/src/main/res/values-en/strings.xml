@@ -1,3 +1,6 @@
 <resources>
-    <string name="share_tv_save">save</string>
+    <string name="share_tv_save">savePhoto</string>
+    <string name="share_save_photo_success">successful to save photo</string>
+    <string name="share_save_photo_failure">failed to save photo</string>
+
 </resources>
