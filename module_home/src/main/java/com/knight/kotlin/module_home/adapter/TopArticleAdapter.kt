@@ -13,7 +13,7 @@ import com.knight.kotlin.module_home.entity.TopArticleBean
 /**
  * Author:Knight
  * Time:2022/2/17 10:43
- * Description:TopArticleAdapter
+ * Description:TopArticleAdapter 置顶文章/热搜
  */
 class TopArticleAdapter : BaseQuickAdapter<TopArticleBean, TopArticleAdapter.VH>() {
 

@@ -58,7 +58,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/home_top_article_rv"/>
-        
+
+        <include
+            android:id="@+id/home_top_recommend_include"
+            layout="@layout/home_toparticle_foot"/>
+
+
+
         <com.youth.banner.Banner
             android:id="@+id/home_banner"
             android:layout_width="match_parent"

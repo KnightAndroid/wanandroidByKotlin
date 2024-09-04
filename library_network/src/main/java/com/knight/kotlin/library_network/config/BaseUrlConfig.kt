@@ -14,4 +14,6 @@ internal object BaseUrlConfig {
     const val JOKES_URL = "http://tools.cretinzp.com/jokes/"
     //开眼接口 访问链接
     const val OPENEYE_URL = "https://baobab.kaiyanapp.com/api/"
+    //百度接口 访问链接
+    const val BAIDU_URL = "https://top.baidu.com/api/"
 }

@@ -6,6 +6,7 @@ import com.knight.kotlin.library_network.bean.BaseResponse
 import com.knight.kotlin.module_home.entity.BannerBean
 import com.knight.kotlin.module_home.entity.EveryDayPushArticlesBean
 import com.knight.kotlin.module_home.entity.HomeArticleListBean
+import com.knight.kotlin.module_home.entity.HomeBaiduTopRealTimeBean
 import com.knight.kotlin.module_home.entity.TopArticleBean
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
@@ -48,6 +49,13 @@ interface HomeRecommendApiService {
      */
     @GET("article/list/{page}/json?page_size=10")
     suspend fun getHomeArticle(@Path("page") page:Int):BaseResponse<HomeArticleListBean>
+
+    /**
+     * 获取热搜新闻
+     */
+    @Headers("Domain-Name:baidu")
+    @GET("board?platform=pc&tab=realtime")
+    suspend fun getBaiduRealTime() : HomeBaiduTopRealTimeBean
 
     /**
      * 获取公众号数据

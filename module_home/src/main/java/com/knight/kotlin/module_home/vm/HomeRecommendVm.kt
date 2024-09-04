@@ -13,6 +13,7 @@ import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_home.entity.BannerBean
 import com.knight.kotlin.module_home.entity.EveryDayPushArticlesBean
 import com.knight.kotlin.module_home.entity.HomeArticleListBean
+import com.knight.kotlin.module_home.entity.HomeBaiduCardDataBean
 import com.knight.kotlin.module_home.entity.TopArticleBean
 import com.knight.kotlin.module_home.repo.HomeRecommendRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -83,12 +84,21 @@ class HomeRecommendVm @Inject constructor(private val mRepo: HomeRecommendRepo) 
     fun getUnreadMessage():LiveData<Int> {
         return mRepo.getUnreadMessage().asLiveData()
     }
+
+
     /**
      * 获取指置顶文章
      */
     fun getTopArticle() :LiveData<MutableList<TopArticleBean>>{
         return mRepo.getTopArticle().asLiveData()
+    }
 
+    /**
+     * 获取百度热搜
+     *
+     */
+    fun getTopBaiduRealTime() : LiveData<HomeBaiduCardDataBean> {
+        return mRepo.getTopBaiduRealTime().asLiveData()
     }
 
 

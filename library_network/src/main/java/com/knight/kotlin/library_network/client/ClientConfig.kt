@@ -81,6 +81,7 @@ class ClientConfig {
             .setDomain("gitee",BaseUrlConfig.GITEE_RUL)
             .setDomain("jokes",BaseUrlConfig.JOKES_URL)
             .setDomain("eye",BaseUrlConfig.OPENEYE_URL)
+            .setDomain("baidu",BaseUrlConfig.BAIDU_URL)
             .build()
     }
 

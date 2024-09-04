@@ -12,6 +12,7 @@ import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.animation.DecelerateInterpolator
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
@@ -60,6 +61,7 @@ import com.knight.kotlin.library_widget.skeleton.Skeleton
 import com.knight.kotlin.library_widget.skeleton.SkeletonScreen
 import com.knight.kotlin.module_home.R
 import com.knight.kotlin.module_home.activity.HomeArticlesTabActivity
+import com.knight.kotlin.module_home.adapter.BaiduHotSearchAdapter
 import com.knight.kotlin.module_home.adapter.HomeArticleAdapter
 import com.knight.kotlin.module_home.adapter.OfficialAccountAdapter
 import com.knight.kotlin.module_home.adapter.TopArticleAdapter
@@ -68,6 +70,7 @@ import com.knight.kotlin.module_home.dialog.HomePushArticleFragment
 import com.knight.kotlin.module_home.entity.BannerBean
 import com.knight.kotlin.module_home.entity.EveryDayPushArticlesBean
 import com.knight.kotlin.module_home.entity.HomeArticleListBean
+import com.knight.kotlin.module_home.entity.HomeBaiduContent
 import com.knight.kotlin.module_home.entity.TopArticleBean
 import com.knight.kotlin.module_home.utils.HomeAnimUtils
 import com.knight.kotlin.module_home.vm.HomeRecommendVm
@@ -107,6 +110,10 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
     //置顶文章适配器
     private val mTopArticleAdapter: TopArticleAdapter by lazy { TopArticleAdapter() }
 
+
+    //百度热搜适配器
+
+    private val mBaiduHotSearchAdapter : BaiduHotSearchAdapter by lazy {BaiduHotSearchAdapter()}
     //推荐文章适配器
     private val mHomeArticleAdapter: HomeArticleAdapter by lazy { HomeArticleAdapter() }
 
@@ -165,6 +172,9 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
     //FloatingActionButton宽度和高度，宽高一样
     private var width: Int = 0
 
+
+    private var firstItemHeight:Int = 0
+    private var totalHeight:Int = 0
     /**
      * 知识标签
      */
@@ -235,8 +245,12 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
             }
         }
         //获取置顶文章
-        mViewModel.getTopArticle().observerKt {
-            setTopArticle(it)
+//        mViewModel.getTopArticle().observerKt {
+//            setTopArticle(it)
+//        }
+        //获取百度热搜
+        mViewModel.getTopBaiduRealTime().observerKt {
+            setTopBaiduRealTime(it.cards[0].content)
         }
         //获取banner
         mViewModel.getBanner().observerKt {
@@ -299,20 +313,43 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
         home_top_article_rv = recommendHeadView.findViewById(R.id.home_top_article_rv)
         mBanner = recommendHeadView.findViewById(R.id.home_banner)
         home_rv_official_account = recommendHeadView.findViewById(R.id.home_rv_official_account)
-
+        val home_iv_toparticlearrow:ImageView = recommendHeadView.findViewById(R.id.home_iv_toparticlearrow)
         home_rl_message.setOnClickListener {
             startPage(RouteActivity.Message.MessageActivity)
         }
-        home_top_article_rv.init(LinearLayoutManager(requireActivity()), mTopArticleAdapter)
-        topArticleFootView.findViewById<LinearLayout>(R.id.home_ll_seemorearticles)
+        //home_top_article_rv.init(LinearLayoutManager(requireActivity()), mTopArticleAdapter)
+        home_top_article_rv.init(LinearLayoutManager(requireActivity()), mBaiduHotSearchAdapter)
+        recommendHeadView.findViewById<LinearLayout>(R.id.home_ll_seemorearticles)
             .setOnClickListener {
-                //展开收缩逻辑
+                //展开收缩逻辑 mTopArticleAdapter
                 HomeAnimUtils.setArrowAnimate(
-                    mTopArticleAdapter,
-                    topArticleFootView.findViewById(R.id.home_iv_toparticlearrow),
+                    mBaiduHotSearchAdapter,
+
+                    home_iv_toparticlearrow,
                     isShowOnlythree
                 )
+                if (isShowOnlythree) {
+                    //home_top_article_rv.setHasFixedSize(true)
+                   // mTopArticleAdapter.notifyItemRangeRemoved(3,4)
+                    // mTopArticleAdapter.setShowOnlyThree(isShowOnlythree)
+
+                    HomeAnimUtils.height(home_top_article_rv,3 * firstItemHeight.toFloat(),totalHeight.toFloat(),600,null)
+//                    home_top_article_rv.postDelayed({
+//                        home_top_article_rv.setHasFixedSize(false)
+//                        home_top_article_rv.requestLayout()
+//                    }, home_top_article_rv.itemAnimator!!.addDuration)
+
+                } else {
+                   // home_top_article_rv.setHasFixedSize(false)
+                   // mTopArticleAdapter.setShowOnlyThree(isShowOnlythree)
+
+                   // mTopArticleAdapter.notifyDataSetChanged()
+                 HomeAnimUtils.height(home_top_article_rv,totalHeight.toFloat(),3 * firstItemHeight.toFloat(),600,null)
+
+                }
                 isShowOnlythree = !isShowOnlythree
+
+
             }
 
     }
@@ -393,12 +430,40 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
             mTopArticleAdapter.setShowOnlyThree(false)
         }
 
-        if (home_top_article_rv.footerCount == 0 && data.size > 3) {
-            home_top_article_rv.addFooterView(topArticleFootView)
-        }
+//        if (home_top_article_rv.footerCount == 0 && data.size > 3) {
+//            home_top_article_rv.addFooterView(topArticleFootView)
+//        }
 
         if (mBinding.homeRecommendArticleBody.headerCount == 0) {
             mBinding.homeRecommendArticleBody.addHeaderView(recommendHeadView)
+        }
+    }
+
+
+    /**
+     * 获取置顶文章数据
+     */
+    private fun setTopBaiduRealTime(data: List<HomeBaiduContent>) {
+        mBaiduHotSearchAdapter.submitList(data.take(5))
+        if (data.size > 3) {
+            mBaiduHotSearchAdapter.setShowOnlyThree(true)
+        } else {
+            mBaiduHotSearchAdapter.setShowOnlyThree(false)
+        }
+
+//        if (home_top_article_rv.footerCount == 0 && data.size > 3) {
+//            home_top_article_rv.addFooterView(topArticleFootView)
+//        }
+
+        if (mBinding.homeRecommendArticleBody.headerCount == 0) {
+            mBinding.homeRecommendArticleBody.addHeaderView(recommendHeadView)
+        }
+
+
+        home_top_article_rv.post {
+            val viewFirst = home_top_article_rv.layoutManager!!.findViewByPosition(0)
+            firstItemHeight = viewFirst!!.height
+            totalHeight = home_top_article_rv.height
         }
     }
 
@@ -907,6 +972,7 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
             }
         }
     }
+
 
 
 }

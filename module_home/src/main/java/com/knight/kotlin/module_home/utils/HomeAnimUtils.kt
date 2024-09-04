@@ -2,8 +2,10 @@ package com.knight.kotlin.module_home.utils
 
 import android.animation.Animator
 import android.animation.ObjectAnimator
+import android.animation.ValueAnimator
+import android.view.View
 import android.widget.ImageView
-import com.knight.kotlin.module_home.adapter.TopArticleAdapter
+import com.knight.kotlin.module_home.adapter.BaiduHotSearchAdapter
 
 /**
  * Author:Knight
@@ -12,7 +14,7 @@ import com.knight.kotlin.module_home.adapter.TopArticleAdapter
  */
 object HomeAnimUtils {
     fun setArrowAnimate(
-        mTopArticleAdapter: TopArticleAdapter,
+        mTopArticleAdapter: BaiduHotSearchAdapter,
         view: ImageView?,
         isShowOnlythree: Boolean
     ) {
@@ -26,13 +28,36 @@ object HomeAnimUtils {
             override fun onAnimationStart(animation: Animator) {}
             override fun onAnimationEnd(animation: Animator) {
                 //结束之后
-                mTopArticleAdapter.setShowOnlyThree(isShowOnlythree)
+                //mTopArticleAdapter.setShowOnlyThree(isShowOnlythree)
             }
 
             override fun onAnimationCancel(animation: Animator) {}
             override fun onAnimationRepeat(animation: Animator) {}
         })
-        animator.duration = 500
+        animator.duration = 250
         animator.start()
     }
+
+
+    fun height(view: View, from: Float, to: Float, duration: Int, animatorListener: Animator.AnimatorListener?): ValueAnimator {
+        val animator = ValueAnimator.ofFloat(from, to)
+        animator.duration = duration.toLong()
+        if (animatorListener != null) {
+            animator.addListener(animatorListener)
+        }
+        animator.addUpdateListener { animation ->
+            if (view.layoutParams != null) {
+                val lp = view.layoutParams
+                val aFloat = animation.animatedValue as Float
+                lp.height = aFloat.toInt()
+                view.layoutParams = lp
+            }
+        }
+        animator.start()
+        return animator
+    }
+
+
+
+
 }
