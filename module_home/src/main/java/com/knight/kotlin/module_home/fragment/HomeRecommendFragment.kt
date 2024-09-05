@@ -112,7 +112,6 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
 
 
     //百度热搜适配器
-
     private val mBaiduHotSearchAdapter : BaiduHotSearchAdapter by lazy {BaiduHotSearchAdapter()}
     //推荐文章适配器
     private val mHomeArticleAdapter: HomeArticleAdapter by lazy { HomeArticleAdapter() }
@@ -175,6 +174,9 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
 
     private var firstItemHeight:Int = 0
     private var totalHeight:Int = 0
+    val home_tv_seemorearticles : TextView by lazy {
+        recommendHeadView.findViewById(R.id.home_tv_seemorearticles)
+    }
     /**
      * 知识标签
      */
@@ -235,6 +237,8 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
 
     override fun initRequestData() {
         currentPage = 0
+        home_tv_seemorearticles.text = getString(R.string.home_toparticle_expand_foot)
+        isShowOnlythree = false
         mViewModel.getEveryDayPushArticle().observerKt {
              setEveryDayPushArticle(it)
         }
@@ -314,6 +318,7 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
         mBanner = recommendHeadView.findViewById(R.id.home_banner)
         home_rv_official_account = recommendHeadView.findViewById(R.id.home_rv_official_account)
         val home_iv_toparticlearrow:ImageView = recommendHeadView.findViewById(R.id.home_iv_toparticlearrow)
+//        val home_tv_seemorearticles:TextView = recommendHeadView.findViewById(R.id.home_tv_seemorearticles)
         home_rl_message.setOnClickListener {
             startPage(RouteActivity.Message.MessageActivity)
         }
@@ -333,7 +338,9 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
                    // mTopArticleAdapter.notifyItemRangeRemoved(3,4)
                     // mTopArticleAdapter.setShowOnlyThree(isShowOnlythree)
 
-                    HomeAnimUtils.height(home_top_article_rv,3 * firstItemHeight.toFloat(),totalHeight.toFloat(),600,null)
+                    home_tv_seemorearticles.text = getString(R.string.home_toparticle_expand_foot)
+                    HomeAnimUtils.height(home_top_article_rv,totalHeight.toFloat(),3 * firstItemHeight.toFloat(),300,null)
+
 //                    home_top_article_rv.postDelayed({
 //                        home_top_article_rv.setHasFixedSize(false)
 //                        home_top_article_rv.requestLayout()
@@ -344,8 +351,8 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
                    // mTopArticleAdapter.setShowOnlyThree(isShowOnlythree)
 
                    // mTopArticleAdapter.notifyDataSetChanged()
-                 HomeAnimUtils.height(home_top_article_rv,totalHeight.toFloat(),3 * firstItemHeight.toFloat(),600,null)
-
+                    home_tv_seemorearticles.text = getString(R.string.home_toparticle_collapse_foot)
+                    HomeAnimUtils.height(home_top_article_rv,3 * firstItemHeight.toFloat(),totalHeight.toFloat(),300,null)
                 }
                 isShowOnlythree = !isShowOnlythree
 
@@ -463,7 +470,11 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
         home_top_article_rv.post {
             val viewFirst = home_top_article_rv.layoutManager!!.findViewByPosition(0)
             firstItemHeight = viewFirst!!.height
-            totalHeight = home_top_article_rv.height
+            totalHeight = if (totalHeight >= home_top_article_rv.height)  totalHeight else home_top_article_rv.height
+            val lp = home_top_article_rv.layoutParams
+            //val aFloat = animation.animatedValue as Float
+            lp.height = 3 * firstItemHeight
+            home_top_article_rv.layoutParams = lp
         }
     }
 
