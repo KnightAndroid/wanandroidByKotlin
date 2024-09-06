@@ -15,6 +15,7 @@ import com.knight.kotlin.module_home.entity.TopArticleBean
  * Time:2022/2/17 10:43
  * Description:TopArticleAdapter 置顶文章/热搜
  */
+@Deprecated("先废弃，暂时不用")
 class TopArticleAdapter : BaseQuickAdapter<TopArticleBean, TopArticleAdapter.VH>() {
 
 

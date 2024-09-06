@@ -4,13 +4,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/home_recommend_home_bg"
     >
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginBottom="10dp">
 
 
         <RelativeLayout
@@ -52,12 +54,55 @@
 
             
         </RelativeLayout>
-        
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@color/home_rl_real_time_title_background"
+            android:layout_marginTop="@dimen/home_rl_realtime_title_margin_top">
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/home_tv_realtime_title"
+                android:textSize="@dimen/home_tv_realtime_title_text_size"
+                android:textStyle="bold"
+                android:textColor="@color/home_real_time_title_text_color"
+                android:layout_marginLeft="@dimen/home_tv_realtime_title_margin_left"
+                android:layout_centerVertical="true"
+                />
+
+
+
+
+            <TextView
+                android:id="@+id/tv_real_time_more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:drawableEnd="@drawable/base_iv_light_right_arrow"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="@dimen/home_tv_real_time_more_text_size"
+                android:text="查看更多" />
+
+
+
+        </RelativeLayout>
+
+
+
+
         <com.yanzhenjie.recyclerview.SwipeRecyclerView
             android:id="@+id/home_top_article_rv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/home_top_article_rv"/>
+            android:background="@color/home_top_article_rv"
+           />
 
         <include
             android:id="@+id/home_top_recommend_include"
@@ -69,7 +114,7 @@
             android:id="@+id/home_banner"
             android:layout_width="match_parent"
             android:layout_height="@dimen/home_banner_height"
-            android:layout_marginTop="@dimen/home_banner_margin_top"/>
+            android:layout_marginTop="10dp"/>
 
 
         <com.yanzhenjie.recyclerview.SwipeRecyclerView
@@ -78,10 +123,10 @@
             android:layout_height="wrap_content"
             android:background="@color/home_rv_official_account"/>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/home_rv_bottom_line_height"
-            android:background="@color/home_rv_official_bottom_view"/>
+<!--        <View-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="@dimen/home_rv_bottom_line_height"-->
+<!--            android:background="@color/home_rv_official_bottom_view"/>-->
 
     </LinearLayout>
 

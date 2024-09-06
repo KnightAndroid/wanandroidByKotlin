@@ -30,36 +30,6 @@ class BaiduHotSearchAdapter : BaseQuickAdapter<HomeBaiduContent, BaiduHotSearchA
     ) : RecyclerView.ViewHolder(binding.root)
 
 
-    private var mIsShowOnlyCount = false
-    private var mCount = 3 //设置最多展示几条数据
-
-    /**
-     * 设置是否仅显示的条数         * 默认全部显示
-     */
-    fun setShowOnlyThree(isShowOnlyThree: Boolean) {
-        setShowOnlyCount(isShowOnlyThree, 3)
-    }
-
-    /**
-     * 设置显示的条数
-     */
-    fun setShowOnlyCount(isShowOnlyThree: Boolean, count: Int) {
-        mIsShowOnlyCount = isShowOnlyThree
-        mCount = count
-//        if (mIsShowOnlyCount) {
-//            notifyItemRangeInserted(count, itemCount - count)
-//        } else {
-//            notifyItemRangeInserted(1,   count - itemCount)
-//        }
-
-        notifyDataSetChanged()
-    }
-
-//    override fun getItemCount(items: List<HomeBaiduContent>): Int {
-//        return if (mIsShowOnlyCount) if (super.getItemCount(items) > mCount) mCount else super.getItemCount(items) else super.getItemCount(items)
-//    }
-
-
     override fun onBindViewHolder(holder: VH, position: Int, item: HomeBaiduContent?) {
         val binding = DataBindingUtil.getBinding<HomeBaiduRealtimeItemBinding>(holder.itemView)
         item?.run {

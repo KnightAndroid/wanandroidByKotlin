@@ -51,7 +51,6 @@ import com.knight.kotlin.library_permiss.utils.PermissionUtils
 import com.knight.kotlin.library_scan.activity.ScanCodeActivity
 import com.knight.kotlin.library_scan.annoation.ScanStyle
 import com.knight.kotlin.library_scan.decode.ScanCodeConfig
-import com.knight.kotlin.library_util.BlurBuilderUtils
 import com.knight.kotlin.library_util.DateUtils
 import com.knight.kotlin.library_util.image.ImageLoader
 import com.knight.kotlin.library_util.startPage
@@ -60,18 +59,15 @@ import com.knight.kotlin.library_widget.ktx.init
 import com.knight.kotlin.library_widget.skeleton.Skeleton
 import com.knight.kotlin.library_widget.skeleton.SkeletonScreen
 import com.knight.kotlin.module_home.R
-import com.knight.kotlin.module_home.activity.HomeArticlesTabActivity
 import com.knight.kotlin.module_home.adapter.BaiduHotSearchAdapter
 import com.knight.kotlin.module_home.adapter.HomeArticleAdapter
 import com.knight.kotlin.module_home.adapter.OfficialAccountAdapter
-import com.knight.kotlin.module_home.adapter.TopArticleAdapter
 import com.knight.kotlin.module_home.databinding.HomeRecommendFragmentBinding
 import com.knight.kotlin.module_home.dialog.HomePushArticleFragment
 import com.knight.kotlin.module_home.entity.BannerBean
 import com.knight.kotlin.module_home.entity.EveryDayPushArticlesBean
 import com.knight.kotlin.module_home.entity.HomeArticleListBean
 import com.knight.kotlin.module_home.entity.HomeBaiduContent
-import com.knight.kotlin.module_home.entity.TopArticleBean
 import com.knight.kotlin.module_home.utils.HomeAnimUtils
 import com.knight.kotlin.module_home.vm.HomeRecommendVm
 import com.knight.library_biometric.control.BiometricControl
@@ -104,12 +100,6 @@ import javax.crypto.IllegalBlockSizeException
 @Route(path = RouteFragment.Home.RecommendFragment)
 class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRecommendVm>(),
     OnRefreshListener, OnLoadMoreListener {
-
-
-
-    //置顶文章适配器
-    private val mTopArticleAdapter: TopArticleAdapter by lazy { TopArticleAdapter() }
-
 
     //百度热搜适配器
     private val mBaiduHotSearchAdapter : BaiduHotSearchAdapter by lazy {BaiduHotSearchAdapter()}
@@ -154,8 +144,8 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
 
 
 
-    //置顶文章是否展开
-    private var isShowOnlythree = false
+    //置顶文章是否只显示三条
+    private var isShowOnlythree = true
 
     //头部view中的recycleview
     private lateinit var home_top_article_rv: SwipeRecyclerView
@@ -177,6 +167,12 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
     val home_tv_seemorearticles : TextView by lazy {
         recommendHeadView.findViewById(R.id.home_tv_seemorearticles)
     }
+
+    /**
+     * 展开后的数据
+     *
+     */
+    private var expandRealTimeList = mutableListOf<HomeBaiduContent>()
     /**
      * 知识标签
      */
@@ -195,7 +191,6 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
             .angle(0)
             .show()
         bindHeadView()
-        initTopAdapter()
         initOfficialListener()
         initArticleListener()
         setOnClickListener(homeIncludeToolbar!!.homeScanIcon,homeIncludeToolbar.homeTvLoginname,
@@ -238,7 +233,7 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
     override fun initRequestData() {
         currentPage = 0
         home_tv_seemorearticles.text = getString(R.string.home_toparticle_expand_foot)
-        isShowOnlythree = false
+        isShowOnlythree = true
         mViewModel.getEveryDayPushArticle().observerKt {
              setEveryDayPushArticle(it)
         }
@@ -275,37 +270,37 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
      * 初始化置顶适配器
      * 点击事件
      */
-    private fun initTopAdapter() {
-        mTopArticleAdapter.run {
-            setOnItemClickListener { adapter, view, position ->
-                ArouteUtils.startWebArticle(
-                    items[position].link,
-                    items[position].title,
-                    items[position].id,
-                    items[position].collect,
-                    items[position].envelopePic,
-                    items[position].desc,
-                    items[position].chapterName,
-                    items[position].author,
-                    items[position].shareUser
-                )
-
-            }
-
-            setOnItemLongClickListener { adapter, view, position ->
-                BlurBuilderUtils.snapShotWithoutStatusBar(requireActivity())
-                startActivity(
-                    Intent(activity, HomeArticlesTabActivity::class.java)
-                        .putParcelableArrayListExtra("toparticles", ArrayList(items))
-                )
-                activity?.overridePendingTransition(
-                    com.knight.kotlin.library_base.R.anim.base_scalealpha_in,
-                    com.knight.kotlin.library_base.R.anim.base_scalealpha_slient
-                )
-                false
-            }
-        }
-    }
+//    private fun initTopAdapter() {
+//        mTopArticleAdapter.run {
+//            setOnItemClickListener { adapter, view, position ->
+//                ArouteUtils.startWebArticle(
+//                    items[position].link,
+//                    items[position].title,
+//                    items[position].id,
+//                    items[position].collect,
+//                    items[position].envelopePic,
+//                    items[position].desc,
+//                    items[position].chapterName,
+//                    items[position].author,
+//                    items[position].shareUser
+//                )
+//
+//            }
+//
+//            setOnItemLongClickListener { adapter, view, position ->
+//                BlurBuilderUtils.snapShotWithoutStatusBar(requireActivity())
+//                startActivity(
+//                    Intent(activity, HomeArticlesTabActivity::class.java)
+//                        .putParcelableArrayListExtra("toparticles", ArrayList(items))
+//                )
+//                activity?.overridePendingTransition(
+//                    com.knight.kotlin.library_base.R.anim.base_scalealpha_in,
+//                    com.knight.kotlin.library_base.R.anim.base_scalealpha_slient
+//                )
+//                false
+//            }
+//        }
+//    }
 
     /**
      *
@@ -318,7 +313,6 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
         mBanner = recommendHeadView.findViewById(R.id.home_banner)
         home_rv_official_account = recommendHeadView.findViewById(R.id.home_rv_official_account)
         val home_iv_toparticlearrow:ImageView = recommendHeadView.findViewById(R.id.home_iv_toparticlearrow)
-//        val home_tv_seemorearticles:TextView = recommendHeadView.findViewById(R.id.home_tv_seemorearticles)
         home_rl_message.setOnClickListener {
             startPage(RouteActivity.Message.MessageActivity)
         }
@@ -329,30 +323,19 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
                 //展开收缩逻辑 mTopArticleAdapter
                 HomeAnimUtils.setArrowAnimate(
                     mBaiduHotSearchAdapter,
-
                     home_iv_toparticlearrow,
                     isShowOnlythree
                 )
                 if (isShowOnlythree) {
-                    //home_top_article_rv.setHasFixedSize(true)
-                   // mTopArticleAdapter.notifyItemRangeRemoved(3,4)
-                    // mTopArticleAdapter.setShowOnlyThree(isShowOnlythree)
-
+                    home_tv_seemorearticles.text = getString(R.string.home_toparticle_collapse_foot)
+                    if (mBaiduHotSearchAdapter.items.size < 5) {
+                        mBaiduHotSearchAdapter.submitList(expandRealTimeList)
+                    }
+                    HomeAnimUtils.height(home_top_article_rv,3 * firstItemHeight.toFloat(),totalHeight.toFloat(),300,null)
+                } else {
                     home_tv_seemorearticles.text = getString(R.string.home_toparticle_expand_foot)
                     HomeAnimUtils.height(home_top_article_rv,totalHeight.toFloat(),3 * firstItemHeight.toFloat(),300,null)
 
-//                    home_top_article_rv.postDelayed({
-//                        home_top_article_rv.setHasFixedSize(false)
-//                        home_top_article_rv.requestLayout()
-//                    }, home_top_article_rv.itemAnimator!!.addDuration)
-
-                } else {
-                   // home_top_article_rv.setHasFixedSize(false)
-                   // mTopArticleAdapter.setShowOnlyThree(isShowOnlythree)
-
-                   // mTopArticleAdapter.notifyDataSetChanged()
-                    home_tv_seemorearticles.text = getString(R.string.home_toparticle_collapse_foot)
-                    HomeAnimUtils.height(home_top_article_rv,3 * firstItemHeight.toFloat(),totalHeight.toFloat(),300,null)
                 }
                 isShowOnlythree = !isShowOnlythree
 
@@ -426,40 +409,33 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
     }
 
 
-    /**
-     * 获取置顶文章数据
-     */
-    private fun setTopArticle(data: MutableList<TopArticleBean>) {
-        mTopArticleAdapter.submitList(data)
-        if (data.size > 3) {
-            mTopArticleAdapter.setShowOnlyThree(true)
-        } else {
-            mTopArticleAdapter.setShowOnlyThree(false)
-        }
-
-//        if (home_top_article_rv.footerCount == 0 && data.size > 3) {
-//            home_top_article_rv.addFooterView(topArticleFootView)
+//    /**
+//     * 获取置顶文章数据
+//     */
+//    private fun setTopArticle(data: MutableList<TopArticleBean>) {
+//        mTopArticleAdapter.submitList(data)
+//        if (data.size > 3) {
+//            mTopArticleAdapter.setShowOnlyThree(true)
+//        } else {
+//            mTopArticleAdapter.setShowOnlyThree(false)
 //        }
-
-        if (mBinding.homeRecommendArticleBody.headerCount == 0) {
-            mBinding.homeRecommendArticleBody.addHeaderView(recommendHeadView)
-        }
-    }
+//
+//        if (mBinding.homeRecommendArticleBody.headerCount == 0) {
+//            mBinding.homeRecommendArticleBody.addHeaderView(recommendHeadView)
+//        }
+//    }
 
 
     /**
      * 获取置顶文章数据
      */
-    private fun setTopBaiduRealTime(data: List<HomeBaiduContent>) {
-        mBaiduHotSearchAdapter.submitList(data.take(5))
-        if (data.size > 3) {
-            mBaiduHotSearchAdapter.setShowOnlyThree(true)
-        } else {
-            mBaiduHotSearchAdapter.setShowOnlyThree(false)
-        }
-
-//        if (home_top_article_rv.footerCount == 0 && data.size > 3) {
-//            home_top_article_rv.addFooterView(topArticleFootView)
+    private fun setTopBaiduRealTime(data: MutableList<HomeBaiduContent>) {
+        expandRealTimeList = data.subList(0,5)
+        mBaiduHotSearchAdapter.submitList(data.take(3))
+//        if (data.size > 3) {
+//            mBaiduHotSearchAdapter.setShowOnlyThree(true)
+//        } else {
+//            mBaiduHotSearchAdapter.setShowOnlyThree(false)
 //        }
 
         if (mBinding.homeRecommendArticleBody.headerCount == 0) {
@@ -470,11 +446,10 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
         home_top_article_rv.post {
             val viewFirst = home_top_article_rv.layoutManager!!.findViewByPosition(0)
             firstItemHeight = viewFirst!!.height
-            totalHeight = if (totalHeight >= home_top_article_rv.height)  totalHeight else home_top_article_rv.height
-            val lp = home_top_article_rv.layoutParams
-            //val aFloat = animation.animatedValue as Float
-            lp.height = 3 * firstItemHeight
-            home_top_article_rv.layoutParams = lp
+            totalHeight = if (totalHeight >= 5 * firstItemHeight)  totalHeight else 5 * firstItemHeight
+//            val lp = home_top_article_rv.layoutParams
+//            lp.height = 3 * firstItemHeight
+//            home_top_article_rv.layoutParams = lp
         }
     }
 

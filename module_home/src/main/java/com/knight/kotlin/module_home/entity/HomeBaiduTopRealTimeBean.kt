@@ -32,7 +32,7 @@ data class HomeBaiduMessage(
 ) : Parcelable
 @Parcelize
 data class HomeBaiduCardDataBean(
-    val cards: List<HomeBaiduCardBean>,
+    val cards: MutableList<HomeBaiduCardBean>,
     val curBoardName: String,
     val logid: String,
     val platform: String,
@@ -42,7 +42,7 @@ data class HomeBaiduCardDataBean(
 @Parcelize
 data class HomeBaiduCardBean(
     val component: String,
-    val content: List<HomeBaiduContent>,
+    val content: MutableList<HomeBaiduContent>,
     val more: Int,
     val moreAppUrl: String,
     val moreUrl: String,

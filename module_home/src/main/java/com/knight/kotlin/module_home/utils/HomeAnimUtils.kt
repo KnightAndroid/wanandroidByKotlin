@@ -20,9 +20,9 @@ object HomeAnimUtils {
     ) {
         val animator: ObjectAnimator
         animator = if (isShowOnlythree) {
-            ObjectAnimator.ofFloat(view, "rotation", 180f, 0f)
-        } else {
             ObjectAnimator.ofFloat(view, "rotation", 0f, 180f)
+        } else {
+            ObjectAnimator.ofFloat(view, "rotation", 180f, 0f)
         }
         animator.addListener(object : Animator.AnimatorListener {
             override fun onAnimationStart(animation: Animator) {}

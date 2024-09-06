@@ -6,6 +6,7 @@
     <string name="home_top_sticky">Topping</string>
     <string name="home_toparticle_expand_foot">See more</string>
     <string name="home_toparticle_collapse_foot">collapse</string>
+    <string name="home_tv_realtime_title">RealTime</string>
     <string name="home_biometric_cancel">Cancel</string>
     <string name="home_cancel">Cancel</string>
     <string name="home_hotsearch">Popular search</string>

@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/home_top_article_rv">
+    android:background="@color/home_tv_commend_background">
 
 
     <com.knight.kotlin.library_widget.shadeview.FpShadowLayout

@@ -31,13 +31,16 @@
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginLeft="@dimen/home_iv_top_baidu_rank_margin_left"/>
 
-        <com.knight.kotlin.library_widget.AlignTextView
+        <TextView
             android:id="@+id/home_tv_top_article_title"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/home_top_baidu_title_margin_left"
             android:layout_marginRight="@dimen/home_top_article_title_margin_right"
-            tools:text="大小厂都问源码，到底有多难大小厂都问源码"
+            tools:text="大小厂都问源码，到底有多难小厂都问源码小厂都问源码小厂都问源码"
+            android:maxEms="14"
+            android:lines="1"
+            android:ellipsize="end"
             android:text="@{viewModel.word}"
             android:textColor="@color/home_top_article_title"
             android:textSize="@dimen/home_top_article_title_text_size"
@@ -45,6 +48,16 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
 
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            app:layout_constraintLeft_toRightOf="@id/home_tv_top_article_title"
+            android:layout_marginLeft="2dp"
+            app:layout_constraintBottom_toBottomOf="@id/home_tv_top_article_title"
+            android:text="@{viewModel.hotScore}"
+            android:textColor="@color/home_tv_hot_value_text_color"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
