@@ -195,6 +195,14 @@ object RouteActivity {
         const val EyeSpecialTopicDetailActivity = "$EyeDiscover/EyeSpecialTopicDetailActivity"
     }
 
+    /**
+     * 热搜模块
+     */
+    object RealTime {
+        private const val RealTime = "/module_realtime"
+        const val RealTimeMainActivity = "$RealTime/RealTimeMainActivity"
+    }
+
 
 
 }

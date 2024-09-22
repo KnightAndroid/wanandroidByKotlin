@@ -316,6 +316,10 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
         home_rl_message.setOnClickListener {
             startPage(RouteActivity.Message.MessageActivity)
         }
+
+        recommendHeadView.findViewById<TextView>(R.id.tv_real_time_more).setOnClick {
+            startPage(RouteActivity.RealTime.RealTimeMainActivity)
+        }
         //home_top_article_rv.init(LinearLayoutManager(requireActivity()), mTopArticleAdapter)
         home_top_article_rv.init(LinearLayoutManager(requireActivity()), mBaiduHotSearchAdapter)
         recommendHeadView.findViewById<LinearLayout>(R.id.home_ll_seemorearticles)

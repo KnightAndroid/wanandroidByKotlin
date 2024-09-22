@@ -166,6 +166,7 @@ dependencies {
     implementation project(path:":module_eye_daily")
     implementation project(path:":module_eye_video_detail")
     implementation project(path:":module_eye_discover")
+    implementation project(path:":module_realtime")
     implementation Dependencies.JetPack.HILT_CORE
     kapt Dependencies.JetPack.HILT_APT
     kapt Dependencies.JetPack.HILT_ANDROIDX

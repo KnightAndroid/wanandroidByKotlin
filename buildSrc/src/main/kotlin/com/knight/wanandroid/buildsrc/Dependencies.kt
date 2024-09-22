@@ -39,7 +39,7 @@ object Dependencies {
        //Material样式
        const val MATERIAL_VERSION = "1.5.0"
        //智能排版
-       const val FLEX_LAYOUT_VERSION = "2.0.1"
+       const val FLEX_LAYOUT_VERSION = "3.0.0"
 
 
        //kotlin相关-----------------------------------------------
@@ -74,7 +74,7 @@ object Dependencies {
        const val MMKV = "1.2.11"                           // 腾讯 MMKV 替代SP
        const val AUTO_SERVICE = "1.0"                       // 自动生成SPI暴露服务文件
        const val EVENT_BUS = "3.3.1"                        // 事件总线
-       const val AUTO_SIZE = "1.2.1"                        // 屏幕适配
+       const val AUTO_SIZE = "v1.2.1"                        // 屏幕适配
        const val BOTTOM_NAVIGATION = "2.1.0"                // 底部导航栏
        const val MAGIC_INDICATOR = "1.7.0"                  // 指示器
        const val AGENT = "v5.0.0-alpha.1-androidx"         // Android WebView
@@ -82,7 +82,7 @@ object Dependencies {
        const val LOAD_SIR = "1.3.8"                         // 全局视图加载
        const val COOKIE = "v1.0.0"                         // Cookie管理
        const val GLIDE = "4.11.0"                          // Glide图像版本
-       const val SMART_REFRESH = "2.0.3"                    // 智能刷新库
+       const val SMART_REFRESH = "2.1.0"                    // 智能刷新库
        const val BASE_ADAPTER = "4.1.4"                     // Base适配器
        const val RECYCLEVIEW_VERSION = "1.3.2"              // recycleview
        const val BANNER_VERSION = "2.2.2"                   // Banner
@@ -136,7 +136,7 @@ object Dependencies {
         const val JUNIT = "junit:junit:${Version.JUNIT_VERSION}"
         const val MATERIAL = "com.google.android.material:material:${Version.MATERIAL_VERSION}"
         //flexLayout
-        const val FLEXLAYOUT = "com.google.android:flexbox:${Version.FLEX_LAYOUT_VERSION}"
+        const val FLEXLAYOUT = "com.google.android.flexbox:flexbox:${Version.FLEX_LAYOUT_VERSION}"
         //exoPlayer
         const val EXOPLAYER = "com.google.android.exoplayer:exoplayer:${Version.EXOPLAYER}"
         const val EXOPLAYER_CORE = "com.google.android.exoplayer:exoplayer-core:${Version.EXOPLAYER}"
@@ -215,7 +215,7 @@ object Dependencies {
         const val EVENTBUS = "org.greenrobot:eventbus:${Version.EVENT_BUS}"
         const val EVENTBUS_APT = "org.greenrobot:eventbus-annotation-processor:${Version.EVENT_BUS}"
         //屏幕适配 https://github.com/JessYanCoding/AndroidAutoSize
-        const val AUTO_SIZE = "me.jessyan:autosize:${Version.AUTO_SIZE}"
+        const val AUTO_SIZE = "com.github.JessYanCoding:AndroidAutoSize:${Version.AUTO_SIZE}"
         //底部导航栏 https://github.com/CListery/BottomNavigationEx
         const val BOTTOM_NAVIGATE = "io.github.clistery:bottomnavigationex-ex:${Version.BOTTOM_NAVIGATION}"
         const val BOTTOM_NAVIGATE_X = "io.github.clistery:bottomnavigationex-15x:${Version.BOTTOM_NAVIGATION}"
@@ -233,13 +233,13 @@ object Dependencies {
         //图像加载库 https://github.com/bumptech/glide
         const val GLIDE = "com.github.bumptech.glide:glide:${Version.GLIDE}"
         //智能刷新库 核心依赖 https://github.com/scwang90/SmartRefreshLayout
-        const val SMART_KERNEL = "com.scwang.smart:refresh-layout-kernel:${Version.SMART_REFRESH}"
+        const val SMART_KERNEL = "io.github.scwang90:refresh-layout-kernel:${Version.SMART_REFRESH}"
         //智能刷新库 经典刷新头
-        const val SMART_HEADER = "com.scwang.smart:refresh-header-classics:${Version.SMART_REFRESH}"
+        const val SMART_HEADER = "io.github.scwang90:refresh-header-classics:${Version.SMART_REFRESH}"
         //智能刷新库 经典加载
-        const val SMART_FOOTER = "com.scwang.smart:refresh-footer-classics:${Version.SMART_REFRESH}"
+        const val SMART_FOOTER = "io.github.scwang90:refresh-footer-classics:${Version.SMART_REFRESH}"
         //智能刷新库 二级刷新头
-        const val SMART_HEADER_TWO_LEVEL = "com.scwang.smart:refresh-header-two-level:${Version.SMART_REFRESH}"
+        const val SMART_HEADER_TWO_LEVEL = "io.github.scwang90:refresh-header-two-level:${Version.SMART_REFRESH}"
         //BaseAdapter https://github.com/CymChad/BaseRecyclerViewAdapterHelper
         const val BASE_ADAPTER_HELPER = "io.github.cymchad:BaseRecyclerViewAdapterHelper4:${Version.BASE_ADAPTER}"
         //SwipeRecycleview https://github.com/yanzhenjie/SwipeRecyclerView

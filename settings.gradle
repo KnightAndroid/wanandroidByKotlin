@@ -37,3 +37,4 @@ include ':module_eye_discover'
 
 //include ':module_share'
 include ':library_share'
+include ':module_realtime'

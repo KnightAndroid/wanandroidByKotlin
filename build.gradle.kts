@@ -5,10 +5,12 @@ plugins {
 buildscript {
     repositories {
         google()
+        maven (url = "https://maven.aliyun.com/repository/public/" ) //为了解决loadSir版本下载不了问题
         jcenter()
         mavenCentral()
         maven(url="https://jitpack.io")
         maven(url = "https://dl.google.com/dl/android/maven2/")
+
         gradlePluginPortal()
     }
     dependencies {
@@ -23,8 +25,10 @@ buildscript {
 allprojects {
     repositories {
         google()
+        maven (url = "https://maven.aliyun.com/repository/public/" ) //为了解决loadSir版本下载不了问题
         jcenter()
         maven(url = "https://jitpack.io")
+
         mavenCentral()
         gradlePluginPortal()
     }
