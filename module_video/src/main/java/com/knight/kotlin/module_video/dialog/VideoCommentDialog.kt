@@ -90,9 +90,9 @@ class VideoCommentDialog(val videoData: VideoPlayEntity, val videoView: VideoPla
     }
 
     private fun loadData() {
-        videoVm.getVideoCommentList(videoData.jokeId,1).observe(this) {
-            binding.tvTitle.setText(it.comments.size.toString().plus("条评论"))
-            mVideoCommentAdapter.submitList(it.comments)
+        videoVm.getVideoCommentList(videoData.playerId).observe(this) {
+            binding.tvTitle.setText(it.total.toString().plus("条评论"))
+            mVideoCommentAdapter.submitList(it.itemList.drop(1))
         }
     }
 

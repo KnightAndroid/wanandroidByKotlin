@@ -3,6 +3,8 @@ import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import com.flyjingfish.android_aop_core.annotations.SingleClick
 import com.knight.kotlin.library_base.activity.BaseActivity
+import com.knight.kotlin.library_base.config.EyeTypeConstants
+import com.knight.kotlin.library_base.entity.EyeDailyItemEntity
 import com.knight.kotlin.library_base.ktx.setOnClick
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.util.CacheUtils
@@ -14,7 +16,6 @@ import com.knight.kotlin.library_widget.ktx.init
 import com.knight.kotlin.module_video.DataConstant
 import com.knight.kotlin.module_video.adapter.VideoMainAdapter
 import com.knight.kotlin.module_video.databinding.VideoMainActivityBinding
-import com.knight.kotlin.module_video.entity.VideoListEntity
 import com.knight.kotlin.module_video.entity.VideoPlayEntity
 import com.knight.kotlin.module_video.utils.VideoHelpUtils
 import com.knight.kotlin.module_video.vm.VideoVm
@@ -44,9 +45,16 @@ class VideoMainActivity : BaseActivity<VideoMainActivityBinding,VideoVm>(), OnRe
     }
 
     override fun initRequestData() {
-        mViewModel.getDouyinVideos().observerKt {
-            getDouyinVideos(it)
+        mViewModel.getVideos().observerKt {
+            val (textCardList, followCardList) = it.itemList.partition {
+                it.type == EyeTypeConstants.TEXT_HEAD_TYPE
+            }
+            getVideos(followCardList)
+            //去除标识为文本卡片的
+
         }
+
+
     }
 
     override fun reLoadData() {
@@ -60,7 +68,8 @@ class VideoMainActivity : BaseActivity<VideoMainActivityBinding,VideoVm>(), OnRe
         }
         requestLoading(includeVideo.baseFreshlayout)
         includeVideo.baseFreshlayout.setOnRefreshListener(this@VideoMainActivity)
-        includeVideo.baseFreshlayout.setOnLoadMoreListener(this@VideoMainActivity)
+        //includeVideo.baseFreshlayout.setOnLoadMoreListener(this@VideoMainActivity)
+        includeVideo.baseFreshlayout.setEnableLoadMore(false)
         includeVideo.baseBodyRv.init(
             GridLayoutManager(this@VideoMainActivity,
             2,
@@ -72,40 +81,37 @@ class VideoMainActivity : BaseActivity<VideoMainActivityBinding,VideoVm>(), OnRe
     }
 
 
-    private fun getDouyinVideos(data: MutableList<VideoListEntity>) {
+    private fun getVideos(data: List<EyeDailyItemEntity>) {
         for (i in data.size - 1 downTo 0) {
-            val decryptUrl = VideoHelpUtils.removePrefixToDecry(data[i].joke.videoUrl)
-            if (!decryptUrl.contains("flag=null")) {
-                val videoPlayEntity = VideoPlayEntity(data[i].user.userId,
-                    data[i].joke.jokesId,
-                    decryptUrl,
-                    VideoHelpUtils.removePrefixToDecry(data[i].joke.thumbUrl),
-                    data[i].joke.videoSize,
-                    data[i].user.nickName,
-                    data[i].user.avatar,
-                    data[i].joke.content,
-                    data[i].info.LikeNum,
-                    data[i].info.shareNum,
-                    data[i].info.commentNum,
-                    data[i].info.disLikeNum,
-                    data[i].info.isLike,
-                    data[i].info.isUnlike,
-                    data[i].info.isAttention,
+
+
+           // val decryptUrl = VideoHelpUtils.removePrefixToDecry(data[i].joke.videoUrl)
+
+                val videoPlayEntity = VideoPlayEntity(data[i].data.content.data.id,
+                    data[i].data.content.data.author!!.id,
+                    data[i].data.content.data.playUrl,
+                    data[i].data.content.data.cover!!.feed,
+                    "1080,1920",
+                    data[i].data.content.data.author!!.name,
+                    data[i].data.content.data.author!!.icon,
+                    data[i].data.content.data.description,
+                    data[i].data.content.data.consumption.collectionCount,
+                    data[i].data.content.data.consumption.shareCount,
+                    data[i].data.content.data.consumption.replyCount,
+                    0,
+                    false,
+                    false,
+                    false
                     )
                 DataConstant.videoDatas.add(videoPlayEntity)
-            }
+
         }
-        if (DataConstant.videoDatas.size < 10) {
-            //这里如果少于10个视频就继续调用接口补充视频数
-            mViewModel.getDouyinVideos().observerKt {
-                getDouyinVideos(it)
-            }
-        } else {
+
             requestSuccess()
             mBinding.includeVideo.baseFreshlayout.finishLoadMore()
             mBinding.includeVideo.baseFreshlayout.finishRefresh()
             mVideoMainAdapter.submitList(DataConstant.videoDatas)
-        }
+
 
 
     }
@@ -125,15 +131,18 @@ class VideoMainActivity : BaseActivity<VideoMainActivityBinding,VideoVm>(), OnRe
 
     override fun onRefresh(refreshLayout: RefreshLayout) {
         DataConstant.videoDatas.clear()
-        mViewModel.getDouyinVideos().observerKt {
-            getDouyinVideos(it)
+        mViewModel.getVideos().observerKt {
+            val (textCardList, followCardList) = it.itemList.partition {
+                it.type == EyeTypeConstants.TEXT_HEAD_TYPE
+            }
+            getVideos(followCardList)
+            //去除标识为文本卡片的
+
         }
     }
 
     override fun onLoadMore(refreshLayout: RefreshLayout) {
-        mViewModel.getDouyinVideos().observerKt {
-            getDouyinVideos(it)
-        }
+
     }
 
     @SingleClick

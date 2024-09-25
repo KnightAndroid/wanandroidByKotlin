@@ -139,4 +139,17 @@ object DateUtils {
         val simpleDateFormat = SimpleDateFormat("yyyy/MM/dd HH:mm")
         return simpleDateFormat.format(Date(milliseconds))
     }
+
+
+    /**
+     *
+     * 时间格式转成年月日 时分秒
+     *
+     * @param milliseconds
+     * @return
+     */
+    fun formatDateMsByYMDHMS(milliseconds: Long): String {
+        val simpleDateFormat = SimpleDateFormat("yyyy/MM/dd HH:mm:ss")
+        return simpleDateFormat.format(Date(milliseconds))
+    }
 }

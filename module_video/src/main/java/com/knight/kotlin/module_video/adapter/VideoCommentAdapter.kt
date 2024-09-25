@@ -5,10 +5,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter4.BaseQuickAdapter
+import com.knight.kotlin.library_util.DateUtils
 import com.knight.kotlin.library_util.TimeAgoUtils
 import com.knight.kotlin.library_util.image.ImageLoader
 import com.knight.kotlin.module_video.databinding.VideoCommentItemBinding
-import com.knight.kotlin.module_video.entity.VideoComment
+import com.knight.kotlin.module_video.entity.VideoCommentData
+import com.knight.kotlin.module_video.entity.VideoCommentItem
 
 /**
  * Author:Knight
@@ -16,7 +18,7 @@ import com.knight.kotlin.module_video.entity.VideoComment
  * Description:VideoCommentAdapter
  */
 class VideoCommentAdapter :
-    BaseQuickAdapter<VideoComment, VideoCommentAdapter.VH>() {
+    BaseQuickAdapter<VideoCommentItem, VideoCommentAdapter.VH>() {
 
     class VH(
         parent: ViewGroup,
@@ -26,18 +28,18 @@ class VideoCommentAdapter :
     ) : RecyclerView.ViewHolder(binding.root)
 
 
-    override fun onBindViewHolder(holder: VH, position: Int, item: VideoComment?) {
+    override fun onBindViewHolder(holder: VH, position: Int, item: VideoCommentItem?) {
         item?.run {
             //本评论的用户昵称
-            holder.binding.tvNickname.setText(commentUser.nickname)
+            holder.binding.tvNickname.setText(data.user.nickname)
             //本评论的用户头像
-            ImageLoader.loadStringPhoto(context,commentUser.userAvatar,holder.binding.ivHead)
+            ImageLoader.loadStringPhoto(context,data.user.avatar,holder.binding.ivHead)
             //评论内容
-            holder.binding.tvContent.setText(content)
+            holder.binding.tvContent.setText(data.message)
             //点赞数
-            holder.binding.tvLikecount.setText(likeNum.toString())
+            holder.binding.tvLikecount.setText(data.likeCount.toString())
             //这里要补:00
-            holder.binding.tvCommentTime.setText(TimeAgoUtils.format(timeStr.plus(":00")))
+            holder.binding.tvCommentTime.setText(TimeAgoUtils.format(DateUtils.formatDateMsByYMDHMS(data.createTime)))
         }
     }
 

@@ -1,8 +1,9 @@
 package com.knight.kotlin.module_video.api
 
+import com.knight.kotlin.library_base.entity.EyeDailyListEntity
 import com.knight.kotlin.library_network.bean.BaseResponse
 import com.knight.kotlin.module_video.entity.VideoCommentList
-import com.knight.kotlin.module_video.entity.VideoListEntity
+import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.POST
 import retrofit2.http.Query
@@ -14,18 +15,21 @@ import retrofit2.http.Query
  */
 interface VideoApiService {
 
-    @Headers("Domain-Name:jokes","project_token:AD9D5C1ADEF444DAAB430A3DB71B94CC")
-    @POST("douyin/list")
-    suspend fun getDouyinVideos(): BaseResponse<MutableList<VideoListEntity>>
-
-
 
 
     /**
+     * 获取视频(为了模仿抖音)
      *
-     * 获取视频评论
+     *
+     * @return
      */
-    @Headers("Domain-Name:jokes","project_token:AD9D5C1ADEF444DAAB430A3DB71B94CC")
-    @POST("/jokes/comment/list")
-    suspend fun getVideoCommentList(@Query("jokeId") jokeId:Long,@Query("page") page:Long):BaseResponse<VideoCommentList>
+    @Headers("Domain-Name:eye")
+    @POST("v5/index/tab/feed")
+    suspend fun getVideos(): EyeDailyListEntity
+
+
+    @Headers("Domain-Name:eye")
+    @GET("v2/replies/video")
+    suspend fun getVideoCommentList(@Query("videoId") videoId:Long):VideoCommentList
+
 }

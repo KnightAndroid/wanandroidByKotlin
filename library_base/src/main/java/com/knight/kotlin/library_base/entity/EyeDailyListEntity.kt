@@ -88,7 +88,7 @@ data class EyeAuthorEntity(
     val expert: Boolean,
     val follow: EyeFollow,
     val icon: String,
-    val id: Int,
+    val id: Long,
     val ifPgc: Boolean,
     val latestReleaseTime: Long,
     val link: String,
@@ -125,10 +125,10 @@ data class EyeOwner(
 
 @Parcelize
 data class EyeConsumption(
-    val collectionCount: Int,
-    val realCollectionCount: Int,
-    val replyCount: Int,
-    val shareCount: Int
+    val collectionCount: Long,
+    val realCollectionCount: Long,
+    val replyCount: Long,
+    val shareCount: Long
 ): Parcelable
 @Parcelize
 data class EyeCover(
