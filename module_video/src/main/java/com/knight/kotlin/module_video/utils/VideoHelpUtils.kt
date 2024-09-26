@@ -20,8 +20,8 @@ import java.util.Hashtable
 object VideoHelpUtils {
 
     /**
-     * 移除前缀并且解密
-     * @param cipherUrl
+     * 移除前缀并且解密(暂时不用)
+     * @param cipherUrl 加密的字符串
      * @return
      */
     fun removePrefixToDecry(cipherUrl:String) :String {

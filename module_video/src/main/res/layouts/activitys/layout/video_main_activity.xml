@@ -1,45 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="title"
+            type="java.lang.String" />
+    </data>
 
 
-
-    <include
-        android:id="@+id/include_video_toolbar"
-        layout="@layout/base_include_toolbar"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
+        android:layout_height="match_parent">
 
 
 
-    <include
-        android:id="@+id/include_video"
-        layout="@layout/base_layout_recycleview"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/include_video_toolbar"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
+        <include
+            android:id="@+id/include_video_toolbar"
+            layout="@layout/base_include_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:title="@{title}"/>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/video_float_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:src="@drawable/base_icon_up"
-        android:layout_marginEnd="@dimen/video_float_btn_margin_end"
-        android:layout_marginRight="@dimen/video_float_btn_margin_right"
-        android:layout_marginBottom="@dimen/video_float_btn_margin_bottom"
-        app:layout_behavior="com.knight.kotlin.library_widget.FloatButtonBehavior"
-        />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+        <include
+            android:id="@+id/include_video"
+            layout="@layout/base_layout_recycleview"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@id/include_video_toolbar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/video_float_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:src="@drawable/base_icon_up"
+            android:layout_marginEnd="@dimen/video_float_btn_margin_end"
+            android:layout_marginRight="@dimen/video_float_btn_margin_right"
+            android:layout_marginBottom="@dimen/video_float_btn_margin_bottom"
+            app:layout_behavior="com.knight.kotlin.library_widget.FloatButtonBehavior"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

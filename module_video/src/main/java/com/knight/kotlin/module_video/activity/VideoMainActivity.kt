@@ -62,7 +62,7 @@ class VideoMainActivity : BaseActivity<VideoMainActivityBinding,VideoVm>(), OnRe
     }
 
     override fun VideoMainActivityBinding.initView() {
-        includeVideoToolbar.baseTvTitle.text = getString(com.knight.kotlin.module_video.R.string.video_main_toolbar)
+        mBinding.title = getString(com.knight.kotlin.module_video.R.string.video_main_toolbar)
         includeVideoToolbar.baseIvBack.setOnClick {
             finish()
         }
@@ -83,9 +83,6 @@ class VideoMainActivity : BaseActivity<VideoMainActivityBinding,VideoVm>(), OnRe
 
     private fun getVideos(data: List<EyeDailyItemEntity>) {
         for (i in data.size - 1 downTo 0) {
-
-
-           // val decryptUrl = VideoHelpUtils.removePrefixToDecry(data[i].joke.videoUrl)
 
                 val videoPlayEntity = VideoPlayEntity(data[i].data.content.data.id,
                     data[i].data.content.data.author!!.id,

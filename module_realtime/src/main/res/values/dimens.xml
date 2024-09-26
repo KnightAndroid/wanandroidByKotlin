@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="realtime_main_tab_height">48dp</dimen>
+
+</resources>
