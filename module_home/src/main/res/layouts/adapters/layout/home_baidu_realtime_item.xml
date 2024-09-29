@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.knight.kotlin.module_home.entity.HomeBaiduContent" />
+            type="com.knight.kotlin.library_base.entity.BaiduContent" />
 
 
     </data>

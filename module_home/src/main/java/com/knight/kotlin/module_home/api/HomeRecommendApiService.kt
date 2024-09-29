@@ -1,12 +1,12 @@
 package com.knight.kotlin.module_home.api
 
+import com.knight.kotlin.library_base.entity.BaiduTopRealTimeBean
 import com.knight.kotlin.library_base.entity.UserInfoEntity
 import com.knight.kotlin.library_common.entity.OfficialAccountEntity
 import com.knight.kotlin.library_network.bean.BaseResponse
 import com.knight.kotlin.module_home.entity.BannerBean
 import com.knight.kotlin.module_home.entity.EveryDayPushArticlesBean
 import com.knight.kotlin.module_home.entity.HomeArticleListBean
-import com.knight.kotlin.module_home.entity.HomeBaiduTopRealTimeBean
 import com.knight.kotlin.module_home.entity.TopArticleBean
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
@@ -55,7 +55,7 @@ interface HomeRecommendApiService {
      */
     @Headers("Domain-Name:baidu")
     @GET("board?platform=pc&tab=realtime")
-    suspend fun getBaiduRealTime() : HomeBaiduTopRealTimeBean
+    suspend fun getBaiduRealTime() : BaiduTopRealTimeBean
 
     /**
      * 获取公众号数据

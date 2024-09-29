@@ -67,7 +67,7 @@ import com.knight.kotlin.module_home.dialog.HomePushArticleFragment
 import com.knight.kotlin.module_home.entity.BannerBean
 import com.knight.kotlin.module_home.entity.EveryDayPushArticlesBean
 import com.knight.kotlin.module_home.entity.HomeArticleListBean
-import com.knight.kotlin.module_home.entity.HomeBaiduContent
+import com.knight.kotlin.library_base.entity.BaiduContent
 import com.knight.kotlin.module_home.utils.HomeAnimUtils
 import com.knight.kotlin.module_home.vm.HomeRecommendVm
 import com.knight.library_biometric.control.BiometricControl
@@ -172,7 +172,7 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
      * 展开后的数据
      *
      */
-    private var expandRealTimeList = mutableListOf<HomeBaiduContent>()
+    private var expandRealTimeList = mutableListOf<BaiduContent>()
     /**
      * 知识标签
      */
@@ -433,7 +433,7 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
     /**
      * 获取置顶文章数据
      */
-    private fun setTopBaiduRealTime(data: MutableList<HomeBaiduContent>) {
+    private fun setTopBaiduRealTime(data: MutableList<BaiduContent>) {
         expandRealTimeList = data.subList(0,5)
         mBaiduHotSearchAdapter.submitList(data.take(3))
 //        if (data.size > 3) {

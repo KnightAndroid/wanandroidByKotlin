@@ -1,5 +1,6 @@
 package com.knight.kotlin.module_home.repo
 
+import com.knight.kotlin.library_base.entity.BaiduCardDataBean
 import com.knight.kotlin.library_base.entity.UserInfoEntity
 import com.knight.kotlin.library_base.repository.BaseRepository
 import com.knight.kotlin.library_common.entity.OfficialAccountEntity
@@ -9,7 +10,7 @@ import com.knight.kotlin.module_home.api.HomeRecommendApiService
 import com.knight.kotlin.module_home.entity.BannerBean
 import com.knight.kotlin.module_home.entity.EveryDayPushArticlesBean
 import com.knight.kotlin.module_home.entity.HomeArticleListBean
-import com.knight.kotlin.module_home.entity.HomeBaiduCardDataBean
+
 import com.knight.kotlin.module_home.entity.TopArticleBean
 import javax.inject.Inject
 
@@ -64,7 +65,7 @@ class HomeRecommendRepo @Inject constructor(): BaseRepository() {
      *
      * 获取百度热搜
      */
-    fun getTopBaiduRealTime() = request<HomeBaiduCardDataBean> ({
+    fun getTopBaiduRealTime() = request<BaiduCardDataBean> ({
         mHomeRecommendApiService.getBaiduRealTime().run {
             responseCodeExceptionHandler(error.code,error.message)
             emit(data)

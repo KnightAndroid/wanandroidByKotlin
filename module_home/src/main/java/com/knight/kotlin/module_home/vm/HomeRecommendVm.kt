@@ -3,6 +3,7 @@ package com.knight.kotlin.module_home.vm
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import com.knight.kotlin.library_base.entity.BaiduCardDataBean
 import com.knight.kotlin.library_base.entity.UserInfoEntity
 import com.knight.kotlin.library_base.vm.BaseViewModel
 import com.knight.kotlin.library_common.entity.OfficialAccountEntity
@@ -13,7 +14,6 @@ import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_home.entity.BannerBean
 import com.knight.kotlin.module_home.entity.EveryDayPushArticlesBean
 import com.knight.kotlin.module_home.entity.HomeArticleListBean
-import com.knight.kotlin.module_home.entity.HomeBaiduCardDataBean
 import com.knight.kotlin.module_home.entity.TopArticleBean
 import com.knight.kotlin.module_home.repo.HomeRecommendRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -97,7 +97,7 @@ class HomeRecommendVm @Inject constructor(private val mRepo: HomeRecommendRepo) 
      * 获取百度热搜
      *
      */
-    fun getTopBaiduRealTime() : LiveData<HomeBaiduCardDataBean> {
+    fun getTopBaiduRealTime() : LiveData<BaiduCardDataBean> {
         return mRepo.getTopBaiduRealTime().asLiveData()
     }
 

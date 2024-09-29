@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter4.BaseQuickAdapter
 import com.knight.kotlin.module_home.R
 import com.knight.kotlin.module_home.databinding.HomeBaiduRealtimeItemBinding
-import com.knight.kotlin.module_home.entity.HomeBaiduContent
+import com.knight.kotlin.library_base.entity.BaiduContent
 
 
 /**
@@ -18,7 +18,7 @@ import com.knight.kotlin.module_home.entity.HomeBaiduContent
  * @Date 2024/9/4 16:13
  * @descript:百度热搜榜适配器
  */
-class BaiduHotSearchAdapter : BaseQuickAdapter<HomeBaiduContent, BaiduHotSearchAdapter.VH>(){
+class BaiduHotSearchAdapter : BaseQuickAdapter<BaiduContent, BaiduHotSearchAdapter.VH>(){
 
 
     // 自定义ViewHolder类
@@ -30,7 +30,7 @@ class BaiduHotSearchAdapter : BaseQuickAdapter<HomeBaiduContent, BaiduHotSearchA
     ) : RecyclerView.ViewHolder(binding.root)
 
 
-    override fun onBindViewHolder(holder: VH, position: Int, item: HomeBaiduContent?) {
+    override fun onBindViewHolder(holder: VH, position: Int, item: BaiduContent?) {
         val binding = DataBindingUtil.getBinding<HomeBaiduRealtimeItemBinding>(holder.itemView)
         item?.run {
             binding?.viewModel = this

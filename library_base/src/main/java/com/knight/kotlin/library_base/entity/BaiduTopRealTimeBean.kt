@@ -1,4 +1,4 @@
-package com.knight.kotlin.module_home.entity
+package com.knight.kotlin.library_base.entity
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
@@ -11,14 +11,14 @@ import kotlinx.parcelize.Parcelize
  * @descript:百度热搜
  */
 @Parcelize
-data class HomeBaiduTopRealTimeBean (
+data class BaiduTopRealTimeBean (
     val success:Boolean,
-    val data :HomeBaiduCardDataBean,
-    val error:HomeBaiduErrorMessage
+    val data : BaiduCardDataBean,
+    val error: BaiduErrorMessage
 ): Parcelable
 
 @Parcelize
-data class HomeBaiduErrorMessage (
+data class BaiduErrorMessage (
     val code:Int,
     val message:String
 ): Parcelable
@@ -26,46 +26,46 @@ data class HomeBaiduErrorMessage (
 
 
 @Parcelize
-data class HomeBaiduMessage(
+data class BaiduMessage(
     val code:Int,
     val message:String
 ) : Parcelable
 @Parcelize
-data class HomeBaiduCardDataBean(
-    val cards: MutableList<HomeBaiduCardBean>,
+data class BaiduCardDataBean(
+    val cards: MutableList<BaiduCardBean>,
     val curBoardName: String,
     val logid: String,
     val platform: String,
-    val tabBoard: List<HomeBaiduTabBoard>,
-    val tag: List<Tag>
+    val tabBoard: List<BaiduTabBoard>,
+    val tag: List<BaiduTag>
 ): Parcelable
 @Parcelize
-data class HomeBaiduCardBean(
+data class BaiduCardBean(
     val component: String,
-    val content: MutableList<HomeBaiduContent>,
+    val content: MutableList<BaiduContent>,
     val more: Int,
     val moreAppUrl: String,
     val moreUrl: String,
     val text: String,
-    val topContent: List<HomeBaiduTopContent>,
+    val topContent: List<BaiduTopContent>,
     val typeName: String,
     val updateTime: String
 ): Parcelable
 @Parcelize
-data class HomeBaiduTabBoard(
+data class BaiduTabBoard(
     val index: Int,
     val text: String,
     val typeName: String
 ): Parcelable
 @Parcelize
-data class HomeBaiduTag(
+data class BaiduTag(
     val content: List<String>,
     val curIndex: Int,
     val text: String,
     val typeName: String
 ): Parcelable
 @Parcelize
-data class HomeBaiduContent(
+data class BaiduContent(
     val appUrl: String,
     val desc: String,
     val hotChange: String,
@@ -82,7 +82,7 @@ data class HomeBaiduContent(
     val word: String
 ): Parcelable
 @Parcelize
-data class HomeBaiduTopContent(
+data class BaiduTopContent(
     val appUrl: String,
     val desc: String,
     val hotChange: String,
