@@ -12,7 +12,7 @@ import retrofit2.http.Headers
  * @Date 2024/8/6 9:10
  * @descript:发现主页接口请求
  */
-interface EyeDiscoverApi {
+interface EyeDiscoverScollListApi {
 
 
     /**

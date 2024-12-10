@@ -1,39 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include
-        android:id="@+id/include_eye_discover_toolbar"
-        layout="@layout/base_include_toolbar"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
 
 
-    <com.scwang.smart.refresh.layout.SmartRefreshLayout
-        android:id="@+id/discover_list_refreshLayout"
+    <FrameLayout
+        android:id="@+id/eye_discover_container"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/include_eye_discover_toolbar"
-        app:layout_constraintBottom_toBottomOf="parent"
-        >
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-        <com.scwang.smart.refresh.header.ClassicsHeader
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/discover_compat_toolbar"
+            android:theme="@style/Theme.Material3.DayNight.NoActionBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            />
+            android:fitsSystemWindows="true"
 
-        <com.yanzhenjie.recyclerview.SwipeRecyclerView
-            android:id="@+id/rv_discover_list"
+            app:statusBarForeground="?attr/colorSurface">
+<!--            app:liftOnScrollTargetViewId="@id/scroll_view"-->
+    <com.google.android.material.search.SearchBar
+        android:id="@+id/eye_discover_search_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/Theme.Material3.Light.NoActionBar"
+        app:layout_scrollFlags="enterAlways"
+        android:hint="@string/eye_discover_search_hint"
+        android:layout_marginHorizontal="8dp"
+        android:layout_marginVertical="16dp"
+        app:defaultMarginsEnabled="false"/>
+        </com.google.android.material.appbar.AppBarLayout>
+
+
+    <com.google.android.material.search.SearchView
+        android:id="@+id/eye_discover_search_view"
+        android:theme="@style/Theme.Material3.DayNight"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:hint="@string/eye_discover_search_hint"
+        app:layout_anchor="@id/eye_discover_search_bar">
+        <!-- Content goes here (ScrollView, RecyclerView, etc.). -->
+        <FrameLayout
+            android:id="@+id/search_view_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="match_parent" />
 
-        <com.scwang.smart.refresh.footer.ClassicsFooter
+        <FrameLayout
+            android:id="@+id/search_view_result_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="match_parent" />
+    </com.google.android.material.search.SearchView>
 
-    </com.scwang.smart.refresh.layout.SmartRefreshLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

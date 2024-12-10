@@ -4,4 +4,5 @@
     <string name="eye_discover_share_element_container">shared_element_container</string>
     <string name="eye_discover_special_topic_collect">收藏</string>
     <string name="eye_discover_special_topic_share">分享</string>
+    <string name="eye_discover_search_hint">搜索视频，作者，用户及标签</string>
 </resources>

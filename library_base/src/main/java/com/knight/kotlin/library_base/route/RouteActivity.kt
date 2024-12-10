@@ -193,6 +193,7 @@ object RouteActivity {
         const val EyeDiscoverActivity = "$EyeDiscover/EyeDetailActivity"
         const val EyeCategoryDetailActivity = "$EyeDiscover/EyeCategoryDetailActivity"
         const val EyeSpecialTopicDetailActivity = "$EyeDiscover/EyeSpecialTopicDetailActivity"
+        const val EyeDiscoverScollListActivity = "$EyeDiscover/EyeDiscoverScollListActivity"
     }
 
     /**

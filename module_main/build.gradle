@@ -1,4 +1,3 @@
-import com.knight.wanandroid.buildsrc.Dependencies
 apply from: '../base_module.gradle'
 android {
     resourcePrefix "main_"
@@ -7,6 +6,6 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation Dependencies.GitHub.BOTTOM_NAVIGATE
-    implementation Dependencies.GitHub.BOTTOM_NAVIGATE_X
+   // implementation Dependencies.GitHub.BOTTOM_NAVIGATE
+   // implementation Dependencies.GitHub.BOTTOM_NAVIGATE_X
 }

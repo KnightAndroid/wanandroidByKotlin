@@ -22,6 +22,7 @@ dependencies {
     api Dependencies.Androidx.FRAGMENT_KTX
     api Dependencies.Android.MATERIAL
     api Dependencies.Androidx.MULTIDEX
+    api Dependencies.Androidx.WINDOWX
 
     api Dependencies.Kotlin.KOTLIN
     api Dependencies.Kotlin.COROUTINES_CORE

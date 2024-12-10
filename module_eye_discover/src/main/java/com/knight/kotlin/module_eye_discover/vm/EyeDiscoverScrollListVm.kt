@@ -6,7 +6,7 @@ import com.knight.kotlin.library_base.ktx.showLoadingDialog
 import com.knight.kotlin.library_base.vm.BaseViewModel
 import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_eye_discover.entity.BaseEyeDiscoverEntity
-import com.knight.kotlin.module_eye_discover.repo.EyeDiscoverRepo
+import com.knight.kotlin.module_eye_discover.repo.EyeDiscoverScrollListRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -18,7 +18,7 @@ import javax.inject.Inject
  * @descript:
  */
 @HiltViewModel
-class EyeDiscoverVm @Inject constructor(private val mRepo:EyeDiscoverRepo) : BaseViewModel(){
+class EyeDiscoverScrollListVm @Inject constructor(private val mRepo:EyeDiscoverScrollListRepo) : BaseViewModel(){
 
 
     /**

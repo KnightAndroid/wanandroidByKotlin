@@ -89,6 +89,19 @@ object RouteFragment {
         const val MessageFragment = "$MESSAGE/MessageFragment"
     }
 
+    /**
+     *
+     * 发现
+     */
+    object Discover {
+        private const val DISCOVER = "/modeule_discover"
+        const val DiscoverScollListFragment = "$DISCOVER/DiscoverScollListFragment"
+        const val DiscoverRecommendFragment = "$DISCOVER/DiscoverRecommendFragment"
+    }
+
+
+
+
 
 
 

@@ -5,7 +5,7 @@ import com.knight.kotlin.library_base.ktx.fromJson
 import com.knight.kotlin.library_base.repository.BaseRepository
 import com.knight.kotlin.library_network.enum.ResponseExceptionEnum
 import com.knight.kotlin.library_network.exception.ResponseException
-import com.knight.kotlin.module_eye_discover.api.EyeDiscoverApi
+import com.knight.kotlin.module_eye_discover.api.EyeDiscoverScollListApi
 import com.knight.kotlin.module_eye_discover.entity.BaseEyeDiscoverEntity
 import com.knight.kotlin.module_eye_discover.entity.EyeCategoryCardEntity
 import com.knight.kotlin.module_eye_discover.entity.EyeDiscoverBriefCardEntity
@@ -23,9 +23,9 @@ import javax.inject.Inject
  * @Date 2024/8/6 9:29
  * @descript:开眼发现模块 Repo
  */
-class EyeDiscoverRepo @Inject constructor() : BaseRepository(){
+class EyeDiscoverScrollListRepo @Inject constructor() : BaseRepository(){
     @Inject
-    lateinit var mEyeDiscoverApi : EyeDiscoverApi
+    lateinit var mEyeDiscoverScollListApi : EyeDiscoverScollListApi
 
 
     /**
@@ -33,7 +33,7 @@ class EyeDiscoverRepo @Inject constructor() : BaseRepository(){
      *
      */
     fun getDiscoverData (failureCallBack:((String?) ->Unit) ?= null) = request<List<BaseEyeDiscoverEntity>>({
-        mEyeDiscoverApi.getDiscoverData().run {
+        mEyeDiscoverScollListApi.getDiscoverData().run {
             val jsonErrorCodeElement  =  this.get("errorCode")
             val jsonErrorMsgElement = this.get("errorMessage")
             jsonErrorCodeElement?.run {

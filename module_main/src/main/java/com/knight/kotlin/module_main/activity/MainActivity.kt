@@ -38,9 +38,10 @@ class MainActivity : BaseActivity<MainActivityBinding,MainViewModel>() {
             isUserInputEnabled = false
         )
         btnNav.run {
-            realView.itemTextColor =  ColorUtils.createColorStateList(CacheUtils.getThemeColor(),ColorUtils.convertToColorInt("a6a6a6"))
-            setIconTintList(ColorUtils.createColorStateList(CacheUtils.getThemeColor(),ColorUtils.convertToColorInt("a6a6a6")))
-            realView.setOnItemSelectedListener {
+            itemTextColor =  ColorUtils.createColorStateList(CacheUtils.getThemeColor(),ColorUtils.convertToColorInt("a6a6a6"))
+            itemIconTintList =ColorUtils.createColorStateList(CacheUtils.getThemeColor(),ColorUtils.convertToColorInt("a6a6a6"))
+           // setIconTintList(ColorUtils.createColorStateList(CacheUtils.getThemeColor(),ColorUtils.convertToColorInt("a6a6a6")))
+            setOnItemSelectedListener {
                 when(it.itemId) {
                     R.id.homeFragment -> mainViewpager.setCurrentItem(0,false)
                     R.id.squareFragment -> mainViewpager.setCurrentItem(1,false)
@@ -142,12 +143,12 @@ class MainActivity : BaseActivity<MainActivityBinding,MainViewModel>() {
     private fun bottomNavShowOrDimiss(show:Boolean) {
         if (show) { // 上滑显示
             outAnimator?.let {
-                if (!it.isRunning && mBinding.btnNav.realView.translationY <= 0) {
+                if (!it.isRunning && mBinding.btnNav.translationY <= 0) {
                     it.start()
                 }
             } ?:run{
                 outAnimator =
-                    ObjectAnimator.ofFloat(mBinding.btnNav.realView, "translationY", 0f, mBinding.btnNav.realView.height.toFloat())
+                    ObjectAnimator.ofFloat(mBinding.btnNav, "translationY", 0f, mBinding.btnNav.height.toFloat())
                 outAnimator?.setDuration(200)
                 outAnimator?.start()
             }
@@ -155,12 +156,12 @@ class MainActivity : BaseActivity<MainActivityBinding,MainViewModel>() {
 
         } else  { // 下滑隐藏
             inAnimator?.let {
-                if (!it.isRunning && mBinding.btnNav.realView.translationY >= mBinding.btnNav.realView.height) {
+                if (!it.isRunning && mBinding.btnNav.translationY >= mBinding.btnNav.height) {
                     it.start()
                 }
             } ?: run {
                 inAnimator =
-                    ObjectAnimator.ofFloat(mBinding.btnNav.realView, "translationY", mBinding.btnNav.realView.height.toFloat(), 0f)
+                    ObjectAnimator.ofFloat(mBinding.btnNav, "translationY", mBinding.btnNav.height.toFloat(), 0f)
                 inAnimator?.setDuration(200)
                 inAnimator?.start()
             }

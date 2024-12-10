@@ -1,6 +1,7 @@
 package com.knight.kotlin.library_base.config
 
 import com.knight.kotlin.library_base.entity.UserInfoEntity
+import java.util.UUID
 
 /**
  * Author:Knight
@@ -59,5 +60,13 @@ object Appconfig {
       *
       */
      const val EYE_UUID = "d2807c895f0348a180148c9dfa6f2feeac0781b5"
+
+     /**
+      *
+      * 开眼
+      */
+     const val APP_ID = "ahpagrcrf2p7m6rg"
+     const val X_API_KEY = "0530ee4341324ce2b26c23fcece80ea2"
+     val SESSION_ID by lazy { UUID.randomUUID().toString().replace("-", "") }
 
 }

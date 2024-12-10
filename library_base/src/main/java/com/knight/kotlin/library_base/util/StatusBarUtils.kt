@@ -8,6 +8,8 @@ import android.os.Build
 import android.view.View
 import android.view.WindowInsetsController
 import android.view.WindowManager
+import androidx.core.view.WindowInsetsCompat
+import androidx.window.layout.WindowMetricsCalculator
 
 
 /**
@@ -68,9 +70,22 @@ object StatusBarUtils {
      */
     @SuppressLint("DiscouragedApi", "InternalInsetResource")
     fun getStatusBarHeight(context: Context): Int {
-        val resourceId: Int =
-            context.resources.getIdentifier("status_bar_height", "dimen", "android")
-        return context.resources.getDimensionPixelSize(resourceId)
+
+        val metrics = WindowMetricsCalculator.getOrCreate().computeCurrentWindowMetrics(context)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            val insets =
+                metrics.getWindowInsets()
+                .getInsetsIgnoringVisibility(WindowInsetsCompat.Type.systemBars())
+            return insets.top
+        } else {
+            val resourceId: Int =
+                context.resources.getIdentifier("status_bar_height", "dimen", "android")
+            return context.resources.getDimensionPixelSize(resourceId)
+        }
+
+
+
+
     }
 
 

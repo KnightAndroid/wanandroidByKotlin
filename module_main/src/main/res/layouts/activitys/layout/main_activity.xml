@@ -12,16 +12,30 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <com.yh.bottomnavigationex.BottomNavigationViewEx
+<!--    <com.yh.bottomnavigationex.BottomNavigationViewEx-->
+<!--        android:id="@+id/btn_nav"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_gravity="bottom|end"-->
+<!--        android:background="@color/main_bottom_color"-->
+<!--        app:itemTextColor="@drawable/main_bottom_color_selector"-->
+<!--        app:menu="@menu/main_menu_main"-->
+<!--        app:layout_behavior="com.knight.kotlin.library_widget.BottomNavigationBehavior"-->
+<!--        />-->
+
+<!--    style="@style/Widget.Material3.BottomNavigationView"-->
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/btn_nav"
+        android:theme="@style/Theme.MaterialComponents"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:background="@color/main_bottom_color"
+        android:layout_gravity="bottom"
         app:itemTextColor="@drawable/main_bottom_color_selector"
-        app:menu="@menu/main_menu_main"
+        android:background="@color/main_bottom_color"
+        app:labelVisibilityMode="selected"
         app:layout_behavior="com.knight.kotlin.library_widget.BottomNavigationBehavior"
-        />
+        app:menu="@menu/main_menu_main" />
 
 
 
