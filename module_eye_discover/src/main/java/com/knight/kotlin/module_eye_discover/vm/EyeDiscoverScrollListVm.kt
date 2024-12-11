@@ -6,6 +6,7 @@ import com.knight.kotlin.library_base.ktx.showLoadingDialog
 import com.knight.kotlin.library_base.vm.BaseViewModel
 import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_eye_discover.entity.BaseEyeDiscoverEntity
+import com.knight.kotlin.module_eye_discover.entity.EyeDiscoverNavEntity
 import com.knight.kotlin.module_eye_discover.repo.EyeDiscoverScrollListRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -31,6 +32,18 @@ class EyeDiscoverScrollListVm @Inject constructor(private val mRepo:EyeDiscoverS
             it?.let { it1 -> toast(it1) }
         }).asLiveData()
     }
+
+    /**
+     *
+     * 获取发现导航数据
+     */
+    fun getNav(tabel:String):LiveData<EyeDiscoverNavEntity> {
+        return mRepo.getNav(tabel).asLiveData()
+
+    }
+
+
+
 
 
 }

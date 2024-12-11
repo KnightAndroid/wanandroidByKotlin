@@ -26,8 +26,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-         />
-
+            app:strokeColor="@color/base_color_transparent" />
+    <!-- app:strokeColor="@color/base_color_transparent 为了解决inflate ColorStateList, leaving it to the framework错误-->
         <TextView
             android:id="@+id/tv_label"
             android:textSize="15sp"

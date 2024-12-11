@@ -10,6 +10,7 @@ import com.knight.kotlin.library_network.domain.addDomain
 import com.knight.kotlin.library_network.domain.setDomain
 import com.knight.kotlin.library_network.header.HeaderStorage
 import com.knight.kotlin.library_network.interceptor.CacheInterceptor
+import com.knight.kotlin.library_network.interceptor.EyeAddHeadInterceptor
 import com.knight.kotlin.library_network.interceptor.HttpInterceptor
 import com.knight.kotlin.library_network.interceptor.NetworkInterceptor
 import com.knight.kotlin.library_network.interceptor.SignInterceptor
@@ -70,6 +71,8 @@ class ClientConfig {
             .responseTag("Response")
             .build()
 
+        //头部存储
+        val headerStorage = HeaderStorage(BaseApp.context)
         return OkHttpClient.Builder()
             .connectTimeout(15L * 1000L, TimeUnit.MILLISECONDS)
             .readTimeout(20L * 1000L,TimeUnit.MILLISECONDS)
@@ -77,7 +80,8 @@ class ClientConfig {
             .addInterceptor(CacheInterceptor()) //缓存拦截器
             .addInterceptor(NetworkInterceptor()) //配合缓存拦截器
             .addInterceptor(HttpInterceptor())//重复拦截
-            .addInterceptor(SignInterceptor(BaseApp.context, HeaderStorage(BaseApp.context)))
+            .addInterceptor(SignInterceptor(BaseApp.context, headerStorage))
+            .addInterceptor(EyeAddHeadInterceptor(BaseApp.context, headerStorage))
             .cache(cache)
             .retryOnConnectionFailure(true)
             .cookieJar(JavaNetCookieJar(cookieManager))
@@ -86,6 +90,7 @@ class ClientConfig {
             .setDomain("jokes",BaseUrlConfig.JOKES_URL)
             .setDomain("eye",BaseUrlConfig.OPENEYE_URL)
             .setDomain("baidu",BaseUrlConfig.BAIDU_URL)
+            .setDomain("eye_sub",BaseUrlConfig.OPENEYE_SUB_URL)
             .build()
     }
 

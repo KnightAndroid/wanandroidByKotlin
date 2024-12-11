@@ -7,7 +7,6 @@ import com.google.gson.JsonElement
 import com.google.gson.JsonPrimitive
 import com.knight.kotlin.library_base.config.Appconfig
 import com.knight.kotlin.library_base.ktx.fromJson
-import com.knight.kotlin.library_base.ktx.versionName
 import com.knight.kotlin.library_base.util.GsonUtils
 import com.knight.kotlin.library_network.bean.ApiResponse
 import com.knight.kotlin.library_network.bean.AuthToken
@@ -28,20 +27,28 @@ class SignInterceptor(
 
     override fun intercept(chain: Chain): Response {
         //if (chain.request().url.toString() === BaseUrlConfig.OPENEYE_URL) {
-            val requestBuilder = chain.request().newBuilder()
-            headerStorage.header.entries.forEach {
-                requestBuilder.addHeader(it.key, it.value)
+        val headers  = chain.request().headers.values("Domain-Name")
+        if (headers .size == 1) {
+            val headerTag = headers[0]
+            if (headerTag == "eye_sub") {
+
+                val requestBuilder = chain.request().newBuilder()
+                headerStorage.header.entries.forEach {
+                    requestBuilder.addHeader(it.key, it.value)
+                }
+
+                val ts: String = (System.currentTimeMillis() / 1000).toString()
+                val sign: String = AesUtils.encrypt(signString("refresh_token", ts))
+                val decrypt = AesUtils.decrypt(sign)
+
+
+                val response = chain.proceed(requestBuilder.build())
+                val refresh = tryRefreshToken(requestBuilder, response)
+                return if (refresh) intercept(chain) else response
             }
+        }
+        return chain.proceed(chain.request())
 
-        val ts: String = (System.currentTimeMillis() / 1000).toString()
-        val sign: String = AesUtils.encrypt(signString("refresh_token", ts))
-        val decrypt = AesUtils.decrypt(sign)
-        Log.e("huqiang1", "fillBuilder: $decrypt")
-        Log.e("huqiang2", "fillBuilder: "+sign+"")
-
-            val response = chain.proceed(requestBuilder.build())
-            val refresh = tryRefreshToken(requestBuilder, response)
-            return if (refresh) intercept(chain) else response
 //        } else {
 //            return chain.proceed(chain.request())
 //        }
@@ -111,7 +118,7 @@ class SignInterceptor(
         grantType: String,
         ts: String
     ): String {
-        return "$grantType|${Appconfig.APP_ID}|android|${context.versionName}|${headerStorage.deviceId}|$ts"
+        return "$grantType|${Appconfig.APP_ID}|android|${Appconfig.VERSION_NAME}|${headerStorage.deviceId}|$ts"
     }
 
     companion object {

@@ -10,6 +10,7 @@ import com.knight.kotlin.module_eye_discover.entity.BaseEyeDiscoverEntity
 import com.knight.kotlin.module_eye_discover.entity.EyeCategoryCardEntity
 import com.knight.kotlin.module_eye_discover.entity.EyeDiscoverBriefCardEntity
 import com.knight.kotlin.module_eye_discover.entity.EyeDiscoverMiddleBannerEntity
+import com.knight.kotlin.module_eye_discover.entity.EyeDiscoverNavEntity
 import com.knight.kotlin.module_eye_discover.entity.EyeDiscoverTopBannerEntity
 import com.knight.kotlin.module_eye_discover.entity.EyeDiscoverVideoSmallCardEntity
 import com.knight.kotlin.module_eye_discover.entity.EyeSubTitleEntity
@@ -97,6 +98,18 @@ class EyeDiscoverScrollListRepo @Inject constructor() : BaseRepository(){
         failureCallBack?.run {
             this(it)
         }
+    }
+
+    /**
+     *
+     * 获取发现页标签 （这个方法用来）
+     */
+    fun getNav(tabLabel: String) = request<EyeDiscoverNavEntity>({
+        mEyeDiscoverScollListApi.getNav(tabLabel).run {
+            emit(this)
+        }
+    }){
+
     }
 
 }

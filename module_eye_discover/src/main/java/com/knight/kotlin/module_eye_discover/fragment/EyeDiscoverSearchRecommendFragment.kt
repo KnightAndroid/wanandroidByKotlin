@@ -2,8 +2,9 @@ package com.knight.kotlin.module_eye_discover.fragment
 
 import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.knight.kotlin.library_base.route.RouteFragment
-import com.knight.kotlin.library_base.vm.EmptyViewModel
+import com.knight.kotlin.library_util.LogUtils
 import com.knight.kotlin.module_eye_discover.databinding.EyeDiscoverRecommendFragmentBinding
+import com.knight.kotlin.module_eye_discover.vm.EyeDiscoverSearchRecommendVm
 import com.wyjson.router.annotation.Route
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -16,7 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 @AndroidEntryPoint
 @Route(path = RouteFragment.Discover.DiscoverRecommendFragment)
-class EyeDiscoverRecommendFragment : BaseFragment<EyeDiscoverRecommendFragmentBinding,EmptyViewModel>() {
+class EyeDiscoverSearchRecommendFragment : BaseFragment<EyeDiscoverRecommendFragmentBinding,EyeDiscoverSearchRecommendVm>() {
     override fun setThemeColor(isDarkMode: Boolean) {
 
     }
@@ -26,7 +27,9 @@ class EyeDiscoverRecommendFragment : BaseFragment<EyeDiscoverRecommendFragmentBi
     }
 
     override fun initRequestData() {
-
+         mViewModel.getHotQueries().observerKt {
+             LogUtils.d(it.item_list.toString())
+         }
     }
 
     override fun reLoadData() {

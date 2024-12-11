@@ -52,7 +52,6 @@
 
 
 
-
         <TextView
             android:id="@+id/tv_video_title"
             android:layout_width="0dp"

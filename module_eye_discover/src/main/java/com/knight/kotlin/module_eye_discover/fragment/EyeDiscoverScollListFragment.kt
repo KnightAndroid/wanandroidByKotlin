@@ -52,6 +52,10 @@ class EyeDiscoverScollListFragment : BaseFragment<EyeDiscoverScollListFragmentBi
                 mBinding.rvDiscoverList.addFooterView(getFootView())
             }
         }
+
+        mViewModel.getNav("discovery").observerKt {
+
+        }
     }
 
     override fun reLoadData() {

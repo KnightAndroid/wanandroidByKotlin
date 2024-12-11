@@ -12,8 +12,10 @@ internal object BaseUrlConfig {
     const val GITEE_RUL = "https://gitee.com/"
     //推荐视频 访问链接
     const val JOKES_URL = "http://tools.cretinzp.com/jokes/"
-    //开眼接口 访问链接
+    //开眼接口 访问链接 http://api.eyepetizer.net
     const val OPENEYE_URL = "https://baobab.kaiyanapp.com/api/"
+    //开眼接口2
+    const val OPENEYE_SUB_URL = "http://api.eyepetizer.net/"
     //百度接口 访问链接
     const val BAIDU_URL = "https://top.baidu.com/api/"
 }

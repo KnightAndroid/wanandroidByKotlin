@@ -12,19 +12,24 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="95dp">
-
+<!--        -->
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/iv_subject_bg"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            imageUrl="@{viewModel.image}"
+            app:imageUrl="@{viewModel.image}"
             app:shapeAppearance="@style/base_roundedCornerStyle"
             android:scaleType="fitXY"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:strokeColor="@color/base_color_transparent"
              />
+        <!-- app:strokeColor="@color/base_color_transparent 为了解决inflate ColorStateList, leaving it to the framework错误-->
+<!--        strokeColor 的设置会触发 ShapeableImageView 或 MaterialButton 内部的样式层次链，确保所有依赖的属性（包括 ColorStateList）被正确解析。-->
+<!--        如果没有设置 strokeColor，框架可能尝试从默认主题中查找该值，而某些主题（或系统资源）可能未定义它。-->
+
 
         <TextView
             android:id="@+id/tv_label"

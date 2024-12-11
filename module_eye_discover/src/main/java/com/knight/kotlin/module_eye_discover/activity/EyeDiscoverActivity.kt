@@ -11,8 +11,8 @@ import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.module_eye_discover.R
 import com.knight.kotlin.module_eye_discover.databinding.EyeDiscoverActivityBinding
-import com.knight.kotlin.module_eye_discover.fragment.EyeDiscoverRecommendFragment
 import com.knight.kotlin.module_eye_discover.fragment.EyeDiscoverScollListFragment
+import com.knight.kotlin.module_eye_discover.fragment.EyeDiscoverSearchRecommendFragment
 import com.knight.kotlin.module_eye_discover.vm.EyeDiscoverScrollListVm
 import com.wyjson.router.annotation.Route
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,7 +28,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @Route(path = RouteActivity.EyeDiscover.EyeDiscoverActivity)
 class EyeDiscoverActivity : BaseActivity<EyeDiscoverActivityBinding, EyeDiscoverScrollListVm>(){
 
-   val recommendFragment = EyeDiscoverRecommendFragment()
+   val recommendSearchFragment = EyeDiscoverSearchRecommendFragment()
    val scrollListFragment = EyeDiscoverScollListFragment()
 
     override fun setThemeColor(isDarkMode: Boolean) {
@@ -101,7 +101,7 @@ class EyeDiscoverActivity : BaseActivity<EyeDiscoverActivityBinding, EyeDiscover
             onBackPressedCallback.isEnabled =
                 newState == SearchView.TransitionState.SHOWN
             if (newState == SearchView.TransitionState.SHOWN) {
-                switchFragment(recommendFragment)
+                switchFragment(recommendSearchFragment)
             //    supportFragmentManager.beginTransaction().show(recommendFragment)
 //                supportFragmentManager.showFragment<EyeDiscoverRecommendFragment>(
 //                    R.id.search_view_container
