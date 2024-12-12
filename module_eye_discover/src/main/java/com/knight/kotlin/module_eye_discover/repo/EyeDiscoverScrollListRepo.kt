@@ -3,8 +3,10 @@ package com.knight.kotlin.module_eye_discover.repo
 import com.knight.kotlin.library_base.ktx.dimissLoadingDialog
 import com.knight.kotlin.library_base.ktx.fromJson
 import com.knight.kotlin.library_base.repository.BaseRepository
+import com.knight.kotlin.library_network.bean.EyeApiResponse
 import com.knight.kotlin.library_network.enum.ResponseExceptionEnum
 import com.knight.kotlin.library_network.exception.ResponseException
+import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_eye_discover.api.EyeDiscoverScollListApi
 import com.knight.kotlin.module_eye_discover.entity.BaseEyeDiscoverEntity
 import com.knight.kotlin.module_eye_discover.entity.EyeCategoryCardEntity
@@ -104,12 +106,13 @@ class EyeDiscoverScrollListRepo @Inject constructor() : BaseRepository(){
      *
      * 获取发现页标签 （这个方法用来）
      */
-    fun getNav(tabLabel: String) = request<EyeDiscoverNavEntity>({
-        mEyeDiscoverScollListApi.getNav(tabLabel).run {
-            emit(this)
+    fun getNav(tabLabel: String) = request< EyeApiResponse<EyeDiscoverNavEntity>>({
+       mEyeDiscoverScollListApi.getNav(tabLabel).run {
+
+         emit(this)
         }
     }){
-
+        it?.let { it1 -> toast(it1) }
     }
 
 }

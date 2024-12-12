@@ -3,13 +3,14 @@ package com.knight.kotlin.library_network.interceptor
 
 import android.content.Context
 import android.util.Log
+import com.google.gson.Gson
 import com.google.gson.JsonElement
 import com.google.gson.JsonPrimitive
+import com.google.gson.reflect.TypeToken
 import com.knight.kotlin.library_base.config.Appconfig
-import com.knight.kotlin.library_base.ktx.fromJson
 import com.knight.kotlin.library_base.util.GsonUtils
-import com.knight.kotlin.library_network.bean.ApiResponse
 import com.knight.kotlin.library_network.bean.AuthToken
+import com.knight.kotlin.library_network.bean.EyeApiResponse
 import com.knight.kotlin.library_network.bean.GetToken
 import com.knight.kotlin.library_network.header.HeaderStorage
 import com.knight.kotlin.library_network.util.AesUtils
@@ -19,6 +20,8 @@ import okhttp3.Interceptor.Chain
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
+import java.lang.reflect.Type
+
 
 class SignInterceptor(
     private val context: Context,
@@ -61,26 +64,36 @@ class SignInterceptor(
     ): Boolean {
         if (response.code == 400) {
             val result = response.peekBody(Long.MAX_VALUE).string()
-            val apiResponse =
-                fromJson<ApiResponse<GetToken>>(result)
-               // json.decodeFromString(ApiResponse.serializer(GetToken.serializer()), result)
-            if (apiResponse.code in 60000..69999 && apiResponse.result != null) {
-                val request = Request.Builder()
-                    .headers(requestBuilder.build().headers)
-                    .url("$BASE_URL?grant_type=${apiResponse.result.grant_type}")
-                    .post(fillBuilder(apiResponse.result.grant_type))
-                    .build()
 
-                fromJson<ApiResponse<AuthToken>>(     OkHttpClient.Builder().build().newCall(request).execute().body?.string() ?: "")
-                    .result?.let {
+            val gson = Gson()
+            val type: Type = object : TypeToken<EyeApiResponse<GetToken>>() {}.getType()
+            val eyeApiResponse: EyeApiResponse<GetToken> = gson.fromJson(result, type)
+            val content = eyeApiResponse.message.get("content")
+            var contentMessage:String = ""
+            if (content != null) {
+                contentMessage = content.asString
+            }
+            if (content == null) {
+                if (eyeApiResponse.code in 60000..69999 && eyeApiResponse.result != null) {
+                    val request = Request.Builder()
+                        .headers(requestBuilder.build().headers)
+                        .url("$BASE_URL?grant_type=${eyeApiResponse.result.grant_type}")
+                        .post(fillBuilder(eyeApiResponse.result.grant_type))
+                        .build()
+
+                    val body = OkHttpClient.Builder().build().newCall(request).execute().body?.string()+""
+                    val gson = Gson()
+                    val type: Type = object : TypeToken<EyeApiResponse<AuthToken>>() {}.getType()
+                    gson.fromJson<EyeApiResponse<AuthToken>?>(body, type).result?.let {
                         headerStorage.updateHeader(it)
                     }
-//                json.decodeFromString(
-//                    ApiResponse.serializer(AuthToken.serializer()),
-//                    OkHttpClient.Builder().build().newCall(request).execute().body()?.string() ?: ""
-//                )
-                return true
+
+                    return true
+                }
+            } else {
+                return false
             }
+
         }
         return false
     }

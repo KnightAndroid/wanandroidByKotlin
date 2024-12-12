@@ -22,3 +22,4 @@
 -dontwarn com.knight.kotlin.library_base.R$drawable
 -dontwarn com.knight.kotlin.library_base.R$string
 -dontwarn com.knight.kotlin.library_widget.R$drawable
+-dontwarn com.knight.kotlin.library_widget.R$layout

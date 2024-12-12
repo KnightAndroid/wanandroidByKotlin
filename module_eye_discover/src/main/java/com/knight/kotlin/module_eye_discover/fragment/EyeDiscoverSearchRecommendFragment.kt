@@ -2,7 +2,7 @@ package com.knight.kotlin.module_eye_discover.fragment
 
 import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.knight.kotlin.library_base.route.RouteFragment
-import com.knight.kotlin.library_util.LogUtils
+import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_eye_discover.databinding.EyeDiscoverRecommendFragmentBinding
 import com.knight.kotlin.module_eye_discover.vm.EyeDiscoverSearchRecommendVm
 import com.wyjson.router.annotation.Route
@@ -28,7 +28,8 @@ class EyeDiscoverSearchRecommendFragment : BaseFragment<EyeDiscoverRecommendFrag
 
     override fun initRequestData() {
          mViewModel.getHotQueries().observerKt {
-             LogUtils.d(it.item_list.toString())
+             toast(it.result?.item_list.toString())
+             //LogUtils.d(it.result?.item_list.toString())
          }
     }
 

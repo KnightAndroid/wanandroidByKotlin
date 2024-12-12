@@ -1,6 +1,8 @@
 package com.knight.kotlin.module_eye_discover.repo
 
 import com.knight.kotlin.library_base.repository.BaseRepository
+import com.knight.kotlin.library_network.bean.EyeApiResponse
+import com.knight.kotlin.library_network.model.responseCodeExceptionHandler
 import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_eye_discover.api.EyeDiscoverSearchRecommendApi
 import com.knight.kotlin.module_eye_discover.entity.EyeHotQueriesEntity
@@ -23,8 +25,9 @@ class EyeDiscoverSearchRecommendRepo @Inject constructor() : BaseRepository(){
      *
      * 获取热门搜索
      */
-    fun getHotQueries() = request<EyeHotQueriesEntity>({
+    fun getHotQueries() = request< EyeApiResponse<EyeHotQueriesEntity>>({
           mEyeDiscoverSearchRecommendApi.getHotQueries().run {
+              responseCodeExceptionHandler(this.code.toInt(), this.message.toString())
               emit(this)
           }
     }){

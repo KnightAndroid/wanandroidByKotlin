@@ -10,8 +10,6 @@ import com.knight.kotlin.library_base.config.Appconfig.X_API_KEY
 import com.knight.kotlin.library_base.ktx.networkName
 import com.knight.kotlin.library_base.ktx.screenHeight
 import com.knight.kotlin.library_base.ktx.screenWidth
-import com.knight.kotlin.library_base.ktx.versionCode
-import com.knight.kotlin.library_base.ktx.versionName
 import com.knight.kotlin.library_network.bean.AuthToken
 import java.util.Locale
 import java.util.UUID
@@ -80,8 +78,8 @@ class HeaderStorage (mContext: Context) {
 
     val ua: String
         get() {
-            return "EYEPETIZER/${context.versionCode} (${Build.MODEL};android;${Build.VERSION.RELEASE};" +
-                    "${Locale.getDefault()};android;${context.versionName};cn-bj;pp;${deviceId};${context.networkName};" +
+            return "EYEPETIZER/${Appconfig.VERSION_CODE} (${Build.MODEL};android;${Build.VERSION.RELEASE};" +
+                    "${Locale.getDefault()};android;${Appconfig.VERSION_NAME};cn-bj;pp;${deviceId};${context.networkName};" +
                     "${context.screenWidth}*${context.screenHeight}) native/1.0"
         }
 

@@ -9,7 +9,7 @@ import com.google.gson.JsonObject
  * @Date 2024/12/9 18:16
  * @descript:
  */
-class ApiResponse<T> (
+data class EyeApiResponse<T> (
     val code: Long,
     val message: JsonObject,
     val result: T? = null,

@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
 import com.knight.kotlin.library_base.ktx.showLoadingDialog
 import com.knight.kotlin.library_base.vm.BaseViewModel
+import com.knight.kotlin.library_network.bean.EyeApiResponse
 import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_eye_discover.entity.BaseEyeDiscoverEntity
 import com.knight.kotlin.module_eye_discover.entity.EyeDiscoverNavEntity
@@ -37,9 +38,8 @@ class EyeDiscoverScrollListVm @Inject constructor(private val mRepo:EyeDiscoverS
      *
      * 获取发现导航数据
      */
-    fun getNav(tabel:String):LiveData<EyeDiscoverNavEntity> {
+    fun getNav(tabel:String):LiveData<EyeApiResponse<EyeDiscoverNavEntity>> {
         return mRepo.getNav(tabel).asLiveData()
-
     }
 
 

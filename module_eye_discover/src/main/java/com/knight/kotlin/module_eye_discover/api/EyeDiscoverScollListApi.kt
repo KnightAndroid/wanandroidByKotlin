@@ -2,6 +2,7 @@ package com.knight.kotlin.module_eye_discover.api
 
 import com.google.gson.JsonObject
 import com.knight.kotlin.library_base.config.Appconfig
+import com.knight.kotlin.library_network.bean.EyeApiResponse
 import com.knight.kotlin.module_eye_discover.entity.EyeDiscoverNavEntity
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
@@ -33,5 +34,5 @@ interface EyeDiscoverScollListApi {
     @Headers("Domain-Name:eye_sub")
     @FormUrlEncoded
     @POST("v1/card/page/get_nav")
-    suspend fun getNav(@Field("tab_label") tabLabel: String) : EyeDiscoverNavEntity
+    suspend fun getNav(@Field("tab_label") tabLabel: String) : EyeApiResponse<EyeDiscoverNavEntity>
 }
