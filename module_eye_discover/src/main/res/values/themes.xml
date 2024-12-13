@@ -2,4 +2,10 @@
 <resources>
 
     <style name="eye_discover_Theme.Wanandroid" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="eye_discover_Theme.chip" parent="Theme.MaterialComponents"/>
+
+
+    <style name="eye_discover_CustomAssistChip" parent="Widget.Material3.Chip.Assist">
+
+    </style>
 </resources>

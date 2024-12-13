@@ -2,6 +2,7 @@ package com.knight.kotlin.module_eye_discover.vm
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
+import com.google.gson.JsonObject
 import com.knight.kotlin.library_base.vm.BaseViewModel
 import com.knight.kotlin.library_network.bean.EyeApiResponse
 import com.knight.kotlin.module_eye_discover.entity.EyeHotQueriesEntity
@@ -25,6 +26,15 @@ class EyeDiscoverSearchRecommendVm @Inject constructor(private val mRepo: EyeDis
      */
     fun getHotQueries(): LiveData<EyeApiResponse<EyeHotQueriesEntity>> {
         return mRepo.getHotQueries().asLiveData()
+    }
+
+
+    /**
+     *
+     * 获取推荐视频
+     */
+    fun getRecommendCardList() : LiveData<JsonObject> {
+        return mRepo.getRecommendCardList().asLiveData()
     }
 
 

@@ -8,4 +8,6 @@
     <style name="eye_discover_CustomSearchBar" parent="Theme.Material3.Light.NoActionBar">
         <item name="android:background">#FF7729</item> <!-- 背景颜色 -->
     </style>
+
+
 </resources>

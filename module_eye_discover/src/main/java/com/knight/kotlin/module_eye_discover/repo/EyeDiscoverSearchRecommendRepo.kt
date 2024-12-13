@@ -1,5 +1,6 @@
 package com.knight.kotlin.module_eye_discover.repo
 
+import com.google.gson.JsonObject
 import com.knight.kotlin.library_base.repository.BaseRepository
 import com.knight.kotlin.library_network.bean.EyeApiResponse
 import com.knight.kotlin.library_network.model.responseCodeExceptionHandler
@@ -30,6 +31,19 @@ class EyeDiscoverSearchRecommendRepo @Inject constructor() : BaseRepository(){
               responseCodeExceptionHandler(this.code.toInt(), this.message.toString())
               emit(this)
           }
+    }){
+        it?.let { it1 -> toast(it1) }
+    }
+
+
+    /**
+     *
+     * 获取推荐视频
+     */
+    fun getRecommendCardList() = request<JsonObject>({
+        mEyeDiscoverSearchRecommendApi.getRecommendCardList().run {
+            emit(this)
+        }
     }){
         it?.let { it1 -> toast(it1) }
     }
