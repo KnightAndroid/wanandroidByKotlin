@@ -33,12 +33,23 @@ class EyeAddHeadInterceptor(context: Context,
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
         val requestBuilder = request.newBuilder()
-        when (request.method) {
-            "GET" -> addCommonParamToUrl(request, requestBuilder)
-            "POST" -> addCommonParamToBody(request, requestBuilder)
-            else -> {
+
+        val headers  = chain.request().headers.values("Domain-Name")
+        if (headers .size == 1) {
+            val headerTag = headers[0]
+            if (headerTag == "eye_sub") {
+                when (request.method) {
+                    "GET" -> addCommonParamToUrl(request, requestBuilder)
+                    "POST" -> addCommonParamToBody(request, requestBuilder)
+                    else -> {
+                    }
+                }
             }
         }
+
+
+
+
         return chain.proceed(requestBuilder.build())
     }
 
