@@ -54,6 +54,25 @@
     public static <fields>;
 }
 
+
+# 保持标记了@Serializable的实体类不被混淆
+-keepnames class * {
+    @kotlinx.serialization.Serializable *;
+}
+
+# 如果你想保持这些类的字段不被混淆，可以添加<fields>标签
+-keepclassmembers class * {
+    @kotlinx.serialization.Serializable *;
+    <fields>;
+}
+# 如果你有自定义的serializer，也需要保持它们不被混淆
+-keepclassmembers class * {
+    @kotlinx.serialization.Serializer *;
+}
+ -keepnames class * {
+      @kotlinx.serialization.Serializable *;
+  }
+
 -keepclasseswithmembernames class * { # 保持native方法不被混淆
     native <methods>;
 }

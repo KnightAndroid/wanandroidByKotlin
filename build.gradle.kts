@@ -1,6 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
     id("com.google.devtools.ksp") version com.knight.wanandroid.buildsrc.Dependencies.Version.ANDROID_KSP_VERSION
+    id("org.jetbrains.kotlin.plugin.serialization") version com.knight.wanandroid.buildsrc.Dependencies.Version.KOTLIN_SERIALIZATION
 }
 buildscript {
     repositories {
@@ -18,6 +19,7 @@ buildscript {
         classpath(com.knight.wanandroid.buildsrc.ProjectPluginDencies.KOTLIN_PLUGIN)
         classpath(com.knight.wanandroid.buildsrc.ProjectPluginDencies.GO_ROUTER_REGISTER)
         classpath(com.knight.wanandroid.buildsrc.ProjectPluginDencies.HILT_PLUGIN)
+       // classpath(com.knight.wanandroid.buildsrc.ProjectPluginDencies.KOTLIN_SERIALIZATION)
         classpath(com.knight.wanandroid.buildsrc.ProjectPluginDencies.ANDROID_AOP)
     }
 }

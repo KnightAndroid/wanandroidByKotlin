@@ -1,11 +1,11 @@
 package com.knight.kotlin.module_eye_discover.repo
 
-import com.google.gson.JsonObject
 import com.knight.kotlin.library_base.repository.BaseRepository
 import com.knight.kotlin.library_network.bean.EyeApiResponse
 import com.knight.kotlin.library_network.model.responseCodeExceptionHandler
 import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_eye_discover.api.EyeDiscoverSearchRecommendApi
+import com.knight.kotlin.module_eye_discover.entity.EyeDiscoverCardListEntity
 import com.knight.kotlin.module_eye_discover.entity.EyeHotQueriesEntity
 import javax.inject.Inject
 
@@ -40,9 +40,9 @@ class EyeDiscoverSearchRecommendRepo @Inject constructor() : BaseRepository(){
      *
      * 获取推荐视频
      */
-    fun getRecommendCardList() = request<JsonObject>({
+    fun getRecommendCardList() = request<EyeDiscoverCardListEntity>({
         mEyeDiscoverSearchRecommendApi.getRecommendCardList().run {
-            emit(this)
+            this.result?.let { emit(it) }
         }
     }){
         it?.let { it1 -> toast(it1) }

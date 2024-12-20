@@ -6,7 +6,6 @@ import com.knight.kotlin.library_base.repository.BaseRepository
 import com.knight.kotlin.library_network.bean.EyeApiResponse
 import com.knight.kotlin.library_network.enum.ResponseExceptionEnum
 import com.knight.kotlin.library_network.exception.ResponseException
-import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_eye_discover.api.EyeDiscoverScollListApi
 import com.knight.kotlin.module_eye_discover.entity.BaseEyeDiscoverEntity
 import com.knight.kotlin.module_eye_discover.entity.EyeCategoryCardEntity
@@ -112,7 +111,7 @@ class EyeDiscoverScrollListRepo @Inject constructor() : BaseRepository(){
          emit(this)
         }
     }){
-        it?.let { it1 -> toast(it1) }
+       // it?.let { it1 -> toast(it1) }
     }
 
 }

@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.config.Appconfig
-import com.knight.kotlin.library_base.entity.EyeData
+import com.knight.kotlin.library_base.entity.EyeVideoDetailEntity
 import com.knight.kotlin.library_base.ktx.fromJson
 import com.knight.kotlin.library_base.ktx.init
 import com.knight.kotlin.library_base.route.RouteActivity
@@ -37,9 +37,9 @@ class EyeVideoDetailActivity : BaseActivity<EyeVideoDetailActivityBinding,EyeVid
 
     /**
      *
-     * 开眼播放视频详情实体
+     * 详细实体
      */
-    private lateinit var videoEyeData:EyeData
+    private lateinit var videoDetailData:EyeVideoDetailEntity
 
     @JvmField
     @Param(name = Appconfig.EYE_VIDEO_PARAM_KEY)
@@ -78,11 +78,11 @@ class EyeVideoDetailActivity : BaseActivity<EyeVideoDetailActivityBinding,EyeVid
         )
         ((rvRelateVideo.layoutManager) as LinearLayoutManager).initialPrefetchItemCount = 3
         eyeDetailRefreshLayout.setOnRefreshListener(this@EyeVideoDetailActivity)
-        videoEyeData = fromJson(videoJson)
+        videoDetailData = fromJson(videoJson)
         //注入xml中
-        videoEntity = videoEyeData
-        jzVideo.setUp(videoEyeData.playUrl
-            , videoEyeData.title)
+        videoEntity = videoDetailData
+        jzVideo.setUp(videoDetailData.videoUrl
+            , videoDetailData.videoTitle)
         jzVideo.startVideo()
         jzVideo.setNormalBackListener(object : OkPlayer.NormalBackListener{
             override fun backFinifsh() {
@@ -113,9 +113,9 @@ class EyeVideoDetailActivity : BaseActivity<EyeVideoDetailActivityBinding,EyeVid
                 mHeaderBinding =
                     EyeVideoDetailHeadBinding.inflate(LayoutInflater.from(this@EyeVideoDetailActivity))
                 mBinding.rvRelateVideo.addHeaderView(mHeaderBinding.root)
-                mHeaderBinding.videoEntity = videoEyeData
+                mHeaderBinding.videoEntity = videoDetailData
             } else {
-                mHeaderBinding.videoEntity = videoEyeData
+                mHeaderBinding.videoEntity = videoDetailData
             }
         }
     }
@@ -148,7 +148,7 @@ class EyeVideoDetailActivity : BaseActivity<EyeVideoDetailActivityBinding,EyeVid
     }
 
     private fun getRelateVideoList() {
-        mViewModel.getVideoDetail(videoEyeData.id).observerKt {
+        mViewModel.getVideoDetail(videoDetailData.videoId).observerKt {
             mBinding.eyeDetailRefreshLayout.finishRefresh()
             initHeaderView()
             mEyeVideoRelateAdapter.submitList(it.itemList)

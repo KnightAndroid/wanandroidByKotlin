@@ -8,7 +8,7 @@
 
         <variable
             name="videoEntity"
-            type="com.knight.kotlin.library_base.entity.EyeData" />
+            type="com.knight.kotlin.library_base.entity.EyeVideoDetailEntity" />
 
         <import type="com.knight.kotlin.library_util.DateUtils" />
 
@@ -29,7 +29,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/eye_video_detail_tv_title_margin_start"
                 android:layout_marginTop="@dimen/eye_video_detail_tv_title_margin_top"
-                android:text="@{videoEntity.title}"
+                android:text="@{videoEntity.videoTitle}"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/eye_video_detail_tv_title_text_size"
                 android:textStyle="bold" />
@@ -40,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/eye_video_detail_tv_category_margin_start"
                 android:layout_marginTop="@dimen/eye_video_detail_tv_category_margin_top"
-                android:text="@{`#` + videoEntity.category + ` / ` + DateUtils.INSTANCE.formatDateMsByYMDHM(videoEntity.author.latestReleaseTime)}"
+                android:text="@{`#` + videoEntity.videoCategory + ` / ` + DateUtils.INSTANCE.formatDateMsByYMDHM(videoEntity.latestReleaseTime)}"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/eye_video_detail_tv_category_text_size" />
 
@@ -52,7 +52,7 @@
                 android:layout_marginStart="@dimen/eye_video_detail_tv_desc_margin_start"
                 android:layout_marginTop="@dimen/eye_video_detail_tv_desc_margin_top"
                 android:layout_marginEnd="@dimen/eye_video_detail_tv_desc_margin_end"
-                android:text="@{videoEntity.description}"
+                android:text="@{videoEntity.videoDescription}"
                 app:contentTextColor="@android:color/white"
                 app:contentTextSize="@dimen/eye_video_detail_tv_desc_text_size"
                 app:maxCollapsedLines="3"
@@ -71,7 +71,7 @@
                     android:layout_weight="1"
                     android:drawableTop="@drawable/eye_video_icon_give"
                     android:gravity="center"
-                    android:text="@{String.valueOf(videoEntity.consumption.collectionCount)}"
+                    android:text="@{String.valueOf(videoEntity.collectionCount)}"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/eye_video_detail_tv_give_text_size" />
 
@@ -92,7 +92,7 @@
                     android:layout_weight="1"
                     android:drawableTop="@drawable/eye_video_icon_comment"
                     android:gravity="center"
-                    android:text="@{String.valueOf(videoEntity.consumption.replyCount)}"
+                    android:text="@{String.valueOf(videoEntity.replyCount)}"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/eye_video_detail_tv_comment_text_size" />
 
@@ -103,7 +103,7 @@
                     android:layout_weight="1"
                     android:drawableTop="@drawable/eye_video_icon_share"
                     android:gravity="center"
-                    android:text="@{String.valueOf(videoEntity.consumption.shareCount)}"
+                    android:text="@{String.valueOf(videoEntity.shareCount)}"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/eye_video_detail_tv_share_text_size" />
             </LinearLayout>
@@ -129,14 +129,14 @@
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:shapeAppearance="@style/base_circleStyle"
-                    bind:imageUrl="@{videoEntity.author.icon}" />
+                    bind:imageUrl="@{videoEntity.authorIcon}" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/eye_video_detail_tv_title_margin_start"
-                    android:text="@{String.valueOf(videoEntity.author.name)}"
+                    android:text="@{String.valueOf(videoEntity.authorName)}"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/eye_video_detail_category_tv_title_text_size"
                     app:layout_constraintLeft_toRightOf="@id/iv_author"
@@ -147,7 +147,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/eye_video_detail_category_tv_desc_margin_start"
                     android:layout_marginEnd="@dimen/eye_video_detail_category_tv_desc_margin_end"
-                    android:text="@{String.valueOf(videoEntity.author.description)}"
+                    android:text="@{String.valueOf(videoEntity.authorDescription)}"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/eye_video_detail_category_tv_desc_text_size"
                     app:layout_constraintHorizontal_weight="1"

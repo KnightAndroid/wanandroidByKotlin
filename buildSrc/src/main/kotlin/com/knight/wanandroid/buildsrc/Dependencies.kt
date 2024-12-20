@@ -17,6 +17,8 @@ object Dependencies {
        //构建相关-----------------------------------------------
        const val TOOL_BUILD_VERSION= "8.0.0"
        const val KOTLIN_GRADLE_PLUGIN_VERSION = "1.8.10"
+       //kotlin Serialization序列化（KOTLIN_GRADLE_PLUGIN_VERSION后续要和这个版本统一）
+       const val KOTLIN_SERIALIZATION = "1.8.10"
        //AndroidX----------------------------------------------
        const val APPCOMPAT_VERSION = "1.7.0"
        //核心依赖
@@ -97,7 +99,7 @@ object Dependencies {
        const val LOTTIE =  "2.8.0"                  //lottie 动画版本
        const val SLF4J = "1.7.21"                    //slf4j版本
        const val windowx = "1.3.0"                      //window 版本
-
+       const val kotlinxSerializationJson = "1.5.0"   //kotlin序列化帮助类
     }
     /**
      * AndroidX相关依赖
@@ -160,6 +162,9 @@ object Dependencies {
             "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Version.COROUTINES_VERSION}"
         const val COROUTINES_ANDROID =
             "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Version.COROUTINES_VERSION}"
+
+        const val kotlinx_serialization_json =
+            "org.jetbrains.kotlinx:kotlinx-serialization-json:${Version.kotlinxSerializationJson}"
     }
 
     /**

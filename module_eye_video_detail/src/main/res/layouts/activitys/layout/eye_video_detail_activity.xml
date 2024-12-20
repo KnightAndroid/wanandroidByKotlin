@@ -9,7 +9,7 @@
 
         <variable
             name="videoEntity"
-            type="com.knight.kotlin.library_base.entity.EyeData" />
+            type="com.knight.kotlin.library_base.entity.EyeVideoDetailEntity" />
 
 
 
@@ -25,8 +25,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
-            bind:imageUrl="@{BlurredLoadUrlUtils.INSTANCE.loadBlurredUrl(videoEntity.cover.blurred)}" />
-
+            android:background="@color/eye_video_detail_bg"
+           />
+<!--      可设置加载背景模糊图  bind:imageUrl="@{BlurredLoadUrlUtils.INSTANCE.loadBlurredUrl(videoEntity.videoCover)}"-->
 
         <com.knight.kotlin.library_video.play.OkPlayerStd
             android:id="@+id/jz_video"

@@ -2,4 +2,5 @@
 <resources>
     <color name="eye_video_follow_text_color">#FF9E9E9E</color>
     <color name="eye_video_detail_relate_tv_time_background_tint">#8A000000</color>
+    <color name="eye_video_detail_bg">#E61e272e</color>
 </resources>

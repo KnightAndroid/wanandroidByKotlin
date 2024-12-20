@@ -1,5 +1,7 @@
 package com.knight.kotlin.library_network.client
 
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.knight.kotlin.library_base.BaseApp
 import com.knight.kotlin.library_network.BuildConfig
 import com.knight.kotlin.library_network.config.BaseUrlConfig
@@ -15,10 +17,12 @@ import com.knight.kotlin.library_network.interceptor.HttpInterceptor
 import com.knight.kotlin.library_network.interceptor.NetworkInterceptor
 import com.knight.kotlin.library_network.interceptor.SignInterceptor
 import com.knight.kotlin.library_network.log.LoggingInterceptor
+import com.knight.kotlin.library_network.serializer.JsonObjectAdapter
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import kotlinx.serialization.json.JsonObject
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -103,6 +107,11 @@ class ClientConfig {
     @Provides
     fun retrofitBuild(okHttpClient: OkHttpClient) :Retrofit {
 
+
+        // 创建自定义 Gson 实例 为了兼容解析kotlinx.serialization
+        val gson: Gson = GsonBuilder()
+            .registerTypeAdapter(JsonObject::class.java, JsonObjectAdapter())
+            .create()
         return Retrofit.Builder()
             .baseUrl(BaseUrlConfig.WANDROID_URL)
             .client(okHttpClient)
@@ -135,7 +144,7 @@ class ClientConfig {
 //                    return null
 //                }
 //            })
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
 
     }

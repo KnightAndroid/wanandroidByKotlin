@@ -11,6 +11,7 @@ import com.knight.kotlin.library_base.R
 import com.knight.kotlin.library_base.config.Appconfig
 import com.knight.kotlin.library_base.config.EyeTypeConstants
 import com.knight.kotlin.library_base.entity.EyeItemEntity
+import com.knight.kotlin.library_base.entity.EyeVideoDetailEntity
 import com.knight.kotlin.library_base.ktx.setOnClick
 import com.knight.kotlin.library_base.ktx.toJson
 import com.knight.kotlin.library_base.route.RouteActivity
@@ -60,12 +61,29 @@ class EyeVideoRelateAdapter(data: List<EyeItemEntity>,activity: Activity) : Base
                 val binding = DataBindingUtil.getBinding<EyeVideoRelateItemBinding>(holder.itemView)
                 binding?.model = item?.data
                 binding?.clRelateItem?.setOnClick{
+                    val videoDetailData = EyeVideoDetailEntity(item?.data!!.id,
+                        item?.data!!.title,
+                        item?.data!!.playUrl,
+                        item?.data!!.category,
+                        item?.data!!.author?.latestReleaseTime?:System.currentTimeMillis(),
+                        item?.data!!.description,
+                        item?.data!!.consumption.collectionCount ,
+                        item?.data!!.consumption.replyCount ,
+                        item?.data!!.consumption.shareCount,
+                        item?.data!!.author?.icon ?: "",
+                        item?.data!!.author?.name?: "",
+                        item?.data!!.author?.description?: "",
+                        item?.data!!.cover?.blurred ?: ""
+                    )
+
+
+
                     startPageWithAnimate(
                         activity,
                         RouteActivity.EyeVideo.EyeVideoDetail,
                         binding.ivCover,
                         activity.getString(R.string.base_daily_share_image),
-                        Appconfig.EYE_VIDEO_PARAM_KEY to toJson(item?.data!!)
+                        Appconfig.EYE_VIDEO_PARAM_KEY to toJson(videoDetailData)
                     )
                 }
             }

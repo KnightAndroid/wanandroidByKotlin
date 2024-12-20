@@ -11,7 +11,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'dagger.hilt.android.plugin'
 apply plugin: 'kotlin-parcelize'
-
+apply plugin: 'kotlinx-serialization'
 android {
     compileSdkVersion ProjectBuildDencies.COMPILE_SDK_VERSION
     buildToolsVersion ProjectBuildDencies.BUILD_TOOLS_VERSION

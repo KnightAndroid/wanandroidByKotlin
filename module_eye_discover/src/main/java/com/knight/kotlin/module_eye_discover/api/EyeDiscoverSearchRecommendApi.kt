@@ -1,7 +1,7 @@
 package com.knight.kotlin.module_eye_discover.api
 
-import com.google.gson.JsonObject
 import com.knight.kotlin.library_network.bean.EyeApiResponse
+import com.knight.kotlin.module_eye_discover.entity.EyeDiscoverCardListEntity
 import com.knight.kotlin.module_eye_discover.entity.EyeHotQueriesEntity
 import retrofit2.http.GET
 import retrofit2.http.Headers
@@ -22,7 +22,7 @@ interface EyeDiscoverSearchRecommendApi {
 
     @Headers("Domain-Name:eye_sub")
     @GET("v1/search/search/get_search_recommend_card_list")
-    suspend fun getRecommendCardList():JsonObject
+    suspend fun getRecommendCardList():EyeApiResponse<EyeDiscoverCardListEntity>
 
 
 

@@ -68,12 +68,12 @@ class SignInterceptor(
             val gson = Gson()
             val type: Type = object : TypeToken<EyeApiResponse<GetToken>>() {}.getType()
             val eyeApiResponse: EyeApiResponse<GetToken> = gson.fromJson(result, type)
-            val content = eyeApiResponse.message.get("content")
-            var contentMessage:String = ""
-            if (content != null) {
-                contentMessage = content.asString
-            }
-            if (content == null) {
+//            val content = eyeApiResponse.message.get("content")
+//            var contentMessage:String = ""
+//            if (content != null) {
+//                contentMessage = content.asString
+//            }
+//            if (content == null) {
                 if (eyeApiResponse.code in 60000..69999 && eyeApiResponse.result != null) {
                     val request = Request.Builder()
                         .headers(requestBuilder.build().headers)
@@ -90,9 +90,9 @@ class SignInterceptor(
 
                     return true
                 }
-            } else {
-                return false
-            }
+//            } else {
+//                return false
+//            }
 
         }
         return false
