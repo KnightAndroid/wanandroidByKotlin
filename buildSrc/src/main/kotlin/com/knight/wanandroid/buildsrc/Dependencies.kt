@@ -16,7 +16,7 @@ object Dependencies {
     object Version {
        //构建相关-----------------------------------------------
        const val TOOL_BUILD_VERSION= "8.0.0"
-       const val KOTLIN_GRADLE_PLUGIN_VERSION = "1.8.10"
+       const val KOTLIN_GRADLE_PLUGIN_VERSION = "2.0.21"
        //kotlin Serialization序列化（KOTLIN_GRADLE_PLUGIN_VERSION后续要和这个版本统一）
        const val KOTLIN_SERIALIZATION = "1.8.10"
        //AndroidX----------------------------------------------
@@ -45,7 +45,7 @@ object Dependencies {
 
 
        //kotlin相关-----------------------------------------------
-       const val KOTLIN_VERSION = "1.8.10"
+       const val KOTLIN_VERSION = "2.0.21"
        //协程
        const val COROUTINES_VERSION = "1.7.0"
 
@@ -54,10 +54,10 @@ object Dependencies {
        const val LIFECYCLE = "2.5.1"
        const val LIFECYCLE_EXTENSION = "2.2.0"
        //DI框架-Hilt
-       const val HILT = "2.47"
+       const val HILT = "2.51.1"
        const val HILT_ANDROIDX = "1.0.0"
        //数据库Room
-       const val ROOM_VERSION = "2.4.3"
+       const val ROOM_VERSION = "2.6.0"
        //camerax
        const val CAMERAX_VERSION = "1.0.2"
        //cameraView
@@ -92,8 +92,8 @@ object Dependencies {
        //第三方其他相关------------------------------------------------------
        const val LEAKCANARY_VERSION = "2.8.1"               // 内存泄漏相关
        const val BUG_LY = "4.1.9.2"                   // bugly异常上报
-       const val ANDROID_AOP = "1.3.1"                       //aop相关
-       const val ANDROID_KSP_VERSION = "1.8.10-1.0.9"         //ksp版本
+       const val ANDROID_AOP = "2.3.3"                       //aop相关
+       const val ANDROID_KSP_VERSION = "2.0.21-1.0.25"         //ksp版本
 
        const val EXOPLAYER = "2.17.0"                //视频播放器版本
        const val LOTTIE =  "2.8.0"                  //lottie 动画版本
@@ -259,6 +259,8 @@ object Dependencies {
         const val LEAK_CANARY = "com.squareup.leakcanary:leakcanary-android:${Version.LEAKCANARY_VERSION}"
         //aop相关 https://github.com/FlyJingFish/AndroidAOP
         const val ANDROID_AOP = "io.github.FlyJingFish.AndroidAop:android-aop-core:${Version.ANDROID_AOP}"
+        //👇非必须项 👈 这个包提供了一些常见的注解切面
+        const val ANDROID_EXTRA_AOP =  "io.github.FlyJingFish.AndroidAop:android-aop-extra:${Version.ANDROID_AOP}"
         const val ANDROID_AOP_ANNOTATION = "io.github.FlyJingFish.AndroidAop:android-aop-annotation:${Version.ANDROID_AOP}"
         const val ANDROID_KSP = "io.github.FlyJingFish.AndroidAop:android-aop-ksp:${Version.ANDROID_AOP}"
     }
