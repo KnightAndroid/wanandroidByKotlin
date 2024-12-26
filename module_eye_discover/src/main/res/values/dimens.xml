@@ -73,5 +73,10 @@
     <dimen name="eye_discover_special_topic_item_tag_padding_right">5dp</dimen>
     <dimen name="eye_discover_special_topic_item_tag_text_size">12sp</dimen>
     <dimen name="eye_discover_special_topic_item_tag_corner_radius">4dp</dimen>
-
+    <dimen name="eye_discover_search_video_cl_margin_start">10dp</dimen>
+    <dimen name="eye_discover_search_video_cl_margin_bottom">10dp</dimen>
+    <dimen name="eye_discover_search_video_iv_width">160dp</dimen>
+    <dimen name="eye_discover_search_video_iv_height">90dp</dimen>
+    <dimen name="eye_discover_search_video_tv_title_margin_left">10dp</dimen>
+    <dimen name="eye_discover_search_video_tv_title_text_size">16sp</dimen>
 </resources>

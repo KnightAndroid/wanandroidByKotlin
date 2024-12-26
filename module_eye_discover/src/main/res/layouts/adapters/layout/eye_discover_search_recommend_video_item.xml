@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.knight.kotlin.library_base.entity.EyeCommonVideoEntity" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_relate_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/eye_discover_search_video_cl_margin_start"
+        android:layout_marginBottom="@dimen/eye_discover_search_video_cl_margin_bottom">
+
+
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/iv_video_cover"
+                android:layout_width="@dimen/eye_discover_search_video_iv_width"
+                android:layout_height="@dimen/eye_discover_search_video_iv_height"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:scaleType="centerCrop"
+                app:shapeAppearance="@style/base_roundedCornerStyle"
+                bind:imageUrl="@{viewModel.cover.url}"
+        />
+
+<!--        bind:imageUrl="@{model.component9().feed}"-->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_video_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/eye_discover_search_video_tv_title_margin_left"
+            android:gravity="start"
+            android:textColor="@color/eye_discover_recommend_search_video_title_text_color"
+            android:textSize="@dimen/eye_discover_search_video_tv_title_text_size"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintLeft_toRightOf="@id/iv_video_cover"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="@{viewModel.title}"/>
+
+<!--        android:text="@{model.title}"-->
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

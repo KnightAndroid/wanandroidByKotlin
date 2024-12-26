@@ -16,4 +16,5 @@
       <color name="eye_discover_special_topic_tv_collect_text_color">#bfbfbf</color>
       <color name="eye_discover_special_topic_tv_share_text_color">#bfbfbf</color>
       <color name="eye_discover_special_tag_background_tint">#3389b1e9</color>
+      <color name="eye_discover_recommend_search_video_title_text_color">#CC333333</color>
   </resources>

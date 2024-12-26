@@ -7,4 +7,5 @@
       <color name="eye_discover_special_topic_header_desc_stroke_color">#666666</color>
       <color name="eye_discover_special_topic_tv_publish_time_text_color">#D3D3D3</color>
       <color name="eye_discover_special_topic_tv_des_text_color">#666666</color>
+      <color name="eye_discover_recommend_search_video_title_text_color">#D3D3D3</color>
 </resources>

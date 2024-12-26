@@ -99,7 +99,7 @@ object Dependencies {
        const val LOTTIE =  "2.8.0"                  //lottie 动画版本
        const val SLF4J = "1.7.21"                    //slf4j版本
        const val windowx = "1.3.0"                      //window 版本
-       const val kotlinxSerializationJson = "1.5.0"   //kotlin序列化帮助类
+       const val kotlinxSerializationJson = "1.7.3"   //kotlin序列化帮助类
     }
     /**
      * AndroidX相关依赖

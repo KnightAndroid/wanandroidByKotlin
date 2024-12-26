@@ -6,6 +6,7 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.serializer
 import kotlin.reflect.KType
+import kotlin.reflect.typeOf
 
 
 /**
@@ -98,7 +99,17 @@ data class EyeDiscoverMetroCard<T>(
     @Serializable(with = NumberOrStringSerializer::class)
     val link: String = ""
 )
-
+inline fun <reified T> EyeDiscoverMetroCard<JsonObject>.toMetroCard(): EyeDiscoverMetroCard<T> {
+    return EyeDiscoverMetroCard(
+        metro_id = metro_id,
+        type = type,
+        alias_name = alias_name,
+        style = this.style,
+        metro_unique_id = metro_unique_id,
+        metro_data = json.decodeFromJsonElement(serializer(typeOf<T>()), metro_data) as T,
+        link = this.link
+    )
+}
 fun EyeDiscoverMetroCard<JsonObject>.toMetroCard(kType: KType): EyeDiscoverMetroCard<Any> {
     return EyeDiscoverMetroCard(
         metro_id = metro_id,
@@ -117,4 +128,7 @@ data class EyeDiscoverApiRequest(
     val url: String = "",
     val params: JsonObject? = null,
 )
+
+
+
 
