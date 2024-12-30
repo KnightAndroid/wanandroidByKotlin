@@ -79,4 +79,5 @@
     <dimen name="eye_discover_search_video_iv_height">90dp</dimen>
     <dimen name="eye_discover_search_video_tv_title_margin_left">10dp</dimen>
     <dimen name="eye_discover_search_video_tv_title_text_size">16sp</dimen>
+    <dimen name="eye_discover_search_result_indicator_height">40dp</dimen>
 </resources>

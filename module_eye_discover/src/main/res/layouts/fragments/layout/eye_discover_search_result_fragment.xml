@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/colorSurface"
+    android:theme="@style/Theme.Material3.DayNight"
+    android:backgroundTint="@macro/m3_comp_search_view_container_color"
+    tools:context="com.knight.kotlin.module_eye_discover.fragment.EyeDiscoverSearchResultFragment"
+    android:orientation="vertical"
+   >
+<!--    android:backgroundTint="?attr/colorSurface"-->
+<!--    -->
+
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="sdsdsdsd"/>
+<!--    <com.knight.kotlin.library_widget.CompatToolBar-->
+<!--        android:id="@+id/search_result_toolbar"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content">-->
+
+<!--        <net.lucode.hackware.magicindicator.MagicIndicator-->
+<!--            android:id="@+id/project_indicator"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="@dimen/eye_discover_search_result_indicator_height"-->
+<!--            android:theme="@style/base_AppTheme.AppBarOverlay"-->
+<!--            app:layout_scrollFlags="scroll|enterAlways"-->
+<!--            app:popupTheme="@style/base_AppTheme.PopupOverlay"/>-->
+
+<!--    </com.knight.kotlin.library_widget.CompatToolBar>-->
+
+<!--    <androidx.viewpager2.widget.ViewPager2-->
+<!--        android:id="@+id/search_result_view_pager"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent" />-->
+</LinearLayout>

@@ -97,6 +97,7 @@ object RouteFragment {
         private const val DISCOVER = "/modeule_discover"
         const val DiscoverScollListFragment = "$DISCOVER/DiscoverScollListFragment"
         const val DiscoverRecommendFragment = "$DISCOVER/DiscoverRecommendFragment"
+        const val DiscoverSearchResultFragment = "$DISCOVER/DiscoverSearchResultFragment"
     }
 
 

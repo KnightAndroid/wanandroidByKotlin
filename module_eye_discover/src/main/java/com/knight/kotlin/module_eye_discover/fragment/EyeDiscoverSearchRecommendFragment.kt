@@ -11,9 +11,11 @@ import com.google.android.material.chip.Chip
 import com.google.android.material.shape.ShapeAppearanceModel
 import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.knight.kotlin.library_base.ktx.init
+import com.knight.kotlin.library_base.ktx.setOnClick
 import com.knight.kotlin.library_base.route.RouteFragment
 import com.knight.kotlin.library_base.util.dp2px
 import com.knight.kotlin.library_util.toast
+import com.knight.kotlin.module_eye_discover.activity.EyeDiscoverActivity
 import com.knight.kotlin.module_eye_discover.adapter.EyeDiscoverSearchRecommendVideoAdapter
 
 import com.knight.kotlin.module_eye_discover.databinding.EyeDiscoverRecommendFragmentBinding
@@ -27,7 +29,7 @@ import dagger.hilt.android.AndroidEntryPoint
  * @author created by luguian
  * @organize
  * @Date 2024/12/10 17:20
- * @descript:
+ * @descript:搜索推荐页面
  */
 @AndroidEntryPoint
 @Route(path = RouteFragment.Discover.DiscoverRecommendFragment)
@@ -57,8 +59,6 @@ class EyeDiscoverSearchRecommendFragment : BaseFragment<EyeDiscoverRecommendFrag
 
     override fun initRequestData() {
          mViewModel.getHotQueries().observerKt {
-            // toast(it.result?.item_list.toString())
-
              if (mBinding.rvDiscoverRecommendVideo.headerCount == 0) {
                  if (!::mHeaderBinding.isInitialized) {
                       mHeaderBinding = EyeDiscoverRecommendSearchHotItemBinding.inflate(LayoutInflater.from(activity))
@@ -75,6 +75,12 @@ class EyeDiscoverSearchRecommendFragment : BaseFragment<EyeDiscoverRecommendFrag
                      chip.setChipStrokeColor(ColorStateList.valueOf(Color.BLACK)) // 边线颜色
                      chip.setChipStrokeWidth(2f) // 边线宽度（单位：像素）
                      chip.setText(key)
+                     chip.setOnClick {
+                         (activity as EyeDiscoverActivity)?.let{
+                             it.showResultFragment()
+                         }
+
+                     }
                      mHeaderBinding.chipGroup.chipSpacingVertical = 0
                      mHeaderBinding.chipGroup.setPadding(16.dp2px(), 0, 16.dp2px(), 8.dp2px())
                      mHeaderBinding.chipGroup.addView(chip)

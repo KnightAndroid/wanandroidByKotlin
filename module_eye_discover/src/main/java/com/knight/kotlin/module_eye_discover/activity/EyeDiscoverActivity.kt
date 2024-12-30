@@ -6,13 +6,17 @@ import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.replace
 import com.google.android.material.search.SearchView
 import com.knight.kotlin.library_base.activity.BaseActivity
+import com.knight.kotlin.library_base.ktx.hide
+import com.knight.kotlin.library_base.ktx.showFragment
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.module_eye_discover.R
 import com.knight.kotlin.module_eye_discover.databinding.EyeDiscoverActivityBinding
 import com.knight.kotlin.module_eye_discover.fragment.EyeDiscoverScollListFragment
 import com.knight.kotlin.module_eye_discover.fragment.EyeDiscoverSearchRecommendFragment
+import com.knight.kotlin.module_eye_discover.fragment.EyeDiscoverSearchResultFragment
 import com.knight.kotlin.module_eye_discover.vm.EyeDiscoverScrollListVm
 import com.wyjson.router.annotation.Route
 import dagger.hilt.android.AndroidEntryPoint
@@ -30,6 +34,7 @@ class EyeDiscoverActivity : BaseActivity<EyeDiscoverActivityBinding, EyeDiscover
 
    val recommendSearchFragment = EyeDiscoverSearchRecommendFragment()
    val scrollListFragment = EyeDiscoverScollListFragment()
+    val searchResultFragment = EyeDiscoverSearchResultFragment()
 
     override fun setThemeColor(isDarkMode: Boolean) {
 
@@ -101,7 +106,9 @@ class EyeDiscoverActivity : BaseActivity<EyeDiscoverActivityBinding, EyeDiscover
             onBackPressedCallback.isEnabled =
                 newState == SearchView.TransitionState.SHOWN
             if (newState == SearchView.TransitionState.SHOWN) {
-                switchFragment(recommendSearchFragment)
+                supportFragmentManager.showFragment<EyeDiscoverSearchRecommendFragment>(R.id.search_view_container)
+              //  supportFragmentManager.beginTransaction().replace<>(recommendSearchFragment).commit()
+             //   switchFragment(recommendSearchFragment)
             //    supportFragmentManager.beginTransaction().show(recommendFragment)
 //                supportFragmentManager.showFragment<EyeDiscoverRecommendFragment>(
 //                    R.id.search_view_container
@@ -109,8 +116,9 @@ class EyeDiscoverActivity : BaseActivity<EyeDiscoverActivityBinding, EyeDiscover
             } else {
               //  supportFragmentManager.beginTransaction().show(recommendFragment)
                 //supportFragmentManager.beginTransaction().hide(recommendFragment)
-                switchFragment(scrollListFragment)
-//                supportFragmentManager.beginTransaction().hide()
+            //    switchFragment(scrollListFragment)
+                supportFragmentManager.hide(R.id.search_view_container)
+                supportFragmentManager.hide(R.id.search_view_result_container)
 //                childFragmentManager.hide(R.id.search_view_container)
              //   childFragmentManager.hide(R.id.search_view_result_container)
             }
@@ -137,6 +145,15 @@ class EyeDiscoverActivity : BaseActivity<EyeDiscoverActivityBinding, EyeDiscover
         }
 
         transaction.commit()
+    }
+
+
+    fun showResultFragment() {
+//        val transaction = supportFragmentManager.beginTransaction()
+//        transaction.add(R.id.search_view_result_container, searchResultFragment, searchResultFragment.tag) // 添加新 Fragment
+//        transaction.commit()
+
+        supportFragmentManager.showFragment<EyeDiscoverSearchResultFragment>(R.id.search_view_result_container)
     }
 
 
