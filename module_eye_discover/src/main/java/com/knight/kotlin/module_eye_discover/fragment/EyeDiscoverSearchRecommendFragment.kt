@@ -77,7 +77,7 @@ class EyeDiscoverSearchRecommendFragment : BaseFragment<EyeDiscoverRecommendFrag
                      chip.setText(key)
                      chip.setOnClick {
                          (activity as EyeDiscoverActivity)?.let{
-                             it.showResultFragment()
+                             it.showResultFragment(chip.text.toString())
                          }
 
                      }

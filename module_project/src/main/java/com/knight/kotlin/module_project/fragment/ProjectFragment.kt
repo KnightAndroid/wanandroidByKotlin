@@ -64,6 +64,5 @@ class ProjectFragment:BaseFragment<ProjectActivityBinding, ProjectVm>() {
         )
         mBinding.projectIndicator.bindWechatViewPager2(mBinding.projectViewPager,mTitileDatas)
 
-
     }
 }

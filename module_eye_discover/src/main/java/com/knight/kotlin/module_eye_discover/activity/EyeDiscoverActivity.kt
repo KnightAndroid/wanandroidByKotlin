@@ -4,6 +4,7 @@ import android.view.KeyEvent
 import android.view.KeyEvent.KEYCODE_ENTER
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.replace
@@ -107,20 +108,9 @@ class EyeDiscoverActivity : BaseActivity<EyeDiscoverActivityBinding, EyeDiscover
                 newState == SearchView.TransitionState.SHOWN
             if (newState == SearchView.TransitionState.SHOWN) {
                 supportFragmentManager.showFragment<EyeDiscoverSearchRecommendFragment>(R.id.search_view_container)
-              //  supportFragmentManager.beginTransaction().replace<>(recommendSearchFragment).commit()
-             //   switchFragment(recommendSearchFragment)
-            //    supportFragmentManager.beginTransaction().show(recommendFragment)
-//                supportFragmentManager.showFragment<EyeDiscoverRecommendFragment>(
-//                    R.id.search_view_container
-//                )
             } else {
-              //  supportFragmentManager.beginTransaction().show(recommendFragment)
-                //supportFragmentManager.beginTransaction().hide(recommendFragment)
-            //    switchFragment(scrollListFragment)
                 supportFragmentManager.hide(R.id.search_view_container)
                 supportFragmentManager.hide(R.id.search_view_result_container)
-//                childFragmentManager.hide(R.id.search_view_container)
-             //   childFragmentManager.hide(R.id.search_view_result_container)
             }
         }
     }
@@ -128,32 +118,12 @@ class EyeDiscoverActivity : BaseActivity<EyeDiscoverActivityBinding, EyeDiscover
 
 
 
-    fun switchFragment(newFragment: Fragment) {
-        val transaction = supportFragmentManager.beginTransaction()
+    fun showResultFragment(query:String) {
+        supportFragmentManager.showFragment<EyeDiscoverSearchResultFragment>(
+            R.id.search_view_result_container,
+            args = bundleOf("query" to query)
+        )
 
-        // 获取当前显示的 Fragment
-        val currentFragment = supportFragmentManager.fragments.find { it.isVisible }
-
-        if (currentFragment != null && currentFragment != newFragment) {
-            transaction.hide(currentFragment) // 隐藏当前 Fragment
-        }
-
-        if (!newFragment.isAdded) {
-            transaction.add(R.id.search_view_container, newFragment, newFragment.tag) // 添加新 Fragment
-        } else {
-            transaction.show(newFragment) // 显示已添加的 Fragment
-        }
-
-        transaction.commit()
-    }
-
-
-    fun showResultFragment() {
-//        val transaction = supportFragmentManager.beginTransaction()
-//        transaction.add(R.id.search_view_result_container, searchResultFragment, searchResultFragment.tag) // 添加新 Fragment
-//        transaction.commit()
-
-        supportFragmentManager.showFragment<EyeDiscoverSearchResultFragment>(R.id.search_view_result_container)
     }
 
 
