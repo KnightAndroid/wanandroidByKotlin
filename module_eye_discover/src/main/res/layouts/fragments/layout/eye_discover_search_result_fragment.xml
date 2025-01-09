@@ -16,27 +16,32 @@
 
 
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="sdsdsdsd"/>
+
 <!--    <com.knight.kotlin.library_widget.CompatToolBar-->
-<!--        android:id="@+id/search_result_toolbar"-->
+<!--        android:id="@+id/search_result_item_toolbar"-->
 <!--        android:layout_width="match_parent"-->
 <!--        android:layout_height="wrap_content">-->
 
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/search_result_item_indicator"
+        android:theme="@style/base_AppTheme.AppBarOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"/>
 <!--        <net.lucode.hackware.magicindicator.MagicIndicator-->
-<!--            android:id="@+id/project_indicator"-->
+<!--            android:id="@+id/search_result_item_indicator"-->
 <!--            android:layout_width="wrap_content"-->
 <!--            android:layout_height="@dimen/eye_discover_search_result_indicator_height"-->
 <!--            android:theme="@style/base_AppTheme.AppBarOverlay"-->
 <!--            app:layout_scrollFlags="scroll|enterAlways"-->
+<!--            android:layout_gravity="center_horizontal"-->
 <!--            app:popupTheme="@style/base_AppTheme.PopupOverlay"/>-->
 
 <!--    </com.knight.kotlin.library_widget.CompatToolBar>-->
 
-<!--    <androidx.viewpager2.widget.ViewPager2-->
-<!--        android:id="@+id/search_result_view_pager"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent" />-->
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/search_result_view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </LinearLayout>

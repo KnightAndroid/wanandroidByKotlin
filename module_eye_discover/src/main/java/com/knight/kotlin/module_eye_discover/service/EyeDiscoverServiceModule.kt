@@ -4,6 +4,7 @@ import com.knight.kotlin.module_eye_discover.api.EyeDiscoverCategoryDetailApi
 import com.knight.kotlin.module_eye_discover.api.EyeDiscoverScollListApi
 import com.knight.kotlin.module_eye_discover.api.EyeDiscoverSearchRecommendApi
 import com.knight.kotlin.module_eye_discover.api.EyeDiscoverSearchResultApi
+import com.knight.kotlin.module_eye_discover.api.EyeDiscoverSearchResultItemApi
 import com.knight.kotlin.module_eye_discover.api.EyeDiscoverSpecialTopicApi
 import dagger.Module
 import dagger.Provides
@@ -61,6 +62,14 @@ class EyeDiscoverServiceModule {
     @Provides
     fun provideDiscoverSearchResultApiService(retrofit:Retrofit) : EyeDiscoverSearchResultApi {
         return retrofit.create(EyeDiscoverSearchResultApi::class.java)
+    }
+
+
+    @Singleton
+    @Provides
+    fun provideDiscoverSearchResultItemApiService(retrofit:Retrofit) : EyeDiscoverSearchResultItemApi {
+        return retrofit.create(EyeDiscoverSearchResultItemApi::class.java)
+
     }
 
 

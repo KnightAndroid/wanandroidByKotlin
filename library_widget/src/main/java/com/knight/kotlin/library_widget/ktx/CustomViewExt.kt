@@ -134,7 +134,7 @@ fun MagicIndicator.bindWechatViewPager2(
 
         override fun getIndicator(context: Context): IPagerIndicator {
             return LinePagerIndicator(context).apply {
-                mode = LinePagerIndicator.MODE_EXACTLY
+                mode = LinePagerIndicator.MODE_MATCH_EDGE
                 lineHeight = 3.dp2px().toFloat()
                 lineWidth = 30.dp2px().toFloat()
                 roundRadius = 6.dp2px().toFloat()

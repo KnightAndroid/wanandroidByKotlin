@@ -115,14 +115,6 @@
             app:layout_constraintTop_toBottomOf="@id/iv_cover"
             android:layout_marginEnd="@dimen/eye_discover_detail_item_tv_share_margin_end"/>
 
-<!--        <View-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="@dimen/dp_0_5"-->
-<!--            android:layout_marginTop="@dimen/dp_10"-->
-<!--            android:background="@color/common_divider_line_color"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintTop_toBottomOf="@id/iv_author" />-->
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

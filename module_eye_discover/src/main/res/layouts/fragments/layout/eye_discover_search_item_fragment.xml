@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+<!--        <import type="com.knight.kotlin.library_util.DateUtils" />-->
+
+<!--        <variable-->
+<!--            name="viewModel"-->
+<!--            type="com.knight.kotlin.library_base.entity.EyeItemEntity" />-->
+    </data>
+
+
+
+    <com.scwang.smart.refresh.layout.SmartRefreshLayout
+        android:id="@+id/search_result_refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <com.yanzhenjie.recyclerview.SwipeRecyclerView
+            android:id="@+id/search_result_rv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <com.scwang.smart.refresh.footer.ClassicsFooter
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </com.scwang.smart.refresh.layout.SmartRefreshLayout>
+
+
+
+
+
+
+
+</layout>
