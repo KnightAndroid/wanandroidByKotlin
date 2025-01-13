@@ -1,12 +1,9 @@
 package com.knight.kotlin.module_eye_discover.repo
 
 import com.knight.kotlin.library_base.repository.BaseRepository
-import com.knight.kotlin.library_network.bean.EyeApiResponse
 import com.knight.kotlin.library_network.model.responseCodeExceptionHandler
 import com.knight.kotlin.library_util.toast
-import com.knight.kotlin.module_eye_discover.api.EyeDiscoverSearchRecommendApi
 import com.knight.kotlin.module_eye_discover.api.EyeDiscoverSearchResultItemApi
-import com.knight.kotlin.module_eye_discover.entity.EyeDiscoverMetro
 import com.knight.kotlin.module_eye_discover.entity.EyeSearchResultEntity
 import javax.inject.Inject
 

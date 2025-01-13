@@ -1,5 +1,6 @@
 package com.knight.kotlin.module_eye_discover.entity
 
+import com.knight.kotlin.library_base.entity.EyeCardEntity
 import kotlinx.serialization.Serializable
 
 /**
@@ -18,7 +19,7 @@ data class EyeSearchResultEntity (
 @Serializable
 data class EyeSearchResultItem(
     val nav:EyeSearchNav,
-    val card_list:List<EyeDiscoverCardEntity>
+    val card_list:List<EyeCardEntity>
 
 
 )

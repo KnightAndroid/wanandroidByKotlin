@@ -1,8 +1,6 @@
 package com.knight.kotlin.module_eye_discover.api
 
 import com.knight.kotlin.library_network.bean.EyeApiResponse
-import com.knight.kotlin.module_eye_discover.entity.EyeDiscoverMetro
-import com.knight.kotlin.module_eye_discover.entity.EyeDiscoverMetroCard
 import com.knight.kotlin.module_eye_discover.entity.EyeSearchResultEntity
 import retrofit2.http.FieldMap
 import retrofit2.http.FormUrlEncoded

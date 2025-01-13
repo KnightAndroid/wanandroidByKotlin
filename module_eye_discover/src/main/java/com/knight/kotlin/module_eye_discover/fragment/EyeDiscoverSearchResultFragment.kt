@@ -45,7 +45,6 @@ class EyeDiscoverSearchResultFragment:BaseFragment<EyeDiscoverSearchResultFragme
 
     override fun initRequestData() {
          mViewModel.getSearchResultByQuery(query).observerKt {
-            LogUtils.d(it.item_list.size.toString()+"sddsd")
             var  mNavDatas = it.item_list.map { it.nav } .toMutableList()
              for (index  in 0 until  it.item_list.size) {
                  mFragments.add(EyeDiscoverSearchResultItemFragment().also {

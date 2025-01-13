@@ -1,4 +1,4 @@
-package com.knight.kotlin.module_eye_discover.entity
+package com.knight.kotlin.library_base.entity
 
 import com.knight.kotlin.library_base.ktx.NumberOrStringSerializer
 import com.knight.kotlin.library_base.ktx.json
@@ -16,48 +16,48 @@ import kotlin.reflect.typeOf
  * @descript:推荐视频实体模型
  */
 @Serializable
-data class EyeDiscoverCardListEntity(
-    private val card_list:List<EyeDiscoverCardEntity>? = null,
-    private val item_list:List<EyeDiscoverCardEntity>? = null,
+data class EyeCardListEntity(
+    private val card_list:List<EyeCardEntity>? = null,
+    private val item_list:List<EyeCardEntity>? = null,
     val item_count: Long = 0,
     @Serializable(with = NumberOrStringSerializer::class)
     val last_item_id: String = "",
 ) {
-    val list: List<EyeDiscoverCardEntity>?
+    val list: List<EyeCardEntity>?
         get() = card_list ?: item_list
 }
 
 
 @Serializable
-data class EyeDiscoverCardEntity(
+data class EyeCardEntity(
     val card_id: Long = 0,
     val type: String = "",
-    val style: EyeDiscoverStyle? = null,
-    val interaction: EyeDiscoverInteraction? = null,
-    val card_data: EyeDiscoverCardDataEntity? = null,
+    val style: EyeStyle? = null,
+    val interaction: EyeInteraction? = null,
+    val card_data: EyeCardDataEntity? = null,
     val card_unique_id: String = "",
 )
 
 
 
 @Serializable
-data class EyeDiscoverCardDataEntity(
-    val header: EyeDiscoverLayout? = null,
-    var body: EyeDiscoverMetroList? = null,
-    val footer: EyeDiscoverLayout? = null,
+data class EyeCardDataEntity(
+    val header: EyeLayout? = null,
+    var body: EyeMetroList? = null,
+    val footer: EyeLayout? = null,
 )
 
 
 @Serializable
-data class EyeDiscoverStyle(
+data class EyeStyle(
     val tpl_label: String = "",
-    val padding: EyeDiscoverParams? = null,
+    val padding: EyeParams? = null,
 )
 
 
 
 @Serializable
-data class EyeDiscoverParams(
+data class EyeParams(
     val top: Double = 0.0,
     val right: Double = 0.0,
     val bottom: Double = 0.0,
@@ -67,40 +67,40 @@ data class EyeDiscoverParams(
 
 
 @Serializable
-data class EyeDiscoverInteraction(
+data class EyeInteraction(
     val scroll: String = "",
 )
 
 
 @Serializable
-data class EyeDiscoverLayout(
-    val style: EyeDiscoverStyle? = null,
-    val left: List<EyeDiscoverMetroCard<JsonObject>>? = null,
-    val right: List<EyeDiscoverMetroCard<JsonObject>>? = null,
-    val center: List<EyeDiscoverMetroCard<JsonObject>>? = null,
-    val bottom: List<EyeDiscoverMetroCard<JsonObject>>? = null,
+data class EyeLayout(
+    val style: EyeStyle? = null,
+    val left: List<EyeMetroCard<JsonObject>>? = null,
+    val right: List<EyeMetroCard<JsonObject>>? = null,
+    val center: List<EyeMetroCard<JsonObject>>? = null,
+    val bottom: List<EyeMetroCard<JsonObject>>? = null,
 )
 
 
 @Serializable
-data class EyeDiscoverMetroList(
-    val api_request: EyeDiscoverApiRequest? = null,
-    val metro_list: List<EyeDiscoverMetroCard<JsonObject>>? = null,
+data class EyeMetroList(
+    val api_request: EyeApiRequest? = null,
+    val metro_list: List<EyeMetroCard<JsonObject>>? = null,
 )
 
 @Serializable
-data class EyeDiscoverMetroCard<T>(
+data class EyeMetroCard<T>(
     val metro_id: Long = 0,
     val type: String = "",
     val alias_name: String = "",
-    val style: EyeDiscoverStyle? = null,
+    val style: EyeStyle? = null,
     val metro_unique_id: String = "",
     val metro_data: T,
     @Serializable(with = NumberOrStringSerializer::class)
     val link: String = ""
 )
-inline fun <reified T> EyeDiscoverMetroCard<JsonObject>.toMetroCard(): EyeDiscoverMetroCard<T> {
-    return EyeDiscoverMetroCard(
+inline fun <reified T> EyeMetroCard<JsonObject>.toMetroCard(): EyeMetroCard<T> {
+    return EyeMetroCard(
         metro_id = metro_id,
         type = type,
         alias_name = alias_name,
@@ -110,8 +110,8 @@ inline fun <reified T> EyeDiscoverMetroCard<JsonObject>.toMetroCard(): EyeDiscov
         link = this.link
     )
 }
-fun EyeDiscoverMetroCard<JsonObject>.toMetroCard(kType: KType): EyeDiscoverMetroCard<Any> {
-    return EyeDiscoverMetroCard(
+fun EyeMetroCard<JsonObject>.toMetroCard(kType: KType): EyeMetroCard<Any> {
+    return EyeMetroCard(
         metro_id = metro_id,
         type = type,
         alias_name = alias_name,
@@ -124,7 +124,7 @@ fun EyeDiscoverMetroCard<JsonObject>.toMetroCard(kType: KType): EyeDiscoverMetro
 
 
 @Serializable
-data class EyeDiscoverApiRequest(
+data class EyeApiRequest(
     val url: String = "",
     val params: JsonObject? = null,
 )
@@ -133,7 +133,7 @@ data class EyeDiscoverApiRequest(
 //搜索结果 更多返回数据用
 @Serializable
 data class EyeDiscoverMetro(
-    val item_List:List<EyeDiscoverMetroCard<JsonObject>>? = null,
+    val item_List:List<EyeMetroCard<JsonObject>>? = null,
     val item_count:Long = 0,
     @Serializable(with = NumberOrStringSerializer::class)
     val last_item_id:String = ""

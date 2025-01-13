@@ -1,11 +1,9 @@
 package com.knight.kotlin.module_eye_discover.api
 
 import com.knight.kotlin.library_network.bean.EyeApiResponse
-import com.knight.kotlin.module_eye_discover.entity.EyeDiscoverCardListEntity
 import com.knight.kotlin.module_eye_discover.entity.EyeSearchResultEntity
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
-import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.POST
 
