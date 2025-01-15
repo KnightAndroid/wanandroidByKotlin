@@ -8,7 +8,7 @@ import com.knight.kotlin.library_base.entity.EyeMetroItemCard
 import com.knight.kotlin.library_base.entity.EyeSlideItemCard
 
 /**
- * @Description
+ * @Description 卡片转换器
  * @Author knight
  * @Time 2025/1/13 22:44
  *

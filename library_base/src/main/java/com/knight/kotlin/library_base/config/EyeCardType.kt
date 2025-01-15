@@ -42,3 +42,15 @@ object EyeCardType {
 
     const val DEFAULT = ""
 }
+
+/**
+ *
+ * 搜索结果类型
+ */
+object EyeSearchResultType {
+    const val VIDEO = 1 //视频
+    const val PGC = 2 //作者
+    const val GRAPHIC = 3 //图文
+    const val TOPIC = 4 //话题
+    const val UGC = 5 //用户
+}
