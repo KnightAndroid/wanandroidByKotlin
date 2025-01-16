@@ -3,6 +3,7 @@ package com.knight.kotlin.module_eye_discover.adapter
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter4.BaseMultiItemAdapter
 import com.knight.kotlin.library_base.config.EyeCardType
@@ -11,6 +12,7 @@ import com.knight.kotlin.library_base.entity.EyeCommonVideoEntity
 import com.knight.kotlin.library_base.entity.EyeMetroCard
 import com.knight.kotlin.library_base.ktx.json
 import com.knight.kotlin.module_eye_discover.databinding.EyeDiscoverSearchResultVideoItemBinding
+import com.knight.kotlin.module_eye_discover.databinding.EyeDiscoverTestBinding
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.decodeFromJsonElement
 
@@ -27,6 +29,7 @@ class EyeDiscoverSearchResultAdapter(data :List<EyeMetroCard<JsonObject>>) : Bas
     class EyeDiscoverSearchResultVideoVH(viewBinding: EyeDiscoverSearchResultVideoItemBinding): RecyclerView.ViewHolder(viewBinding.root)
 
 
+    class EyeDiscoverSearchResultTestVH(viewBinding: EyeDiscoverTestBinding): RecyclerView.ViewHolder(viewBinding.root)
     init {
         addItemType(EyeSearchResultType.VIDEO,object:OnMultiItemAdapterListener<EyeMetroCard<JsonObject>,EyeDiscoverSearchResultVideoVH> {
             override fun onBind(
@@ -34,7 +37,9 @@ class EyeDiscoverSearchResultAdapter(data :List<EyeMetroCard<JsonObject>>) : Bas
                 position: Int,
                 item: EyeMetroCard<JsonObject>?
             ) {
+                val binding = DataBindingUtil.getBinding<EyeDiscoverSearchResultVideoItemBinding>(holder.itemView)
                 val video = item?.metro_data?.let { json.decodeFromJsonElement<EyeCommonVideoEntity>(it) }
+                binding?.viewModel = video
             }
 
             override fun onCreate(
@@ -45,6 +50,28 @@ class EyeDiscoverSearchResultAdapter(data :List<EyeMetroCard<JsonObject>>) : Bas
 
                 val viewBinding = EyeDiscoverSearchResultVideoItemBinding.inflate(LayoutInflater.from(context), parent, false)
                 return EyeDiscoverSearchResultVideoVH(viewBinding)
+            }
+
+
+        }).addItemType(EyeSearchResultType.PGC,object:OnMultiItemAdapterListener<EyeMetroCard<JsonObject>,EyeDiscoverSearchResultTestVH> {
+            override fun onBind(
+                holder:EyeDiscoverSearchResultTestVH,
+                position: Int,
+                item: EyeMetroCard<JsonObject>?
+            ) {
+                val bing = DataBindingUtil.getBinding<EyeDiscoverTestBinding>(holder.itemView)
+               // val video = item?.metro_data?.let { json.decodeFromJsonElement<EyeCommonVideoEntity>(it) }
+              //  binding?.viewModel = video
+            }
+
+            override fun onCreate(
+                context: Context,
+                parent: ViewGroup,
+                viewType: Int
+            ): EyeDiscoverSearchResultTestVH {
+
+                val viewBinding = EyeDiscoverTestBinding.inflate(LayoutInflater.from(context), parent, false)
+                return EyeDiscoverSearchResultTestVH(viewBinding)
             }
 
 

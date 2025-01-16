@@ -91,13 +91,13 @@ data class EyeMetroList(
 @Serializable
 data class EyeMetroCard<T>(
     val metro_id: Long = 0,
-    val type: String = "",
-    val alias_name: String = "",
+    val type: String? = "",
+    val alias_name: String? = "",
     val style: EyeStyle? = null,
     val metro_unique_id: String = "",
     val metro_data: T,
     @Serializable(with = NumberOrStringSerializer::class)
-    val link: String = ""
+    val link: String? = ""
 )
 inline fun <reified T> EyeMetroCard<JsonObject>.toMetroCard(): EyeMetroCard<T> {
     return EyeMetroCard(

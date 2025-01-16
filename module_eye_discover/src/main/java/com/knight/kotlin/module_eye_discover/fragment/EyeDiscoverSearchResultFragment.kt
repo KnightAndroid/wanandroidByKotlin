@@ -4,8 +4,11 @@ import android.graphics.Color
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import com.google.android.material.tabs.TabLayoutMediator
+import com.knight.kotlin.library_base.entity.EyeMetroCard
 import com.knight.kotlin.library_base.fragment.BaseFragment
+import com.knight.kotlin.library_base.ktx.fromJson
 import com.knight.kotlin.library_base.ktx.toHtml
+import com.knight.kotlin.library_base.ktx.toJson
 import com.knight.kotlin.library_base.route.RouteFragment
 import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_base.util.ColorUtils
@@ -19,6 +22,11 @@ import com.knight.kotlin.module_eye_discover.entity.EyeSearchResultItem
 import com.knight.kotlin.module_eye_discover.vm.EyeDiscoverSearchResultVm
 import com.wyjson.router.annotation.Route
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.serialization.builtins.ListSerializer
+
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.Json.Default.encodeToString
+import kotlinx.serialization.json.JsonObject
 
 /**
  * @Description 开眼搜索界面
@@ -45,8 +53,15 @@ class EyeDiscoverSearchResultFragment:BaseFragment<EyeDiscoverSearchResultFragme
 
     override fun initRequestData() {
          mViewModel.getSearchResultByQuery(query).observerKt {
+
+
             var  mNavDatas = it.item_list.map { it.nav } .toMutableList()
              for (index  in 0 until  it.item_list.size) {
+                 try {
+                     CacheUtils.saveCacheValue(it.item_list[index].nav.type, Json.encodeToString(ListSerializer(EyeMetroCard.serializer(JsonObject.serializer())),it.item_list[index].card_list.get(0).card_data?.body?.metro_list!!))
+                 } catch (e: NullPointerException) {
+                     e.printStackTrace()
+                }
                  mFragments.add(EyeDiscoverSearchResultItemFragment().also {
                      it.arguments = bundleOf("type" to mNavDatas[index].type)
                  })
