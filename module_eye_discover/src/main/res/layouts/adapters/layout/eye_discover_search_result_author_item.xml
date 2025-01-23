@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.knight.kotlin.library_base.entity.EyeCommonAuthorEntity" />
+
+
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="110dp">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/iv_search_author"
+            android:layout_width="@dimen/eye_discover_search_result_author_width"
+            android:layout_height="@dimen/eye_discover_search_result_author_height"
+            android:layout_marginStart="@dimen/eye_discover_search_result_author_margin_start"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearance="@style/base_circleStyle"
+            app:imageUrl="@{viewModel.avatar.url}" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/iv_search_author"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <TextView
+                android:id="@+id/tv_search_author_title"
+                style="@style/TextAppearance.Material3.TitleMedium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                tools:text="hhhhh"
+                android:text="@{viewModel.nick}"/>
+
+            <TextView
+                android:id="@+id/tv_search_author_desc"
+                style="@style/TextAppearance.Material3.BodySmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/eye_discover_tv_search_author_desc_margin_top"
+                android:layout_marginEnd="@dimen/eye_discover_tv_search_author_desc_margin_end"
+                android:ellipsize="end"
+                android:maxLines="2"
+                tools:text="hhhhehehehehehehhehehehehhehehehehehehhhdhdhdhdhhddhdhdhdh"
+                android:text="@{viewModel.description}"/>
+
+        </LinearLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
+
+
+
+
