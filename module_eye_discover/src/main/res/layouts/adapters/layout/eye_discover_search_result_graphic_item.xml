@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.knight.kotlin.library_base.entity.EyeCommonGraphicEntity" />
+
+
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/base_round"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/iv_search_video_cover"
+            imageUrl="@{viewModel.cover.url}"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:scaleType="fitXY"
+            android:adjustViewBounds="true"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:shapeAppearance="@style/eye_discover_CustomSearchAuthor"
+            />
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/eye_discover_topic_round_bottom"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_search_video_cover"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/tv_search_result_topic_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="10dp"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:text="@{viewModel.title}"
+                android:textColor="@android:color/black"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                tools:text="这不是你想的那种羞羞的广告 [ 真的] !" />
+
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="@color/eye_discover_video_card_tv_desc_text_color"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:text="@{viewModel.topics.get(0).title}"
+                app:layout_constraintTop_toBottomOf="@id/tv_search_result_topic_title"
+                app:layout_constraintLeft_toLeftOf="parent"
+                tools:text="# 广告 / 开眼精选" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="10dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="@color/eye_discover_video_card_tv_desc_text_color"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:text="@{viewModel.consumption.like_count+`人点赞` + viewModel.consumption.collection_count + `人收藏`}"
+                app:layout_constraintTop_toBottomOf="@id/tv_search_result_topic_title"
+                app:layout_constraintRight_toRightOf="parent"
+                tools:text="# 广告 / 开眼精选" />
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+<!--        <com.google.android.material.button.MaterialButton-->
+<!--            android:theme="@style/Theme.MaterialComponents.NoActionBar"-->
+<!--            style="@style/Widget.MaterialComponents.Button.TextButton"-->
+<!--            android:layout_width="@dimen/eye_discover_video_card_mb_time_width"-->
+<!--            android:layout_height="@dimen/eye_discover_video_card_mb_time_height"-->
+<!--            android:layout_gravity="end|bottom"-->
+<!--            android:layout_marginEnd="@dimen/eye_discover_video_card_mb_time_margin_end"-->
+<!--            android:layout_marginBottom="@dimen/eye_discover_video_card_mb_time_margin_bottom"-->
+<!--            android:insetTop="0dp"-->
+<!--            android:insetBottom="0dp"-->
+<!--            android:padding="0dp"-->
+<!--            android:text="@{DateUtils.INSTANCE.formatDateMsByMS(viewModel.duration.value * 1000)}"-->
+<!--            android:textColor="@android:color/white"-->
+<!--            android:textSize="@dimen/eye_discover_video_card_mb_time_text_size"-->
+<!--            app:backgroundTint="@color/eye_discover_video_card_mb_time_background_tint"-->
+<!--            app:cornerRadius="@dimen/eye_discover_video_card_mb_time_corner_radius"-->
+<!--            app:layout_constraintBottom_toBottomOf="@+id/iv_search_video_cover"-->
+<!--            app:layout_constraintEnd_toEndOf="@+id/iv_search_video_cover" />-->
+
+
+
+
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
+
+
+
+

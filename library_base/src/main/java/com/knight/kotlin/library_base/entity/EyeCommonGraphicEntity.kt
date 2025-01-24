@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
  * @author created by luguian
  * @organize
  * @Date 2025/1/23 17:49
- * @descript:
+ * @descript:图文实体类
  */
 @Serializable
 data class EyeCommonGraphicEntity(
@@ -37,10 +37,10 @@ data class EyeCommonTopic(
 
 @Serializable
 data class EyeCommonConsumption(
-    val collectionCount: Long,
-    val realCollectionCount: Long,
-    val replyCount: Long,
-    val shareCount: Long
+    val like_count: Long = 0,
+    val collection_count: Long = 0,
+    val comment_count: Long = 0,
+    val share_count: Long = 0
 )
 
 
