@@ -32,7 +32,15 @@ fun ImageView.loadUrl(url:String?){
          loadImage = url.replace("ali-ali","ali")
       } else  {
          if (!url.contains("//ali")) {
-            loadImage = "http://ali-" + url.splitString("http://").get(1)
+            if (url.contains("img.kaiyanapp.com")) {
+               if (url.startsWith("http://")) {
+                  loadImage = "http://ali-" + url.splitString("http://").get(1)
+               } else {
+                  loadImage = "http://ali-" + url.splitString("https://").get(1)
+               }
+            } else {
+               loadImage = url
+            }
          } else {
             loadImage = url
          }

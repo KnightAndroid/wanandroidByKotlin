@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter4.BaseMultiItemAdapter
@@ -53,6 +54,16 @@ class EyeDiscoverSearchResultAdapter(data :List<EyeMetroCard<JsonObject>>) : Bas
                 val binding = DataBindingUtil.getBinding<EyeDiscoverSearchResultVideoItemBinding>(holder.itemView)
                 val video = item?.metro_data?.let { json.decodeFromJsonElement<EyeCommonVideoEntity>(it) }
                 binding?.viewModel = video
+
+                binding?.llVideoTags?.removeAllViews()
+                video?.tags?.forEach { tag ->
+                    val view =
+                        TextView(context, null, R.attr.textAppearanceLabelSmall).also {
+                            it.text = tag.title
+                        }
+                    binding?.llVideoTags?.addView(view)
+                }
+
             }
 
             override fun onCreate(
@@ -125,6 +136,7 @@ class EyeDiscoverSearchResultAdapter(data :List<EyeMetroCard<JsonObject>>) : Bas
                     val view =
                         TextView(context, null, R.attr.textAppearanceLabelSmall).also {
                             it.text = tag.title
+                            it.setTextColor(ContextCompat.getColor(context,com.knight.kotlin.module_eye_discover.R.color.eye_discover_video_card_tv_desc_text_color))
                         }
                     binding?.tags?.addView(view)
                 }

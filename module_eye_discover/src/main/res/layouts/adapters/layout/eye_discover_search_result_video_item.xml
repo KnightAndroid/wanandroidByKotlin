@@ -56,6 +56,7 @@
 
 
         <TextView
+            android:id="@+id/tv_search_video_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
@@ -71,6 +72,20 @@
             app:layout_constraintStart_toEndOf="@+id/iv_search_video_cover"
             app:layout_constraintTop_toTopOf="@+id/iv_search_video_cover"
             tools:text="这不是你想的那种羞羞的广告 [ 真的] !" />
+
+
+        <LinearLayout
+            android:id="@+id/ll_video_tags"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/tv_search_video_title"
+            app:layout_constraintStart_toEndOf="@+id/iv_search_video_cover" />
+
+
+
 
         <TextView
             android:id="@+id/textView"

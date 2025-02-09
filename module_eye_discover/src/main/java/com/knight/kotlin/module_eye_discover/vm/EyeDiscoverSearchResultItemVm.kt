@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
 import com.knight.kotlin.library_base.vm.BaseViewModel
 import com.knight.kotlin.module_eye_discover.entity.EyeSearchResultEntity
+import com.knight.kotlin.module_eye_discover.entity.EyeSearchResultLoadEntity
 import com.knight.kotlin.module_eye_discover.repo.EyeDiscoverSearchResultItemRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -23,7 +24,7 @@ class EyeDiscoverSearchResultItemVm @Inject constructor(private val mRepo: EyeDi
      *
      * 获取搜索热词更多数据
      */
-    fun getMoreDataSearchByQuery(url:String,params:MutableMap<String,Any>): LiveData<EyeSearchResultEntity> {
+    fun getMoreDataSearchByQuery(url:String,params:MutableMap<String,String>): LiveData<EyeSearchResultLoadEntity> {
         return mRepo.getMoreDataSearchByQuery(url,params).asLiveData()
     }
 

@@ -4,6 +4,7 @@ import android.graphics.Color
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import com.google.android.material.tabs.TabLayoutMediator
+import com.knight.kotlin.library_base.entity.EyeApiRequest
 import com.knight.kotlin.library_base.entity.EyeMetroCard
 import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.knight.kotlin.library_base.ktx.fromJson
@@ -41,7 +42,7 @@ class EyeDiscoverSearchResultFragment:BaseFragment<EyeDiscoverSearchResultFragme
    private lateinit var query:String
 
     private val mFragments = mutableListOf<EyeDiscoverSearchResultItemFragment>()
-   // private val mTitileDatas = mutableListOf<String>()
+   private  var api_request :EyeApiRequest? = null
 
     override fun setThemeColor(isDarkMode: Boolean) {
 
@@ -59,23 +60,27 @@ class EyeDiscoverSearchResultFragment:BaseFragment<EyeDiscoverSearchResultFragme
              for (index  in 0 until  it.item_list.size) {
                  try {
                      CacheUtils.saveCacheValue(it.item_list[index].nav.type, Json.encodeToString(ListSerializer(EyeMetroCard.serializer(JsonObject.serializer())),it.item_list[index].card_list.get(0).card_data?.body?.metro_list!!))
+                     api_request = it.item_list[index].card_list.last().card_data?.body?.api_request
                  } catch (e: NullPointerException) {
                      e.printStackTrace()
                 }
                  mFragments.add(EyeDiscoverSearchResultItemFragment().also {
-                     it.arguments = bundleOf("type" to mNavDatas[index].type)
+                     it.arguments = bundleOf("type" to mNavDatas[index].type,"api_Request" to Json.encodeToString(EyeApiRequest.serializer(), api_request?.let { it } ?: run{EyeApiRequest()}))
                  })
              }
-             ViewInitUtils.setViewPager2Init(requireActivity(),mBinding.searchResultViewPager,mFragments,
-                 isOffscreenPageLimit = true,
-                 isUserInputEnabled = false
-             )
+             if (mFragments.size > 0) {
+                 ViewInitUtils.setViewPager2Init(requireActivity(),mBinding.searchResultViewPager,mFragments,
+                     isOffscreenPageLimit = true,
+                     isUserInputEnabled = false
+                 )
 
-             TabLayoutMediator(mBinding.searchResultItemIndicator, mBinding.searchResultViewPager) { tab, pos ->
-                 tab.text = mNavDatas[pos].title }.attach()
+                 TabLayoutMediator(mBinding.searchResultItemIndicator, mBinding.searchResultViewPager) { tab, pos ->
+                     tab.text = mNavDatas[pos].title }.attach()
 
-             mBinding.searchResultItemIndicator.setSelectedTabIndicatorColor(CacheUtils.getThemeColor())
-             mBinding.searchResultItemIndicator.setTabTextColors(Color.parseColor("#CC000000"),CacheUtils.getThemeColor())
+                 mBinding.searchResultItemIndicator.setSelectedTabIndicatorColor(CacheUtils.getThemeColor())
+                 mBinding.searchResultItemIndicator.setTabTextColors(Color.parseColor("#CC000000"),CacheUtils.getThemeColor())
+             }
+
          }
     }
 
