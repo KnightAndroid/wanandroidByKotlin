@@ -1,6 +1,7 @@
 package com.knight.kotlin.module_eye_discover.adapter
 
 import android.content.Context
+import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
@@ -108,6 +109,19 @@ class EyeDiscoverSearchResultAdapter(data :List<EyeMetroCard<JsonObject>>) : Bas
                 val binding = DataBindingUtil.getBinding<EyeDiscoverSearchResultGraphicItemBinding>(holder.itemView)
                 val graphicEntity = item?.metro_data?.let { json.decodeFromJsonElement<EyeCommonGraphicEntity>(it) }
                 binding?.viewModel = graphicEntity
+
+                binding?.llGraphicTags?.removeAllViews()
+                graphicEntity?.topics?.forEach { tag ->
+                    val view =
+                        TextView(context, null, R.attr.textAppearanceLabelSmall).also {
+                            it.text = tag.title
+                            it.setTextColor(ContextCompat.getColor(context,com.knight.kotlin.module_eye_discover.R.color.eye_discover_video_card_tv_desc_text_color))
+                            it.textSize = 12f
+                            it.setTypeface(null,Typeface.BOLD)
+                        }
+                    binding?.llGraphicTags?.addView(view)
+                }
+
             }
 
             override fun onCreate(

@@ -3,6 +3,7 @@ package com.knight.kotlin.module_eye_discover.activity
 import android.view.KeyEvent
 import android.view.KeyEvent.KEYCODE_ENTER
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.widget.doAfterTextChanged
@@ -19,6 +20,7 @@ import com.knight.kotlin.module_eye_discover.fragment.EyeDiscoverScollListFragme
 import com.knight.kotlin.module_eye_discover.fragment.EyeDiscoverSearchRecommendFragment
 import com.knight.kotlin.module_eye_discover.fragment.EyeDiscoverSearchResultFragment
 import com.knight.kotlin.module_eye_discover.vm.EyeDiscoverScrollListVm
+import com.knight.kotlin.module_eye_discover.vm.EyeDiscoverSearchResultVm
 import com.wyjson.router.annotation.Route
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -33,9 +35,10 @@ import dagger.hilt.android.AndroidEntryPoint
 @Route(path = RouteActivity.EyeDiscover.EyeDiscoverActivity)
 class EyeDiscoverActivity : BaseActivity<EyeDiscoverActivityBinding, EyeDiscoverScrollListVm>(){
 
-   val recommendSearchFragment = EyeDiscoverSearchRecommendFragment()
+
    val scrollListFragment = EyeDiscoverScollListFragment()
-    val searchResultFragment = EyeDiscoverSearchResultFragment()
+
+
 
     override fun setThemeColor(isDarkMode: Boolean) {
 
@@ -85,6 +88,9 @@ class EyeDiscoverActivity : BaseActivity<EyeDiscoverActivityBinding, EyeDiscover
                     mBinding.eyeDiscoverSearchView.clearFocusAndHideKeyboard()
                     //提交进行搜索
                     //uerySearchViewModel.submitSearchQuery(searchView.text.toString())
+
+                    showResultFragment(mBinding.eyeDiscoverSearchView.text.toString())
+
                 }
                 false
             }

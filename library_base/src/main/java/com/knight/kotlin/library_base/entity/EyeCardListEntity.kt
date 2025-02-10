@@ -130,15 +130,5 @@ data class EyeApiRequest(
 )
 
 
-//搜索结果 更多返回数据用
-@Serializable
-data class EyeDiscoverMetro(
-    val item_List:List<EyeMetroCard<JsonObject>>? = null,
-    val item_count:Long = 0,
-    @Serializable(with = NumberOrStringSerializer::class)
-    val last_item_id:String = ""
-)
-
-
 
 

@@ -38,7 +38,7 @@ class EyeDiscoverSearchResultItemFragment : BaseFragment<EyeDiscoverSearchItemFr
     private lateinit var type:String
     //下一页Url请求连接
     private  var api_request : EyeApiRequest? = null
-
+    private lateinit var map : MutableMap<String,String>
     //搜索结果适配器
     private val mEyeDiscoverSearchResultAdapter: EyeDiscoverSearchResultAdapter by lazy { EyeDiscoverSearchResultAdapter(mutableListOf()) }
     override fun setThemeColor(isDarkMode: Boolean) {
@@ -67,7 +67,9 @@ class EyeDiscoverSearchResultItemFragment : BaseFragment<EyeDiscoverSearchItemFr
         mBinding.searchResultRefreshLayout.setEnableRefresh(false)
         val firstDataJson =CacheUtils.getCacheValue(type)!!
         val datas = Json.decodeFromString<List<EyeMetroCard<JsonObject>>>(firstDataJson)
-
+        map = api_request?.params?.mapValues { param ->
+            param.value.jsonPrimitive.content
+        }?.toMutableMap() ?: mutableMapOf()
         mEyeDiscoverSearchResultAdapter.submitList(datas)
 
 
@@ -76,14 +78,18 @@ class EyeDiscoverSearchResultItemFragment : BaseFragment<EyeDiscoverSearchItemFr
     }
 
     override fun onLoadMore(refreshLayout: RefreshLayout) {
-        var map = api_request?.params?.mapValues { param ->
-            param.value.jsonPrimitive.content
-        }?.toMutableMap() ?: mutableMapOf()
        mViewModel.getMoreDataSearchByQuery(api_request!!.url,map).observerKt {
            it.item_list?.let {
                mEyeDiscoverSearchResultAdapter.addAll(it)
            }
            mBinding.searchResultRefreshLayout.finishLoadMore()
+           it.last_item_id.takeIf {
+               it.isNotEmpty()
+           }?.let {
+               lastItemId -> api_request!!.params.also {
+                   map["last_item_id"] = lastItemId
+           }
+           }
 
        }
     }

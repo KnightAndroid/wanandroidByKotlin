@@ -2,6 +2,7 @@ package com.knight.kotlin.module_eye_discover.entity
 
 import com.knight.kotlin.library_base.entity.EyeCardEntity
 import com.knight.kotlin.library_base.entity.EyeMetroCard
+import com.knight.kotlin.library_base.ktx.NumberOrStringSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonObject
 
@@ -39,5 +40,6 @@ data class EyeSearchNav(
 data class EyeSearchResultLoadEntity (
     val item_list: List<EyeMetroCard<JsonObject>>? = null,
     val item_count:Int,
-    val last_item_id:Int
+    @Serializable(with = NumberOrStringSerializer::class)
+    val last_item_id: String = "",
 )

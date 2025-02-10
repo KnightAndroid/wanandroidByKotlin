@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.OnChildAttachStateChangeListener
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.ktx.init
+import com.knight.kotlin.library_base.ktx.setOnClick
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.util.dp2px
 import com.knight.kotlin.library_video.play.OkPlayer
@@ -77,6 +78,11 @@ class EyeSpecialTopicDetailActivity : BaseActivity<EyeDiscoverSpecialTopicActivi
             OkPlayer.backPress()
             finishAfterTransition()
         }
+        specialTopicDetailToolbar.baseIvBack.setOnClick {
+            OkPlayer.backPress()
+            finishAfterTransition()
+        }
+
 
     }
 

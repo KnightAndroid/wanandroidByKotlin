@@ -58,7 +58,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/cover"
             app:layout_constraintTop_toBottomOf="@id/title"
-            tools:text="#广告hhhhdhdhdhdhdhdhdhdhdhdhdhdhdhdhdhdhdhhdhd" />
+            tools:text="#广告" />
 
         <LinearLayout
             android:id="@+id/tags"

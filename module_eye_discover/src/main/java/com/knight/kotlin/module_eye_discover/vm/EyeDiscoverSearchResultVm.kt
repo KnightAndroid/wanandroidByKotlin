@@ -24,9 +24,6 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class EyeDiscoverSearchResultVm  @Inject constructor(private val mRepo: EyeDiscoverSearchResultRepo) : BaseViewModel() {
-
-    //分类栏目
-    private val firstData = mutableMapOf<String, List<EyeMetroCard<JsonObject>>>()
     /**
      *
      * 获取搜索热词
