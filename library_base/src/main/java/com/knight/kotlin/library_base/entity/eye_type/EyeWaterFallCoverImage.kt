@@ -16,8 +16,11 @@ import kotlinx.serialization.Serializable
 class EyeWaterFallCoverImage (
     val image_id: Long = 0,
     val title: String = "",
+    val recommend_level:String = "",
     val cover: EyeCommonCover? = null,
     val author: EyeCommonAuthor? = null,
     val liked: Boolean = false,
-    val image_count: Long = 0
+    val image_count: Long = 0,
+    val resource_id: Long = 0,
+    val resource_type:String = ""
 )

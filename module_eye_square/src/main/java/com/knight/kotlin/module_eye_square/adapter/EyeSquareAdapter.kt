@@ -5,14 +5,19 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentActivity
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter4.BaseMultiItemAdapter
 import com.knight.kotlin.library_base.config.EyeCardUIType
 import com.knight.kotlin.library_base.entity.EyeCardEntity
 import com.knight.kotlin.library_base.entity.eye_type.EyeBannerImageList
 import com.knight.kotlin.library_base.entity.eye_type.EyeBannerSquare
+import com.knight.kotlin.library_base.entity.eye_type.EyeWaterFallCoverImage
+import com.knight.kotlin.library_widget.ktx.init
 import com.knight.kotlin.module_eye_square.databinding.EyeSquareBannerItemBinding
 import com.knight.kotlin.module_eye_square.databinding.EyeSquareTestItemBinding
+import com.knight.kotlin.module_eye_square.databinding.EyeSquareWaterCoverSmallItemBinding
+import com.knight.kotlin.module_eye_square.databinding.EyeSquareWaterfallCoverSmallBinding
 import com.youth.banner.indicator.CircleIndicator
 import kotlinx.serialization.json.Json
 
@@ -27,6 +32,9 @@ class EyeSquareAdapter(activity : FragmentActivity,data :List<EyeCardEntity>): B
 
     //类型1 广告
     class EyeSquareBannerVH(viewBinding:EyeSquareBannerItemBinding): RecyclerView.ViewHolder(viewBinding.root)
+    //类型2 小图片
+    class EyeSquareWaterFallCoverSmallVH(viewBinding:EyeSquareWaterCoverSmallItemBinding): RecyclerView.ViewHolder(viewBinding.root)
+
     //类型2 测试
     class EyeSquareTextVH(viewBinding: EyeSquareTestItemBinding): RecyclerView.ViewHolder(viewBinding.root)
     init {
@@ -50,6 +58,38 @@ class EyeSquareAdapter(activity : FragmentActivity,data :List<EyeCardEntity>): B
                 //创建 viewholder
                 val viewBinding = EyeSquareBannerItemBinding.inflate(LayoutInflater.from(context), parent, false)
                 return EyeSquareBannerVH(viewBinding)
+            }
+        }).addItemType(EyeCardUIType.WATERFALL_COVER_SMALL, object : OnMultiItemAdapterListener<EyeCardEntity, EyeSquareWaterFallCoverSmallVH> {
+            override fun onBind(holder: EyeSquareWaterFallCoverSmallVH, position: Int, item: EyeCardEntity?) {
+                // 绑定 item 数据
+                val binding = DataBindingUtil.getBinding<EyeSquareWaterCoverSmallItemBinding>(holder.itemView)
+                val waterFallSmallCovers : List<EyeWaterFallCoverImage>? = item?.card_data?.body?.metro_list?.map { eyeMetroCard ->
+                    // 将JsonObject转换为JSON字符串
+                    val jsonString = eyeMetroCard.metro_data.toString()
+                    // 使用Kotlinx.serialization从字符串转换为EyeMetroCardEntity
+                    Json.decodeFromString<EyeWaterFallCoverImage>(jsonString)
+                }
+                val mEyeSquareWaterFallCoverSmallAdapter = EyeSquareWaterFallCoverSmallAdapter()
+                binding?.rvSquareWaterfallSmall?.init(
+                    GridLayoutManager(activity, 2).also {
+                        it.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+                            override fun getSpanSize(position: Int): Int {
+                                return 1
+                            }
+                        }
+                    },
+                    mEyeSquareWaterFallCoverSmallAdapter,
+                    false
+                )
+
+                mEyeSquareWaterFallCoverSmallAdapter.submitList(waterFallSmallCovers)
+
+            }
+
+            override fun onCreate(context: Context, parent: ViewGroup, viewType: Int):EyeSquareWaterFallCoverSmallVH {
+                //创建 viewholder
+                val viewBinding = EyeSquareWaterCoverSmallItemBinding.inflate(LayoutInflater.from(context), parent, false)
+                return EyeSquareWaterFallCoverSmallVH(viewBinding)
             }
         }).addItemType(EyeCardUIType.PIC, object : OnMultiItemAdapterListener<EyeCardEntity, EyeSquareTextVH> {
             override fun onBind(holder: EyeSquareTextVH, position: Int, item: EyeCardEntity?) {
@@ -75,6 +115,8 @@ class EyeSquareAdapter(activity : FragmentActivity,data :List<EyeCardEntity>): B
         }).onItemViewType { position, list -> // 根据数据，返回对应的 ItemViewType
             if (list[position].type == "set_banner_list") {
                 EyeCardUIType.BANNER
+            }else if(list[position].type == "set_waterfall_metro_list") {
+                EyeCardUIType.WATERFALL_COVER_SMALL
             } else {
                 EyeCardUIType.PIC
             }
@@ -88,7 +130,7 @@ class EyeSquareAdapter(activity : FragmentActivity,data :List<EyeCardEntity>): B
     ): Int {
         if (position >= itemCount) return spanCount
         return when (getItemViewType(position)) {
-            EyeCardUIType.BANNER -> spanCount
+            EyeCardUIType.BANNER,EyeCardUIType.WATERFALL_COVER_SMALL -> spanCount
             else -> 1
         }
     }
