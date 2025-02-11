@@ -41,6 +41,9 @@ object EyeCardType {
     const val DESCRIPTION_TEXT = "description_text"
 
     const val DEFAULT = ""
+
+
+
 }
 
 /**
@@ -53,4 +56,10 @@ object EyeSearchResultType {
     const val GRAPHIC = 3 //图文
     const val TOPIC = 4 //话题
     const val UGC = 5 //用户
+}
+
+
+object EyeCardUIType {
+    const val BANNER = 1 //广告
+    const val PIC = 2 //图文
 }

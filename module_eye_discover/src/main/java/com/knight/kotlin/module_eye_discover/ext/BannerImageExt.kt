@@ -29,8 +29,18 @@ fun Banner<EyeDiscoverTopBannerItemListData, BannerImageAdapter<EyeDiscoverTopBa
             holder: BannerImageHolder, data: EyeDiscoverTopBannerItemListData, position: Int, size: Int
         ) {
             var imageUrl = data.data.image
-            if (!imageUrl.contains("http://ali-")) {
-                imageUrl = imageUrl.replace("http://","http://ali-")
+//            if (!imageUrl.contains("http://ali-")) {
+//                imageUrl = imageUrl.replace("http://","http://ali-")
+//            }
+
+            if (!imageUrl.contains("//ali")) {
+                if (imageUrl.contains("img.kaiyanapp.com")) {
+                    if (imageUrl.startsWith("http://")) {
+                        imageUrl = imageUrl.replace("http://","http://ali-")
+                    } else {
+                        imageUrl = imageUrl.replace("https://","https://ali-")
+                    }
+                }
             }
             ImageLoader.loadStringPhoto(
                 context,

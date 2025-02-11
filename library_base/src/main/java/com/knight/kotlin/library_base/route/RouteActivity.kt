@@ -197,6 +197,18 @@ object RouteActivity {
     }
 
     /**
+     *
+     * 开眼 社区/广场模块
+     */
+    object EyeSquare {
+        private const val EyeSquare = "/module_eye_square"
+        const val EyeSquareActivity = "$EyeSquare/EyeSquareActivity"
+
+    }
+
+
+
+    /**
      * 热搜模块
      */
     object RealTime {

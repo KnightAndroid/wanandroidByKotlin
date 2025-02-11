@@ -9,6 +9,7 @@ import com.knight.kotlin.library_base.util.GsonUtils
 import com.knight.kotlin.library_base.vm.EmptyViewModel
 import com.knight.kotlin.library_util.JsonUtils
 import com.knight.kotlin.library_util.startPage
+import com.knight.kotlin.library_util.startPageWithParams
 import com.knight.kotlin.library_widget.ktx.init
 import com.knight.kotlin.module_home.adapter.EyepetizerCategoryAdapter
 import com.knight.kotlin.module_home.databinding.HomeEyeClassifyFragmentBinding
@@ -61,11 +62,14 @@ class HomeEyeClassifyFragment : BaseFragment<HomeEyeClassifyFragmentBinding,Empt
         mEyepetizerCategoryAdapter.run {
             setOnItemClickListener { adapter, view, position ->
                 if (position === 0) {
-                    startPage(RouteActivity.EyeDaily.DailyListActivity)
+                    startPageWithParams(RouteActivity.EyeDaily.DailyListActivity,"tabTitle" to mDataList[position].categoryName)
                 } else if (position === 1) {
                     startPage(RouteActivity.EyeDiscover.EyeDiscoverActivity)
-                } else {
-
+                } else if (position === 2) {
+                    //广场
+                    startPageWithParams(RouteActivity.EyeSquare.EyeSquareActivity,"tabTitle" to mDataList[position].categoryName)
+                } else if (position === 3){
+                    //热门
                 }
 
 

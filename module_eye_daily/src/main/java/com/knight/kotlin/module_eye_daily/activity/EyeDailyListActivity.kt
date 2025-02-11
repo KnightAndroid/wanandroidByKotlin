@@ -25,6 +25,7 @@ import com.knight.kotlin.module_eye_daily.vm.EyeDailyListVm
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener
+import com.wyjson.router.annotation.Param
 import com.wyjson.router.annotation.Route
 import com.youth.banner.config.IndicatorConfig
 import dagger.hilt.android.AndroidEntryPoint
@@ -41,6 +42,10 @@ import dagger.hilt.android.AndroidEntryPoint
 class EyeDailyListActivity : BaseActivity<EyeDailyListActivityBinding, EyeDailyListVm>(),
     OnRefreshListener, OnLoadMoreListener {
 
+
+    @JvmField
+    @Param(name = "tabTitle")
+    var tabTitle:String = ""
     /**
      *
      * 加载下一页的Url
@@ -55,8 +60,10 @@ class EyeDailyListActivity : BaseActivity<EyeDailyListActivityBinding, EyeDailyL
 
     //头部广告View
     private val bannerHeadView: EyeDailyListHeadBinding by lazy {
-        EyeDailyListHeadBinding.inflate(LayoutInflater.from(this), mBinding.root, false)
+       // EyeDailyListHeadBinding.inflate(LayoutInflater.from(this), mBinding.root, false)
 
+
+        EyeDailyListHeadBinding.inflate(LayoutInflater.from(this))
     }
 
     //日报适配器
@@ -86,13 +93,14 @@ class EyeDailyListActivity : BaseActivity<EyeDailyListActivityBinding, EyeDailyL
     }
 
     override fun EyeDailyListActivityBinding.initView() {
-        includeEyeDailyToolbar.baseTvTitle.text = getString(R.string.eye_daily_toolbar_title)
+       // includeEyeDailyToolbar.baseTvTitle.text = getString(R.string.eye_daily_toolbar_title)
         includeEyeDailyToolbar.baseIvBack.setOnClick { finish() }
         rvDailyList.init(
             LinearLayoutManager(this@EyeDailyListActivity),
             mEyeDailyAdapter,
             true
         )
+        mBinding.title = tabTitle
         dailyListRefreshLayout.setOnLoadMoreListener(this@EyeDailyListActivity)
         dailyListRefreshLayout.setOnRefreshListener(this@EyeDailyListActivity)
     }

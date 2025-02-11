@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.knight.kotlin.library_base.entity.eye_type.EyeBannerSquare" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.youth.banner.Banner
+            android:id="@+id/discover_top_banner"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/eye_square_top_banner_height"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:bannerImageUrl="@{viewModel.itemlist}"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
