@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="eye_square_top_banner_height">160dp</dimen>
+    <dimen name="eye_square_top_banner_height">180dp</dimen>
+    <dimen name="eye_square_cover_author_width">16dp</dimen>
+    <dimen name="eye_square_cover_author_height">16dp</dimen>
+    <dimen name="eye_square_cover_author_margin_start">10dp</dimen>
 </resources>

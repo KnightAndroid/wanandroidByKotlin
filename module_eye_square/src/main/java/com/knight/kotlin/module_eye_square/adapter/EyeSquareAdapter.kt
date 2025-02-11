@@ -80,4 +80,18 @@ class EyeSquareAdapter(activity : FragmentActivity,data :List<EyeCardEntity>): B
             }
         }
     }
+
+
+    fun convertViewType2SpanSize(
+        position: Int,
+        spanCount: Int
+    ): Int {
+        if (position >= itemCount) return spanCount
+        return when (getItemViewType(position)) {
+            EyeCardUIType.BANNER -> spanCount
+            else -> 1
+        }
+    }
+
+
 }

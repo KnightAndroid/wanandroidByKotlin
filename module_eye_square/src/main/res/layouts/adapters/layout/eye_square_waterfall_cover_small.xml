@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.knight.kotlin.library_base.entity.eye_type.EyeWaterFallCoverImage" />
+    </data>
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="8dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:strokeColor="?attr/colorSurfaceVariant">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/cover"
+                android:layout_width="300dp"
+                android:layout_height="300dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="8dp"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:minLines="2"
+                android:textAppearance="?attr/textAppearanceBodySmall"
+                app:layout_constrainedWidth="true"
+                app:layout_constraintEnd_toEndOf="@id/cover"
+                app:layout_constraintStart_toStartOf="@id/cover"
+                app:layout_constraintTop_toBottomOf="@id/cover"
+                tools:text="永远为落日落泪hhhhhhh" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginVertical="12dp"
+                android:gravity="center_vertical"
+                app:layout_constrainedWidth="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/cover"
+                app:layout_constraintStart_toStartOf="@id/cover"
+                app:layout_constraintTop_toBottomOf="@id/title">
+
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/iv_avatar"
+                    android:layout_width="@dimen/eye_square_cover_author_width"
+                    android:layout_height="@dimen/eye_square_cover_author_height"
+                    android:layout_marginStart="@dimen/eye_square_cover_author_margin_start"
+                    app:shapeAppearance="@style/base_circleStyle"
+                    app:imageUrl="@{viewModel.author.avatar.url}" />
+
+                <TextView
+                    android:id="@+id/nick_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_weight="1"
+                    android:textAppearance="?attr/textAppearanceLabelSmall"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/title"
+                    tools:text="Ekkoe" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:src="@drawable/eye_square_favorite_icon" />
+
+            </LinearLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+
+</layout>
+
