@@ -35,4 +35,22 @@ class EyeSquareRepo @Inject constructor() : BaseRepository(){
     }){
         it?.let { it1 -> toast(it1) }
     }
+
+
+
+
+
+    /**
+     *
+     * 搜索结果后下滑加载更多
+     */
+    fun getSquareMoreData(url:String,params:MutableMap<String,String>) = request<EyeCardListEntity>({
+        mEyeSquareApi.getSquareMoreData(url,params).run {
+            responseCodeExceptionHandler(this.code.toInt(), this.message.toString())
+            this.result?.let { emit(it) }
+        }
+    }){
+        it?.let { it1 -> toast(it1) }
+    }
+
 }

@@ -60,6 +60,9 @@ data class EyeCommonAuthor(
     val link: String = "",
     val type: String = "",
     val followed: Boolean = false,
+    val user_type: String = "",
+    val status: String = "",
+    val is_m: Boolean = false
 )
 
 

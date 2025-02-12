@@ -40,7 +40,8 @@ data class EyeCommonConsumption(
     val like_count: Long = 0,
     val collection_count: Long = 0,
     val comment_count: Long = 0,
-    val share_count: Long = 0
+    val share_count: Long = 0,
+    val play_count:Long = 0
 )
 
 

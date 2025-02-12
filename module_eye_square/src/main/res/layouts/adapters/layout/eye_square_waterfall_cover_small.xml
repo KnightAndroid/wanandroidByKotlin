@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.knight.kotlin.library_base.entity.eye_type.EyeWaterFallCoverImage" />
+            type="com.knight.kotlin.library_base.entity.eye_type.EyeWaterFallCoverVideoImage" />
     </data>
 
 
@@ -23,59 +23,62 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/cover"
+                android:id="@+id/iv_waterfall_samall_cover"
                 android:layout_width="300dp"
                 android:layout_height="300dp"
                 android:scaleType="centerCrop"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:imageUrl="@{viewModel.cover.url}"
+
+                />
 
             <TextView
-                android:id="@+id/title"
+                android:id="@+id/tv_waterfall_samall_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="8dp"
                 android:ellipsize="end"
                 android:maxLines="2"
                 android:minLines="2"
-                android:textAppearance="?attr/textAppearanceBodySmall"
+                android:text="@{viewModel.title}"
+                android:textSize="14sp"
                 app:layout_constrainedWidth="true"
-                app:layout_constraintEnd_toEndOf="@id/cover"
-                app:layout_constraintStart_toStartOf="@id/cover"
-                app:layout_constraintTop_toBottomOf="@id/cover"
+                app:layout_constraintEnd_toEndOf="@id/iv_waterfall_samall_cover"
+                app:layout_constraintStart_toStartOf="@id/iv_waterfall_samall_cover"
+                app:layout_constraintTop_toBottomOf="@id/iv_waterfall_samall_cover"
                 tools:text="永远为落日落泪hhhhhhh" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="8dp"
+                android:layout_marginHorizontal="10dp"
                 android:layout_marginVertical="12dp"
                 android:gravity="center_vertical"
                 app:layout_constrainedWidth="true"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@id/cover"
-                app:layout_constraintStart_toStartOf="@id/cover"
-                app:layout_constraintTop_toBottomOf="@id/title">
+                app:layout_constraintEnd_toEndOf="@id/iv_waterfall_samall_cover"
+                app:layout_constraintStart_toStartOf="@id/iv_waterfall_samall_cover"
+                app:layout_constraintTop_toBottomOf="@id/tv_waterfall_samall_title">
 
 
                 <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/iv_avatar"
+                    android:id="@+id/tv_waterfall_avatar"
                     android:layout_width="@dimen/eye_square_cover_author_width"
                     android:layout_height="@dimen/eye_square_cover_author_height"
-                    android:layout_marginStart="@dimen/eye_square_cover_author_margin_start"
+
                     app:shapeAppearance="@style/base_circleStyle"
                     app:imageUrl="@{viewModel.author.avatar.url}" />
 
                 <TextView
-                    android:id="@+id/nick_name"
+                    android:id="@+id/tv_waterfall_avatar_nick_name"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     android:layout_weight="1"
-                    android:textAppearance="?attr/textAppearanceLabelSmall"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/title"
+                    android:textSize="14sp"
+                    android:text="@{viewModel.author.nick}"
                     tools:text="Ekkoe" />
 
                 <ImageView

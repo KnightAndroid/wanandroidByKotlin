@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="viewModel"
+            type="com.knight.kotlin.library_base.entity.eye_type.EyeFeedItemDetail" />
+    </data>
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:clickable="true"
+        android:focusable="true"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/iv_feed_item_avatar"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="8dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toBottomOf="@id/ll_feed_detail_container"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/ll_feed_detail_container"
+                app:shapeAppearance="@style/base_circleStyle"
+                app:imageUrl="@{viewModel.author.avatar.url}"/>
+
+            <LinearLayout
+                android:id="@+id/ll_feed_detail_container"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:layout_marginEnd="16dp"
+                android:orientation="vertical"
+                android:paddingVertical="12dp"
+                app:layout_constraintEnd_toStartOf="@id/fb_square_collect"
+                app:layout_constraintStart_toEndOf="@id/iv_feed_item_avatar"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/nick_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+                    android:text="@{viewModel.author.nick}"
+                    tools:text="食光知味食光知味" />
+
+                <TextView
+                    android:id="@+id/publish_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:textAppearance="@style/TextAppearance.Material3.LabelSmall"
+                    tools:text="2023.09.11"
+                    android:text="@{viewModel.publish_time}"/>
+
+            </LinearLayout>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fb_square_collect"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="6dp"
+                android:contentDescription="@string/eye_square_follow"
+                app:elevation="0dp"
+                app:fabCustomSize="40dp"
+                android:scaleType="center"
+                app:useCompatPadding="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.None"
+                app:srcCompat="@drawable/eye_square_add_icon"
+                app:backgroundTint="@color/base_color_theme"
+                />
+
+
+            <ImageView
+                android:id="@+id/iv_feedItem_cover"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ll_feed_detail_container"
+                tools:layout_height="200dp"
+                app:imageUrl="@{viewModel.video.cover.url}"/>
+
+            <TextView
+                android:id="@+id/tv_feedItem_desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="12dp"
+                android:textSize="14sp"
+                android:letterSpacing="0.1"
+                app:layout_constraintTop_toBottomOf="@id/iv_feedItem_cover"
+                tools:text="风筝手艺人们是如何制作、传承、创新风筝的? 不同流派的风筝又有哪些特色和寓意? 这期我们为大家讲述风筝手艺人及其背后的风筝文化，希望能带大家感受，中国传统艺术究竟有多美"
+                android:text="@{viewModel.text}"/>
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/cg_feedItem_tag"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_feedItem_desc" />
+
+            <LinearLayout
+                android:id="@+id/consumption"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="12dp"
+                android:gravity="center_vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cg_feedItem_tag">
+
+                <TextView
+                    android:id="@+id/like"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="2dp"
+                    android:textColor="#cdcdcd"
+                    android:text="@{String.valueOf(viewModel.consumption.like_count)}"
+                    app:drawableStartCompat="@drawable/eye_square_favorite_icon" />
+
+                <TextView
+                    android:id="@+id/collected"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:drawablePadding="2dp"
+                    android:textColor="#cdcdcd"
+                    app:drawableStartCompat="@drawable/eye_square_collect_icon"
+                    android:text="@{String.valueOf(viewModel.consumption.collection_count)}"/>
+
+                <TextView
+                    android:id="@+id/comment"
+                    style="@style/TextAppearance.Material3.BodySmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:drawablePadding="2dp"
+                    android:textColor="#cdcdcd"
+                    app:drawableStartCompat="@drawable/eye_square_commont_icon"
+                    android:text="@{String.valueOf(viewModel.consumption.comment_count)}"/>
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+
+</layout>
+

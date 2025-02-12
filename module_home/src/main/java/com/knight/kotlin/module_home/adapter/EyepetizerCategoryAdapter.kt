@@ -58,7 +58,7 @@ class EyepetizerCategoryAdapter:
                     R.drawable.home_icon_eye_find,
                     iv_eyepetizer_category
                 )
-            } else if (item.categoryName.equals("广场")) {
+            } else if (item.categoryName.equals("社区")) {
                 ImageLoader.loadLocalPhoto(
                     context,
                     R.drawable.home_icon_eye_square,

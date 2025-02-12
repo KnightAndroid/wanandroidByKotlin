@@ -26,4 +26,14 @@ class EyeSquareVm @Inject constructor(private val mRepo:EyeSquareRepo) : BaseVie
     fun getSquareDataByTypeAndLabel(page_type:String, page_label:String):LiveData<EyeCardListEntity> {
          return mRepo.getSquareDataByTypeAndLabel(page_type, page_label).asLiveData()
      }
+
+
+    /**
+     *
+     * 获取上滑加载更多数据
+     */
+    fun getSquareMoreData(url:String,params:MutableMap<String,String>): LiveData<EyeCardListEntity> {
+        return mRepo.getSquareMoreData(url,params).asLiveData()
+    }
+
 }

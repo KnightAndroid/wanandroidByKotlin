@@ -26,6 +26,7 @@ import com.knight.kotlin.library_aop.loginintercept.LoginCheck
 import com.knight.kotlin.library_base.annotation.EventBusRegister
 import com.knight.kotlin.library_base.config.Appconfig
 import com.knight.kotlin.library_base.config.CacheKey
+import com.knight.kotlin.library_base.entity.BaiduContent
 import com.knight.kotlin.library_base.entity.LoginEntity
 import com.knight.kotlin.library_base.entity.UserInfoEntity
 import com.knight.kotlin.library_base.event.MessageEvent
@@ -67,7 +68,6 @@ import com.knight.kotlin.module_home.dialog.HomePushArticleFragment
 import com.knight.kotlin.module_home.entity.BannerBean
 import com.knight.kotlin.module_home.entity.EveryDayPushArticlesBean
 import com.knight.kotlin.module_home.entity.HomeArticleListBean
-import com.knight.kotlin.library_base.entity.BaiduContent
 import com.knight.kotlin.module_home.utils.HomeAnimUtils
 import com.knight.kotlin.module_home.vm.HomeRecommendVm
 import com.knight.library_biometric.control.BiometricControl
@@ -185,6 +185,7 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
 
     override fun HomeRecommendFragmentBinding.initView() {
         mBinding.root.rotation = 180f
+        homeIconFab.imageTintList = null
         mSkeletonScreen = Skeleton.bind(mBinding.rlHome)
             .load(R.layout.home_skeleton_activity)
             .duration(1200)

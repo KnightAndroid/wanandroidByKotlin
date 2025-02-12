@@ -61,6 +61,7 @@ object EyeSearchResultType {
 
 object EyeCardUIType {
     const val BANNER = 1 //广告
-    const val WATERFALL_COVER_SMALL = 2 //小图片
-    const val PIC = 3 //图文
+    const val WATERFALL_COVER_SMALL = 2 //图片/视频
+    const val FEEDITEM = 3
+    const val PIC = 4 //图文
 }

@@ -6,8 +6,7 @@ import android.view.ViewGroup
 import android.view.ViewGroup.MarginLayoutParams
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter4.BaseQuickAdapter
-import com.knight.kotlin.library_base.entity.EyeItemEntity
-import com.knight.kotlin.library_base.entity.eye_type.EyeWaterFallCoverImage
+import com.knight.kotlin.library_base.entity.eye_type.EyeWaterFallCoverVideoImage
 import com.knight.kotlin.library_base.ktx.getScreenWidth
 import com.knight.kotlin.library_base.util.dp2px
 import com.knight.kotlin.module_eye_square.databinding.EyeSquareWaterfallCoverSmallBinding
@@ -19,7 +18,7 @@ import com.knight.kotlin.module_eye_square.databinding.EyeSquareWaterfallCoverSm
  * 广场WaterCoverSmall适配器
  */
 
-class EyeSquareWaterFallCoverSmallAdapter : BaseQuickAdapter<EyeWaterFallCoverImage, EyeSquareWaterFallCoverSmallAdapter.VH>() {
+class EyeSquareWaterFallCoverSmallAdapter : BaseQuickAdapter<EyeWaterFallCoverVideoImage, EyeSquareWaterFallCoverSmallAdapter.VH>() {
 
     class VH(
         parent: ViewGroup,
@@ -28,10 +27,10 @@ class EyeSquareWaterFallCoverSmallAdapter : BaseQuickAdapter<EyeWaterFallCoverIm
         ),
     ) : RecyclerView.ViewHolder(binding.root)
 
-    override fun onBindViewHolder(holder: VH, position: Int, item: EyeWaterFallCoverImage?) {
+    override fun onBindViewHolder(holder: VH, position: Int, item: EyeWaterFallCoverVideoImage?) {
         holder.binding.viewModel = item
 
-        holder.binding.cover.apply {
+        holder.binding.ivWaterfallSamallCover.apply {
             layoutParams.width = getScreenWidth() / 2 - 12.dp2px()
             layoutParams.height = layoutParams.width
         }
