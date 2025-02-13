@@ -7,9 +7,7 @@ import com.google.auto.service.AutoService
 import com.knight.kotlin.library_base.BaseApp
 import com.knight.kotlin.library_base.app.ApplicationLifecycle
 import com.knight.kotlin.library_base.util.ProcessUtil
-import com.knight.kotlin.library_util.toast.ToastInterceptor
 import com.knight.kotlin.library_util.toast.ToastUtils.init
-import com.knight.kotlin.library_util.toast.ToastUtils.setInterceptor
 import com.tencent.bugly.crashreport.CrashReport
 import com.wyjson.router.GoRouter
 
@@ -92,7 +90,7 @@ class UtilApplication:ApplicationLifecycle {
      */
     private fun initToast():String {
         //初始化Toast
-        setInterceptor(ToastInterceptor())
+        //setInterceptor(ToastInterceptor())
         init(BaseApp.application)
         return  "Toast -->> init Toast"
     }

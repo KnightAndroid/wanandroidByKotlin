@@ -1,23 +1,28 @@
 package com.knight.kotlin.library_util.toast.style
 
 import android.content.Context
+import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
 import com.knight.kotlin.library_util.toast.callback.IToastStyle
 
 
 /**
- * Author:Knight
- * Time:2021/12/17 13:52
- * Description:LocationToastStyle
+ * @author created by luguian
+ * @organize
+ * @Date 2025/2/13 15:00
+ * @descript:自自定义 View 包装样式实现
  */
-class LocationToastStyle constructor(style: IToastStyle<*>?,
-                                     gravity: Int,
-                                     xOffset: Int = 0,
-                                     yOffset: Int = 0,
-                                     horizontalMargin: Float = 0f,
-                                     verticalMargin: Float = 0f) : IToastStyle<View?> {
-    private val mStyle:IToastStyle<*>? = style
-
+class CustomToastS22tyle @JvmOverloads constructor(
+    id: Int,
+    gravity: Int = Gravity.CENTER,
+    xOffset: Int = 0,
+    yOffset: Int = 0,
+    horizontalMargin: Float = 0f,
+    verticalMargin: Float = 0f
+) :
+    IToastStyle<View?> {
+    private val mLayoutId = id
     private val mGravity = gravity
     private val mXOffset = xOffset
     private val mYOffset = yOffset
@@ -25,7 +30,7 @@ class LocationToastStyle constructor(style: IToastStyle<*>?,
     private val mVerticalMargin = verticalMargin
 
     override fun createView(context: Context): View? {
-        return mStyle?.createView(context)
+        return LayoutInflater.from(context).inflate(mLayoutId, null)
     }
 
     override fun getGravity(): Int {

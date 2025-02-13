@@ -22,19 +22,12 @@ import androidx.fragment.app.FragmentActivity
 import com.knight.kotlin.library_permiss.AndroidManifestInfo
 import com.knight.kotlin.library_permiss.AndroidManifestParser
 import com.knight.kotlin.library_permiss.AndroidVersion
-import com.knight.kotlin.library_permiss.AndroidVersion.getAndroidVersionCode
-import com.knight.kotlin.library_permiss.AndroidVersion.getTargetSdkVersionCode
-import com.knight.kotlin.library_permiss.AndroidVersion.isAndroid13
-import com.knight.kotlin.library_permiss.AndroidVersion.isAndroid14
-import com.knight.kotlin.library_permiss.PermissionIntentManager
 import com.knight.kotlin.library_permiss.PermissionNameConvert
 import com.knight.kotlin.library_permiss.R
 import com.knight.kotlin.library_permiss.XXPermissions
 import com.knight.kotlin.library_permiss.listener.OnPermissionCallback
 import com.knight.kotlin.library_permiss.listener.OnPermissionPageCallback
 import com.knight.kotlin.library_permiss.permissions.Permission
-import com.knight.kotlin.library_permiss.permissions.PermissionApi
-import com.knight.kotlin.library_permiss.permissions.PermissionApi.getPermissionResult
 import com.knight.kotlin.library_util.DialogUtils
 import org.xmlpull.v1.XmlPullParserException
 import java.io.IOException
@@ -238,52 +231,52 @@ object PermissionUtils {
         return androidManifestInfo
     }
 
-    /**
-     * 优化权限回调结果
-     */
-    fun optimizePermissionResults(
-        activity: Activity,
-        permissions: Array<String>,
-        grantResults: IntArray
-    ) {
-        for (i in 0 until permissions.size) {
-            val permission = permissions[i]
-
-            // 如果这个权限是特殊权限，则需要重新检查权限的状态
-            if (PermissionApi.isSpecialPermission(permission)) {
-                grantResults[i] = getPermissionResult(activity, permission)
-                continue
-            }
-
-            // 如果是读取应用列表权限（国产权限），则需要重新检查权限的状态
-            if (equalsPermission(permission, Permission.GET_INSTALLED_APPS)) {
-                grantResults[i] = getPermissionResult(activity, permission)
-                continue
-            }
-
-            // 如果是在 Android 14 上面，并且是图片权限或者视频权限，则需要重新检查权限的状态
-            // 这是因为用户授权部分图片或者视频的时候，READ_MEDIA_VISUAL_USER_SELECTED 权限状态是授予的
-            // 但是 READ_MEDIA_IMAGES 和 READ_MEDIA_VIDEO 的权限状态是拒绝的
-            if (isAndroid14() &&
-                (equalsPermission(permission, Permission.READ_MEDIA_IMAGES) ||
-                        equalsPermission(permission, Permission.READ_MEDIA_VIDEO))
-            ) {
-                grantResults[i] = getPermissionResult(activity, permission)
-                continue
-            }
-            if (isAndroid13() && getTargetSdkVersionCode(activity) >= AndroidVersion.ANDROID_13 &&
-                equalsPermission(permission, Permission.WRITE_EXTERNAL_STORAGE)
-            ) {
-                // 在 Android 13 不能申请 WRITE_EXTERNAL_STORAGE，会被系统直接拒绝，在这里需要重新检查权限的状态
-                grantResults[i] = getPermissionResult(activity, permission)
-                continue
-            }
-            if (Permission.getDangerPermissionFromAndroidVersion(permission) > getAndroidVersionCode()) {
-                // 如果是申请了新权限，但却是旧设备上面运行的，会被系统直接拒绝，在这里需要重新检查权限的状态
-                grantResults[i] = getPermissionResult(activity, permission)
-            }
-        }
-    }
+//    /**
+//     * 优化权限回调结果
+//     */
+//    fun optimizePermissionResults(
+//        activity: Activity,
+//        permissions: Array<String>,
+//        grantResults: IntArray
+//    ) {
+//        for (i in 0 until permissions.size) {
+//            val permission = permissions[i]
+//
+//            // 如果这个权限是特殊权限，则需要重新检查权限的状态
+//            if (PermissionApi.isSpecialPermission(permission)) {
+//                grantResults[i] = getPermissionResult(activity, permission)
+//                continue
+//            }
+//
+//            // 如果是读取应用列表权限（国产权限），则需要重新检查权限的状态
+//            if (equalsPermission(permission, Permission.GET_INSTALLED_APPS)) {
+//                grantResults[i] = getPermissionResult(activity, permission)
+//                continue
+//            }
+//
+//            // 如果是在 Android 14 上面，并且是图片权限或者视频权限，则需要重新检查权限的状态
+//            // 这是因为用户授权部分图片或者视频的时候，READ_MEDIA_VISUAL_USER_SELECTED 权限状态是授予的
+//            // 但是 READ_MEDIA_IMAGES 和 READ_MEDIA_VIDEO 的权限状态是拒绝的
+//            if (isAndroid14() &&
+//                (equalsPermission(permission, Permission.READ_MEDIA_IMAGES) ||
+//                        equalsPermission(permission, Permission.READ_MEDIA_VIDEO))
+//            ) {
+//                grantResults[i] = getPermissionResult(activity, permission)
+//                continue
+//            }
+//            if (isAndroid13() && getTargetSdkVersionCode(activity) >= AndroidVersion.ANDROID_13 &&
+//                equalsPermission(permission, Permission.WRITE_EXTERNAL_STORAGE)
+//            ) {
+//                // 在 Android 13 不能申请 WRITE_EXTERNAL_STORAGE，会被系统直接拒绝，在这里需要重新检查权限的状态
+//                grantResults[i] = getPermissionResult(activity, permission)
+//                continue
+//            }
+//            if (Permission.getDangerPermissionFromAndroidVersion(permission) > getAndroidVersionCode()) {
+//                // 如果是申请了新权限，但却是旧设备上面运行的，会被系统直接拒绝，在这里需要重新检查权限的状态
+//                grantResults[i] = getPermissionResult(activity, permission)
+//            }
+//        }
+//    }
 
     /**
      * 将数组转换成 ArrayList
@@ -470,52 +463,52 @@ object PermissionUtils {
             .isEmpty()
     }
 
-    /**
-     * 根据传入的权限自动选择最合适的权限设置页
-     *
-     * @param permissions                 请求失败的权限
-     */
-    fun getSmartPermissionIntent(
-       context: Context,
-       permissions: List<String>
-    ): Intent? {
-        // 如果失败的权限里面不包含特殊权限
-        if (permissions == null || permissions.isEmpty()) {
-            return PermissionIntentManager.getApplicationDetailsIntent(context)
-        }
-
-        // 危险权限统一处理
-        if (!PermissionApi.containsSpecialPermission(permissions)) {
-            return if (permissions.size == 1) {
-                PermissionApi.getPermissionIntent(context, permissions[0])
-            } else PermissionIntentManager.getApplicationDetailsIntent(context)
-        }
-        when (permissions.size) {
-            1 ->                 // 如果当前只有一个权限被拒绝了
-                return PermissionApi.getPermissionIntent(context, permissions[0])
-
-            2 -> if (!AndroidVersion.isAndroid13() &&
-                containsPermission(permissions, Permission.NOTIFICATION_SERVICE) &&
-                containsPermission(permissions, Permission.POST_NOTIFICATIONS)
-            ) {
-                return PermissionApi.getPermissionIntent(context, Permission.NOTIFICATION_SERVICE)
-            }
-
-            3 -> if (AndroidVersion.isAndroid11() &&
-                containsPermission(permissions, Permission.MANAGE_EXTERNAL_STORAGE) &&
-                containsPermission(permissions, Permission.READ_EXTERNAL_STORAGE) &&
-                containsPermission(permissions, Permission.WRITE_EXTERNAL_STORAGE)
-            ) {
-                return PermissionApi.getPermissionIntent(
-                    context,
-                    Permission.MANAGE_EXTERNAL_STORAGE
-                )
-            }
-
-            else -> {}
-        }
-        return PermissionIntentManager.getApplicationDetailsIntent(context)
-    }
+//    /**
+//     * 根据传入的权限自动选择最合适的权限设置页
+//     *
+//     * @param permissions                 请求失败的权限
+//     */
+//    fun getSmartPermissionIntent(
+//       context: Context,
+//       permissions: List<String>
+//    ): Intent? {
+//        // 如果失败的权限里面不包含特殊权限
+//        if (permissions == null || permissions.isEmpty()) {
+//            return PermissionIntentManager.getApplicationDetailsIntent(context)
+//        }
+//
+//        // 危险权限统一处理
+//        if (!PermissionApi.containsSpecialPermission(permissions)) {
+//            return if (permissions.size == 1) {
+//                PermissionApi.getPermissionIntent(context, permissions[0])
+//            } else PermissionIntentManager.getApplicationDetailsIntent(context)
+//        }
+//        when (permissions.size) {
+//            1 ->                 // 如果当前只有一个权限被拒绝了
+//                return PermissionApi.getPermissionIntent(context, permissions[0])
+//
+//            2 -> if (!AndroidVersion.isAndroid13() &&
+//                containsPermission(permissions, Permission.NOTIFICATION_SERVICE) &&
+//                containsPermission(permissions, Permission.POST_NOTIFICATIONS)
+//            ) {
+//                return PermissionApi.getPermissionIntent(context, Permission.NOTIFICATION_SERVICE)
+//            }
+//
+//            3 -> if (AndroidVersion.isAndroid11() &&
+//                containsPermission(permissions, Permission.MANAGE_EXTERNAL_STORAGE) &&
+//                containsPermission(permissions, Permission.READ_EXTERNAL_STORAGE) &&
+//                containsPermission(permissions, Permission.WRITE_EXTERNAL_STORAGE)
+//            ) {
+//                return PermissionApi.getPermissionIntent(
+//                    context,
+//                    Permission.MANAGE_EXTERNAL_STORAGE
+//                )
+//            }
+//
+//            else -> {}
+//        }
+//        return PermissionIntentManager.getApplicationDetailsIntent(context)
+//    }
 
     /**
      * 判断两个权限字符串是否为同一个
@@ -616,6 +609,7 @@ object PermissionUtils {
                         callback!!.onGranted(allPermissions, true)
                     }
 
+                    @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
                     override fun onDenied() {
                         showPermissionSettingDialog(
                             activity, allPermissions,

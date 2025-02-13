@@ -14,6 +14,7 @@ import com.knight.kotlin.library_permiss.AndroidVersion.isAndroid4_2
 import com.knight.kotlin.library_permiss.AndroidVersion.isAndroid7
 import com.knight.kotlin.library_permiss.AndroidVersion.isAndroid8
 import com.knight.kotlin.library_permiss.permissions.Permission
+import com.knight.kotlin.library_permiss.utils.PermissionUtils
 import com.knight.kotlin.library_permiss.utils.PermissionUtils.containsPermission
 import com.knight.kotlin.library_permiss.utils.PermissionUtils.equalsPermission
 import com.knight.kotlin.library_permiss.utils.PermissionUtils.isScopedStorage
@@ -135,6 +136,7 @@ object PermissionChecker {
         for (permission: String? in requestPermissions) {
             if ((equalsPermission((permission)!!, Permission.ACCESS_MEDIA_LOCATION)
                         || equalsPermission((permission), Permission.READ_MEDIA_IMAGES)
+                        || equalsPermission((permission),Permission.READ_MEDIA_VIDEO)
                         || equalsPermission((permission), Permission.READ_EXTERNAL_STORAGE)
                         || equalsPermission((permission), Permission.WRITE_EXTERNAL_STORAGE)
                         || equalsPermission((permission), Permission.MANAGE_EXTERNAL_STORAGE))
@@ -148,9 +150,10 @@ object PermissionChecker {
         }
         if (getTargetSdkVersionCode((context)!!) >= AndroidVersion.ANDROID_13) {
             if (!containsPermission(requestPermissions, Permission.READ_MEDIA_IMAGES) &&
+                !containsPermission(requestPermissions, Permission.READ_MEDIA_VIDEO) &&
                 !containsPermission(requestPermissions, Permission.MANAGE_EXTERNAL_STORAGE)
             ) {
-                // 你需要在外层手动添加 READ_MEDIA_IMAGES 或者 MANAGE_EXTERNAL_STORAGE 才可以申请 ACCESS_MEDIA_LOCATION 权限
+                // 你需要在外层手动添加 READ_MEDIA_IMAGES 、READ_MEDIA_VIDEO、 MANAGE_EXTERNAL_STORAGE 才可以申请 ACCESS_MEDIA_LOCATION 权限
                 throw IllegalArgumentException(
                     (((("You must add " + Permission.READ_MEDIA_IMAGES).toString() + " or " +
                             Permission.MANAGE_EXTERNAL_STORAGE).toString() + " rights to apply for " + Permission.ACCESS_MEDIA_LOCATION).toString() + " rights")
@@ -202,7 +205,33 @@ object PermissionChecker {
         if (containsPermission(requestPermissions, Permission.READ_MEDIA_IMAGES) ||
             containsPermission(requestPermissions,Permission.READ_MEDIA_VIDEO) ||
             containsPermission(requestPermissions,Permission.READ_MEDIA_AUDIO)) {
-            return
+
+            if (containsPermission(requestPermissions, Permission.READ_EXTERNAL_STORAGE)) {
+                // 检测是否有旧版的存储权限，有的话直接抛出异常，请不要自己动态申请这个权限
+                // 框架会在 Android 13 以下的版本上自动添加并申请这两个权限
+                throw IllegalArgumentException("If you have applied for media permissions, " +
+                        "do not apply for the READ_EXTERNAL_STORAGE and WRITE_EXTERNAL_STORAGE permissions");
+            }
+
+            if (containsPermission(requestPermissions, Permission.MANAGE_EXTERNAL_STORAGE)) {
+                // 因为 MANAGE_EXTERNAL_STORAGE 权限范围很大，有了它就可以读取媒体文件，不需要再叠加申请媒体权限
+                throw IllegalArgumentException("Because the MANAGE_EXTERNAL_STORAGE permission range is very large, "
+                        + "you can read media files with it, and there is no need to apply for additional media permissions.");
+            }
+
+            // 到此结束，不需要往下走是否有分区存储的判断
+            return;
+        }
+
+        if (containsPermission(requestPermissions, Permission.MANAGE_EXTERNAL_STORAGE)) {
+
+            if (containsPermission(requestPermissions, Permission.READ_EXTERNAL_STORAGE) ||
+                containsPermission(requestPermissions, Permission.WRITE_EXTERNAL_STORAGE)) {
+                // 检测是否有旧版的存储权限，有的话直接抛出异常，请不要自己动态申请这两个权限
+                // 框架会在 Android 10 以下的版本上自动添加并申请这两个权限
+                throw IllegalArgumentException("If you have applied for MANAGE_EXTERNAL_STORAGE permissions, " +
+                        "do not apply for the READ_EXTERNAL_STORAGE and WRITE_EXTERNAL_STORAGE permissions");
+            }
         }
 
         // 如果申请的是 Android 10 获取媒体位置权限，则绕过本次检查
@@ -497,8 +526,18 @@ object PermissionChecker {
                     // READ_MEDIA_VISUAL_USER_SELECTED 这个权限比较特殊，不需要调高 targetSdk 的版本才能申请，但是需要和 READ_MEDIA_IMAGES 和 READ_MEDIA_VIDEO 组合使用
                     // 这个权限不能单独申请，只能和 READ_MEDIA_IMAGES、READ_MEDIA_VIDEO 一起申请，否则会有问题，所以这个权限的 targetSdk 最低要求为 33 及以上
                     AndroidVersion.ANDROID_13
+                }  else if (containsPermission(arrayOf(
+                        Permission.BLUETOOTH_SCAN,
+                        Permission.BLUETOOTH_CONNECT,
+                        Permission.BLUETOOTH_ADVERTISE
+                    ).toList(), permission)) {
+                    // 部分厂商修改了蓝牙权限机制，在 targetSdk 不满足条件的情况下（小于 31），仍需要让应用申请这个权限
+                    // 相关的 issue 地址：
+                    // 1. https://github.com/getActivity/XXPermissions/issues/123
+                    // 2. https://github.com/getActivity/XXPermissions/issues/302
+                    AndroidVersion.ANDROID_6
                 } else {
-                    Permission.getPermissionFromAndroidVersion(permission)
+                    PermissionHelper.findAndroidVersionByPermission(permission);
                 }
 
             // 必须设置正确的 targetSdkVersion 才能正常检测权限
@@ -542,9 +581,9 @@ object PermissionChecker {
             }
         }
         for (permission in requestPermissions) {
-            if (!Permission.isMustRegisterInManifestFile(permission!!)) {
+            if (PermissionHelper.isVirtualPermission(permission)) {
                 // 不检测这些权限有没有在清单文件中注册，因为这几个权限是框架虚拟出来的，有没有在清单文件中注册都没关系
-                continue
+                continue;
             }
 
             // 检查这个权限有没有在清单文件中注册
@@ -580,8 +619,8 @@ object PermissionChecker {
             }
 
             // 如果 minSdkVersion 已经大于等于权限出现的版本，则不需要做向下兼容
-            if (minSdkVersion >= Permission.getPermissionFromAndroidVersion(permission!!)) {
-                return
+            if (minSdkVersion >= PermissionHelper.findAndroidVersionByPermission(permission)) {
+                return;
             }
 
             // Android 13

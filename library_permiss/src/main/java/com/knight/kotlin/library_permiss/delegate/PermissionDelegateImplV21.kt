@@ -42,13 +42,13 @@ open class PermissionDelegateImplV21 : PermissionDelegateImplV19(){
         } else super.isDoNotAskAgainPermission(activity, permission)
     }
 
-    override fun getPermissionIntent(context: Context, permission: String): Intent? {
+    override fun getPermissionSettingIntent(context: Context, permission: String): Intent? {
         return if (equalsPermission(
                 permission, Permission.PACKAGE_USAGE_STATS
             )
         ) {
             getPackagePermissionIntent(context)
-        } else super.getPermissionIntent(context, permission)
+        } else super.getPermissionSettingIntent(context, permission)
     }
 
     /**

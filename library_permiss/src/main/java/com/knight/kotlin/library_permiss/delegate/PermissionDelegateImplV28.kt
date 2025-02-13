@@ -6,8 +6,6 @@ import androidx.annotation.RequiresApi
 import com.knight.kotlin.library_permiss.AndroidVersion
 import com.knight.kotlin.library_permiss.permissions.Permission
 import com.knight.kotlin.library_permiss.utils.PermissionUtils
-import com.knight.kotlin.library_permiss.utils.PermissionUtils.checkSelfPermission
-import com.knight.kotlin.library_permiss.utils.PermissionUtils.equalsPermission
 
 
 /**
@@ -22,12 +20,14 @@ open class PermissionDelegateImplV28 :PermissionDelegateImplV26() {
        context: Context,
        permission: String
     ): Boolean {
-        return if (equalsPermission(
-                permission, Permission.ACCEPT_HANDOVER
-            )
-        ) {
-            checkSelfPermission(context, permission)
-        } else super.isGrantedPermission(context, permission)
+         if (PermissionUtils.equalsPermission(permission, Permission.ACCEPT_HANDOVER)) {
+             if (!AndroidVersion.isAndroid9()) {
+                 return true
+             }
+             return PermissionUtils.checkSelfPermission(context, permission)
+         }
+
+         return super.isGrantedPermission(context, permission);
     }
 
     override fun isDoNotAskAgainPermission(
@@ -35,9 +35,14 @@ open class PermissionDelegateImplV28 :PermissionDelegateImplV26() {
         permission: String
     ): Boolean {
         if (PermissionUtils.equalsPermission(permission, Permission.ACCEPT_HANDOVER)) {
+            if (!AndroidVersion.isAndroid9()) {
+                return false
+            }
             return !PermissionUtils.checkSelfPermission(activity, permission) &&
-                    !PermissionUtils.shouldShowRequestPermissionRationale(activity, permission);
+                    !PermissionUtils.shouldShowRequestPermissionRationale(activity, permission)
         }
-        return super.isDoNotAskAgainPermission(activity, permission);
+
+        return super.isDoNotAskAgainPermission(activity, permission)
+
     }
 }

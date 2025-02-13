@@ -10,6 +10,9 @@ buildscript {
 
 
         mavenCentral()
+        maven {
+            url = uri("https://storage.googleapis.com/r8-releases/raw")
+        }
         jcenter()
         maven(url="https://jitpack.io")
         maven(url = "https://dl.google.com/dl/android/maven2/")
@@ -23,6 +26,7 @@ buildscript {
         classpath(com.knight.wanandroid.buildsrc.ProjectPluginDencies.HILT_PLUGIN)
        // classpath(com.knight.wanandroid.buildsrc.ProjectPluginDencies.KOTLIN_SERIALIZATION)
         classpath(com.knight.wanandroid.buildsrc.ProjectPluginDencies.ANDROID_AOP)
+        classpath("com.android.tools:r8:8.2.24")
     }
 }
 

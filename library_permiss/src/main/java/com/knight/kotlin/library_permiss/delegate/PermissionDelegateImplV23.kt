@@ -10,13 +10,19 @@ import androidx.annotation.RequiresApi
 import com.knight.kotlin.library_permiss.AndroidVersion
 import com.knight.kotlin.library_permiss.AndroidVersion.isAndroid10
 import com.knight.kotlin.library_permiss.AndroidVersion.isAndroid6
+import com.knight.kotlin.library_permiss.GetInstalledAppsPermissionCompat
+import com.knight.kotlin.library_permiss.GetInstalledAppsPermissionCompat.isDoNotAskAgainPermission
+import com.knight.kotlin.library_permiss.PermissionHelper
 import com.knight.kotlin.library_permiss.PermissionIntentManager
-import com.knight.kotlin.library_permiss.PermissionIntentManager.getApplicationDetailsIntent
+import com.knight.kotlin.library_permiss.WindowPermissionCompat
 import com.knight.kotlin.library_permiss.permissions.Permission
 import com.knight.kotlin.library_permiss.utils.PermissionUtils
 import com.knight.kotlin.library_permiss.utils.PermissionUtils.areActivityIntent
+import com.knight.kotlin.library_permiss.utils.PermissionUtils.checkSelfPermission
+import com.knight.kotlin.library_permiss.utils.PermissionUtils.containsPermission
 import com.knight.kotlin.library_permiss.utils.PermissionUtils.equalsPermission
 import com.knight.kotlin.library_permiss.utils.PermissionUtils.getPackageNameUri
+import com.knight.kotlin.library_permiss.utils.PermissionUtils.shouldShowRequestPermissionRationale
 import com.knight.kotlin.library_permiss.utils.PhoneRomUtils.isHarmonyOs
 import com.knight.kotlin.library_permiss.utils.PhoneRomUtils.isMagicOs
 
@@ -32,212 +38,122 @@ open class PermissionDelegateImplV23 : PermissionDelegateImplV21(){
         context: Context,
         permission: String
     ): Boolean {
-        if (Permission.getPermissionFromAndroidVersion(permission) > AndroidVersion.getAndroidVersionCode()) {
+        if (!PermissionHelper.isSpecialPermission(permission)) {
+            // 读取应用列表权限是比较特殊的危险权限，它和其他危险权限的判断方式不太一样，所以需要放在这里来判断
+            if (PermissionUtils.equalsPermission(permission, Permission.GET_INSTALLED_APPS)) {
+                return GetInstalledAppsPermissionCompat.isGrantedPermission(context);
+            }
 
-            // 向下兼容 Android 14 新权限
-            if (PermissionUtils.equalsPermission(permission, Permission.READ_MEDIA_VISUAL_USER_SELECTED)) {
+            if (!AndroidVersion.isAndroid6()) {
                 return true;
             }
-
-            // 向下兼容 Android 13 新权限
-            if (PermissionUtils.equalsPermission(permission, Permission.POST_NOTIFICATIONS)) {
-                // 交给父类处理
-                return super.isGrantedPermission(context, permission);
-            }
-
-            if (PermissionUtils.equalsPermission(permission, Permission.NEARBY_WIFI_DEVICES)) {
-                return PermissionUtils.checkSelfPermission(context, Permission.ACCESS_FINE_LOCATION);
-            }
-
-            if (PermissionUtils.equalsPermission(permission, Permission.BODY_SENSORS_BACKGROUND)) {
-                return PermissionUtils.checkSelfPermission(context, Permission.BODY_SENSORS);
-            }
-
-            if (PermissionUtils.equalsPermission(permission, Permission.READ_MEDIA_IMAGES) ||
-                PermissionUtils.equalsPermission(permission, Permission.READ_MEDIA_VIDEO) ||
-                PermissionUtils.equalsPermission(permission, Permission.READ_MEDIA_AUDIO)) {
-                return PermissionUtils.checkSelfPermission(context, Permission.READ_EXTERNAL_STORAGE);
-            }
-
-            // 向下兼容 Android 12 新权限
-            if (PermissionUtils.equalsPermission(permission, Permission.BLUETOOTH_SCAN)) {
-                return PermissionUtils.checkSelfPermission(context, Permission.ACCESS_FINE_LOCATION);
-            }
-
-            if (PermissionUtils.equalsPermission(permission, Permission.BLUETOOTH_CONNECT) ||
-                PermissionUtils.equalsPermission(permission, Permission.BLUETOOTH_ADVERTISE)) {
-                return true;
-            }
-
-            // 向下兼容 Android 11 新权限
-            if (PermissionUtils.equalsPermission(permission, Permission.MANAGE_EXTERNAL_STORAGE)) {
-                // 检测管理所有文件权限
-                return PermissionUtils.checkSelfPermission(context, Permission.READ_EXTERNAL_STORAGE) &&
-                        PermissionUtils.checkSelfPermission(context, Permission.WRITE_EXTERNAL_STORAGE);
-            }
-
-            // 向下兼容 Android 10 新权限
-            if (PermissionUtils.equalsPermission(permission, Permission.ACCESS_BACKGROUND_LOCATION)) {
-                return PermissionUtils.checkSelfPermission(context, Permission.ACCESS_FINE_LOCATION);
-            }
-
-            if (PermissionUtils.equalsPermission(permission, Permission.ACTIVITY_RECOGNITION)) {
-                return true;
-            }
-
-            if (PermissionUtils.equalsPermission(permission, Permission.ACCESS_MEDIA_LOCATION)) {
-                return PermissionUtils.checkSelfPermission(context, Permission.READ_EXTERNAL_STORAGE);
-            }
-
-            // 向下兼容 Android 9.0 新权限
-            if (PermissionUtils.equalsPermission(permission, Permission.ACCEPT_HANDOVER)) {
-                return true;
-            }
-
-            // 向下兼容 Android 8.0 新权限
-            if (PermissionUtils.equalsPermission(permission, Permission.ANSWER_PHONE_CALLS)) {
-                return true;
-            }
-
-            if (PermissionUtils.equalsPermission(permission, Permission.READ_PHONE_NUMBERS)) {
-                return PermissionUtils.checkSelfPermission(context, Permission.READ_PHONE_STATE);
-            }
+            return PermissionUtils.checkSelfPermission(context, permission);
         }
 
-        // 交给父类处理
-        if (PermissionUtils.equalsPermission(permission, Permission.GET_INSTALLED_APPS) ||
-            PermissionUtils.equalsPermission(permission, Permission.POST_NOTIFICATIONS)) {
-            return super.isGrantedPermission(context, permission);
+        if (PermissionUtils.equalsPermission(permission, Permission.SYSTEM_ALERT_WINDOW)) {
+            return WindowPermissionCompat.isGrantedPermission(context);
         }
 
-        if (Permission.isSpecialPermission(permission)) {
-            // 检测系统权限
-            if (PermissionUtils.equalsPermission(permission, Permission.WRITE_SETTINGS)) {
-                return isGrantedSettingPermission(context);
+        if (PermissionUtils.equalsPermission(permission, Permission.WRITE_SETTINGS)) {
+            if (!AndroidVersion.isAndroid6()) {
+                return true;
             }
-
-            // 检测勿扰权限
-            if (PermissionUtils.equalsPermission(permission, Permission.ACCESS_NOTIFICATION_POLICY)) {
-                return isGrantedNotDisturbPermission(context);
-            }
-
-            // 检测电池优化选项权限
-            if (PermissionUtils.equalsPermission(permission, Permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS)) {
-                return isGrantedIgnoreBatteryPermission(context);
-            }
-
-            return super.isGrantedPermission(context, permission);
+            return isGrantedSettingPermission(context);
         }
 
-        return PermissionUtils.checkSelfPermission(context, permission);
+        if (PermissionUtils.equalsPermission(permission, Permission.ACCESS_NOTIFICATION_POLICY)) {
+            if (!AndroidVersion.isAndroid6()) {
+                return true;
+            }
+            return isGrantedNotDisturbPermission(context);
+        }
+
+        if (PermissionUtils.equalsPermission(permission, Permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS)) {
+            if (!AndroidVersion.isAndroid6()) {
+                return true;
+            }
+            return isGrantedIgnoreBatteryPermission(context);
+        }
+
+        // Android 6.0 及以下还有一些特殊权限需要判断
+        return super.isGrantedPermission(context, permission);
     }
 
     override fun isDoNotAskAgainPermission(
         activity: Activity,
         permission: String
     ): Boolean {
-        if (Permission.getPermissionFromAndroidVersion(permission) > AndroidVersion.getAndroidVersionCode()) {
-
-            // 向下兼容 Android 14 新权限
-            if (PermissionUtils.equalsPermission(permission, Permission.READ_MEDIA_VISUAL_USER_SELECTED)) {
-                return false;
+        if (!PermissionHelper.isSpecialPermission(permission)) {
+            // 读取应用列表权限是比较特殊的危险权限，它和其他危险权限的判断方式不太一样，所以需要放在这里来判断
+            if (equalsPermission(permission, Permission.GET_INSTALLED_APPS)) {
+                return isDoNotAskAgainPermission(activity)
             }
 
-            // 向下兼容 Android 13 新权限
-            if (PermissionUtils.equalsPermission(permission, Permission.POST_NOTIFICATIONS)) {
-                return super.isDoNotAskAgainPermission(activity, permission);
+            if (!isAndroid6()) {
+                return false
             }
-
-            if (PermissionUtils.equalsPermission(permission, Permission.NEARBY_WIFI_DEVICES)) {
-                return !PermissionUtils.checkSelfPermission(activity, Permission.ACCESS_FINE_LOCATION) &&
-                        !PermissionUtils.shouldShowRequestPermissionRationale(activity, Permission.ACCESS_FINE_LOCATION);
-            }
-
-            if (PermissionUtils.equalsPermission(permission, Permission.BODY_SENSORS_BACKGROUND)) {
-                return !PermissionUtils.checkSelfPermission(activity, Permission.BODY_SENSORS) &&
-                        !PermissionUtils.shouldShowRequestPermissionRationale(activity, Permission.BODY_SENSORS);
-            }
-
-            if (PermissionUtils.equalsPermission(permission, Permission.READ_MEDIA_IMAGES) ||
-                PermissionUtils.equalsPermission(permission, Permission.READ_MEDIA_VIDEO) ||
-                PermissionUtils.equalsPermission(permission, Permission.READ_MEDIA_AUDIO)) {
-                return !PermissionUtils.checkSelfPermission(activity, Permission.READ_EXTERNAL_STORAGE) &&
-                        !PermissionUtils.shouldShowRequestPermissionRationale(activity, Permission.READ_EXTERNAL_STORAGE);
-            }
-
-            // 向下兼容 Android 12 新权限
-            if (PermissionUtils.equalsPermission(permission, Permission.BLUETOOTH_SCAN)) {
-                return !PermissionUtils.checkSelfPermission(activity, Permission.ACCESS_FINE_LOCATION) &&
-                        !PermissionUtils.shouldShowRequestPermissionRationale(activity, Permission.ACCESS_FINE_LOCATION);
-            }
-
-            if (PermissionUtils.equalsPermission(permission, Permission.BLUETOOTH_CONNECT) ||
-                PermissionUtils.equalsPermission(permission, Permission.BLUETOOTH_ADVERTISE)) {
-                return false;
-            }
-
-            // 向下兼容 Android 10 新权限
-            if (PermissionUtils.equalsPermission(permission, Permission.ACCESS_BACKGROUND_LOCATION)) {
-                return !PermissionUtils.checkSelfPermission(activity, Permission.ACCESS_FINE_LOCATION) &&
-                        !PermissionUtils.shouldShowRequestPermissionRationale(activity, Permission.ACCESS_FINE_LOCATION);
-            }
-
-            if (PermissionUtils.equalsPermission(permission, Permission.ACTIVITY_RECOGNITION)) {
-                return false;
-            }
-
-            if (PermissionUtils.equalsPermission(permission, Permission.ACCESS_MEDIA_LOCATION)) {
-                return !PermissionUtils.checkSelfPermission(activity, Permission.READ_EXTERNAL_STORAGE) &&
-                        !PermissionUtils.shouldShowRequestPermissionRationale(activity, Permission.READ_EXTERNAL_STORAGE);
-            }
-
-            // 向下兼容 Android 9.0 新权限
-            if (PermissionUtils.equalsPermission(permission, Permission.ACCEPT_HANDOVER)) {
-                return false;
-            }
-
-            // 向下兼容 Android 8.0 新权限
-            if (PermissionUtils.equalsPermission(permission, Permission.ANSWER_PHONE_CALLS)) {
-                return false;
-            }
-
-            if (PermissionUtils.equalsPermission(permission, Permission.READ_PHONE_NUMBERS)) {
-                return !PermissionUtils.checkSelfPermission(activity, Permission.READ_PHONE_STATE) &&
-                        !PermissionUtils.shouldShowRequestPermissionRationale(activity, Permission.READ_PHONE_STATE);
-            }
+            return !checkSelfPermission(activity, permission) &&
+                    !shouldShowRequestPermissionRationale(activity, permission)
         }
 
-        // 交给父类处理
-        if (PermissionUtils.equalsPermission(permission, Permission.GET_INSTALLED_APPS) ||
-            PermissionUtils.equalsPermission(permission, Permission.POST_NOTIFICATIONS)) {
-            return super.isDoNotAskAgainPermission(activity, permission);
+        if (containsPermission(
+                arrayOf(
+                    Permission.SYSTEM_ALERT_WINDOW,
+                    Permission.WRITE_SETTINGS,
+                    Permission.ACCESS_NOTIFICATION_POLICY,
+                    Permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS
+                ).toList(), permission
+            )
+        ) {
+            return false
         }
 
-        if (Permission.isSpecialPermission(permission)) {
-            // 特殊权限不算，本身申请方式和危险权限申请方式不同，因为没有永久拒绝的选项，所以这里返回 false
-            return false;
-        }
-
-        return !PermissionUtils.checkSelfPermission(activity, permission) &&
-                !PermissionUtils.shouldShowRequestPermissionRationale(activity, permission);
+        return super.isDoNotAskAgainPermission(activity, permission)
     }
 
-    override fun getPermissionIntent(
+    override fun getPermissionSettingIntent(
         context: Context,
         permission: String
     ): Intent? {
-        if (equalsPermission(permission, Permission.WRITE_SETTINGS)) {
-            return getSettingPermissionIntent(context)
+        if (PermissionUtils.equalsPermission(permission, Permission.GET_INSTALLED_APPS)) {
+            return GetInstalledAppsPermissionCompat.getPermissionIntent(context)
         }
-        if (equalsPermission(permission, Permission.ACCESS_NOTIFICATION_POLICY)) {
-            return getNotDisturbPermissionIntent(context)
+
+        if (PermissionUtils.equalsPermission(permission, Permission.SYSTEM_ALERT_WINDOW)) {
+            return WindowPermissionCompat.getPermissionIntent(context);
         }
-        return if (equalsPermission(
-                permission, Permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS
-            )
-        ) {
-            getIgnoreBatteryPermissionIntent(context)
-        } else super.getPermissionIntent(context, permission)
+
+        if (PermissionUtils.equalsPermission(permission, Permission.WRITE_SETTINGS)) {
+            if (!AndroidVersion.isAndroid6()) {
+                return getApplicationDetailsIntent(context);
+            }
+            return getSettingPermissionIntent(context);
+        }
+
+        if (PermissionUtils.equalsPermission(permission, Permission.ACCESS_NOTIFICATION_POLICY)) {
+            if (!AndroidVersion.isAndroid6()) {
+                return getApplicationDetailsIntent(context);
+            }
+            return getNotDisturbPermissionIntent(context);
+        }
+
+        if (PermissionUtils.equalsPermission(permission, Permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS)) {
+            if (!AndroidVersion.isAndroid6()) {
+                return getApplicationDetailsIntent(context);
+            }
+            return getIgnoreBatteryPermissionIntent(context);
+        }
+
+        return super.getPermissionSettingIntent(context, permission);
+    }
+
+    override fun recheckPermissionResult( context: Context,  permission: String, grantResult: Boolean): Boolean {
+        // 如果是读取应用列表权限（国产权限），则需要重新检查权限的状态
+        if (equalsPermission(permission, Permission.GET_INSTALLED_APPS)) {
+            return isGrantedPermission(context, permission)
+        }
+
+        return super.recheckPermissionResult(context!!, permission, grantResult)
     }
 
     companion object {

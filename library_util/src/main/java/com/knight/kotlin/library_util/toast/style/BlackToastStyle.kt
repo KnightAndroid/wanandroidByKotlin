@@ -8,7 +8,7 @@ import android.util.TypedValue
 import android.view.Gravity
 import android.view.ViewGroup
 import android.widget.TextView
-import com.knight.kotlin.library_util.toast.callback.ToastStyleInterface
+import com.knight.kotlin.library_util.toast.callback.IToastStyle
 
 
 /**
@@ -16,7 +16,7 @@ import com.knight.kotlin.library_util.toast.callback.ToastStyleInterface
  * Time:2021/12/17 11:20
  * Description:BlackToastStyle
  */
-open class BlackToastStyle : ToastStyleInterface<TextView> {
+open class BlackToastStyle : IToastStyle<TextView> {
     override fun createView(context: Context): TextView {
         val textView = TextView(context)
         textView.id = android.R.id.message
@@ -49,8 +49,6 @@ open class BlackToastStyle : ToastStyleInterface<TextView> {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             textView.z = getTranslationZ(context)
         }
-        //设置最大显示行数
-        textView.maxLines = getMaxLines()
         return textView
     }
 
@@ -102,10 +100,6 @@ open class BlackToastStyle : ToastStyleInterface<TextView> {
             3f,
             context.resources.displayMetrics
         )
-    }
-
-    protected open fun getMaxLines() :Int {
-        return 5
     }
 
 }

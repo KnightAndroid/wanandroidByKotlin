@@ -7,6 +7,7 @@ import android.provider.Settings
 import com.knight.kotlin.library_permiss.utils.PermissionUtils.areActivityIntent
 import com.knight.kotlin.library_permiss.utils.PermissionUtils.getPackageNameUri
 import com.knight.kotlin.library_permiss.utils.PhoneRomUtils
+import com.knight.kotlin.library_permiss.utils.PhoneRomUtils.isColorOs
 
 
 /**
@@ -276,27 +277,40 @@ object PermissionIntentManager {
 
     /* ---------------------------------------------------------------------------------------- */
 
-    /* ---------------------------------------------------------------------------------------- */
+    fun getApplicationDetailsIntent(context: Context): Intent {
+        return getApplicationDetailsIntent(context, null)
+    }
+
     /**
      * 获取应用详情界面意图
      */
 
-    fun getApplicationDetailsIntent( context: Context): Intent {
+    fun getApplicationDetailsIntent( context: Context,  permissions: List<String?>?): Intent {
         var intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-        intent.data = getPackageNameUri(
-            context
-        )
+        intent.setData(getPackageNameUri(context!!))
+        if (permissions != null && !permissions.isEmpty() && isColorOs()) {
+            // OPPO 应用权限受阻跳转优化适配：https://open.oppomobile.com/new/developmentDoc/info?id=12983
+            val bundle = Bundle()
+            // 元素为受阻权限的原生权限名字符串常量
+            bundle.putStringArrayList("permissionList", if (permissions is ArrayList<*>) permissions as ArrayList<String?> else ArrayList(permissions))
+            intent.putExtras(bundle)
+            // 传入跳转优化标识
+            intent.putExtra("isGetPermission", true)
+        }
         if (areActivityIntent(context, intent)) {
             return intent
         }
+
         intent = Intent(Settings.ACTION_APPLICATION_SETTINGS)
         if (areActivityIntent(context, intent)) {
             return intent
         }
+
         intent = Intent(Settings.ACTION_MANAGE_APPLICATIONS_SETTINGS)
-        return if (areActivityIntent(context, intent)) {
-            intent
-        } else getAndroidSettingAppIntent()
+        if (areActivityIntent(context, intent)) {
+            return intent
+        }
+        return getAndroidSettingAppIntent()
     }
 
     /** 跳转到系统设置页面  */

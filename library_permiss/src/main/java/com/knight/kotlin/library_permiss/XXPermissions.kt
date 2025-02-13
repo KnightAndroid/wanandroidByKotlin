@@ -3,13 +3,14 @@ package com.knight.kotlin.library_permiss
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.knight.kotlin.library_permiss.AndroidVersion.isAndroid13
 import com.knight.kotlin.library_permiss.AndroidVersion.isAndroid4_2
 import com.knight.kotlin.library_permiss.PermissionChecker.checkActivityStatus
 import com.knight.kotlin.library_permiss.PermissionChecker.checkPermissionArgument
-import com.knight.kotlin.library_permiss.PermissionChecker.optimizeDeprecatedPermission
 import com.knight.kotlin.library_permiss.PermissionIntentManager.getApplicationDetailsIntent
 import com.knight.kotlin.library_permiss.fragment.PermissionPageFragment
 import com.knight.kotlin.library_permiss.listener.IPermissionInterceptor
@@ -18,6 +19,7 @@ import com.knight.kotlin.library_permiss.listener.OnPermissionPageCallback
 import com.knight.kotlin.library_permiss.permissions.PermissionApi
 import com.knight.kotlin.library_permiss.permissions.PermissionApi.containsSpecialPermission
 import com.knight.kotlin.library_permiss.permissions.PermissionApi.getDeniedPermissions
+import com.knight.kotlin.library_permiss.permissions.PermissionApi.getSmartPermissionIntent
 import com.knight.kotlin.library_permiss.permissions.PermissionApi.isGrantedPermissions
 import com.knight.kotlin.library_permiss.permissions.PermissionApi.isSpecialPermission
 import com.knight.kotlin.library_permiss.utils.PermissionUtils
@@ -25,7 +27,6 @@ import com.knight.kotlin.library_permiss.utils.PermissionUtils.asArrayList
 import com.knight.kotlin.library_permiss.utils.PermissionUtils.asArrayLists
 import com.knight.kotlin.library_permiss.utils.PermissionUtils.findActivity
 import com.knight.kotlin.library_permiss.utils.PermissionUtils.getAndroidManifestInfo
-import com.knight.kotlin.library_permiss.utils.PermissionUtils.getSmartPermissionIntent
 import com.knight.kotlin.library_permiss.utils.PermissionUtils.isDebugMode
 
 
@@ -92,10 +93,12 @@ class XXPermissions constructor(context: Context) {
         /**
          * 判断一个或多个权限是否全部授予了
          */
-        fun isGranted(context: Context,  vararg permissions: String): Boolean {
+        @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
+        fun isGranted(context: Context, vararg permissions: String): Boolean {
             return isGranted(context, asArrayList(*permissions))
         }
 
+        @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
         fun isGranted(
             context: Context,
             vararg permissions: Array<String>
@@ -103,13 +106,15 @@ class XXPermissions constructor(context: Context) {
             return isGranted(context, asArrayLists<String>(*permissions))
         }
 
-        fun isGranted( context: Context,  permissions: List<String>): Boolean {
+        @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
+        fun isGranted(context: Context, permissions: List<String>): Boolean {
             return isGrantedPermissions(context, permissions)
         }
 
         /**
          * 获取没有授予的权限
          */
+        @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
         fun getDenied(
             context: Context,
             vararg permissions: String
@@ -117,6 +122,7 @@ class XXPermissions constructor(context: Context) {
             return getDenied(context, asArrayList(*permissions))
         }
 
+        @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
         fun getDenied(
             context: Context,
             vararg permissions: Array<String>
@@ -124,6 +130,7 @@ class XXPermissions constructor(context: Context) {
             return getDenied(context, asArrayLists<String>(*permissions))
         }
 
+        @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
         fun getDenied(
             context: Context,
             permissions: List<String>
@@ -156,6 +163,7 @@ class XXPermissions constructor(context: Context) {
          * 如果你在应用启动后，没有申请过这个权限，然后去判断它有没有勾选不再询问的选项，这样系统会一直返回 true，也就是不再询问
          * 但是实际上还能继续申请，系统只是不想让你知道权限是否勾选了不再询问的选项，你必须要申请过这个权限，才能去判断这个权限是否勾选了不再询问的选项
          */
+        @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
         fun isDoNotAskAgainPermissions(
             activity: Activity,
             vararg permissions: String
@@ -163,6 +171,7 @@ class XXPermissions constructor(context: Context) {
             return isDoNotAskAgainPermissions(activity, asArrayList(*permissions))
         }
 
+        @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
         fun isDoNotAskAgainPermissions(
             activity: Activity,
             vararg permissions: Array<String>
@@ -170,6 +179,7 @@ class XXPermissions constructor(context: Context) {
             return isDoNotAskAgainPermissions(activity, asArrayLists<String>(*permissions))
         }
 
+        @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
         fun isDoNotAskAgainPermissions(
             activity: Activity,
             permissions: List<String>
@@ -440,7 +450,8 @@ class XXPermissions constructor(context: Context) {
     /**
      * 请求权限
      */
-    fun request( callback: OnPermissionCallback) {
+    @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
+    fun request(callback: OnPermissionCallback) {
         if (mContext == null) {
             return
         }
@@ -490,7 +501,7 @@ class XXPermissions constructor(context: Context) {
         }
 
         // 优化所申请的权限列表
-        optimizeDeprecatedPermission(permissions)
+        PermissionChecker.optimizeDeprecatedPermission(permissions)
         if (isGrantedPermissions(context, permissions)) {
             // 证明这些权限已经全部授予过，直接回调成功
             if (callback != null) {

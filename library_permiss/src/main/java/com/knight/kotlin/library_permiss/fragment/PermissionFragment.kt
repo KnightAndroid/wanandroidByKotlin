@@ -2,14 +2,12 @@ package com.knight.kotlin.library_permiss.fragment
 
 import android.annotation.SuppressLint
 import android.app.Activity
-
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-
 import androidx.fragment.app.FragmentActivity
 import com.knight.kotlin.library_permiss.AndroidVersion.isAndroid10
 import com.knight.kotlin.library_permiss.AndroidVersion.isAndroid11
@@ -20,15 +18,14 @@ import com.knight.kotlin.library_permiss.listener.IPermissionInterceptor
 import com.knight.kotlin.library_permiss.listener.OnPermissionCallback
 import com.knight.kotlin.library_permiss.permissions.Permission
 import com.knight.kotlin.library_permiss.permissions.PermissionApi
-import com.knight.kotlin.library_permiss.permissions.PermissionApi.isDoNotAskAgainPermissions
+import com.knight.kotlin.library_permiss.permissions.PermissionApi.getSmartPermissionIntent
 import com.knight.kotlin.library_permiss.permissions.PermissionApi.isGrantedPermission
 import com.knight.kotlin.library_permiss.permissions.PermissionApi.isSpecialPermission
+import com.knight.kotlin.library_permiss.permissions.PermissionApi.recheckPermissionResult
 import com.knight.kotlin.library_permiss.utils.PermissionUtils.asArrayList
 import com.knight.kotlin.library_permiss.utils.PermissionUtils.containsPermission
 import com.knight.kotlin.library_permiss.utils.PermissionUtils.equalsPermission
-import com.knight.kotlin.library_permiss.utils.PermissionUtils.getSmartPermissionIntent
 import com.knight.kotlin.library_permiss.utils.PermissionUtils.lockActivityOrientation
-import com.knight.kotlin.library_permiss.utils.PermissionUtils.optimizePermissionResults
 import com.knight.kotlin.library_permiss.utils.PermissionUtils.postActivityResult
 import com.knight.kotlin.library_permiss.utils.PermissionUtils.postDelayed
 import java.util.Arrays
@@ -79,11 +76,11 @@ class PermissionFragment: Fragment(),Runnable {
             // 设置权限申请标记
             fragment.setRequestFlag(true)
             // 设置权限回调监听
-            fragment.setCallBack(callback)
+            fragment.setOnPermissionCallback(callback)
             // 设置权限请求拦截器
-            fragment.setInterceptor(interceptor)
+            fragment.setOnPermissionInterceptor(interceptor)
             // 绑定到 Activity 上面
-            fragment.attachActivity(activity)
+            fragment.attachByActivity(activity)
         }
 
     }
@@ -109,7 +106,7 @@ class PermissionFragment: Fragment(),Runnable {
     /**
      * 绑定 Activity
      */
-    fun attachActivity(activity: FragmentActivity) {
+    fun attachByActivity(activity: FragmentActivity) {
         activity.supportFragmentManager.beginTransaction().add(this, this.toString())
             .commitAllowingStateLoss()
 
@@ -119,14 +116,14 @@ class PermissionFragment: Fragment(),Runnable {
     /**
      * 解绑 Activity
      */
-    fun detachActivity(activity: FragmentActivity) {
+    fun detachByActivity(activity: FragmentActivity) {
         activity.supportFragmentManager.beginTransaction().remove(this).commitAllowingStateLoss()
     }
 
     /**
      * 设置权限监听回调监听
      */
-    fun setCallBack(callback: OnPermissionCallback) {
+    fun setOnPermissionCallback(callback: OnPermissionCallback) {
         mCallBack = callback
     }
 
@@ -137,10 +134,12 @@ class PermissionFragment: Fragment(),Runnable {
         mRequestFlag = flag
     }
 
+
+
     /**
      * 设置权限请求拦截器
      */
-    fun setInterceptor(interceptor: IPermissionInterceptor) {
+    fun setOnPermissionInterceptor( interceptor: IPermissionInterceptor) {
         mInterceptor = interceptor
     }
 
@@ -180,7 +179,7 @@ class PermissionFragment: Fragment(),Runnable {
 
         // 如果当前 Fragment 是通过系统重启应用触发的，则不进行权限申请
         if (!mRequestFlag) {
-            getActivity()?.let { detachActivity(it) }
+            getActivity()?.let { detachByActivity(it) }
             return
         }
 
@@ -245,7 +244,6 @@ class PermissionFragment: Fragment(),Runnable {
             return
         }
         // 如果没有跳转到特殊权限授权页面，就直接申请危险权限
-        // 如果没有跳转到特殊权限授权页面，就直接申请危险权限
         requestDangerousPermission()
     }
 
@@ -282,7 +280,6 @@ class PermissionFragment: Fragment(),Runnable {
 
         // Android 13 传感器策略发生改变，申请后台传感器权限的前提是要有前台传感器权限
 
-        // Android 13 传感器策略发生改变，申请后台传感器权限的前提是要有前台传感器权限
         if (isAndroid13() && allPermissions.size >= 2 &&
             containsPermission(allPermissions, Permission.BODY_SENSORS_BACKGROUND)
         ) {
@@ -300,8 +297,6 @@ class PermissionFragment: Fragment(),Runnable {
         }
 
         // Android 10 定位策略发生改变，申请后台定位权限的前提是要有前台定位权限（授予了精确或者模糊任一权限）
-
-        // Android 10 定位策略发生改变，申请后台定位权限的前提是要有前台定位权限（授予了精确或者模糊任一权限）
         if (isAndroid10() && allPermissions.size >= 2 &&
             containsPermission(allPermissions, Permission.ACCESS_BACKGROUND_LOCATION)
         ) {
@@ -312,8 +307,6 @@ class PermissionFragment: Fragment(),Runnable {
             splitTwiceRequestPermission(activity, allPermissions, locationPermission, requestCode)
             return
         }
-
-        // 必须要有文件读取权限才能申请获取媒体位置权限
 
         // 必须要有文件读取权限才能申请获取媒体位置权限
         if (isAndroid10() &&
@@ -452,7 +445,7 @@ class PermissionFragment: Fragment(),Runnable {
 
         // 优化权限回调结果
 
-        optimizePermissionResults(activity, permissions, grantResults)
+        //optimizePermissionResults(activity, permissions, grantResults)
 
         // 将数组转换成 ArrayList
 
@@ -462,12 +455,24 @@ class PermissionFragment: Fragment(),Runnable {
 
         // 释放对这个请求码的占用
         REQUEST_CODE_ARRAY.remove(requestCode as Int)
-        // 将 Fragment 从 Activity 移除
 
-        detachActivity(activity)
+        if (permissions == null || permissions.size == 0 || grantResults == null || grantResults.size == 0) {
+            return;
+        }
+
+        for (i in 0 until permissions.size) {
+            grantResults[i] = if (recheckPermissionResult(
+                    activity, permissions[i], grantResults[i] === PackageManager.PERMISSION_GRANTED
+                )
+            )
+                PackageManager.PERMISSION_GRANTED
+            else
+                PackageManager.PERMISSION_DENIED
+        }
+        // 将 Fragment 从 Activity 移除
+        detachByActivity(activity)
 
         // 获取已授予的权限
-
         val grantedPermissions: List<String> =
             PermissionApi.getGrantedPermissions(allPermissions, grantResults)
 
@@ -492,7 +497,6 @@ class PermissionFragment: Fragment(),Runnable {
             return
         }
 
-        // 获取被拒绝的权限
 
         // 获取被拒绝的权限
         val deniedPermissions: List<String> =
@@ -522,7 +526,6 @@ class PermissionFragment: Fragment(),Runnable {
             }
         }
 
-        // 权限申请结束
 
         // 权限申请结束
         callback?.let { interceptor?.finishPermissionRequest(activity, allPermissions, false, it) }

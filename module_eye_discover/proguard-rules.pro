@@ -24,3 +24,5 @@
 -dontwarn com.knight.kotlin.library_base.R$string
 -dontwarn com.knight.kotlin.library_video.R$id
 -dontwarn com.knight.kotlin.library_widget.R$layout
+-dontwarn com.google.android.material.R$attr
+-dontwarn com.google.android.material.R$style

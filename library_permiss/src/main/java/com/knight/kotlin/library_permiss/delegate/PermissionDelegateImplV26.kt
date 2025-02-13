@@ -12,8 +12,6 @@ import com.knight.kotlin.library_permiss.permissions.Permission
 import com.knight.kotlin.library_permiss.utils.PermissionUtils
 import com.knight.kotlin.library_permiss.utils.PermissionUtils.areActivityIntent
 import com.knight.kotlin.library_permiss.utils.PermissionUtils.checkOpNoThrow
-import com.knight.kotlin.library_permiss.utils.PermissionUtils.checkSelfPermission
-import com.knight.kotlin.library_permiss.utils.PermissionUtils.equalsPermission
 import com.knight.kotlin.library_permiss.utils.PermissionUtils.getPackageNameUri
 
 
@@ -29,19 +27,38 @@ open class PermissionDelegateImplV26 :PermissionDelegateImplV23() {
          context: Context,
          permission: String
     ): Boolean {
-        if (equalsPermission(permission, Permission.REQUEST_INSTALL_PACKAGES)) {
-            return isGrantedInstallPermission(context)
+        if (PermissionUtils.equalsPermission(permission, Permission.REQUEST_INSTALL_PACKAGES)) {
+            if (!AndroidVersion.isAndroid8()) {
+                return true
+            }
+            return isGrantedInstallPermission(context);
         }
-        if (equalsPermission(permission, Permission.PICTURE_IN_PICTURE)) {
-            return isGrantedPictureInPicturePermission(context)
+
+        if (PermissionUtils.equalsPermission(permission, Permission.PICTURE_IN_PICTURE)) {
+            if (!AndroidVersion.isAndroid8()) {
+                return true
+            }
+            return isGrantedPictureInPicturePermission(context);
         }
-        return if (equalsPermission(
-                permission, Permission.READ_PHONE_NUMBERS
-            ) ||
-            equalsPermission(permission, Permission.ANSWER_PHONE_CALLS)
-        ) {
-            checkSelfPermission(context, permission)
-        } else super.isGrantedPermission(context, permission)
+
+        if (PermissionUtils.equalsPermission(permission, Permission.READ_PHONE_NUMBERS)) {
+            if (!AndroidVersion.isAndroid6()) {
+                return true
+            }
+            if (!AndroidVersion.isAndroid8()) {
+                return PermissionUtils.checkSelfPermission(context, Permission.READ_PHONE_STATE);
+            }
+            return PermissionUtils.checkSelfPermission(context, permission);
+        }
+
+        if (PermissionUtils.equalsPermission(permission, Permission.ANSWER_PHONE_CALLS)) {
+            if (!AndroidVersion.isAndroid8()) {
+                return true
+            }
+            return PermissionUtils.checkSelfPermission(context, permission);
+        }
+
+        return super.isGrantedPermission(context, permission);
     }
 
     override  fun isDoNotAskAgainPermission(
@@ -56,27 +73,48 @@ open class PermissionDelegateImplV26 :PermissionDelegateImplV23() {
             return false
         }
 
-        if (PermissionUtils.equalsPermission(permission, Permission.READ_PHONE_NUMBERS) ||
-            PermissionUtils.equalsPermission(permission, Permission.ANSWER_PHONE_CALLS)) {
+        if (PermissionUtils.equalsPermission(permission, Permission.READ_PHONE_NUMBERS)) {
+            if (!AndroidVersion.isAndroid6()) {
+                return false
+            }
+            if (!AndroidVersion.isAndroid8()) {
+                return !PermissionUtils.checkSelfPermission(activity, Permission.READ_PHONE_STATE) &&
+                        !PermissionUtils.shouldShowRequestPermissionRationale(activity, Permission.READ_PHONE_STATE);
+            }
             return !PermissionUtils.checkSelfPermission(activity, permission) &&
-                    !PermissionUtils.shouldShowRequestPermissionRationale(activity, permission)
+                    !PermissionUtils.shouldShowRequestPermissionRationale(activity, permission);
         }
-        return super.isDoNotAskAgainPermission(activity, permission)
+
+        if (PermissionUtils.equalsPermission(permission, Permission.ANSWER_PHONE_CALLS)) {
+            if (!AndroidVersion.isAndroid8()) {
+                return false
+            }
+            return !PermissionUtils.checkSelfPermission(activity, permission) &&
+                    !PermissionUtils.shouldShowRequestPermissionRationale(activity, permission);
+        }
+
+        return super.isDoNotAskAgainPermission(activity, permission);
     }
 
-    override fun getPermissionIntent(
+    override fun getPermissionSettingIntent(
         context: Context,
         permission: String
     ): Intent? {
-        if (equalsPermission(permission, Permission.REQUEST_INSTALL_PACKAGES)) {
+        if (PermissionUtils.equalsPermission(permission, Permission.REQUEST_INSTALL_PACKAGES)) {
+            if (!AndroidVersion.isAndroid8()) {
+                return getApplicationDetailsIntent(context)
+            }
             return getInstallPermissionIntent(context)
         }
-        return if (equalsPermission(
-                permission, Permission.PICTURE_IN_PICTURE
-            )
-        ) {
-            getPictureInPicturePermissionIntent(context)
-        } else super.getPermissionIntent(context, permission)
+
+        if (PermissionUtils.equalsPermission(permission, Permission.PICTURE_IN_PICTURE)) {
+            if (!AndroidVersion.isAndroid8()) {
+                return getApplicationDetailsIntent(context)
+            }
+            return getPictureInPicturePermissionIntent(context)
+        }
+
+        return super.getPermissionSettingIntent(context, permission)
     }
 
     companion object {

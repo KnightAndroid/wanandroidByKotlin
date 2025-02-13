@@ -12,23 +12,27 @@ import android.os.Bundle
 class ActivityStack :Application.ActivityLifecycleCallbacks {
 
     companion object {
+
+        /**
+         * 前台Activity 对象
+         *
+         */
+        private var mForegroundActivity :Activity?=null
         fun register(application: Application):ActivityStack {
             val lifecycle = ActivityStack()
             application.registerActivityLifecycleCallbacks(lifecycle)
             return lifecycle
 
         }
+
+        fun getForegroundActivity() :Activity? {
+            return mForegroundActivity
+        }
     }
 
-    /**
-     * 前台Activity 对象
-     *
-     */
-    private var mForegroundActivity :Activity?=null
 
-    fun getForegroundActivity() :Activity? {
-        return mForegroundActivity
-    }
+
+
 
     override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
     }

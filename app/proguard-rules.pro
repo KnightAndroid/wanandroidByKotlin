@@ -82,6 +82,8 @@
     public static ** valueOf(java.lang.String);
 }
 
+
+
 ################support###############
 -keep class android.support.** { *; }
 -keep interface android.support.** { *; }

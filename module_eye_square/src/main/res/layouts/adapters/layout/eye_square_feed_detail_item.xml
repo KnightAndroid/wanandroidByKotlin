@@ -97,6 +97,19 @@
                 tools:layout_height="200dp"
                 app:imageUrl="@{viewModel.video.cover.url}"/>
 
+
+            <ImageView
+                android:id="@+id/iv_feed_item_video_play"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/eye_square_feed_video_play_icon"
+                app:layout_constraintTop_toTopOf="@id/iv_feedItem_cover"
+                app:layout_constraintBottom_toBottomOf="@id/iv_feedItem_cover"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:visibility="gone"/>
+
+
             <TextView
                 android:id="@+id/tv_feedItem_desc"
                 android:layout_width="match_parent"

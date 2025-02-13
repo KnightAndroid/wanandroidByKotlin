@@ -20,3 +20,4 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 -dontwarn com.knight.kotlin.library_base.R$string
+-dontwarn com.knight.kotlin.library_widget.R$layout

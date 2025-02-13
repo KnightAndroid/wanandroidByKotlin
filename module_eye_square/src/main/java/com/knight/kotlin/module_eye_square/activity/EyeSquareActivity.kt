@@ -3,6 +3,7 @@ package com.knight.kotlin.module_eye_square.activity
 import androidx.recyclerview.widget.GridLayoutManager
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.entity.EyeApiRequest
+import com.knight.kotlin.library_base.ktx.setOnClick
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_widget.ktx.init
 import com.knight.kotlin.module_eye_square.adapter.EyeSquareAdapter
@@ -64,6 +65,9 @@ class EyeSquareActivity : BaseActivity<EyeSquareActivityBinding,EyeSquareVm>(), 
 
     override fun EyeSquareActivityBinding.initView() {
         mBinding.title = tabTitle
+        includeEyeSquareToolbar.baseIvBack.setOnClick {
+            finish()
+        }
         rvEyeSquareList.init(
             GridLayoutManager(this@EyeSquareActivity, 2).also {
                 it.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {

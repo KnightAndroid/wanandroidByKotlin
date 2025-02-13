@@ -1,14 +1,16 @@
 package com.knight.kotlin.library_permiss.fragment
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.knight.kotlin.library_permiss.StartActivityManager
 import com.knight.kotlin.library_permiss.XXPermissions
 import com.knight.kotlin.library_permiss.listener.OnPermissionPageCallback
 import com.knight.kotlin.library_permiss.permissions.PermissionApi.getGrantedPermissions
-import com.knight.kotlin.library_permiss.utils.PermissionUtils.getSmartPermissionIntent
+import com.knight.kotlin.library_permiss.permissions.PermissionApi.getSmartPermissionIntent
 import com.knight.kotlin.library_permiss.utils.PermissionUtils.postActivityResult
 
 
@@ -40,9 +42,9 @@ class PermissionPageFragment : Fragment(),Runnable {
             // 设置权限申请标记
             fragment.setRequestFlag(true)
             // 设置权限回调监听
-            fragment.setCallBack(callback)
+            fragment.setOnPermissionPageCallback(callback)
             // 绑定到 Activity 上面
-            fragment.attachActivity(activity)
+            fragment.attachByActivity(activity)
         }
 
     }
@@ -59,7 +61,7 @@ class PermissionPageFragment : Fragment(),Runnable {
     /**
      * 绑定 Activity
      */
-    fun attachActivity(activity: FragmentActivity) {
+    fun attachByActivity(activity: FragmentActivity) {
         activity.supportFragmentManager.beginTransaction().add(this, this.toString())
             .commitAllowingStateLoss()
     }
@@ -67,14 +69,14 @@ class PermissionPageFragment : Fragment(),Runnable {
     /**
      * 解绑 Activity
      */
-    fun detachActivity(activity: FragmentActivity) {
+    fun detachByActivity(activity: FragmentActivity) {
         activity.supportFragmentManager.beginTransaction().remove(this).commitAllowingStateLoss()
     }
 
     /**
      * 设置权限监听回调监听
      */
-    fun setCallBack(callback: OnPermissionPageCallback) {
+    fun setOnPermissionPageCallback(callback: OnPermissionPageCallback) {
         mCallBack = callback
     }
 
@@ -90,7 +92,7 @@ class PermissionPageFragment : Fragment(),Runnable {
 
         // 如果当前 Fragment 是通过系统重启应用触发的，则不进行权限申请
         if (!mRequestFlag) {
-            activity?.let { detachActivity(it) }
+            activity?.let { detachByActivity(it) }
             return
         }
         if (mStartActivityFlag) {
@@ -130,6 +132,7 @@ class PermissionPageFragment : Fragment(),Runnable {
         postActivityResult(allPermissions, this)
     }
 
+    @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
     override fun run() {
         // 如果用户离开太久，会导致 Activity 被回收掉
         // 所以这里要判断当前 Fragment 是否有被添加到 Activity
@@ -147,7 +150,7 @@ class PermissionPageFragment : Fragment(),Runnable {
         mCallBack = null
 
         if (callback == null) {
-            detachActivity(activity)
+            detachByActivity(activity)
             return
         }
 
@@ -166,6 +169,6 @@ class PermissionPageFragment : Fragment(),Runnable {
             callback.onDenied()
         }
 
-        detachActivity(activity)
+        detachByActivity(activity)
     }
 }

@@ -4,7 +4,7 @@ import android.app.Application
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
-import com.knight.kotlin.library_util.toast.callback.ToastInterface
+import com.knight.kotlin.library_util.toast.callback.IToast
 
 
 /**
@@ -13,7 +13,7 @@ import com.knight.kotlin.library_util.toast.callback.ToastInterface
  * Description:SystemToast
  */
 open class SystemToast(application: Application) : Toast(application),
-    ToastInterface {
+    IToast {
     /** 吐司消息 View  */
     private var mMessageView: TextView? = null
 

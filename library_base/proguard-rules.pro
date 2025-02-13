@@ -53,7 +53,11 @@
 # 错误日志收集
 -dontwarn com.tencent.bugly.**
 -keep public class com.tencent.bugly.**{*;}
-# 全局作用于各library
+# 全局作用于各library 单独各自写在库的混淆文件不起作用
 ## https://stackoverflow.com/questions/77143071/r8-and-proguard-missing-class-error-in-data-class-that-is-using-keep-annotatio
 -dontwarn java.lang.invoke.StringConcatFactory
 -dontwarn com.knight.kotlin.library_base.R$anim
+-dontwarn com.knight.kotlin.library_base.R$color
+-dontwarn com.google.android.material.R$id
+
+

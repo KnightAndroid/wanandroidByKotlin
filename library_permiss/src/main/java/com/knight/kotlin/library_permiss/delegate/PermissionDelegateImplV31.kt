@@ -7,10 +7,15 @@ import android.content.Intent
 import android.provider.Settings
 import androidx.annotation.RequiresApi
 import com.knight.kotlin.library_permiss.AndroidVersion
+import com.knight.kotlin.library_permiss.AndroidVersion.getTargetSdkVersionCode
+import com.knight.kotlin.library_permiss.AndroidVersion.isAndroid12
+import com.knight.kotlin.library_permiss.AndroidVersion.isAndroid6
 import com.knight.kotlin.library_permiss.PermissionIntentManager
 import com.knight.kotlin.library_permiss.permissions.Permission
+import com.knight.kotlin.library_permiss.utils.PermissionUtils
 import com.knight.kotlin.library_permiss.utils.PermissionUtils.areActivityIntent
 import com.knight.kotlin.library_permiss.utils.PermissionUtils.checkSelfPermission
+import com.knight.kotlin.library_permiss.utils.PermissionUtils.containsPermission
 import com.knight.kotlin.library_permiss.utils.PermissionUtils.equalsPermission
 import com.knight.kotlin.library_permiss.utils.PermissionUtils.getPackageNameUri
 import com.knight.kotlin.library_permiss.utils.PermissionUtils.shouldShowRequestPermissionRationale
@@ -27,22 +32,37 @@ open class PermissionDelegateImplV31 : PermissionDelegateImplV30(){
         context: Context,
         permission: String
     ): Boolean {
-        // 检测闹钟权限
         if (equalsPermission(permission, Permission.SCHEDULE_EXACT_ALARM)) {
+            if (!isAndroid12()) {
+                return true
+            }
             return isGrantedAlarmPermission(context)
         }
-        return if (equalsPermission(
-                permission, Permission.BLUETOOTH_SCAN
-            ) ||
-            equalsPermission(
-                permission, Permission.BLUETOOTH_CONNECT
-            ) ||
-            equalsPermission(
-                permission, Permission.BLUETOOTH_ADVERTISE
+
+        if (equalsPermission(permission, Permission.BLUETOOTH_SCAN)) {
+            if (!isAndroid6()) {
+                return true
+            }
+            if (!isAndroid12()) {
+                return checkSelfPermission(context, Permission.ACCESS_FINE_LOCATION)
+            }
+            return checkSelfPermission(context, permission)
+        }
+
+        if (containsPermission(
+                arrayOf(
+                    Permission.BLUETOOTH_CONNECT,
+                    Permission.BLUETOOTH_ADVERTISE
+                ).toList(), permission
             )
         ) {
-            checkSelfPermission(context, permission)
-        } else super.isGrantedPermission(context, permission)
+            if (!isAndroid12()) {
+                return true
+            }
+            return checkSelfPermission(context, permission)
+        }
+
+        return super.isGrantedPermission(context, permission)
     }
 
     override fun isDoNotAskAgainPermission(
@@ -52,39 +72,62 @@ open class PermissionDelegateImplV31 : PermissionDelegateImplV30(){
         if (equalsPermission(permission, Permission.SCHEDULE_EXACT_ALARM)) {
             return false
         }
-        if (equalsPermission(permission, Permission.BLUETOOTH_SCAN) ||
-            equalsPermission(permission, Permission.BLUETOOTH_CONNECT) ||
-            equalsPermission(permission, Permission.BLUETOOTH_ADVERTISE)
-        ) {
+
+        if (equalsPermission(permission, Permission.BLUETOOTH_SCAN)) {
+            if (!isAndroid6()) {
+                return false
+            }
+            if (!isAndroid12()) {
+                return !checkSelfPermission(activity, Permission.ACCESS_FINE_LOCATION) &&
+                        !shouldShowRequestPermissionRationale(activity, Permission.ACCESS_FINE_LOCATION)
+            }
             return !checkSelfPermission(activity, permission) &&
                     !shouldShowRequestPermissionRationale(activity, permission)
         }
-        return if (activity.applicationInfo.targetSdkVersion >= AndroidVersion.ANDROID_12 &&
-            equalsPermission(permission, Permission.ACCESS_BACKGROUND_LOCATION)
+
+        if (containsPermission(
+                arrayOf(
+                    Permission.BLUETOOTH_CONNECT,
+                    Permission.BLUETOOTH_ADVERTISE
+                ).toList(), permission
+            )
+        ) {
+            if (!isAndroid12()) {
+                return false
+            }
+            return !checkSelfPermission(activity, permission) &&
+                    !shouldShowRequestPermissionRationale(activity, permission)
+        }
+
+        if (equalsPermission(permission, Permission.ACCESS_BACKGROUND_LOCATION) &&
+            isAndroid6() && getTargetSdkVersionCode(activity) >= AndroidVersion.ANDROID_12
         ) {
             if (!checkSelfPermission(activity, Permission.ACCESS_FINE_LOCATION) &&
                 !checkSelfPermission(activity, Permission.ACCESS_COARSE_LOCATION)
             ) {
-                !shouldShowRequestPermissionRationale(activity, Permission.ACCESS_FINE_LOCATION) &&
-                        !shouldShowRequestPermissionRationale(
-                            activity,
-                            Permission.ACCESS_COARSE_LOCATION
-                        )
-            } else !checkSelfPermission(activity, permission) &&
+                return !shouldShowRequestPermissionRationale(activity, Permission.ACCESS_FINE_LOCATION) &&
+                        !shouldShowRequestPermissionRationale(activity, Permission.ACCESS_COARSE_LOCATION)
+            }
+
+            return !checkSelfPermission(activity, permission) &&
                     !shouldShowRequestPermissionRationale(activity, permission)
-        } else super.isDoNotAskAgainPermission(activity, permission!!)
+        }
+
+        return super.isDoNotAskAgainPermission(activity, permission)
     }
 
-    override fun getPermissionIntent(
+    override fun  getPermissionSettingIntent(
         context: Context,
         permission: String
     ): Intent? {
-        return if (equalsPermission(
-                permission, Permission.SCHEDULE_EXACT_ALARM
-            )
-        ) {
-            getAlarmPermissionIntent(context)
-        } else super.getPermissionIntent(context, permission)
+        if (PermissionUtils.equalsPermission(permission, Permission.SCHEDULE_EXACT_ALARM)) {
+            if (!AndroidVersion.isAndroid12()) {
+                return getApplicationDetailsIntent(context);
+            }
+            return getAlarmPermissionIntent(context);
+        }
+
+        return super.getPermissionSettingIntent(context, permission);
     }
 
     companion object {

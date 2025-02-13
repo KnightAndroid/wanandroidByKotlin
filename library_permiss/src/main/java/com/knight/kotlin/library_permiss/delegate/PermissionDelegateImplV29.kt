@@ -25,24 +25,31 @@ open class PermissionDelegateImplV29 : PermissionDelegateImplV28(){
         permission: String
     ): Boolean {
         if (PermissionUtils.equalsPermission(permission, Permission.ACCESS_MEDIA_LOCATION)) {
-            return hasReadStoragePermission(context) &&
+            if (!AndroidVersion.isAndroid6()) {
+                return true;
+            }
+            if (!AndroidVersion.isAndroid10()) {
+                return PermissionUtils.checkSelfPermission(context, Permission.READ_EXTERNAL_STORAGE);
+            }
+            return isGrantedReadStoragePermission(context) &&
                     PermissionUtils.checkSelfPermission(context, Permission.ACCESS_MEDIA_LOCATION);
         }
 
-        if (PermissionUtils.equalsPermission(permission, Permission.ACCESS_BACKGROUND_LOCATION) ||
-            PermissionUtils.equalsPermission(permission, Permission.ACTIVITY_RECOGNITION)) {
+        if (PermissionUtils.equalsPermission(permission, Permission.ACCESS_BACKGROUND_LOCATION)) {
+            if (!AndroidVersion.isAndroid6()) {
+                return true;
+            }
+            if (!AndroidVersion.isAndroid10()) {
+                return PermissionUtils.checkSelfPermission(context, Permission.ACCESS_FINE_LOCATION);
+            }
             return PermissionUtils.checkSelfPermission(context, permission);
         }
 
-        // 向下兼容 Android 11 新权限
-        if (!AndroidVersion.isAndroid11()) {
-            if (PermissionUtils.equalsPermission(permission, Permission.MANAGE_EXTERNAL_STORAGE)) {
-                // 这个是 Android 10 上面的历史遗留问题，假设申请的是 MANAGE_EXTERNAL_STORAGE 权限
-                // 必须要在 AndroidManifest.xml 中注册 android:requestLegacyExternalStorage="true"
-                if (!isUseDeprecationExternalStorage()) {
-                    return false;
-                }
+        if (PermissionUtils.equalsPermission(permission, Permission.ACTIVITY_RECOGNITION)) {
+            if (!AndroidVersion.isAndroid10()) {
+                return true;
             }
+            return PermissionUtils.checkSelfPermission(context, permission);
         }
 
         return super.isGrantedPermission(context, permission);
@@ -53,32 +60,42 @@ open class PermissionDelegateImplV29 : PermissionDelegateImplV28(){
         permission: String
     ): Boolean {
         if (PermissionUtils.equalsPermission(permission, Permission.ACCESS_BACKGROUND_LOCATION)) {
+            if (!AndroidVersion.isAndroid6()) {
+                return false;
+            }
+            if (!AndroidVersion.isAndroid10()) {
+                return !PermissionUtils.checkSelfPermission(activity, Permission.ACCESS_FINE_LOCATION) &&
+                        !PermissionUtils.shouldShowRequestPermissionRationale(activity, Permission.ACCESS_FINE_LOCATION);
+            }
+            // 先检查前台的定位权限是否拒绝了
             if (!PermissionUtils.checkSelfPermission(activity, Permission.ACCESS_FINE_LOCATION)) {
+                // 如果是的话就判断前台的定位权限是否被永久拒绝了
                 return !PermissionUtils.shouldShowRequestPermissionRationale(activity, Permission.ACCESS_FINE_LOCATION);
             }
+            // 如果不是的话再去判断后台的定位权限是否被拒永久拒绝了
             return !PermissionUtils.checkSelfPermission(activity, permission) &&
                     !PermissionUtils.shouldShowRequestPermissionRationale(activity, permission);
         }
 
         if (PermissionUtils.equalsPermission(permission, Permission.ACCESS_MEDIA_LOCATION)) {
-            return hasReadStoragePermission(activity) &&
+            if (!AndroidVersion.isAndroid6()) {
+                return false;
+            }
+            if (!AndroidVersion.isAndroid10()) {
+                return !PermissionUtils.checkSelfPermission(activity, Permission.READ_EXTERNAL_STORAGE) &&
+                        !PermissionUtils.shouldShowRequestPermissionRationale(activity, Permission.READ_EXTERNAL_STORAGE);
+            }
+            return isGrantedReadStoragePermission(activity) &&
                     !PermissionUtils.checkSelfPermission(activity, permission) &&
                     !PermissionUtils.shouldShowRequestPermissionRationale(activity, permission);
         }
 
         if (PermissionUtils.equalsPermission(permission, Permission.ACTIVITY_RECOGNITION)) {
+            if (!AndroidVersion.isAndroid10()) {
+                return false;
+            }
             return !PermissionUtils.checkSelfPermission(activity, permission) &&
                     !PermissionUtils.shouldShowRequestPermissionRationale(activity, permission);
-        }
-
-        // 向下兼容 Android 11 新权限
-        if (!AndroidVersion.isAndroid11()) {
-            if (PermissionUtils.equalsPermission(permission, Permission.MANAGE_EXTERNAL_STORAGE)) {
-                // 处理 Android 10 上面的历史遗留问题
-                if (!isUseDeprecationExternalStorage()) {
-                    return true;
-                }
-            }
         }
 
         return super.isDoNotAskAgainPermission(activity, permission);
@@ -97,9 +114,9 @@ open class PermissionDelegateImplV29 : PermissionDelegateImplV28(){
     }
 
     /**
-     * 是否有读取文件的权限
+     * 判断是否授予了读取文件的权限
      */
-    fun hasReadStoragePermission(context: Context): Boolean {
+    fun isGrantedReadStoragePermission(context: Context): Boolean {
         if (isAndroid13() && getTargetSdkVersionCode(context) >= AndroidVersion.ANDROID_13) {
             return PermissionUtils.checkSelfPermission(context, Permission.READ_MEDIA_IMAGES) ||
                     isGrantedPermission(context, Permission.MANAGE_EXTERNAL_STORAGE)
@@ -109,5 +126,6 @@ open class PermissionDelegateImplV29 : PermissionDelegateImplV28(){
                     isGrantedPermission(context, Permission.MANAGE_EXTERNAL_STORAGE)
         } else PermissionUtils.checkSelfPermission(context, Permission.READ_EXTERNAL_STORAGE)
     }
+
 
 }

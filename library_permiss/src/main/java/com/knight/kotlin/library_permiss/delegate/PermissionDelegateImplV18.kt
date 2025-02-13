@@ -7,6 +7,7 @@ import androidx.annotation.RequiresApi
 import com.knight.kotlin.library_permiss.AndroidVersion
 import com.knight.kotlin.library_permiss.NotificationListenerPermissionCompat
 import com.knight.kotlin.library_permiss.NotificationListenerPermissionCompat.isGrantedPermission
+import com.knight.kotlin.library_permiss.listener.PermissionDelegateImplBase
 import com.knight.kotlin.library_permiss.permissions.Permission
 import com.knight.kotlin.library_permiss.utils.PermissionUtils.equalsPermission
 
@@ -17,7 +18,7 @@ import com.knight.kotlin.library_permiss.utils.PermissionUtils.equalsPermission
  * Description:PermissionDelegateImplV18
  */
 @RequiresApi(api = AndroidVersion.ANDROID_4_3)
-open class PermissionDelegateImplV18 : PermissionDelegateImplV14() {
+open class PermissionDelegateImplV18 : PermissionDelegateImplBase() {
 
     override fun isGrantedPermission(context: Context,  permission: String): Boolean {
         // 检测通知栏监听权限
@@ -41,12 +42,12 @@ open class PermissionDelegateImplV18 : PermissionDelegateImplV14() {
         } else super.isDoNotAskAgainPermission(activity, permission)
     }
 
-    override  fun getPermissionIntent(context: Context, permission: String): Intent? {
+    override  fun getPermissionSettingIntent(context: Context, permission: String): Intent? {
         return if (equalsPermission(
                 permission, Permission.BIND_NOTIFICATION_LISTENER_SERVICE
             )
         ) {
             NotificationListenerPermissionCompat.getPermissionIntent(context)
-        } else super.getPermissionIntent(context, permission)
+        } else super.getPermissionSettingIntent(context, permission)
     }
 }

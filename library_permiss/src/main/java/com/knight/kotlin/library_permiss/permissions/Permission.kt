@@ -1,8 +1,5 @@
 package com.knight.kotlin.library_permiss.permissions
 
-import com.knight.kotlin.library_permiss.AndroidVersion
-import com.knight.kotlin.library_permiss.utils.PermissionUtils.equalsPermission
-
 
 /**
  * Author:Knight
@@ -341,123 +338,123 @@ object Permission {
         )
     }
 
-    fun isSpecialPermission(permission: String): Boolean {
-        return equalsPermission(permission, MANAGE_EXTERNAL_STORAGE) ||
-                equalsPermission(permission, REQUEST_INSTALL_PACKAGES) ||
-                equalsPermission(permission, SYSTEM_ALERT_WINDOW) ||
-                equalsPermission(permission, WRITE_SETTINGS) ||
-                equalsPermission(permission, NOTIFICATION_SERVICE) ||
-                equalsPermission(permission, PACKAGE_USAGE_STATS) ||
-                equalsPermission(permission, SCHEDULE_EXACT_ALARM) ||
-                equalsPermission(permission, BIND_NOTIFICATION_LISTENER_SERVICE) ||
-                equalsPermission(permission, ACCESS_NOTIFICATION_POLICY) ||
-                equalsPermission(permission, REQUEST_IGNORE_BATTERY_OPTIMIZATIONS) ||
-                equalsPermission(permission, BIND_VPN_SERVICE) ||
-                equalsPermission(permission, PICTURE_IN_PICTURE)
-    }
-
-
-    /**
-     * 获取权限是从哪个 Android 版本新增的
-     */
-    fun getPermissionFromAndroidVersion(permission: String): Int {
-        return if (isSpecialPermission(permission)) {
-            getSpecialPermissionFromAndroidVersion(permission)
-        } else getDangerPermissionFromAndroidVersion(permission)
-    }
-
-    /**
-     * 获取特殊权限是从哪个 Android 版本新增的
-     */
-    fun getSpecialPermissionFromAndroidVersion(permission: String): Int {
-        if (equalsPermission(permission!!, SCHEDULE_EXACT_ALARM)) {
-            return AndroidVersion.ANDROID_12
-        }
-        if (equalsPermission(permission, MANAGE_EXTERNAL_STORAGE)) {
-            return AndroidVersion.ANDROID_11
-        }
-        if (equalsPermission(permission, REQUEST_INSTALL_PACKAGES)) {
-            return AndroidVersion.ANDROID_8
-        }
-        if (equalsPermission(permission, PICTURE_IN_PICTURE)) {
-            return AndroidVersion.ANDROID_8
-        }
-        if (equalsPermission(permission, SYSTEM_ALERT_WINDOW)) {
-            return AndroidVersion.ANDROID_6
-        }
-        if (equalsPermission(permission, WRITE_SETTINGS)) {
-            return AndroidVersion.ANDROID_6
-        }
-        if (equalsPermission(permission, REQUEST_IGNORE_BATTERY_OPTIMIZATIONS)) {
-            return AndroidVersion.ANDROID_6
-        }
-        if (equalsPermission(permission, ACCESS_NOTIFICATION_POLICY)) {
-            return AndroidVersion.ANDROID_6
-        }
-        if (equalsPermission(permission, PACKAGE_USAGE_STATS)) {
-            return AndroidVersion.ANDROID_5
-        }
-        if (equalsPermission(permission, NOTIFICATION_SERVICE)) {
-            return AndroidVersion.ANDROID_4_4
-        }
-        if (equalsPermission(permission, BIND_NOTIFICATION_LISTENER_SERVICE)) {
-            return AndroidVersion.ANDROID_4_3
-        }
-        return if (equalsPermission(
-                permission, BIND_VPN_SERVICE
-            )
-        ) {
-            AndroidVersion.ANDROID_4_0
-        } else AndroidVersion.ANDROID_4_0
-    }
-
-    /**
-     * 获取危险权限是从哪个 Android 版本新增的
-     */
-    fun getDangerPermissionFromAndroidVersion(permission: String): Int {
-        if (equalsPermission(permission, READ_MEDIA_VISUAL_USER_SELECTED)) {
-            return AndroidVersion.ANDROID_14
-        }
-        if (equalsPermission(permission, POST_NOTIFICATIONS) ||
-            equalsPermission(permission, NEARBY_WIFI_DEVICES) ||
-            equalsPermission(permission, BODY_SENSORS_BACKGROUND) ||
-            equalsPermission(permission, READ_MEDIA_IMAGES) ||
-            equalsPermission(permission, READ_MEDIA_VIDEO) ||
-            equalsPermission(permission, READ_MEDIA_AUDIO)
-        ) {
-            return AndroidVersion.ANDROID_13
-        }
-        if (equalsPermission(permission, BLUETOOTH_SCAN) ||
-            equalsPermission(permission, BLUETOOTH_CONNECT) ||
-            equalsPermission(permission, BLUETOOTH_ADVERTISE)
-        ) {
-            return AndroidVersion.ANDROID_12
-        }
-        if (equalsPermission(permission, ACCESS_BACKGROUND_LOCATION) ||
-            equalsPermission(permission, ACTIVITY_RECOGNITION) ||
-            equalsPermission(permission, ACCESS_MEDIA_LOCATION)
-        ) {
-            return AndroidVersion.ANDROID_10
-        }
-        if (equalsPermission(permission, ACCEPT_HANDOVER)) {
-            return AndroidVersion.ANDROID_9
-        }
-        return if (equalsPermission(
-                permission, ANSWER_PHONE_CALLS
-            ) ||
-            equalsPermission(permission, READ_PHONE_NUMBERS)
-        ) {
-            AndroidVersion.ANDROID_8
-        } else AndroidVersion.ANDROID_6
-    }
-
-    /**
-     * 判断权限是否必须要在清单文件中注册
-     */
-    fun isMustRegisterInManifestFile(permission: String): Boolean {
-        return !equalsPermission(permission, NOTIFICATION_SERVICE) &&
-                !equalsPermission(permission, BIND_NOTIFICATION_LISTENER_SERVICE) &&
-                !equalsPermission(permission, BIND_VPN_SERVICE) &&
-                !equalsPermission(permission, PICTURE_IN_PICTURE)
-    }
+//    fun isSpecialPermission(permission: String): Boolean {
+//        return equalsPermission(permission, MANAGE_EXTERNAL_STORAGE) ||
+//                equalsPermission(permission, REQUEST_INSTALL_PACKAGES) ||
+//                equalsPermission(permission, SYSTEM_ALERT_WINDOW) ||
+//                equalsPermission(permission, WRITE_SETTINGS) ||
+//                equalsPermission(permission, NOTIFICATION_SERVICE) ||
+//                equalsPermission(permission, PACKAGE_USAGE_STATS) ||
+//                equalsPermission(permission, SCHEDULE_EXACT_ALARM) ||
+//                equalsPermission(permission, BIND_NOTIFICATION_LISTENER_SERVICE) ||
+//                equalsPermission(permission, ACCESS_NOTIFICATION_POLICY) ||
+//                equalsPermission(permission, REQUEST_IGNORE_BATTERY_OPTIMIZATIONS) ||
+//                equalsPermission(permission, BIND_VPN_SERVICE) ||
+//                equalsPermission(permission, PICTURE_IN_PICTURE)
+//    }
+//
+//
+//    /**
+//     * 获取权限是从哪个 Android 版本新增的
+//     */
+//    fun getPermissionFromAndroidVersion(permission: String): Int {
+//        return if (isSpecialPermission(permission)) {
+//            getSpecialPermissionFromAndroidVersion(permission)
+//        } else getDangerPermissionFromAndroidVersion(permission)
+//    }
+//
+//    /**
+//     * 获取特殊权限是从哪个 Android 版本新增的
+//     */
+//    fun getSpecialPermissionFromAndroidVersion(permission: String): Int {
+//        if (equalsPermission(permission!!, SCHEDULE_EXACT_ALARM)) {
+//            return AndroidVersion.ANDROID_12
+//        }
+//        if (equalsPermission(permission, MANAGE_EXTERNAL_STORAGE)) {
+//            return AndroidVersion.ANDROID_11
+//        }
+//        if (equalsPermission(permission, REQUEST_INSTALL_PACKAGES)) {
+//            return AndroidVersion.ANDROID_8
+//        }
+//        if (equalsPermission(permission, PICTURE_IN_PICTURE)) {
+//            return AndroidVersion.ANDROID_8
+//        }
+//        if (equalsPermission(permission, SYSTEM_ALERT_WINDOW)) {
+//            return AndroidVersion.ANDROID_6
+//        }
+//        if (equalsPermission(permission, WRITE_SETTINGS)) {
+//            return AndroidVersion.ANDROID_6
+//        }
+//        if (equalsPermission(permission, REQUEST_IGNORE_BATTERY_OPTIMIZATIONS)) {
+//            return AndroidVersion.ANDROID_6
+//        }
+//        if (equalsPermission(permission, ACCESS_NOTIFICATION_POLICY)) {
+//            return AndroidVersion.ANDROID_6
+//        }
+//        if (equalsPermission(permission, PACKAGE_USAGE_STATS)) {
+//            return AndroidVersion.ANDROID_5
+//        }
+//        if (equalsPermission(permission, NOTIFICATION_SERVICE)) {
+//            return AndroidVersion.ANDROID_4_4
+//        }
+//        if (equalsPermission(permission, BIND_NOTIFICATION_LISTENER_SERVICE)) {
+//            return AndroidVersion.ANDROID_4_3
+//        }
+//        return if (equalsPermission(
+//                permission, BIND_VPN_SERVICE
+//            )
+//        ) {
+//            AndroidVersion.ANDROID_4_0
+//        } else AndroidVersion.ANDROID_4_0
+//    }
+//
+//    /**
+//     * 获取危险权限是从哪个 Android 版本新增的
+//     */
+//    fun getDangerPermissionFromAndroidVersion(permission: String): Int {
+//        if (equalsPermission(permission, READ_MEDIA_VISUAL_USER_SELECTED)) {
+//            return AndroidVersion.ANDROID_14
+//        }
+//        if (equalsPermission(permission, POST_NOTIFICATIONS) ||
+//            equalsPermission(permission, NEARBY_WIFI_DEVICES) ||
+//            equalsPermission(permission, BODY_SENSORS_BACKGROUND) ||
+//            equalsPermission(permission, READ_MEDIA_IMAGES) ||
+//            equalsPermission(permission, READ_MEDIA_VIDEO) ||
+//            equalsPermission(permission, READ_MEDIA_AUDIO)
+//        ) {
+//            return AndroidVersion.ANDROID_13
+//        }
+//        if (equalsPermission(permission, BLUETOOTH_SCAN) ||
+//            equalsPermission(permission, BLUETOOTH_CONNECT) ||
+//            equalsPermission(permission, BLUETOOTH_ADVERTISE)
+//        ) {
+//            return AndroidVersion.ANDROID_12
+//        }
+//        if (equalsPermission(permission, ACCESS_BACKGROUND_LOCATION) ||
+//            equalsPermission(permission, ACTIVITY_RECOGNITION) ||
+//            equalsPermission(permission, ACCESS_MEDIA_LOCATION)
+//        ) {
+//            return AndroidVersion.ANDROID_10
+//        }
+//        if (equalsPermission(permission, ACCEPT_HANDOVER)) {
+//            return AndroidVersion.ANDROID_9
+//        }
+//        return if (equalsPermission(
+//                permission, ANSWER_PHONE_CALLS
+//            ) ||
+//            equalsPermission(permission, READ_PHONE_NUMBERS)
+//        ) {
+//            AndroidVersion.ANDROID_8
+//        } else AndroidVersion.ANDROID_6
+//    }
+//
+//    /**
+//     * 判断权限是否必须要在清单文件中注册
+//     */
+//    fun isMustRegisterInManifestFile(permission: String): Boolean {
+//        return !equalsPermission(permission, NOTIFICATION_SERVICE) &&
+//                !equalsPermission(permission, BIND_NOTIFICATION_LISTENER_SERVICE) &&
+//                !equalsPermission(permission, BIND_VPN_SERVICE) &&
+//                !equalsPermission(permission, PICTURE_IN_PICTURE)
+//    }
 }

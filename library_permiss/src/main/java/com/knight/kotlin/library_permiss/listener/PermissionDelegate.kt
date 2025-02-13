@@ -24,8 +24,13 @@ interface PermissionDelegate {
         permission: String
     ): Boolean
 
+
+    /**
+     * 重新检查权限回调的结果
+     */
+    fun recheckPermissionResult(context: Context, permission: String, grantResult: Boolean): Boolean
     /**
      * 获取权限设置页的意图
      */
-    fun getPermissionIntent(context: Context, permission: String): Intent?
+    fun getPermissionSettingIntent(context: Context, permission: String): Intent?
 }

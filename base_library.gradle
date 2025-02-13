@@ -28,6 +28,10 @@ android {
 
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_17.toString()
+        // 确保你设置 Kotlin 编译选项
+        //用于解决-dontwarn java.lang.invoke.StringConcatFactory
+        freeCompilerArgs = ['-Xstring-concat=inline']
+
     }
     buildTypes {
         debug {

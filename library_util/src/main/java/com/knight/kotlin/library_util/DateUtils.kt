@@ -4,6 +4,7 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
+import java.util.Locale
 
 /**
  * Author:Knight
@@ -151,5 +152,22 @@ object DateUtils {
     fun formatDateMsByYMDHMS(milliseconds: Long): String {
         val simpleDateFormat = SimpleDateFormat("yyyy/MM/dd HH:mm:ss")
         return simpleDateFormat.format(Date(milliseconds))
+    }
+
+    /**
+     * 将时间格式转成整形
+     *
+     */
+    fun convertToTimestamp(dateString: String) : Long? {
+        val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+        return try {
+            // 解析日期字符串并返回时间戳
+            val date: Date = formatter.parse(dateString)
+            date?.time
+        } catch (e: Exception) {
+            // 如果日期格式不匹配，返回 null
+            e.printStackTrace()
+            null
+        }
     }
 }

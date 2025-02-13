@@ -22,8 +22,11 @@ class StartActivityManager {
     }
 
     companion object {
+        /** 存取子意图所用的 Intent Key */
         private const val SUB_INTENT_KEY = "sub_intent_key"
-
+        /**
+         * 从父意图中获取子意图
+         */
         fun getSubIntentInMainIntent( mainIntent: Intent?): Intent? {
             val subIntent: Intent?
             subIntent = if (isAndroid13()) {
@@ -34,11 +37,16 @@ class StartActivityManager {
             return subIntent
         }
 
+        /**
+         * 获取意图中最底层的子意图
+         */
         fun getDeepSubIntent( superIntent: Intent?): Intent? {
             val subIntent = getSubIntentInMainIntent(superIntent)
             return subIntent?.let { getDeepSubIntent(it) } ?: superIntent
         }
-
+        /**
+         * 将子意图添加到主意图中
+         */
         fun addSubIntentToMainIntent(
              mainIntent: Intent?,
              subIntent: Intent?

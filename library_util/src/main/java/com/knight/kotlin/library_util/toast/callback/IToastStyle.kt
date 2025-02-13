@@ -10,7 +10,7 @@ import android.view.View
  * Time:2021/12/17 11:02
  * Description:ToastStyleInterface
  */
-open interface ToastStyleInterface<V : View?> {
+open interface IToastStyle<V : View?> {
     /**
      * 创建 Toast 视图
      */

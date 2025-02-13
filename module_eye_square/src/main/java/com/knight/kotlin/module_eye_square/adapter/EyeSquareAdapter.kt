@@ -103,7 +103,7 @@ class EyeSquareAdapter(activity : FragmentActivity,data :List<EyeCardEntity>): B
                     // 使用Kotlinx.serialization从字符串转换为EyeMetroCardEntity
                     Json.decodeFromString<EyeFeedItemDetail>(jsonString)
                 }
-                val mEyeSquareFeedItemAdapter = EyeSquareFeedItemAdapter()
+                val mEyeSquareFeedItemAdapter = EyeSquareFeedItemAdapter(activity)
                 binding?.rvSquareWaterfallSmall?.init(
                     LinearLayoutManager(activity),
                     mEyeSquareFeedItemAdapter,

@@ -10,7 +10,7 @@ import android.widget.TextView
  * Time:2021/12/17 10:27
  * Description:ToastInterface
  */
-interface ToastInterface {
+interface IToast {
 
     /**
      * 显示

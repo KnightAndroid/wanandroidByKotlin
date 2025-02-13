@@ -1,16 +1,19 @@
 package com.knight.kotlin.library_util.toast
 
-import android.app.Activity
+import android.app.Application
+
+
 
 
 /**
- * Author:Knight
- * Time:2021/12/17 14:21
- * Description:ActivityToast
+ * @author created by luguian
+ * @organize
+ * @Date 2025/2/13 15:08
+ * @descript:利用悬浮窗权限弹出全局 Toast
  */
-class ActivityToast(activity: Activity) : CustomToast() {
+class GlobalToast(application: Application) : CustomToast() {
     /** Toast 实现类  */
-    private val mToastImpl = ToastImpl(activity, this)
+    private val mToastImpl = ToastImpl(application, this)
 
     override fun show() {
         // 替换成 WindowManager 来显示

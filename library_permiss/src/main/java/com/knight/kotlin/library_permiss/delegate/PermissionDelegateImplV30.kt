@@ -27,9 +27,22 @@ open class PermissionDelegateImplV30 : PermissionDelegateImplV29(){
        permission: String
     ): Boolean {
         if (PermissionUtils.equalsPermission(permission, Permission.MANAGE_EXTERNAL_STORAGE)) {
-            return isGrantedManageStoragePermission()
+            if (!AndroidVersion.isAndroid6()) {
+                return true;
+            }
+            if (!AndroidVersion.isAndroid11()) {
+                // 这个是 Android 10 上面的历史遗留问题，假设申请的是 MANAGE_EXTERNAL_STORAGE 权限
+                // 必须要在 AndroidManifest.xml 中注册 android:requestLegacyExternalStorage="true"
+                if (AndroidVersion.isAndroid10() && !isUseDeprecationExternalStorage()) {
+                    return false;
+                }
+                return PermissionUtils.checkSelfPermission(context, Permission.READ_EXTERNAL_STORAGE) &&
+                        PermissionUtils.checkSelfPermission(context, Permission.WRITE_EXTERNAL_STORAGE);
+            }
+            return isGrantedManageStoragePermission();
         }
-        return super.isGrantedPermission(context, permission)
+
+        return super.isGrantedPermission(context, permission);
     }
 
     override fun isDoNotAskAgainPermission(
@@ -44,16 +57,18 @@ open class PermissionDelegateImplV30 : PermissionDelegateImplV29(){
         } else super.isDoNotAskAgainPermission(activity, permission)
     }
 
-    override fun getPermissionIntent(
+    override fun getPermissionSettingIntent(
         context: Context,
         permission: String
     ): Intent? {
-        return if (equalsPermission(
-                permission, Permission.MANAGE_EXTERNAL_STORAGE
-            )
-        ) {
-            getManageStoragePermissionIntent(context)
-        } else super.getPermissionIntent(context, permission)
+        if (PermissionUtils.equalsPermission(permission, Permission.MANAGE_EXTERNAL_STORAGE)) {
+            if (!AndroidVersion.isAndroid11()) {
+                return getApplicationDetailsIntent(context)
+            }
+            return getManageStoragePermissionIntent(context)
+        }
+
+        return super.getPermissionSettingIntent(context, permission)
     }
 
 
@@ -78,6 +93,13 @@ open class PermissionDelegateImplV30 : PermissionDelegateImplV29(){
                 intent = PermissionIntentManager.getApplicationDetailsIntent(context)
             }
             return intent
+        }
+
+        /**
+         * 是否采用的是非分区存储的模式
+         */
+        private fun isUseDeprecationExternalStorage(): Boolean {
+            return Environment.isExternalStorageLegacy()
         }
     }
 
