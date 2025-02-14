@@ -17,7 +17,7 @@
 
 ## 主要功能
 
-- 首页、广场、导航、项目、公众号、我的、课程、推荐视频等模块
+- 首页、广场、导航、项目、公众号、我的、课程、推荐视频、开眼浏览图片视频等模块
 - 登录注册
 - 搜索功能：热门查询，搜索历史
 - 收藏：文章添加收藏，取消收藏
@@ -43,8 +43,7 @@
 - 内存泄漏检测
 - 推荐视频
 - 自动夜间模式切换
-
-
+- 开眼功能浏览图片和视频等
 
 
 
@@ -57,7 +56,7 @@
 | ![10.jpg](https://gitee.com/MengSuiXinSuoYuan/wanandroid_server/raw/master/wanandroid_picture/wanandroid_everydaypush.jpg) | ![11.jpg](https://gitee.com/MengSuiXinSuoYuan/wanandroid_server/raw/master/wanandroid_picture/wanandroid_historyrecord.jpg) | ![12.jpg](https://gitee.com/MengSuiXinSuoYuan/wanandroid_server/raw/master/wanandroid_picture/wanandroid_updateapp.jpg) |
 | ![11.jpg](https://gitee.com/MengSuiXinSuoYuan/wanandroid_server/raw/master/wanandroid_picture/wanandroid_knowledgeLabel.jpg) | ![12.jpg](https://gitee.com/MengSuiXinSuoYuan/wanandroid_server/raw/master/wanandroid_picture/wanandroid_message_remind.jpg) | ![13.jpg](https://gitee.com/MengSuiXinSuoYuan/wanandroid_server/raw/master/wanandroid_picture/wanandroid_messagecenter.jpg) |
 | ![14.jpg](https://gitee.com/MengSuiXinSuoYuan/wanandroid_server/raw/master/wanandroid_picture/set_changesize.png) | ![wanandroid_biometric_finger.jpg](https://gitee.com/MengSuiXinSuoYuan/wanandroid_server/raw/master/wanandroid_picture/wanandroid_biometric_finger.jpg) |![wanandroid_gesturelock.jpg](https://gitee.com/MengSuiXinSuoYuan/wanandroid_server/raw/master/wanandroid_picture/wanandroid_gesturelock.jpg) |
-| ![15.jpg](https://gitee.com/MengSuiXinSuoYuan/wanandroid_server/raw/master/wanandroid_picture/home_feedback_article.png) |![wanandroid_shortcuts.jpg](https://gitee.com/MengSuiXinSuoYuan/wanandroid_server/raw/master/wanandroid_picture/wanandroid_shortcuts.jpg) |
+| ![15.jpg](https://gitee.com/MengSuiXinSuoYuan/wanandroid_server/raw/master/wanandroid_picture/home_feedback_article.png) |![wanandroid_shortcuts.jpg](https://gitee.com/MengSuiXinSuoYuan/wanandroid_server/raw/master/wanandroid_picture/wanandroid_shortcuts.jpg) |![wanandroid_home_eye_category.jpg](https://gitee.com/MengSuiXinSuoYuan/wanandroid_server/raw/master/wanandroid_picture/wanandroid_home_eye_category.jpg)
 
 ### 深色模式
 | ![dark_01.jpg](https://gitee.com/MengSuiXinSuoYuan/wanandroid_server/raw/master/wanandroid_picture/home_dark_01.jpg) | ![dark_02.jpg](https://gitee.com/MengSuiXinSuoYuan/wanandroid_server/raw/master/wanandroid_picture/square_dark_02.jpg) | ![dark_03.jpg](https://gitee.com/MengSuiXinSuoYuan/wanandroid_server/raw/master/wanandroid_picture/navigate_dark_03.jpg) |
@@ -88,7 +87,7 @@
 | ![4.gif](https://github.com/KnightAndroid/wanandroid_server/blob/main/wanandroid_gif/home_04.gif)          |![5.gif](https://github.com/KnightAndroid/wanandroid_server/blob/main/wanandroid_gif/home_05.gif) | ![6.gif](https://github.com/KnightAndroid/wanandroid_server/blob/main/wanandroid_gif/home_06.gif) |
 | ![7.gif](https://github.com/KnightAndroid/wanandroid_server/blob/main/wanandroid_gif/home_07.gif)          |![8.gif](https://github.com/KnightAndroid/wanandroid_server/blob/main/wanandroid_gif/home_08.gif) |![9.gif](https://github.com/KnightAndroid/wanandroid_server/blob/main/wanandroid_gif/home_09.gif) |
 | ![10.gif](https://github.com/KnightAndroid/wanandroid_server/blob/main/wanandroid_gif/home_10.gif)         |![11.gif](https://github.com/KnightAndroid/wanandroid_server/blob/main/wanandroid_gif/home_skeleton.gif)|![12.gif](https://github.com/KnightAndroid/wanandroid_server/blob/main/wanandroid_gif/home_icon_animate.gif)|
-| ![13.gif](https://github.com/KnightAndroid/wanandroid_server/blob/main/wanandroid_gif/recommend_video.gif) |
+| ![13.gif](https://github.com/KnightAndroid/wanandroid_server/blob/main/wanandroid_gif/recommend_video.gif) |![14.gif](https://github.com/KnightAndroid/wanandroid_server/blob/main/wanandroid_gif/home_up_data_eye.gif)
 ## 主要开源框架
 
 - [GoRouter](https://github.com/wyjsonGo/GoRouter)
@@ -110,8 +109,8 @@
 - [LeakCanary](https://github.com/square/leakcanary)
 
 ## 本项目开发环境
-- 基于Android Studio Iguana
-- Android Gradle Plugin 8.0
+- 基于Android Studio Ladybug
+- Android Gradle Plugin 8.9
 - Android Gradle插件8.0.0
 
 打包方式如下图：
@@ -127,6 +126,15 @@
 ![wanandroid_normal_release.png](https://gitee.com/MengSuiXinSuoYuan/wanandroid_server/raw/master/wanandroid_picture/wanandroid_normal_release.png)
 
 ## 更新日志
+
+### 2.0.0(7)
+-  wanandroid 第七版发布
+-  适配Android15
+-  新增开眼功能
+-  更新优化权限库
+-  更新优化Toast功能
+-  发布时间：2024/02/14
+
 ### 1.2.0(6)
 -  wanandroid 第六版发布
 -  规范代码命名
@@ -184,6 +192,11 @@
 
 ## Thanks
 感谢鸿洋大大开放的[API](https://github.com/hongyangAndroid/wanandroid)
+感谢开眼的API
+
+## 非商业用途声明
+
+本项目中的代码、文档和相关资源仅限用于个人学习、学术研究或其他非商业用途。
 
 ## License
 

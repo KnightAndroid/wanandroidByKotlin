@@ -17,7 +17,6 @@ import com.knight.kotlin.module_video.DataConstant
 import com.knight.kotlin.module_video.adapter.VideoMainAdapter
 import com.knight.kotlin.module_video.databinding.VideoMainActivityBinding
 import com.knight.kotlin.module_video.entity.VideoPlayEntity
-import com.knight.kotlin.module_video.utils.VideoHelpUtils
 import com.knight.kotlin.module_video.vm.VideoVm
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener
@@ -76,6 +75,7 @@ class VideoMainActivity : BaseActivity<VideoMainActivityBinding,VideoVm>(), OnRe
         ),mVideoMainAdapter,true)
         includeVideo.baseBodyRv.addItemDecoration(SpacesItemDecoration(10.dp2px()))
         videoFloatBtn.backgroundTintList = ColorUtils.createColorStateList(CacheUtils.getThemeColor(), CacheUtils.getThemeColor())
+        videoFloatBtn.imageTintList = null
         setOnClickListener(videoFloatBtn)
         initListener()
     }

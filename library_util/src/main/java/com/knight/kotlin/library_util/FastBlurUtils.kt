@@ -41,7 +41,7 @@ object FastBlurUtils {
         bitmap = if (canReuseInBitmap) {
             sentBitmap
         } else {
-            sentBitmap.copy(sentBitmap.config, true)
+            sentBitmap.config?.let { sentBitmap.copy(it, true) } ?: sentBitmap
         }
         if (radius < 1) {
             return null

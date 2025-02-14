@@ -59,7 +59,11 @@ object SystemUtils {
     fun getAppName(context:Context) :String {
         val pm:PackageManager = context.packageManager;
         val pi: PackageInfo = pm.getPackageInfo(context.packageName, 0)
-        return context.resources.getString(pi.applicationInfo.labelRes)
+        return  pi.applicationInfo?.let{
+            context.resources.getString(it.labelRes)
+        } ?: "wanandroid"
+
+
     }
 
     /**
@@ -157,13 +161,10 @@ object SystemUtils {
             view.isFocusable = true
             view.isFocusableInTouchMode = true
             view.requestFocus()
-            val imm =
-                view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.showSoftInput(view, InputMethodManager.RESULT_UNCHANGED_SHOWN)
-            imm.toggleSoftInput(
-                InputMethodManager.HIDE_IMPLICIT_ONLY,
-                InputMethodManager.HIDE_IMPLICIT_ONLY
-            )
+            val imm = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+
+            // Key change: Use SHOW_IMPLICIT or SHOW_FORCED
+            imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT) // Or SHOW_FORCED
         } catch (e: java.lang.Exception) {
             e.printStackTrace()
         }
