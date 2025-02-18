@@ -10,6 +10,7 @@ import com.knight.kotlin.library_base.ktx.setOnClick
 import com.knight.kotlin.library_base.vm.EmptyViewModel
 import com.knight.kotlin.library_share.databinding.ShareDialogBinding
 import com.knight.kotlin.library_util.FileUtils
+import com.knight.kotlin.library_util.ShareSdkUtils
 import com.knight.kotlin.library_util.bitmap.BitmapUtils
 import com.knight.kotlin.library_util.bitmap.saveToAlbum
 import com.knight.kotlin.library_util.image.ImageLoader
@@ -79,6 +80,10 @@ class ShareDialog : BaseDialogFragment<ShareDialogBinding, EmptyViewModel>() {
                     toast(getString(R.string.share_save_photo_failure))
                 }
             }
+        }
+
+        tvWechat.setOnClick {
+            ShareSdkUtils.sharePlatform()
         }
 
     }

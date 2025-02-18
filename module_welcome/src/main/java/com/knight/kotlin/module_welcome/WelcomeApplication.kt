@@ -6,6 +6,7 @@ import android.content.Context
 import com.google.auto.service.AutoService
 import com.knight.kotlin.library_base.app.ApplicationLifecycle
 
+
 /**
  * Author:Knight
  * Time:2021/12/21 11:42

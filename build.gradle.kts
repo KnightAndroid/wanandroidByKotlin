@@ -17,6 +17,9 @@ buildscript {
         maven(url="https://jitpack.io")
         maven(url = "https://dl.google.com/dl/android/maven2/")
         maven (url = "https://maven.aliyun.com/repository/public/" ) //为了解决loadSir版本下载不了问题
+        maven (
+            url = "https://mvn.mob.com/android"
+        )
         gradlePluginPortal()
     }
     dependencies {
@@ -27,6 +30,7 @@ buildscript {
        // classpath(com.knight.wanandroid.buildsrc.ProjectPluginDencies.KOTLIN_SERIALIZATION)
         classpath(com.knight.wanandroid.buildsrc.ProjectPluginDencies.ANDROID_AOP)
         classpath("com.android.tools:r8:8.2.24")
+        classpath("com.mob.sdk:MobSDK2:+")
     }
 }
 
@@ -41,6 +45,9 @@ allprojects {
         jcenter()
         maven (url = "https://maven.aliyun.com/repository/public/" ) //为了解决loadSir版本下载不了问题
         gradlePluginPortal()
+        maven (
+            url = "https://mvn.mob.com/android"
+        )
     }
 }
 

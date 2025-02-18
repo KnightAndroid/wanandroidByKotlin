@@ -8,6 +8,7 @@ import com.knight.kotlin.library_base.BaseApp
 import com.knight.kotlin.library_base.app.ApplicationLifecycle
 import com.knight.kotlin.library_base.util.ProcessUtil
 import com.knight.kotlin.library_util.toast.ToastUtils.init
+import com.mob.MobSDK
 import com.tencent.bugly.crashreport.CrashReport
 import com.wyjson.router.GoRouter
 
@@ -62,6 +63,8 @@ class UtilApplication:ApplicationLifecycle {
         strategy.appVersion = SystemUtils.getAppVersionName(BaseApp.context)
         strategy.appPackageName = BaseApp.context.packageName
         CrashReport.initCrashReport(BaseApp.context,"99ea018e83",false,strategy)
+        //同意ShareSdk分享
+        MobSDK.submitPolicyGrantResult(true)
     }
 
 

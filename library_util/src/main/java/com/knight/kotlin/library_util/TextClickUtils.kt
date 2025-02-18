@@ -11,7 +11,7 @@ import android.view.View
  * Time:2021/12/31 15:44
  * Description:TextClickUtils
  */
-class TextClickUtils :ClickableSpan() {
+open class TextClickUtils :ClickableSpan() {
 
     interface OnClickToWebListener {
         fun goWeb()

@@ -60,6 +60,7 @@ class WebActivity : BaseActivity<WebActivityBinding,EmptyViewModel>() {
 
     override fun WebActivityBinding.initView() {
         mBinding.includeWebToolbar.baseIvRight.visibility = View.VISIBLE
+        mBinding.title = webTitle
         mAgentWeb = AgentWeb.with(this@WebActivity)
               .setAgentWebParent(mBinding.webLl,LinearLayout.LayoutParams(-1,-1))
             .useDefaultIndicator(CacheUtils.getThemeColor(),2)
@@ -99,8 +100,11 @@ class WebActivity : BaseActivity<WebActivityBinding,EmptyViewModel>() {
         settings.javaScriptEnabled = true
         settings.loadsImagesAutomatically = true
         settings.useWideViewPort = true
+
+
         settings.loadWithOverviewMode = true
-        settings.layoutAlgorithm = WebSettings.LayoutAlgorithm.SINGLE_COLUMN
+
+        settings.layoutAlgorithm = WebSettings.LayoutAlgorithm.NARROW_COLUMNS
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             settings.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
         }

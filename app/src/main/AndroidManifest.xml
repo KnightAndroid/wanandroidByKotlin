@@ -14,7 +14,8 @@
         tools:ignore="Instantiatable"
         android:theme="@style/base_AppTheme"
         tools:targetApi="n"
-        android:enableOnBackInvokedCallback="true"> <!-- 启用手势-->
+        android:enableOnBackInvokedCallback="true"
+        tools:replace="android:name">
 
 
         <meta-data

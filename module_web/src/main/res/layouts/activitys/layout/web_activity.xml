@@ -1,15 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".activity.WebActivity">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <include
-        android:id="@+id/include_web_toolbar"
-        layout="@layout/base_include_toolbar"
-        app:layout_constraintTop_toTopOf="parent" />
+    <data>
+        <variable
+            name="title"
+            type="java.lang.String" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".activity.WebActivity">
+
+        <include
+            android:id="@+id/include_web_toolbar"
+            layout="@layout/base_include_toolbar"
+            app:layout_constraintTop_toTopOf="parent"
+            app:title="@{title}"/>
 
 
     <com.knight.kotlin.library_widget.WebContainer
@@ -22,4 +33,6 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/include_web_toolbar" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
+

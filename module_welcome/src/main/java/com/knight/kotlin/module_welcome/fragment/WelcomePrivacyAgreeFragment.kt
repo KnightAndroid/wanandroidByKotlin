@@ -10,7 +10,6 @@ import android.text.method.LinkMovementMethod
 import android.view.Gravity
 import android.view.KeyEvent
 import androidx.annotation.NonNull
-import androidx.annotation.Nullable
 import com.knight.kotlin.library_base.BaseApp
 import com.knight.kotlin.library_base.fragment.BaseDialogFragment
 import com.knight.kotlin.library_base.ktx.setOnClick
@@ -19,11 +18,11 @@ import com.knight.kotlin.library_base.util.ActivityManagerUtils
 import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_base.vm.EmptyViewModel
 import com.knight.kotlin.library_util.TextClickUtils
-import com.knight.kotlin.library_util.TextClickUtils.OnClickToWebListener
 import com.knight.kotlin.library_util.ViewInitUtils
 import com.knight.kotlin.library_util.startPage
 import com.knight.kotlin.library_util.startPageWithParams
 import com.knight.kotlin.module_welcome.databinding.WelcomePrivacyAgreeFragmentBinding
+import java.util.regex.Pattern
 import kotlin.system.exitProcess
 
 
@@ -37,7 +36,7 @@ class WelcomePrivacyAgreeFragment : BaseDialogFragment<WelcomePrivacyAgreeFragme
     private lateinit var spannable: SpannableStringBuilder
 
     @NonNull
-    override fun onCreateDialog(@Nullable savedInstanceState: Bundle?): Dialog {
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog: Dialog = super.onCreateDialog(savedInstanceState)
         dialog.setCancelable(false)
         dialog.setCanceledOnTouchOutside(false)
@@ -73,23 +72,47 @@ class WelcomePrivacyAgreeFragment : BaseDialogFragment<WelcomePrivacyAgreeFragme
     @SuppressLint("NewApi")
     override fun WelcomePrivacyAgreeFragmentBinding.initView() {
         spannable = SpannableStringBuilder(mBinding.appPrivacyTip.text.toString())
+
+
+
+
+
+        // 使用正则表达式提取所有《》内的内容
+        val pattern = Pattern.compile("《(.*?)》") // 匹配《》之间的内容
+        val matcher = pattern.matcher(appPrivacyTip.text.toString())
         mBinding.appPrivacyTip.movementMethod = LinkMovementMethod.getInstance()
-        spannable.setSpan(TextClickUtils().setOnClickWebListener(object : OnClickToWebListener {
-            override fun goWeb() {
+        while (matcher.find()) {
+            val startIndex = matcher.start() // 获取每个《》的起始位置
+            val endIndex = matcher.end() // 获取每个《》的结束位置
+            val target = matcher.group(1) // 获取《》中的内容
 
-                startPageWithParams(RouteActivity.Web.WebPager,
-                    "webUrl" to "file:android_asset/wanandroid_useragree.html",
-                            "webTitle" to "用户协议")
-            }
-        }), 8, 14, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-        spannable.setSpan(TextClickUtils().setOnClickWebListener(object : OnClickToWebListener {
-            override fun goWeb() {
-                startPageWithParams(RouteActivity.Web.WebPager,
-                            "webUrl" to "file:android_asset/wanandroid_userprivacy.html",
-                                    "webTitle" to "隐私政策")
-            }
+            // 创建点击事件
+            val span = TextClickUtils().setOnClickWebListener(object : TextClickUtils.OnClickToWebListener {
+                override fun goWeb() {
 
-        }), 15, 21, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                    when(target) {
+                        "用户协议","User Agreement"->{
+                            startPageWithParams(RouteActivity.Web.WebPager,
+                                "webUrl" to "file:android_asset/wanandroid_useragree.html",
+                                "webTitle" to "用户协议")
+                        }
+                        "隐私政策","Privacy Policy"->{
+                            startPageWithParams(RouteActivity.Web.WebPager,
+                                "webUrl" to "file:android_asset/wanandroid_userprivacy.html",
+                                "webTitle" to "隐私政策")
+                        }
+                        "ShareSdk隐私政策","ShareSdk Privacy Policy"->{
+                            startPageWithParams(RouteActivity.Web.WebPager,
+                                "webUrl" to "file:android_asset/wanandroid_sharesdk_userprivacy.html",
+                                "webTitle" to "ShareSdk隐私政策")
+                        }
+                    }
+                }
+            })
+            // 为该部分设置点击事件
+            spannable.setSpan(span, startIndex, endIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+        }
         mBinding.appPrivacyTip.text = spannable
         ViewInitUtils.avoidHintColor(mBinding.appPrivacyTip)
         setOnClick(mBinding.tvConfimPrivacy,::goAgreeToMain)
