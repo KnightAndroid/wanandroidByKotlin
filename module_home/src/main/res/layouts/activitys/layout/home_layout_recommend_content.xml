@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/home_cl_recommend_root"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <include
+        android:id="@+id/home_include_toolbar"
+        layout="@layout/home_include_toolbar"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+
+    <RelativeLayout
+        android:id="@+id/rl_home"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/home_include_toolbar"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+
+
+
+        <com.scwang.smart.refresh.layout.SmartRefreshLayout
+            android:id="@+id/recommend_refreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.scwang.smart.refresh.header.ClassicsHeader
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <!-- Viewpager2嵌套Recycleview解决滑动冲突 -->
+            <com.knight.kotlin.module_home.view.NestedScrollableHost
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <com.yanzhenjie.recyclerview.SwipeRecyclerView
+                    android:id="@+id/home_recommend_article_body"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </com.knight.kotlin.module_home.view.NestedScrollableHost>
+
+
+            <com.scwang.smart.refresh.footer.ClassicsFooter
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </com.scwang.smart.refresh.layout.SmartRefreshLayout>
+
+
+
+
+
+
+    </RelativeLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/home_icon_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/home_icon_fab_margin_right"
+        android:layout_marginBottom="@dimen/home_icon_fab_margin_bottom"
+        android:src="@drawable/home_icon_show_icon"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/home_icon_course"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/home_icon_course_margin_bottom"
+        android:layout_marginEnd="@dimen/home_icon_course_margin_end"
+        android:padding="10dp"
+        android:src="@drawable/home_icon_course"
+        app:fabSize="normal"
+        app:layout_constraintCircle="@+id/home_icon_fab"
+        app:layout_constraintCircleRadius="80dp"
+        app:layout_constraintCircleAngle="270"
+        app:tint="#ffffff"
+        app:pressedTranslationZ="20dp"
+        app:rippleColor="#1f000000"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        />
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/home_icon_utils"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/home_icon_utils_margin_bottom"
+        android:layout_marginEnd="@dimen/home_icon_utils_margin_end"
+        android:padding="10dp"
+        android:src="@drawable/home_icon_utils"
+        app:fabSize="normal"
+        app:layout_constraintCircle="@+id/home_icon_fab"
+        app:layout_constraintCircleRadius="80dp"
+        app:layout_constraintCircleAngle="315"
+        app:tint="#ffffff"
+        app:pressedTranslationZ="20dp"
+        app:rippleColor="#1f000000"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/home_icon_scroll_up"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/home_icon_scroll_up_margin_bottom"
+        android:layout_marginEnd="@dimen/home_icon_scroll_up_margin_end"
+        android:padding="10dp"
+        android:src="@drawable/base_icon_up"
+        app:fabSize="normal"
+        app:layout_constraintCircle="@+id/home_icon_fab"
+        app:layout_constraintCircleRadius="80dp"
+        app:layout_constraintCircleAngle="360"
+        app:tint="#ffffff"
+        android:visibility="gone"
+        app:pressedTranslationZ="20dp"
+        app:rippleColor="#1f000000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        />
+
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/home_gp_icon_course"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="home_icon_course"/>
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/home_gp_icon_utils"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="home_icon_utils"/>
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/home_gp_icon_up"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="home_icon_scroll_up"/>
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -18,6 +18,7 @@
 package com.knight.kotlin.library_widget.slidinglayout;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
@@ -25,12 +26,12 @@ import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.view.animation.Interpolator;
 
+import java.util.Arrays;
+
 import androidx.core.view.MotionEventCompat;
 import androidx.core.view.VelocityTrackerCompat;
 import androidx.core.view.ViewCompat;
 import androidx.core.widget.ScrollerCompat;
-
-import java.util.Arrays;
 
 /**
  * ViewDragHelper is a utility class for writing custom ViewGroups. It offers a number
@@ -332,7 +333,11 @@ public class ViewDragHelper {
             return t * t * t * t * t + 1.0f;
         }
     };
+    private static int mDuration = -1;
 
+    public void setDuration(int millimetre) {
+        mDuration = millimetre;
+    }
     private final Runnable mSetIdleRunnable = new Runnable() {
         @Override
         public void run() {
@@ -620,8 +625,12 @@ public class ViewDragHelper {
             return false;
         }
 
-        final int duration = computeSettleDuration(mCapturedView, dx, dy, xvel, yvel);
-        mScroller.startScroll(startLeft, startTop, dx, dy, duration);
+        if (mDuration == -1) {
+            mDuration = computeSettleDuration(mCapturedView, dx, dy, xvel, yvel);
+        }
+        mScroller.startScroll(startLeft, startTop, dx, dy, mDuration);
+//        final int duration = computeSettleDuration(mCapturedView, dx, dy, xvel, yvel);
+//        mScroller.startScroll(startLeft, startTop, dx, dy, duration);
 
         setDragState(STATE_SETTLING);
         return true;
@@ -1517,5 +1526,16 @@ public class ViewDragHelper {
         }
 
         return result;
+    }
+
+
+    private boolean isValidPointerForActionMove(int pointerId) {
+        if (!isPointerDown(pointerId)) {
+            Log.e(TAG, "Ignoring pointerId=" + pointerId + " because ACTION_DOWN was not received "
+                    + "for this pointer before ACTION_MOVE. It likely happened because "
+                    + " ViewDragHelper did not receive all the events in the event stream.");
+            return false;
+        }
+        return true;
     }
 }

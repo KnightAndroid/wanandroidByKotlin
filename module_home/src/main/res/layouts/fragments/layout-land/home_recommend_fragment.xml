@@ -1,66 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:id="@+id/home_cl_recommend_root"
+<com.knight.kotlin.library_widget.slidinglayout.SlidingLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/home_sliding_menu"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
 
-
-
-    <FrameLayout
-        android:id="@+id/fl_recommend_root"
+    android:orientation="vertical"
+    app:menuRightMargin="62dp">
+    <!--    android:background="@drawable/home_menu_bg"-->
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <RelativeLayout
-            android:id="@+id/rl_home"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <com.scwang.smart.refresh.layout.SmartRefreshLayout
-                android:id="@+id/recommend_refreshLayout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
 
 
+        <include
+            android:id="@+id/home_recomment_conent"
+            layout="@layout/home_layout_recommend_content"/>
 
-                    <com.scwang.smart.refresh.header.ClassicsHeader
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-
-
-
-
-                <com.yanzhenjie.recyclerview.SwipeRecyclerView
-                    android:id="@+id/home_recommend_article_body"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-
-                <com.scwang.smart.refresh.footer.ClassicsFooter
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-
-            </com.scwang.smart.refresh.layout.SmartRefreshLayout>
-
-
-
-        </RelativeLayout>
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/home_icon_fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_gravity="bottom|end"
-            android:layout_marginRight="@dimen/home_icon_fab_margin_right"
-            android:layout_marginBottom="@dimen/home_icon_fab_margin_bottom"
-            android:src="@drawable/base_icon_up"/>
-
-    </FrameLayout>
-
-
-
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <include
+            android:id="@+id/home_recomment_menu"
+            layout="@layout/home_layout_recommend_menu"/>
+    </LinearLayout>
+</com.knight.kotlin.library_widget.slidinglayout.SlidingLayout>

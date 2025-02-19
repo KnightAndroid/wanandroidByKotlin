@@ -1159,4 +1159,9 @@
         <attr name="shape_lineGravity" />
     </declare-styleable>
 
+
+    <declare-styleable name="SlidingLayout">
+        <attr name="menuRightMargin" format="dimension"/>
+    </declare-styleable>
+
 </resources>

@@ -186,8 +186,8 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
 
     override fun HomeRecommendFragmentBinding.initView() {
         mBinding.root.rotation = 180f
-        homeIconFab.imageTintList = null
-        mSkeletonScreen = Skeleton.bind(mBinding.rlHome)
+        homeRecommentConent.homeIconFab.imageTintList = null
+        mSkeletonScreen = Skeleton.bind(mBinding.homeRecommentConent.rlHome)
             .load(R.layout.home_skeleton_activity)
             .duration(1200)
             .angle(0)
@@ -195,27 +195,27 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
         bindHeadView()
         initOfficialListener()
         initArticleListener()
-        setOnClickListener(homeIncludeToolbar!!.homeScanIcon,homeIncludeToolbar.homeTvLoginname,
-            homeIncludeToolbar.homeIvEveryday,
-            homeIncludeToolbar.homeIvAdd,homeIncludeToolbar.homeRlSearch,homeIconFab,homeIconCourse!!,homeIconUtils!!,homeIconScrollUp!!)
-        getUser()?.let {
-            homeIncludeToolbar.homeTvLoginname.text = it.username
-        } ?: kotlin.run {
-            homeIncludeToolbar.homeTvLoginname.text = getString(R.string.home_tv_login)
-        }
-        homeIconFab.backgroundTintList = ColorUtils.createColorStateList(themeColor, themeColor)
-        homeIconCourse.backgroundTintList = ColorUtils.createColorStateList(themeColor, themeColor)
-        homeIconUtils.backgroundTintList = ColorUtils.createColorStateList(themeColor, themeColor)
-        homeIconScrollUp.backgroundTintList =
+        setOnClickListener(homeRecommentConent.homeIncludeToolbar!!.homeScanIcon,homeRecommentConent.homeIncludeToolbar.homeIvLoginname,
+            homeRecommentConent.homeIncludeToolbar.homeIvEveryday,
+            homeRecommentConent.homeIncludeToolbar.homeIvAdd,homeRecommentConent.homeIncludeToolbar.homeRlSearch,homeRecommentConent.homeIconFab,homeRecommentConent.homeIconCourse!!,homeRecommentConent.homeIconUtils!!,homeRecommentConent.homeIconScrollUp!!)
+//        getUser()?.let {
+//            homeRecommentConent.homeIncludeToolbar.homeTvLoginname.text = it.username
+//        } ?: kotlin.run {
+//            homeRecommentConent.homeIncludeToolbar.homeTvLoginname.text = getString(R.string.home_tv_login)
+//        }
+        homeRecommentConent.homeIconFab.backgroundTintList = ColorUtils.createColorStateList(themeColor, themeColor)
+        homeRecommentConent.homeIconCourse.backgroundTintList = ColorUtils.createColorStateList(themeColor, themeColor)
+        homeRecommentConent.homeIconUtils.backgroundTintList = ColorUtils.createColorStateList(themeColor, themeColor)
+        homeRecommentConent.homeIconScrollUp.backgroundTintList =
             ColorUtils.createColorStateList(themeColor, themeColor)
-        homeRecommendArticleBody.init(
+        homeRecommentConent.homeRecommendArticleBody.init(
             LinearLayoutManager(requireActivity()),
             mHomeArticleAdapter,
             true
         )
 
-        recommendRefreshLayout.setOnLoadMoreListener(this@HomeRecommendFragment)
-        recommendRefreshLayout.setOnRefreshListener(this@HomeRecommendFragment)
+        homeRecommentConent.recommendRefreshLayout.setOnLoadMoreListener(this@HomeRecommendFragment)
+        homeRecommentConent.recommendRefreshLayout.setOnRefreshListener(this@HomeRecommendFragment)
 
 
 
@@ -227,8 +227,8 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
 
     override fun onResume() {
         super.onResume()
-        mBinding.homeIconFab.post {
-            width = mBinding.homeIconFab.measuredWidth
+        mBinding.homeRecommentConent.homeIconFab.post {
+            width = mBinding.homeRecommentConent.homeIconFab.measuredWidth
         }
     }
 
@@ -444,8 +444,8 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
 //            mBaiduHotSearchAdapter.setShowOnlyThree(false)
 //        }
 
-        if (mBinding.homeRecommendArticleBody.headerCount == 0) {
-            mBinding.homeRecommendArticleBody.addHeaderView(recommendHeadView)
+        if (mBinding.homeRecommentConent.homeRecommendArticleBody.headerCount == 0) {
+            mBinding.homeRecommentConent.homeRecommendArticleBody.addHeaderView(recommendHeadView)
         }
 
 
@@ -572,18 +572,18 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
         mSkeletonScreen?.hide()
         //这里返回的页码自己+1
         currentPage = data.curPage
-        mBinding.recommendRefreshLayout.finishLoadMore()
-        mBinding.recommendRefreshLayout.finishRefresh()
+        mBinding.homeRecommentConent.recommendRefreshLayout.finishLoadMore()
+        mBinding.homeRecommentConent.recommendRefreshLayout.finishRefresh()
         if (currentPage > 1) {
             mHomeArticleAdapter.addAll(data.datas)
         } else {
             mHomeArticleAdapter.submitList(data.datas)
-            if (mBinding.homeRecommendArticleBody.headerCount == 0) {
-                mBinding.homeRecommendArticleBody.addHeaderView(recommendHeadView)
+            if (mBinding.homeRecommentConent.homeRecommendArticleBody.headerCount == 0) {
+                mBinding.homeRecommentConent.homeRecommendArticleBody.addHeaderView(recommendHeadView)
             }
         }
         if (data.datas.size == 0) {
-            mBinding.recommendRefreshLayout.setEnableLoadMore(false)
+            mBinding.homeRecommentConent.recommendRefreshLayout.setEnableLoadMore(false)
         }
     }
 
@@ -640,22 +640,22 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
     @SingleClick
     override fun onClick(v: View) {
         when (v) {
-            mBinding.homeIconFab -> {
+            mBinding.homeRecommentConent.homeIconFab -> {
                 showAnimation()
             }
 
-            mBinding.homeIconUtils -> {
+            mBinding.homeRecommentConent.homeIconUtils -> {
                 startPage(RouteActivity.Utils.UtilsActivity)
             }
 
-            mBinding.homeIconCourse -> {
+            mBinding.homeRecommentConent.homeIconCourse -> {
                 startPage(RouteActivity.Course.CourseListActivity)
             }
 
-            mBinding.homeIconScrollUp -> {
+            mBinding.homeRecommentConent.homeIconScrollUp -> {
                 scrollTop()
             }
-            mBinding.homeIncludeToolbar!!.homeScanIcon->{
+            mBinding.homeRecommentConent.homeIncludeToolbar!!.homeScanIcon->{
                 XXPermissions.with(this@HomeRecommendFragment)
                     ?.permission(Permission.CAMERA)
                     ?.request(object : OnPermissionCallback {
@@ -683,26 +683,28 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
                         }
                     })
             }
-            mBinding.homeIncludeToolbar!!.homeIvEveryday->{
+            mBinding.homeRecommentConent.homeIncludeToolbar!!.homeIvEveryday->{
                 HomePushArticleFragment.newInstance(mEveryDayPushData.datas).showAllowingStateLoss(parentFragmentManager,"dialog_everydaypush")
             }
 
-            mBinding.homeIncludeToolbar!!.homeIvAdd->{
+            mBinding.homeRecommentConent.homeIncludeToolbar!!.homeIvAdd->{
                 startPage(RouteActivity.Square.SquareShareArticleActivity)
             }
-            mBinding.homeIncludeToolbar!!.homeTvLoginname -> {
-                if (mBinding.homeIncludeToolbar!!.homeTvLoginname.text.toString().equals(getString(R.string.home_tv_login))) {
-                    if (CacheUtils.getGestureLogin()) {
-                        startPage(RouteActivity.Mine.QuickLoginActivity)
-                    } else if (CacheUtils.getFingerLogin()) {
-                        loginBiomtric()
-                    } else {
-                        startPage(RouteActivity.Mine.LoginActivity)
-                    }
-                }
+            mBinding.homeRecommentConent.homeIncludeToolbar!!.homeIvLoginname -> {
+//                if (mBinding.homeRecommentConent.homeIncludeToolbar!!.homeTvLoginname.text.toString().equals(getString(R.string.home_tv_login))) {
+//                    if (CacheUtils.getGestureLogin()) {
+//                        startPage(RouteActivity.Mine.QuickLoginActivity)
+//                    } else if (CacheUtils.getFingerLogin()) {
+//                        loginBiomtric()
+//                    } else {
+//                        startPage(RouteActivity.Mine.LoginActivity)
+//                    }
+//                }
+
+                mBinding.homeSlidingMenu.openMenu()
             }
 
-            mBinding.homeIncludeToolbar!!.homeRlSearch ->{
+            mBinding.homeRecommentConent.homeIncludeToolbar!!.homeRlSearch ->{
                 startPage(RouteActivity.Home.HomeSearchActivity)
             }
 
@@ -713,7 +715,7 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
     }
 
     fun scrollTop() {
-        mBinding.homeRecommendArticleBody.smoothScrollToPosition(0)
+        mBinding.homeRecommentConent.homeRecommendArticleBody.smoothScrollToPosition(0)
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -722,14 +724,14 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
             //登录成功
             MessageEvent.MessageType.LoginSuccess -> {
                 initRequestData()
-                mBinding.homeIncludeToolbar!!.homeTvLoginname.text = getUser()?.username
+               // mBinding.homeRecommentConent.homeIncludeToolbar!!.homeTvLoginname.text = getUser()?.username
             }
             //退出登录
             MessageEvent.MessageType.LogoutSuccess -> {
                 home_rl_message.visibility = View.GONE
                 initRequestData()
                 //退出登录成功
-                mBinding.homeIncludeToolbar!!.homeTvLoginname.setText(getString(R.string.home_tv_login))
+                //mBinding.homeRecommentConent.homeIncludeToolbar!!.homeTvLoginname.setText(getString(R.string.home_tv_login))
             }
 
             MessageEvent.MessageType.LogoutSuccess -> {
@@ -772,9 +774,9 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
      * 设置view是否显示与否
      */
     private fun setViewVisible(isShow: Boolean) {
-        mBinding.homeGpIconCourse?.visibility = if (isShow) View.VISIBLE else View.GONE
-        mBinding.homeGpIconUtils?.visibility = if (isShow) View.VISIBLE else View.GONE
-        mBinding.homeGpIconUp?.visibility = if (isShow) View.VISIBLE else View.GONE
+        mBinding.homeRecommentConent.homeGpIconCourse?.visibility = if (isShow) View.VISIBLE else View.GONE
+        mBinding.homeRecommentConent.homeGpIconUtils?.visibility = if (isShow) View.VISIBLE else View.GONE
+        mBinding.homeRecommentConent.homeGpIconUp?.visibility = if (isShow) View.VISIBLE else View.GONE
     }
 
 
@@ -808,7 +810,7 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
             }
 
             override fun onAnimationEnd(animation: Animator) {
-                if (group == mBinding.homeGpIconCourse && reverse) {
+                if (group == mBinding.homeRecommentConent.homeGpIconCourse && reverse) {
                     setViewVisible(false)
                 }
             }
@@ -835,20 +837,20 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
         val utils: ValueAnimator
         val course: ValueAnimator
         val upScrollView: ValueAnimator
-        if (mBinding.homeGpIconCourse?.visibility != View.VISIBLE) {
+        if (mBinding.homeRecommentConent.homeGpIconCourse?.visibility != View.VISIBLE) {
             course =
-                getValueAnimator(mBinding.homeIconCourse!!, false, mBinding.homeGpIconCourse!!, 0)
+                getValueAnimator(mBinding.homeRecommentConent.homeIconCourse!!, false, mBinding.homeRecommentConent.homeGpIconCourse!!, 0)
             utils =
-                getValueAnimator(mBinding.homeIconUtils!!, false, mBinding.homeGpIconUtils!!, 45)
+                getValueAnimator(mBinding.homeRecommentConent.homeIconUtils!!, false, mBinding.homeRecommentConent.homeGpIconUtils!!, 45)
             upScrollView =
-                getValueAnimator(mBinding.homeIconScrollUp!!, false, mBinding.homeGpIconUp!!, 90)
+                getValueAnimator(mBinding.homeRecommentConent.homeIconScrollUp!!, false, mBinding.homeRecommentConent.homeGpIconUp!!, 90)
             animatorSet?.playSequentially(course, utils, upScrollView)
         } else {
             course =
-                getValueAnimator(mBinding.homeIconCourse!!, true, mBinding.homeGpIconCourse!!, 0)
-            utils = getValueAnimator(mBinding.homeIconUtils!!, true, mBinding.homeGpIconUtils!!, 45)
+                getValueAnimator(mBinding.homeRecommentConent.homeIconCourse!!, true, mBinding.homeRecommentConent.homeGpIconCourse!!, 0)
+            utils = getValueAnimator(mBinding.homeRecommentConent.homeIconUtils!!, true, mBinding.homeRecommentConent.homeGpIconUtils!!, 45)
             upScrollView =
-                getValueAnimator(mBinding.homeIconScrollUp!!, true, mBinding.homeGpIconUp!!, 90)
+                getValueAnimator(mBinding.homeRecommentConent.homeIconScrollUp!!, true, mBinding.homeRecommentConent.homeGpIconUp!!, 90)
             animatorSet?.playSequentially(upScrollView, utils, course)
         }
         animatorSet?.start()
@@ -923,8 +925,8 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
             gradientDrawable.cornerRadius = 45.dp2px().toFloat()
             if (statusWIthTheme) {
                 gradientDrawable.setColor(Color.WHITE)
-                mBinding.homeIncludeToolbar?.run {
-                    homeTvLoginname.setTextColor(Color.WHITE)
+                mBinding.homeRecommentConent.homeIncludeToolbar?.run {
+                   // homeTvLoginname.setTextColor(Color.WHITE)
                     homeIvAdd.setBackgroundResource(R.drawable.home_icon_add_white)
                     homeIvEveryday.setBackgroundResource(R.drawable.home_icon_everyday_white)
                     toolbar.setBackgroundColor(CacheUtils.getThemeColor())
@@ -932,8 +934,8 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
 
             } else {
                 gradientDrawable.setColor(Color.parseColor("#1f767680"))
-                mBinding.homeIncludeToolbar?.run {
-                    homeTvLoginname.setTextColor(Color.parseColor("#333333"))
+                mBinding.homeRecommentConent.homeIncludeToolbar?.run {
+                  //  homeTvLoginname.setTextColor(Color.parseColor("#333333"))
                     homeIvEveryday.setBackgroundResource(R.drawable.home_icon_everyday)
                     homeIvAdd.setBackgroundResource(R.drawable.home_icon_add)
                     toolbar.setBackgroundColor(Color.WHITE)
@@ -942,9 +944,9 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
             }
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                mBinding.homeIncludeToolbar!!.homeRlSearch.background = gradientDrawable
+                mBinding.homeRecommentConent.homeIncludeToolbar!!.homeRlSearch.background = gradientDrawable
             } else {
-                mBinding.homeIncludeToolbar!!.homeRlSearch.setBackgroundDrawable(gradientDrawable)
+                mBinding.homeRecommentConent.homeIncludeToolbar!!.homeRlSearch.setBackgroundDrawable(gradientDrawable)
             }
 
 
