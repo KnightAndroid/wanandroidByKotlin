@@ -1,88 +1,40 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="72dp"
         android:orientation="vertical">
 
-        <LinearLayout
-            android:id="@+id/enter_login"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="23dp"
-            android:orientation="horizontal">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            android:background="@drawable/home_bg_user_card">
 
-            <ImageView
-                android:id="@+id/user_head_iv"
-                android:layout_width="56dp"
-                android:layout_height="56dp"
-                android:src="@drawable/home_icon_eye_daily" />
-
-            <LinearLayout
+            <TextView
+                android:id="@+id/home_tv_login_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="22dp"
-                android:orientation="vertical">
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/home_tv_user_name_text_size"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginTop="@dimen/home_tv_user_name_margin_top"
+                android:layout_marginLeft="@dimen/home_tv_user_name_margin_left"
+                android:text="请登录"/>
 
-                <TextView
-                    android:id="@+id/user_name_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:drawablePadding="10dp"
-                    android:drawableRight="@drawable/ssdk_mobile_logo"
-                    android:text="请登录"
-                    android:textColor="#c6b178"
-                    android:textSize="18dp" />
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="42dp"
-                    android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/user_attention_tv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:drawablePadding="10dp"
-                        android:text="关注 0"
-                        android:textColor="#c6b178"
-                        android:textSize="12dp" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="40dp"
-                        android:drawablePadding="10dp"
-                        android:text="粉丝 0"
-                        android:textColor="#c6b178"
-                        android:textSize="12dp" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-                </LinearLayout>
-            </LinearLayout>
-        </LinearLayout>
 
-        <ListView
-            android:id="@+id/menu_item_lv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:divider="@null"
-            android:dividerHeight="0dp"
-            android:layout_marginTop="60dp"/>
 
     </LinearLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_margin="20dp"
-        android:text="退出"
-        android:textColor="#FFFFFF"
-        android:layout_height="wrap_content" />
-</RelativeLayout>
+
+</androidx.core.widget.NestedScrollView>

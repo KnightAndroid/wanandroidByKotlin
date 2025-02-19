@@ -56,6 +56,8 @@ import com.knight.kotlin.library_scan.decode.ScanCodeConfig
 import com.knight.kotlin.library_util.DateUtils
 import com.knight.kotlin.library_util.image.ImageLoader
 import com.knight.kotlin.library_util.startPage
+import com.knight.kotlin.library_util.startPageWithAnimate
+import com.knight.kotlin.library_util.startPageWithRightAnimate
 import com.knight.kotlin.library_util.toast.ToastUtils
 import com.knight.kotlin.library_widget.ktx.init
 import com.knight.kotlin.library_widget.skeleton.Skeleton
@@ -195,14 +197,15 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
         bindHeadView()
         initOfficialListener()
         initArticleListener()
-        setOnClickListener(homeRecommentConent.homeIncludeToolbar!!.homeScanIcon,homeRecommentConent.homeIncludeToolbar.homeIvLoginname,
+        setOnClickListener(homeRecommentConent.homeIncludeToolbar!!.homeScanIcon,homeRecommentMenu.homeTvLoginName,
+            homeRecommentConent.homeIncludeToolbar.homeIvMoreMenu,
             homeRecommentConent.homeIncludeToolbar.homeIvEveryday,
             homeRecommentConent.homeIncludeToolbar.homeIvAdd,homeRecommentConent.homeIncludeToolbar.homeRlSearch,homeRecommentConent.homeIconFab,homeRecommentConent.homeIconCourse!!,homeRecommentConent.homeIconUtils!!,homeRecommentConent.homeIconScrollUp!!)
-//        getUser()?.let {
-//            homeRecommentConent.homeIncludeToolbar.homeTvLoginname.text = it.username
-//        } ?: kotlin.run {
-//            homeRecommentConent.homeIncludeToolbar.homeTvLoginname.text = getString(R.string.home_tv_login)
-//        }
+        getUser()?.let {
+            homeRecommentMenu.homeTvLoginName.text = it.username
+        } ?: kotlin.run {
+            homeRecommentMenu.homeTvLoginName.text = getString(R.string.home_tv_login)
+        }
         homeRecommentConent.homeIconFab.backgroundTintList = ColorUtils.createColorStateList(themeColor, themeColor)
         homeRecommentConent.homeIconCourse.backgroundTintList = ColorUtils.createColorStateList(themeColor, themeColor)
         homeRecommentConent.homeIconUtils.backgroundTintList = ColorUtils.createColorStateList(themeColor, themeColor)
@@ -690,18 +693,27 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
             mBinding.homeRecommentConent.homeIncludeToolbar!!.homeIvAdd->{
                 startPage(RouteActivity.Square.SquareShareArticleActivity)
             }
-            mBinding.homeRecommentConent.homeIncludeToolbar!!.homeIvLoginname -> {
-//                if (mBinding.homeRecommentConent.homeIncludeToolbar!!.homeTvLoginname.text.toString().equals(getString(R.string.home_tv_login))) {
-//                    if (CacheUtils.getGestureLogin()) {
-//                        startPage(RouteActivity.Mine.QuickLoginActivity)
-//                    } else if (CacheUtils.getFingerLogin()) {
-//                        loginBiomtric()
-//                    } else {
-//                        startPage(RouteActivity.Mine.LoginActivity)
-//                    }
-//                }
+            mBinding.homeRecommentConent.homeIncludeToolbar!!.homeIvMoreMenu -> {
+
 
                 mBinding.homeSlidingMenu.openMenu()
+            }
+
+            mBinding.homeRecommentMenu.homeTvLoginName -> {
+                if ( mBinding.homeRecommentMenu.homeTvLoginName.text.toString().equals(getString(R.string.home_tv_login))) {
+                    mBinding.homeSlidingMenu.closeMenuByCallBack {
+                        if (CacheUtils.getGestureLogin()) {
+                            startPage(RouteActivity.Mine.QuickLoginActivity)
+                        } else if (CacheUtils.getFingerLogin()) {
+                            loginBiomtric()
+                        } else {
+                            startPageWithRightAnimate(requireActivity(),
+                                RouteActivity.Mine.LoginActivity)
+                        }
+                    }
+
+                }
+
             }
 
             mBinding.homeRecommentConent.homeIncludeToolbar!!.homeRlSearch ->{
@@ -724,18 +736,14 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
             //登录成功
             MessageEvent.MessageType.LoginSuccess -> {
                 initRequestData()
-               // mBinding.homeRecommentConent.homeIncludeToolbar!!.homeTvLoginname.text = getUser()?.username
+                mBinding.homeRecommentMenu!!.homeTvLoginName.text = getUser()?.username
             }
             //退出登录
             MessageEvent.MessageType.LogoutSuccess -> {
                 home_rl_message.visibility = View.GONE
                 initRequestData()
                 //退出登录成功
-                //mBinding.homeRecommentConent.homeIncludeToolbar!!.homeTvLoginname.setText(getString(R.string.home_tv_login))
-            }
-
-            MessageEvent.MessageType.LogoutSuccess -> {
-
+                mBinding.homeRecommentMenu!!.homeTvLoginName.setText(getString(R.string.home_tv_login))
             }
 
             //更改标签

@@ -1,5 +1,7 @@
 package com.knight.kotlin.library_widget.slidinglayout
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.animation.ValueAnimator
 import android.content.Context
 import android.util.AttributeSet
@@ -18,6 +20,9 @@ import kotlin.math.abs
  * @Date 2025/2/19 14:30
  * @descript:
  */
+
+// 定义一个函数类型作为动画完成的回调
+typealias AnimationCompleteCallback = () -> Unit
 class SlidingLayout @JvmOverloads constructor(context: Context?, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
     HorizontalScrollView(context, attrs, defStyleAttr) {
     //获取屏幕宽
@@ -203,6 +208,12 @@ class SlidingLayout @JvmOverloads constructor(context: Context?, attrs: Attribut
         menuViewIsOpen = false
     }
 
+
+    fun closeMenuByCallBack(onAnimationComplete: AnimationCompleteCallback) {
+        smoothScrollToWithDuration(screenWidth,200,onAnimationComplete)
+        menuViewIsOpen = false
+    }
+
     // 左边缩放+透明度 右边缩放
     override fun onScrollChanged(l: Int, t: Int, oldl: Int, oldt: Int) {
         super.onScrollChanged(l, t, oldl, oldt)
@@ -251,8 +262,7 @@ class SlidingLayout @JvmOverloads constructor(context: Context?, attrs: Attribut
     }
 
 
-
-    fun smoothScrollToWithDuration(targetX: Int, duration: Int) {
+    fun smoothScrollToWithDuration(targetX: Int, duration: Int,onAnimationComplete: AnimationCompleteCallback?=null) {
         // 获取当前滚动位置
         val startX = scrollX
 
@@ -265,6 +275,16 @@ class SlidingLayout @JvmOverloads constructor(context: Context?, attrs: Attribut
             val value = animation.animatedValue as Int
             scrollTo(value, 0)  // 更新水平滚动位置
         }
+
+        // 添加动画监听
+        animator.addListener(object : AnimatorListenerAdapter() {
+            override fun onAnimationEnd(animation: Animator) {
+                // 在这里处理动画完成后的逻辑
+                onAnimationComplete?.invoke()
+                super.onAnimationEnd(animation)
+            }
+        })
+
 
         // 启动动画
         animator.start()

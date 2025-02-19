@@ -75,6 +75,18 @@ fun startPageWithAnimate(activity: Activity,path:String,view: View?,sharedElemen
 }
 
 /**
+ *
+ * 通过右边进入动画
+ */
+fun startPageWithRightAnimate(activity: Activity,path:String) {
+    // 转场动画(常规方式)
+    GoRouter.getInstance()
+        .build(path)
+        .withTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+        .go(activity);// 注意这个(Activity) this是必传的,否则动画无效
+}
+
+/**
  * 共享元素转场动画跳转
  *
  *

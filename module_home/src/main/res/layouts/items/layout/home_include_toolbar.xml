@@ -33,7 +33,7 @@
 <!--            tools:ignore="SpUsage" />-->
 
         <ImageView
-            android:id="@+id/home_iv_loginname"
+            android:id="@+id/home_iv_more_menu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/home_icon_menu"
@@ -48,7 +48,7 @@
             android:layout_marginLeft="@dimen/base_dimen_10"
             android:layout_marginRight="@dimen/base_dimen_6"
             android:layout_toLeftOf="@+id/home_iv_everyday"
-            android:layout_toRightOf="@id/home_iv_loginname"
+            android:layout_toRightOf="@id/home_iv_more_menu"
             android:background="@drawable/base_bg_filtrate_shape">
 
 
