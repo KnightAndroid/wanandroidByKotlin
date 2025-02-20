@@ -103,5 +103,17 @@ interface HomeRecommendApiService {
     @GET("zaobao")
     suspend fun getZaoBao():BaseResponse<ZaoBaoBean>
 
-
+    //天气API
+    //https://wis.qq.com/weather/common?source=pc&weather_type=observe&province=%E5%9B%9B%E5%B7%9D&city=%E6%88%90%E9%83%BD&county=%E6%88%90%E5%8D%8E%E5%8C%BA
+    //https://wis.qq.com/weather/common?source=pc&weather_type=observe|forecast_1h|forecast_24h|index|alarm|limit|tips|rise&province=%E5%9B%9B%E5%B7%9D&city=%E6%88%90%E9%83%BD&county=%E5%8F%8C%E6%B5%81%E5%8C%BA
+    //weather_type参数(查询类型，多个|分隔):
+    //        observe 当前天气
+    //        forecast_1h  48小时天气
+    //        forecast_24h  7天天气预报
+    //        alarm 预警
+    //        tips 天气介绍
+    //        index 穿衣，舒适度等等...
+    //        air 空气质量
+    //        rise 日出
+    //https://tianqi.qq.com/
 }
