@@ -252,6 +252,11 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
         mViewModel.getZaoBao().observerKt {
             mBinding.viewModel = it
         }
+        //获取天气
+        mViewModel.getCurrentCityWeather("广东省","深圳市","福田区").observerKt {
+            it.observe.degree = it.observe.degree + "°"
+            mBinding.todayWeather = it.observe
+        }
 
 
         //获取置顶文章

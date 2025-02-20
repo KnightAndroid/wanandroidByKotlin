@@ -20,4 +20,6 @@ internal object BaseUrlConfig {
     const val BAIDU_URL = "https://top.baidu.com/api/"
     //每日微语
     const val ZAO_BAO_URL = "https://xzdx.top/api/"
+    //天气预报
+    const val WEATHER_URL = "https://wis.qq.com/"
 }

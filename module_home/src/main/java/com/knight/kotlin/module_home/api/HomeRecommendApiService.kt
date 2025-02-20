@@ -7,6 +7,7 @@ import com.knight.kotlin.library_network.bean.BaseResponse
 import com.knight.kotlin.module_home.entity.BannerBean
 import com.knight.kotlin.module_home.entity.EveryDayPushArticlesBean
 import com.knight.kotlin.module_home.entity.HomeArticleListBean
+import com.knight.kotlin.module_home.entity.TodayWeatherBean
 import com.knight.kotlin.module_home.entity.TopArticleBean
 import com.knight.kotlin.module_home.entity.ZaoBaoBean
 import retrofit2.http.Field
@@ -15,6 +16,7 @@ import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.POST
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 /**
  * Author:Knight
@@ -102,6 +104,17 @@ interface HomeRecommendApiService {
     @Headers("Domain-Name:zaobao")
     @GET("zaobao")
     suspend fun getZaoBao():BaseResponse<ZaoBaoBean>
+
+
+    /**
+     * 获取今天天气
+     */
+    @Headers("Domain-Name:weather")
+    @GET("weather/common")
+    suspend fun getCurrentCityWeather(@Query("source") source:String,@Query("weather_type") weather_type:String,
+                                      @Query("province") province:String,
+                                      @Query("city") city:String,
+                                      @Query("country") country:String):BaseResponse<TodayWeatherBean>
 
     //天气API
     //https://wis.qq.com/weather/common?source=pc&weather_type=observe&province=%E5%9B%9B%E5%B7%9D&city=%E6%88%90%E9%83%BD&county=%E6%88%90%E5%8D%8E%E5%8C%BA

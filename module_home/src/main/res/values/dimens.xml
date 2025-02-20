@@ -230,6 +230,9 @@
      <dimen name="home_iv_eyepetizer_category_height">40dp</dimen>
      <dimen name="home_iv_eyepetizer_category_width">40dp</dimen>
      <dimen name="home_tv_user_name_text_size">18sp</dimen>
-     <dimen name="home_tv_user_name_margin_top">25dp</dimen>
+     <dimen name="home_tv_user_name_margin_top">30dp</dimen>
      <dimen name="home_tv_user_name_margin_left">10dp</dimen>
+     <dimen name="home_tv_degree_text_size">80sp</dimen>
+     <dimen name="home_tv_degree_margin_top">20dp</dimen>
+     <dimen name="home_tv_degree_margin_left">10dp</dimen>
 </resources>

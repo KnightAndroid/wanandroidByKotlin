@@ -14,6 +14,7 @@ import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_home.entity.BannerBean
 import com.knight.kotlin.module_home.entity.EveryDayPushArticlesBean
 import com.knight.kotlin.module_home.entity.HomeArticleListBean
+import com.knight.kotlin.module_home.entity.TodayWeatherBean
 import com.knight.kotlin.module_home.entity.TopArticleBean
 import com.knight.kotlin.module_home.entity.ZaoBaoBean
 import com.knight.kotlin.module_home.repo.HomeRecommendRepo
@@ -161,6 +162,17 @@ class HomeRecommendVm @Inject constructor(private val mRepo: HomeRecommendRepo) 
      */
     fun login(userName:String,passWord:String):LiveData<UserInfoEntity> {
         return mRepo.login(userName, passWord).asLiveData()
+    }
+
+
+    /**
+     *
+     * 获取当日天气
+     */
+    fun getCurrentCityWeather(province:String,
+                              city:String,
+                              country:String):LiveData<TodayWeatherBean> {
+         return mRepo.getCurrentCityWeather("pc", "observe", province, city, country).asLiveData()
     }
 
 

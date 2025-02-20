@@ -10,9 +10,11 @@ import com.knight.kotlin.module_home.api.HomeRecommendApiService
 import com.knight.kotlin.module_home.entity.BannerBean
 import com.knight.kotlin.module_home.entity.EveryDayPushArticlesBean
 import com.knight.kotlin.module_home.entity.HomeArticleListBean
+import com.knight.kotlin.module_home.entity.TodayWeatherBean
 
 import com.knight.kotlin.module_home.entity.TopArticleBean
 import com.knight.kotlin.module_home.entity.ZaoBaoBean
+import retrofit2.http.Query
 import javax.inject.Inject
 
 /**
@@ -166,6 +168,23 @@ class HomeRecommendRepo @Inject constructor(): BaseRepository() {
             responseCodeExceptionHandler(code,msg)
             emit(data)
         }
+    }){
+        it?.let { it1 -> toast(it1) }
+    }
+
+    /**
+     *
+     * 获取今天天气
+     */
+    fun getCurrentCityWeather(source:String, weather_type:String,
+                               province:String,
+                              city:String,
+                               country:String) = request<TodayWeatherBean> ({
+
+          mHomeRecommendApiService.getCurrentCityWeather(source, weather_type, province, city, country).run {
+              responseCodeExceptionHandler(0,msg)
+              emit(data)
+          }
     }){
         it?.let { it1 -> toast(it1) }
     }

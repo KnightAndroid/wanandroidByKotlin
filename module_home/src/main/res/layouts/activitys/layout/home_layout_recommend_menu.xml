@@ -9,6 +9,9 @@
             name="viewModel"
             type="com.knight.kotlin.module_home.entity.ZaoBaoBean" />
 
+        <variable
+            name="todayWeather"
+            type="com.knight.kotlin.module_home.entity.TodayWeatherDataBean" />
     </data>
 
 
@@ -54,9 +57,17 @@
                     android:text="请登录"
                     android:background="@drawable/home_btn_login_shape"/>
 
-
-
-
+                 <TextView
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:textColor="@android:color/white"
+                     android:textSize="@dimen/home_tv_degree_text_size"
+                     android:text="@{todayWeather.degree}"
+                     android:textStyle="bold"
+                     app:layout_constraintTop_toBottomOf="@id/home_btn_login_name"
+                     android:layout_marginLeft="@dimen/home_tv_degree_margin_left"
+                     android:layout_marginTop="@dimen/home_tv_degree_margin_top"
+                     app:layout_constraintLeft_toLeftOf="parent"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
