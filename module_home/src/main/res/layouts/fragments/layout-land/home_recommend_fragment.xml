@@ -1,26 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.knight.kotlin.library_widget.slidinglayout.SlidingLayout
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/home_sliding_menu"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
 
-    android:orientation="vertical"
-    app:menuRightMargin="62dp">
-    <!--    android:background="@drawable/home_menu_bg"-->
-    <LinearLayout
+        <variable
+            name="viewModel"
+            type="com.knight.kotlin.module_home.entity.ZaoBaoBean" />
+
+    </data>
+
+    <com.knight.kotlin.library_widget.slidinglayout.SlidingLayout
+        android:id="@+id/home_sliding_menu"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:orientation="vertical"
+        app:menuRightMargin="62dp"
+        >
+        <!--    android:background="@drawable/home_menu_bg"-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+            <include
+                android:id="@+id/home_recomment_menu"
+                layout="@layout/home_layout_recommend_menu"
+                />
+            <include
+                android:id="@+id/home_recomment_conent"
+                layout="@layout/home_layout_recommend_content"/>
 
 
-        <include
-            android:id="@+id/home_recomment_conent"
-            layout="@layout/home_layout_recommend_content"/>
+        </LinearLayout>
+    </com.knight.kotlin.library_widget.slidinglayout.SlidingLayout>
 
-        <include
-            android:id="@+id/home_recomment_menu"
-            layout="@layout/home_layout_recommend_menu"/>
-    </LinearLayout>
-</com.knight.kotlin.library_widget.slidinglayout.SlidingLayout>
+</layout>
+

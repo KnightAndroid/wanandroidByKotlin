@@ -12,6 +12,7 @@ import com.knight.kotlin.module_home.entity.EveryDayPushArticlesBean
 import com.knight.kotlin.module_home.entity.HomeArticleListBean
 
 import com.knight.kotlin.module_home.entity.TopArticleBean
+import com.knight.kotlin.module_home.entity.ZaoBaoBean
 import javax.inject.Inject
 
 /**
@@ -24,6 +25,18 @@ class HomeRecommendRepo @Inject constructor(): BaseRepository() {
     lateinit var mHomeRecommendApiService: HomeRecommendApiService
 
 
+    /**
+     *
+     * 获取早报新闻
+     */
+    fun getZaoBao() = request<ZaoBaoBean>({
+        mHomeRecommendApiService.getZaoBao().run {
+            responseCodeExceptionHandler(code,msg)
+            emit(data)
+        }
+    }) {
+        it?.let { it1 -> toast(it1) }
+    }
     /**
      * 获取推送文章信息接口
      */

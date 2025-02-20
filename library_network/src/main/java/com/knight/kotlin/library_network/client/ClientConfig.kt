@@ -95,6 +95,7 @@ class ClientConfig {
             .setDomain("eye",BaseUrlConfig.OPENEYE_URL)
             .setDomain("baidu",BaseUrlConfig.BAIDU_URL)
             .setDomain("eye_sub",BaseUrlConfig.OPENEYE_SUB_URL)
+            .setDomain("zaobao",BaseUrlConfig.ZAO_BAO_URL)
             .build()
     }
 

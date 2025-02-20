@@ -56,7 +56,6 @@ import com.knight.kotlin.library_scan.decode.ScanCodeConfig
 import com.knight.kotlin.library_util.DateUtils
 import com.knight.kotlin.library_util.image.ImageLoader
 import com.knight.kotlin.library_util.startPage
-import com.knight.kotlin.library_util.startPageWithAnimate
 import com.knight.kotlin.library_util.startPageWithRightAnimate
 import com.knight.kotlin.library_util.toast.ToastUtils
 import com.knight.kotlin.library_widget.ktx.init
@@ -197,14 +196,14 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
         bindHeadView()
         initOfficialListener()
         initArticleListener()
-        setOnClickListener(homeRecommentConent.homeIncludeToolbar!!.homeScanIcon,homeRecommentMenu.homeTvLoginName,
+        setOnClickListener(homeRecommentConent.homeIncludeToolbar!!.homeScanIcon,homeRecommentMenu.homeBtnLoginName,
             homeRecommentConent.homeIncludeToolbar.homeIvMoreMenu,
             homeRecommentConent.homeIncludeToolbar.homeIvEveryday,
             homeRecommentConent.homeIncludeToolbar.homeIvAdd,homeRecommentConent.homeIncludeToolbar.homeRlSearch,homeRecommentConent.homeIconFab,homeRecommentConent.homeIconCourse!!,homeRecommentConent.homeIconUtils!!,homeRecommentConent.homeIconScrollUp!!)
         getUser()?.let {
-            homeRecommentMenu.homeTvLoginName.text = it.username
+            homeRecommentMenu.homeBtnLoginName.text = it.username
         } ?: kotlin.run {
-            homeRecommentMenu.homeTvLoginName.text = getString(R.string.home_tv_login)
+            homeRecommentMenu.homeBtnLoginName.text = getString(R.string.home_tv_login)
         }
         homeRecommentConent.homeIconFab.backgroundTintList = ColorUtils.createColorStateList(themeColor, themeColor)
         homeRecommentConent.homeIconCourse.backgroundTintList = ColorUtils.createColorStateList(themeColor, themeColor)
@@ -248,6 +247,13 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
                 setUnreadMessage(it)
             }
         }
+
+        //获取日报新闻
+        mViewModel.getZaoBao().observerKt {
+            mBinding.viewModel = it
+        }
+
+
         //获取置顶文章
 //        mViewModel.getTopArticle().observerKt {
 //            setTopArticle(it)
@@ -699,8 +705,8 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
                 mBinding.homeSlidingMenu.openMenu()
             }
 
-            mBinding.homeRecommentMenu.homeTvLoginName -> {
-                if ( mBinding.homeRecommentMenu.homeTvLoginName.text.toString().equals(getString(R.string.home_tv_login))) {
+            mBinding.homeRecommentMenu.homeBtnLoginName -> {
+                if ( mBinding.homeRecommentMenu.homeBtnLoginName.text.toString().equals(getString(R.string.home_tv_login))) {
                     mBinding.homeSlidingMenu.closeMenuByCallBack {
                         if (CacheUtils.getGestureLogin()) {
                             startPage(RouteActivity.Mine.QuickLoginActivity)
@@ -736,14 +742,14 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
             //登录成功
             MessageEvent.MessageType.LoginSuccess -> {
                 initRequestData()
-                mBinding.homeRecommentMenu!!.homeTvLoginName.text = getUser()?.username
+                mBinding.homeRecommentMenu!!.homeBtnLoginName.text = getUser()?.username
             }
             //退出登录
             MessageEvent.MessageType.LogoutSuccess -> {
                 home_rl_message.visibility = View.GONE
                 initRequestData()
                 //退出登录成功
-                mBinding.homeRecommentMenu!!.homeTvLoginName.setText(getString(R.string.home_tv_login))
+                mBinding.homeRecommentMenu!!.homeBtnLoginName.setText(getString(R.string.home_tv_login))
             }
 
             //更改标签

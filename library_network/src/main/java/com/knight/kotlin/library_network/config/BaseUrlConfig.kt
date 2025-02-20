@@ -18,4 +18,6 @@ internal object BaseUrlConfig {
     const val OPENEYE_SUB_URL = "http://api.eyepetizer.net/"
     //百度接口 访问链接
     const val BAIDU_URL = "https://top.baidu.com/api/"
+    //每日微语
+    const val ZAO_BAO_URL = "https://xzdx.top/api/"
 }

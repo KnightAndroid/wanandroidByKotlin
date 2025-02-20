@@ -15,6 +15,7 @@ import com.knight.kotlin.module_home.entity.BannerBean
 import com.knight.kotlin.module_home.entity.EveryDayPushArticlesBean
 import com.knight.kotlin.module_home.entity.HomeArticleListBean
 import com.knight.kotlin.module_home.entity.TopArticleBean
+import com.knight.kotlin.module_home.entity.ZaoBaoBean
 import com.knight.kotlin.module_home.repo.HomeRecommendRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -54,6 +55,14 @@ class HomeRecommendVm @Inject constructor(private val mRepo: HomeRecommendRepo) 
         }).asLiveData()
 
 
+    }
+
+    /**
+     * 获取早报信息
+     *
+     */
+    fun getZaoBao():LiveData<ZaoBaoBean> {
+        return mRepo.getZaoBao().asLiveData()  //#1DD4EC #4B97F8
     }
 
 

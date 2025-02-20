@@ -8,6 +8,7 @@ import com.knight.kotlin.module_home.entity.BannerBean
 import com.knight.kotlin.module_home.entity.EveryDayPushArticlesBean
 import com.knight.kotlin.module_home.entity.HomeArticleListBean
 import com.knight.kotlin.module_home.entity.TopArticleBean
+import com.knight.kotlin.module_home.entity.ZaoBaoBean
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
@@ -94,6 +95,13 @@ interface HomeRecommendApiService {
     @FormUrlEncoded
     @POST("user/login")
     suspend fun login(@Field("username") userName:String, @Field("password") passWord:String): BaseResponse<UserInfoEntity>
+
+    /**
+     * 获取热早报微语
+     */
+    @Headers("Domain-Name:zaobao")
+    @GET("zaobao")
+    suspend fun getZaoBao():BaseResponse<ZaoBaoBean>
 
 
 }
