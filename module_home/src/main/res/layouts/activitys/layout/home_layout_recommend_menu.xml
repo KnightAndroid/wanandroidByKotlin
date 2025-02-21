@@ -34,14 +34,14 @@
                 >
 
 
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:imageUrl="@{viewModel.head_image}"
-                    android:scaleType="fitXY"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
+<!--                <ImageView-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    app:imageUrl="@{viewModel.head_image}"-->
+<!--                    android:scaleType="fitXY"-->
+<!--                    app:layout_constraintRight_toRightOf="parent"-->
+<!--                    app:layout_constraintLeft_toLeftOf="parent"-->
+<!--                    app:layout_constraintTop_toTopOf="parent"/>-->
 
 
                 <TextView
@@ -58,16 +58,45 @@
                     android:background="@drawable/home_btn_login_shape"/>
 
                  <TextView
+                     android:id="@+id/tv_weather_degree"
                      android:layout_width="wrap_content"
                      android:layout_height="wrap_content"
                      android:textColor="@android:color/white"
                      android:textSize="@dimen/home_tv_degree_text_size"
-                     android:text="@{todayWeather.degree}"
+                     android:text="@{todayWeather.degree + '°'}"
                      android:textStyle="bold"
                      app:layout_constraintTop_toBottomOf="@id/home_btn_login_name"
                      android:layout_marginLeft="@dimen/home_tv_degree_margin_left"
                      android:layout_marginTop="@dimen/home_tv_degree_margin_top"
                      app:layout_constraintLeft_toLeftOf="parent"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/white"
+                    app:layout_constraintLeft_toRightOf="@id/tv_weather_degree"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_weather_degree"
+                    android:text="@{todayWeather.wind_direction_name + ' ' + todayWeather.wind_power + '级' }"
+                    android:textSize="@dimen/home_tv_wind_direction_text_size"
+                    android:layout_marginBottom="@dimen/home_tv_wind_direction_margin_bottom"
+                    />
+
+
+
+                <TextView
+                    android:id="@+id/tv_zaobao_day_tip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:background="@drawable/home_zaobao_title_tip_shape"
+                    app:layout_constraintTop_toBottomOf="@id/tv_weather_degree"
+                    android:drawableRight="@drawable/home_icon_zaobao_tip"
+                    android:drawablePadding="@dimen/base_dimen_4"
+                    android:textSize="@dimen/home_tv_zaobao_title_tip_text_size"/>
+
+
+
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 

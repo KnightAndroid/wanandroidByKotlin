@@ -170,4 +170,15 @@ object DateUtils {
             null
         }
     }
+
+    /**
+     *
+     * 获取当天月日
+     */
+    fun getCurrentDateFormatted(): String {
+        val calendar = Calendar.getInstance()  // 获取当前日期
+        val dateFormat = SimpleDateFormat("M月d日", Locale.getDefault())  // 格式化为 "1月1日"
+        return dateFormat.format(calendar.time)  // 格式化当前时间并返回
+    }
+
 }

@@ -251,10 +251,10 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
         //获取日报新闻
         mViewModel.getZaoBao().observerKt {
             mBinding.viewModel = it
+            mBinding.homeRecommentMenu.tvZaobaoDayTip.text = DateUtils.convertTime() + "，"+ DateUtils.getCurrentDateFormatted() + "早报内容已为你准备~"
         }
         //获取天气
         mViewModel.getCurrentCityWeather("广东省","深圳市","福田区").observerKt {
-            it.observe.degree = it.observe.degree + "°"
             mBinding.todayWeather = it.observe
         }
 
