@@ -30,6 +30,8 @@ import com.knight.kotlin.library_base.config.CacheKey
 import com.knight.kotlin.library_base.entity.BaiduContent
 import com.knight.kotlin.library_base.entity.LoginEntity
 import com.knight.kotlin.library_base.entity.UserInfoEntity
+import com.knight.kotlin.library_base.entity.WeatherCustomEntity
+import com.knight.kotlin.library_base.enum.AirLevel
 import com.knight.kotlin.library_base.event.MessageEvent
 import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.knight.kotlin.library_base.ktx.getUser
@@ -58,6 +60,7 @@ import com.knight.kotlin.library_util.image.ImageLoader
 import com.knight.kotlin.library_util.startPage
 import com.knight.kotlin.library_util.startPageWithRightAnimate
 import com.knight.kotlin.library_util.toast.ToastUtils
+import com.knight.kotlin.library_widget.ZzWeatherView
 import com.knight.kotlin.library_widget.ktx.init
 import com.knight.kotlin.library_widget.skeleton.Skeleton
 import com.knight.kotlin.library_widget.skeleton.SkeletonScreen
@@ -256,6 +259,33 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
         //获取天气
         mViewModel.getCurrentCityWeather("广东省","深圳市","福田区").observerKt {
             mBinding.todayWeather = it.observe
+
+
+            //填充天气数据
+            mBinding.homeRecommentMenu.weatherView.setData(generateMockData())
+
+
+            //画折线
+            mBinding.homeRecommentMenu.weatherView.setLineType(ZzWeatherView.LINE_TYPE_DISCOUNT)
+
+
+            //画曲线(已修复不圆滑问题)
+            //        weatherView.setLineType(ZzWeatherView.LINE_TYPE_CURVE);
+
+            //设置线宽，单位px
+            mBinding.homeRecommentMenu.weatherView.setLineWidth(6f)
+
+
+            //设置一屏幕显示几列(最少3列)
+            try {
+                mBinding.homeRecommentMenu.weatherView.setColumnNumber(6)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+
+
+            //设置白天和晚上线条的颜色
+            mBinding.homeRecommentMenu.weatherView.setDayAndNightLineColor(Color.BLUE, Color.RED)
         }
 
 
@@ -986,6 +1016,142 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
             }
         }
     }
+
+    private fun generateMockData(): List<WeatherCustomEntity> {
+        val list = mutableListOf<WeatherCustomEntity>()
+
+        val model = WeatherCustomEntity().apply {
+            date = "12/07"
+            week = "昨天"
+            dayWeather = "大雪"
+            dayTemp = 11
+            nightTemp = 5
+            nightWeather = "晴"
+            windOrientation = "西南风"
+            windLevel = "3级"
+            airLevel = AirLevel.EXCELLENT
+        }
+        list.add(model)
+
+        val model1 = WeatherCustomEntity().apply {
+            date = "12/08"
+            week = "今天"
+            dayWeather = "晴"
+            dayTemp = 8
+            nightTemp = 5
+            nightWeather = "晴"
+            windOrientation = "西南风"
+            windLevel = "3级"
+            airLevel = AirLevel.HIGH
+        }
+        list.add(model1)
+
+        val model2 = WeatherCustomEntity().apply {
+            date = "12/09"
+            week = "明天"
+            dayWeather = "晴"
+            dayTemp = 9
+            nightTemp = 8
+            nightWeather = "晴"
+            windOrientation = "东南风"
+            windLevel = "3级"
+            airLevel = AirLevel.POISONOUS
+        }
+        list.add(model2)
+
+        val model3 = WeatherCustomEntity().apply {
+            date = "12/10"
+            week = "周六"
+            dayWeather = "晴"
+            dayTemp = 12
+            nightTemp = 9
+            dayPic = com.knight.kotlin.library_widget.R.drawable.widget_weather_icon_w0
+            nightPic = com.knight.kotlin.library_widget.R.drawable.widget_weather_icon_w1
+            nightWeather = "晴"
+            windOrientation = "东北风"
+            windLevel = "3级"
+            airLevel = AirLevel.GOOD
+        }
+        list.add(model3)
+
+        val model4 = WeatherCustomEntity().apply {
+            date = "12/11"
+            week = "周日"
+            dayWeather = "多云"
+            dayTemp = 13
+            nightTemp = 7
+            dayPic = com.knight.kotlin.library_widget.R.drawable.widget_weather_icon_w2
+            nightPic = com.knight.kotlin.library_widget.R.drawable.widget_weather_icon_w4
+            nightWeather = "多云"
+            windOrientation = "东北风"
+            windLevel = "3级"
+            airLevel = AirLevel.LIGHT
+        }
+        list.add(model4)
+
+        val model5 = WeatherCustomEntity().apply {
+            date = "12/12"
+            week = "周一"
+            dayWeather = "多云"
+            dayTemp = 17
+            nightTemp = 8
+            dayPic = com.knight.kotlin.library_widget.R.drawable.widget_weather_icon_w3
+            nightPic = com.knight.kotlin.library_widget.R.drawable.widget_weather_icon_w4
+            nightWeather = "多云"
+            windOrientation = "西南风"
+            windLevel = "3级"
+            airLevel = AirLevel.LIGHT
+        }
+        list.add(model5)
+
+        val model6 = WeatherCustomEntity().apply {
+            date = "12/13"
+            week = "周二"
+            dayWeather = "晴"
+            dayTemp = 13
+            nightTemp = 6
+            dayPic = com.knight.kotlin.library_widget.R.drawable.widget_weather_icon_w5
+            nightPic = com.knight.kotlin.library_widget.R.drawable.widget_weather_icon_w6
+            nightWeather = "晴"
+            windOrientation = "西南风"
+            windLevel = "3级"
+            airLevel = AirLevel.POISONOUS
+        }
+        list.add(model6)
+
+        val model7 = WeatherCustomEntity().apply {
+            date = "12/14"
+            week = "周三"
+            dayWeather = "晴"
+            dayTemp = 19
+            nightTemp = 10
+            dayPic = com.knight.kotlin.library_widget.R.drawable.widget_weather_icon_w5
+            nightPic = com.knight.kotlin.library_widget.R.drawable.widget_weather_icon_w7
+            nightWeather = "晴"
+            windOrientation = "西南风"
+            windLevel = "3级"
+            airLevel = AirLevel.POISONOUS
+        }
+        list.add(model7)
+
+        val model8 = WeatherCustomEntity().apply {
+            date = "12/15"
+            week = "周四"
+            dayWeather = "晴"
+            dayTemp = 22
+            nightTemp = 4
+            dayPic = com.knight.kotlin.library_widget.R.drawable.widget_weather_icon_w5
+            nightPic = com.knight.kotlin.library_widget.R.drawable.widget_weather_icon_w8
+            nightWeather = "晴"
+            windOrientation = "西南风"
+            windLevel = "3级"
+            airLevel = AirLevel.POISONOUS
+        }
+        list.add(model8)
+
+        return list
+    }
+
 
 
 

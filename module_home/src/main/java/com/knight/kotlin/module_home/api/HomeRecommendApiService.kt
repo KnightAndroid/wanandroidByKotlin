@@ -32,6 +32,7 @@ interface HomeRecommendApiService {
     @Headers("Domain-Name:gitee")
     @GET("MengSuiXinSuoYuan/wanandroid_server/raw/master/wanandroid_config/advert/dailyPushArticles.json")
     suspend fun getEveryDayPushArticle(): BaseResponse<EveryDayPushArticlesBean>
+
     /**
      *
      * 获取置顶文章
@@ -44,35 +45,35 @@ interface HomeRecommendApiService {
      * 获取广告数据
      */
     @GET("banner/json")
-    suspend fun getBanner():BaseResponse<MutableList<BannerBean>>
+    suspend fun getBanner(): BaseResponse<MutableList<BannerBean>>
 
 
     /**
      * 获取首页文章数据
      */
     @GET("article/list/{page}/json?page_size=10")
-    suspend fun getHomeArticle(@Path("page") page:Int):BaseResponse<HomeArticleListBean>
+    suspend fun getHomeArticle(@Path("page") page: Int): BaseResponse<HomeArticleListBean>
 
     /**
      * 获取热搜新闻
      */
     @Headers("Domain-Name:baidu")
     @GET("board?platform=pc&tab=realtime")
-    suspend fun getBaiduRealTime() : BaiduTopRealTimeBean
+    suspend fun getBaiduRealTime(): BaiduTopRealTimeBean
 
     /**
      * 获取公众号数据
      *
      */
     @GET("wxarticle/chapters/json")
-    suspend fun getOfficialAccount():BaseResponse<MutableList<OfficialAccountEntity>>
+    suspend fun getOfficialAccount(): BaseResponse<MutableList<OfficialAccountEntity>>
 
     /**
      *
      * 获取未读消息
      */
     @GET("message/lg/count_unread/json")
-    suspend fun getUnreadMessage():BaseResponse<Int>
+    suspend fun getUnreadMessage(): BaseResponse<Int>
 
 
     /**
@@ -80,7 +81,7 @@ interface HomeRecommendApiService {
      * 收藏文章
      */
     @POST("lg/collect/{collectArticleId}/json")
-    suspend fun collectArticle(@Path("collectArticleId") collectArticleId:Int):BaseResponse<Any>
+    suspend fun collectArticle(@Path("collectArticleId") collectArticleId: Int): BaseResponse<Any>
 
 
     /**
@@ -88,7 +89,7 @@ interface HomeRecommendApiService {
      * 取消收藏
      */
     @POST("lg/uncollect_originId/{unCollectArticleId}/json")
-    suspend fun unCollectArticle(@Path("unCollectArticleId") unCollectArticleId:Int):BaseResponse<Any>
+    suspend fun unCollectArticle(@Path("unCollectArticleId") unCollectArticleId: Int): BaseResponse<Any>
 
     /**
      * 登录接口
@@ -96,14 +97,14 @@ interface HomeRecommendApiService {
      */
     @FormUrlEncoded
     @POST("user/login")
-    suspend fun login(@Field("username") userName:String, @Field("password") passWord:String): BaseResponse<UserInfoEntity>
+    suspend fun login(@Field("username") userName: String, @Field("password") passWord: String): BaseResponse<UserInfoEntity>
 
     /**
      * 获取热早报微语
      */
     @Headers("Domain-Name:zaobao")
     @GET("zaobao")
-    suspend fun getZaoBao():BaseResponse<ZaoBaoBean>
+    suspend fun getZaoBao(): BaseResponse<ZaoBaoBean>
 
 
     /**
@@ -111,10 +112,12 @@ interface HomeRecommendApiService {
      */
     @Headers("Domain-Name:weather")
     @GET("weather/common")
-    suspend fun getCurrentCityWeather(@Query("source") source:String,@Query("weather_type") weather_type:String,
-                                      @Query("province") province:String,
-                                      @Query("city") city:String,
-                                      @Query("country") country:String):BaseResponse<TodayWeatherBean>
+    suspend fun getCurrentCityWeather(
+        @Query("source") source: String, @Query("weather_type") weather_type: String,
+        @Query("province") province: String,
+        @Query("city") city: String,
+        @Query("country") country: String
+    ): BaseResponse<TodayWeatherBean>
 
     //天气API
     //https://wis.qq.com/weather/common?source=pc&weather_type=observe&province=%E5%9B%9B%E5%B7%9D&city=%E6%88%90%E9%83%BD&county=%E6%88%90%E5%8D%8E%E5%8C%BA
@@ -129,4 +132,6 @@ interface HomeRecommendApiService {
     //        air 空气质量
     //        rise 日出
     //https://tianqi.qq.com/
+
+
 }

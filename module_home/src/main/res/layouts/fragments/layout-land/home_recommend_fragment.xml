@@ -7,6 +7,9 @@
         <variable
             name="viewModel"
             type="com.knight.kotlin.module_home.entity.ZaoBaoBean" />
+        <variable
+            name="todayWeather"
+            type="com.knight.kotlin.module_home.entity.TodayWeatherDataBean" />
 
     </data>
 
@@ -25,6 +28,8 @@
             <include
                 android:id="@+id/home_recomment_menu"
                 layout="@layout/home_layout_recommend_menu"
+                app:viewModel="@{viewModel}"
+                app:todayWeather="@{todayWeather}"
                 />
             <include
                 android:id="@+id/home_recomment_conent"

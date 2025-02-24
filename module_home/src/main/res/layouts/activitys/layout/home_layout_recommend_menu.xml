@@ -15,7 +15,7 @@
     </data>
 
 
-    <androidx.core.widget.NestedScrollView
+    <RelativeLayout
         android:id="@+id/home_recommend_menu"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -30,7 +30,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="240dp"
+                android:layout_height="wrap_content"
                 >
 
 
@@ -92,7 +92,24 @@
                     app:layout_constraintTop_toBottomOf="@id/tv_weather_degree"
                     android:drawableRight="@drawable/home_icon_zaobao_tip"
                     android:drawablePadding="@dimen/base_dimen_4"
-                    android:textSize="@dimen/home_tv_zaobao_title_tip_text_size"/>
+                    android:textSize="@dimen/home_tv_zaobao_title_tip_text_size"
+                    android:gravity="center" />
+
+
+                <com.knight.kotlin.library_widget.ZzWeatherView
+                    android:id="@+id/weather_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#333"
+                    app:layout_constraintTop_toBottomOf="@id/tv_zaobao_day_tip"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:scrollbarSize="4dp"
+                    android:scrollbarThumbHorizontal="@drawable/widget_scroll_bar_thumb"
+                    android:scrollbarTrackHorizontal="@drawable/widget_scroll_bar_thumb" />
+
+
 
 
 
@@ -104,7 +121,7 @@
         </LinearLayout>
 
 
-    </androidx.core.widget.NestedScrollView>
+    </RelativeLayout>
 
 
 </layout>
