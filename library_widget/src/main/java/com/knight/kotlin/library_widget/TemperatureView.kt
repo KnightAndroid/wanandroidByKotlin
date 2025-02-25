@@ -2,6 +2,7 @@ package com.knight.kotlin.library_widget
 
 import android.content.Context
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.View
@@ -22,11 +23,19 @@ class TemperatureView @JvmOverloads constructor(context: Context, attrs: Attribu
     private var temperatureDay = 0
     private var temperatureNight = 0
 
-    private var pointPaint: Paint? = null
+    //白天圆点
+    private var dayPointPaint: Paint? = null
+    //晚上圆点
+    private var nightPointPaint: Paint? = null
+    //白色圆点
+    private var whitePointPaint:Paint? = null
+
+
     private var linePaint: Paint? = null
     private var textPaint: Paint? = null
     private var lineColor = 0
-    private var pointColor = 0
+    private var dayPointColor = 0
+    private var nightPointColor = 0
     private var textColor = 0
 
     private var radius = 6
@@ -52,20 +61,32 @@ class TemperatureView @JvmOverloads constructor(context: Context, attrs: Attribu
 
     private fun initAttrs(context: Context, attrs: AttributeSet?) {
         lineColor = 0xff93a122.toInt()
-        textColor = 0xffffffff.toInt()
-        pointColor = 0xffffffff.toInt()
+        textColor = Color.parseColor("#565657")
+        dayPointColor = Color.parseColor("#102BF8")
+        nightPointColor = Color.parseColor("#ED106A")
     }
 
     private fun initPaint(context: Context, attrs: AttributeSet?) {
         textSize = 15.dp2px()
 
-        pointPaint = Paint()
+        dayPointPaint = Paint()
+
+        nightPointPaint = Paint()
+
+        whitePointPaint = Paint()
+        whitePointPaint?.style = Paint.Style.STROKE
+        whitePointPaint?.strokeWidth = 6f
+        whitePointPaint?.color = Color.parseColor("#ffffff")
         linePaint = Paint()
         textPaint = Paint()
 
         linePaint!!.color = lineColor
-        pointPaint!!.color = pointColor
-        pointPaint!!.isAntiAlias = true
+        dayPointPaint!!.color = dayPointColor
+        dayPointPaint!!.isAntiAlias = true
+        nightPointPaint!!.color = nightPointColor
+        nightPointPaint!!.isAntiAlias = true
+
+
         textPaint!!.color = textColor
         textPaint!!.textSize = textSize.toFloat()
         textPaint!!.isAntiAlias = true
@@ -96,8 +117,13 @@ class TemperatureView @JvmOverloads constructor(context: Context, attrs: Attribu
         xPointNight = x2
         yPointNight = y2
         mWidth = width
-        canvas.drawCircle(x.toFloat(), y.toFloat(), radius.toFloat(), pointPaint!!)
-        canvas.drawCircle(x2.toFloat(), y2.toFloat(), radius.toFloat(), pointPaint!!)
+        canvas.drawCircle(x.toFloat(), y.toFloat(), radius.toFloat() - whitePointPaint!!.strokeWidth / 2, dayPointPaint!!)
+
+        canvas.drawCircle(x.toFloat(), y.toFloat(), radius.toFloat(), whitePointPaint!!)
+
+        canvas.drawCircle(x2.toFloat(), y2.toFloat(), radius.toFloat() - whitePointPaint!!.strokeWidth / 2, nightPointPaint!!)
+
+        canvas.drawCircle(x2.toFloat(), y2.toFloat(), radius.toFloat(), whitePointPaint!!)
     }
 
     private fun drawText(canvas: Canvas) {
@@ -191,11 +217,11 @@ class TemperatureView @JvmOverloads constructor(context: Context, attrs: Attribu
     }
 
     fun getPointColor(): Int {
-        return pointColor
+        return dayPointColor
     }
 
     fun setPointColor(pointColor: Int) {
-        this.pointColor = pointColor
+        this.dayPointColor = pointColor
     }
 
     fun getTextColor(): Int {

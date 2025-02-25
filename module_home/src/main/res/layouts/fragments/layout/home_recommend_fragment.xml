@@ -18,6 +18,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         app:menuRightMargin="62dp"
+        android:scrollbars="none"
         >
         <!--    android:background="@drawable/home_menu_bg"-->
         <LinearLayout

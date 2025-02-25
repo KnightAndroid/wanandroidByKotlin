@@ -1,0 +1,18 @@
+package com.knight.kotlin.module_home
+
+import com.knight.kotlin.library_base.BaseApp
+
+
+/**
+ * @author created by luguian
+ * @organize
+ * @Date 2025/2/25 11:30
+ * @descript:单独app应用
+ */
+//单独运行使用@HiltAndroidApp
+class HomeAloneApplication: BaseApp() {
+
+    override fun onCreate() {
+        super.onCreate()
+    }
+}

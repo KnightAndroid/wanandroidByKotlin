@@ -55,8 +55,13 @@ class TwoLevelTransformer(val mViewPager:ViewPager2,val expendPointView:ExpendPo
         } else {
             Math.max(expendPointView!!.getBackgroundAlpha() / 255f, 0.5f)
         }
-        mToolbar.setAlpha(alpha)
-        rl_home.setAlpha(alpha)
+        if (::mToolbar.isInitialized) {
+            mToolbar.setAlpha(alpha)
+        }
+        if (::rl_home.isInitialized)  {
+            rl_home.setAlpha(alpha)
+        }
+
     }
 
 

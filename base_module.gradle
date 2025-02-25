@@ -29,6 +29,14 @@ android {
             abiFilters 'armeabi-v7a', 'arm64-v8a'
         }
     }
+
+    //解决 单moduule 运行 java.lang.RuntimeException: ARouter::Compiler >>> No module name
+    if (ProjectBuildDencies.APP_MODE) {
+        hilt {
+            enableExperimentalClasspathAggregation = true // 此行不加会遇到下面的新问题
+            enableAggregatingTask = false
+        }
+    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
@@ -94,16 +102,19 @@ android {
     }
 
 
+
+
 }
-
-
 
 kapt {
     arguments {
-        arg("GOROUTER_MODULE_NAME", project.name)
+
         arg("eventBusIndex", "${ProjectBuildDencies.APPLICATION_ID}.eventbus.index.${project.name}EventIndex")
+        arg("GOROUTER_MODULE_NAME", project.name)
     }
 }
+
+
 
 
 dependencies {

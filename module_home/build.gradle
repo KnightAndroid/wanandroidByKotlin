@@ -1,15 +1,16 @@
 import com.knight.wanandroid.buildsrc.Dependencies
-
 apply from: '../base_module.gradle'
 android {
     resourcePrefix "home_"
     namespace = "com.knight.kotlin.module_home"
+
+    
 }
-
-
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(path: ':library_scan')
     implementation project(path: ':library_biometric')
     implementation Dependencies.GitHub.BANNER
+
+
 }

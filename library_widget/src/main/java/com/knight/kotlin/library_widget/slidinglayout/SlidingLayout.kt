@@ -162,19 +162,19 @@ class SlidingLayout @JvmOverloads constructor(context: Context?, attrs: Attribut
             MotionEvent.ACTION_UP -> {
                 //初始化现实content的状态 x坐标是 = menuWidth
                 //手指抬起移动的距离 大于 menuWidth的一半 显示右边 content
-//                if (scrollX > screenWidth / 2) {
-//                    closeMenu()
-//                } else {
-//                    //显示左边 menu
-//                    openMenu()
-//                }
+                if (scrollX > screenWidth / 2) {
+                   // closeMenu()
+                    return true
+                } else {
+                    //显示左边 menu
+                    openMenu()
+                }
 
-                 super.onTouchEvent(ev)
-                //return true
+                //不执行 super.onTouchEvent(ev);
+                return true
             }
         }
-        //return super.onTouchEvent(ev)
-        return false
+        return super.onTouchEvent(ev)
     }
 
     override fun onInterceptTouchEvent(ev: MotionEvent): Boolean {
@@ -188,8 +188,9 @@ class SlidingLayout @JvmOverloads constructor(context: Context?, attrs: Attribut
                 //拦截右边菜单事件 子view不响应触摸事件
                 // 返回true 拦截子 view touch事件 会 响应自身的 onTouch事件
                 isIntercept = true
-                return true
+                return false
             }
+            return false
         }
         return super.onInterceptTouchEvent(ev)
     }
@@ -289,5 +290,9 @@ class SlidingLayout @JvmOverloads constructor(context: Context?, attrs: Attribut
 
         // 启动动画
         animator.start()
+    }
+
+    override fun setOnTouchListener(l: OnTouchListener?) {
+        super.setOnTouchListener(l)
     }
 }

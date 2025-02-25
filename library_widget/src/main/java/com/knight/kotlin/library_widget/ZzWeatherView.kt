@@ -3,6 +3,7 @@ package com.knight.kotlin.library_widget
 
 import android.content.Context
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
 import android.util.AttributeSet
@@ -35,8 +36,8 @@ class ZzWeatherView @JvmOverloads constructor(context: Context, attrs: Attribute
     private var lineType = LINE_TYPE_CURVE
     private var lineWidth = 6f
 
-    private var dayLineColor = -0x8752dd
-    private var nightLineColor = -0xdc534d
+    private var dayLineColor = Color.parseColor("#1616D5")
+    private var nightLineColor = Color.parseColor("#ED106A")
 
     private var columnNumber = 6
 

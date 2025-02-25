@@ -23,6 +23,7 @@ object RouteActivity {
      */
     object Home {
         private const val HOME = "/module_home"
+        const val HomeAloneMainActivity = "$HOME/AloneMainActivity"
         const val HomeArticlesTabActivity = "$HOME/ArticlesTabActivity"
         const val HomeSearchActivity = "$HOME/HomeSearchActivity"
         const val HomeSearchResultActivity = "$HOME/HomeSearchResultActivity"
