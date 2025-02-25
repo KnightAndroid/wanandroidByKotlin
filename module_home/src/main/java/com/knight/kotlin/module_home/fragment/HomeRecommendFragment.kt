@@ -261,7 +261,8 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
             mBinding.todayWeather = it.observe
 
 
-
+            //填充天气数据
+            mBinding.homeRecommentMenu.weatherView.setData(generateMockData())
 
             //画折线
             mBinding.homeRecommentMenu.weatherView.setLineType(ZzWeatherView.LINE_TYPE_DISCOUNT)
@@ -284,11 +285,8 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
 
             //设置白天和晚上线条的颜色
             mBinding.homeRecommentMenu.weatherView.setDayAndNightLineColor(Color.BLUE, Color.RED)
-            //填充天气数据
-            mBinding.homeRecommentMenu.weatherView.postDelayed({
-                mBinding.homeRecommentMenu.weatherView.setData(generateMockData())
-
-            },500)
+            //延迟绘制 进行渲染
+            mBinding.homeRecommentMenu.weatherView.postInvalidateDelayed(200)
 
         }
 
