@@ -9,7 +9,7 @@
             type="com.knight.kotlin.module_home.entity.ZaoBaoBean" />
         <variable
             name="todayWeather"
-            type="com.knight.kotlin.module_home.entity.TodayWeatherDataBean" />
+            type="com.knight.kotlin.library_base.entity.TodayWeatherDataBean" />
     </data>
 
     <com.knight.kotlin.library_widget.slidinglayout.SlidingLayout

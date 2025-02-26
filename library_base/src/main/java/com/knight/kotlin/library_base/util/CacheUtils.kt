@@ -3,6 +3,7 @@ package com.knight.kotlin.library_base.util
 import android.content.Context
 import android.text.TextUtils
 import com.google.gson.Gson
+import com.knight.kotlin.library_base.BaseApp
 import com.knight.kotlin.library_base.config.CacheKey
 import com.tencent.mmkv.MMKV
 import java.lang.reflect.Type
@@ -166,8 +167,8 @@ object CacheUtils {
     /**
      * 返回是什么语言模式 跟随系统 中文 英文
      */
-    fun getLanguageMode(): String? {
-        return mmkv?.decodeString(CacheKey.LANGUAGE, "简体中文")
+    fun getLanguageMode(): String {
+        return mmkv?.decodeString(CacheKey.LANGUAGE, "简体中文")!!
     }
 
     /**
@@ -462,6 +463,73 @@ object CacheUtils {
      */
     fun getUserRank() : String {
         return mmkv?.decodeString(CacheKey.RANK,"0") ?: "0"
+    }
+
+
+    /**
+     * 设置重力传感器是否开启
+     */
+    fun setGravitySensorSwitch(isGravitySensorEnabled: Boolean) {
+        mmkv?.encode(CacheKey.GRAVITY_SENSOR_SWITCH, isGravitySensorEnabled)
+    }
+
+
+    /**
+     * 返回是否开启重力传感器
+     * @return
+     */
+    fun getGravitySensorSwitch(): Boolean {
+        return mmkv?.decodeBool(CacheKey.GRAVITY_SENSOR_SWITCH, false)!!
+    }
+
+
+    /**
+     *
+     * 设置颜色模型
+     */
+    fun setDarkMode(darkMode:String) {
+        mmkv?.encode(CacheKey.DARK_MODEL, darkMode)
+    }
+
+    /**
+     *
+     * 返回颜色模型
+     */
+    fun getDarkMode() :String {
+        return mmkv?.decodeString(CacheKey.DARK_MODEL,"system") ?: "system"
+    }
+
+    /**
+     *
+     * 设置背景动画效果模式
+     */
+    fun setBackgroundAnimationMode(mode:String) {
+        mmkv?.encode(CacheKey.BG_ANIMAT_MODE,mode)
+    }
+
+    /**
+     *
+     * 返回背景动画效果模式
+     */
+    fun getBackgroundAnimationMode():String {
+        return mmkv?.decodeString(CacheKey.BG_ANIMAT_MODE,"system") ?: "system"
+    }
+
+
+    /**
+     *
+     * icon提供
+     */
+    fun setIconProvider(value:String) {
+        mmkv?.encode(CacheKey.ICON_PROVIDER,value)
+    }
+
+    /**
+     *
+     * 返回icon 提供
+     */
+    fun getIconProvider():String {
+        return mmkv?.decodeString(CacheKey.ICON_PROVIDER,BaseApp.context.packageName) ?: ""
     }
 
 

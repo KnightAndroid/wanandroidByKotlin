@@ -7,4 +7,10 @@
     <string name="base_unavailable_text">网络连接不可用,请检查网络设置</string>
     <string name="base_request_failure">请求失败,请稍后尝试</string>
     <string name="base_daily_share_image">share_image</string>
+    <string name="base_light_mode">白天模式</string>
+    <string name="base_dark_mode">深色模式</string>
+    <string name="base_follow_system_mode">跟随系统</string>
+    <string name="base_settings_follow_system">跟随系统</string>
+    <string name="base_settings_main_background_animation_enabled">启用</string>
+    <string name="base_settings_main_background_animation_disabled">禁用</string>
 </resources>

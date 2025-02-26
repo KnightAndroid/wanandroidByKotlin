@@ -11,7 +11,7 @@
 
         <variable
             name="todayWeather"
-            type="com.knight.kotlin.module_home.entity.TodayWeatherDataBean" />
+            type="com.knight.kotlin.library_base.entity.TodayWeatherDataBean" />
     </data>
 
 
@@ -20,9 +20,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@drawable/home_enum_bg">
 
+        >
 
+<!--            android:background="@drawable/home_enum_bg"    -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

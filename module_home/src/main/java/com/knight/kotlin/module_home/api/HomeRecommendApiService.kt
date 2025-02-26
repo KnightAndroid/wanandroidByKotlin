@@ -2,12 +2,12 @@ package com.knight.kotlin.module_home.api
 
 import com.knight.kotlin.library_base.entity.BaiduTopRealTimeBean
 import com.knight.kotlin.library_base.entity.UserInfoEntity
+import com.knight.kotlin.library_base.entity.WeatherDetailBean
 import com.knight.kotlin.library_common.entity.OfficialAccountEntity
 import com.knight.kotlin.library_network.bean.BaseResponse
 import com.knight.kotlin.module_home.entity.BannerBean
 import com.knight.kotlin.module_home.entity.EveryDayPushArticlesBean
 import com.knight.kotlin.module_home.entity.HomeArticleListBean
-import com.knight.kotlin.module_home.entity.TodayWeatherBean
 import com.knight.kotlin.module_home.entity.TopArticleBean
 import com.knight.kotlin.module_home.entity.ZaoBaoBean
 import retrofit2.http.Field
@@ -107,18 +107,20 @@ interface HomeRecommendApiService {
     suspend fun getZaoBao(): BaseResponse<ZaoBaoBean>
 
 
+
+
     /**
-     * 获取今天天气
+     *
+     * 获取一周详细天气
      */
     @Headers("Domain-Name:weather")
     @GET("weather/common")
-    suspend fun getCurrentCityWeather(
+    suspend fun getDetailWeekWeather(
         @Query("source") source: String, @Query("weather_type") weather_type: String,
         @Query("province") province: String,
         @Query("city") city: String,
         @Query("country") country: String
-    ): BaseResponse<TodayWeatherBean>
-
+    ): BaseResponse<WeatherDetailBean>
     //天气API
     //https://wis.qq.com/weather/common?source=pc&weather_type=observe&province=%E5%9B%9B%E5%B7%9D&city=%E6%88%90%E9%83%BD&county=%E6%88%90%E5%8D%8E%E5%8C%BA
     //https://wis.qq.com/weather/common?source=pc&weather_type=observe|forecast_1h|forecast_24h|index|alarm|limit|tips|rise&province=%E5%9B%9B%E5%B7%9D&city=%E6%88%90%E9%83%BD&county=%E5%8F%8C%E6%B5%81%E5%8C%BA

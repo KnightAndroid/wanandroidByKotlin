@@ -8,5 +8,6 @@
     <dimen name="widget_gesture_default_dot_radius">4dp</dimen>
     <dimen name="widget_gesture_default_line_width">8dp</dimen>
     <dimen name="widget_gesture_default_dot_pressed_radius">4dp</dimen>
-
+    <dimen name="widget_material3_card_list_item_corner_radius">16dp</dimen>
+    <dimen name="widget_little_margin">8dp</dimen>
 </resources>

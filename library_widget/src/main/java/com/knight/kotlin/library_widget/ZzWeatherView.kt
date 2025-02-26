@@ -12,10 +12,13 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.HorizontalScrollView
 import android.widget.LinearLayout
-import com.knight.kotlin.library_base.entity.WeatherCustomEntity
+import com.knight.kotlin.library_base.entity.WeatherEveryDay
+import com.knight.kotlin.library_base.enum.AirLevel
+import com.knight.kotlin.library_util.DateUtils
 import com.knight.kotlin.library_widget.utils.WeatherPicUtil
 import kotlin.math.max
 import kotlin.math.min
+import kotlin.random.Random
 
 
 /**
@@ -26,7 +29,7 @@ import kotlin.math.min
  */
 class ZzWeatherView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) :
     HorizontalScrollView(context, attrs) {
-    private var mData: List<WeatherCustomEntity>? = null
+    private var mData: List<WeatherEveryDay>? = null
     private var dayPaint: Paint? = null
     private var nightPaint: Paint? = null
 
@@ -430,7 +433,7 @@ class ZzWeatherView @JvmOverloads constructor(context: Context, attrs: Attribute
         invalidate()
     }
 
-    fun getData(): List<WeatherCustomEntity>? {
+    fun getData(): List<WeatherEveryDay>? {
         return mData
     }
 
@@ -448,7 +451,7 @@ class ZzWeatherView @JvmOverloads constructor(context: Context, attrs: Attribute
      *
      * @param data 天气数据
      */
-    fun setData(data: List<WeatherCustomEntity>?) {
+    fun setData(data: List<WeatherEveryDay>?) {
         this.mData = data
         val screenWidth = getScreenWidth()
         val maxDay = getMaxDayTemp(data)
@@ -462,33 +465,34 @@ class ZzWeatherView @JvmOverloads constructor(context: Context, attrs: Attribute
         llRoot.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         llRoot.orientation = LinearLayout.HORIZONTAL
         for (i in data!!.indices) {
-            val model: WeatherCustomEntity = data[i]
+            val model: WeatherEveryDay = data[i]
             val itemView = WeatherItemView(context)
             itemView.setMaxTemp(max)
             itemView.setMinTemp(min)
-            itemView.setDate(model.date)
-            itemView.setWeek(model.week)
-            itemView.setDayTemp(model.dayTemp)
+            itemView.setDate(DateUtils.formatDateToMMdd(model.time))
+            itemView.setWeek(DateUtils.getDayOfWeek(model.time))
+            itemView.setDayTemp(model.maxDegree.toInt())
             itemView.setDayWeather(model.dayWeather)
-            if (model.dayPic === 0) {
-                if (model.dayWeather != null) {
+
+            if (model.dayWeather != null) {
                     itemView.setDayImg(WeatherPicUtil.getDayWeatherPic(model.dayWeather))
-                }
-            } else {
-                itemView.setDayImg(model.dayPic)
             }
+
             itemView.setNightWeather(model.nightWeather)
-            itemView.setNightTemp(model.nightTemp)
-            if (model.nightPic === 0) {
+            itemView.setNightTemp(model.minDegree.toInt())
+            i
                 if (model.nightWeather != null) {
                     itemView.setNightImg(WeatherPicUtil.getNightWeatherPic(model.nightWeather))
                 }
-            } else {
-                itemView.setNightImg(model.nightPic)
-            }
-            itemView.setWindOri(model.windOrientation)
-            itemView.setWindLevel(model.windLevel)
-            itemView.setAirLevel(model.airLevel)
+
+            itemView.setWindOri(model.dayWindDirection)
+            itemView.setWindLevel(model.dayWindPower)
+            itemView.setAirLevel( when (Random.nextInt(3)) { // 假设枚举只有3个值
+                0 -> AirLevel.EXCELLENT
+                1 -> AirLevel.GOOD
+                2 -> AirLevel.LIGHT
+                else -> AirLevel.EXCELLENT // 永远不会执行到这里，但为了完整性
+            })
             itemView.layoutParams = LinearLayout.LayoutParams(screenWidth / columnNumber, ViewGroup.LayoutParams.WRAP_CONTENT)
             itemView.isClickable = true
             val finalI = i
@@ -525,21 +529,21 @@ class ZzWeatherView @JvmOverloads constructor(context: Context, attrs: Attribute
         return wm.defaultDisplay.width
     }
 
-    private fun getMinDayTemp(list: List<WeatherCustomEntity>?): Int {
-        return list?.minByOrNull { it.dayTemp }?.dayTemp ?: 0
+    private fun getMinDayTemp(list: List<WeatherEveryDay>?): Int {
+        return list?.minByOrNull { it.maxDegree.toInt() }?.maxDegree?.toInt() ?: 0
     }
 
-    private fun getMinNightTemp(list: List<WeatherCustomEntity>?): Int {
-        return list?.minByOrNull { it.nightTemp }?.nightTemp ?: 0
+    private fun getMinNightTemp(list: List<WeatherEveryDay>?): Int {
+        return list?.minByOrNull { it.minDegree.toInt() }?.minDegree?.toInt() ?: 0
     }
 
 
-    private fun getMaxNightTemp(list: List<WeatherCustomEntity>?): Int {
-        return list?.maxByOrNull { it.nightTemp }?.nightTemp ?: 0
+    private fun getMaxNightTemp(list: List<WeatherEveryDay>?): Int {
+        return list?.maxByOrNull { it.minDegree.toInt() }?.minDegree?.toInt() ?: 0
     }
 
-    private fun getMaxDayTemp(list: List<WeatherCustomEntity>?): Int {
-        return list?.maxByOrNull { it.dayTemp }?.dayTemp ?: 0
+    private fun getMaxDayTemp(list: List<WeatherEveryDay>?): Int {
+        return list?.maxByOrNull { it.maxDegree.toInt() }?.maxDegree?.toInt() ?: 0
     }
 
     fun getLineType(): Int {
@@ -551,32 +555,32 @@ class ZzWeatherView @JvmOverloads constructor(context: Context, attrs: Attribute
         invalidate()
     }
 
-    private class DayTempComparator : Comparator<WeatherCustomEntity> {
-        override fun compare(o1: WeatherCustomEntity, o2: WeatherCustomEntity): Int {
-            return if (o1.dayTemp === o2.dayTemp ) {
-                0
-            } else if (o1.dayTemp  > o2.dayTemp ) {
-                1
-            } else {
-                -1
-            }
-        }
-    }
-
-    private class NightTempComparator : Comparator<WeatherCustomEntity> {
-        override fun compare(o1: WeatherCustomEntity, o2: WeatherCustomEntity): Int {
-            return if (o1.nightTemp === o2.nightTemp) {
-                0
-            } else if (o1.nightTemp > o2.nightTemp) {
-                1
-            } else {
-                -1
-            }
-        }
-    }
+//    private class DayTempComparator : Comparator<WeatherCustomEntity> {
+//        override fun compare(o1: WeatherCustomEntity, o2: WeatherCustomEntity): Int {
+//            return if (o1.dayTemp === o2.dayTemp ) {
+//                0
+//            } else if (o1.dayTemp  > o2.dayTemp ) {
+//                1
+//            } else {
+//                -1
+//            }
+//        }
+//    }
+//
+//    private class NightTempComparator : Comparator<WeatherCustomEntity> {
+//        override fun compare(o1: WeatherCustomEntity, o2: WeatherCustomEntity): Int {
+//            return if (o1.nightTemp === o2.nightTemp) {
+//                0
+//            } else if (o1.nightTemp > o2.nightTemp) {
+//                1
+//            } else {
+//                -1
+//            }
+//        }
+//    }
 
     interface OnWeatherItemClickListener {
-        fun onItemClick(itemView: WeatherItemView?, position: Int, weatherModel: WeatherCustomEntity?)
+        fun onItemClick(itemView: WeatherItemView?, position: Int, weatherModel: WeatherEveryDay?)
     }
 
     companion object {

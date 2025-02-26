@@ -2,11 +2,13 @@ package com.knight.kotlin.library_base.ktx
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.res.Configuration
 import android.text.Html
 import android.text.Spanned
 import android.view.View
 import android.view.WindowManager
 import androidx.annotation.MainThread
+import androidx.annotation.Px
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
 import com.knight.kotlin.library_base.BaseApp
@@ -20,9 +22,11 @@ import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.knight.kotlin.library_base.util.ActivityManagerUtils
 import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_base.util.StatusBarUtils
+import com.knight.kotlin.library_base.util.dp2px
 import com.knight.kotlin.library_base.vm.BaseViewModel
 import com.knight.kotlin.library_base.widget.loadcircleview.ProgressHud
 import java.lang.reflect.ParameterizedType
+import kotlin.math.min
 import kotlin.reflect.KClass
 
 /**
@@ -279,6 +283,39 @@ fun <VM> getVmClazz(obj: Any): VM {
     return (obj.javaClass.genericSuperclass as ParameterizedType).actualTypeArguments[1] as VM
 }
 
+/**
+ *
+ * 是否横屏
+ */
+val Context.isLandscape: Boolean
+    get() = this.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+
+val Context.isTabletDevice: Boolean
+    get() = (
+            this.resources.configuration.screenLayout
+                    and Configuration.SCREENLAYOUT_SIZE_MASK
+            ) >= Configuration.SCREENLAYOUT_SIZE_LARGE
+
+@Px
+fun Context.getTabletListAdaptiveWidth(@Px width: Int): Int {
+    return if (!this.isTabletDevice && !this.isLandscape) {
+        width
+    } else {
+        min(
+            width.toFloat(),
+
+                if (this.isTabletDevice) {
+                    MAX_TABLET_ADAPTIVE_LIST_WIDTH_DIP_TABLET
+                } else {
+                    MAX_TABLET_ADAPTIVE_LIST_WIDTH_DIP_PHONE
+                }.dp2px().toFloat()
+
+        ).toInt()
+    }
+}
+
+private const val MAX_TABLET_ADAPTIVE_LIST_WIDTH_DIP_PHONE = 512
+private const val MAX_TABLET_ADAPTIVE_LIST_WIDTH_DIP_TABLET = 600
 
 
 

@@ -1,4 +1,4 @@
-package com.knight.kotlin.module_home.entity
+package com.knight.kotlin.library_base.entity
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
@@ -13,15 +13,16 @@ import kotlinx.parcelize.Parcelize
  */
 @Parcelize
 data class WeatherDetailBean (
-    val forecast_1h: List<Forecast1h>,
-    val forecast_24h: List<Forecast24h>,
+    val forecast_1h: Map<String,WeatherEveryHour>,
+    val forecast_24h: Map<String,WeatherEveryDay>,
     val index: Index,
     val limit: Limit,
-    val rise: List<Rise>
+    val rise: Map<String,Rise>,
+    val observe:TodayWeatherDataBean
 ): Parcelable
 
 @Parcelize
-data class Forecast1h (
+data class WeatherEveryHour (
     val degree: String,
     @SerializedName("update_time") val updateTime: String,
     val weather: String,
@@ -33,21 +34,21 @@ data class Forecast1h (
 ): Parcelable
 
 @Parcelize
-data class Forecast24h(
+data class WeatherEveryDay(
     @SerializedName("aqi_level") val aqiLevel: Int,
     @SerializedName("aqi_name") val aqiName: String,
     @SerializedName("aqi_url") val aqiUrl: String,
-    @SerializedName("day_weather") val dayWeather: String,
+    @SerializedName("day_weather") val dayWeather: String,//白天天气
     @SerializedName("day_weather_code") val dayWeatherCode: String,
     @SerializedName("day_weather_short") val dayWeatherShort: String,
     @SerializedName("day_weather_url") val dayWeatherUrl: String,
-    @SerializedName("day_wind_direction") val dayWindDirection: String,
+    @SerializedName("day_wind_direction") val dayWindDirection: String,//凤向
     @SerializedName("day_wind_direction_code") val dayWindDirectionCode: String,
-    @SerializedName("day_wind_power") val dayWindPower: String,
+    @SerializedName("day_wind_power") val dayWindPower: String,//风级
     @SerializedName("day_wind_power_code") val dayWindPowerCode: String,
-    @SerializedName("max_degree") val maxDegree: String,
-    @SerializedName("min_degree") val minDegree: String,
-    @SerializedName("night_weather") val nightWeather: String,
+    @SerializedName("max_degree") val maxDegree: String,//白天最高温度
+    @SerializedName("min_degree") val minDegree: String,//晚上最低温度
+    @SerializedName("night_weather") val nightWeather: String,//晚上天气
     @SerializedName("night_weather_code") val nightWeatherCode: String,
     @SerializedName("night_weather_short") val nightWeatherShort: String,
     @SerializedName("night_weather_url") val nightWeatherUrl: String,
@@ -55,7 +56,7 @@ data class Forecast24h(
     @SerializedName("night_wind_direction_code") val nightWindDirectionCode: String,
     @SerializedName("night_wind_power") val nightWindPower: String,
     @SerializedName("night_wind_power_code") val nightWindPowerCode: String,
-    val time: String
+    val time: String //日期
 ): Parcelable
 
 

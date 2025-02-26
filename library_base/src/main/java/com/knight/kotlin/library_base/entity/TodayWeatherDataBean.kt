@@ -1,4 +1,4 @@
-package com.knight.kotlin.module_home.entity
+package com.knight.kotlin.library_base.entity
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
@@ -9,10 +9,6 @@ import kotlinx.parcelize.Parcelize
  * @Time 2025/2/20 20:19
  * {"data":{"observe":{"degree":"16","humidity":"80","precipitation":"0","pressure":"1013","update_time":"202502202005","weather":"晴","weather_bg_pag":"","weather_code":"00","weather_color":null,"weather_first":"","weather_pag":"","weather_short":"晴","weather_url":"","wind_direction":"2","wind_direction_name":"东风","wind_power":"4-5"}},"message":"OK","status":200}
  */
-@Parcelize
-data class TodayWeatherBean (
-    val observe:TodayWeatherDataBean
-): Parcelable
 
 @Parcelize
 data class TodayWeatherDataBean (

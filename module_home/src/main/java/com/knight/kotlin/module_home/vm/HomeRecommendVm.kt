@@ -5,6 +5,7 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.knight.kotlin.library_base.entity.BaiduCardDataBean
 import com.knight.kotlin.library_base.entity.UserInfoEntity
+import com.knight.kotlin.library_base.entity.WeatherDetailBean
 import com.knight.kotlin.library_base.vm.BaseViewModel
 import com.knight.kotlin.library_common.entity.OfficialAccountEntity
 import com.knight.kotlin.library_database.db.AppDataBase
@@ -14,7 +15,6 @@ import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_home.entity.BannerBean
 import com.knight.kotlin.module_home.entity.EveryDayPushArticlesBean
 import com.knight.kotlin.module_home.entity.HomeArticleListBean
-import com.knight.kotlin.module_home.entity.TodayWeatherBean
 import com.knight.kotlin.module_home.entity.TopArticleBean
 import com.knight.kotlin.module_home.entity.ZaoBaoBean
 import com.knight.kotlin.module_home.repo.HomeRecommendRepo
@@ -167,12 +167,12 @@ class HomeRecommendVm @Inject constructor(private val mRepo: HomeRecommendRepo) 
 
     /**
      *
-     * 获取当日天气
+     * 获取一周天气
      */
-    fun getCurrentCityWeather(province:String,
-                              city:String,
-                              country:String):LiveData<TodayWeatherBean> {
-         return mRepo.getCurrentCityWeather("pc", "observe", province, city, country).asLiveData()
+    fun getDetailWeekWeather(province:String,
+                             city:String,
+                             country:String):LiveData<WeatherDetailBean> {
+        return mRepo.getDetailWeekWeather("pc","observe|forecast_1h|forecast_24h|index|alarm|limit|tips|rise",province, city, country).asLiveData()
     }
 
 

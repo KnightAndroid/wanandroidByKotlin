@@ -1,5 +1,6 @@
 package com.knight.kotlin.library_util
 
+import com.knight.kotlin.library_base.util.CacheUtils
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -179,6 +180,72 @@ object DateUtils {
         val calendar = Calendar.getInstance()  // 获取当前日期
         val dateFormat = SimpleDateFormat("M月d日", Locale.getDefault())  // 格式化为 "1月1日"
         return dateFormat.format(calendar.time)  // 格式化当前时间并返回
+    }
+
+
+    /**
+     *
+     * 将日期yyyy-MM-dd改成MM/dd
+     */
+    fun formatDateToMMdd(dateString: String): String {
+        val inputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val outputFormat = SimpleDateFormat("MM/dd", Locale.getDefault())
+
+        return try {
+            val date: Date = inputFormat.parse(dateString) as Date
+            outputFormat.format(date)
+        } catch (e: Exception) {
+            // 处理日期解析错误，例如无效的日期字符串
+            "Invalid Date"
+        }
+    }
+
+    /**
+     * 获取一周的第几天
+     */
+    fun getDayOfWeek(dateString: String): String {
+        val inputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        return try {
+            val date: Date = inputFormat.parse(dateString) as Date
+            val calendar = Calendar.getInstance()
+            calendar.time = date
+            val dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK)
+            getDayOfWeekName(dayOfWeek)
+        } catch (e: Exception) {
+            "Invalid Date"
+        }
+    }
+
+    /**
+     *
+     * 将一周的第几天转成周几
+     */
+    fun getDayOfWeekName(dayOfWeek: Int): String {
+        if (CacheUtils.getLanguageMode() == "English") {
+            return when (dayOfWeek) {
+                    Calendar.SUNDAY -> "Sunday"
+                    Calendar.MONDAY -> "Monday"
+                    Calendar.TUESDAY -> "Tuesday"
+                    Calendar.WEDNESDAY -> "Wednesday"
+                    Calendar.THURSDAY -> "Thursday"
+                    Calendar.FRIDAY -> "Friday"
+                    Calendar.SATURDAY -> "Saturday"
+                    else -> "Invalid Day"
+                }
+        } else {
+            return when (dayOfWeek) {
+                Calendar.SUNDAY -> "周日"
+                Calendar.MONDAY -> "周一"
+                Calendar.TUESDAY -> "周二"
+                Calendar.WEDNESDAY -> "周三"
+                Calendar.THURSDAY -> "周四"
+                Calendar.FRIDAY -> "周五"
+                Calendar.SATURDAY -> "周六"
+                else -> "无效"
+            }
+        }
+
+
     }
 
 }

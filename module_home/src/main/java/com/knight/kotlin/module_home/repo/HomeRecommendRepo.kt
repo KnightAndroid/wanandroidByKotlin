@@ -2,6 +2,7 @@ package com.knight.kotlin.module_home.repo
 
 import com.knight.kotlin.library_base.entity.BaiduCardDataBean
 import com.knight.kotlin.library_base.entity.UserInfoEntity
+import com.knight.kotlin.library_base.entity.WeatherDetailBean
 import com.knight.kotlin.library_base.repository.BaseRepository
 import com.knight.kotlin.library_common.entity.OfficialAccountEntity
 import com.knight.kotlin.library_network.model.responseCodeExceptionHandler
@@ -10,11 +11,8 @@ import com.knight.kotlin.module_home.api.HomeRecommendApiService
 import com.knight.kotlin.module_home.entity.BannerBean
 import com.knight.kotlin.module_home.entity.EveryDayPushArticlesBean
 import com.knight.kotlin.module_home.entity.HomeArticleListBean
-import com.knight.kotlin.module_home.entity.TodayWeatherBean
-
 import com.knight.kotlin.module_home.entity.TopArticleBean
 import com.knight.kotlin.module_home.entity.ZaoBaoBean
-import retrofit2.http.Query
 import javax.inject.Inject
 
 /**
@@ -174,20 +172,26 @@ class HomeRecommendRepo @Inject constructor(): BaseRepository() {
 
     /**
      *
-     * 获取今天天气
+     * 获取一周详细天气
      */
-    fun getCurrentCityWeather(source:String, weather_type:String,
-                               province:String,
-                              city:String,
-                               country:String) = request<TodayWeatherBean> ({
-
-          mHomeRecommendApiService.getCurrentCityWeather(source, weather_type, province, city, country).run {
+    fun getDetailWeekWeather(source:String, weather_type:String,
+                             province:String,
+                             city:String,
+                             country:String) = request<WeatherDetailBean> ({
+          mHomeRecommendApiService.getDetailWeekWeather(source, weather_type,
+              province,
+              city,
+              country).run{
               responseCodeExceptionHandler(0,msg)
               emit(data)
           }
     }){
         it?.let { it1 -> toast(it1) }
     }
+
+
+
+
 
 
 

@@ -128,4 +128,28 @@ object CacheKey {
      */
     const val RANK = "rank"
 
+    /**
+     *
+     * 重力传感器是否开启
+     */
+    const val GRAVITY_SENSOR_SWITCH = "gravity_sensor_switch"
+
+    /**
+     *
+     * 颜色模式
+     */
+    const val DARK_MODEL = "dark_mode"
+
+    /**
+     *
+     * 背景效果模式
+     */
+    const val BG_ANIMAT_MODE = "background_animation_mode"
+
+    /**
+     *
+     * 图标提供
+     */
+    const val ICON_PROVIDER = "icon_provider"
+
 }

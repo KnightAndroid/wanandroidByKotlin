@@ -11,6 +11,7 @@ import android.os.Build
 import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.view.animation.DecelerateInterpolator
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -30,10 +31,10 @@ import com.knight.kotlin.library_base.config.CacheKey
 import com.knight.kotlin.library_base.entity.BaiduContent
 import com.knight.kotlin.library_base.entity.LoginEntity
 import com.knight.kotlin.library_base.entity.UserInfoEntity
-import com.knight.kotlin.library_base.entity.WeatherCustomEntity
-import com.knight.kotlin.library_base.enum.AirLevel
+import com.knight.kotlin.library_base.enum.BackgroundAnimationMode
 import com.knight.kotlin.library_base.event.MessageEvent
 import com.knight.kotlin.library_base.fragment.BaseFragment
+import com.knight.kotlin.library_base.ktx.SettingsManager
 import com.knight.kotlin.library_base.ktx.getUser
 import com.knight.kotlin.library_base.ktx.setOnClick
 import com.knight.kotlin.library_base.ktx.toHtml
@@ -46,6 +47,7 @@ import com.knight.kotlin.library_base.util.EventBusUtils
 import com.knight.kotlin.library_base.util.GsonUtils
 import com.knight.kotlin.library_base.util.LanguageFontSizeUtils
 import com.knight.kotlin.library_base.util.dp2px
+import com.knight.kotlin.library_base.util.isMotionReduced
 import com.knight.kotlin.library_common.entity.OfficialAccountEntity
 import com.knight.kotlin.library_database.entity.PushDateEntity
 import com.knight.kotlin.library_permiss.XXPermissions
@@ -56,6 +58,7 @@ import com.knight.kotlin.library_scan.activity.ScanCodeActivity
 import com.knight.kotlin.library_scan.annoation.ScanStyle
 import com.knight.kotlin.library_scan.decode.ScanCodeConfig
 import com.knight.kotlin.library_util.DateUtils
+import com.knight.kotlin.library_util.ResourceProvider
 import com.knight.kotlin.library_util.image.ImageLoader
 import com.knight.kotlin.library_util.startPage
 import com.knight.kotlin.library_util.startPageWithRightAnimate
@@ -64,6 +67,8 @@ import com.knight.kotlin.library_widget.ZzWeatherView
 import com.knight.kotlin.library_widget.ktx.init
 import com.knight.kotlin.library_widget.skeleton.Skeleton
 import com.knight.kotlin.library_widget.skeleton.SkeletonScreen
+import com.knight.kotlin.library_widget.weatherview.ThemeManager
+import com.knight.kotlin.library_widget.weatherview.WeatherView
 import com.knight.kotlin.module_home.R
 import com.knight.kotlin.module_home.adapter.BaiduHotSearchAdapter
 import com.knight.kotlin.module_home.adapter.HomeArticleAdapter
@@ -105,7 +110,9 @@ import javax.crypto.IllegalBlockSizeException
 @Route(path = RouteFragment.Home.RecommendFragment)
 class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRecommendVm>(),
     OnRefreshListener, OnLoadMoreListener {
-
+    //天气背景
+    private lateinit var weatherView: WeatherView
+    private var resourceProvider: ResourceProvider? = null
     //百度热搜适配器
     private val mBaiduHotSearchAdapter : BaiduHotSearchAdapter by lazy {BaiduHotSearchAdapter()}
     //推荐文章适配器
@@ -221,13 +228,38 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
 
         homeRecommentConent.recommendRefreshLayout.setOnLoadMoreListener(this@HomeRecommendFragment)
         homeRecommentConent.recommendRefreshLayout.setOnRefreshListener(this@HomeRecommendFragment)
-
-
-
         setViewVisible(false)
         radius = 80.dp2px()
+        // attach weather view.
+        weatherView = ThemeManager
+            .getInstance(requireContext())
+            .weatherThemeDelegate
+            .getWeatherView(requireContext())
+        (mBinding.homeRecommentMenu.homeRecommendMenu as RelativeLayout).addView(
+            weatherView as View,
+            0,
+            RelativeLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+            )
+        )
 
+        weatherView.setWeather(
+            WeatherView.WEATHER_KIND_SNOW,
+            true,null
+
+        )
     }
+
+
+
+
+    private fun isBackgroundAnimationEnabled() =
+        when (SettingsManager.getInstance(requireContext()).backgroundAnimationMode) {
+            BackgroundAnimationMode.SYSTEM -> !requireContext().isMotionReduced
+            BackgroundAnimationMode.ENABLED -> true
+            BackgroundAnimationMode.DISABLED -> false
+        }
 
 
     override fun onResume() {
@@ -235,7 +267,19 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
         mBinding.homeRecommentConent.homeIconFab.post {
             width = mBinding.homeRecommentConent.homeIconFab.measuredWidth
         }
+        weatherView.setDrawable(!isHidden)
     }
+
+    override fun onPause() {
+        super.onPause()
+        weatherView.setDrawable(false)
+    }
+
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        weatherView.setDrawable(!hidden)
+    }
+
 
     override fun initRequestData() {
         currentPage = 0
@@ -256,13 +300,17 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
             mBinding.viewModel = it
             mBinding.homeRecommentMenu.tvZaobaoDayTip.text = DateUtils.convertTime() + "，"+ DateUtils.getCurrentDateFormatted() + "早报内容已为你准备~"
         }
-        //获取天气
-        mViewModel.getCurrentCityWeather("广东省","深圳市","福田区").observerKt {
+
+
+
+
+        mViewModel.getDetailWeekWeather("广东省","深圳市","福田区").observerKt {
+
+
             mBinding.todayWeather = it.observe
 
 
-            //填充天气数据
-            mBinding.homeRecommentMenu.weatherView.setData(generateMockData())
+
 
             //画折线
             mBinding.homeRecommentMenu.weatherView.setLineType(ZzWeatherView.LINE_TYPE_DISCOUNT)
@@ -288,6 +336,8 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
             //延迟绘制 进行渲染
             mBinding.homeRecommentMenu.weatherView.postInvalidateDelayed(200)
 
+            //填充天气数据
+            mBinding.homeRecommentMenu.weatherView.setData(it.forecast_24h.values.toList())
         }
 
 
@@ -773,6 +823,9 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
         mBinding.homeRecommentConent.homeRecommendArticleBody.smoothScrollToPosition(0)
     }
 
+
+
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onMessageEvent(event: MessageEvent) {
         when (event.type) {
@@ -1019,140 +1072,7 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
         }
     }
 
-    private fun generateMockData(): List<WeatherCustomEntity> {
-        val list = mutableListOf<WeatherCustomEntity>()
 
-        val model = WeatherCustomEntity().apply {
-            date = "12/07"
-            week = "昨天"
-            dayWeather = "大雪"
-            dayTemp = 11
-            nightTemp = 5
-            nightWeather = "晴"
-            windOrientation = "西南风"
-            windLevel = "3级"
-            airLevel = AirLevel.EXCELLENT
-        }
-        list.add(model)
-
-        val model1 = WeatherCustomEntity().apply {
-            date = "12/08"
-            week = "今天"
-            dayWeather = "晴"
-            dayTemp = 8
-            nightTemp = 5
-            nightWeather = "晴"
-            windOrientation = "西南风"
-            windLevel = "3级"
-            airLevel = AirLevel.HIGH
-        }
-        list.add(model1)
-
-        val model2 = WeatherCustomEntity().apply {
-            date = "12/09"
-            week = "明天"
-            dayWeather = "晴"
-            dayTemp = 9
-            nightTemp = 8
-            nightWeather = "晴"
-            windOrientation = "东南风"
-            windLevel = "3级"
-            airLevel = AirLevel.POISONOUS
-        }
-        list.add(model2)
-
-        val model3 = WeatherCustomEntity().apply {
-            date = "12/10"
-            week = "周六"
-            dayWeather = "晴"
-            dayTemp = 12
-            nightTemp = 9
-            dayPic = com.knight.kotlin.library_widget.R.drawable.widget_weather_icon_w0
-            nightPic = com.knight.kotlin.library_widget.R.drawable.widget_weather_icon_w1
-            nightWeather = "晴"
-            windOrientation = "东北风"
-            windLevel = "3级"
-            airLevel = AirLevel.GOOD
-        }
-        list.add(model3)
-
-        val model4 = WeatherCustomEntity().apply {
-            date = "12/11"
-            week = "周日"
-            dayWeather = "多云"
-            dayTemp = 13
-            nightTemp = 7
-            dayPic = com.knight.kotlin.library_widget.R.drawable.widget_weather_icon_w2
-            nightPic = com.knight.kotlin.library_widget.R.drawable.widget_weather_icon_w4
-            nightWeather = "多云"
-            windOrientation = "东北风"
-            windLevel = "3级"
-            airLevel = AirLevel.LIGHT
-        }
-        list.add(model4)
-
-        val model5 = WeatherCustomEntity().apply {
-            date = "12/12"
-            week = "周一"
-            dayWeather = "多云"
-            dayTemp = 17
-            nightTemp = 8
-            dayPic = com.knight.kotlin.library_widget.R.drawable.widget_weather_icon_w3
-            nightPic = com.knight.kotlin.library_widget.R.drawable.widget_weather_icon_w4
-            nightWeather = "多云"
-            windOrientation = "西南风"
-            windLevel = "3级"
-            airLevel = AirLevel.LIGHT
-        }
-        list.add(model5)
-
-        val model6 = WeatherCustomEntity().apply {
-            date = "12/13"
-            week = "周二"
-            dayWeather = "晴"
-            dayTemp = 13
-            nightTemp = 6
-            dayPic = com.knight.kotlin.library_widget.R.drawable.widget_weather_icon_w5
-            nightPic = com.knight.kotlin.library_widget.R.drawable.widget_weather_icon_w6
-            nightWeather = "晴"
-            windOrientation = "西南风"
-            windLevel = "3级"
-            airLevel = AirLevel.POISONOUS
-        }
-        list.add(model6)
-
-        val model7 = WeatherCustomEntity().apply {
-            date = "12/14"
-            week = "周三"
-            dayWeather = "晴"
-            dayTemp = 19
-            nightTemp = 10
-            dayPic = com.knight.kotlin.library_widget.R.drawable.widget_weather_icon_w5
-            nightPic = com.knight.kotlin.library_widget.R.drawable.widget_weather_icon_w7
-            nightWeather = "晴"
-            windOrientation = "西南风"
-            windLevel = "3级"
-            airLevel = AirLevel.POISONOUS
-        }
-        list.add(model7)
-
-        val model8 = WeatherCustomEntity().apply {
-            date = "12/15"
-            week = "周四"
-            dayWeather = "晴"
-            dayTemp = 22
-            nightTemp = 4
-            dayPic = com.knight.kotlin.library_widget.R.drawable.widget_weather_icon_w5
-            nightPic = com.knight.kotlin.library_widget.R.drawable.widget_weather_icon_w8
-            nightWeather = "晴"
-            windOrientation = "西南风"
-            windLevel = "3级"
-            airLevel = AirLevel.POISONOUS
-        }
-        list.add(model8)
-
-        return list
-    }
 
 
 
