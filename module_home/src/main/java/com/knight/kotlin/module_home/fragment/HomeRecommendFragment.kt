@@ -11,7 +11,6 @@ import android.os.Build
 import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.view.animation.DecelerateInterpolator
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -20,6 +19,7 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.Group
+import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.flyjingfish.android_aop_core.annotations.SingleClick
@@ -67,11 +67,14 @@ import com.knight.kotlin.library_widget.ZzWeatherView
 import com.knight.kotlin.library_widget.ktx.init
 import com.knight.kotlin.library_widget.skeleton.Skeleton
 import com.knight.kotlin.library_widget.skeleton.SkeletonScreen
+import com.knight.kotlin.library_widget.slidinglayout.SlidingLayout
 import com.knight.kotlin.library_widget.weatherview.ThemeManager
 import com.knight.kotlin.library_widget.weatherview.WeatherView
 import com.knight.kotlin.module_home.R
 import com.knight.kotlin.module_home.adapter.BaiduHotSearchAdapter
+import com.knight.kotlin.module_home.adapter.HeadHourWeatherAdapter
 import com.knight.kotlin.module_home.adapter.HomeArticleAdapter
+import com.knight.kotlin.module_home.adapter.HourWeatherAdapter
 import com.knight.kotlin.module_home.adapter.OfficialAccountAdapter
 import com.knight.kotlin.module_home.databinding.HomeRecommendFragmentBinding
 import com.knight.kotlin.module_home.dialog.HomePushArticleFragment
@@ -109,7 +112,7 @@ import javax.crypto.IllegalBlockSizeException
 @AndroidEntryPoint
 @Route(path = RouteFragment.Home.RecommendFragment)
 class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRecommendVm>(),
-    OnRefreshListener, OnLoadMoreListener {
+    OnRefreshListener, OnLoadMoreListener, SlidingLayout.MenuStatusListener {
     //天气背景
     private lateinit var weatherView: WeatherView
     private var resourceProvider: ResourceProvider? = null
@@ -122,6 +125,18 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
     private val mOfficialAccountAdapter: OfficialAccountAdapter by lazy {
         OfficialAccountAdapter()
     }
+
+    //今日天气头部适配器
+    private val mHourWeatherHeadAdapter:HeadHourWeatherAdapter by lazy {
+                HeadHourWeatherAdapter()
+    }
+
+    //今日小时天气横向布局
+    private val mHourWeatherAdapterr:HourWeatherAdapter by lazy {
+        HourWeatherAdapter()
+    }
+
+    //private lateinit var mHourWeatherHeaderBinding: HomeHourWeatherHeadBinding
 
     //头部View
     private val recommendHeadView: View by lazy {
@@ -189,6 +204,8 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
      * 知识标签
      */
     private var knowledgeLabelList = mutableListOf<String>()
+
+    var mSlideMenuOpenListener :SlideMenuOpenListener? = null
     override fun setThemeColor(isDarkMode: Boolean) {
         if (!isDarkMode) {
             isWithStatusTheme(CacheUtils.getStatusBarIsWithTheme())
@@ -235,20 +252,63 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
             .getInstance(requireContext())
             .weatherThemeDelegate
             .getWeatherView(requireContext())
-        (mBinding.homeRecommentMenu.homeRecommendMenu as RelativeLayout).addView(
+
+        val layoutParams = ConstraintLayout.LayoutParams(
+            ConstraintLayout.LayoutParams.MATCH_PARENT,
+            0
+        )
+
+        layoutParams.topToTop = ConstraintLayout.LayoutParams.PARENT_ID
+        layoutParams.bottomToBottom = ConstraintLayout.LayoutParams.PARENT_ID
+        layoutParams.startToStart = ConstraintLayout.LayoutParams.PARENT_ID
+        layoutParams.endToEnd = ConstraintLayout.LayoutParams.PARENT_ID
+
+        (mBinding.homeRecommentMenu.clSlidmenu as ConstraintLayout).addView(
             weatherView as View,
             0,
-            RelativeLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT
-            )
+             layoutParams
         )
 
-        weatherView.setWeather(
-            WeatherView.WEATHER_KIND_SNOW,
-            true,null
 
+        homeSlidingMenu.menuStatusListener = this@HomeRecommendFragment
+
+
+
+        val concatAdapter = ConcatAdapter(mHourWeatherHeadAdapter, mHourWeatherAdapterr)
+       // homeRecommentMenu.rvHourWeather.adapter = concatAdapter
+        // 设置横向列表的布局管理器
+        homeRecommentMenu.rvHourWeather.init(
+            LinearLayoutManager(requireActivity(),LinearLayoutManager.VERTICAL,false),
+            concatAdapter,
+            true
         )
+    }
+
+    /**
+     *
+     * 根据天气返回背景图片
+     */
+    private fun getBackGroundByWeather(weather:String) : Int {
+        return when (weather) {
+            "晴" -> WeatherView.WEATHER_KIND_CLEAR
+            "多云" -> WeatherView.WEATHER_KIND_CLOUD
+            "阴" -> WeatherView.WEATHER_KIND_CLOUDY
+            "打雷" -> WeatherView.WEATHER_KIND_THUNDER
+            "雷阵雨" -> WeatherView.WEATHER_KIND_THUNDERSTORM
+            "雨夹雪" -> WeatherView.WEATHER_KIND_SLEET
+            "小雨" -> WeatherView.WEATHER_KIND_RAINY
+            "中雨" -> WeatherView.WEATHER_KIND_RAINY
+            "大雨" -> WeatherView.WEATHER_KIND_RAINY
+            "暴雨" -> WeatherView.WEATHER_KIND_RAINY
+            "小雪" -> WeatherView.WEATHER_KIND_SNOW
+            "大雪" -> WeatherView.WEATHER_KIND_SNOW
+            "中雪" -> WeatherView.WEATHER_KIND_SNOW
+            "暴雪" -> WeatherView.WEATHER_KIND_SNOW
+            "冰雹" -> WeatherView.WEATHER_KIND_HAIL
+            "雾"   -> WeatherView.WEATHER_KIND_FOG
+            "薄雾" -> WeatherView.WEATHER_KIND_HAZE
+            else -> WeatherView.WEATHER_KIND_WIND
+        }
     }
 
 
@@ -308,8 +368,18 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
 
 
             mBinding.todayWeather = it.observe
+            weatherView.setWeather(
+                getBackGroundByWeather(it.observe.weather),
+                DateUtils.isDaytime(),null
 
+            )
 
+          //  val weekRiseLists = it.rise.entries.sortedBy { it.key.toInt() }.map { it.value }
+
+            mHourWeatherHeadAdapter.setRisks(listOf(it.rise.entries.sortedBy { it.key.toInt() }.map { it.value }.first()))
+            mHourWeatherAdapterr.setWeatherEveryHour(it.forecast_1h.entries.sortedBy { it.key.toInt() }.map { it.value })
+           // mHourHorizontalWeatherAdapter.submitList(it.forecast_1h.entries.sortedBy { it.key.toInt() }.map { it.value })
+            //HourHorizontalWeatherAdapter.submitList( it.forecast_1h.entries.sortedBy { it.key.toInt() }.map { it.value })
 
 
             //画折线
@@ -396,6 +466,20 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
 //                    com.knight.kotlin.library_base.R.anim.base_scalealpha_slient
 //                )
 //                false
+//            }
+//        }
+//    }
+
+
+    /**
+     * 初始化头像
+     */
+//    private fun initHourWeatherHeaderView () {
+//        if (mBinding.homeRecommentMenu.rvHourWeather.headerCount == 0) {
+//            if (!::mHourWeatherHeaderBinding.isInitialized) {
+//                mHourWeatherHeaderBinding =
+//                    HomeHourWeatherHeadBinding.inflate(LayoutInflater.from(activity))
+//                mBinding.homeRecommentMenu.rvHourWeather.addHeaderView(mHourWeatherHeaderBinding.root)
 //            }
 //        }
 //    }
@@ -1072,9 +1156,18 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
         }
     }
 
+    override fun onOpenStatus(open: Boolean) {
+        mSlideMenuOpenListener?.onOpenStatus(open)
+    }
 
 
-
+    /**
+     *
+     * 侧滑菜单是否打开还是关闭状态
+     */
+    interface SlideMenuOpenListener {
+        fun onOpenStatus(open: Boolean)
+    }
 
 
 }

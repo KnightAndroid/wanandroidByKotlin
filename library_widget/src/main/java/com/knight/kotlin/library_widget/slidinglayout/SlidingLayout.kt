@@ -45,6 +45,8 @@ class SlidingLayout @JvmOverloads constructor(context: Context?, attrs: Attribut
 
     private var isIntercept = false
 
+    var menuStatusListener:MenuStatusListener? = null
+
     init {
         //        gestureDetector=new GestureDetector(getContext(), new GestureDetector.OnGestureListener() {
 //            @Override
@@ -202,18 +204,21 @@ class SlidingLayout @JvmOverloads constructor(context: Context?, attrs: Attribut
         //smoothScrollTo(0, 0)
         smoothScrollToWithDuration(0,500)
         menuViewIsOpen = true
+        menuStatusListener?.onOpenStatus(menuViewIsOpen)
     }
 
     fun closeMenu() {
         //smoothScrollTo(screenWidth, 0)
         smoothScrollToWithDuration(screenWidth,500)
         menuViewIsOpen = false
+        menuStatusListener?.onOpenStatus(menuViewIsOpen)
     }
 
 
     fun closeMenuByCallBack(onAnimationComplete: AnimationCompleteCallback) {
         smoothScrollToWithDuration(screenWidth,200,onAnimationComplete)
         menuViewIsOpen = false
+
     }
 
     // 左边缩放+透明度 右边缩放
@@ -294,5 +299,13 @@ class SlidingLayout @JvmOverloads constructor(context: Context?, attrs: Attribut
 
     override fun setOnTouchListener(l: OnTouchListener?) {
         super.setOnTouchListener(l)
+    }
+
+    /**
+     *
+     * 侧滑菜单是否打开还是关闭状态
+     */
+    interface MenuStatusListener {
+        fun onOpenStatus(open: Boolean)
     }
 }

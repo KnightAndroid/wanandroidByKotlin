@@ -42,7 +42,7 @@ object WeatherPicUtil {
      */
     fun getNightWeatherPic(weatherName: String?): Int {
         when (weatherName) {
-            "晴" -> return com.knight.kotlin.library_widget.R.drawable.widget_weather_icon_w30
+            "晴" -> return com.knight.kotlin.library_widget.R.drawable.widget_weather_icon_w0
             "多云" -> return com.knight.kotlin.library_widget.R.drawable.widget_weather_icon_w31
             "阴" -> return com.knight.kotlin.library_widget.R.drawable.widget_weather_icon_w2
             "雷阵雨" -> return com.knight.kotlin.library_widget.R.drawable.widget_weather_icon_w4
@@ -51,9 +51,12 @@ object WeatherPicUtil {
             "中雨" -> return com.knight.kotlin.library_widget.R.drawable.widget_weather_icon_w8
             "大雨" -> return com.knight.kotlin.library_widget.R.drawable.widget_weather_icon_w9
             "暴雨" -> return com.knight.kotlin.library_widget.R.drawable.widget_weather_icon_w10
+            "小雪" -> return com.knight.kotlin.library_widget.R.drawable.widget_weather_icon_w38
             "大雪" -> return com.knight.kotlin.library_widget.R.drawable.widget_weather_icon_w17
             "中雪" -> return com.knight.kotlin.library_widget.R.drawable.widget_weather_icon_w16
+            "暴雪" -> return com.knight.kotlin.library_widget.R.drawable.widget_weather_icon_w39
             "冰雹" -> return com.knight.kotlin.library_widget.R.drawable.widget_weather_icon_w15
+            "雾"   -> return com.knight.kotlin.library_widget.R.drawable.widget_weather_icon_w37
         }
         return com.knight.kotlin.library_widget.R.drawable.widget_weather_icon_w30
     }

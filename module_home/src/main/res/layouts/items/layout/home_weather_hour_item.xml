@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+   >
+
+
+    <com.yanzhenjie.recyclerview.SwipeRecyclerView
+        android:id="@+id/rv_horizontal_hour_weather"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content">
+    </com.yanzhenjie.recyclerview.SwipeRecyclerView>
+
+</LinearLayout>

@@ -15,7 +15,7 @@
     </data>
 
 
-    <RelativeLayout
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/home_recommend_menu"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -24,15 +24,18 @@
         >
 
 <!--            android:background="@drawable/home_enum_bg"    -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+<!--        <RelativeLayout-->
+<!--            android:id="@+id/rl_recommend_menu"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="vertical">-->
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_slidmenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 >
+
 
 
 <!--                <ImageView-->
@@ -97,12 +100,28 @@
                     android:gravity="center" />
 
 
+                <com.yanzhenjie.recyclerview.SwipeRecyclerView
+                    android:id="@+id/rv_hour_weather"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/home_weather_corners_bg"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_zaobao_day_tip"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                   />
+
+
+
+
                 <com.knight.kotlin.library_widget.ZzWeatherView
                     android:id="@+id/weather_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/home_weather_corners_bg"
-                    app:layout_constraintTop_toBottomOf="@id/tv_zaobao_day_tip"
+                    app:layout_constraintTop_toBottomOf="@id/rv_hour_weather"
                     android:layout_marginTop="10dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
@@ -115,17 +134,25 @@
 <!--                android:scrollbarThumbHorizontal="@drawable/widget_scroll_bar_thumb"-->
 <!--                android:scrollbarTrackHorizontal="@drawable/widget_scroll_bar_thumb"-->
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="600dp"
 
+                    android:layout_below="@id/cl_slidmenu"
+                    app:layout_constraintTop_toBottomOf="@id/weather_view"/>
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 
-        </LinearLayout>
 
 
-    </RelativeLayout>
+
+<!--        </RelativeLayout>-->
+
+
+    </androidx.core.widget.NestedScrollView>
 
 
 </layout>

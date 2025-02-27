@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="model"
+            type="com.knight.kotlin.library_base.entity.WeatherEveryHour" />
+    </data>
+<!--    android:background="@drawable/widget_item_click"-->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:orientation="vertical"
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:gravity="center"
+        >
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="12/07"
+            android:textColor="#929395"
+            android:textSize="14sp" />
+
+
+
+        <ImageView
+            android:id="@+id/iv_day_weather"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="4dp"
+            />
+
+
+        <TextView
+            android:id="@+id/tv_hour_degree"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{model.degree + '°'}"
+            android:textColor="#606061"/>
+
+    </LinearLayout>
+
+</layout>

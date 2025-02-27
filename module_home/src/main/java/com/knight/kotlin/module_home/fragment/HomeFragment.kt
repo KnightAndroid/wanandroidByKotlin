@@ -27,7 +27,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 @Route(path = RouteFragment.Home.HomeFragment)
-class HomeFragment : BaseFragment<HomeFragmentBinding, HomeVm>() {
+class HomeFragment : BaseFragment<HomeFragmentBinding, HomeVm>(),HomeRecommendFragment.SlideMenuOpenListener {
 
 
     /**
@@ -36,10 +36,18 @@ class HomeFragment : BaseFragment<HomeFragmentBinding, HomeVm>() {
     private var mFragments = mutableListOf<Fragment>()
     private val mHomeRecommendFragment by lazy { HomeRecommendFragment() }
     private val mHomeClassifyFragment by lazy { HomeEyeClassifyFragment() }
-
+    private var mSlideMenuOpen :Boolean = false
 
     override fun HomeFragmentBinding.initView() {
         initMagicIndicator()
+        mHomeRecommendFragment.mSlideMenuOpenListener = this@HomeFragment
+//        viewPager.getChildAt(0)?.setOnTouchListener { _, event ->
+//            if (mSlideMenuOpen) {
+//                true  // 禁止滑动
+//            } else {
+//                false // 允许滑动
+//            }
+//        }
     }
 
     /**
@@ -153,6 +161,11 @@ class HomeFragment : BaseFragment<HomeFragmentBinding, HomeVm>() {
 
     override fun reLoadData() {
 
+    }
+
+    override fun onOpenStatus(open: Boolean) {
+        mSlideMenuOpen = open
+        mBinding.viewPager.isUserInputEnabled = !mSlideMenuOpen
     }
 
 }

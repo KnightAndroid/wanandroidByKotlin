@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+<data>
+
+
+    <variable
+        name="model"
+        type="com.knight.kotlin.library_base.entity.Rise" />
+</data>
+
+    <RelativeLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+       >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="24小时预报"
+            android:textSize="16sp"
+            android:textColor="#333333"
+            android:textStyle="bold"
+            android:layout_marginLeft="10dp"
+            android:layout_centerVertical="true"
+            />
+
+
+
+
+        <TextView
+            android:id="@+id/tv_sunrist_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#545455"
+            android:layout_marginRight="15dp"
+            android:drawableLeft="@drawable/home_icon_sunrise"
+            android:layout_toLeftOf="@+id/tv_sunset_time"
+            android:layout_centerVertical="true"
+            android:text="@{model.sunrise}"
+            android:gravity="center"
+            android:textSize="12sp"
+            />
+
+        <TextView
+            android:id="@+id/tv_sunset_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#545455"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:drawableLeft="@drawable/home_icon_sunset"
+            android:layout_centerVertical="true"
+            android:text="@{model.sunset}"
+            android:gravity="center"
+            android:textSize="12sp"/>
+    </RelativeLayout>
+
+
+
+</layout>

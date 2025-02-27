@@ -248,4 +248,26 @@ object DateUtils {
 
     }
 
+    /**
+     *
+     * 判断是否在白天还是晚上
+     */
+    fun isDaytime(): Boolean {
+        val calendar = Calendar.getInstance()
+        val hour = calendar.get(Calendar.HOUR_OF_DAY)
+        return hour in 6..18 // 假设 6:00 到 18:00 为白天
+    }
+
+    /**
+     *
+     * 将20250227110000 转成时分  20250227170000
+     */
+    fun formatTimeToHourMinuter(timeStr: String): String {
+        if (timeStr.length != 14) {
+            return "Invalid time string" // 或者抛出异常，根据你的需求
+        }
+        val hour = timeStr.substring(8, 10)
+        val minute = timeStr.substring(10, 12)
+        return "$hour:$minute"
+    }
 }
