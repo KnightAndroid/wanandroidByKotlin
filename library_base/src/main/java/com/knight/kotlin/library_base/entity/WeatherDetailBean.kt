@@ -13,13 +13,36 @@ import kotlinx.parcelize.Parcelize
  */
 @Parcelize
 data class WeatherDetailBean (
-    val forecast_1h: Map<String,WeatherEveryHour>,
-    val forecast_24h: Map<String,WeatherEveryDay>,
+    val forecast_1h: List<WeatherEveryHour>,
+    val forecast_24h: List<WeatherEveryDay>,
     val index: Index,
     val limit: Limit,
-    val rise: Map<String,Rise>,
+    val tips:TipObserve,
+    val air:WeatherAir,
+    val rise: List<Rise>,
+    val limit_forecast:List<Limit>,
     val observe:TodayWeatherDataBean
 ): Parcelable
+
+
+@Parcelize
+data class WeatherAir(
+    val aqi :Int,
+    val aqi_level:Int,
+    val aqi_name:String,
+    val aqi_url:String,//空气图标
+    val co:String,
+    val no2:String,
+    val o3:String,
+    val pm10:String,
+    @SerializedName("pm2.5") val pmTwoPointFive :String,
+    val pm25:String,
+    val so2:String,
+    val update_time:String,
+    val rank:Int,
+    val total:Int
+): Parcelable
+
 
 @Parcelize
 data class WeatherEveryHour (
@@ -56,7 +79,7 @@ data class WeatherEveryDay(
     @SerializedName("night_wind_direction_code") val nightWindDirectionCode: String,
     @SerializedName("night_wind_power") val nightWindPower: String,
     @SerializedName("night_wind_power_code") val nightWindPowerCode: String,
-    val time: String //日期
+    val time: String, //日期
 ): Parcelable
 
 
@@ -87,52 +110,52 @@ data class Index(
     val umbrella: Umbrella
 ): Parcelable
 @Parcelize
-data class Airconditioner(val detail: String, val info: String, val name: String): Parcelable
+data class Airconditioner(val detail: String, val info: String, val name: String,val url:String): Parcelable
 @Parcelize
-data class Allergy(val detail: String, val info: String, val name: String): Parcelable
+data class Allergy(val detail: String, val info: String, val name: String,val url:String): Parcelable
 @Parcelize
-data class Carwash(val detail: String, val info: String, val name: String): Parcelable
+data class Carwash(val detail: String, val info: String, val name: String,val url:String): Parcelable
 @Parcelize
-data class Chill(val detail: String, val info: String, val name: String): Parcelable
+data class Chill(val detail: String, val info: String, val name: String,val url:String): Parcelable
 @Parcelize
-data class Clothes(val detail: String, val info: String, val name: String): Parcelable
+data class Clothes(val detail: String, val info: String, val name: String,val url:String): Parcelable
 @Parcelize
-data class Cold(val detail: String, val info: String, val name: String): Parcelable
+data class Cold(val detail: String, val info: String, val name: String,val url:String): Parcelable
 @Parcelize
-data class Comfort(val detail: String, val info: String, val name: String): Parcelable
+data class Comfort(val detail: String, val info: String, val name: String,val url:String): Parcelable
 @Parcelize
-data class Diffusion(val detail: String, val info: String, val name: String): Parcelable
+data class Diffusion(val detail: String, val info: String, val name: String,val url:String): Parcelable
 @Parcelize
-data class Dry(val detail: String, val info: String, val name: String): Parcelable
+data class Dry(val detail: String, val info: String, val name: String,val url:String): Parcelable
 @Parcelize
-data class Drying(val detail: String, val info: String, val name: String): Parcelable
+data class Drying(val detail: String, val info: String, val name: String,val url:String): Parcelable
 @Parcelize
-data class Fish(val detail: String, val info: String, val name: String): Parcelable
+data class Fish(val detail: String, val info: String, val name: String,val url:String): Parcelable
 @Parcelize
-data class Heatstroke(val detail: String, val info: String, val name: String): Parcelable
+data class Heatstroke(val detail: String, val info: String, val name: String,val url:String): Parcelable
 @Parcelize
-data class Makeup(val detail: String, val info: String, val name: String): Parcelable
+data class Makeup(val detail: String, val info: String, val name: String,val url:String): Parcelable
 @Parcelize
-data class Mood(val detail: String, val info: String, val name: String): Parcelable
+data class Mood(val detail: String, val info: String, val name: String,val url:String): Parcelable
 @Parcelize
-data class Morning(val detail: String, val info: String, val name: String): Parcelable
+data class Morning(val detail: String, val info: String, val name: String,val url:String): Parcelable
 @Parcelize
-data class Sports(val detail: String, val info: String, val name: String): Parcelable
+data class Sports(val detail: String, val info: String, val name: String,val url:String): Parcelable
 @Parcelize
-data class Sunglasses(val detail: String, val info: String, val name: String): Parcelable
+data class Sunglasses(val detail: String, val info: String, val name: String,val url:String): Parcelable
 @Parcelize
-data class Sunscreen(val detail: String, val info: String, val name: String): Parcelable
+data class Sunscreen(val detail: String, val info: String, val name: String,val url:String): Parcelable
 @Parcelize
-data class Tourism(val detail: String, val info: String, val name: String): Parcelable
+data class Tourism(val detail: String, val info: String, val name: String,val url:String): Parcelable
 @Parcelize
-data class Traffic(val detail: String, val info: String, val name: String): Parcelable
+data class Traffic(val detail: String, val info: String, val name: String,val url:String): Parcelable
 @Parcelize
-data class Ultraviolet(val detail: String, val info: String, val name: String): Parcelable
+data class Ultraviolet(val detail: String, val info: String, val name: String,val url:String): Parcelable
 @Parcelize
-data class Umbrella(val detail: String, val info: String, val name: String): Parcelable
+data class Umbrella(val detail: String, val info: String, val name: String,val url:String): Parcelable
 @Parcelize
 data class Limit(
-    @SerializedName("tail_number") val tailNumber: String
+    @SerializedName("tail_number") val tailNumber: String //限行尾号
 ): Parcelable
 
 @Parcelize
@@ -140,5 +163,13 @@ data class Rise(
     val sunrise: String,
     val sunset: String,
     val time: String
+): Parcelable
+
+
+@Parcelize
+data class TipObserve(
+    @SerializedName("0") val firstTips:String,
+    @SerializedName("1") val secondTips:String,
+    @SerializedName("2") val thirdTips:String
 ): Parcelable
 

@@ -172,7 +172,7 @@ class HomeRecommendVm @Inject constructor(private val mRepo: HomeRecommendRepo) 
     fun getDetailWeekWeather(province:String,
                              city:String,
                              country:String):LiveData<WeatherDetailBean> {
-        return mRepo.getDetailWeekWeather("pc","observe|forecast_1h|forecast_24h|index|alarm|limit|tips|rise",province, city, country).asLiveData()
+        return mRepo.getDetailWeekWeather("xw","h5","air|observe|limit_forecast|forecast_1h|forecast_24h|local_channel|index|alarm|nearby_alarm|limit|tips|rise",province, city, country).asLiveData()
     }
 
 

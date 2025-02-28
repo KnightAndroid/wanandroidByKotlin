@@ -60,7 +60,7 @@ open class BaseRepository {
 
             }
             .catch {
-                failureCallBack?.let { it1 -> it1(it.message) }
+                failureCallBack?.let { it1 -> it1(it.cause?.message + it.message) }
             }
     }
 

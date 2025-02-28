@@ -368,20 +368,20 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
 
 
             mBinding.todayWeather = it.observe
+            mBinding.airWeather = it.air
             weatherView.setWeather(
                 getBackGroundByWeather(it.observe.weather),
                 DateUtils.isDaytime(),null
 
             )
-
-          //  val weekRiseLists = it.rise.entries.sortedBy { it.key.toInt() }.map { it.value }
-
-            mHourWeatherHeadAdapter.setRisks(listOf(it.rise.entries.sortedBy { it.key.toInt() }.map { it.value }.first()))
-            mHourWeatherAdapterr.setWeatherEveryHour(it.forecast_1h.entries.sortedBy { it.key.toInt() }.map { it.value })
-           // mHourHorizontalWeatherAdapter.submitList(it.forecast_1h.entries.sortedBy { it.key.toInt() }.map { it.value })
-            //HourHorizontalWeatherAdapter.submitList( it.forecast_1h.entries.sortedBy { it.key.toInt() }.map { it.value })
-
-
+            mHourWeatherHeadAdapter.setRisks(listOf(it.rise.first()))
+            mHourWeatherAdapterr.setWeatherEveryHour(it.forecast_1h)
+            mBinding.homeRecommentMenu.tvWeatherTodayValue.text = it.forecast_24h.get(1).dayWeather
+            mBinding.homeRecommentMenu.tvWeatherTomorrowValue.text = it.forecast_24h.get(2).dayWeather
+            mBinding.homeRecommentMenu.tvWeatherTodayMinmaxDegree.text = it.forecast_24h.get(1).maxDegree + "/" +it.forecast_24h.get(1).minDegree + "°"
+            mBinding.homeRecommentMenu.tvWeatherTomorrowMinmaxDegree.text = it.forecast_24h.get(2).maxDegree + "/" +it.forecast_24h.get(2).minDegree + "°"
+            setAirLevelBackground(mBinding.homeRecommentMenu.tvTodayAirLevel,it.forecast_24h.get(1).aqiLevel)
+            setAirLevelBackground(mBinding.homeRecommentMenu.tvTomorrowAirLevel,it.forecast_24h.get(2).aqiLevel)
             //画折线
             mBinding.homeRecommentMenu.weatherView.setLineType(ZzWeatherView.LINE_TYPE_DISCOUNT)
 
@@ -407,7 +407,7 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
             mBinding.homeRecommentMenu.weatherView.postInvalidateDelayed(200)
 
             //填充天气数据
-            mBinding.homeRecommentMenu.weatherView.setData(it.forecast_24h.values.toList())
+            mBinding.homeRecommentMenu.weatherView.setData(it.forecast_24h)
         }
 
 
@@ -427,6 +427,44 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
         mViewModel.getOfficialAccount().observerKt {
             setOfficialAccount(it)
         }
+    }
+
+    /**
+     *
+     * 根据空气质量设置背景
+     */
+    fun setAirLevelBackground(textView: TextView,aqiLevel:Int) {
+        when(aqiLevel) {
+            1 -> {
+                textView.setBackgroundResource(com.knight.kotlin.library_widget.R.drawable.widget_best_level_shape)
+                textView.text = "优"
+            }
+            2 -> {
+                textView.setBackgroundResource(com.knight.kotlin.library_widget.R.drawable.widget_good_level_shape)
+                textView.text = "良好"
+            }
+            3 -> {
+                textView.text = "轻度"
+                textView.setBackgroundResource(com.knight.kotlin.library_widget.R.drawable.widget_small_level_shape)
+            }
+            4 -> {
+                textView.setBackgroundResource(com.knight.kotlin.library_widget.R.drawable.widget_mid_level_shape)
+                textView.text = "中度"
+            }
+            5 -> {
+                textView.setBackgroundResource(com.knight.kotlin.library_widget.R.drawable.widget_big_level_shape)
+                textView.text = "重度"
+            }
+            6 -> {
+                textView.setBackgroundResource(com.knight.kotlin.library_widget.R.drawable.widget_poison_level_shape)
+                textView.text = "有毒"
+            }
+            else -> {
+                textView.setBackgroundResource(com.knight.kotlin.library_widget.R.drawable.widget_best_level_shape)
+                textView.text = "优"
+            }
+        }
+
     }
 
     override fun initObserver() {

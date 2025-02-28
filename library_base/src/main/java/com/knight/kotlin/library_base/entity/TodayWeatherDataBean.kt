@@ -20,12 +20,12 @@ data class TodayWeatherDataBean (
     val weather:String,//天气
     val weather_bg_pag:String,
     val weather_code:String,
-    val weather_color:String?,
+    val weather_color:List<String?>,
     val weather_first:String,
     val weather_pag:String,
     val weather_short:String,
     val weather_url:String,
     val wind_direction:String,//风向
     val wind_direction_name:String,
-    val wind_power:String //风向登记
+    val wind_power:String, //风向登记
 ): Parcelable

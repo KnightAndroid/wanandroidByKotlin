@@ -10,6 +10,10 @@
         <variable
             name="todayWeather"
             type="com.knight.kotlin.library_base.entity.TodayWeatherDataBean" />
+
+        <variable
+            name="airWeather"
+            type="com.knight.kotlin.library_base.entity.WeatherAir" />
     </data>
 
     <com.knight.kotlin.library_widget.slidinglayout.SlidingLayout
@@ -30,6 +34,7 @@
                 layout="@layout/home_layout_recommend_menu"
                 app:viewModel="@{viewModel}"
                 app:todayWeather="@{todayWeather}"
+                app:airWeather="@{airWeather}"
                 />
             <include
                 android:id="@+id/home_recomment_conent"

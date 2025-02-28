@@ -18,7 +18,6 @@ import com.knight.kotlin.library_util.DateUtils
 import com.knight.kotlin.library_widget.utils.WeatherPicUtil
 import kotlin.math.max
 import kotlin.math.min
-import kotlin.random.Random
 
 
 /**
@@ -485,14 +484,9 @@ class ZzWeatherView @JvmOverloads constructor(context: Context, attrs: Attribute
                     itemView.setNightImg(WeatherPicUtil.getNightWeatherPic(model.nightWeather))
                 }
 
-            itemView.setWindOri(model.dayWindDirection)
-            itemView.setWindLevel(model.dayWindPower)
-            itemView.setAirLevel( when (Random.nextInt(3)) { // 假设枚举只有3个值
-                0 -> AirLevel.EXCELLENT
-                1 -> AirLevel.GOOD
-                2 -> AirLevel.LIGHT
-                else -> AirLevel.EXCELLENT // 永远不会执行到这里，但为了完整性
-            })
+            itemView.setWindOri(model.nightWindDirection)
+            itemView.setWindLevel(model.nightWindPower)
+            itemView.setAirLevel(getAirLevelByAqiLevel(model.aqiLevel))
             itemView.layoutParams = LinearLayout.LayoutParams(screenWidth / columnNumber, ViewGroup.LayoutParams.WRAP_CONTENT)
             itemView.isClickable = true
             val finalI = i
@@ -505,6 +499,23 @@ class ZzWeatherView @JvmOverloads constructor(context: Context, attrs: Attribute
         }
         addView(llRoot)
         invalidate()
+    }
+
+
+    /**
+     *
+     * 根据等级转换空气质量level
+     */
+    fun getAirLevelByAqiLevel(aqiLevel:Int) :AirLevel{
+        return when(aqiLevel) {
+            1 -> AirLevel.EXCELLENT
+            2 -> AirLevel.GOOD
+            3 -> AirLevel.LIGHT
+            4 -> AirLevel.MIDDLE
+            5 -> AirLevel.HIGH
+            6 -> AirLevel.POISONOUS
+            else -> AirLevel.GOOD
+        }
     }
 
     /**

@@ -21,5 +21,5 @@ internal object BaseUrlConfig {
     //每日微语
     const val ZAO_BAO_URL = "https://xzdx.top/api/"
     //天气预报
-    const val WEATHER_URL = "https://wis.qq.com/"
+    const val WEATHER_URL = "https://i.news.qq.com/"
 }

@@ -232,10 +232,13 @@
      <dimen name="home_tv_user_name_text_size">18sp</dimen>
      <dimen name="home_tv_user_name_margin_top">30dp</dimen>
      <dimen name="home_tv_user_name_margin_left">10dp</dimen>
-     <dimen name="home_tv_degree_text_size">80sp</dimen>
-     <dimen name="home_tv_degree_margin_top">20dp</dimen>
+     <dimen name="home_tv_degree_text_size">96sp</dimen>
+     <dimen name="home_tv_degree_margin_top">30dp</dimen>
      <dimen name="home_tv_degree_margin_left">10dp</dimen>
      <dimen name="home_tv_wind_direction_text_size">16sp</dimen>
      <dimen name="home_tv_wind_direction_margin_bottom">15dp</dimen>
      <dimen name="home_tv_zaobao_title_tip_text_size">14sp</dimen>
+     <dimen name="home_rl_air_quality_margin_top">15dp</dimen>
+     <dimen name="home_rl_air_quality_margin_left">5dp</dimen>
+     <dimen name="home_tv_zaobao_day_tip_margin_top">10dp</dimen>
 </resources>

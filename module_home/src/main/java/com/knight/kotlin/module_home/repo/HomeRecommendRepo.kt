@@ -174,11 +174,11 @@ class HomeRecommendRepo @Inject constructor(): BaseRepository() {
      *
      * 获取一周详细天气
      */
-    fun getDetailWeekWeather(source:String, weather_type:String,
+    fun getDetailWeekWeather(source:String, refer:String,weather_type:String,
                              province:String,
                              city:String,
                              country:String) = request<WeatherDetailBean> ({
-          mHomeRecommendApiService.getDetailWeekWeather(source, weather_type,
+          mHomeRecommendApiService.getDetailWeekWeather(source, refer,weather_type,
               province,
               city,
               country).run{

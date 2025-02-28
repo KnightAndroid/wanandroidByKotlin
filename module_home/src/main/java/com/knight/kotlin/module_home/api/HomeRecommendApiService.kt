@@ -116,7 +116,7 @@ interface HomeRecommendApiService {
     @Headers("Domain-Name:weather")
     @GET("weather/common")
     suspend fun getDetailWeekWeather(
-        @Query("source") source: String, @Query("weather_type") weather_type: String,
+        @Query("source") source: String, @Query("refer") refer:String,@Query("weather_type") weather_type: String,
         @Query("province") province: String,
         @Query("city") city: String,
         @Query("country") country: String
