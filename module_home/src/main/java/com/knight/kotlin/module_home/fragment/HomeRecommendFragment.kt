@@ -371,9 +371,9 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
             mBinding.airWeather = it.air
             weatherView.setWeather(
                 getBackGroundByWeather(it.observe.weather),
-                DateUtils.isDaytime(),null
+                true,null
 
-            )
+            ) //DateUtils.isDaytime()
             mHourWeatherHeadAdapter.setRisks(listOf(it.rise.first()))
             mHourWeatherAdapterr.setWeatherEveryHour(it.forecast_1h)
             mBinding.homeRecommentMenu.tvWeatherTodayValue.text = it.forecast_24h.get(1).dayWeather

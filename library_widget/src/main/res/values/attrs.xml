@@ -1164,4 +1164,16 @@
         <attr name="menuRightMargin" format="dimension"/>
     </declare-styleable>
 
+
+    <declare-styleable name="BarChartView">
+        <attr name="barWidth" format="integer"></attr>
+        <attr name="maxValue" format="integer"></attr>
+        <attr name="unit" format="string"></attr>
+        <attr name="horizentalLineNum" format="integer"></attr>
+        <attr name="barlineColor" format="color"></attr>
+        <attr name="chartColor" format="color"></attr>
+        <attr name="bartextColor" format="color"></attr>
+        <attr name="gradientStartColor" format="color"></attr>//渐变色起始颜色
+        <attr name="gradientEndColor" format="color"></attr>//渐变色结束颜色
+    </declare-styleable>
 </resources>
