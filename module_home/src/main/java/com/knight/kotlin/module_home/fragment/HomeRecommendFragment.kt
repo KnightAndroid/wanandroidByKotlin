@@ -98,9 +98,11 @@ import com.youth.banner.indicator.CircleIndicator
 import dagger.hilt.android.AndroidEntryPoint
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import java.util.Random
 import javax.crypto.BadPaddingException
 import javax.crypto.Cipher
 import javax.crypto.IllegalBlockSizeException
+
 
 
 /**
@@ -373,7 +375,27 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
                 getBackGroundByWeather(it.observe.weather),
                 true,null
 
-            ) //DateUtils.isDaytime()
+            )//DateUtils.isDaytime()
+
+            var verticalList: List<Float>
+            var horizontalList: List<String>
+
+            verticalList = ArrayList()
+            horizontalList = ArrayList()
+
+
+            for (i in 0..9) {
+                horizontalList.add("" + i)
+            }
+
+            val random = Random()
+            while (verticalList.size < 10) {
+                val randomInt: Int = random.nextInt(255)
+                verticalList.add(randomInt.toFloat())
+            }
+
+            mBinding.homeRecommentMenu.scrbarChartView.setHorizontalList(horizontalList)
+            mBinding.homeRecommentMenu.scrbarChartView.setVerticalList(verticalList)
             mHourWeatherHeadAdapter.setRisks(listOf(it.rise.first()))
             mHourWeatherAdapterr.setWeatherEveryHour(it.forecast_1h)
             mBinding.homeRecommentMenu.tvWeatherTodayValue.text = it.forecast_24h.get(1).dayWeather
