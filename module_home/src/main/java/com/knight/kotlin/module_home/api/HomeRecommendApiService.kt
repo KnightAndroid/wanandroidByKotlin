@@ -135,5 +135,8 @@ interface HomeRecommendApiService {
     //        rise 日出
     //https://tianqi.qq.com/
 
-
+    //获取每日降雨量  需要谷歌坐标
+    //https://api.open-meteo.com/v1/forecast?latitude=48.8566&longitude=2.3522&start_date=2025-03-05&end_date=2025-03-11&current_weather=True&daily=precipitation_sum
+    //获取每小时降雨量
+    //https://api.open-meteo.com/v1/forecast?latitude=48.8566&longitude=2.3522&start_date=2025-03-05&end_date=2025-03-11&current_weather=True&hourly=precipitation
 }
