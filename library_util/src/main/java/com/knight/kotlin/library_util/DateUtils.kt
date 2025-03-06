@@ -3,9 +3,12 @@ package com.knight.kotlin.library_util
 import com.knight.kotlin.library_base.util.CacheUtils
 import java.text.ParseException
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
+
 
 /**
  * Author:Knight
@@ -174,12 +177,23 @@ object DateUtils {
 
     /**
      *
-     * 获取当天月日
+     * 获取当天月日 自行传入格式
      */
-    fun getCurrentDateFormatted(): String {
+    fun getCurrentDateFormatted(format:String? = "M月d日"): String {
         val calendar = Calendar.getInstance()  // 获取当前日期
-        val dateFormat = SimpleDateFormat("M月d日", Locale.getDefault())  // 格式化为 "1月1日"
+        val dateFormat = SimpleDateFormat(format, Locale.getDefault())  // 格式化为 "1月1日"
         return dateFormat.format(calendar.time)  // 格式化当前时间并返回
+    }
+
+    /**
+     *
+     * 获取14天后的日期
+     */
+    fun getTwoWeekDaysLater(): String {
+        val calendar = Calendar.getInstance()
+        calendar.add(Calendar.DAY_OF_MONTH, 14) // 添加 14 天
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        return dateFormat.format(calendar.time)
     }
 
 
@@ -269,5 +283,15 @@ object DateUtils {
         val hour = timeStr.substring(8, 10)
         val minute = timeStr.substring(10, 12)
         return "$hour:$minute"
+    }
+
+    /**
+     *
+     * 获取月-日
+     */
+    fun getMonthDay(dateString: String?): String {
+        val date = LocalDate.parse(dateString)
+        val formatter = DateTimeFormatter.ofPattern("MM/dd")
+        return date.format(formatter)
     }
 }

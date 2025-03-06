@@ -188,9 +188,9 @@ class SlidingLayout @JvmOverloads constructor(context: Context?, attrs: Attribut
             if (ev.x > menuWidth) {
                 closeMenu()
                 //拦截右边菜单事件 子view不响应触摸事件
-                // 返回true 拦截子 view touch事件 会 响应自身的 onTouch事件
+                //返回true 拦截子 view touch事件 会 响应自身的 onTouch事件
                 isIntercept = true
-                return false
+                return true
             }
             return false
         }

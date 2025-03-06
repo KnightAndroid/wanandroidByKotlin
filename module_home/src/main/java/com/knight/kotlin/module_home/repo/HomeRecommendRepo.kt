@@ -11,6 +11,7 @@ import com.knight.kotlin.module_home.api.HomeRecommendApiService
 import com.knight.kotlin.module_home.entity.BannerBean
 import com.knight.kotlin.module_home.entity.EveryDayPushArticlesBean
 import com.knight.kotlin.module_home.entity.HomeArticleListBean
+import com.knight.kotlin.module_home.entity.RainFallBean
 import com.knight.kotlin.module_home.entity.TopArticleBean
 import com.knight.kotlin.module_home.entity.ZaoBaoBean
 import javax.inject.Inject
@@ -185,6 +186,26 @@ class HomeRecommendRepo @Inject constructor(): BaseRepository() {
               responseCodeExceptionHandler(0,msg)
               emit(data)
           }
+    }){
+        it?.let { it1 -> toast(it1) }
+    }
+
+
+    /**
+     *
+     * 获取未来两周降雨量
+     */
+    fun getTwoWeekDayRainFall(
+        latitude: Double,
+        longitude:Double,
+        start_date:String,
+        end_date:String,
+        current_weather:Boolean,
+        daily :String
+    )  = request<RainFallBean> ({
+        mHomeRecommendApiService.getTwoWeekDayRainFall(latitude, longitude, start_date, end_date, current_weather, daily).run {
+            emit(this)
+        }
     }){
         it?.let { it1 -> toast(it1) }
     }

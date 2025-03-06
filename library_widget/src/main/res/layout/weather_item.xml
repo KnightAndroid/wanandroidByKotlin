@@ -5,7 +5,8 @@
     android:layout_height="wrap_content"
     android:background="@drawable/widget_item_click"
     android:orientation="horizontal"
-    tools:background="#000">
+    tools:background="#000"
+    android:id="@+id/ll_weather_view">
 
 <!--    <View-->
 <!--        android:id="@+id/line_one"-->

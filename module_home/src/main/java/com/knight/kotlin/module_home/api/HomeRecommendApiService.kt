@@ -8,6 +8,7 @@ import com.knight.kotlin.library_network.bean.BaseResponse
 import com.knight.kotlin.module_home.entity.BannerBean
 import com.knight.kotlin.module_home.entity.EveryDayPushArticlesBean
 import com.knight.kotlin.module_home.entity.HomeArticleListBean
+import com.knight.kotlin.module_home.entity.RainFallBean
 import com.knight.kotlin.module_home.entity.TopArticleBean
 import com.knight.kotlin.module_home.entity.ZaoBaoBean
 import retrofit2.http.Field
@@ -121,6 +122,24 @@ interface HomeRecommendApiService {
         @Query("city") city: String,
         @Query("country") country: String
     ): BaseResponse<WeatherDetailBean>
+
+
+    /**
+     *
+     * 得到未来两周降水量
+     */
+    @Headers("Domain-Name:rainfall")
+    @GET("v1/forecast")
+    suspend fun getTwoWeekDayRainFall(
+        @Query("latitude") latitude: Double,
+        @Query("longitude") longitude:Double,
+        @Query("start_date") start_date:String,
+        @Query("end_date") end_date:String,
+        @Query("current_weather") current_weather:Boolean,
+        @Query("daily") daily :String
+    ) : RainFallBean
+
+
     //天气API
     //https://wis.qq.com/weather/common?source=pc&weather_type=observe&province=%E5%9B%9B%E5%B7%9D&city=%E6%88%90%E9%83%BD&county=%E6%88%90%E5%8D%8E%E5%8C%BA
     //https://wis.qq.com/weather/common?source=pc&weather_type=observe|forecast_1h|forecast_24h|index|alarm|limit|tips|rise&province=%E5%9B%9B%E5%B7%9D&city=%E6%88%90%E9%83%BD&county=%E5%8F%8C%E6%B5%81%E5%8C%BA

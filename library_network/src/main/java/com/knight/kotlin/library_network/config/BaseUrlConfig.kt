@@ -22,4 +22,6 @@ internal object BaseUrlConfig {
     const val ZAO_BAO_URL = "https://xzdx.top/api/"
     //天气预报
     const val WEATHER_URL = "https://i.news.qq.com/"
+    //降雨量
+    const val RAIN_FALL_URL = "https://api.open-meteo.com/"
 }

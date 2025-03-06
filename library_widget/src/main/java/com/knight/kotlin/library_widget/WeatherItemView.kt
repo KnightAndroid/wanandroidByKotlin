@@ -2,6 +2,7 @@ package com.knight.kotlin.library_widget
 
 
 import android.content.Context
+import android.graphics.Color
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.knight.kotlin.library_base.enum.AirLevel
+import com.knight.kotlin.library_base.util.dp2px
 
 
 /**
@@ -31,7 +33,7 @@ class WeatherItemView @JvmOverloads constructor(context: Context, attrs: Attribu
     private var tvAirLevel: TextView? = null
     private var ivDayWeather: ImageView? = null
     private var ivNightWeather: ImageView? = null
-
+    private var root_linearLayout :LinearLayout? =null
     init {
         init(context, attrs)
     }
@@ -40,6 +42,7 @@ class WeatherItemView @JvmOverloads constructor(context: Context, attrs: Attribu
 
     private fun init(context: Context, attrs: AttributeSet?) {
         rootView = LayoutInflater.from(context).inflate(R.layout.weather_item, null)
+        root_linearLayout = rootView!!.findViewById<View>(R.id.ll_weather_view) as LinearLayout
         tvWeek = rootView!!.findViewById<View>(R.id.tv_week) as TextView
         tvDate = rootView!!.findViewById<View>(R.id.tv_date) as TextView
         tvDayWeather = rootView!!.findViewById<View>(R.id.tv_day_weather) as TextView
@@ -180,4 +183,13 @@ class WeatherItemView @JvmOverloads constructor(context: Context, attrs: Attribu
             ttvTemp!!.setMinTemp(min)
         }
     }
+
+    fun setTodayShadowBackground() {
+    // 实例：设置背景为颜色为#3D5AFE，圆角为8dp, 阴影颜色为#66000000，宽度为10dp的背景
+        ShadowDrawable.setShadowDrawable(root_linearLayout!!, Color.parseColor("#00ffffff"), 4.dp2px(),
+            Color.parseColor("#66000000"), 5.dp2px(), 0, 0);
+    }
+
+
+
 }

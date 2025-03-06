@@ -4,13 +4,12 @@ import android.animation.ValueAnimator.AnimatorUpdateListener
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
-import android.graphics.LinearGradient
 import android.graphics.Paint
 import android.graphics.PointF
 import android.graphics.Rect
 import android.graphics.RectF
 import android.graphics.Region
-import android.graphics.Shader
+import android.graphics.Typeface
 import android.os.Build
 import android.text.TextPaint
 import android.util.AttributeSet
@@ -21,11 +20,11 @@ import android.view.ViewConfiguration
 import android.widget.OverScroller
 import androidx.core.view.GestureDetectorCompat
 import androidx.core.view.ViewCompat
+import androidx.core.view.marginLeft
+import androidx.core.view.marginRight
 import androidx.interpolator.view.animation.FastOutLinearInInterpolator
 import java.util.Collections
 import kotlin.math.abs
-import kotlin.math.ceil
-import kotlin.math.floor
 import kotlin.math.min
 
 
@@ -68,14 +67,15 @@ class ScrollBarChartView(context: Context?, attrs: AttributeSet?, defStyleAttr: 
     private var linePaint: Paint? = null
 
     private val noDataColor = "#66FF6933"
-    private val textColor = "#FFBEBEBE"
-    private val lineColor = "#E4E5E6"
-    private val chartColor = "#FF6933"
+    private val textColor = "#8D8D8E"
+    private val titleTextColor = "#333333"
+    private val lineColor = "#8D8D8E"
+    private val chartColor = "#4297E7"
     private val yBgColor = "#66FF6933"
     private val mDuriation = 3000
 
     private var textYpaint: TextPaint? = null
-
+    private lateinit var titleTextPaint:TextPaint
     private var mContext: Context?
 
     private var mAnimator: ChartAnimator? = null
@@ -349,7 +349,7 @@ class ScrollBarChartView(context: Context?, attrs: AttributeSet?, defStyleAttr: 
 
         chartWidth = mWidth - outSpace
         //每个柱子宽度
-        barWidth = 100f
+        barWidth = 120f
         interval = 30f
 
         //柱子开始的横坐标
@@ -406,6 +406,13 @@ class ScrollBarChartView(context: Context?, attrs: AttributeSet?, defStyleAttr: 
         textYpaint!!.textSize = 28f
         textYpaint!!.textAlign = Paint.Align.LEFT
         textYpaint!!.color = Color.parseColor(textColor)
+
+        //绘制标题
+        titleTextPaint = TextPaint()
+        titleTextPaint!!.isAntiAlias = true
+        titleTextPaint!!.textSize = 40f
+        titleTextPaint!!.setTypeface(Typeface.DEFAULT_BOLD)
+        titleTextPaint!!.color = Color.parseColor(titleTextColor)
 
         //Y轴背景
         yBackgroundPaint = Paint()
@@ -560,10 +567,20 @@ class ScrollBarChartView(context: Context?, attrs: AttributeSet?, defStyleAttr: 
             canvas.clipRect(0f, 0f, outSpace, mHeight.toFloat(),Region.Op.REPLACE)
         }
 
-        canvas.drawText("0", 0f, textHeight, textYpaint!!)
+        canvas.drawText("0", 20f, textHeight, textYpaint!!)
 
-        canvas.drawText(middleValue, 0f, textHeight - lineInterval * 2f + 10f, textYpaint!!)
-        canvas.drawText(maxValue, 0f, textHeight - lineInterval * 4f + 10f, textYpaint!!)
+        canvas.drawText(middleValue, 20f, textHeight - lineInterval * 2f + 10f, textYpaint!!)
+        canvas.drawText(maxValue, 30f, textHeight - lineInterval * 4f + 20f, textYpaint!!)
+
+
+        // 获取 middleValue 文本的边界
+        val textBounds = Rect()
+        textYpaint!!.getTextBounds(middleValue, 0, middleValue.length, textBounds)
+        canvas.drawText("(mm)", 20f, textHeight - lineInterval * 4f + 20f + textBounds.height(), textYpaint!!)
+
+
+        canvas.drawText("降雨量", ((mWidth-marginLeft -marginRight )/ 2).toFloat(), textHeight - lineInterval * 4f + 30f, titleTextPaint)
+
     }
 
     /**
@@ -593,13 +610,13 @@ class ScrollBarChartView(context: Context?, attrs: AttributeSet?, defStyleAttr: 
             textHeight - lineInterval * 3f,
             linePaint!!
         )
-        canvas.drawLine(
-            outSpace - 10f,
-            textHeight - lineInterval * 4f,
-            mWidth.toFloat(),
-            textHeight - lineInterval * 4f,
-            linePaint!!
-        )
+//        canvas.drawLine(
+//            outSpace - 10f,
+//            textHeight - lineInterval * 4f,
+//            mWidth.toFloat(),
+//            textHeight - lineInterval * 4f,
+//            linePaint!!
+//        )
     }
 
 
@@ -634,6 +651,7 @@ class ScrollBarChartView(context: Context?, attrs: AttributeSet?, defStyleAttr: 
 
         if (Collections.max(verticalList) > 2) {
             var tempMax = Math.round(Collections.max(verticalList))
+            //这里主要是凑整数10 方便计算 /4
             while (tempMax % 10 != 0) {
                 tempMax++
             }

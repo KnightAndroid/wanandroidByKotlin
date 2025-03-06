@@ -132,6 +132,13 @@ class ZzWeatherView @JvmOverloads constructor(context: Context, attrs: Attribute
                             val nightX = curWI.getTempX() + curWI.width * i
                             val nightY = curWI.getTempY()
                             val tempV = curWI.findViewById<View>(R.id.ttv_day) as TemperatureView
+
+
+
+
+
+
+
                             tempV.setRadius(10)
 
 
@@ -355,7 +362,6 @@ class ZzWeatherView @JvmOverloads constructor(context: Context, attrs: Attribute
 
                         val tempV = child.findViewById<View>(R.id.ttv_day) as TemperatureView
                         val tempV1 = child1.findViewById<View>(R.id.ttv_day) as TemperatureView
-
                         tempV.setRadius(10)
                         tempV1.setRadius(10)
 
@@ -469,6 +475,9 @@ class ZzWeatherView @JvmOverloads constructor(context: Context, attrs: Attribute
             itemView.setMaxTemp(max)
             itemView.setMinTemp(min)
             itemView.setDate(DateUtils.formatDateToMMdd(model.time))
+            if (i == 1) {
+                itemView.setTodayShadowBackground()
+            }
             itemView.setWeek(DateUtils.getDayOfWeek(model.time))
             itemView.setDayTemp(model.maxDegree.toInt())
             itemView.setDayWeather(model.dayWeather)

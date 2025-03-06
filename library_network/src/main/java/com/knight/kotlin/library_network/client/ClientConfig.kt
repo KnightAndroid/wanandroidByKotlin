@@ -78,8 +78,8 @@ class ClientConfig {
         //头部存储
         val headerStorage = HeaderStorage(BaseApp.context)
         return OkHttpClient.Builder()
-            .connectTimeout(15L * 1000L, TimeUnit.MILLISECONDS)
-            .readTimeout(20L * 1000L,TimeUnit.MILLISECONDS)
+            .connectTimeout(30L * 1000L, TimeUnit.MILLISECONDS)
+            .readTimeout(30L * 1000L,TimeUnit.MILLISECONDS)
             .addInterceptor(loggingInterceptor) //日志拦截器
             .addInterceptor(CacheInterceptor()) //缓存拦截器
             .addInterceptor(NetworkInterceptor()) //配合缓存拦截器
@@ -97,6 +97,7 @@ class ClientConfig {
             .setDomain("eye_sub",BaseUrlConfig.OPENEYE_SUB_URL)
             .setDomain("zaobao",BaseUrlConfig.ZAO_BAO_URL)
             .setDomain("weather",BaseUrlConfig.WEATHER_URL)
+            .setDomain("rainfall",BaseUrlConfig.RAIN_FALL_URL)
             .build()
     }
 

@@ -15,6 +15,7 @@ import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_home.entity.BannerBean
 import com.knight.kotlin.module_home.entity.EveryDayPushArticlesBean
 import com.knight.kotlin.module_home.entity.HomeArticleListBean
+import com.knight.kotlin.module_home.entity.RainFallBean
 import com.knight.kotlin.module_home.entity.TopArticleBean
 import com.knight.kotlin.module_home.entity.ZaoBaoBean
 import com.knight.kotlin.module_home.repo.HomeRecommendRepo
@@ -173,6 +174,19 @@ class HomeRecommendVm @Inject constructor(private val mRepo: HomeRecommendRepo) 
                              city:String,
                              country:String):LiveData<WeatherDetailBean> {
         return mRepo.getDetailWeekWeather("xw","h5","air|observe|limit_forecast|forecast_1h|forecast_24h|local_channel|index|alarm|nearby_alarm|limit|tips|rise",province, city, country).asLiveData()
+    }
+
+    /**
+     *
+     * 获取未来两周降雨量
+     */
+    fun getTwoWeekDayRainFall( latitude: Double,
+                               longitude:Double,
+                               start_date:String,
+                               end_date:String,
+                               current_weather:Boolean,
+                               daily :String):LiveData<RainFallBean> {
+        return mRepo.getTwoWeekDayRainFall(latitude, longitude, start_date, end_date, current_weather, daily).asLiveData()
     }
 
 
