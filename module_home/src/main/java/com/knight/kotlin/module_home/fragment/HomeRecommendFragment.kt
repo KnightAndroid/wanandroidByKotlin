@@ -20,10 +20,13 @@ import androidx.annotation.RequiresApi
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.Group
 import androidx.recyclerview.widget.ConcatAdapter
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.flyjingfish.android_aop_core.annotations.SingleClick
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.gson.reflect.TypeToken
 import com.knight.kotlin.library_aop.loginintercept.LoginCheck
 import com.knight.kotlin.library_base.annotation.EventBusRegister
 import com.knight.kotlin.library_base.config.Appconfig
@@ -31,13 +34,17 @@ import com.knight.kotlin.library_base.config.CacheKey
 import com.knight.kotlin.library_base.entity.BaiduContent
 import com.knight.kotlin.library_base.entity.LoginEntity
 import com.knight.kotlin.library_base.entity.UserInfoEntity
+import com.knight.kotlin.library_base.entity.WeatherIndexItem
 import com.knight.kotlin.library_base.enum.BackgroundAnimationMode
 import com.knight.kotlin.library_base.event.MessageEvent
 import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.knight.kotlin.library_base.ktx.SettingsManager
+import com.knight.kotlin.library_base.ktx.fromJson
 import com.knight.kotlin.library_base.ktx.getUser
+import com.knight.kotlin.library_base.ktx.init
 import com.knight.kotlin.library_base.ktx.setOnClick
 import com.knight.kotlin.library_base.ktx.toHtml
+import com.knight.kotlin.library_base.ktx.toJson
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.route.RouteFragment
 import com.knight.kotlin.library_base.util.ArouteUtils
@@ -63,6 +70,7 @@ import com.knight.kotlin.library_util.image.ImageLoader
 import com.knight.kotlin.library_util.startPage
 import com.knight.kotlin.library_util.startPageWithRightAnimate
 import com.knight.kotlin.library_util.toast.ToastUtils
+import com.knight.kotlin.library_widget.SpacesItemDecoration
 import com.knight.kotlin.library_widget.ZzWeatherView
 import com.knight.kotlin.library_widget.ktx.init
 import com.knight.kotlin.library_widget.skeleton.Skeleton
@@ -76,6 +84,7 @@ import com.knight.kotlin.module_home.adapter.HeadHourWeatherAdapter
 import com.knight.kotlin.module_home.adapter.HomeArticleAdapter
 import com.knight.kotlin.module_home.adapter.HourWeatherAdapter
 import com.knight.kotlin.module_home.adapter.OfficialAccountAdapter
+import com.knight.kotlin.module_home.adapter.WeatherIndexAdapter
 import com.knight.kotlin.module_home.databinding.HomeRecommendFragmentBinding
 import com.knight.kotlin.module_home.dialog.HomePushArticleFragment
 import com.knight.kotlin.module_home.entity.BannerBean
@@ -132,10 +141,15 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
     }
 
     //今日小时天气横向布局
-    private val mHourWeatherAdapterr:HourWeatherAdapter by lazy {
+    private val mHourWeatherAdapter:HourWeatherAdapter by lazy {
         HourWeatherAdapter()
     }
 
+    //今日提示
+    private val mWeatherIndexAdapter:WeatherIndexAdapter by lazy {
+        WeatherIndexAdapter()
+
+    }
     //private lateinit var mHourWeatherHeaderBinding: HomeHourWeatherHeadBinding
 
     //头部View
@@ -274,13 +288,23 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
 
 
 
-        val concatAdapter = ConcatAdapter(mHourWeatherHeadAdapter, mHourWeatherAdapterr)
+        val concatAdapter = ConcatAdapter(mHourWeatherHeadAdapter, mHourWeatherAdapter)
        // homeRecommentMenu.rvHourWeather.adapter = concatAdapter
         // 设置横向列表的布局管理器
         homeRecommentMenu.rvHourWeather.init(
             LinearLayoutManager(requireActivity(),LinearLayoutManager.VERTICAL,false),
             concatAdapter,
             true
+        )
+
+        //设置今日提示布局管理器
+        homeRecommentMenu.rvWeatherIndex.init(
+             GridLayoutManager(activity, 2, RecyclerView.HORIZONTAL,false),mWeatherIndexAdapter,true
+        )
+
+        homeRecommentMenu.rvWeatherIndex.addItemDecoration(
+
+            SpacesItemDecoration(10.dp2px())
         )
     }
 
@@ -377,7 +401,7 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
 
 
             mHourWeatherHeadAdapter.setRisks(listOf(it.rise.first()))
-            mHourWeatherAdapterr.setWeatherEveryHour(it.forecast_1h)
+            mHourWeatherAdapter.setWeatherEveryHour(it.forecast_1h)
             mBinding.homeRecommentMenu.tvWeatherTodayValue.text = it.forecast_24h.get(1).dayWeather
             mBinding.homeRecommentMenu.tvWeatherTomorrowValue.text = it.forecast_24h.get(2).dayWeather
             mBinding.homeRecommentMenu.tvWeatherTodayMinmaxDegree.text = it.forecast_24h.get(1).maxDegree + "/" +it.forecast_24h.get(1).minDegree + "°"
@@ -407,9 +431,20 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
             mBinding.homeRecommentMenu.weatherView.setDayAndNightLineColor(Color.BLUE, Color.RED)
             //延迟绘制 进行渲染
             mBinding.homeRecommentMenu.weatherView.postInvalidateDelayed(200)
-
             //填充天气数据
             mBinding.homeRecommentMenu.weatherView.setData(it.forecast_24h)
+
+
+            val indexType = object : TypeToken<Map<String, WeatherIndexItem>>() {}.type
+            val indexMap: Map<String, WeatherIndexItem>? = fromJson(toJson(it.index),indexType)
+            indexMap?.let {
+                val indexList: List<WeatherIndexItem> = it.values.toList()
+                mWeatherIndexAdapter.submitList(indexList)
+            }
+
+
+
+
         }
 
         mViewModel.getTwoWeekDayRainFall(22.5256393434,114.0494336236,DateUtils.getCurrentDateFormatted("yyyy-MM-dd"),DateUtils.getTwoWeekDaysLater(),true,"precipitation_sum").observerKt {

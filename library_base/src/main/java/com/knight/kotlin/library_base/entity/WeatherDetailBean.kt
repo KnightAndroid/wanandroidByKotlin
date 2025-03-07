@@ -85,74 +85,38 @@ data class WeatherEveryDay(
 
 @Parcelize
 data class Index(
-    val airconditioner: Airconditioner,
-    val allergy: Allergy,
-    val carwash: Carwash,
-    val chill: Chill,
-    val clothes: Clothes,
-    val cold: Cold,
-    val comfort: Comfort,
-    val diffusion: Diffusion,
-    val dry: Dry,
-    val drying: Drying,
-    val fish: Fish,
-    val heatstroke: Heatstroke,
-    val makeup: Makeup,
-    val mood: Mood,
-    val morning: Morning,
-    val sports: Sports,
-    val sunglasses: Sunglasses,
-    val sunscreen: Sunscreen,
-    val time: String,
-    val tourism: Tourism,
-    val traffic: Traffic,
-    val ultraviolet: Ultraviolet,
-    val umbrella: Umbrella
+    val airconditioner: WeatherIndexItem,
+    val allergy: WeatherIndexItem,
+    val carwash: WeatherIndexItem,
+    val chill: WeatherIndexItem,
+    val clothes: WeatherIndexItem,
+    val cold: WeatherIndexItem,
+    val comfort: WeatherIndexItem,
+    val diffusion: WeatherIndexItem,
+    val dry: WeatherIndexItem,
+    val drying: WeatherIndexItem,
+    val fish:WeatherIndexItem,
+    val heatstroke: WeatherIndexItem,
+    val makeup: WeatherIndexItem,
+    val mood: WeatherIndexItem,
+    val morning: WeatherIndexItem,
+    val sports: WeatherIndexItem,
+    val sunglasses:WeatherIndexItem,
+    val sunscreen: WeatherIndexItem,
+    val tourism: WeatherIndexItem,
+    val traffic: WeatherIndexItem,
+    val ultraviolet: WeatherIndexItem,
+    val umbrella: WeatherIndexItem
 ): Parcelable
 @Parcelize
-data class Airconditioner(val detail: String, val info: String, val name: String,val url:String): Parcelable
-@Parcelize
-data class Allergy(val detail: String, val info: String, val name: String,val url:String): Parcelable
-@Parcelize
-data class Carwash(val detail: String, val info: String, val name: String,val url:String): Parcelable
-@Parcelize
-data class Chill(val detail: String, val info: String, val name: String,val url:String): Parcelable
-@Parcelize
-data class Clothes(val detail: String, val info: String, val name: String,val url:String): Parcelable
-@Parcelize
-data class Cold(val detail: String, val info: String, val name: String,val url:String): Parcelable
-@Parcelize
-data class Comfort(val detail: String, val info: String, val name: String,val url:String): Parcelable
-@Parcelize
-data class Diffusion(val detail: String, val info: String, val name: String,val url:String): Parcelable
-@Parcelize
-data class Dry(val detail: String, val info: String, val name: String,val url:String): Parcelable
-@Parcelize
-data class Drying(val detail: String, val info: String, val name: String,val url:String): Parcelable
-@Parcelize
-data class Fish(val detail: String, val info: String, val name: String,val url:String): Parcelable
-@Parcelize
-data class Heatstroke(val detail: String, val info: String, val name: String,val url:String): Parcelable
-@Parcelize
-data class Makeup(val detail: String, val info: String, val name: String,val url:String): Parcelable
-@Parcelize
-data class Mood(val detail: String, val info: String, val name: String,val url:String): Parcelable
-@Parcelize
-data class Morning(val detail: String, val info: String, val name: String,val url:String): Parcelable
-@Parcelize
-data class Sports(val detail: String, val info: String, val name: String,val url:String): Parcelable
-@Parcelize
-data class Sunglasses(val detail: String, val info: String, val name: String,val url:String): Parcelable
-@Parcelize
-data class Sunscreen(val detail: String, val info: String, val name: String,val url:String): Parcelable
-@Parcelize
-data class Tourism(val detail: String, val info: String, val name: String,val url:String): Parcelable
-@Parcelize
-data class Traffic(val detail: String, val info: String, val name: String,val url:String): Parcelable
-@Parcelize
-data class Ultraviolet(val detail: String, val info: String, val name: String,val url:String): Parcelable
-@Parcelize
-data class Umbrella(val detail: String, val info: String, val name: String,val url:String): Parcelable
+data class WeatherIndexItem (
+    val detail: String,
+    val info: String,
+    val name: String,
+    val url: String? // url 可能是 null，因此使用 String?
+): Parcelable
+
+
 @Parcelize
 data class Limit(
     @SerializedName("tail_number") val tailNumber: String //限行尾号

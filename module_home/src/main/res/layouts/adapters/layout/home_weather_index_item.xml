@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="model"
+            type="com.knight.kotlin.library_base.entity.WeatherIndexItem" />
+
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="@dimen/home_cl_weather_index_width"
+        android:layout_height="@dimen/home_cl_weather_index_height"
+        android:background="@drawable/home_weather_corners_bg">
+
+
+        <ImageView
+            android:id="@+id/iv_weather_index_icon"
+            android:layout_width="@dimen/home_iv_weather_index_icon_width"
+            android:layout_height="@dimen/home_iv_weather_index_icon_height"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginTop="@dimen/home_iv_weather_index_icon_margin_top"
+            />
+
+
+        <TextView
+            android:id="@+id/tv_weather_index_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/home_tv_weather_index_name_color"
+            app:layout_constraintTop_toBottomOf="@id/iv_weather_index_icon"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginTop="@dimen/home_tv_weather_index_name_margin_top"
+            android:text="@{model.name}"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:maxEms="5"/>
+
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:textColor="@color/home_tv_weather_index_info"
+           app:layout_constraintTop_toBottomOf="@id/tv_weather_index_name"
+           app:layout_constraintLeft_toLeftOf="parent"
+           app:layout_constraintRight_toRightOf="parent"
+           android:layout_marginTop="@dimen/home_tv_weather_index_info_margin_top"
+           android:text="@{model.info}"
+           android:singleLine="true"
+           android:ellipsize="end"
+           android:maxEms="5"
+          />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
+
+

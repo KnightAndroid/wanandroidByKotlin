@@ -241,4 +241,11 @@
      <dimen name="home_rl_air_quality_margin_top">15dp</dimen>
      <dimen name="home_rl_air_quality_margin_left">5dp</dimen>
      <dimen name="home_tv_zaobao_day_tip_margin_top">10dp</dimen>
+     <dimen name="home_tv_weather_index_name_margin_top">10dp</dimen>
+     <dimen name="home_tv_weather_index_info_margin_top">10dp</dimen>
+     <dimen name="home_cl_weather_index_width">100dp</dimen>
+     <dimen name="home_cl_weather_index_height">120dp</dimen>
+     <dimen name="home_iv_weather_index_icon_width">32dp</dimen>
+     <dimen name="home_iv_weather_index_icon_height">32dp</dimen>
+     <dimen name="home_iv_weather_index_icon_margin_top">20dp</dimen>
 </resources>

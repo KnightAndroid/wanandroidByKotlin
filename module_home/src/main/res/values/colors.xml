@@ -50,6 +50,7 @@
      <color name="home_inputlabel_et_color">#333333</color>
      <color name="home_eye_classify_bg_color">#202131</color>
      <color name="home_eyepetizer_category_color">#83838E</color>
-
+     <color name="home_tv_weather_index_name_color">#9E9E9E</color>
+     <color name="home_tv_weather_index_info">#333333</color>
 
 </resources>
