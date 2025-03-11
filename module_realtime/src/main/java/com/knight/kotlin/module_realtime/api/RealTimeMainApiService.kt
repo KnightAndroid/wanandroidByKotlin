@@ -3,7 +3,6 @@ package com.knight.kotlin.module_realtime.api
 import com.knight.kotlin.library_base.entity.BaiduTopRealTimeBean
 import retrofit2.http.GET
 import retrofit2.http.Headers
-import retrofit2.http.Query
 
 /**
  * @Description
@@ -12,12 +11,15 @@ import retrofit2.http.Query
  *
  */
 
-interface RealTimeMainApi {
+interface RealTimeMainApiService {
+
+
+
 
     /**
-     * 根据类型获取热搜数据
+     * 获取主页热搜新闻
      */
     @Headers("Domain-Name:baidu")
-    @GET("board?platform=pc")
-    suspend fun getBaiduRealTimeByTab(@Query("tab") tab : String) : BaiduTopRealTimeBean
+    @GET("board?platform=wise&tab=homepage")
+    suspend fun getMainBaiduRealTime(): BaiduTopRealTimeBean
 }
