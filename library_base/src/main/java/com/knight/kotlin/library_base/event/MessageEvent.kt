@@ -40,6 +40,7 @@ data class MessageEvent(var type: MessageType) {
         return this
     }
 
+
     fun put(value: Boolean): MessageEvent {
         bundle.putBoolean(KEY_BOOL, value)
         return this
@@ -173,7 +174,9 @@ data class MessageEvent(var type: MessageType) {
         //页面重建
         RecreateMain,
         //开眼入口
-        OpenEyepetizer
+        OpenEyepetizer,
+        //百度热搜页面滑动AppBar监听
+        AppBarOffsetChanged
     }
 
 }

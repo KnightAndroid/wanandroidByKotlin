@@ -137,6 +137,16 @@ fun getScreenWidth():Int {
  */
 val Context.screenHeightWithStatus
     get() = resources.displayMetrics.heightPixels + StatusBarUtils.getStatusBarHeight(this)
+
+
+/**
+ *
+ * 状态栏高度
+ */
+val Context.statusHeight
+    get() = StatusBarUtils.getStatusBarHeight(this)
+
+
 /**
  * 转换html字符串
  *

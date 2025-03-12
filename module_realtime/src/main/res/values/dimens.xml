@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="realtime_main_tab_height">48dp</dimen>
-
+    <dimen name="realtime_home_title_text_size">18sp</dimen>
+    <dimen name="realtime_home_iv_back_margin_left">10dp</dimen>
 </resources>

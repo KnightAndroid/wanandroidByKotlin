@@ -13,7 +13,11 @@
     <com.scwang.smart.refresh.layout.SmartRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/smartfresh">
+        android:id="@+id/realtime_home_smartfresh">
+
+        <com.scwang.smart.refresh.header.ClassicsHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:id="@+id/scrollerLayout"
@@ -74,14 +78,13 @@
                     android:id="@+id/realtime_tabLayout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:tabIndicatorHeight="0dp"
-                    app:tabGravity="start"
-                    app:tabRippleColor="@null"
-                    android:layout_marginStart="12dp"
-                    android:layout_marginEnd="12dp"
-                    app:tabMode="auto"
-                    app:tabSelectedTextColor="@color/white" />
 
+                    app:tabGravity="start"
+
+                    app:tabMode="auto"
+                    app:tabSelectedTextColor="@android:color/white" />
+<!--                app:tabRippleColor="@null"-->
+<!--                app:tabIndicatorHeight="0dp"-->
                 <com.knight.kotlin.library_widget.NestedScrollableHost
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
