@@ -11,5 +11,6 @@
     <dimen name="realtime_tv_rank_margin_left">5dp</dimen>
     <dimen name="realtime_tv_title_margin_left">10dp</dimen>
     <dimen name="realtime_iv_icon_margin_left">5dp</dimen>
-    <dimen name="realtime_ct_item_height">40dp</dimen>
+    <dimen name="realtime_ct_item_height">44dp</dimen>
+    <dimen name="realtime_tv_title_text_size">16sp</dimen>
 </resources>
