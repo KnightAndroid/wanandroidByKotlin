@@ -78,6 +78,6 @@ class RealTimeMainFragment : BaseFragment<RealtimeMainFragmentBinding, RealTimeH
     }
 
     override fun RealtimeMainFragmentBinding.initView() {
-        rvHotList.init(LinearLayoutManager(requireActivity()), mRealTimeHotMainAdapter, false)
+        rvHotList.init(LinearLayoutManager(requireActivity()), mRealTimeHotMainAdapter,false)
     }
 }
