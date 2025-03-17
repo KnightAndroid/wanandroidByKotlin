@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="realtime_tab_select_color">#FBADAB</color>
+    <color name="realtime_tv_title_color">#333333</color>
 </resources>

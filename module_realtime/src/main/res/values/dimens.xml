@@ -3,4 +3,13 @@
     <dimen name="realtime_main_tab_height">48dp</dimen>
     <dimen name="realtime_home_title_text_size">18sp</dimen>
     <dimen name="realtime_home_iv_back_margin_left">10dp</dimen>
+    <dimen name="realtime_home_rv_top_head_height">60dp</dimen>
+    <dimen name="realtime_tv_tealtime_title_text_size">18sp</dimen>
+    <dimen name="realtime_home_rv_bottom_head_height">60dp</dimen>
+    <dimen name="realtime_iv_icon_width">24dp</dimen>
+    <dimen name="realtime_iv_icon_height">24dp</dimen>
+    <dimen name="realtime_tv_rank_margin_left">5dp</dimen>
+    <dimen name="realtime_tv_title_margin_left">10dp</dimen>
+    <dimen name="realtime_iv_icon_margin_left">5dp</dimen>
+    <dimen name="realtime_ct_item_height">40dp</dimen>
 </resources>

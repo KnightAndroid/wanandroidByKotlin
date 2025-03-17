@@ -6,4 +6,5 @@
     <color name="base_cl_article_item_color">#303030</color>
     <color name="base_tv_title_color">#D3D3D3</color>
     <color name="base_item_bottom_view">#000000</color>
+    <color name="base_activity_bg">#D3D3D3</color>
 </resources>

@@ -17,4 +17,5 @@
     <color name="base_tv_superchapter_color">#999999</color>
     <color name="base_item_tv_time_color">#999999</color>
     <color name="base_item_bottom_view">#EFF2F5</color>
+    <color name="base_activity_bg">#f7f7f7</color>
 </resources>
