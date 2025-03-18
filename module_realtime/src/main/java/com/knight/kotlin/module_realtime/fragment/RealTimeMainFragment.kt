@@ -5,10 +5,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.knight.kotlin.library_base.route.RouteFragment
 import com.knight.kotlin.library_widget.ktx.init
-import com.knight.kotlin.module_realtime.adapter.RealTimeHotMainAdapter
+import com.knight.kotlin.module_realtime.R
+import com.knight.kotlin.module_realtime.adapter.HotRankMainAdapter
+import com.knight.kotlin.module_realtime.adapter.HotRankNovelMovieAdapter
 import com.knight.kotlin.module_realtime.databinding.RealtimeMainFragmentBinding
 import com.knight.kotlin.module_realtime.databinding.RealtimeTabBoardFootItemBinding
 import com.knight.kotlin.module_realtime.databinding.RealtimeTabBoardHeadItemBinding
+import com.knight.kotlin.module_realtime.enum.HotListEnum
 import com.knight.kotlin.module_realtime.vm.RealTimeHomeVm
 import com.wyjson.router.annotation.Route
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,13 +29,22 @@ import dagger.hilt.android.AndroidEntryPoint
 class RealTimeMainFragment : BaseFragment<RealtimeMainFragmentBinding, RealTimeHomeVm>() {
 
     //热搜适配器
-    private val mRealTimeHotMainAdapter: RealTimeHotMainAdapter by lazy { RealTimeHotMainAdapter() }
-
-
-
-    private lateinit var mHeaderBinding: RealtimeTabBoardHeadItemBinding
-    private lateinit var mFootBinding: RealtimeTabBoardFootItemBinding
-
+    private val mRealTimeHotMainAdapter: HotRankMainAdapter by lazy { HotRankMainAdapter(HotListEnum.REALTIME) }
+    //热梗适配器
+    private val mPhraseMainAdapter: HotRankMainAdapter by lazy { HotRankMainAdapter(HotListEnum.PHRASE) }
+    //小说适配器
+    private val mNovelAdapter:HotRankNovelMovieAdapter by lazy {HotRankNovelMovieAdapter()}
+    //热搜头部 尾部
+    private lateinit var mRealTimeHeaderBinding: RealtimeTabBoardHeadItemBinding
+    private lateinit var mRealTimeFootBinding: RealtimeTabBoardFootItemBinding
+    private lateinit var mNovelHeadBinding: RealtimeTabBoardHeadItemBinding
+    private lateinit var mNovelFootBinding: RealtimeTabBoardFootItemBinding
+    //热梗榜
+    private lateinit var mPhraseHeaderBinding: RealtimeTabBoardHeadItemBinding
+    private lateinit var mPhraseFootBinding: RealtimeTabBoardFootItemBinding
+    //小说榜
+    private lateinit var mNovelHeaderBinding: RealtimeTabBoardHeadItemBinding
+    private lateinit var mNoveleFootBinding: RealtimeTabBoardFootItemBinding
     override fun setThemeColor(isDarkMode: Boolean) {
 
     }
@@ -43,8 +55,15 @@ class RealTimeMainFragment : BaseFragment<RealtimeMainFragmentBinding, RealTimeH
 
     override fun initRequestData() {
         mViewModel.getMainBaiduRealTime().observerKt {
+
+            it.cards.get(0).content.addAll(0,it.cards.get(0).topContent)
             mRealTimeHotMainAdapter.submitList(it.cards.get(0).content)
-            initHeadTabBoard()
+
+            mPhraseMainAdapter.submitList(it.cards.get(1).content)
+
+            mNovelAdapter.submitList(it.cards.get(2).content)
+            initHeadFootTabBoard()
+
         }
     }
 
@@ -52,25 +71,63 @@ class RealTimeMainFragment : BaseFragment<RealtimeMainFragmentBinding, RealTimeH
      *
      * 初始化个榜单头部
      */
-    private fun initHeadTabBoard() {
+    private fun initHeadFootTabBoard() {
         if (mBinding.rvHotList.headerCount == 0) {
-            if (!::mHeaderBinding.isInitialized) {
-                mHeaderBinding =
+            if (!::mRealTimeHeaderBinding.isInitialized) {
+                mRealTimeHeaderBinding =
                     RealtimeTabBoardHeadItemBinding.inflate(LayoutInflater.from(requireActivity()))
-               mBinding.rvHotList.addHeaderView(mHeaderBinding.root)
+               mBinding.rvHotList.addHeaderView(mRealTimeHeaderBinding.root)
+                mRealTimeHeaderBinding.ivRealtimeIcon.setBackgroundResource(R.drawable.realtime_hot_icon)
+               mRealTimeHeaderBinding.tvTealtimeTitle.text = "热搜榜"
+            }
+
+
+        }
+
+        if (mBinding.rvHotList.footerCount == 0) {
+            if (!::mRealTimeFootBinding.isInitialized) {
+                mRealTimeFootBinding = RealtimeTabBoardFootItemBinding.inflate(LayoutInflater.from(requireActivity()))
+                mBinding.rvHotList.addFooterView(mRealTimeFootBinding.root)
+            }
+
+        }
+
+        if (mBinding.rvPhraseList.headerCount == 0) {
+            if (!::mPhraseHeaderBinding.isInitialized) {
+                mPhraseHeaderBinding =
+                    RealtimeTabBoardHeadItemBinding.inflate(LayoutInflater.from(requireActivity()))
+                mBinding.rvPhraseList.addHeaderView(mPhraseHeaderBinding.root)
+                mPhraseHeaderBinding.ivRealtimeIcon.setBackgroundResource(R.drawable.realtime_phrase_icon)
+                mPhraseHeaderBinding.tvTealtimeTitle.text = "热梗榜"
             }
         }
 
-       // mBinding.rvHotList.addItemDecoration(RecycleviewHeaderItemDecoration(mHeaderBinding.root))
+        if (mBinding.rvPhraseList.footerCount == 0) {
+            if (!::mPhraseFootBinding.isInitialized) {
+                mPhraseFootBinding = RealtimeTabBoardFootItemBinding.inflate(LayoutInflater.from(requireActivity()))
+                mBinding.rvPhraseList.addFooterView(mPhraseFootBinding.root)
+            }
+
+        }
 
 
-//        if (mBinding.rvHotList.footerCount == 0) {
-//            if (!::mFootBinding.isInitialized) {
-//                mFootBinding =
-//                    RealtimeTabBoardFootItemBinding.inflate(LayoutInflater.from(requireActivity()))
-//                mBinding.rvHotList.addFooterView(mHeaderBinding.root)
-//            }
-//        }
+        if (mBinding.rvNovelList.headerCount == 0) {
+            if (!::mNovelHeadBinding.isInitialized) {
+                mNovelHeadBinding =
+                    RealtimeTabBoardHeadItemBinding.inflate(LayoutInflater.from(requireActivity()))
+                mBinding.rvNovelList.addHeaderView(mNovelHeadBinding.root)
+                mNovelHeadBinding.ivRealtimeIcon.setBackgroundResource(R.drawable.realtime_novel_icon)
+                mNovelHeadBinding.tvTealtimeTitle.text = "小说榜"
+            }
+        }
+
+        if (mBinding.rvNovelList.footerCount == 0) {
+            if (!::mNovelFootBinding.isInitialized) {
+                mNovelFootBinding= RealtimeTabBoardFootItemBinding.inflate(LayoutInflater.from(requireActivity()))
+                mBinding.rvNovelList.addFooterView(mNovelFootBinding.root)
+            }
+
+        }
     }
 
     override fun reLoadData() {
@@ -79,5 +136,7 @@ class RealTimeMainFragment : BaseFragment<RealtimeMainFragmentBinding, RealTimeH
 
     override fun RealtimeMainFragmentBinding.initView() {
         rvHotList.init(LinearLayoutManager(requireActivity()), mRealTimeHotMainAdapter,false)
+        rvPhraseList.init(LinearLayoutManager(requireActivity()),mPhraseMainAdapter,false)
+        rvNovelList.init(LinearLayoutManager(requireActivity()),mNovelAdapter,false)
     }
 }

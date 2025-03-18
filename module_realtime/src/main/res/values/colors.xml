@@ -2,4 +2,8 @@
 <resources>
     <color name="realtime_tab_select_color">#FBADAB</color>
     <color name="realtime_tv_title_color">#333333</color>
+    <color name="realtime_tv_foot_title_color">#333333</color>
+    <color name="realtime_tv_desc_color">#999999</color>
+    <color name="realtime_tv_novel_movie_title_color">#333333</color>
+    <color name="realtime_tv_novel_movie_desc_color">#999999</color>
 </resources>

@@ -47,7 +47,7 @@ data class BaiduCardBean(
     val moreAppUrl: String,
     val moreUrl: String,
     val text: String,
-    val topContent: List<BaiduTopContent>,
+    val topContent: List<BaiduContent>,
     val typeName: String,
     val updateTime: String
 ): Parcelable
@@ -71,7 +71,8 @@ data class BaiduContent(
     val hotChange: String,
     val hotScore: String,
     val hotTag: String,
-    val hotTagImg: String,
+    val hotTagImg: String?,
+    val expression:String?,
     val img: String,
     val index: Int,
     val indexUrl: String,
@@ -81,19 +82,4 @@ data class BaiduContent(
     val url: String,
     val word: String
 ): Parcelable
-@Parcelize
-data class BaiduTopContent(
-    val appUrl: String,
-    val desc: String,
-    val hotChange: String,
-    val hotScore: String,
-    val hotTag: String,
-    val img: String,
-    val index: Int,
-    val indexUrl: String,
-    val query: String,
-    val rawUrl: String,
-    val show: List<String>,
-    val url: String,
-    val word: String
-): Parcelable
+
