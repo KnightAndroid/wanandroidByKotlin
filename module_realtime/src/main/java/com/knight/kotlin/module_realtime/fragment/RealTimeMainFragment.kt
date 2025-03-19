@@ -34,6 +34,8 @@ class RealTimeMainFragment : BaseFragment<RealtimeMainFragmentBinding, RealTimeH
     private val mPhraseMainAdapter: HotRankMainAdapter by lazy { HotRankMainAdapter(HotListEnum.PHRASE) }
     //小说适配器
     private val mNovelAdapter:HotRankNovelMovieAdapter by lazy {HotRankNovelMovieAdapter()}
+    //电影适配器
+    private val mMovieAdapter:HotRankNovelMovieAdapter by lazy {HotRankNovelMovieAdapter()}
     //热搜头部 尾部
     private lateinit var mRealTimeHeaderBinding: RealtimeTabBoardHeadItemBinding
     private lateinit var mRealTimeFootBinding: RealtimeTabBoardFootItemBinding
@@ -45,6 +47,9 @@ class RealTimeMainFragment : BaseFragment<RealtimeMainFragmentBinding, RealTimeH
     //小说榜
     private lateinit var mNovelHeaderBinding: RealtimeTabBoardHeadItemBinding
     private lateinit var mNoveleFootBinding: RealtimeTabBoardFootItemBinding
+    //电影榜
+    private lateinit var mMovieHeaderBinding: RealtimeTabBoardHeadItemBinding
+    private lateinit var mMovieFootBinding: RealtimeTabBoardFootItemBinding
     override fun setThemeColor(isDarkMode: Boolean) {
 
     }
@@ -62,6 +67,8 @@ class RealTimeMainFragment : BaseFragment<RealtimeMainFragmentBinding, RealTimeH
             mPhraseMainAdapter.submitList(it.cards.get(1).content)
 
             mNovelAdapter.submitList(it.cards.get(2).content)
+
+            mMovieAdapter.submitList(it.cards.get(3).content)
             initHeadFootTabBoard()
 
         }
@@ -128,6 +135,25 @@ class RealTimeMainFragment : BaseFragment<RealtimeMainFragmentBinding, RealTimeH
             }
 
         }
+
+
+        if (mBinding.rvMovieList.headerCount == 0) {
+            if (!::mMovieHeaderBinding.isInitialized) {
+                mMovieHeaderBinding =
+                    RealtimeTabBoardHeadItemBinding.inflate(LayoutInflater.from(requireActivity()))
+                mBinding.rvMovieList.addHeaderView(mMovieHeaderBinding.root)
+                mMovieHeaderBinding.ivRealtimeIcon.setBackgroundResource(R.drawable.realtime_movie_icon)
+                mMovieHeaderBinding.tvTealtimeTitle.text = "电影榜"
+            }
+        }
+
+        if (mBinding.rvMovieList.footerCount == 0) {
+            if (!::mMovieFootBinding.isInitialized) {
+                mMovieFootBinding= RealtimeTabBoardFootItemBinding.inflate(LayoutInflater.from(requireActivity()))
+                mBinding.rvMovieList.addFooterView(mMovieFootBinding.root)
+            }
+
+        }
     }
 
     override fun reLoadData() {
@@ -138,5 +164,6 @@ class RealTimeMainFragment : BaseFragment<RealtimeMainFragmentBinding, RealTimeH
         rvHotList.init(LinearLayoutManager(requireActivity()), mRealTimeHotMainAdapter,false)
         rvPhraseList.init(LinearLayoutManager(requireActivity()),mPhraseMainAdapter,false)
         rvNovelList.init(LinearLayoutManager(requireActivity()),mNovelAdapter,false)
+        rvMovieList.init(LinearLayoutManager(requireActivity()),mMovieAdapter,false)
     }
 }

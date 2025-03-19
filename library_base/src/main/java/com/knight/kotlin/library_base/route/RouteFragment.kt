@@ -109,6 +109,7 @@ object RouteFragment {
         private const val REALTIME = "/module_realtime"
         const val RealTimeHomeFragment = "$REALTIME/RealTimeHomeFragment"
         const val RealTimeMainFragment = "$REALTIME/RealTimeMainFragment"
+        const val RealTimeTextFragment = "$REALTIME/RealTimeTextFragment"
 
     }
 

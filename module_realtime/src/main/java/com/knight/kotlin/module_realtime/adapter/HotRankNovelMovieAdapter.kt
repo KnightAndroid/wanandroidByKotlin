@@ -41,8 +41,16 @@ class HotRankNovelMovieAdapter: BaseQuickAdapter<BaiduContent, HotRankNovelMovie
             } else {
                 holder.binding.tvRankPosition.setBackgroundResource(R.drawable.hot_rank_novel_third)
             }
-            holder.binding.tvNovelMovieTitle.setText(query)
+            holder.binding.tvNovelMovieTitle.setText(word)
             holder.binding.tvNovelMovieDesc.setText(show.get(0))
+            holder.binding.tvRankHotScore.setText(hotScore)
+            if (hotChange == "up") {
+                 holder.binding.ivRankTrend.setBackgroundResource(R.drawable.realtime_hotchange_up)
+            } else if (hotChange == "down") {
+                holder.binding.ivRankTrend.setBackgroundResource(R.drawable.realtime_hotchange_down)
+            } else {
+                holder.binding.ivRankTrend.setBackgroundResource(R.drawable.realtime_hotchange_same)
+            }
         }
     }
 

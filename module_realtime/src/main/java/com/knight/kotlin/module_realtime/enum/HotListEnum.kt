@@ -16,5 +16,17 @@ enum class HotListEnum {
     /**
      * 热梗
      */
-    PHRASE
+    PHRASE,
+
+    /**
+     *
+     * 民生
+     */
+    LIVELIHOOD,
+
+    /**
+     *
+     * 财经
+     */
+    FINANCE
 }

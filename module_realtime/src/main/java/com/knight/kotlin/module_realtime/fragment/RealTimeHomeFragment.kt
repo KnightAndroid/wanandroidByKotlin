@@ -1,6 +1,8 @@
 package com.knight.kotlin.module_realtime.fragment
 
 import android.graphics.Color
+import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayoutMediator
 import com.knight.kotlin.library_base.annotation.EventBusRegister
 import com.knight.kotlin.library_base.config.EventBusKeys
@@ -13,6 +15,7 @@ import com.knight.kotlin.library_base.util.dp2px
 import com.knight.kotlin.library_util.ThreadUtils
 import com.knight.kotlin.library_util.ViewInitUtils
 import com.knight.kotlin.module_realtime.databinding.RealtimeHomeFragmentBinding
+import com.knight.kotlin.module_realtime.enum.HotListEnum
 import com.knight.kotlin.module_realtime.vm.RealTimeHomeVm
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener
@@ -34,7 +37,7 @@ import kotlin.math.abs
 @Route(path = RouteFragment.RealTime.RealTimeHomeFragment)
 class RealTimeHomeFragment : BaseFragment<RealtimeHomeFragmentBinding, RealTimeHomeVm>(),OnRefreshListener{
 
-    private val mFragments = mutableListOf<RealTimeMainFragment>()
+    private val mFragments = mutableListOf<Fragment>()
 
     override fun setThemeColor(isDarkMode: Boolean) {
 
@@ -49,8 +52,19 @@ class RealTimeHomeFragment : BaseFragment<RealtimeHomeFragmentBinding, RealTimeH
             var  mNavDatas = it.tabBoard
 
             for (index  in 0 until  it.tabBoard.size) {
+                if (it.tabBoard.get(index).typeName == "homepage") {
+                    mFragments.add(RealTimeMainFragment())
+                } else if (it.tabBoard.get(index).typeName == HotListEnum.REALTIME.name.lowercase()
+                    || it.tabBoard.get(index).typeName == HotListEnum.FINANCE.name.lowercase()
+                    || it.tabBoard.get(index).typeName == HotListEnum.PHRASE.name.lowercase()
+                    || it.tabBoard.get(index).typeName == HotListEnum.LIVELIHOOD.name.lowercase()){
+                    mFragments.add(RealTimeTextFragment().also { fragment ->
+                        fragment.arguments = bundleOf("typeName" to it.tabBoard.get(index).typeName.uppercase())
+                    })
+                } else {
+                    mFragments.add(RealTimeMainFragment())
+                }
 
-                mFragments.add(RealTimeMainFragment())
 
 //                try {
 //                    CacheUtils.saveCacheValue(it.item_list[index].nav.type, Json.encodeToString(ListSerializer(EyeMetroCard.serializer(JsonObject.serializer())),it.item_list[index].card_list.get(0).card_data?.body?.metro_list!!))

@@ -1,4 +1,5 @@
 <resources>
     <string name="realtime_app_name">module_realtime</string>
     <string name="realtime_home_title">百度热搜</string>
+    <string name="realtime_tv_hot_title">热搜指数</string>
 </resources>

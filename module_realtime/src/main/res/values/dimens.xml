@@ -23,4 +23,34 @@
     <dimen name="realtime_realtime_tv_rank_position_text_size">14sp</dimen>
     <dimen name="realtime_realtime_tv_rank_position_padding_left">5dp</dimen>
     <dimen name="realtime_novel_movie_desc_text_size">14sp</dimen>
+    <dimen name="realtime_tv_rank_hot_score_margin_right">5dp</dimen>
+    <dimen name="realtime_tv_rank_hot_score_title_margin_top">5dp</dimen>
+    <dimen name="realtime_tv_rank_hot_score_text_size">12sp</dimen>
+    <dimen name="realtime_ll_teleplay_car_height">56dp</dimen>
+    <dimen name="realtime_ll_teleplay_car_margin_left">10dp</dimen>
+    <dimen name="realtime_ll_teleplay_car_margin_right">10dp</dimen>
+    <dimen name="realtime_ll_teleplay_car_margin_top">10dp</dimen>
+    <dimen name="realtime_ll_teleplay_car_margin_bottom">10dp</dimen>
+    <dimen name="realtime_ll_teleplay_car_padding_top">5dp</dimen>
+    <dimen name="realtime_ll_teleplay_car_padding_left">10dp</dimen>
+    <dimen name="realtime_ll_teleplay_car_padding_right">10dp</dimen>
+    <dimen name="realtime_ll_teleplay_car_padding_bottom">5dp</dimen>
+    <dimen name="realtime_rl_teleplay_margin_left">5dp</dimen>
+    <dimen name="realtime_rl_teleplay_margin_right">5dp</dimen>
+    <dimen name="realtime_iv_teleplay_height">25dp</dimen>
+    <dimen name="realtime_iv_teleplay_width">25dp</dimen>
+    <dimen name="realtime_iv_teleplay_margin_left">10dp</dimen>
+    <dimen name="realtime_rl_car_margin_left">5dp</dimen>
+    <dimen name="realtime_rl_car_margin_right">5dp</dimen>
+    <dimen name="realtime_iv_car_height">25dp</dimen>
+    <dimen name="realtime_iv_car_width">25dp</dimen>
+    <dimen name="realtime_iv_car_margin_left">10dp</dimen>
+
+    <dimen name="realtime_iv_teleplay_arrow_width">16dp</dimen>
+    <dimen name="realtime_iv_teleplay_arrow_height">16dp</dimen>
+    <dimen name="realtime_iv_teleplay_arrow_margin_right">10dp</dimen>
+
+    <dimen name="realtime_iv_car_arrow_width">16dp</dimen>
+    <dimen name="realtime_iv_car_arrow_height">16dp</dimen>
+    <dimen name="realtime_iv_car_arrow_margin_right">10dp</dimen>
 </resources>

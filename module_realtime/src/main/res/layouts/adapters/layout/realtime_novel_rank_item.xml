@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -15,7 +14,7 @@
         android:layout_height="100dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         android:layout_marginLeft="10dp"
         android:scaleType="centerCrop"
         />
@@ -33,13 +32,16 @@
 
 
     <RelativeLayout
-        android:layout_width="wrap_content"
+        android:id="@+id/rl_hotchange_title"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="@id/iv_realtime_url"
         app:layout_constraintBottom_toBottomOf="@id/iv_realtime_url"
-        app:layout_constraintLeft_toRightOf="@id/iv_realtime_url"
-        android:layout_marginLeft="10dp">
+        app:layout_constraintStart_toEndOf="@id/iv_realtime_url"
+        app:layout_constraintRight_toLeftOf="@id/rl_hotchange_score"
+        android:layout_marginLeft="10dp"
 
+        >
 
 
         <TextView
@@ -48,7 +50,8 @@
             android:layout_height="wrap_content"
             android:maxLines="1"
             android:ellipsize="end"
-            android:textColor="@color/realtime_tv_novel_movie_title_color"/>
+            android:textColor="@color/realtime_tv_novel_movie_title_color"
+            android:maxEms="8"/>
 
 
 
@@ -67,5 +70,54 @@
 
 
     </RelativeLayout>
+
+
+
+
+    <RelativeLayout
+        android:id="@+id/rl_hotchange_score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/iv_realtime_url"
+        app:layout_constraintBottom_toBottomOf="@id/iv_realtime_url"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginRight="10dp">
+
+
+        <TextView
+            android:id="@+id/tv_rank_hot_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/iv_rank_trend"
+            android:textColor="@color/realtime_tv_rank_hot_score_text_color"
+            android:textSize="@dimen/realtime_tv_rank_hot_score_text_size"
+            android:layout_marginRight="@dimen/realtime_tv_rank_hot_score_margin_right"/>
+
+
+        <ImageView
+            android:id="@+id/iv_rank_trend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"/>
+
+
+
+        <TextView
+            android:id="@+id/tv_rank_hot_score_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_rank_hot_score"
+            android:layout_alignParentEnd="true"
+            android:textColor="@color/realtime_tv_rank_hot_score_title_text_color"
+            android:layout_marginRight="@dimen/realtime_tv_rank_hot_score_margin_right"
+            android:layout_marginTop="@dimen/realtime_tv_rank_hot_score_title_margin_top"
+            android:text="@string/realtime_tv_hot_title"/>
+
+
+
+
+    </RelativeLayout>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

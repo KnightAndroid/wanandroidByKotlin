@@ -6,4 +6,9 @@
     <color name="realtime_tv_desc_color">#999999</color>
     <color name="realtime_tv_novel_movie_title_color">#333333</color>
     <color name="realtime_tv_novel_movie_desc_color">#999999</color>
+    <color name="realtime_tv_rank_hot_score_text_color">#333333</color>
+    <color name="realtime_tv_rank_hot_score_title_text_color">#999999</color>
+    <color name="realtime_tv_teleplay_text_color">#4D4DFF</color>
+    <color name="realtime_tv_car_text_color">#1A8CFF</color>
+
 </resources>

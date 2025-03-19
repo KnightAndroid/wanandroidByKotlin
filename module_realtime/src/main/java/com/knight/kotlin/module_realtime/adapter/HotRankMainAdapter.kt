@@ -36,6 +36,7 @@ class HotRankMainAdapter(val hotListEnum: HotListEnum) : BaseQuickAdapter<BaiduC
            if (hotListEnum == HotListEnum.REALTIME) {
                if (position == 0) {
                    holder.binding.tvRealTimeRank.setBackgroundResource(com.knight.kotlin.library_base.R.drawable.base_baidu_real_time_top)
+                   holder.binding.tvRealTimeRank.setText("")
                } else {
                    holder.binding.tvRealTimeRank.background = null
                    holder.binding.tvRealTimeRank.setText(position.toString())
@@ -52,11 +53,11 @@ class HotRankMainAdapter(val hotListEnum: HotListEnum) : BaseQuickAdapter<BaiduC
                }
            }
 
-           if ((position == 1 && hotListEnum == HotListEnum.REALTIME) || (position == 0 && hotListEnum == HotListEnum.PHRASE)) {
+           if ((position == 1 && hotListEnum == HotListEnum.REALTIME) || (position == 0 && (hotListEnum == HotListEnum.PHRASE || hotListEnum == HotListEnum.LIVELIHOOD || hotListEnum == HotListEnum.FINANCE))) {
                holder.binding.tvRealTimeRank.setTextColor(Color.parseColor("#FE3951"))
-           } else if ((position == 2 && hotListEnum == HotListEnum.REALTIME) || (position == 1 && hotListEnum == HotListEnum.PHRASE)) {
+           } else if ((position == 2 && hotListEnum == HotListEnum.REALTIME) || (position == 1 && (hotListEnum == HotListEnum.PHRASE || hotListEnum == HotListEnum.LIVELIHOOD || hotListEnum == HotListEnum.FINANCE))) {
                holder.binding.tvRealTimeRank.setTextColor(Color.parseColor("#FF7315"))
-           } else if ((position == 3 && hotListEnum == HotListEnum.REALTIME) || (position == 2 && hotListEnum == HotListEnum.PHRASE)) {
+           } else if ((position == 3 && hotListEnum == HotListEnum.REALTIME) || (position == 2 && (hotListEnum == HotListEnum.PHRASE || hotListEnum == HotListEnum.LIVELIHOOD || hotListEnum == HotListEnum.FINANCE))) {
                holder.binding.tvRealTimeRank.setTextColor(Color.parseColor("#FAAC17"))
            } else {
                holder.binding.tvRealTimeRank.setTextColor(Color.parseColor("#858585"))

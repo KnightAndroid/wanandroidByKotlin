@@ -60,6 +60,120 @@
             >
 
         </com.yanzhenjie.recyclerview.SwipeRecyclerView>
+
+
+        <com.yanzhenjie.recyclerview.SwipeRecyclerView
+            android:id="@+id/rv_movie_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/base_round"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:paddingTop="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            >
+
+        </com.yanzhenjie.recyclerview.SwipeRecyclerView>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/realtime_ll_teleplay_car_height"
+            android:background="@drawable/base_round"
+            android:layout_marginLeft="@dimen/realtime_ll_teleplay_car_margin_left"
+            android:layout_marginRight="@dimen/realtime_ll_teleplay_car_margin_left"
+            android:layout_marginTop="@dimen/realtime_ll_teleplay_car_margin_top"
+            android:layout_marginBottom="@dimen/realtime_ll_teleplay_car_margin_top"
+            android:paddingTop="@dimen/realtime_ll_teleplay_car_padding_top"
+            android:paddingLeft="@dimen/realtime_ll_teleplay_car_padding_left"
+            android:paddingRight="@dimen/realtime_ll_teleplay_car_padding_right"
+            android:paddingBottom="@dimen/realtime_ll_teleplay_car_padding_bottom">
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/realtime_rl_teleplay_margin_left"
+                android:layout_marginRight="@dimen/realtime_rl_teleplay_margin_right"
+                android:layout_weight="1"
+                android:background="@drawable/realtime_hotchange_teleplay_shape">
+
+
+                <ImageView
+                    android:layout_width="@dimen/realtime_iv_teleplay_width"
+                    android:layout_height="@dimen/realtime_iv_teleplay_height"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/realtime_iv_teleplay_margin_left"
+                    android:background="@drawable/realtime_teleplay_icon"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="电视剧榜"
+                    android:textColor="@color/realtime_tv_teleplay_text_color"
+                    android:gravity="center"/>
+
+                <ImageView
+                    android:layout_width="@dimen/realtime_iv_teleplay_arrow_width"
+                    android:layout_height="@dimen/realtime_iv_teleplay_arrow_height"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginRight="@dimen/realtime_iv_teleplay_arrow_margin_right"
+                    android:background="@drawable/realtime_teleplay_arrow_icon"/>
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/realtime_rl_car_margin_left"
+                android:layout_marginRight="@dimen/realtime_rl_car_margin_right"
+                android:layout_weight="1"
+                android:background="@drawable/realtime_hotchange_car_shape">
+
+
+                <ImageView
+                    android:layout_width="@dimen/realtime_iv_car_width"
+                    android:layout_height="@dimen/realtime_iv_car_width"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/realtime_iv_car_margin_left"
+                    android:background="@drawable/realtime_car_icon"/>
+
+
+
+
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="汽车榜"
+                    android:textColor="@color/realtime_tv_car_text_color"
+                    android:gravity="center"/>
+
+
+
+                <ImageView
+                    android:layout_width="@dimen/realtime_iv_car_arrow_width"
+                    android:layout_height="@dimen/realtime_iv_car_arrow_height"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginRight="@dimen/realtime_iv_car_arrow_margin_right"
+                    android:background="@drawable/realtime_car_arrow_icon"/>
+
+            </RelativeLayout>
+
+
+
+
+        </LinearLayout>
+
+
+
     </LinearLayout>
 
 </androidx.core.widget.NestedScrollView>
