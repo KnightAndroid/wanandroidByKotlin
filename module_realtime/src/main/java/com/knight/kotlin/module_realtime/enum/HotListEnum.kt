@@ -5,7 +5,7 @@ package com.knight.kotlin.module_realtime.enum
  * @author created by luguian
  * @organize
  * @Date 2025/3/18 15:08
- * @descript:
+ * @descript:热搜榜名称
  */
 enum class HotListEnum {
 
@@ -28,5 +28,13 @@ enum class HotListEnum {
      *
      * 财经
      */
-    FINANCE
+    FINANCE,
+
+    /**
+     * 小说
+     *
+     */
+    NOVEL
+
+
 }

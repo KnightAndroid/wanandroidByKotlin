@@ -16,7 +16,7 @@ import com.knight.kotlin.module_realtime.databinding.RealtimeNovelRankItemBindin
  * @author created by luguian
  * @organize
  * @Date 2025/3/18 17:06
- * @descript:
+ * @descript:热搜小说 电影 适配器
  */
 class HotRankNovelMovieAdapter: BaseQuickAdapter<BaiduContent, HotRankNovelMovieAdapter.VH>() {
 
@@ -42,7 +42,16 @@ class HotRankNovelMovieAdapter: BaseQuickAdapter<BaiduContent, HotRankNovelMovie
                 holder.binding.tvRankPosition.setBackgroundResource(R.drawable.hot_rank_novel_third)
             }
             holder.binding.tvNovelMovieTitle.setText(word)
-            holder.binding.tvNovelMovieDesc.setText(show.get(0))
+            if (show.size == 1) {
+                holder.binding.tvNovelMovieDesc.setText(show.get(0))
+            } else {
+                val result = StringBuilder() // 使用 StringBuilder 提高效率
+                for (str in show) {
+                    result.append(str).append("\n") // 追加字符串和换行符
+                }
+                holder.binding.tvNovelMovieDesc.setText(result)
+            }
+
             holder.binding.tvRankHotScore.setText(hotScore)
             if (hotChange == "up") {
                  holder.binding.ivRankTrend.setBackgroundResource(R.drawable.realtime_hotchange_up)

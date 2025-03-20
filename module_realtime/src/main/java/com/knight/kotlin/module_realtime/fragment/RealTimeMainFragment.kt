@@ -59,7 +59,7 @@ class RealTimeMainFragment : BaseFragment<RealtimeMainFragmentBinding, RealTimeH
     }
 
     override fun initRequestData() {
-        mViewModel.getMainBaiduRealTime().observerKt {
+        mViewModel.getDataByTab("wise","homepage").observerKt {
 
             it.cards.get(0).content.addAll(0,it.cards.get(0).topContent)
             mRealTimeHotMainAdapter.submitList(it.cards.get(0).content)

@@ -110,7 +110,8 @@ object RouteFragment {
         const val RealTimeHomeFragment = "$REALTIME/RealTimeHomeFragment"
         const val RealTimeMainFragment = "$REALTIME/RealTimeMainFragment"
         const val RealTimeTextFragment = "$REALTIME/RealTimeTextFragment"
-
+        const val RealTimeNovelFragment = "$REALTIME/RealTimeNovelFragment"
+        const val RealTimeNovelChildFragment = "$REALTIME/RealTimeNovelChildFragment"
     }
 
 

@@ -10,5 +10,7 @@
     <color name="realtime_tv_rank_hot_score_title_text_color">#999999</color>
     <color name="realtime_tv_teleplay_text_color">#4D4DFF</color>
     <color name="realtime_tv_car_text_color">#1A8CFF</color>
-
+    <color name="realtime_novel_tab_bg">#F5F5F5</color>
+    <color name="realtime_novel_text_select_color">#F84C48</color>
+    <color name="realtime_novel_text_unselect_color">#333333</color>
 </resources>

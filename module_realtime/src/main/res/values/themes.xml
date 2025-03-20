@@ -2,4 +2,11 @@
 <resources>
 
     <style name="realtime_Theme.Wanandroid" parent="android:Theme.Material.Light.NoActionBar" />
+
+
+    <style name="realtime_novel_tabLayout" parent="Widget.Material3.TabLayout">
+        <item name="tabIndicator">@drawable/realtime_novel_rounded_tab_bg</item>
+        <item name="tabIndicatorFullWidth">false</item> <!-- 根据需要设置是否全宽 -->
+        <item name="tabIndicatorHeight">4dp</item> <!-- 设置Indicator高度 -->
+    </style>
 </resources>

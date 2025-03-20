@@ -1,17 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
 <com.yanzhenjie.recyclerview.SwipeRecyclerView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/base_round"
-    android:layout_marginLeft="10dp"
-    android:layout_marginRight="10dp"
-    android:layout_marginTop="10dp"
-    android:paddingTop="10dp"
-    android:paddingLeft="10dp"
-    android:paddingRight="10dp"
-    android:id="@+id/rv_hot_rank"
-    >
+    android:id="@+id/rv_novel_hot_rank">
 
 </com.yanzhenjie.recyclerview.SwipeRecyclerView>

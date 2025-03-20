@@ -48,7 +48,7 @@ class RealTimeHomeFragment : BaseFragment<RealtimeHomeFragmentBinding, RealTimeH
     }
 
     override fun initRequestData() {
-        mViewModel.getMainBaiduRealTime().observerKt {
+        mViewModel.getDataByTab("wise","homepage").observerKt {
             var  mNavDatas = it.tabBoard
 
             for (index  in 0 until  it.tabBoard.size) {
@@ -61,6 +61,8 @@ class RealTimeHomeFragment : BaseFragment<RealtimeHomeFragmentBinding, RealTimeH
                     mFragments.add(RealTimeTextFragment().also { fragment ->
                         fragment.arguments = bundleOf("typeName" to it.tabBoard.get(index).typeName.uppercase())
                     })
+                } else if (it.tabBoard.get(index).typeName == HotListEnum.NOVEL.name.lowercase()) {
+                    mFragments.add(RealTimeNovelFragment())
                 } else {
                     mFragments.add(RealTimeMainFragment())
                 }
