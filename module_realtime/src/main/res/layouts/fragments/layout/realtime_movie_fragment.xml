@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/base_activity_bg"
+    >
+
+
+
+
+    <com.yanzhenjie.recyclerview.SwipeRecyclerView
+        android:id="@+id/rv_movie_category"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/realtime_rv_movie_category_margin_top"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:background="@color/realtime_indicator_background"
+
+        >
+
+    </com.yanzhenjie.recyclerview.SwipeRecyclerView>
+
+
+    <com.yanzhenjie.recyclerview.SwipeRecyclerView
+        android:id="@+id/rv_movie_country"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintTop_toBottomOf="@id/rv_movie_category"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:background="@color/realtime_indicator_background"
+
+        />
+
+
+        <com.yanzhenjie.recyclerview.SwipeRecyclerView
+            android:id="@+id/rv_movie"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@id/rv_movie_country"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:background="@drawable/base_round"
+            android:layout_marginLeft="@dimen/realtime_rv_movie_margin_left"
+            android:layout_marginRight="@dimen/realtime_rv_movie_margin_right"
+            android:layout_marginTop="@dimen/realtime_rv_movie_margin_top"
+
+            />
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

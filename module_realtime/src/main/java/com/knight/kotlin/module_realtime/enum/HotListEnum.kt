@@ -34,7 +34,11 @@ enum class HotListEnum {
      * 小说
      *
      */
-    NOVEL
-
+    NOVEL,
+    /**
+     *
+     * 电影
+     */
+    MOVIE
 
 }

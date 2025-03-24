@@ -170,6 +170,12 @@ fun MagicIndicator.bindWechatViewPager2(
     })
 
 
+
+
+
+
+
+
 }
 
 

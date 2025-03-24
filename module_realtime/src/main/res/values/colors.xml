@@ -13,4 +13,9 @@
     <color name="realtime_novel_tab_bg">#F5F5F5</color>
     <color name="realtime_novel_text_select_color">#F84C48</color>
     <color name="realtime_novel_text_unselect_color">#333333</color>
+    <color name="realtime_movie_category_select">#F84C48</color>
+    <color name="realtime_movie_category_unselect">#1F1F1F</color>
+    <color name="realtime_movie_chip_background">#F5F5F5</color>
+    <color name="realtime_indicator_background">#ffffff</color>
+
 </resources>

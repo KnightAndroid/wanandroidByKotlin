@@ -6,7 +6,6 @@ import android.view.View
 import android.widget.ProgressBar
 import com.kingja.loadsir.callback.Callback
 import com.knight.kotlin.library_base.R
-import com.knight.kotlin.library_base.util.CacheUtils
 
 
 /**
@@ -26,7 +25,13 @@ class LoadCallBack:Callback() {
     override fun onViewCreate(context: Context,view: View){
         super.onViewCreate(context, view)
         loadProgressBar = view.findViewById(R.id.base_load_pb)
-        loadProgressBar.indeterminateTintList = ColorStateList.valueOf(CacheUtils.getThemeColor())
+
+    }
+
+
+
+    fun setIndeterminateTint(tint:Int) {
+        loadProgressBar.indeterminateTintList = ColorStateList.valueOf(tint)
     }
 
 

@@ -53,4 +53,11 @@
     <dimen name="realtime_iv_car_arrow_width">16dp</dimen>
     <dimen name="realtime_iv_car_arrow_height">16dp</dimen>
     <dimen name="realtime_iv_car_arrow_margin_right">10dp</dimen>
+
+    <dimen name="realtime_rv_movie_category_margin_top">10dp</dimen>
+
+
+    <dimen name="realtime_rv_movie_margin_right">10dp</dimen>
+    <dimen name="realtime_rv_movie_margin_left">10dp</dimen>
+    <dimen name="realtime_rv_movie_margin_top">10dp</dimen>
 </resources>

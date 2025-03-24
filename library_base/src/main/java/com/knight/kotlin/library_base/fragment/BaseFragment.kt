@@ -1,9 +1,11 @@
 package com.knight.kotlin.library_base.fragment
 
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
@@ -11,6 +13,7 @@ import androidx.lifecycle.LiveData
 import androidx.viewbinding.ViewBinding
 import com.kingja.loadsir.core.LoadService
 import com.kingja.loadsir.core.LoadSir
+import com.knight.kotlin.library_base.R
 import com.knight.kotlin.library_base.annotation.EventBusRegister
 import com.knight.kotlin.library_base.ktx.ClickAction
 import com.knight.kotlin.library_base.ktx.createViewModel
@@ -185,7 +188,7 @@ abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel> : Fragment(), 
      *
      * 默认加载
      */
-    protected fun requestLoading(view: View) {
+    protected fun requestLoading(view: View,tint: Int = CacheUtils.getThemeColor()) {
         if (!::mLoadService.isInitialized) {
             mLoadService = LoadSir.getDefault().register(view) {
                 mLoadService.showCallback(LoadCallBack::class.java)
@@ -193,8 +196,12 @@ abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel> : Fragment(), 
             }
         }
         mLoadService.showCallback(LoadCallBack::class.java)
+        val pb:ProgressBar = mLoadService.loadLayout.findViewById<ProgressBar>(R.id.base_load_pb)
+        if (pb != null) {
+                val colorStateList = ColorStateList.valueOf(tint)
+                pb.indeterminateTintList = colorStateList
 
-
+        }
     }
 
     /**

@@ -84,3 +84,32 @@ fun BaseQuickAdapter<*, *>.addOnItemChildClickListener(interval: Long = 1000, ac
         action(adapter, view, position)
     }
 }
+
+
+/**
+ * 重新设置ViewPager2高度，解决ViewPager2内View不同高度问题。
+ * 划到当前Pager，设置ViewPager2高度为当前Pager高度
+ * @param viewPager2 ViewPager2
+ * @param position Int 当前Pager
+ * @param minHeight Int? ViewPager2 的最小高度
+ */
+fun setViewPager2Height(viewPager2: ViewPager2, position: Int, minHeight: Int? = null) {
+    val recyclerView: RecyclerView = viewPager2.getChildAt(0) as RecyclerView
+    val layoutManager: RecyclerView.LayoutManager? = recyclerView.layoutManager
+    if (layoutManager != null) {
+        // 查找当前页面的 View
+        val view: View? = layoutManager.findViewByPosition(position)
+        if (view != null) {
+            // 测量 View 的高度
+            view.measure(
+                View.MeasureSpec.makeMeasureSpec(viewPager2.width, View.MeasureSpec.EXACTLY),
+                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
+            )
+            val measuredHeight = view.measuredHeight
+            // 设置 ViewPager2 的高度
+            val params = viewPager2.layoutParams
+            params.height = minHeight?.coerceAtLeast(measuredHeight) ?: measuredHeight
+            viewPager2.layoutParams = params
+        }
+    }
+}

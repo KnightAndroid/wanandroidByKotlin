@@ -3,6 +3,7 @@ package com.knight.kotlin.module_realtime.fragment
 import android.graphics.Color
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.knight.kotlin.library_base.annotation.EventBusRegister
 import com.knight.kotlin.library_base.config.EventBusKeys
@@ -63,6 +64,8 @@ class RealTimeHomeFragment : BaseFragment<RealtimeHomeFragmentBinding, RealTimeH
                     })
                 } else if (it.tabBoard.get(index).typeName == HotListEnum.NOVEL.name.lowercase()) {
                     mFragments.add(RealTimeNovelFragment())
+                } else if (it.tabBoard.get(index).typeName == HotListEnum.MOVIE.name.lowercase()){
+                    mFragments.add(RealtimeMovieFragment())
                 } else {
                     mFragments.add(RealTimeMainFragment())
                 }
@@ -86,7 +89,54 @@ class RealTimeHomeFragment : BaseFragment<RealtimeHomeFragmentBinding, RealTimeH
                 )
 
                 TabLayoutMediator(mBinding.realtimeTabLayout, mBinding.realtimeViewPager) { tab, pos ->
-                    tab.text = mNavDatas[pos].text}.attach()
+                    tab.text = mNavDatas[pos].text
+                }.attach()
+                mBinding.realtimeTabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+                    override fun onTabSelected(tab: TabLayout.Tab?) {
+                        // 标签被选中
+                        tab?.let {
+                            if (it.text == "电影榜") {
+                                mBinding.appbar.setExpanded(false,true)
+                            }
+                        }
+                    }
+
+                    override fun onTabUnselected(tab: TabLayout.Tab?) {
+                        // 标签被取消选中
+                    }
+
+                    override fun onTabReselected(tab: TabLayout.Tab?) {
+                        // 标签被重新选中（当标签已经被选中，再次点击时触发）
+                    }
+                })
+
+//                mBinding.realtimeViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+//                    override fun onPageScrolled(
+//                        position: Int,
+//                        positionOffset: Float,
+//                        positionOffsetPixels: Int
+//                    ) {
+//                        // 页面滚动时调用
+//                        // position: 当前页面的位置
+//                        // positionOffset: 页面滚动的偏移量 (0.0 到 1.0)
+//                        // positionOffsetPixels: 页面滚动的像素偏移量
+//                    }
+//
+//                    override fun onPageSelected(position: Int) {
+//                        // 页面被选中时调用
+//                        // position: 被选中页面的位置
+//                        //val minHeight = DensityUtils.dp2px(300f)
+//                        setViewPager2Height(mBinding.realtimeViewPager, position)
+//                    }
+//
+//                    override fun onPageScrollStateChanged(state: Int) {
+//                        // 页面滚动状态改变时调用
+//                        // state: 滚动状态 (IDLE, DRAGGING, SETTLING)
+//
+//                    }
+//                })
+
+
 
                 mBinding.realtimeTabLayout.setTabTextColors(Color.parseColor("#BBABAB"), Color.parseColor("#F84C48"))
                 //选中条颜色
@@ -121,6 +171,12 @@ class RealTimeHomeFragment : BaseFragment<RealtimeHomeFragmentBinding, RealTimeH
             }else 1).put(EventBusKeys.OFFSET,i))
 
         }
+//
+//        realtimeViewPager.postDelayed({//解决首次加载时ViewPager2高度问题
+////                        val minHeight = DensityUtils.dp2px(300f)
+//            setViewPager2Height(realtimeViewPager, 0)
+//        }, 300)
+
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

@@ -43,11 +43,23 @@ class HotRankNovelMovieAdapter: BaseQuickAdapter<BaiduContent, HotRankNovelMovie
             }
             holder.binding.tvNovelMovieTitle.setText(word)
             if (show.size == 1) {
-                holder.binding.tvNovelMovieDesc.setText(show.get(0))
+                if (show.get(0).length > 12) {
+                    holder.binding.tvNovelMovieDesc.setText(show.get(0).substring(0,12)+"...")
+                } else {
+                    holder.binding.tvNovelMovieDesc.setText(show.get(0))
+                }
+
             } else {
                 val result = StringBuilder() // 使用 StringBuilder 提高效率
                 for (str in show) {
-                    result.append(str).append("\n") // 追加字符串和换行符
+                    if (str.length > 12) {
+                        result.append(str.substring(0, 12) + "...").append("\n") // 追加字符串和换行符
+                    } else {
+                        result.append(str).append("\n") // 追加字符串和换行符
+                    }
+
+
+
                 }
                 holder.binding.tvNovelMovieDesc.setText(result)
             }

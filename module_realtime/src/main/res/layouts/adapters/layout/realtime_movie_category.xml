@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.chip.Chip xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/realtime_movie_chip"
+    style="@style/Widget.MaterialComponents.Chip.Choice"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginRight="4dp"
+    android:layout_marginLeft="4dp"
+    android:textColor="@drawable/realtime_movie_category"
+    app:chipCornerRadius="8dp"
+    app:chipBackgroundColor="@color/realtime_movie_chip_background"
+    app:chipStartPadding="6dp"
+    app:chipEndPadding="6dp"
+    />
+
