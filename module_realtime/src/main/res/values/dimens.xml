@@ -60,4 +60,40 @@
     <dimen name="realtime_rv_movie_margin_right">10dp</dimen>
     <dimen name="realtime_rv_movie_margin_left">10dp</dimen>
     <dimen name="realtime_rv_movie_margin_top">10dp</dimen>
+    <dimen name="realtime_rv_teleplay_category_margin_top">10dp</dimen>
+
+
+    <dimen name="realtime_rv_teleplay_margin_right">10dp</dimen>
+    <dimen name="realtime_rv_teleplay_margin_left">10dp</dimen>
+    <dimen name="realtime_rv_teleplay_margin_top">10dp</dimen>
+
+    <dimen name="realtime_tv_rank_car_position_width">30dp</dimen>
+    <dimen name="realtime_tv_rank_car_position_height">30dp</dimen>
+
+
+
+    <dimen name="realtime_realtime_tv_rank_car_position_text_size">14sp</dimen>
+    <dimen name="realtime_realtime_tv_rank_car_position_padding_left">5dp</dimen>
+    <dimen name="realtime_car_desc_text_size">14sp</dimen>
+    <dimen name="realtime_tv_rank_hot_score_car_margin_right">5dp</dimen>
+    <dimen name="realtime_tv_rank_car_hot_score_text_size">12sp</dimen>
+
+    <dimen name="realtime_rv_car_category_margin_top">10dp</dimen>
+
+    <dimen name="realtime_rv_car_margin_right">10dp</dimen>
+    <dimen name="realtime_rv_car_margin_left">10dp</dimen>
+    <dimen name="realtime_rv_car_margin_top">10dp</dimen>
+    <dimen name="realtime_rv_game_category_margin_top">10dp</dimen>
+    <dimen name="realtime_rv_game_margin_right">10dp</dimen>
+    <dimen name="realtime_rv_game_margin_left">10dp</dimen>
+    <dimen name="realtime_rv_game_margin_top">10dp</dimen>
+
+    <dimen name="realtime_tv_rank_game_position_width">30dp</dimen>
+    <dimen name="realtime_tv_rank_game_position_height">30dp</dimen>
+    <dimen name="realtime_realtime_tv_rank_game_position_text_size">14sp</dimen>
+    <dimen name="realtime_realtime_tv_rank_game_position_padding_left">5dp</dimen>
+    <dimen name="realtime_game_desc_text_size">14sp</dimen>
+
+    <dimen name="realtime_tv_rank_hot_score_game_margin_right">5dp</dimen>
+    <dimen name="realtime_tv_rank_game_hot_score_text_size">12sp</dimen>
 </resources>

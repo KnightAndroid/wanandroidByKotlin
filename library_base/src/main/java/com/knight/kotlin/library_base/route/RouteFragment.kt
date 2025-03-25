@@ -113,6 +113,9 @@ object RouteFragment {
         const val RealTimeNovelFragment = "$REALTIME/RealTimeNovelFragment"
         const val RealTimeNovelChildFragment = "$REALTIME/RealTimeNovelChildFragment"
         const val RealTimeMovieFragment = "$REALTIME/RealTimeMovieFragment"
+        const val RealTimeTeleplayFragment = "$REALTIME/RealTimeTeleplayFragment"
+        const val RealTimeCarFragment = "$REALTIME/RealTimeCarFragment"
+        const val RealTimeGameFragment = "$REALTIME/RealTimeGameFragment"
     }
 
 

@@ -15,7 +15,7 @@ import com.knight.kotlin.module_realtime.enum.LevelEnum
  * @Date 2025/3/24 11:31
  * @descript:热搜电影类型选择
  */
-class HotRankMovieCategoryAdapter(val listener:OnChipClickListener,val enum:LevelEnum):BaseQuickAdapter<String,HotRankMovieCategoryAdapter.VH>() {
+class HotRankCategoryAdapter(val listener:OnChipClickListener, val enum:LevelEnum):BaseQuickAdapter<String,HotRankCategoryAdapter.VH>() {
 
 
 

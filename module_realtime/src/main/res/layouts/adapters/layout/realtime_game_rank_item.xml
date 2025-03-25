@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="120dp">
+
+
+
+
+    <ImageView
+        android:id="@+id/iv_realtime_game_url"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginLeft="10dp"
+        android:scaleType="centerCrop"
+        />
+
+    <TextView
+        android:id="@+id/tv_rank_game_position"
+        android:layout_width="@dimen/realtime_tv_rank_game_position_width"
+        android:layout_height="@dimen/realtime_tv_rank_game_position_height"
+        app:layout_constraintTop_toTopOf="@id/iv_realtime_game_url"
+        app:layout_constraintLeft_toLeftOf="@id/iv_realtime_game_url"
+        android:textSize="@dimen/realtime_realtime_tv_rank_game_position_text_size"
+        android:paddingLeft="@dimen/realtime_realtime_tv_rank_game_position_padding_left"
+        android:textColor="@android:color/white"
+        />
+
+
+    <RelativeLayout
+        android:id="@+id/rl_game_rank_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/iv_realtime_game_url"
+        app:layout_constraintBottom_toBottomOf="@id/iv_realtime_game_url"
+        app:layout_constraintStart_toEndOf="@id/iv_realtime_game_url"
+        app:layout_constraintRight_toLeftOf="@id/rl_game_hotchange_score"
+        android:layout_marginLeft="10dp"
+
+        >
+
+
+        <TextView
+            android:id="@+id/tv_game_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textColor="@color/realtime_tv_game_name_color"
+            android:maxEms="8"/>
+
+
+
+        <TextView
+            android:id="@+id/tv_game_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/realtime_game_desc_text_size"
+            android:layout_below="@id/tv_game_name"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/realtime_tv_game_desc_color"
+            />
+
+
+
+
+    </RelativeLayout>
+
+
+
+
+    <RelativeLayout
+        android:id="@+id/rl_game_hotchange_score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/iv_realtime_game_url"
+        app:layout_constraintBottom_toBottomOf="@id/iv_realtime_game_url"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginRight="10dp">
+
+
+        <TextView
+            android:id="@+id/tv_rank_game_hot_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/iv_rank_game_trend"
+            android:textColor="@color/realtime_tv_rank_game_hot_score_text_color"
+            android:textSize="@dimen/realtime_tv_rank_game_hot_score_text_size"
+            android:layout_marginRight="@dimen/realtime_tv_rank_hot_score_game_margin_right"/>
+
+
+        <ImageView
+            android:id="@+id/iv_rank_game_trend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"/>
+
+
+
+        <TextView
+            android:id="@+id/tv_rank_hot_score_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_rank_game_hot_score"
+            android:layout_alignParentEnd="true"
+            android:textColor="@color/realtime_tv_rank_game_hot_score_title_text_color"
+            android:layout_marginRight="@dimen/realtime_tv_rank_hot_score_margin_right"
+            android:layout_marginTop="@dimen/realtime_tv_rank_hot_score_title_margin_top"
+            android:text="@string/realtime_tv_hot_title"/>
+
+
+
+
+    </RelativeLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

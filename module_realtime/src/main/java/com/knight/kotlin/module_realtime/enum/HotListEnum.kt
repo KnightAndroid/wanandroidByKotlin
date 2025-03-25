@@ -39,6 +39,24 @@ enum class HotListEnum {
      *
      * 电影
      */
-    MOVIE
+    MOVIE,
+    /**
+     *
+     * 电视剧
+     *
+     */
+    TELEPLAY,
+
+    /**
+     *
+     * 汽车
+     */
+    CAR,
+
+    /**
+     *
+     * 游戏
+     */
+    GAME
 
 }

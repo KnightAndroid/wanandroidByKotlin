@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.knight.kotlin.library_base.route.RouteFragment
 import com.knight.kotlin.library_widget.ktx.init
-import com.knight.kotlin.module_realtime.adapter.HotRankMovieCategoryAdapter
+import com.knight.kotlin.module_realtime.adapter.HotRankCategoryAdapter
 import com.knight.kotlin.module_realtime.adapter.HotRankNovelMovieAdapter
 import com.knight.kotlin.module_realtime.databinding.RealtimeMovieFragmentBinding
 import com.knight.kotlin.module_realtime.enum.LevelEnum
@@ -22,14 +22,14 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 @AndroidEntryPoint
 @Route(path = RouteFragment.RealTime.RealTimeMovieFragment)
-class RealtimeMovieFragment : BaseFragment<RealtimeMovieFragmentBinding,RealtimeMovieVm>(),HotRankMovieCategoryAdapter.OnChipClickListener {
+class RealTimeMovieFragment : BaseFragment<RealtimeMovieFragmentBinding,RealtimeMovieVm>(),HotRankCategoryAdapter.OnChipClickListener {
 
 
     private var category:String = "全部类型"
     private var country:String = "中国大陆"
 
-    private val mCategoryAdapter:HotRankMovieCategoryAdapter by lazy { HotRankMovieCategoryAdapter(this,LevelEnum.PARENT) }
-    private val mCountryAdapter:HotRankMovieCategoryAdapter by lazy { HotRankMovieCategoryAdapter(this,LevelEnum.CHILD) }
+    private val mCategoryAdapter:HotRankCategoryAdapter by lazy { HotRankCategoryAdapter(this,LevelEnum.PARENT) }
+    private val mCountryAdapter:HotRankCategoryAdapter by lazy { HotRankCategoryAdapter(this,LevelEnum.CHILD) }
     private val mMovieAdapter: HotRankNovelMovieAdapter by lazy { HotRankNovelMovieAdapter() }
 
     override fun setThemeColor(isDarkMode: Boolean) {

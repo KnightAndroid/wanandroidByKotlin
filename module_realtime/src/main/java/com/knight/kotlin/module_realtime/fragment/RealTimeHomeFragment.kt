@@ -58,14 +58,22 @@ class RealTimeHomeFragment : BaseFragment<RealtimeHomeFragmentBinding, RealTimeH
                 } else if (it.tabBoard.get(index).typeName == HotListEnum.REALTIME.name.lowercase()
                     || it.tabBoard.get(index).typeName == HotListEnum.FINANCE.name.lowercase()
                     || it.tabBoard.get(index).typeName == HotListEnum.PHRASE.name.lowercase()
-                    || it.tabBoard.get(index).typeName == HotListEnum.LIVELIHOOD.name.lowercase()){
+                    || it.tabBoard.get(index).typeName == HotListEnum.LIVELIHOOD.name.lowercase()
+                ) {
                     mFragments.add(RealTimeTextFragment().also { fragment ->
                         fragment.arguments = bundleOf("typeName" to it.tabBoard.get(index).typeName.uppercase())
                     })
                 } else if (it.tabBoard.get(index).typeName == HotListEnum.NOVEL.name.lowercase()) {
                     mFragments.add(RealTimeNovelFragment())
-                } else if (it.tabBoard.get(index).typeName == HotListEnum.MOVIE.name.lowercase()){
-                    mFragments.add(RealtimeMovieFragment())
+                } else if (it.tabBoard.get(index).typeName == HotListEnum.MOVIE.name.lowercase()) {
+                    mFragments.add(RealTimeMovieFragment())
+                } else if (it.tabBoard.get(index).typeName == HotListEnum.TELEPLAY.name.lowercase()) {
+                    mFragments.add(RealTimeTeleplayFragment())
+
+                } else if(it.tabBoard.get(index).typeName == HotListEnum.CAR.name.lowercase()){
+                    mFragments.add(RealTimeCarFragment())
+                } else if(it.tabBoard.get(index).typeName == HotListEnum.GAME.name.lowercase()){
+                    mFragments.add(RealTimeGameFragment())
                 } else {
                     mFragments.add(RealTimeMainFragment())
                 }
@@ -95,7 +103,7 @@ class RealTimeHomeFragment : BaseFragment<RealtimeHomeFragmentBinding, RealTimeH
                     override fun onTabSelected(tab: TabLayout.Tab?) {
                         // 标签被选中
                         tab?.let {
-                            if (it.text == "电影榜") {
+                            if (it.text == "电影榜" || it.text == "电视剧榜") {
                                 mBinding.appbar.setExpanded(false,true)
                             }
                         }
