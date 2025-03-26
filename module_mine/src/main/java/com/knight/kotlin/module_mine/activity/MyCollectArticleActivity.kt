@@ -7,6 +7,8 @@ import com.knight.kotlin.library_base.ktx.setOnClick
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.util.ArouteUtils
 import com.knight.kotlin.library_util.DialogUtils
+import com.knight.kotlin.library_widget.ktx.setSafeOnItemChildClickListener
+import com.knight.kotlin.library_widget.ktx.setSafeOnItemClickListener
 import com.knight.kotlin.module_mine.R
 import com.knight.kotlin.module_mine.adapter.MyCollectArticleAdapter
 import com.knight.kotlin.module_mine.databinding.MineCollectarticlesActivityBinding
@@ -110,7 +112,7 @@ class MyCollectArticleActivity : BaseActivity<MineCollectarticlesActivityBinding
     }
     private fun initListener() {
         mMyCollectArticleAdapter.run {
-            setOnItemClickListener { adapter, view, position ->
+            setSafeOnItemClickListener { adapter, view, position ->
                 ArouteUtils.startWebArticle(
                     items[position].link,
                     items[position].title,
@@ -124,7 +126,7 @@ class MyCollectArticleActivity : BaseActivity<MineCollectarticlesActivityBinding
                 )
             }
 
-            addOnItemChildClickListener(com.knight.kotlin.library_base.R.id.base_icon_collect) { adapter, view, position ->
+            setSafeOnItemChildClickListener(com.knight.kotlin.library_base.R.id.base_icon_collect) { adapter, view, position ->
 
 
                         selectItem = position
@@ -142,7 +144,7 @@ class MyCollectArticleActivity : BaseActivity<MineCollectarticlesActivityBinding
 
             }
 
-            addOnItemChildClickListener(com.knight.kotlin.library_base.R.id.base_article_collect) { adapter, view, position ->
+            setSafeOnItemChildClickListener(com.knight.kotlin.library_base.R.id.base_article_collect) { adapter, view, position ->
 
                         selectItem = position
                         DialogUtils.getConfirmDialog(this@MyCollectArticleActivity,getString(R.string.mine_confirm_cancelarticle),

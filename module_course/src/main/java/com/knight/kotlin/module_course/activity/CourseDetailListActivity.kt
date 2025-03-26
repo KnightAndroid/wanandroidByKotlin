@@ -6,6 +6,7 @@ import com.knight.kotlin.library_base.ktx.init
 import com.knight.kotlin.library_base.ktx.setOnClick
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_util.startPageWithParams
+import com.knight.kotlin.library_widget.ktx.setSafeOnItemClickListener
 
 import com.knight.kotlin.module_course.R
 import com.knight.kotlin.module_course.adapter.CourseDetailListAdapter
@@ -103,7 +104,7 @@ class CourseDetailListActivity:BaseActivity<CourseDetailListActivityBinding,Cour
 
     private fun initListener() {
         mCourseDetailListAdapter.run {
-            setOnItemClickListener { adapter, view, position ->
+            setSafeOnItemClickListener { adapter, view, position ->
                 startPageWithParams(
                     RouteActivity.Web.WebPager,
                     "webUrl" to items[position].link,

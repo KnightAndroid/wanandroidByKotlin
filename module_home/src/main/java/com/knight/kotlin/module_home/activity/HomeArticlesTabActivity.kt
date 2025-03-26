@@ -14,6 +14,7 @@ import com.knight.kotlin.library_base.vm.EmptyViewModel
 import com.knight.kotlin.library_util.BlurBuilderUtils
 import com.knight.kotlin.library_util.ViewInitUtils
 import com.knight.kotlin.library_widget.ktx.init
+import com.knight.kotlin.library_widget.ktx.setSafeOnItemClickListener
 
 import com.knight.kotlin.module_home.adapter.TopArticleAroundAdapter
 import com.knight.kotlin.module_home.databinding.HomeArticlesTabActivityBinding
@@ -56,7 +57,7 @@ class HomeArticlesTabActivity : BaseActivity<HomeArticlesTabActivityBinding, Emp
         }
         mTopArticleAroundAdapter.submitList(datas)
         mTopArticleAroundAdapter.run {
-            setOnItemClickListener { adapter, view, position ->
+            setSafeOnItemClickListener { adapter, view, position ->
                 setSelectItem(position)
                 notifyDataSetChanged()
                 homeArticleViewpager.setCurrentItem(position)

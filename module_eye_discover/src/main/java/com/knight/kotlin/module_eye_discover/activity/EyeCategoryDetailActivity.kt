@@ -13,6 +13,7 @@ import com.knight.kotlin.library_base.ktx.init
 import com.knight.kotlin.library_base.ktx.toJson
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_util.startPageWithAnimate
+import com.knight.kotlin.library_widget.ktx.setSafeOnItemClickListener
 import com.knight.kotlin.library_widget.ktx.transformShareElementConfig
 import com.knight.kotlin.library_widget.listener.AppBarStateChangeListener
 import com.knight.kotlin.module_eye_discover.adapter.EyeDiscoverCategoryDetailAdapter
@@ -166,7 +167,7 @@ class EyeCategoryDetailActivity : BaseActivity<EyeDiscoverCategoryDetailActivity
      */
     private fun addItemClickListener() {
         mEyeDiscoverCategoryDetailAdapter.run {
-            setOnItemClickListener {adapter, view, position ->
+            setSafeOnItemClickListener {adapter, view, position ->
 
                 val videoDetailData = EyeVideoDetailEntity(adapter.items[position].data.id,
                     adapter.items[position].data.title,

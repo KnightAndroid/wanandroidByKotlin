@@ -6,7 +6,7 @@ import com.knight.kotlin.library_base.ktx.init
 import com.knight.kotlin.library_base.ktx.setOnClick
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_util.startPageWithParams
-
+import com.knight.kotlin.library_widget.ktx.setSafeOnItemClickListener
 import com.knight.kotlin.module_course.R
 import com.knight.kotlin.module_course.adapter.CourseListAdapter
 import com.knight.kotlin.module_course.databinding.CourseListActivityBinding
@@ -73,7 +73,7 @@ class CourseListActivity : BaseActivity<CourseListActivityBinding,CourseListVm>(
 
     private fun initListener() {
         mCourseListAdapter.run {
-            setOnItemClickListener { adapter, view, position ->
+            setSafeOnItemClickListener { adapter, view, position ->
                 startPageWithParams(
                     RouteActivity.Course.CourseDetailListActivity,
                     "cid" to items[position].id)

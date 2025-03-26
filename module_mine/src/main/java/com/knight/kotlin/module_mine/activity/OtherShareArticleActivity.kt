@@ -14,6 +14,8 @@ import com.knight.kotlin.library_base.loadsir.LoadCallBack
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.util.ArouteUtils
 import com.knight.kotlin.library_base.util.ColorUtils
+import com.knight.kotlin.library_widget.ktx.setSafeOnItemChildClickListener
+import com.knight.kotlin.library_widget.ktx.setSafeOnItemClickListener
 import com.knight.kotlin.library_widget.slidinglayout.SlidingUpPanelLayout
 import com.knight.kotlin.module_mine.R
 import com.knight.kotlin.module_mine.adapter.OtherShareArticleAdapter
@@ -126,7 +128,7 @@ class OtherShareArticleActivity :BaseActivity<MineOthershareActivityBinding,Othe
 
     private fun initListener() {
         mOtherShareArticleAdapter.run {
-            setOnItemClickListener { adapter, view, position ->
+            setSafeOnItemClickListener { adapter, view, position ->
                 ArouteUtils.startWebArticle(
                     items[position].link,
                     items[position].title,
@@ -140,7 +142,7 @@ class OtherShareArticleActivity :BaseActivity<MineOthershareActivityBinding,Othe
                 )
             }
 
-            addOnItemChildClickListener(com.knight.kotlin.library_base.R.id.base_icon_collect) { adapter, view, position ->
+            setSafeOnItemChildClickListener(com.knight.kotlin.library_base.R.id.base_icon_collect) { adapter, view, position ->
                 when (view.id) {
                     com.knight.kotlin.library_base.R.id.base_icon_collect -> {
                         selectItem = position

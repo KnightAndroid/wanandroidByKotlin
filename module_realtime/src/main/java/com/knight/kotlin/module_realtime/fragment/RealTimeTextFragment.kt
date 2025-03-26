@@ -7,6 +7,7 @@ import com.knight.kotlin.library_widget.ktx.init
 import com.knight.kotlin.module_realtime.adapter.HotRankMainAdapter
 import com.knight.kotlin.module_realtime.databinding.RealtimeTextFragmentBinding
 import com.knight.kotlin.module_realtime.enum.HotListEnum
+import com.knight.kotlin.module_realtime.ktx.handleAdapterClick
 import com.knight.kotlin.module_realtime.vm.RealTimeTextVm
 import com.wyjson.router.annotation.Route
 import dagger.hilt.android.AndroidEntryPoint
@@ -52,5 +53,6 @@ class RealTimeTextFragment:BaseFragment<RealtimeTextFragmentBinding,RealTimeText
     override fun RealtimeTextFragmentBinding.initView() {
         typeName = arguments?.getString("typeName") ?:""
         rvHotRank.init(LinearLayoutManager(requireActivity()),mRealTimeHotMainAdapter,true)
+        handleAdapterClick(mRealTimeHotMainAdapter)
     }
 }

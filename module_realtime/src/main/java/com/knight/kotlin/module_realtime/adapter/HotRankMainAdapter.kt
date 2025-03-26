@@ -11,6 +11,7 @@ import com.knight.kotlin.library_base.entity.BaiduContent
 import com.knight.kotlin.library_util.image.ImageLoader
 import com.knight.kotlin.module_realtime.databinding.RealtimeHotItemBinding
 import com.knight.kotlin.module_realtime.enum.HotListEnum
+import com.knight.kotlin.module_realtime.ktx.HotAdapterInterface
 
 
 /**
@@ -19,7 +20,7 @@ import com.knight.kotlin.module_realtime.enum.HotListEnum
  * @Date 2025/3/11 16:58
  * @descript: BaiduContent
  */
-class HotRankMainAdapter(val hotListEnum: HotListEnum) : BaseQuickAdapter<BaiduContent,HotRankMainAdapter.VH>() {
+class HotRankMainAdapter(val hotListEnum: HotListEnum) : BaseQuickAdapter<BaiduContent,HotRankMainAdapter.VH>(), HotAdapterInterface<BaiduContent> {
 
 
     // 自定义ViewHolder类
@@ -91,4 +92,10 @@ class HotRankMainAdapter(val hotListEnum: HotListEnum) : BaseQuickAdapter<BaiduC
     override fun onCreateViewHolder(context: Context, parent: ViewGroup, viewType: Int): VH {
         return VH(parent)
     }
+
+    override fun setOnItemClickListener(listener: (adapter: BaseQuickAdapter<BaiduContent, *>, view: View, position: Int) -> Unit) {
+        super.setOnItemClickListener(listener)
+    }
+
+
 }

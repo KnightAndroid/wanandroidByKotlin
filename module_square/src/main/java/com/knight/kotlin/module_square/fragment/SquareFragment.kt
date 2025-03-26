@@ -27,6 +27,8 @@ import com.knight.kotlin.library_util.bindViewPager2
 import com.knight.kotlin.library_util.startPage
 import com.knight.kotlin.library_util.startPageWithStringArrayListParams
 import com.knight.kotlin.library_widget.ktx.init
+import com.knight.kotlin.library_widget.ktx.setSafeOnItemChildClickListener
+import com.knight.kotlin.library_widget.ktx.setSafeOnItemClickListener
 import com.knight.kotlin.library_widget.lottie.RightLottieAnimation
 import com.knight.kotlin.library_widget.lottie.RightLottieListener
 import com.knight.kotlin.module_square.R
@@ -173,14 +175,14 @@ class SquareFragment : BaseFragment<SquareFragmentBinding, SquareVm>() {
     }
     private fun initQuestionAdapterClickEvent() {
         mSquareQuestionAdapter.run {
-            setOnItemClickListener { adapter, view, position ->
+            setSafeOnItemClickListener { adapter, view, position ->
                 ArouteUtils.startWebArticle(items.get(position).link,items.get(position).title,
                     items.get(position).id,items.get(position).collect,items.get(position).envelopePic,
                     items.get(position).desc,items.get(position).chapterName,items[position].author,items[position].shareUser)
             }
 
 
-            addOnItemChildClickListener(com.knight.kotlin.library_base.R.id.base_icon_collect) { adapter, view, position ->
+            setSafeOnItemChildClickListener(com.knight.kotlin.library_base.R.id.base_icon_collect) { adapter, view, position ->
                 selectItem = position
                 collectOrunCollect(items[position].collect,items[position].id)
 

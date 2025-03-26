@@ -73,6 +73,8 @@ import com.knight.kotlin.library_util.toast.ToastUtils
 import com.knight.kotlin.library_widget.SpacesItemDecoration
 import com.knight.kotlin.library_widget.ZzWeatherView
 import com.knight.kotlin.library_widget.ktx.init
+import com.knight.kotlin.library_widget.ktx.setSafeOnItemChildClickListener
+import com.knight.kotlin.library_widget.ktx.setSafeOnItemClickListener
 import com.knight.kotlin.library_widget.skeleton.Skeleton
 import com.knight.kotlin.library_widget.skeleton.SkeletonScreen
 import com.knight.kotlin.library_widget.slidinglayout.SlidingLayout
@@ -723,9 +725,6 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
             val viewFirst = home_top_article_rv.layoutManager!!.findViewByPosition(0)
             firstItemHeight = viewFirst!!.height
             totalHeight = if (totalHeight >= 5 * firstItemHeight)  totalHeight else 5 * firstItemHeight
-//            val lp = home_top_article_rv.layoutParams
-//            lp.height = 3 * firstItemHeight
-//            home_top_article_rv.layoutParams = lp
         }
     }
 
@@ -753,7 +752,7 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
 
         mOfficialAccountAdapter.run {
             //Item点击事件
-            setOnItemClickListener { adapter, view, position ->
+            setSafeOnItemClickListener { adapter, view, position ->
                 GoRouter.getInstance().build(RouteActivity.Wechat.WechatTabActivity)
                     .withParcelableArrayList("data", ArrayList(items))
                     .withInt("position", position)
@@ -768,7 +767,7 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
      */
     private fun initArticleListener() {
         mHomeArticleAdapter.run {
-            setOnItemClickListener { adapter, view, position ->
+            setSafeOnItemClickListener  { adapter, view, position ->
                 ArouteUtils.startWebArticle(
                     mHomeArticleAdapter.items[position - 1].link,
                     mHomeArticleAdapter.items[position - 1].title,
@@ -782,7 +781,7 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
                 )
             }
 
-            addOnItemChildClickListener(R.id.home_icon_collect) { adapter, view, position ->
+            setSafeOnItemChildClickListener(R.id.home_icon_collect) { adapter, view, position ->
                 when (view.id) {
                     R.id.home_icon_collect -> {
                         selectItem = position - 1
@@ -793,6 +792,15 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
                     }
                 }
             }
+        }
+
+        mBaiduHotSearchAdapter.setSafeOnItemChildClickListener{ adapter, view, position ->
+            ArouteUtils.startWebArticle(
+                mBaiduHotSearchAdapter.items[position].appUrl,
+                mBaiduHotSearchAdapter.items[position].word,
+                mBaiduHotSearchAdapter.items[position].index,
+                false
+            )
         }
     }
 

@@ -9,6 +9,7 @@ import com.knight.kotlin.module_realtime.adapter.HotRankCategoryAdapter
 import com.knight.kotlin.module_realtime.adapter.HotRankNovelMovieAdapter
 import com.knight.kotlin.module_realtime.databinding.RealtimeTeleplayFragmentBinding
 import com.knight.kotlin.module_realtime.enum.LevelEnum
+import com.knight.kotlin.module_realtime.ktx.handleAdapterClick
 import com.knight.kotlin.module_realtime.vm.RealTimeTeleplayVm
 import com.wyjson.router.annotation.Route
 import dagger.hilt.android.AndroidEntryPoint
@@ -41,7 +42,7 @@ class RealTimeTeleplayFragment : BaseFragment<RealtimeTeleplayFragmentBinding,Re
         rvTeleplayCategory.init(LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false),mCategoryAdapter,false)
         rvTeleplayCountry.init(LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false),mCountryAdapter,false)
         rvTeleplay.init(LinearLayoutManager(requireActivity()),mTeleplayAdapter,false)
-
+        handleAdapterClick(mTeleplayAdapter)
     }
 
     override fun initObserver() {

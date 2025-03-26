@@ -7,6 +7,8 @@ import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.knight.kotlin.library_base.route.RouteFragment
 import com.knight.kotlin.library_base.util.ArouteUtils
 import com.knight.kotlin.library_widget.ktx.init
+import com.knight.kotlin.library_widget.ktx.setSafeOnItemChildClickListener
+import com.knight.kotlin.library_widget.ktx.setSafeOnItemClickListener
 import com.knight.kotlin.module_navigate.adapter.HierachyArticleAdapter
 import com.knight.kotlin.module_navigate.databinding.NavigateHierachyArticleFragmentBinding
 import com.knight.kotlin.module_navigate.entity.HierachyTabArticleListEntity
@@ -63,7 +65,7 @@ class HierachyTabArticleFragment:BaseFragment<NavigateHierachyArticleFragmentBin
 
     fun initListener() {
         mHierachyArticleAdapter.run {
-            setOnItemClickListener { adapter, view, position ->
+            setSafeOnItemClickListener { adapter, view, position ->
                 ArouteUtils.startWebArticle(
                     items[position].link,
                     items[position].title,
@@ -77,7 +79,7 @@ class HierachyTabArticleFragment:BaseFragment<NavigateHierachyArticleFragmentBin
                 )
             }
 
-            addOnItemChildClickListener(com.knight.kotlin.library_base.R.id.base_icon_collect) { adapter, view, position ->
+            setSafeOnItemChildClickListener(com.knight.kotlin.library_base.R.id.base_icon_collect) { adapter, view, position ->
 
                         selectItem = position
                         collectOrunCollect(
@@ -87,7 +89,7 @@ class HierachyTabArticleFragment:BaseFragment<NavigateHierachyArticleFragmentBin
 
 
             }
-            addOnItemChildClickListener(com.knight.kotlin.library_base.R.id.base_article_collect) { adapter, view, position ->
+            setSafeOnItemChildClickListener(com.knight.kotlin.library_base.R.id.base_article_collect) { adapter, view, position ->
 
                         selectItem = position
                         collectOrunCollect(

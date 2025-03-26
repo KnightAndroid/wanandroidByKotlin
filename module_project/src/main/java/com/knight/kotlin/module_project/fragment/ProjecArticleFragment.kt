@@ -12,6 +12,8 @@ import com.knight.kotlin.library_base.util.ArouteUtils
 import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_base.util.ColorUtils
 import com.knight.kotlin.library_widget.ktx.init
+import com.knight.kotlin.library_widget.ktx.setSafeOnItemChildClickListener
+import com.knight.kotlin.library_widget.ktx.setSafeOnItemClickListener
 import com.knight.kotlin.module_project.adapter.ProjectArticleAdapter
 import com.knight.kotlin.module_project.databinding.ProjectArticleFragmentBinding
 import com.knight.kotlin.module_project.entity.ProjectArticleListBean
@@ -178,12 +180,12 @@ class ProjecArticleFragment:BaseFragment<ProjectArticleFragmentBinding, ProjectA
     private fun initListener() {
         mProjectArticleAdapter.run {
 
-            addOnItemChildClickListener(com.knight.kotlin.library_base.R.id.base_article_collect) { adapter, view, position ->
+            setSafeOnItemChildClickListener(com.knight.kotlin.library_base.R.id.base_article_collect) { adapter, view, position ->
                 selectItem = position
                 collectOrunCollect(items[position].collect,items[position].id)
             }
 
-            setOnItemClickListener { adapter, view, position ->
+            setSafeOnItemClickListener { adapter, view, position ->
                 ArouteUtils.startWebArticle(items.get(position).link,items.get(position).title,
                     items.get(position).id,items.get(position).collect,items.get(position).envelopePic,
                     items.get(position).desc,items.get(position).chapterName,items[position].author,items[position].shareUser)

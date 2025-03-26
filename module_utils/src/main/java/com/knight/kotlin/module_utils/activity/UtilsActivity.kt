@@ -6,6 +6,7 @@ import com.knight.kotlin.library_base.ktx.init
 import com.knight.kotlin.library_base.ktx.setOnClick
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_util.startPageWithParams
+import com.knight.kotlin.library_widget.ktx.setSafeOnItemClickListener
 import com.knight.kotlin.module_utils.R
 import com.knight.kotlin.module_utils.adapter.UtilItemAdapter
 import com.knight.kotlin.module_utils.databinding.UtilsActivityBinding
@@ -73,7 +74,7 @@ class UtilsActivity : BaseActivity<UtilsActivityBinding,UtilsVm>(),OnRefreshList
 
     private fun initListener() {
         mUtilItemAdapter.run {
-            setOnItemClickListener { adapter, view, position ->
+            setSafeOnItemClickListener { adapter, view, position ->
                 startPageWithParams(RouteActivity.Web.WebPager,
                     "webUrl" to items[position].link,
                     "webTitle" to items[position].tabName)

@@ -1,7 +1,9 @@
 package com.knight.kotlin.module_realtime.fragment
 
 import android.view.LayoutInflater
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.flyjingfish.android_aop_core.annotations.SingleClick
 import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.knight.kotlin.library_base.route.RouteFragment
 import com.knight.kotlin.library_widget.ktx.init
@@ -12,6 +14,7 @@ import com.knight.kotlin.module_realtime.databinding.RealtimeMainFragmentBinding
 import com.knight.kotlin.module_realtime.databinding.RealtimeTabBoardFootItemBinding
 import com.knight.kotlin.module_realtime.databinding.RealtimeTabBoardHeadItemBinding
 import com.knight.kotlin.module_realtime.enum.HotListEnum
+import com.knight.kotlin.module_realtime.ktx.handleAdapterClick
 import com.knight.kotlin.module_realtime.vm.RealTimeHomeVm
 import com.wyjson.router.annotation.Route
 import dagger.hilt.android.AndroidEntryPoint
@@ -50,6 +53,8 @@ class RealTimeMainFragment : BaseFragment<RealtimeMainFragmentBinding, RealTimeH
     //电影榜
     private lateinit var mMovieHeaderBinding: RealtimeTabBoardHeadItemBinding
     private lateinit var mMovieFootBinding: RealtimeTabBoardFootItemBinding
+
+    private var selectRankListener:OnSelectRankListener ? = null
     override fun setThemeColor(isDarkMode: Boolean) {
 
     }
@@ -95,6 +100,9 @@ class RealTimeMainFragment : BaseFragment<RealtimeMainFragmentBinding, RealTimeH
             if (!::mRealTimeFootBinding.isInitialized) {
                 mRealTimeFootBinding = RealtimeTabBoardFootItemBinding.inflate(LayoutInflater.from(requireActivity()))
                 mBinding.rvHotList.addFooterView(mRealTimeFootBinding.root)
+                mRealTimeFootBinding.root.setOnClickListener {
+                    selectRankListener?.onChipClick(HotListEnum.REALTIME)
+                }
             }
 
         }
@@ -113,6 +121,9 @@ class RealTimeMainFragment : BaseFragment<RealtimeMainFragmentBinding, RealTimeH
             if (!::mPhraseFootBinding.isInitialized) {
                 mPhraseFootBinding = RealtimeTabBoardFootItemBinding.inflate(LayoutInflater.from(requireActivity()))
                 mBinding.rvPhraseList.addFooterView(mPhraseFootBinding.root)
+                mPhraseFootBinding.root.setOnClickListener {
+                    selectRankListener?.onChipClick(HotListEnum.PHRASE)
+                }
             }
 
         }
@@ -132,6 +143,10 @@ class RealTimeMainFragment : BaseFragment<RealtimeMainFragmentBinding, RealTimeH
             if (!::mNovelFootBinding.isInitialized) {
                 mNovelFootBinding= RealtimeTabBoardFootItemBinding.inflate(LayoutInflater.from(requireActivity()))
                 mBinding.rvNovelList.addFooterView(mNovelFootBinding.root)
+
+                mNovelFootBinding.root.setOnClickListener {
+                    selectRankListener?.onChipClick(HotListEnum.NOVEL)
+                }
             }
 
         }
@@ -151,6 +166,10 @@ class RealTimeMainFragment : BaseFragment<RealtimeMainFragmentBinding, RealTimeH
             if (!::mMovieFootBinding.isInitialized) {
                 mMovieFootBinding= RealtimeTabBoardFootItemBinding.inflate(LayoutInflater.from(requireActivity()))
                 mBinding.rvMovieList.addFooterView(mMovieFootBinding.root)
+
+                mMovieFootBinding.root.setOnClickListener {
+                    selectRankListener?.onChipClick(HotListEnum.MOVIE)
+                }
             }
 
         }
@@ -160,10 +179,43 @@ class RealTimeMainFragment : BaseFragment<RealtimeMainFragmentBinding, RealTimeH
 
     }
 
+    fun setSelectRankListener(selectRankListener:OnSelectRankListener):RealTimeMainFragment {
+        this.selectRankListener = selectRankListener
+        return this
+    }
+
     override fun RealtimeMainFragmentBinding.initView() {
         rvHotList.init(LinearLayoutManager(requireActivity()), mRealTimeHotMainAdapter,false)
         rvPhraseList.init(LinearLayoutManager(requireActivity()),mPhraseMainAdapter,false)
         rvNovelList.init(LinearLayoutManager(requireActivity()),mNovelAdapter,false)
         rvMovieList.init(LinearLayoutManager(requireActivity()),mMovieAdapter,false)
+        setOnClickListener(rlMainTeleplay,rlMainCar)
+        initAdapterClickListener()
+    }
+
+
+    private fun initAdapterClickListener() {
+
+        handleAdapterClick(mMovieAdapter,mRealTimeHotMainAdapter,mPhraseMainAdapter,mNovelAdapter)
+    }
+
+
+
+    @SingleClick
+    override fun onClick(v: View) {
+        when (v) {
+            mBinding.rlMainTeleplay -> {
+                selectRankListener?.onChipClick(HotListEnum.TELEPLAY)
+            }
+
+            mBinding.rlMainCar -> {
+                selectRankListener?.onChipClick(HotListEnum.CAR)
+            }
+        }
+    }
+
+
+    interface OnSelectRankListener {
+        fun onChipClick(enum: HotListEnum)
     }
 }

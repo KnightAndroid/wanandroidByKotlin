@@ -13,6 +13,7 @@ import com.knight.kotlin.library_base.util.ArouteUtils
 import com.knight.kotlin.library_database.entity.HistoryReadRecordsEntity
 import com.knight.kotlin.library_util.DialogUtils
 import com.knight.kotlin.library_widget.floatmenu.FloatMenu
+import com.knight.kotlin.library_widget.ktx.setSafeOnItemClickListener
 
 import com.knight.kotlin.module_mine.R
 import com.knight.kotlin.module_mine.adapter.HistoryRecordAdapter
@@ -132,7 +133,7 @@ class HistoryRecordActivity :BaseActivity<MineHistoryrecordActivityBinding,Histo
 
     private fun initListener() {
         mHistoryRecordAdapter.run {
-            setOnItemClickListener { adapter, view, position ->
+            setSafeOnItemClickListener { adapter, view, position ->
                 ArouteUtils.startWebArticle(
                     items[position].webUrl,
                     items[position].title,

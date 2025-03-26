@@ -20,6 +20,8 @@ import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.library_util.toast.ToastUtils
 import com.knight.kotlin.library_widget.flowlayout.OnTagClickListener
 import com.knight.kotlin.library_widget.flowlayout.TagInfo
+import com.knight.kotlin.library_widget.ktx.setSafeOnItemChildClickListener
+import com.knight.kotlin.library_widget.ktx.setSafeOnItemClickListener
 
 import com.knight.kotlin.module_home.R
 import com.knight.kotlin.module_home.adapter.KnowLedgeAdapter
@@ -140,7 +142,7 @@ class KnowLedgeLabelActivity : BaseActivity<HomeLabelActivityBinding, EmptyViewM
 
     private fun initListener() {
         mMoreKnowLedgeAdapter.run {
-            setOnItemClickListener { adapter, view, position ->
+            setSafeOnItemClickListener { adapter, view, position ->
                 if (isEdit) {
                     for (i in 0 until mBinding.homeKnowledgetTag.getTagInfos().size) {
                         if (mMoreKnowLedgeAdapter.items.get(position).tagName.equals(
@@ -169,7 +171,7 @@ class KnowLedgeLabelActivity : BaseActivity<HomeLabelActivityBinding, EmptyViewM
                 }
 
             }
-            addOnItemChildClickListener(R.id.home_iv_moreknowledge_delete) { adapter, view, position ->
+            setSafeOnItemChildClickListener(R.id.home_iv_moreknowledge_delete) { adapter, view, position ->
                 when (view.id) {
                     R.id.home_iv_moreknowledge_delete -> {
 

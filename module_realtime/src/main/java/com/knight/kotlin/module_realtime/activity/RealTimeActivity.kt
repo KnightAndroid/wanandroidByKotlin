@@ -40,7 +40,7 @@ class RealTimeActivity : BaseActivity<RealtimeMainActivityBinding,EmptyViewModel
     }
 
     override fun RealtimeMainActivityBinding.initView() {
-
+        ivRealtimeHomeBack.setOnClickListener { finish() }
         mBinding.layoutParentTabSegment.apply {
             layoutParams.apply {
                 setPadding(0, statusHeight, 0, 0)

@@ -8,6 +8,8 @@ import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.knight.kotlin.library_base.route.RouteFragment
 import com.knight.kotlin.library_base.util.ArouteUtils
 import com.knight.kotlin.library_widget.ktx.init
+import com.knight.kotlin.library_widget.ktx.setSafeOnItemChildClickListener
+import com.knight.kotlin.library_widget.ktx.setSafeOnItemClickListener
 import com.knight.kotlin.module_square.R
 import com.knight.kotlin.module_square.adapter.SquareShareArticleAdapter
 import com.knight.kotlin.module_square.databinding.SquareListFragmentBinding
@@ -104,13 +106,13 @@ class SquareShareListFragment:BaseFragment<SquareListFragmentBinding, SquareList
      */
     private fun initAdapterClickListener() {
         mSquareShareArticleAdapter.run {
-            setOnItemClickListener { adapter, view, position ->
+            setSafeOnItemClickListener { adapter, view, position ->
                 ArouteUtils.startWebArticle(items.get(position).link,items.get(position).title,
                     items.get(position).id,items.get(position).collect,items.get(position).envelopePic,
                     items.get(position).desc,items.get(position).chapterName,items[position].author,items[position].shareUser)
             }
 
-            addOnItemChildClickListener(R.id.square_icon_collect) { adapter, view, position ->
+            setSafeOnItemChildClickListener(R.id.square_icon_collect) { adapter, view, position ->
                 selectItem = position
                 collectOrunCollect(items[position].collect,items[position].id)
             }

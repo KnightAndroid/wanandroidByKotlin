@@ -11,6 +11,8 @@ import com.knight.kotlin.library_base.util.ArouteUtils
 import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_base.util.ColorUtils
 import com.knight.kotlin.library_widget.ktx.init
+import com.knight.kotlin.library_widget.ktx.setSafeOnItemChildClickListener
+import com.knight.kotlin.library_widget.ktx.setSafeOnItemClickListener
 import com.knight.kotlin.module_wechat.adapter.WechatArticleAdapter
 import com.knight.kotlin.module_wechat.databinding.WechatOfficialaccountFragmentBinding
 import com.knight.kotlin.module_wechat.entity.WechatArticleListEntity
@@ -94,7 +96,7 @@ class WechatOfficialAccountFragment:BaseFragment<WechatOfficialaccountFragmentBi
 
     fun initListener() {
         mWechatArticleAdapter.run {
-            setOnItemClickListener { adapter, view, position ->
+            setSafeOnItemClickListener { adapter, view, position ->
                 ArouteUtils.startWebArticle(
                     items[position].link,
                     items[position].title,
@@ -108,7 +110,7 @@ class WechatOfficialAccountFragment:BaseFragment<WechatOfficialaccountFragmentBi
                 )
             }
 
-            addOnItemChildClickListener(com.knight.kotlin.library_base.R.id.base_icon_collect) { adapter, view, position ->
+            setSafeOnItemChildClickListener(com.knight.kotlin.library_base.R.id.base_icon_collect) { adapter, view, position ->
                 selectItemPosition = position
                 collectOrunCollect(items[position].collect,items[position].id)
             }

@@ -9,6 +9,7 @@ import com.knight.kotlin.module_realtime.adapter.HotRankCategoryAdapter
 import com.knight.kotlin.module_realtime.adapter.HotRankNovelMovieAdapter
 import com.knight.kotlin.module_realtime.databinding.RealtimeMovieFragmentBinding
 import com.knight.kotlin.module_realtime.enum.LevelEnum
+import com.knight.kotlin.module_realtime.ktx.handleAdapterClick
 import com.knight.kotlin.module_realtime.vm.RealtimeMovieVm
 import com.wyjson.router.annotation.Route
 import dagger.hilt.android.AndroidEntryPoint
@@ -58,7 +59,7 @@ class RealTimeMovieFragment : BaseFragment<RealtimeMovieFragmentBinding,Realtime
         rvMovieCategory.init(LinearLayoutManager(requireActivity(),LinearLayoutManager.HORIZONTAL, false),mCategoryAdapter,false)
         rvMovieCountry.init(LinearLayoutManager(requireActivity(),LinearLayoutManager.HORIZONTAL, false),mCountryAdapter,false)
         rvMovie.init(LinearLayoutManager(requireActivity()),mMovieAdapter,false)
-
+        handleAdapterClick(mMovieAdapter)
     }
 
     override fun onChipClick(enum: LevelEnum,chipText: String) {

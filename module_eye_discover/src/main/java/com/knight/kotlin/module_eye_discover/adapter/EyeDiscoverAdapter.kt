@@ -13,6 +13,7 @@ import com.knight.kotlin.library_base.util.dp2px
 import com.knight.kotlin.library_util.startPageWithAnimate
 import com.knight.kotlin.library_util.startPageWithParams
 import com.knight.kotlin.library_widget.SpacesItemDecoration
+import com.knight.kotlin.library_widget.ktx.setSafeOnItemClickListener
 import com.knight.kotlin.module_eye_discover.R
 import com.knight.kotlin.module_eye_discover.constants.DiscoverItemType
 import com.knight.kotlin.module_eye_discover.databinding.EyeDiscoverBriefCardItemBinding
@@ -80,7 +81,7 @@ class EyeDiscoverAdapter(activity : FragmentActivity, data:List<BaseEyeDiscoverE
                     }
                     val adapter = EyeDiscoverSubCategoryAdapter()
                     adapter.run {
-                        setOnItemClickListener { adapter, view, position ->
+                        setSafeOnItemClickListener { adapter, view, position ->
                             startPageWithAnimate(activity, RouteActivity.EyeDiscover.EyeCategoryDetailActivity,view,activity.getString(R.string.eye_discover_share_element_container),
                                 "id" to dataList[position].id,
                                 "name" to dataList[position].title.replace("#",""),
@@ -128,7 +129,7 @@ class EyeDiscoverAdapter(activity : FragmentActivity, data:List<BaseEyeDiscoverE
 
 
                     adapter.run {
-                        setOnItemClickListener { adapter, view, position ->
+                        setSafeOnItemClickListener { adapter, view, position ->
 
                             startPageWithParams(RouteActivity.EyeDiscover.EyeSpecialTopicDetailActivity,"id" to dataList[position].id)
 //                            startPageWithAnimate(activity, RouteActivity.EyeDiscover.EyeCategoryDetailActivity,view,activity.getString(R.string.eye_discover_share_element_container),

@@ -24,6 +24,8 @@ import com.knight.kotlin.library_util.startPage
 import com.knight.kotlin.library_util.startPageWithParams
 import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.library_widget.ktx.init
+import com.knight.kotlin.library_widget.ktx.setSafeOnItemChildClickListener
+import com.knight.kotlin.library_widget.ktx.setSafeOnItemClickListener
 
 import com.knight.kotlin.module_home.R
 import com.knight.kotlin.module_home.adapter.HomeHotKeyAdapter
@@ -150,14 +152,14 @@ class HomeSearchActivity : BaseActivity<HomeSearchActivityBinding,HomeSearchVm>(
 
     private fun initClickListener() {
           mSearchRecordAdapter.run {
-            setOnItemClickListener { adapter, view, position ->
+            setSafeOnItemClickListener { adapter, view, position ->
               keyword = items[position].name ?: ""
               Appconfig.search_keyword = keyword
               startPageWithParams(RouteActivity.Home.HomeSearchResultActivity,"keyword" to keyword)
             }
               //子view点击事件
 
-              addOnItemChildClickListener(R.id.iv_searchkeyword_delete) { adapter, view, position ->
+              setSafeOnItemChildClickListener(R.id.iv_searchkeyword_delete) { adapter, view, position ->
                   HistroyKeywordsRepository.getInstance()?.deleteHistroyKeyword(items[position].id)
                   mSearchRecordAdapter.removeAt(position)
                   mSearchRecordAdapter.notifyItemRemoved(position)
@@ -169,7 +171,7 @@ class HomeSearchActivity : BaseActivity<HomeSearchActivityBinding,HomeSearchVm>(
         }
 
         mHomeHotKeyAdapter.run {
-            setOnItemClickListener { adapter, view, position ->
+            setSafeOnItemClickListener { adapter, view, position ->
                 keyword = items[position].name
                 Appconfig.search_keyword = keyword
                 DataBaseUtils.saveSearchKeyword(keyword)

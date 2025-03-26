@@ -1,7 +1,6 @@
 package com.knight.kotlin.module_realtime
 
 import com.knight.kotlin.library_base.BaseApp
-import dagger.hilt.android.HiltAndroidApp
 
 
 /**
@@ -10,7 +9,7 @@ import dagger.hilt.android.HiltAndroidApp
  * @Date 2025/3/11 15:15
  * @descript:
  */
-@HiltAndroidApp  //单独运行使用
+//@HiltAndroidApp  //单独运行使用 不单独运行要注释掉
 class RealTimeAloneApplication: BaseApp() {
 
     override fun onCreate() {

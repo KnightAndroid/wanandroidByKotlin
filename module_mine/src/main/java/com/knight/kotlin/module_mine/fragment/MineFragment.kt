@@ -33,6 +33,8 @@ import com.knight.kotlin.library_util.startPageWithParams
 import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.library_util.toast.ToastUtils
 import com.knight.kotlin.library_widget.ktx.init
+import com.knight.kotlin.library_widget.ktx.setSafeOnItemChildClickListener
+import com.knight.kotlin.library_widget.ktx.setSafeOnItemClickListener
 
 import com.knight.kotlin.module_mine.R
 import com.knight.kotlin.module_mine.activity.LoginActivity
@@ -285,7 +287,7 @@ class MineFragment: BaseFragment<MineFragmentBinding, MineViewModel>(),OnRefresh
 
         mOpenSourceAdapter.run {
             //子view点击事件
-            addOnItemChildClickListener(R.id.mine_opensource_abroadlink) { adapter, view, position ->
+            setSafeOnItemChildClickListener(R.id.mine_opensource_abroadlink) { adapter, view, position ->
                 GoRouter.getInstance().build(RouteActivity.Web.WebPager)
                     .withString("webUrl", mOpenSourceAdapter.items[position].abroadlink)
                     .withString("webTitle", mOpenSourceAdapter.items[position].name)
@@ -293,7 +295,7 @@ class MineFragment: BaseFragment<MineFragmentBinding, MineViewModel>(),OnRefresh
 
             }
 
-            addOnItemChildClickListener(R.id.mine_iv_abroadcopy) { adapter, view, position ->
+            setSafeOnItemChildClickListener(R.id.mine_iv_abroadcopy) { adapter, view, position ->
                 SystemUtils.copyContent(
                     requireActivity(),
                     mOpenSourceAdapter.items[position].abroadlink
@@ -302,7 +304,7 @@ class MineFragment: BaseFragment<MineFragmentBinding, MineViewModel>(),OnRefresh
             }
 
             //Item点击事件
-            setOnItemClickListener { adapter, view, position ->
+            setSafeOnItemClickListener { adapter, view, position ->
                 //跳到webview
                 GoRouter.getInstance().build(RouteActivity.Web.WebPager)
                     .withString("webUrl", mOpenSourceAdapter.items[position].abroadlink)
@@ -328,7 +330,7 @@ class MineFragment: BaseFragment<MineFragmentBinding, MineViewModel>(),OnRefresh
         mMineItemAdapter.submitList(mDataList)
         mMineItemAdapter.run {
             //Item点击事件
-            setOnItemClickListener { adapter, view, position ->
+            setSafeOnItemClickListener { adapter, view, position ->
                 when(items[position].id) {
                     1 -> {
                         goVideos()

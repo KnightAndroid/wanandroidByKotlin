@@ -8,6 +8,8 @@ import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.knight.kotlin.library_base.route.RouteFragment
 import com.knight.kotlin.library_base.util.ArouteUtils
 import com.knight.kotlin.library_widget.ktx.init
+import com.knight.kotlin.library_widget.ktx.setSafeOnItemChildClickListener
+import com.knight.kotlin.library_widget.ktx.setSafeOnItemClickListener
 import com.knight.kotlin.module_square.R
 import com.knight.kotlin.module_square.adapter.SquareArticleAdapter
 import com.knight.kotlin.module_square.constants.SquareConstants
@@ -49,7 +51,7 @@ class SquareArticleFragment:BaseFragment<SquareArticleFragmentBinding, SquareArt
         includeArticleRecycleview.baseFreshlayout.setOnLoadMoreListener(this@SquareArticleFragment)
         includeArticleRecycleview.baseFreshlayout.setOnRefreshListener(this@SquareArticleFragment)
         mSquareArticleAdapter.run {
-            setOnItemClickListener { adapter, view, position ->
+            setSafeOnItemClickListener { adapter, view, position ->
                 ArouteUtils.startWebArticle(
                     mSquareArticleAdapter.items[position].link,
                     mSquareArticleAdapter.items[position].title,
@@ -63,7 +65,7 @@ class SquareArticleFragment:BaseFragment<SquareArticleFragmentBinding, SquareArt
                 )
             }
 
-            addOnItemChildClickListener(R.id.square_icon_collect) { adapter, view, position ->
+            setSafeOnItemChildClickListener(R.id.square_icon_collect) { adapter, view, position ->
                 when (view.id) {
                     R.id.square_icon_collect -> {
                         selectItem = position

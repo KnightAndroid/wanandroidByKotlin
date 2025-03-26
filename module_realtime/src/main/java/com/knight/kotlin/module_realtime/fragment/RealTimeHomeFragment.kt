@@ -7,6 +7,7 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.knight.kotlin.library_base.annotation.EventBusRegister
 import com.knight.kotlin.library_base.config.EventBusKeys
+import com.knight.kotlin.library_base.entity.BaiduTabBoard
 import com.knight.kotlin.library_base.event.MessageEvent
 import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.knight.kotlin.library_base.ktx.statusHeight
@@ -36,10 +37,12 @@ import kotlin.math.abs
 @EventBusRegister
 @AndroidEntryPoint
 @Route(path = RouteFragment.RealTime.RealTimeHomeFragment)
-class RealTimeHomeFragment : BaseFragment<RealtimeHomeFragmentBinding, RealTimeHomeVm>(),OnRefreshListener{
+class RealTimeHomeFragment : BaseFragment<RealtimeHomeFragmentBinding, RealTimeHomeVm>(),OnRefreshListener,RealTimeMainFragment.OnSelectRankListener{
 
     private val mFragments = mutableListOf<Fragment>()
 
+
+    private lateinit var mNavDatas :List<BaiduTabBoard>
     override fun setThemeColor(isDarkMode: Boolean) {
 
     }
@@ -50,11 +53,11 @@ class RealTimeHomeFragment : BaseFragment<RealtimeHomeFragmentBinding, RealTimeH
 
     override fun initRequestData() {
         mViewModel.getDataByTab("wise","homepage").observerKt {
-            var  mNavDatas = it.tabBoard
+            mNavDatas = it.tabBoard
 
             for (index  in 0 until  it.tabBoard.size) {
                 if (it.tabBoard.get(index).typeName == "homepage") {
-                    mFragments.add(RealTimeMainFragment())
+                    mFragments.add(RealTimeMainFragment().setSelectRankListener(this))
                 } else if (it.tabBoard.get(index).typeName == HotListEnum.REALTIME.name.lowercase()
                     || it.tabBoard.get(index).typeName == HotListEnum.FINANCE.name.lowercase()
                     || it.tabBoard.get(index).typeName == HotListEnum.PHRASE.name.lowercase()
@@ -117,35 +120,6 @@ class RealTimeHomeFragment : BaseFragment<RealtimeHomeFragmentBinding, RealTimeH
                         // 标签被重新选中（当标签已经被选中，再次点击时触发）
                     }
                 })
-
-//                mBinding.realtimeViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-//                    override fun onPageScrolled(
-//                        position: Int,
-//                        positionOffset: Float,
-//                        positionOffsetPixels: Int
-//                    ) {
-//                        // 页面滚动时调用
-//                        // position: 当前页面的位置
-//                        // positionOffset: 页面滚动的偏移量 (0.0 到 1.0)
-//                        // positionOffsetPixels: 页面滚动的像素偏移量
-//                    }
-//
-//                    override fun onPageSelected(position: Int) {
-//                        // 页面被选中时调用
-//                        // position: 被选中页面的位置
-//                        //val minHeight = DensityUtils.dp2px(300f)
-//                        setViewPager2Height(mBinding.realtimeViewPager, position)
-//                    }
-//
-//                    override fun onPageScrollStateChanged(state: Int) {
-//                        // 页面滚动状态改变时调用
-//                        // state: 滚动状态 (IDLE, DRAGGING, SETTLING)
-//
-//                    }
-//                })
-
-
-
                 mBinding.realtimeTabLayout.setTabTextColors(Color.parseColor("#BBABAB"), Color.parseColor("#F84C48"))
                 //选中条颜色
                 mBinding.realtimeTabLayout.setSelectedTabIndicatorColor(Color.parseColor("#F84C48"))
@@ -179,12 +153,6 @@ class RealTimeHomeFragment : BaseFragment<RealtimeHomeFragmentBinding, RealTimeH
             }else 1).put(EventBusKeys.OFFSET,i))
 
         }
-//
-//        realtimeViewPager.postDelayed({//解决首次加载时ViewPager2高度问题
-////                        val minHeight = DensityUtils.dp2px(300f)
-//            setViewPager2Height(realtimeViewPager, 0)
-//        }, 300)
-
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -218,6 +186,25 @@ class RealTimeHomeFragment : BaseFragment<RealtimeHomeFragmentBinding, RealTimeH
         ThreadUtils.postMainDelayed({
             mBinding.realtimeHomeSmartfresh.finishRefresh()
         },2000)
+    }
+
+    override fun onChipClick(enum: HotListEnum) {
+        if (::mNavDatas.isInitialized) {
+            if (enum == HotListEnum.CAR) {
+                mBinding.realtimeViewPager.setCurrentItem(mNavDatas.find { it.typeName == HotListEnum.CAR.name.lowercase() }?.index ?:0,true)
+            } else if (enum == HotListEnum.TELEPLAY) {
+                mBinding.realtimeViewPager.setCurrentItem(mNavDatas.find { it.typeName == HotListEnum.TELEPLAY.name.lowercase() }?.index ?:0,true)
+            } else if (enum == HotListEnum.REALTIME) {
+                mBinding.realtimeViewPager.setCurrentItem(mNavDatas.find { it.typeName == HotListEnum.REALTIME.name.lowercase() }?.index ?:0,true)
+            } else if (enum == HotListEnum.MOVIE) {
+                mBinding.realtimeViewPager.setCurrentItem(mNavDatas.find { it.typeName == HotListEnum.MOVIE.name.lowercase() }?.index ?:0,true)
+            } else if (enum == HotListEnum.NOVEL) {
+                mBinding.realtimeViewPager.setCurrentItem(mNavDatas.find { it.typeName == HotListEnum.NOVEL.name.lowercase() }?.index ?:0,true)
+            } else if (enum == HotListEnum.PHRASE) {
+                mBinding.realtimeViewPager.setCurrentItem(mNavDatas.find { it.typeName == HotListEnum.NOVEL.name.lowercase() }?.index ?:0,true)
+            }
+        }
+
     }
 
 }

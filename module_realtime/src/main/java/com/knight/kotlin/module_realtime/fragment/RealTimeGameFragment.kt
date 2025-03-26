@@ -9,6 +9,7 @@ import com.knight.kotlin.module_realtime.adapter.HotRankCategoryAdapter
 import com.knight.kotlin.module_realtime.adapter.HotRankGameAdapter
 import com.knight.kotlin.module_realtime.databinding.RealtimeGameFragmentBinding
 import com.knight.kotlin.module_realtime.enum.LevelEnum
+import com.knight.kotlin.module_realtime.ktx.handleAdapterClick
 import com.knight.kotlin.module_realtime.vm.RealTimeGameVm
 import com.wyjson.router.annotation.Route
 import dagger.hilt.android.AndroidEntryPoint
@@ -51,6 +52,7 @@ class RealTimeGameFragment: BaseFragment<RealtimeGameFragmentBinding, RealTimeGa
         requestLoading(rvGame, Color.parseColor("#F84C48"))
         rvGame.init(LinearLayoutManager(requireActivity()),mGameAdapter,true)
         rvGameCategory.init(LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false),mCategoryAdapter,false)
+        handleAdapterClick(mGameAdapter)
     }
 
     override fun onChipClick(enum: LevelEnum, chipText: String) {

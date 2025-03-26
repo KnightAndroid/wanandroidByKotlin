@@ -7,6 +7,8 @@ import com.knight.kotlin.library_base.ktx.setOnClick
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.util.ArouteUtils
 import com.knight.kotlin.library_util.DialogUtils
+import com.knight.kotlin.library_widget.ktx.setSafeOnItemChildClickListener
+import com.knight.kotlin.library_widget.ktx.setSafeOnItemClickListener
 import com.knight.kotlin.module_mine.R
 import com.knight.kotlin.module_mine.adapter.MyShareArticleAdapter
 import com.knight.kotlin.module_mine.databinding.MineMySharearticlesActivityBinding
@@ -106,7 +108,7 @@ class MyShareArticlesActivity : BaseActivity<MineMySharearticlesActivityBinding,
 
     private fun initListener() {
         mMyshareArticleAdater.run {
-            setOnItemClickListener { adapter, view, position ->
+            setSafeOnItemClickListener { adapter, view, position ->
                 ArouteUtils.startWebArticle(
                     items[position].link,
                     items[position].title,
@@ -121,7 +123,7 @@ class MyShareArticlesActivity : BaseActivity<MineMySharearticlesActivityBinding,
             }
 
 
-            addOnItemChildClickListener(R.id.mine_iv_share_articles_delete) { adapter, view, position ->
+            setSafeOnItemChildClickListener(R.id.mine_iv_share_articles_delete) { adapter, view, position ->
                 selectItem = position
                 DialogUtils.getConfirmDialog(this@MyShareArticlesActivity,getString(R.string.mine_confirm_cancel_share_article),
                     { dialog, which ->

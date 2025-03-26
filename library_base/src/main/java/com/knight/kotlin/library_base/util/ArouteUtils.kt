@@ -11,15 +11,15 @@ import com.wyjson.router.GoRouter
  */
 class ArouteUtils {
     companion object {
-        fun startWebArticle(link:String,title:String,id:Int,collect:Boolean,envelopePic:String?,desc:String?,chapterName:String?,author:String?,shareUser:String?) {
+        fun startWebArticle(link:String,title:String,id:Int,collect:Boolean,envelopePic:String? ="",desc:String?="",chapterName:String?="",author:String?="",shareUser:String?="") {
             val mWebDataEntity = WebDataEntity(
                 link,
                 title,
                 id,
                 collect,
-                envelopePic ?: "",
-                desc ?: "",
-                chapterName ?: "",
+                envelopePic ?:"",
+                desc?:"" ,
+                chapterName?:"",
                 author
                     ?: shareUser ?: "")
             GoRouter.getInstance().build(RouteActivity.Web.WebArticlePager)

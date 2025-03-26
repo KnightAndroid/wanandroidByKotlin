@@ -15,6 +15,7 @@ import com.knight.kotlin.library_base.util.GsonUtils
 import com.knight.kotlin.library_base.vm.EmptyViewModel
 import com.knight.kotlin.library_util.JsonUtils
 import com.knight.kotlin.library_util.SystemUtils
+import com.knight.kotlin.library_widget.ktx.setSafeOnItemClickListener
 import com.knight.kotlin.module_set.R
 import com.knight.kotlin.module_set.adapter.SelectDarkModeAdapter
 import com.knight.kotlin.module_set.databinding.SetDarkmodeActivityBinding
@@ -117,7 +118,7 @@ class DarkModeActivity : BaseActivity<SetDarkmodeActivityBinding, EmptyViewModel
 
     private fun initListener() {
         mSelectDarkModeAdapter.run {
-            setOnItemClickListener { adapter, view, position ->
+            setSafeOnItemClickListener { adapter, view, position ->
                 for (i in mDataList.indices) {
                     mDataList[i].select = false
                 }

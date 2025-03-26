@@ -93,6 +93,7 @@
             android:paddingBottom="@dimen/realtime_ll_teleplay_car_padding_bottom">
 
             <RelativeLayout
+                android:id="@+id/rl_main_teleplay"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/realtime_rl_teleplay_margin_left"
@@ -127,6 +128,7 @@
 
 
             <RelativeLayout
+                android:id="@+id/rl_main_car"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/realtime_rl_car_margin_left"

@@ -2,6 +2,7 @@ package com.knight.kotlin.module_realtime.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter4.BaseQuickAdapter
@@ -10,6 +11,7 @@ import com.knight.kotlin.library_base.util.dp2px
 import com.knight.kotlin.library_util.image.ImageLoader
 import com.knight.kotlin.module_realtime.R
 import com.knight.kotlin.module_realtime.databinding.RealtimeNovelRankItemBinding
+import com.knight.kotlin.module_realtime.ktx.HotAdapterInterface
 
 
 /**
@@ -18,7 +20,7 @@ import com.knight.kotlin.module_realtime.databinding.RealtimeNovelRankItemBindin
  * @Date 2025/3/18 17:06
  * @descript:热搜小说 电影 适配器
  */
-class HotRankNovelMovieAdapter: BaseQuickAdapter<BaiduContent, HotRankNovelMovieAdapter.VH>() {
+class HotRankNovelMovieAdapter: BaseQuickAdapter<BaiduContent, HotRankNovelMovieAdapter.VH>(), HotAdapterInterface<BaiduContent> {
 
 
     // 自定义ViewHolder类
@@ -77,5 +79,9 @@ class HotRankNovelMovieAdapter: BaseQuickAdapter<BaiduContent, HotRankNovelMovie
 
     override fun onCreateViewHolder(context: Context, parent: ViewGroup, viewType: Int): VH {
         return VH(parent)
+    }
+
+    override fun setOnItemClickListener(listener: (adapter: BaseQuickAdapter<BaiduContent, *>, view: View, position: Int) -> Unit) {
+        super.setOnItemClickListener(listener)
     }
 }

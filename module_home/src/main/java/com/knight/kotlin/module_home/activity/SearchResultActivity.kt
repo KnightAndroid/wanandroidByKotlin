@@ -14,6 +14,8 @@ import com.knight.kotlin.library_util.DataBaseUtils
 import com.knight.kotlin.library_util.SystemUtils
 import com.knight.kotlin.library_util.toast.ToastUtils
 import com.knight.kotlin.library_widget.ktx.init
+import com.knight.kotlin.library_widget.ktx.setSafeOnItemChildClickListener
+import com.knight.kotlin.library_widget.ktx.setSafeOnItemClickListener
 import com.knight.kotlin.module_home.R
 import com.knight.kotlin.module_home.adapter.SearchResultAdapter
 import com.knight.kotlin.module_home.databinding.HomeSearchresultActivityBinding
@@ -147,7 +149,7 @@ class SearchResultActivity : BaseActivity<HomeSearchresultActivityBinding, HomeS
 
     private fun initListener() {
         mSearchResultAdapter.run {
-            setOnItemClickListener { adapter, view, position ->
+            setSafeOnItemClickListener { adapter, view, position ->
                 ArouteUtils.startWebArticle(
                     items[position].link,
                     items[position].title,
@@ -161,7 +163,7 @@ class SearchResultActivity : BaseActivity<HomeSearchresultActivityBinding, HomeS
                 )
             }
 
-            addOnItemChildClickListener(com.knight.kotlin.library_base.R.id.base_icon_collect) { adapter, view, position ->
+            setSafeOnItemChildClickListener(com.knight.kotlin.library_base.R.id.base_icon_collect) { adapter, view, position ->
                 selectItem = position
                 collectOrunCollect(
                     items[position].collect,
@@ -171,7 +173,7 @@ class SearchResultActivity : BaseActivity<HomeSearchresultActivityBinding, HomeS
 
             }
 
-            addOnItemChildClickListener(com.knight.kotlin.library_base.R.id.base_article_collect) { adapter, view, position ->
+            setSafeOnItemChildClickListener(com.knight.kotlin.library_base.R.id.base_article_collect) { adapter, view, position ->
                 selectItem = position
                 collectOrunCollect(
                     items[position].collect,

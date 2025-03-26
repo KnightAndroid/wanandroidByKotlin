@@ -2,6 +2,7 @@ package com.knight.kotlin.module_realtime.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter4.BaseQuickAdapter
@@ -10,6 +11,7 @@ import com.knight.kotlin.library_base.util.dp2px
 import com.knight.kotlin.library_util.image.ImageLoader
 import com.knight.kotlin.module_realtime.R
 import com.knight.kotlin.module_realtime.databinding.RealtimeCarRankItemBinding
+import com.knight.kotlin.module_realtime.ktx.HotAdapterInterface
 
 
 /**
@@ -18,7 +20,7 @@ import com.knight.kotlin.module_realtime.databinding.RealtimeCarRankItemBinding
  * @Date 2025/3/25 14:34
  * @descript:热搜车适配器
  */
-class HotRankCarAdapter:BaseQuickAdapter<BaiduContent,HotRankCarAdapter.VH>() {
+class HotRankCarAdapter:BaseQuickAdapter<BaiduContent,HotRankCarAdapter.VH>() , HotAdapterInterface<BaiduContent> {
 
 
     // 自定义ViewHolder类
@@ -43,8 +45,8 @@ class HotRankCarAdapter:BaseQuickAdapter<BaiduContent,HotRankCarAdapter.VH>() {
             }
             holder.binding.tvCarName.setText(word)
             if (show.size == 1) {
-                if (show.get(0).length > 12) {
-                    holder.binding.tvCarDesc.setText(show.get(0).substring(0,12)+"...")
+                if (show.get(0).length > 16) {
+                    holder.binding.tvCarDesc.setText(show.get(0).substring(0,16)+"...")
                 } else {
                     holder.binding.tvCarDesc.setText(show.get(0))
                 }
@@ -52,8 +54,8 @@ class HotRankCarAdapter:BaseQuickAdapter<BaiduContent,HotRankCarAdapter.VH>() {
             } else {
                 val result = StringBuilder() // 使用 StringBuilder 提高效率
                 for (str in show) {
-                    if (str.length > 12) {
-                        result.append(str.substring(0, 12) + "...").append("\n") // 追加字符串和换行符
+                    if (str.length > 16) {
+                        result.append(str.substring(0, 16) + "...").append("\n") // 追加字符串和换行符
                     } else {
                         result.append(str).append("\n") // 追加字符串和换行符
                     }
@@ -77,6 +79,10 @@ class HotRankCarAdapter:BaseQuickAdapter<BaiduContent,HotRankCarAdapter.VH>() {
 
     override fun onCreateViewHolder(context: Context, parent: ViewGroup, viewType: Int): VH {
         return VH(parent)
+    }
+
+    override fun setOnItemClickListener(listener: (adapter: BaseQuickAdapter<BaiduContent, *>, view: View, position: Int) -> Unit) {
+        super.setOnItemClickListener(listener)
     }
 
 }

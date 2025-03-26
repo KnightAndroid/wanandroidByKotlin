@@ -13,6 +13,7 @@ import com.knight.kotlin.library_base.util.dp2px
 import com.knight.kotlin.library_util.startPageWithParams
 import com.knight.kotlin.library_widget.SpacesItemDecoration
 import com.knight.kotlin.library_widget.ktx.init
+import com.knight.kotlin.library_widget.ktx.setSafeOnItemClickListener
 import com.knight.kotlin.module_video.DataConstant
 import com.knight.kotlin.module_video.adapter.VideoMainAdapter
 import com.knight.kotlin.module_video.databinding.VideoMainActivityBinding
@@ -115,7 +116,7 @@ class VideoMainActivity : BaseActivity<VideoMainActivityBinding,VideoVm>(), OnRe
 
     fun initListener() {
         mVideoMainAdapter.run {
-            setOnItemClickListener { adapter, view, position ->
+            setSafeOnItemClickListener { adapter, view, position ->
                 startPageWithParams(RouteActivity.Video.VideoPlayListActivity,
                     "curPos" to position
                 )

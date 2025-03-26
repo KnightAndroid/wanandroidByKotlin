@@ -11,6 +11,7 @@ import com.knight.kotlin.library_util.JsonUtils
 import com.knight.kotlin.library_util.startPage
 import com.knight.kotlin.library_util.startPageWithParams
 import com.knight.kotlin.library_widget.ktx.init
+import com.knight.kotlin.library_widget.ktx.setSafeOnItemClickListener
 import com.knight.kotlin.module_home.adapter.EyepetizerCategoryAdapter
 import com.knight.kotlin.module_home.databinding.HomeEyeClassifyFragmentBinding
 import com.knight.kotlin.module_home.entity.EyeCategoryBean
@@ -60,7 +61,7 @@ class HomeEyeClassifyFragment : BaseFragment<HomeEyeClassifyFragmentBinding,Empt
         mEyepetizerCategoryAdapter.submitList(mDataList)
 
         mEyepetizerCategoryAdapter.run {
-            setOnItemClickListener { adapter, view, position ->
+            setSafeOnItemClickListener { adapter, view, position ->
                 if (position === 0) {
                     startPageWithParams(RouteActivity.EyeDaily.DailyListActivity,"tabTitle" to mDataList[position].categoryName)
                 } else if (position === 1) {

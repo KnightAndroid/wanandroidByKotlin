@@ -72,6 +72,7 @@ class WebArticleActivity :BaseActivity<WebArticleActivityBinding,WebVm>(),LoveAn
     }
     override fun WebArticleActivityBinding.initView() {
         webToolbar.baseIvRight.visibility = View.VISIBLE
+        title = webDataEntity?.title
         webLikeRl.setOnCollectListener(this@WebArticleActivity)
         mAgentWeb = AgentWeb.with(this@WebArticleActivity)
             .setAgentWebParent(webLl, LinearLayout.LayoutParams(-1,-1))
@@ -162,9 +163,12 @@ class WebArticleActivity :BaseActivity<WebArticleActivityBinding,WebVm>(),LoveAn
     override fun onCollect() {
         if (webDataEntity?.isCollect == false) {
             webDataEntity?.let {
-                mViewModel.collectArticle(it.articleId).observerKt {
-                    collectSuccess()
+                if (it.articleId > 1000) {
+                    mViewModel.collectArticle(it.articleId).observerKt {
+                        collectSuccess()
+                    }
                 }
+
             }
         }
     }

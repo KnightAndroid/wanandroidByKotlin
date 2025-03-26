@@ -9,6 +9,7 @@ import com.knight.kotlin.module_realtime.adapter.HotRankCarAdapter
 import com.knight.kotlin.module_realtime.adapter.HotRankCategoryAdapter
 import com.knight.kotlin.module_realtime.databinding.RealtimeCarFragmentBinding
 import com.knight.kotlin.module_realtime.enum.LevelEnum
+import com.knight.kotlin.module_realtime.ktx.handleAdapterClick
 import com.knight.kotlin.module_realtime.vm.RealTimeCarVm
 import com.wyjson.router.annotation.Route
 import dagger.hilt.android.AndroidEntryPoint
@@ -55,6 +56,7 @@ class RealTimeCarFragment : BaseFragment<RealtimeCarFragmentBinding,RealTimeCarV
         requestLoading(rvCar, Color.parseColor("#F84C48"))
         rvCar.init(LinearLayoutManager(requireActivity()),mHotRankCarAdapter,true)
         rvCarCategory.init(LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false),mCategoryAdapter,false)
+        handleAdapterClick(mHotRankCarAdapter)
     }
 
     override fun onChipClick(enum: LevelEnum, chipText: String) {
