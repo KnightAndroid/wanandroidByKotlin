@@ -795,7 +795,7 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
         }
 
         mBaiduHotSearchAdapter.run {
-            setSafeOnItemChildClickListener{ adapter, view, position ->
+            setSafeOnItemClickListener{ adapter, view, position ->
                 ArouteUtils.startWebArticle(
                     mBaiduHotSearchAdapter.items[position].appUrl,
                     mBaiduHotSearchAdapter.items[position].word,
