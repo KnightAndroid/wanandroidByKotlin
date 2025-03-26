@@ -794,13 +794,15 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
             }
         }
 
-        mBaiduHotSearchAdapter.setSafeOnItemChildClickListener{ adapter, view, position ->
-            ArouteUtils.startWebArticle(
-                mBaiduHotSearchAdapter.items[position].appUrl,
-                mBaiduHotSearchAdapter.items[position].word,
-                mBaiduHotSearchAdapter.items[position].index,
-                false
-            )
+        mBaiduHotSearchAdapter.run {
+            setSafeOnItemChildClickListener{ adapter, view, position ->
+                ArouteUtils.startWebArticle(
+                    mBaiduHotSearchAdapter.items[position].appUrl,
+                    mBaiduHotSearchAdapter.items[position].word,
+                    mBaiduHotSearchAdapter.items[position].index,
+                    false
+                )
+            }
         }
     }
 
