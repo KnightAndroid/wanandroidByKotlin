@@ -1164,4 +1164,16 @@
         <attr name="menuRightMargin" format="dimension"/>
     </declare-styleable>
 
+    <declare-styleable name="easy_flip_view">
+        <attr name="flipOnTouch" format="boolean"/>
+        <attr name="flipDuration" format="integer"/>
+        <attr name="flipType" format="string"/>
+        <attr name="flipFrom" format="string"/>
+        <attr name="flipEnabled" format="boolean"/>
+        <attr name="flipOnceEnabled" format="boolean"/>
+        <attr name="autoFlipBack" format="boolean"/>
+        <attr name="autoFlipBackTime" format="integer"/>
+        <attr name="animFlipInId" format="reference"/>
+        <attr name="animFlipOutId" format="reference"/>
+    </declare-styleable>
 </resources>

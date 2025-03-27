@@ -98,6 +98,7 @@ class ClientConfig {
             .setDomain("zaobao",BaseUrlConfig.ZAO_BAO_URL)
             .setDomain("weather",BaseUrlConfig.WEATHER_URL)
             .setDomain("rainfall",BaseUrlConfig.RAIN_FALL_URL)
+            .setDomain("bingying",BaseUrlConfig.BINGYING_URL)
             .build()
     }
 

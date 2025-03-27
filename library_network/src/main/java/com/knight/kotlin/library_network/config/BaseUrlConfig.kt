@@ -24,4 +24,6 @@ internal object BaseUrlConfig {
     const val WEATHER_URL = "https://i.news.qq.com/"
     //降雨量
     const val RAIN_FALL_URL = "https://api.open-meteo.com/"
+    //每日一图
+    const val BINGYING_URL = "https://cn.bing.com/"
 }

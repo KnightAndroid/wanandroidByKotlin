@@ -1,0 +1,43 @@
+package com.knight.kotlin.module_home.api
+
+import com.knight.kotlin.module_home.entity.RainHourFallBean
+import com.knight.kotlin.module_home.entity.WeatherNewBean
+import retrofit2.http.GET
+import retrofit2.http.Headers
+import retrofit2.http.Query
+
+
+/**
+ * @author created by luguian
+ * @organize
+ * @Date 2025/3/27 14:17
+ * @descript:每天天气 早报
+ */
+interface HomeWeatherNewsApiService {
+
+
+
+
+    /**
+     * 获取每天一图
+     */
+    @Headers("Domain-Name:bingying")
+    @GET("HPImageArchive.aspx")
+    suspend fun getTodayImage(@Query("format") format:String,@Query("idx") idx:String,@Query("n") n:String): WeatherNewBean
+
+    /**
+     *
+     * 得到未来两小时 hourly=precipitation&forecast_hours=2&timezone=Asia/Shanghai
+     */
+    @Headers("Domain-Name:rainfall")
+    @GET("v1/forecast")
+    suspend fun getTwoWeekDayRainFall(
+        @Query("latitude") latitude: Double,
+        @Query("longitude") longitude:Double,
+        @Query("hourly") hourly:String,
+        @Query("forecast_hours") forecast_hours:Int,
+        @Query("timezone") timezone:String,
+    ) : RainHourFallBean
+
+
+}

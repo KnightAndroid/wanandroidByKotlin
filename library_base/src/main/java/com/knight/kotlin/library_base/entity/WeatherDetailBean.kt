@@ -16,6 +16,7 @@ data class WeatherDetailBean (
     val forecast_1h: List<WeatherEveryHour>,
     val forecast_24h: List<WeatherEveryDay>,
     val index: Index,
+    val alarm: Map<String, AlarmDetail>?,
     val limit: Limit,
     val tips:TipObserve,
     val air:WeatherAir,
@@ -136,4 +137,21 @@ data class TipObserve(
     @SerializedName("1") val secondTips:String,
     @SerializedName("2") val thirdTips:String
 ): Parcelable
+
+
+
+// 预警详情类
+@Parcelize
+data class AlarmDetail(
+    @SerializedName("detail") val detail: String,          // 预警详情
+    @SerializedName("info") val info: String,              // 预警信息编码
+    @SerializedName("level_code") val levelCode: String,  // 预警级别编码
+    @SerializedName("level_name") val levelName: String,  // 预警级别名称
+    @SerializedName("province") val province: String,     // 省份
+    @SerializedName("type_code") val typeCode: String,    // 预警类型编码
+    @SerializedName("type_name") val typeName: String,    // 预警类型名称
+    @SerializedName("update_time") val updateTime: String, // 更新时间
+    @SerializedName("url") val url: String                // 预警详情链接
+): Parcelable
+
 

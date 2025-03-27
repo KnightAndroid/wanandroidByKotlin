@@ -89,6 +89,7 @@ import com.knight.kotlin.module_home.adapter.OfficialAccountAdapter
 import com.knight.kotlin.module_home.adapter.WeatherIndexAdapter
 import com.knight.kotlin.module_home.databinding.HomeRecommendFragmentBinding
 import com.knight.kotlin.module_home.dialog.HomePushArticleFragment
+import com.knight.kotlin.module_home.dialog.HomeWeatherNewsFragment
 import com.knight.kotlin.module_home.entity.BannerBean
 import com.knight.kotlin.module_home.entity.EveryDayPushArticlesBean
 import com.knight.kotlin.module_home.entity.HomeArticleListBean
@@ -308,6 +309,9 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
 
             SpacesItemDecoration(10.dp2px())
         )
+
+
+        HomeWeatherNewsFragment().showAllowingStateLoss(parentFragmentManager,"dialog_everyday_weather")
     }
 
     /**

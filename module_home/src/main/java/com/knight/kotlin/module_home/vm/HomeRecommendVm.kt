@@ -15,7 +15,7 @@ import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_home.entity.BannerBean
 import com.knight.kotlin.module_home.entity.EveryDayPushArticlesBean
 import com.knight.kotlin.module_home.entity.HomeArticleListBean
-import com.knight.kotlin.module_home.entity.RainFallBean
+import com.knight.kotlin.module_home.entity.RainDayFallBean
 import com.knight.kotlin.module_home.entity.TopArticleBean
 import com.knight.kotlin.module_home.entity.ZaoBaoBean
 import com.knight.kotlin.module_home.repo.HomeRecommendRepo
@@ -185,7 +185,7 @@ class HomeRecommendVm @Inject constructor(private val mRepo: HomeRecommendRepo) 
                                start_date:String,
                                end_date:String,
                                current_weather:Boolean,
-                               daily :String):LiveData<RainFallBean> {
+                               daily :String):LiveData<RainDayFallBean> {
         return mRepo.getTwoWeekDayRainFall(latitude, longitude, start_date, end_date, current_weather, daily).asLiveData()
     }
 

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.knight.kotlin.library_widget.EasyFlipView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="320dp">
+
+
+    <include layout="@layout/home_today_news_item" />
+    <include layout="@layout/home_today_weather_item" />
+
+
+</com.knight.kotlin.library_widget.EasyFlipView>

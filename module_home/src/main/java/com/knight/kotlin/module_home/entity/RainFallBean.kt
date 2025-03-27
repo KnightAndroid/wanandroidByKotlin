@@ -10,20 +10,70 @@ import kotlinx.parcelize.Parcelize
  * @Date 2025/3/6 10:38
  * @descript:
  */
+
 @Parcelize
-data class RainFallBean(
-    val current_weather: CurrentWeather,
-    val current_weather_units: CurrentWeatherUnits,
+open class RainBaseFallBean(
+    open val current_weather: CurrentWeather,
+    open val current_weather_units: CurrentWeatherUnits,
+    open val elevation: Double,
+    open val generationtime_ms: Double,
+    open val latitude: Double,
+    open val longitude: Double,
+    open val timezone: String,
+    open val timezone_abbreviation: String,
+    open val utc_offset_seconds: Int
+) : Parcelable
+
+@Parcelize
+data class RainDayFallBean(
     val daily: Daily,
     val daily_units: DailyUnits,
-    val elevation: Double,
-    val generationtime_ms: Double,
-    val latitude: Double,
-    val longitude: Double,
-    val timezone: String,
-    val timezone_abbreviation: String,
-    val utc_offset_seconds: Int
-): Parcelable
+    override val current_weather: CurrentWeather,
+    override val current_weather_units: CurrentWeatherUnits,
+    override val elevation: Double,
+    override val generationtime_ms: Double,
+    override val latitude: Double,
+    override val longitude: Double,
+    override val timezone: String,
+    override val timezone_abbreviation: String,
+    override val utc_offset_seconds: Int
+) : RainBaseFallBean(
+    current_weather,
+    current_weather_units,
+    elevation,
+    generationtime_ms,
+    latitude,
+    longitude,
+    timezone,
+    timezone_abbreviation,
+    utc_offset_seconds
+)
+
+
+@Parcelize
+data class RainHourFallBean(
+    val hourly: Hour,
+    val hourly_units: HourUnits,
+    override val current_weather: CurrentWeather,
+    override val current_weather_units: CurrentWeatherUnits,
+    override val elevation: Double,
+    override val generationtime_ms: Double,
+    override val latitude: Double,
+    override val longitude: Double,
+    override val timezone: String,
+    override val timezone_abbreviation: String,
+    override val utc_offset_seconds: Int
+) : RainBaseFallBean(
+    current_weather,
+    current_weather_units,
+    elevation,
+    generationtime_ms,
+    latitude,
+    longitude,
+    timezone,
+    timezone_abbreviation,
+    utc_offset_seconds
+)
 
 
 
@@ -61,5 +111,20 @@ data class Daily(
 @Parcelize
 data class DailyUnits(
     val precipitation_sum: String,
+    val time: String
+): Parcelable
+
+
+
+@Parcelize
+data class Hour(
+    val precipitation: List<Float>,
+    val time: List<String>
+): Parcelable
+
+
+@Parcelize
+data class HourUnits(
+    val precipitation: String,
     val time: String
 ): Parcelable

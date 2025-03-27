@@ -11,7 +11,7 @@ import com.knight.kotlin.module_home.api.HomeRecommendApiService
 import com.knight.kotlin.module_home.entity.BannerBean
 import com.knight.kotlin.module_home.entity.EveryDayPushArticlesBean
 import com.knight.kotlin.module_home.entity.HomeArticleListBean
-import com.knight.kotlin.module_home.entity.RainFallBean
+import com.knight.kotlin.module_home.entity.RainDayFallBean
 import com.knight.kotlin.module_home.entity.TopArticleBean
 import com.knight.kotlin.module_home.entity.ZaoBaoBean
 import javax.inject.Inject
@@ -202,7 +202,7 @@ class HomeRecommendRepo @Inject constructor(): BaseRepository() {
         end_date:String,
         current_weather:Boolean,
         daily :String
-    )  = request<RainFallBean> ({
+    )  = request<RainDayFallBean> ({
         mHomeRecommendApiService.getTwoWeekDayRainFall(latitude, longitude, start_date, end_date, current_weather, daily).run {
             emit(this)
         }

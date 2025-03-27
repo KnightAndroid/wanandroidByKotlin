@@ -8,7 +8,7 @@ import com.knight.kotlin.library_network.bean.BaseResponse
 import com.knight.kotlin.module_home.entity.BannerBean
 import com.knight.kotlin.module_home.entity.EveryDayPushArticlesBean
 import com.knight.kotlin.module_home.entity.HomeArticleListBean
-import com.knight.kotlin.module_home.entity.RainFallBean
+import com.knight.kotlin.module_home.entity.RainDayFallBean
 import com.knight.kotlin.module_home.entity.TopArticleBean
 import com.knight.kotlin.module_home.entity.ZaoBaoBean
 import retrofit2.http.Field
@@ -137,7 +137,7 @@ interface HomeRecommendApiService {
         @Query("end_date") end_date:String,
         @Query("current_weather") current_weather:Boolean,
         @Query("daily") daily :String
-    ) : RainFallBean
+    ) : RainDayFallBean
 
 
     //天气API
@@ -158,4 +158,8 @@ interface HomeRecommendApiService {
     //https://api.open-meteo.com/v1/forecast?latitude=48.8566&longitude=2.3522&start_date=2025-03-05&end_date=2025-03-11&current_weather=True&daily=precipitation_sum
     //获取每小时降雨量
     //https://api.open-meteo.com/v1/forecast?latitude=48.8566&longitude=2.3522&start_date=2025-03-05&end_date=2025-03-11&current_weather=True&hourly=precipitation
+    //每日一图 https://cn.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1    再通过 拼接https://cn.bing.com//th?id=OHR.OdeonAthens_ZH-CN6085881625_640*480.jpg
+    //获取未来两小时降雨量
+    //https://api.open-meteo.com/v1/forecast?latitude=48.8566&longitude=2.3522&hourly=precipitation&forecast_hours=2&timezone=Asia/Shanghai
+
 }
