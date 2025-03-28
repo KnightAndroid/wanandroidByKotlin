@@ -31,7 +31,7 @@ interface HomeWeatherNewsApiService {
      */
     @Headers("Domain-Name:rainfall")
     @GET("v1/forecast")
-    suspend fun getTwoWeekDayRainFall(
+    suspend fun getTwoHourRainFall(
         @Query("latitude") latitude: Double,
         @Query("longitude") longitude:Double,
         @Query("hourly") hourly:String,

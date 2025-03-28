@@ -140,6 +140,9 @@ interface HomeRecommendApiService {
     ) : RainDayFallBean
 
 
+
+
+
     //天气API
     //https://wis.qq.com/weather/common?source=pc&weather_type=observe&province=%E5%9B%9B%E5%B7%9D&city=%E6%88%90%E9%83%BD&county=%E6%88%90%E5%8D%8E%E5%8C%BA
     //https://wis.qq.com/weather/common?source=pc&weather_type=observe|forecast_1h|forecast_24h|index|alarm|limit|tips|rise&province=%E5%9B%9B%E5%B7%9D&city=%E6%88%90%E9%83%BD&county=%E5%8F%8C%E6%B5%81%E5%8C%BA

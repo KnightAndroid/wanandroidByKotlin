@@ -87,6 +87,7 @@ abstract class BaseDialogFragment<VB: ViewBinding,VM: BaseViewModel> : DialogFra
         super.onViewCreated(view, savedInstanceState)
         mBinding.initView()
         initObserver()
+        initRequestData()
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {

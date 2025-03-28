@@ -311,7 +311,7 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
         )
 
 
-        HomeWeatherNewsFragment().showAllowingStateLoss(parentFragmentManager,"dialog_everyday_weather")
+
     }
 
     /**
@@ -405,7 +405,7 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
 
             )//DateUtils.isDaytime()
 
-
+            HomeWeatherNewsFragment.newInstance(it.observe,it.forecast_24h.get(1).maxDegree,it.forecast_24h.get(1).minDegree).showAllowingStateLoss(parentFragmentManager,"dialog_everyday_weather")
             mHourWeatherHeadAdapter.setRisks(listOf(it.rise.first()))
             mHourWeatherAdapter.setWeatherEveryHour(it.forecast_1h)
             mBinding.homeRecommentMenu.tvWeatherTodayValue.text = it.forecast_24h.get(1).dayWeather

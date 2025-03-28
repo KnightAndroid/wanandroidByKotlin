@@ -3,6 +3,7 @@ package com.knight.kotlin.module_home.vm
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
 import com.knight.kotlin.library_base.vm.BaseViewModel
+import com.knight.kotlin.module_home.entity.RainHourFallBean
 import com.knight.kotlin.module_home.entity.WeatherNewBean
 import com.knight.kotlin.module_home.repo.HomeWeatherNewRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -26,6 +27,25 @@ class HomeWeatherNewVm @Inject constructor(private val mRepo: HomeWeatherNewRepo
     fun getTodayImage(format:String, idx:String, n:String): LiveData<WeatherNewBean> {
         return mRepo.getTodayImage(format,idx,n).asLiveData()
     }
+
+    /**
+     *
+     * 查询未来两个小时降雨量
+      */
+    fun getTwoHourRainFall(latitude: Double,
+                                      longitude:Double,
+                                      hourly:String,
+                                      forecast_hours:Int,
+                                      timezone:String) : LiveData<RainHourFallBean>{
+        return mRepo.getTwoHourRainFall(latitude,longitude,hourly,forecast_hours,timezone).asLiveData()
+
+    }
+
+
+
+
+
+
 
 
 }

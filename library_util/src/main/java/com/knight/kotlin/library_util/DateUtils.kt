@@ -1,6 +1,7 @@
 package com.knight.kotlin.library_util
 
 import com.knight.kotlin.library_base.util.CacheUtils
+import com.knight.kotlin.library_base.util.LanguageFontSizeUtils
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.time.LocalDate
@@ -293,5 +294,47 @@ object DateUtils {
         val date = LocalDate.parse(dateString)
         val formatter = DateTimeFormatter.ofPattern("MM/dd")
         return date.format(formatter)
+    }
+
+
+    /**
+     *
+     * 获取是星期几
+     */
+    fun getWeekday():String {
+        return if (LanguageFontSizeUtils.isChinese()) {
+            getCNWeekday()
+        } else {
+            getEnglishWeekday()
+        }
+    }
+
+
+    /**
+     *
+     * 获取中文星期几
+     */
+    fun getCNWeekday(): String {
+        val calendar = Calendar.getInstance()
+        val dayOfWeek = calendar[Calendar.DAY_OF_WEEK]
+
+        // Calendar.DAY_OF_WEEK 的值从 1（星期日）到 7（星期六）
+        return when (dayOfWeek) {
+            Calendar.SUNDAY -> "星期日"
+            Calendar.MONDAY -> "星期一"
+            Calendar.TUESDAY -> "星期二"
+            Calendar.WEDNESDAY -> "星期三"
+            Calendar.THURSDAY -> "星期四"
+            Calendar.FRIDAY -> "星期五"
+            Calendar.SATURDAY -> "星期六"
+            else -> ""
+        }
+    }
+
+
+    // 可选：获取英文星期几
+    fun getEnglishWeekday(): String {
+        val calendar = Calendar.getInstance()
+        return calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.ENGLISH)
     }
 }

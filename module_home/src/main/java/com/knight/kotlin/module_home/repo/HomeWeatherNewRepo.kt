@@ -3,6 +3,7 @@ package com.knight.kotlin.module_home.repo
 import com.knight.kotlin.library_base.repository.BaseRepository
 import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_home.api.HomeWeatherNewsApiService
+import com.knight.kotlin.module_home.entity.RainHourFallBean
 import com.knight.kotlin.module_home.entity.WeatherNewBean
 import javax.inject.Inject
 
@@ -27,6 +28,26 @@ class HomeWeatherNewRepo @Inject constructor(): BaseRepository(){
      */
     fun getTodayImage(format:String, idx:String, n:String) = request<WeatherNewBean>({
         mHomeWeatherNewsApiService.getTodayImage(format,idx,n).run{
+            emit(this)
+        }
+
+    }){
+        it?.run {
+            toast(it)
+        }
+    }
+
+
+    /**
+     *
+     * 获取未来两小时降雨量
+     */
+    fun getTwoHourRainFall(latitude: Double,
+                              longitude:Double,
+                              hourly:String,
+                              forecast_hours:Int,
+                              timezone:String)= request<RainHourFallBean>({
+        mHomeWeatherNewsApiService.getTwoHourRainFall(latitude,longitude,hourly,forecast_hours,timezone).run{
             emit(this)
         }
 

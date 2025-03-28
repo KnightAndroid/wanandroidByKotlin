@@ -1,6 +1,7 @@
 package com.knight.kotlin.module_home.entity
 
 import android.os.Parcelable
+import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 
@@ -11,69 +12,40 @@ import kotlinx.parcelize.Parcelize
  * @descript:
  */
 
-@Parcelize
-open class RainBaseFallBean(
-    open val current_weather: CurrentWeather,
-    open val current_weather_units: CurrentWeatherUnits,
-    open val elevation: Double,
-    open val generationtime_ms: Double,
-    open val latitude: Double,
-    open val longitude: Double,
-    open val timezone: String,
-    open val timezone_abbreviation: String,
-    open val utc_offset_seconds: Int
-) : Parcelable
+
 
 @Parcelize
-data class RainDayFallBean(
-    val daily: Daily,
-    val daily_units: DailyUnits,
-    override val current_weather: CurrentWeather,
-    override val current_weather_units: CurrentWeatherUnits,
-    override val elevation: Double,
-    override val generationtime_ms: Double,
-    override val latitude: Double,
-    override val longitude: Double,
-    override val timezone: String,
-    override val timezone_abbreviation: String,
-    override val utc_offset_seconds: Int
-) : RainBaseFallBean(
-    current_weather,
-    current_weather_units,
-    elevation,
-    generationtime_ms,
-    latitude,
-    longitude,
-    timezone,
-    timezone_abbreviation,
-    utc_offset_seconds
-)
+class RainDayFallBean(
+    @SerializedName("daily") val daily: Daily,
+    @SerializedName("daily_units") val dailyUnits: DailyUnits,
+    @SerializedName("current_weather")  val currentWeather: CurrentWeather,
+    @SerializedName("current_weather_units")val currentWeatherUnits: CurrentWeatherUnits,
+    @SerializedName("elevation")val elevation: Double,
+    @SerializedName("generationtime_ms")  val generationTimeMs: Double,
+    @SerializedName("latitude") val latitude: Double,
+    @SerializedName("longitude")  val longitude: Double,
+    @SerializedName("timezone") val timezone: String,
+    @SerializedName("timezone_abbreviation") val timezoneAbbreviation: String,
+    @SerializedName("utc_offset_seconds") val utcOffsetSeconds: Int
+) :Parcelable
+
+
 
 
 @Parcelize
 data class RainHourFallBean(
-    val hourly: Hour,
-    val hourly_units: HourUnits,
-    override val current_weather: CurrentWeather,
-    override val current_weather_units: CurrentWeatherUnits,
-    override val elevation: Double,
-    override val generationtime_ms: Double,
-    override val latitude: Double,
-    override val longitude: Double,
-    override val timezone: String,
-    override val timezone_abbreviation: String,
-    override val utc_offset_seconds: Int
-) : RainBaseFallBean(
-    current_weather,
-    current_weather_units,
-    elevation,
-    generationtime_ms,
-    latitude,
-    longitude,
-    timezone,
-    timezone_abbreviation,
-    utc_offset_seconds
-)
+    @SerializedName("hourly") val hourly: Hour,
+    @SerializedName("hourly_units") val hourlyUnits: HourUnits,
+    @SerializedName("current_weather")  val currentWeather: CurrentWeather,
+    @SerializedName("current_weather_units")val currentWeatherUnits: CurrentWeatherUnits,
+    @SerializedName("elevation")val elevation: Double,
+    @SerializedName("generationtime_ms")  val generationTimeMs: Double,
+    @SerializedName("latitude") val latitude: Double,
+    @SerializedName("longitude")  val longitude: Double,
+    @SerializedName("timezone") val timezone: String,
+    @SerializedName("timezone_abbreviation") val timezoneAbbreviation: String,
+    @SerializedName("utc_offset_seconds") val utcOffsetSeconds: Int
+) :Parcelable
 
 
 

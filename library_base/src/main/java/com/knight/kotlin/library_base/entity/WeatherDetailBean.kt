@@ -16,7 +16,7 @@ data class WeatherDetailBean (
     val forecast_1h: List<WeatherEveryHour>,
     val forecast_24h: List<WeatherEveryDay>,
     val index: Index,
-    val alarm: Map<String, AlarmDetail>?,
+   // val alarm: Map<String, AlarmDetail>?,
     val limit: Limit,
     val tips:TipObserve,
     val air:WeatherAir,
