@@ -5,6 +5,7 @@ import androidx.lifecycle.asLiveData
 import com.knight.kotlin.library_base.vm.BaseViewModel
 import com.knight.kotlin.module_home.entity.RainHourFallBean
 import com.knight.kotlin.module_home.entity.WeatherNewBean
+import com.knight.kotlin.module_home.entity.ZaoBaoBean
 import com.knight.kotlin.module_home.repo.HomeWeatherNewRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -41,6 +42,14 @@ class HomeWeatherNewVm @Inject constructor(private val mRepo: HomeWeatherNewRepo
 
     }
 
+
+    /**
+     * 获取早报信息
+     *
+     */
+    fun getZaoBao():LiveData<ZaoBaoBean> {
+        return mRepo.getZaoBao().asLiveData()  //#1DD4EC #4B97F8
+    }
 
 
 

@@ -1,10 +1,12 @@
 package com.knight.kotlin.module_home.repo
 
 import com.knight.kotlin.library_base.repository.BaseRepository
+import com.knight.kotlin.library_network.model.responseCodeExceptionHandler
 import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_home.api.HomeWeatherNewsApiService
 import com.knight.kotlin.module_home.entity.RainHourFallBean
 import com.knight.kotlin.module_home.entity.WeatherNewBean
+import com.knight.kotlin.module_home.entity.ZaoBaoBean
 import javax.inject.Inject
 
 
@@ -55,5 +57,20 @@ class HomeWeatherNewRepo @Inject constructor(): BaseRepository(){
         it?.run {
             toast(it)
         }
+    }
+
+
+
+    /**
+     *
+     * 获取早报新闻
+     */
+    fun getZaoBao() = request<ZaoBaoBean>({
+        mHomeWeatherNewsApiService.getZaoBao().run {
+            responseCodeExceptionHandler(code,msg)
+            emit(data)
+        }
+    }) {
+        it?.let { it1 -> toast(it1) }
     }
 }

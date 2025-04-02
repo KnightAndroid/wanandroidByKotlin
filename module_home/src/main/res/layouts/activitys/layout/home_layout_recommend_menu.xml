@@ -6,10 +6,6 @@
     <data>
 
         <variable
-            name="viewModel"
-            type="com.knight.kotlin.module_home.entity.ZaoBaoBean" />
-
-        <variable
             name="todayWeather"
             type="com.knight.kotlin.library_base.entity.TodayWeatherDataBean" />
 
@@ -27,12 +23,6 @@
 
         >
 
-<!--            android:background="@drawable/home_enum_bg"    -->
-<!--        <RelativeLayout-->
-<!--            android:id="@+id/rl_recommend_menu"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:orientation="vertical">-->
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cl_slidmenu"
@@ -40,16 +30,6 @@
                 android:layout_height="wrap_content"
                 >
 
-
-
-<!--                <ImageView-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="match_parent"-->
-<!--                    app:imageUrl="@{viewModel.head_image}"-->
-<!--                    android:scaleType="fitXY"-->
-<!--                    app:layout_constraintRight_toRightOf="parent"-->
-<!--                    app:layout_constraintLeft_toLeftOf="parent"-->
-<!--                    app:layout_constraintTop_toTopOf="parent"/>-->
 
 
                 <TextView

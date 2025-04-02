@@ -4,8 +4,6 @@ import android.graphics.Bitmap
 import android.graphics.BitmapShader
 import android.graphics.Canvas
 import android.graphics.Paint
-import android.graphics.PorterDuff
-import android.graphics.PorterDuffXfermode
 import android.graphics.RectF
 import android.graphics.Shader
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool
@@ -21,7 +19,7 @@ class RoundedCornersTransformation(val radius: Float) : BitmapTransformation() {
 
 
     override fun updateDiskCacheKey(messageDigest: MessageDigest) {
-
+        messageDigest.update(("rounded-corners-$radius").toByteArray())
     }
 
     override fun transform(
@@ -30,20 +28,19 @@ class RoundedCornersTransformation(val radius: Float) : BitmapTransformation() {
         outWidth: Int,
         outHeight: Int
     ): Bitmap {
-        var result = pool.get(outWidth,outHeight,Bitmap.Config.ARGB_8888)
-        if (result == null) {
-            result = Bitmap.createBitmap(outWidth,outHeight,Bitmap.Config.ARGB_8888)
-        }
-        val canvas = Canvas(result)
+        val bitmap = pool.get(outWidth, outHeight, Bitmap.Config.ARGB_8888)
+            ?: Bitmap.createBitmap(outWidth, outHeight, Bitmap.Config.ARGB_8888)
+
+        val canvas = Canvas(bitmap)
         val paint = Paint()
         paint.isAntiAlias = true
-        paint.setShader(null)
-        canvas.drawRoundRect(RectF(0F,0F, outWidth.toFloat(), outHeight.toFloat()),radius,radius,paint)
-        val bitmapPaint = Paint()
-        bitmapPaint.isAntiAlias = true
-        bitmapPaint.setShader(BitmapShader(toTransform, Shader.TileMode.CLAMP,Shader.TileMode.CLAMP))
-        bitmapPaint.setXfermode(PorterDuffXfermode(PorterDuff.Mode.SRC_IN))
-        canvas.drawBitmap(toTransform,0F,0F,bitmapPaint)
-        return result
+        paint.shader = BitmapShader(toTransform, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP)
+
+        val rect = RectF(0f, 0f, outWidth.toFloat(), outHeight.toFloat())
+        canvas.drawRoundRect(rect, radius, radius, paint)
+
+        return bitmap
+
+
     }
 }

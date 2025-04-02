@@ -1,7 +1,9 @@
 package com.knight.kotlin.module_home.api
 
+import com.knight.kotlin.library_network.bean.BaseResponse
 import com.knight.kotlin.module_home.entity.RainHourFallBean
 import com.knight.kotlin.module_home.entity.WeatherNewBean
+import com.knight.kotlin.module_home.entity.ZaoBaoBean
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Query
@@ -39,5 +41,13 @@ interface HomeWeatherNewsApiService {
         @Query("timezone") timezone:String,
     ) : RainHourFallBean
 
+
+
+    /**
+     * 获取热早报微语
+     */
+    @Headers("Domain-Name:zaobao")
+    @GET("zaobao")
+    suspend fun getZaoBao(): BaseResponse<ZaoBaoBean>
 
 }

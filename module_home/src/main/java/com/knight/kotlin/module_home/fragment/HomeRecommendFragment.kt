@@ -288,7 +288,7 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
 
 
         homeSlidingMenu.menuStatusListener = this@HomeRecommendFragment
-
+        mBinding.homeRecommentMenu.tvZaobaoDayTip.text = DateUtils.convertTime() + "，"+ DateUtils.getCurrentDateFormatted() + "早报内容已为你准备~"
 
 
         val concatAdapter = ConcatAdapter(mHourWeatherHeadAdapter, mHourWeatherAdapter)
@@ -385,11 +385,7 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
             }
         }
 
-        //获取日报新闻
-        mViewModel.getZaoBao().observerKt {
-            mBinding.viewModel = it
-            mBinding.homeRecommentMenu.tvZaobaoDayTip.text = DateUtils.convertTime() + "，"+ DateUtils.getCurrentDateFormatted() + "早报内容已为你准备~"
-        }
+
 
 
 

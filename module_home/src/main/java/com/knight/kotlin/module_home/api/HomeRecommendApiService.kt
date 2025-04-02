@@ -100,12 +100,7 @@ interface HomeRecommendApiService {
     @POST("user/login")
     suspend fun login(@Field("username") userName: String, @Field("password") passWord: String): BaseResponse<UserInfoEntity>
 
-    /**
-     * 获取热早报微语
-     */
-    @Headers("Domain-Name:zaobao")
-    @GET("zaobao")
-    suspend fun getZaoBao(): BaseResponse<ZaoBaoBean>
+
 
 
 

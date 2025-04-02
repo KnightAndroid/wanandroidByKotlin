@@ -3,10 +3,9 @@ package com.knight.kotlin.module_home.dialog
 import android.os.Build
 import android.os.Bundle
 import android.view.Gravity
-import androidx.lifecycle.Observer
 import com.knight.kotlin.library_base.entity.TodayWeatherDataBean
 import com.knight.kotlin.library_base.fragment.BaseDialogFragment
-import com.knight.kotlin.library_base.util.dp2px
+import com.knight.kotlin.library_base.ktx.getScreenWidth
 import com.knight.kotlin.library_util.DateUtils
 import com.knight.kotlin.library_util.TimeUtils
 import com.knight.kotlin.library_util.image.ImageLoader
@@ -46,10 +45,48 @@ class HomeWeatherNewsFragment:BaseDialogFragment<HomeTodayWeatherNewsDialogBindi
     }
 
     override fun initRequestData() {
-          mViewModel.getTodayImage("js","0","1").observe(this, Observer { data ->
-              ImageLoader.loadRoundedCornerPhoto(requireActivity(),"https://cn.bing.com" + data.images.get(0).urlbase + "_640x480.jpg", mBinding.homeTodayWeatherItem.ivTodayBg,4.dp2px())
 
-          })
+
+
+        mBinding.flipView.post {
+            val params = mBinding.flipView.layoutParams
+            params.width = getScreenWidth()
+            params.height = (params.width * 5f / 9f).toInt() // 计算9:5的高度
+            mBinding.flipView.layoutParams = params
+
+
+            //获取日报新闻
+            mViewModel.getZaoBao().observe(this,{data->
+
+
+
+
+
+
+                    // ImageLoader.loadImageWithAdaptiveSize(mBinding.homeTodayNewsItem.ivZaobaoHead,getScreenWidth() - 20.dp2px(), 320.dp2px(),data.head_image)
+                    // ImageLoader.loadRoundedCornerPhoto(requireActivity(),data.head_image, mBinding.homeTodayNewsItem.ivZaobaoHead,4.dp2px())
+                    //ImageLoader.loadImageFillWidthAndHeight(mBinding.homeTodayNewsItem.ivZaobaoHead,data.head_image)
+                    ImageLoader.loadStringPhoto(requireActivity(), data.head_image,mBinding.homeTodayNewsItem.ivZaobaoHead)
+
+
+
+                mViewModel.getTodayImage("js","0","1").observe(this,{ data ->
+
+
+
+                    ImageLoader.loadStringPhoto(requireActivity(), "https://cn.bing.com" + data.images.get(0).urlbase + "_640x480.jpg",mBinding.homeTodayWeatherItem.ivTodayBg)
+
+                    // ImageLoader.loadRoundedCornerPhoto(requireActivity(),"https://cn.bing.com" + data.images.get(0).urlbase + "_640x480.jpg",mBinding.homeTodayWeatherItem.ivTodayBg ,4.dp2px())
+
+
+                })
+            })
+
+        }
+
+
+
+
 
          mViewModel.getTwoHourRainFall(22.5256393434,114.0494336236,"precipitation",2,TimeUtils.getDefaultTimeZoneId()).observe(this,{data->
              var rainAmount:Float = 0f
@@ -62,6 +99,10 @@ class HomeWeatherNewsFragment:BaseDialogFragment<HomeTodayWeatherNewsDialogBindi
                  mBinding.homeTodayWeatherItem.tvRainInfo.text = "未来两小时无降雨"
              }
          })
+
+
+
+
     }
 
     override fun reLoadData() {
@@ -81,7 +122,7 @@ class HomeWeatherNewsFragment:BaseDialogFragment<HomeTodayWeatherNewsDialogBindi
         min_degree = arguments?.getString("min_degree") ?: ""
         homeTodayWeatherItem.tvTodayTemperature.text = weather?.degree + "°C"
         homeTodayWeatherItem.tvTodayWeather.text = weather?.weather
-        homeTodayWeatherItem.tvTipInfo.text = "\t\t今天最高温"+max_degree+"°，最低温"+min_degree+"°，多喝水，多运动，注意补充水分，保持新起愉悦"
+        homeTodayWeatherItem.tvTipInfo.text = "\t\t今天最高温"+max_degree+"°，最低温"+min_degree+"°，多喝水，多运动，注意补充水分，保持心情愉悦"
 
     }
 }

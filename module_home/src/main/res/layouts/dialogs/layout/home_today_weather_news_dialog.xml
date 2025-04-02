@@ -1,17 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.knight.kotlin.library_widget.EasyFlipView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="320dp">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
+
+    <ImageView
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/home_icon_white_circle_close"/>
 
 
-    <include
-        android:id="@+id/home_today_news_item"
-        layout="@layout/home_today_news_item" />
+    <com.knight.kotlin.library_widget.EasyFlipView
+        android:id="@+id/flip_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        >
 
-    <include
-        android:id="@+id/home_today_weather_item"
-        layout="@layout/home_today_weather_item" />
+
+        <include
+            android:id="@+id/home_today_news_item"
+            layout="@layout/home_today_news_item" />
+
+        <include
+            android:id="@+id/home_today_weather_item"
+            layout="@layout/home_today_weather_item" />
 
 
-</com.knight.kotlin.library_widget.EasyFlipView>
+    </com.knight.kotlin.library_widget.EasyFlipView>
+
+
+
+</LinearLayout>
+
+
+

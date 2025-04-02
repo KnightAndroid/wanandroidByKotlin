@@ -337,5 +337,24 @@ class ImageLoader {
         fun getCacheBitmap(mFragment: Fragment, uri: Uri, width: Int, height: Int): Bitmap? {
             return mImageLoaderProxy.getCacheBitmap(mFragment, uri, width, height)
         }
+
+        /**
+         * 要实现图片的宽度与 ImageView 的宽度一致，并且高度放大到 ImageView 的高
+         *
+         */
+        @Throws(Exception::class)
+        fun loadImageFillWidthAndHeight(imageView: ImageView, imageUrl: String) {
+            return mImageLoaderProxy.loadImageFillWidthAndHeight(imageView,imageUrl)
+        }
+
+
+        /**
+         * 要实现图片的宽度与 ImageView 的宽度一致，并且高度放大到 ImageView 的高
+         *
+         */
+        @Throws(Exception::class)
+        fun loadImageWithAdaptiveSize(imageView: ImageView, targetWidth:Int,targetHeight:Int ,imageUrl: String) {
+            return mImageLoaderProxy.loadImageWithAdaptiveSize(imageView, targetWidth, targetHeight, imageUrl)
+        }
     }
 }

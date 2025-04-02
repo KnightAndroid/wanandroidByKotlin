@@ -59,13 +59,7 @@ class HomeRecommendVm @Inject constructor(private val mRepo: HomeRecommendRepo) 
 
     }
 
-    /**
-     * 获取早报信息
-     *
-     */
-    fun getZaoBao():LiveData<ZaoBaoBean> {
-        return mRepo.getZaoBao().asLiveData()  //#1DD4EC #4B97F8
-    }
+
 
 
     /**

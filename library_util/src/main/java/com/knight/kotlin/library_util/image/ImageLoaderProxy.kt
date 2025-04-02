@@ -178,6 +178,14 @@ interface ImageLoaderProxy {
      */
     fun loadRoundedCornerPhoto(context: Context,uri: String, imageView: ImageView,corner:Int)
 
+    /**
+     *
+     * 自定义加载图片 根据宽度 不变 放大 高度
+     */
+    fun loadImageFillWidthAndHeight(imageView: ImageView, imageUrl: String)
+
+
+    fun loadImageWithAdaptiveSize(imageView: ImageView, targetWidth:Int,targetHeight:Int ,imageUrl: String)
 
     /**
      *
