@@ -7,11 +7,13 @@ import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.annotation.EventBusRegister
 import com.knight.kotlin.library_base.config.EventBusKeys
 import com.knight.kotlin.library_base.event.MessageEvent
+import com.knight.kotlin.library_base.ktx.setOnClick
 import com.knight.kotlin.library_base.ktx.statusHeight
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.util.dp2px
 import com.knight.kotlin.library_base.vm.EmptyViewModel
 import com.knight.kotlin.module_realtime.databinding.RealtimeMainActivityBinding
+import com.knight.kotlin.module_realtime.dialog.RealTimeRankRuleFragment
 import com.knight.kotlin.module_realtime.fragment.RealTimeHomeFragment
 import com.wyjson.router.annotation.Route
 import dagger.hilt.android.AndroidEntryPoint
@@ -41,6 +43,9 @@ class RealTimeActivity : BaseActivity<RealtimeMainActivityBinding,EmptyViewModel
 
     override fun RealtimeMainActivityBinding.initView() {
         ivRealtimeHomeBack.setOnClickListener { finish() }
+        imgMore.setOnClick {
+            RealTimeRankRuleFragment().show(supportFragmentManager,"dialog_rank_rule")
+        }
         mBinding.layoutParentTabSegment.apply {
             layoutParams.apply {
                 setPadding(0, statusHeight, 0, 0)

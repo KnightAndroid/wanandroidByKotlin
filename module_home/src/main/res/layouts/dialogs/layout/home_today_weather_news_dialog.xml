@@ -6,19 +6,15 @@
     android:orientation="vertical"
     >
 
-    <ImageView
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_marginTop="10dp"
-        android:layout_gravity="center_horizontal"
-        android:background="@drawable/home_icon_white_circle_close"/>
 
 
     <com.knight.kotlin.library_widget.EasyFlipView
         android:id="@+id/flip_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="@dimen/home_fp_weather_margin_top"
+        android:layout_marginRight="@dimen/home_fp_weather_margin_right"
+        android:layout_marginLeft="@dimen/home_fp_weather_margin_left"
         >
 
 
@@ -33,6 +29,13 @@
 
     </com.knight.kotlin.library_widget.EasyFlipView>
 
+    <ImageView
+        android:id="@+id/iv_weather_news_close"
+        android:layout_width="@dimen/home_iv_weather_news_close_width"
+        android:layout_height="@dimen/home_iv_weather_news_close_height"
+        android:layout_marginTop="@dimen/home_iv_weather_news_margin_top"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/home_icon_white_circle_close"/>
 
 
 </LinearLayout>

@@ -2,7 +2,6 @@ package com.knight.kotlin.library_util.image
 
 import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.Matrix
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.view.View
@@ -20,7 +19,6 @@ import com.bumptech.glide.load.resource.gif.GifDrawable
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.CustomTarget
-import com.bumptech.glide.request.target.CustomViewTarget
 import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.request.transition.Transition
 import com.knight.kotlin.library_base.util.dp2px
@@ -237,112 +235,8 @@ class DefaultImageLoaderProxy :ImageLoaderProxy {
         ).override(imageView.width, imageView.height).into(imageView)
     }
 
-    override fun loadImageFillWidthAndHeight(imageView: ImageView, imageUrl: String) {
-        Glide.with(imageView.context).asBitmap()
-            .load(imageUrl)
 
-            .into(object : CustomViewTarget<ImageView, Bitmap>(imageView) {
-                override fun onResourceCleared(placeholder: Drawable?) {
-                    // 资源被清除时的回调，可留空
-                }
-
-                override fun onLoadFailed(errorDrawable: Drawable?) {
-                    // 加载失败时，设置错误占位图
-                    imageView.setImageDrawable(errorDrawable)
-                }
-
-                override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
-                    val imageViewWidth = imageView.width
-                    val imageViewHeight = imageView.height
-
-                    if (imageViewWidth > 0 && imageViewHeight > 0) {
-                        val imageViewWidth = imageView.width
-                        val imageViewHeight = imageView.height
-
-                        if (imageViewWidth > 0 && imageViewHeight > 0) {
-                            val bitmapWidth = resource.width
-                            val bitmapHeight = resource.height
-
-                            // 1️⃣ 先按宽度缩放，保证宽度完全匹配 ImageView
-                            val scaleX = imageViewWidth.toFloat() / bitmapWidth.toFloat()
-                            var scaledHeight = bitmapHeight * scaleX  // 计算缩放后的高度
-
-                            // 2️⃣ 计算高度缩放比例，是否需要额外放大或裁剪
-                            val scaleY = imageViewHeight.toFloat() / scaledHeight
-                            val finalScale = if (scaledHeight < imageViewHeight) scaleX * scaleY else scaleX
-
-                            // 3️⃣ 计算新的缩放后高度
-                            scaledHeight = bitmapHeight * finalScale
-
-                            // 4️⃣ 创建 Matrix 进行缩放变换
-                            val matrix = Matrix()
-                            matrix.setScale(finalScale, finalScale)
-
-                            // 5️⃣ 计算偏移，让图片垂直居中（裁剪顶部和底部）
-                            val dx = 0f // 水平方向对齐 ImageView 左边（不裁剪宽度）
-                            val dy = (imageViewHeight - scaledHeight) / 2 // 计算垂直方向的偏移量
-
-                            matrix.postTranslate(dx, dy)
-
-                            // 6️⃣ 设置 ImageView 变换
-                            imageView.scaleType = ImageView.ScaleType.MATRIX
-                            imageView.imageMatrix = matrix
-                            imageView.setImageBitmap(resource)
-                        }
-                    }
-                }
-            })
-//            .into(object : CustomTarget<Drawable>() {
-//                override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable>?) {
-//                    val originalWidth = resource.intrinsicWidth
-//                    val originalHeight = resource.intrinsicHeight
-//                    val imageViewWidth = imageView.width
-//                    val imageViewHeight = imageView.height
-//                    var scaledHeight = 0
-//                    if (imageViewWidth > 0 && imageViewHeight > 0) {
-//                        // 第一步：按宽度进行加载缩放（不裁剪）
-//                        val scaleX = imageViewWidth.toFloat() / originalWidth.toFloat()
-//                        scaledHeight = (originalHeight * scaleX).toInt()
-//                        imageView.layoutParams.width = imageViewWidth // 确保宽度一致
-//                        imageView.layoutParams.height = imageViewHeight // 确保高度一致
-//                        // 第二步：按高度加载缩放裁剪，铺满整个图片
-//                        if (scaledHeight >= imageViewHeight) {
-//                            // 缩放后的高度大于等于 ImageView 的高度，使用 CENTER_CROP
-//                          //  imageView.layoutParams.width = imageViewWidth
-//                          //  imageView.layoutParams.height = imageViewHeight
-//                            imageView.setImageDrawable(resource)
-//                            imageView.scaleType = ImageView.ScaleType.CENTER_CROP
-//                        } else {
-//                            // 缩放后的高度小于 ImageView 的高度，使用 MATRIX 进行放大
-//                         //   imageView.layoutParams.width = imageViewWidth
-//                          //  imageView.layoutParams.height = imageViewHeight
-//                            imageView.setImageDrawable(resource)
-//                            val scaleY = imageViewHeight.toFloat() / scaledHeight.toFloat()
-//
-//                            val matrix = Matrix()
-//                            matrix.setScale(1f, scaleY, 0f, 0f) // 水平方向不缩放，垂直方向放大 scaleY 倍
-//
-//                            imageView.imageMatrix = matrix
-//                            imageView.scaleType = ImageView.ScaleType.MATRIX
-//                        }
-//                    } else {
-//                        // imageView 的尺寸尚未计算出来，使用 ViewTreeObserver 监听布局变化
-//                        imageView.viewTreeObserver.addOnGlobalLayoutListener(object : android.view.ViewTreeObserver.OnGlobalLayoutListener {
-//                            override fun onGlobalLayout() {
-//                                imageView.viewTreeObserver.removeOnGlobalLayoutListener(this)
-//                                loadImageFillWidthAndHeight(imageView, imageUrl)
-//                            }
-//                        })
-//                    }
-//                }
-//
-//                override fun onLoadCleared(placeholder: Drawable?) {
-//                    // 清除资源
-//                }
-//            })
-    }
-
-    override fun loadImageWithAdaptiveSize(imageView: ImageView, targetWidth: Int, targetHeight: Int, imageUrl: String) {
+    override fun loadImageWithAdaptiveSize(imageView: ImageView, targetWidth: Int, targetHeight: Int, imageUrl: String,callback: ((width: Int, height: Int) -> Unit)?) {
         Glide.with(imageView.context)
             .asBitmap()
             .load(imageUrl)
@@ -350,16 +244,24 @@ class DefaultImageLoaderProxy :ImageLoaderProxy {
                 override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
                     val bitmapWidth = resource.width
                     val bitmapHeight = resource.height
+                    var targetTempHeight:Int = 0
+                    var targetTempWidth:Int = 0
+                    if (targetWidth > 0) {
+                        // 计算 ImageView 高度，保持图片比例
+                        targetTempHeight = (targetWidth.toFloat() / bitmapWidth * bitmapHeight).toInt()
+                        targetTempWidth = targetWidth
+                    } else {
+                        targetTempWidth = (targetHeight.toFloat() / bitmapHeight * bitmapWidth).toInt()
+                        targetTempHeight = targetHeight
+                    }
 
-                    // 计算 ImageView 高度，保持图片比例
-                    val targetHeight = (targetWidth.toFloat() / bitmapWidth * bitmapHeight).toInt()
 
                     // 设置 ImageView 宽高
                     val params = imageView.layoutParams
-                    params.width = targetWidth
-                    params.height = targetHeight
+                    params.width = targetTempWidth
+                    params.height = targetTempHeight
                     imageView.layoutParams = params
-
+                    callback?.invoke(targetTempWidth , targetTempHeight)
                     // 设置图片
                     imageView.setImageBitmap(resource)
                 }
