@@ -7,6 +7,7 @@ import com.knight.kotlin.library_base.entity.BaiduCardDataBean
 import com.knight.kotlin.library_base.entity.UserInfoEntity
 import com.knight.kotlin.library_base.entity.WeatherDetailBean
 import com.knight.kotlin.library_base.vm.BaseViewModel
+import com.knight.kotlin.library_common.entity.AppUpdateBean
 import com.knight.kotlin.library_common.entity.OfficialAccountEntity
 import com.knight.kotlin.library_database.db.AppDataBase
 import com.knight.kotlin.library_database.entity.PushDateEntity
@@ -17,7 +18,6 @@ import com.knight.kotlin.module_home.entity.EveryDayPushArticlesBean
 import com.knight.kotlin.module_home.entity.HomeArticleListBean
 import com.knight.kotlin.module_home.entity.RainDayFallBean
 import com.knight.kotlin.module_home.entity.TopArticleBean
-import com.knight.kotlin.module_home.entity.ZaoBaoBean
 import com.knight.kotlin.module_home.repo.HomeRecommendRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -39,6 +39,17 @@ class HomeRecommendVm @Inject constructor(private val mRepo: HomeRecommendRepo) 
         val mDao =  AppDataBase.getInstance()?.mPushDateDao()!!
         repository = PushArticlesDataRepository(mDao)
     }
+
+
+    /**
+     * 检查APP版本更新
+     */
+    fun checkAppUpdateMessage(): LiveData<AppUpdateBean> {
+        return mRepo.checkAppUpdateMessage().asLiveData()
+    }
+
+
+
 
     /**
      * 获取每天推送文章

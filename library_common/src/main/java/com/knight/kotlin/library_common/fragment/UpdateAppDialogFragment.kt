@@ -1,14 +1,10 @@
 package com.knight.kotlin.library_common.fragment
 
-import android.app.Dialog
 import android.graphics.drawable.GradientDrawable
 import android.os.Build
 import android.os.Bundle
 import android.view.Gravity
-import android.view.KeyEvent
 import android.view.View
-import androidx.annotation.NonNull
-import androidx.annotation.Nullable
 import com.knight.kotlin.library_base.fragment.BaseDialogFragment
 import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_base.util.dp2px
@@ -37,17 +33,9 @@ class UpdateAppDialogFragment: BaseDialogFragment<UpdateAppDialogBinding,EmptyVi
         }
     }
 
-    @NonNull
-    override fun onCreateDialog(@Nullable savedInstanceState: Bundle?): Dialog {
-        val dialog: Dialog = super.onCreateDialog(savedInstanceState)
-        dialog.setCancelable(false)
-        dialog.setCanceledOnTouchOutside(false)
-        dialog.setOnKeyListener { dialog, keyCode, event ->
-            keyCode == KeyEvent.KEYCODE_BACK
-        }
-        return dialog
+    override fun cancelOnTouchOutSide(): Boolean {
+        return false
     }
-
 
 
     override fun getGravity() = Gravity.CENTER

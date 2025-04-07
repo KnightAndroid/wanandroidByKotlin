@@ -37,6 +37,9 @@ class ShareDialog : BaseDialogFragment<ShareDialogBinding, EmptyViewModel>() {
     }
 
     override fun getGravity(): Int = Gravity.CENTER
+    override fun cancelOnTouchOutSide(): Boolean {
+        return true
+    }
 
     override fun initObserver() {
 

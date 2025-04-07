@@ -29,6 +29,7 @@ import com.knight.library_biometric.databinding.BiometricLoginDialogBinding
 class BiometricPromptDialog: BaseDialogFragment<BiometricLoginDialogBinding,EmptyViewModel>(){
     private var mDialogActionCallback: OnBiometricPromptDialogActionCallback? = null
     override fun getGravity() = Gravity.CENTER
+    override fun cancelOnTouchOutSide() = true
 
 
     companion object {

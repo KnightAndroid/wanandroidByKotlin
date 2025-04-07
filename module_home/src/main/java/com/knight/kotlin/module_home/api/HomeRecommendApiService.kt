@@ -3,6 +3,7 @@ package com.knight.kotlin.module_home.api
 import com.knight.kotlin.library_base.entity.BaiduTopRealTimeBean
 import com.knight.kotlin.library_base.entity.UserInfoEntity
 import com.knight.kotlin.library_base.entity.WeatherDetailBean
+import com.knight.kotlin.library_common.entity.AppUpdateBean
 import com.knight.kotlin.library_common.entity.OfficialAccountEntity
 import com.knight.kotlin.library_network.bean.BaseResponse
 import com.knight.kotlin.module_home.entity.BannerBean
@@ -10,7 +11,6 @@ import com.knight.kotlin.module_home.entity.EveryDayPushArticlesBean
 import com.knight.kotlin.module_home.entity.HomeArticleListBean
 import com.knight.kotlin.module_home.entity.RainDayFallBean
 import com.knight.kotlin.module_home.entity.TopArticleBean
-import com.knight.kotlin.module_home.entity.ZaoBaoBean
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
@@ -26,6 +26,15 @@ import retrofit2.http.Query
  */
 interface HomeRecommendApiService {
 
+
+
+
+    /**
+     * 版本更新接口
+     */
+    @Headers("Domain-Name:gitee")
+    @GET("MengSuiXinSuoYuan/wanandroid_server/raw/master/wanandroid_config/kotlin/update.json")
+    suspend fun checkAppUpdateMessage(): BaseResponse<AppUpdateBean>
 
     /**
      * 获取每日推荐文章
@@ -153,7 +162,7 @@ interface HomeRecommendApiService {
     //https://tianqi.qq.com/
 
     //获取每日降雨量  需要谷歌坐标
-    //https://api.open-meteo.com/v1/forecast?latitude=48.8566&longitude=2.3522&start_date=2025-03-05&end_date=2025-03-11&current_weather=True&daily=precipitation_sum
+    //https://api.open-meteo.com/v1/forecast?latitude=22.5256393434&longitude=114.0494336236&start_date=2025-03-05&end_date=2025-03-11&current_weather=True&daily=precipitation_sum
     //获取每小时降雨量
     //https://api.open-meteo.com/v1/forecast?latitude=48.8566&longitude=2.3522&start_date=2025-03-05&end_date=2025-03-11&current_weather=True&hourly=precipitation
     //每日一图 https://cn.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1    再通过 拼接https://cn.bing.com//th?id=OHR.OdeonAthens_ZH-CN6085881625_640*480.jpg   https://api.xygeng.cn/openapi/bing

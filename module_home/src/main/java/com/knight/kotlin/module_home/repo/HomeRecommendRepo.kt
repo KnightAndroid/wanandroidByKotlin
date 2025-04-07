@@ -4,6 +4,7 @@ import com.knight.kotlin.library_base.entity.BaiduCardDataBean
 import com.knight.kotlin.library_base.entity.UserInfoEntity
 import com.knight.kotlin.library_base.entity.WeatherDetailBean
 import com.knight.kotlin.library_base.repository.BaseRepository
+import com.knight.kotlin.library_common.entity.AppUpdateBean
 import com.knight.kotlin.library_common.entity.OfficialAccountEntity
 import com.knight.kotlin.library_network.model.responseCodeExceptionHandler
 import com.knight.kotlin.library_util.toast
@@ -13,7 +14,6 @@ import com.knight.kotlin.module_home.entity.EveryDayPushArticlesBean
 import com.knight.kotlin.module_home.entity.HomeArticleListBean
 import com.knight.kotlin.module_home.entity.RainDayFallBean
 import com.knight.kotlin.module_home.entity.TopArticleBean
-import com.knight.kotlin.module_home.entity.ZaoBaoBean
 import javax.inject.Inject
 
 /**
@@ -25,6 +25,21 @@ class HomeRecommendRepo @Inject constructor(): BaseRepository() {
     @Inject
     lateinit var mHomeRecommendApiService: HomeRecommendApiService
 
+
+
+
+    /**
+     *
+     * 检查APP版本更新接口
+     */
+    fun checkAppUpdateMessage() = request<AppUpdateBean>({
+        mHomeRecommendApiService.checkAppUpdateMessage().run {
+            responseCodeExceptionHandler(code, msg)
+            emit(data)
+        }
+    }){
+        it?.let { it1 -> toast(it1) }
+    }
 
 
     /**

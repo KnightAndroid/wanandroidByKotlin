@@ -20,6 +20,16 @@
        />
 
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/home_icon_weather"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="@dimen/home_icon_weather_margin_top"
+        android:layout_marginRight="@dimen/home_icon_weather_margin_right"/>
+
+
     <TextView
         android:id="@+id/tv_news_top"
         android:layout_width="match_parent"
@@ -39,6 +49,15 @@
         android:ellipsize="end"
         />
 
+
+    <com.knight.kotlin.library_widget.CardShinningView
+        android:id="@+id/iv_card_shinning"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -70,4 +70,10 @@ object Appconfig {
      val SESSION_ID by lazy { UUID.randomUUID().toString().replace("-", "") }
      const val VERSION_CODE = 7070004
      const val VERSION_NAME = "7.7.4"
+
+     /**
+      *
+      * ip
+      */
+     var IP:String = "0.0.0.0"
 }

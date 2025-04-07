@@ -8,13 +8,13 @@ import com.knight.kotlin.library_base.event.MessageEvent
 import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.knight.kotlin.library_base.route.RouteFragment
 import com.knight.kotlin.library_base.util.EventBusUtils
+import com.knight.kotlin.library_base.vm.EmptyViewModel
 import com.knight.kotlin.library_common.entity.AppUpdateBean
 import com.knight.kotlin.library_common.fragment.UpdateAppDialogFragment
 import com.knight.kotlin.library_util.SystemUtils
 import com.knight.kotlin.library_util.ViewInitUtils
 import com.knight.kotlin.module_home.databinding.HomeFragmentBinding
 import com.knight.kotlin.module_home.view.TwoLevelTransformer
-import com.knight.kotlin.module_home.vm.HomeVm
 import com.wyjson.router.annotation.Route
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -27,7 +27,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 @Route(path = RouteFragment.Home.HomeFragment)
-class HomeFragment : BaseFragment<HomeFragmentBinding, HomeVm>(),HomeRecommendFragment.SlideMenuOpenListener {
+class HomeFragment : BaseFragment<HomeFragmentBinding, EmptyViewModel>(),HomeRecommendFragment.SlideMenuOpenListener {
 
 
     /**
@@ -58,9 +58,7 @@ class HomeFragment : BaseFragment<HomeFragmentBinding, HomeVm>(),HomeRecommendFr
     }
 
     override fun initRequestData() {
-        mViewModel.checkAppUpdateMessage().observerKt {
-            checkAppMessage(it)
-        }
+
     }
 
     override fun setThemeColor(isDarkMode: Boolean) {
@@ -69,20 +67,7 @@ class HomeFragment : BaseFragment<HomeFragmentBinding, HomeVm>(),HomeRecommendFr
 
 
 
-    /**
-     *
-     * 检查APP更新
-     */
-    private fun checkAppMessage(data: AppUpdateBean) {
-        //如果本地安装包大于远端 证明本地安装的说测试包 无需更新
-        if (SystemUtils.getAppVersionCode(requireActivity())  < data.versionCode ) {
-            if (data.versionName != activity?.let { SystemUtils.getAppVersionName(it) }) {
-                UpdateAppDialogFragment.newInstance(data).showAllowingStateLoss(
-                    parentFragmentManager, "dialog_update")
 
-            }
-        }
-    }
 
 
 

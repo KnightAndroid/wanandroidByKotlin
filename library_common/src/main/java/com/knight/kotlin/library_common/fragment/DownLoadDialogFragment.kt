@@ -1,17 +1,12 @@
 package com.knight.kotlin.library_common.fragment
 
 import android.annotation.SuppressLint
-import android.app.Dialog
-import android.content.DialogInterface
 import android.os.Bundle
 import android.os.Environment
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
 import android.view.Gravity
-import android.view.KeyEvent
-import androidx.annotation.NonNull
-import androidx.annotation.Nullable
 import com.knight.kotlin.library_base.fragment.BaseDialogFragment
 import com.knight.kotlin.library_base.vm.EmptyViewModel
 import com.knight.kotlin.library_common.databinding.DownloadDialogBinding
@@ -45,15 +40,9 @@ class DownLoadDialogFragment : BaseDialogFragment<DownloadDialogBinding,EmptyVie
 
 
 
-    @NonNull
-    override fun onCreateDialog(@Nullable savedInstanceState: Bundle?): Dialog {
-        val dialog: Dialog = super.onCreateDialog(savedInstanceState)
-        dialog.setCancelable(false)
-        dialog.setCanceledOnTouchOutside(false)
-        dialog.setOnKeyListener(DialogInterface.OnKeyListener { dialog, keyCode, event ->
-            keyCode == KeyEvent.KEYCODE_BACK
-        })
-        return dialog
+
+    override fun cancelOnTouchOutSide(): Boolean {
+        return false
     }
 
     override fun getGravity() = Gravity.CENTER

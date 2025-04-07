@@ -24,6 +24,9 @@ class CoinsRuleDialog : BaseDialogFragment<MinePointRuleDialogBinding,EmptyViewM
     }
 
     override fun getGravity() = Gravity.CENTER
+    override fun cancelOnTouchOutSide(): Boolean {
+       return true
+    }
 
     override fun MinePointRuleDialogBinding.initView() {
         tvRuleDetailPoint.setText(getString(R.string.mine_point_detail_rule).toHtml())

@@ -76,6 +76,9 @@ class WebArticleBottomFragment constructor(
 
 
     override fun getGravity() = Gravity.BOTTOM
+    override fun cancelOnTouchOutSide(): Boolean {
+        return true
+    }
 
     override fun WebArticleBottomDialogBinding.initView() {
         webTvCollectArticle.visibility = if (collect == true) View.GONE else View.VISIBLE

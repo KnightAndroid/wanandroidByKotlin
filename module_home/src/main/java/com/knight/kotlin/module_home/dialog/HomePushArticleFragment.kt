@@ -34,6 +34,9 @@ class HomePushArticleFragment : BaseDialogFragment<HomePusharticleDialogBinding,
     }
 
     override fun getGravity() = Gravity.CENTER
+    override fun cancelOnTouchOutSide(): Boolean {
+        return true
+    }
 
     override fun HomePusharticleDialogBinding.initView() {
         mEveryDayPushEntities = arguments?.getParcelableArrayList("articles")

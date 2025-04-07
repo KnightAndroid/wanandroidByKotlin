@@ -55,7 +55,9 @@ import com.knight.kotlin.library_base.util.GsonUtils
 import com.knight.kotlin.library_base.util.LanguageFontSizeUtils
 import com.knight.kotlin.library_base.util.dp2px
 import com.knight.kotlin.library_base.util.isMotionReduced
+import com.knight.kotlin.library_common.entity.AppUpdateBean
 import com.knight.kotlin.library_common.entity.OfficialAccountEntity
+import com.knight.kotlin.library_common.fragment.UpdateAppDialogFragment
 import com.knight.kotlin.library_database.entity.PushDateEntity
 import com.knight.kotlin.library_permiss.XXPermissions
 import com.knight.kotlin.library_permiss.listener.OnPermissionCallback
@@ -66,6 +68,7 @@ import com.knight.kotlin.library_scan.annoation.ScanStyle
 import com.knight.kotlin.library_scan.decode.ScanCodeConfig
 import com.knight.kotlin.library_util.DateUtils
 import com.knight.kotlin.library_util.ResourceProvider
+import com.knight.kotlin.library_util.SystemUtils
 import com.knight.kotlin.library_util.image.ImageLoader
 import com.knight.kotlin.library_util.startPage
 import com.knight.kotlin.library_util.startPageWithRightAnimate
@@ -326,6 +329,7 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
             "打雷" -> WeatherView.WEATHER_KIND_THUNDER
             "雷阵雨" -> WeatherView.WEATHER_KIND_THUNDERSTORM
             "雨夹雪" -> WeatherView.WEATHER_KIND_SLEET
+            "阵雨" -> WeatherView.WEATHER_KIND_RAINY
             "小雨" -> WeatherView.WEATHER_KIND_RAINY
             "中雨" -> WeatherView.WEATHER_KIND_RAINY
             "大雨" -> WeatherView.WEATHER_KIND_RAINY
@@ -385,68 +389,8 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
             }
         }
 
-
-
-
-
-
-        mViewModel.getDetailWeekWeather("广东省","深圳市","福田区").observerKt {
-
-
-            mBinding.todayWeather = it.observe
-            mBinding.airWeather = it.air
-            weatherView.setWeather(
-                getBackGroundByWeather(it.observe.weather),
-                true,null
-
-            )//DateUtils.isDaytime()
-
-            HomeWeatherNewsFragment.newInstance(it.observe,it.forecast_24h.get(1).maxDegree,it.forecast_24h.get(1).minDegree).showAllowingStateLoss(parentFragmentManager,"dialog_everyday_weather")
-            mHourWeatherHeadAdapter.setRisks(listOf(it.rise.first()))
-            mHourWeatherAdapter.setWeatherEveryHour(it.forecast_1h)
-            mBinding.homeRecommentMenu.tvWeatherTodayValue.text = it.forecast_24h.get(1).dayWeather
-            mBinding.homeRecommentMenu.tvWeatherTomorrowValue.text = it.forecast_24h.get(2).dayWeather
-            mBinding.homeRecommentMenu.tvWeatherTodayMinmaxDegree.text = it.forecast_24h.get(1).maxDegree + "/" +it.forecast_24h.get(1).minDegree + "°"
-            mBinding.homeRecommentMenu.tvWeatherTomorrowMinmaxDegree.text = it.forecast_24h.get(2).maxDegree + "/" +it.forecast_24h.get(2).minDegree + "°"
-            setAirLevelBackground(mBinding.homeRecommentMenu.tvTodayAirLevel,it.forecast_24h.get(1).aqiLevel)
-            setAirLevelBackground(mBinding.homeRecommentMenu.tvTomorrowAirLevel,it.forecast_24h.get(2).aqiLevel)
-            //画折线
-            mBinding.homeRecommentMenu.weatherView.setLineType(ZzWeatherView.LINE_TYPE_DISCOUNT)
-
-
-            //画曲线(已修复不圆滑问题)
-            //        weatherView.setLineType(ZzWeatherView.LINE_TYPE_CURVE);
-
-            //设置线宽，单位px
-            mBinding.homeRecommentMenu.weatherView.setLineWidth(6f)
-
-
-            //设置一屏幕显示几列(最少3列)
-            try {
-                mBinding.homeRecommentMenu.weatherView.setColumnNumber(6)
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-
-
-            //设置白天和晚上线条的颜色
-            mBinding.homeRecommentMenu.weatherView.setDayAndNightLineColor(Color.BLUE, Color.RED)
-            //延迟绘制 进行渲染
-            mBinding.homeRecommentMenu.weatherView.postInvalidateDelayed(200)
-            //填充天气数据
-            mBinding.homeRecommentMenu.weatherView.setData(it.forecast_24h)
-
-
-            val indexType = object : TypeToken<Map<String, WeatherIndexItem>>() {}.type
-            val indexMap: Map<String, WeatherIndexItem>? = fromJson(toJson(it.index),indexType)
-            indexMap?.let {
-                val indexList: List<WeatherIndexItem> = it.values.toList()
-                mWeatherIndexAdapter.submitList(indexList)
-            }
-
-
-
-
+        mViewModel.checkAppUpdateMessage().observerKt {
+            checkAppMessage(it)
         }
 
         mViewModel.getTwoWeekDayRainFall(22.5256393434,114.0494336236,DateUtils.getCurrentDateFormatted("yyyy-MM-dd"),DateUtils.getTwoWeekDaysLater(),true,"precipitation_sum").observerKt {
@@ -525,6 +469,87 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
 
     }
 
+
+    /**
+     *
+     * 获取详细天气预告
+     */
+    private fun getDetailWeekWeather() {
+        mViewModel.getDetailWeekWeather("广东省","深圳市","福田区").observerKt {
+
+
+            mBinding.todayWeather = it.observe
+            mBinding.airWeather = it.air
+            weatherView.setWeather(
+                getBackGroundByWeather(it.observe.weather),
+                true,null
+
+            )//DateUtils.isDaytime()
+
+            HomeWeatherNewsFragment.newInstance(it.observe,it.forecast_24h.get(1).maxDegree,it.forecast_24h.get(1).minDegree).showAllowingStateLoss(parentFragmentManager,"dialog_everyday_weather")
+            mHourWeatherHeadAdapter.setRisks(listOf(it.rise.first()))
+            mHourWeatherAdapter.setWeatherEveryHour(it.forecast_1h)
+            mBinding.homeRecommentMenu.tvWeatherTodayValue.text = it.forecast_24h.get(1).dayWeather
+            mBinding.homeRecommentMenu.tvWeatherTomorrowValue.text = it.forecast_24h.get(2).dayWeather
+            mBinding.homeRecommentMenu.tvWeatherTodayMinmaxDegree.text = it.forecast_24h.get(1).maxDegree + "/" +it.forecast_24h.get(1).minDegree + "°"
+            mBinding.homeRecommentMenu.tvWeatherTomorrowMinmaxDegree.text = it.forecast_24h.get(2).maxDegree + "/" +it.forecast_24h.get(2).minDegree + "°"
+            setAirLevelBackground(mBinding.homeRecommentMenu.tvTodayAirLevel,it.forecast_24h.get(1).aqiLevel)
+            setAirLevelBackground(mBinding.homeRecommentMenu.tvTomorrowAirLevel,it.forecast_24h.get(2).aqiLevel)
+            //画折线
+            mBinding.homeRecommentMenu.weatherView.setLineType(ZzWeatherView.LINE_TYPE_DISCOUNT)
+
+
+            //画曲线(已修复不圆滑问题)
+            //        weatherView.setLineType(ZzWeatherView.LINE_TYPE_CURVE);
+
+            //设置线宽，单位px
+            mBinding.homeRecommentMenu.weatherView.setLineWidth(6f)
+
+
+            //设置一屏幕显示几列(最少3列)
+            try {
+                mBinding.homeRecommentMenu.weatherView.setColumnNumber(6)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+
+
+            //设置白天和晚上线条的颜色
+            mBinding.homeRecommentMenu.weatherView.setDayAndNightLineColor(Color.BLUE, Color.RED)
+            //延迟绘制 进行渲染
+            mBinding.homeRecommentMenu.weatherView.postInvalidateDelayed(200)
+            //填充天气数据
+            mBinding.homeRecommentMenu.weatherView.setData(it.forecast_24h)
+
+
+            val indexType = object : TypeToken<Map<String, WeatherIndexItem>>() {}.type
+            val indexMap: Map<String, WeatherIndexItem>? = fromJson(toJson(it.index),indexType)
+            indexMap?.let {
+                val indexList: List<WeatherIndexItem> = it.values.toList()
+                mWeatherIndexAdapter.submitList(indexList)
+            }
+
+
+
+
+        }
+    }
+    /**
+     *
+     * 检查APP更新
+     */
+    private fun checkAppMessage(data: AppUpdateBean) {
+        //如果本地安装包大于远端 证明本地安装的是测试包 无需更新
+        if (SystemUtils.getAppVersionCode(requireActivity())  < data.versionCode ) {
+            if (data.versionName != activity?.let { SystemUtils.getAppVersionName(it) }) {
+                UpdateAppDialogFragment.newInstance(data).showAllowingStateLoss(
+                    parentFragmentManager, "dialog_update")
+
+            }
+        } else {
+            getDetailWeekWeather()
+        }
+    }
 
     /**
      * 初始化置顶适配器

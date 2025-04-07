@@ -274,4 +274,6 @@
      <dimen name="home_tv_tip_info_text_size">18sp</dimen>
      <dimen name="home_icon_zaobao_margin_top">15dp</dimen>
      <dimen name="home_icon_zaobao_margin_right">15dp</dimen>
+     <dimen name="home_icon_weather_margin_top">15dp</dimen>
+     <dimen name="home_icon_weather_margin_right">15dp</dimen>
 </resources>

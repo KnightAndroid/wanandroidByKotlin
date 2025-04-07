@@ -12,6 +12,7 @@ import com.knight.kotlin.library_network.domain.addDomain
 import com.knight.kotlin.library_network.domain.setDomain
 import com.knight.kotlin.library_network.header.HeaderStorage
 import com.knight.kotlin.library_network.interceptor.CacheInterceptor
+import com.knight.kotlin.library_network.interceptor.CommonHeaderInterceptor
 import com.knight.kotlin.library_network.interceptor.EyeAddHeadInterceptor
 import com.knight.kotlin.library_network.interceptor.HttpInterceptor
 import com.knight.kotlin.library_network.interceptor.NetworkInterceptor
@@ -80,12 +81,14 @@ class ClientConfig {
         return OkHttpClient.Builder()
             .connectTimeout(30L * 1000L, TimeUnit.MILLISECONDS)
             .readTimeout(30L * 1000L,TimeUnit.MILLISECONDS)
-            .addInterceptor(loggingInterceptor) //日志拦截器
+            .addInterceptor(CommonHeaderInterceptor()) //头部拦截器
+
             .addInterceptor(CacheInterceptor()) //缓存拦截器
             .addInterceptor(NetworkInterceptor()) //配合缓存拦截器
             .addInterceptor(HttpInterceptor())//重复拦截
             .addInterceptor(SignInterceptor(BaseApp.context, headerStorage))
             .addInterceptor(EyeAddHeadInterceptor(BaseApp.context, headerStorage))
+            .addInterceptor(loggingInterceptor) //日志拦截器
             .cache(cache)
             .retryOnConnectionFailure(true)
             .cookieJar(JavaNetCookieJar(cookieManager))
@@ -99,6 +102,7 @@ class ClientConfig {
             .setDomain("weather",BaseUrlConfig.WEATHER_URL)
             .setDomain("rainfall",BaseUrlConfig.RAIN_FALL_URL)
             .setDomain("bingying",BaseUrlConfig.BINGYING_URL)
+            .setDomain("ip",BaseUrlConfig.IP_URL)
             .build()
     }
 

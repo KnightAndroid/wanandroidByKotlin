@@ -5,7 +5,7 @@ package com.knight.kotlin.library_network.config
  * Time:2021/12/15 13:49
  * Description:BaseUrlConfig
  */
-internal object BaseUrlConfig {
+object BaseUrlConfig {
     //wanandroid 访问链接
     const val WANDROID_URL = "https://www.wanandroid.com/"
     //gitee 访问链接
@@ -26,4 +26,6 @@ internal object BaseUrlConfig {
     const val RAIN_FALL_URL = "https://api.open-meteo.com/"
     //每日一图
     const val BINGYING_URL = "https://cn.bing.com/"
+    //获取ip
+    const val IP_URL = "https://jsonip.com/"
 }

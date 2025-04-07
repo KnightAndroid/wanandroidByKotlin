@@ -533,5 +533,23 @@ object CacheUtils {
     }
 
 
+    /**
+     *
+     * 获取ip
+     */
+    fun setIp(value:String) {
+        mmkv?.encode(CacheKey.IP,value)
+    }
+
+    /**
+     *
+     * 获取ip
+     */
+    fun getIp():String {
+        return mmkv?.decodeString(CacheKey.IP,"0.0.0.0") ?: "0.0.0.0"
+    }
+
+
+
 
 }

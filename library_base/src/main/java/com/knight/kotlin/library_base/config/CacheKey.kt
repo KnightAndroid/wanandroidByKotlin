@@ -152,4 +152,10 @@ object CacheKey {
      */
     const val ICON_PROVIDER = "icon_provider"
 
+    /**
+     *
+     * Ip
+     */
+    const val IP = "ip"
+
 }

@@ -7,6 +7,7 @@ import com.knight.kotlin.library_base.config.Appconfig
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_base.util.ColorUtils
+import com.knight.kotlin.library_network.config.BaseUrlConfig
 import com.knight.kotlin.module_welcome.databinding.WelcomeActivityBinding
 import com.knight.kotlin.module_welcome.entity.AppThemeBean
 import com.knight.kotlin.module_welcome.fragment.WelcomePrivacyAgreeFragment
@@ -51,6 +52,10 @@ class WelcomeActivity : BaseActivity<WelcomeActivityBinding, WelcomeVm>() {
     override fun initRequestData() {
         mViewModel.getAppTheme().observerKt {
             setAppThemeData(it)
+        }
+
+        mViewModel.getIp(BaseUrlConfig.IP_URL).observerKt {
+            Appconfig.IP = it.ip
         }
     }
 

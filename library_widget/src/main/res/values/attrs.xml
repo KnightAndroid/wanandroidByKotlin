@@ -1176,4 +1176,19 @@
         <attr name="animFlipInId" format="reference"/>
         <attr name="animFlipOutId" format="reference"/>
     </declare-styleable>
+
+
+    <declare-styleable name="CardShinningView">
+        <attr name="colors" format="string" />
+        <attr name="positions" format="string" />
+        <attr name="play_mode" format="enum">
+            <enum name="auto" value="1" />
+            <enum name="manual" value="2" />
+        </attr>
+        <attr name="repeat" format="integer" />
+        <attr name="duration" format="integer" />
+        <attr name="radius" format="dimension" />
+        <attr name="slope" format="float" />
+        <attr name="offset" format="dimension" />
+    </declare-styleable>
 </resources>

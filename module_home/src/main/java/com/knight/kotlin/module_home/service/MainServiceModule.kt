@@ -1,6 +1,5 @@
 package com.knight.kotlin.module_home.service
 
-import com.knight.kotlin.module_home.api.HomeApiService
 import com.knight.kotlin.module_home.api.HomeRecommendApiService
 import com.knight.kotlin.module_home.api.HomeSearchApiService
 import com.knight.kotlin.module_home.api.HomeSearchResultApiService
@@ -21,17 +20,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 class MainServiceModule {
-    /**
-     * Home模块的[HomeApiService]依赖提供方法
-     *
-     * @param retrofit Retrofit
-     * @return HomeApiService
-     */
-    @Singleton
-    @Provides
-    fun provideHomeApiService(retrofit: Retrofit) :HomeApiService {
-        return retrofit.create(HomeApiService::class.java)
-    }
 
     @Singleton
     @Provides

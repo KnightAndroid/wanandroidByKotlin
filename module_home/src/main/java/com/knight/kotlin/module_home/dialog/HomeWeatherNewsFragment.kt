@@ -11,6 +11,7 @@ import com.knight.kotlin.library_base.util.dp2px
 import com.knight.kotlin.library_util.DateUtils
 import com.knight.kotlin.library_util.TimeUtils
 import com.knight.kotlin.library_util.image.ImageLoader
+import com.knight.kotlin.library_widget.EasyFlipView
 import com.knight.kotlin.module_home.databinding.HomeTodayWeatherNewsDialogBinding
 import com.knight.kotlin.module_home.vm.HomeWeatherNewVm
 import dagger.hilt.android.AndroidEntryPoint
@@ -42,16 +43,19 @@ class HomeWeatherNewsFragment:BaseDialogFragment<HomeTodayWeatherNewsDialogBindi
 
     override fun getGravity() = Gravity.CENTER
 
+
+
+
+    override fun cancelOnTouchOutSide(): Boolean {
+        return false
+    }
+
+
     override fun initObserver() {
 
     }
 
     override fun initRequestData() {
-
-
-
-
-
 
             //获取日报新闻
             mViewModel.getZaoBao().observe(this,{data->
@@ -110,5 +114,14 @@ class HomeWeatherNewsFragment:BaseDialogFragment<HomeTodayWeatherNewsDialogBindi
         ivWeatherNewsClose.setOnClick {
             dismiss()
         }
+        flipView.setOnFlipListener(object : EasyFlipView.OnFlipAnimationListener{
+            override fun onViewFlipCompleted(easyFlipView: EasyFlipView?, newCurrentSide: EasyFlipView.FlipState?) {
+                 if (newCurrentSide == EasyFlipView.FlipState.BACK_SIDE) {
+                     homeTodayNewsItem.ivCardShinning.playAnim()
+                 }
+            }
+        })
+
+
     }
 }

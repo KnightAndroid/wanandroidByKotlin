@@ -1,15 +1,10 @@
 package com.knight.kotlin.module_welcome.fragment
 
 import android.annotation.SuppressLint
-import android.app.Dialog
-import android.content.DialogInterface
-import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.method.LinkMovementMethod
 import android.view.Gravity
-import android.view.KeyEvent
-import androidx.annotation.NonNull
 import com.knight.kotlin.library_base.BaseApp
 import com.knight.kotlin.library_base.fragment.BaseDialogFragment
 import com.knight.kotlin.library_base.ktx.setOnClick
@@ -35,16 +30,10 @@ class WelcomePrivacyAgreeFragment : BaseDialogFragment<WelcomePrivacyAgreeFragme
 
     private lateinit var spannable: SpannableStringBuilder
 
-    @NonNull
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val dialog: Dialog = super.onCreateDialog(savedInstanceState)
-        dialog.setCancelable(false)
-        dialog.setCanceledOnTouchOutside(false)
-        dialog.setOnKeyListener(DialogInterface.OnKeyListener { _, keyCode, _ ->
-            keyCode == KeyEvent.KEYCODE_BACK
-        })
-        return dialog
+    override fun cancelOnTouchOutSide(): Boolean {
+        return false
     }
+
     override fun getGravity(): Int = Gravity.CENTER
 
     /**

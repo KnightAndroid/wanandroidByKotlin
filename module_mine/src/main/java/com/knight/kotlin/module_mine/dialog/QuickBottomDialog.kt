@@ -35,6 +35,9 @@ class QuickBottomDialog : BaseDialogFragment<MineQuickloginBottomDialogBinding,E
     }
 
     override fun getGravity() = Gravity.BOTTOM
+    override fun cancelOnTouchOutSide(): Boolean {
+        return true
+    }
 
     override fun MineQuickloginBottomDialogBinding.initView() {
          if (CacheUtils.getFingerLogin()) {

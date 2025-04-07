@@ -19,7 +19,7 @@ import java.util.UUID
  * @author created by luguian
  * @organize
  * @Date 2024/12/9 17:52
- * @descript:
+ * @descript:开眼视频头部
  */
 val Context.headerSp: SharedPreferences
     get() = this.getSharedPreferences("header_sp", MODE_PRIVATE)

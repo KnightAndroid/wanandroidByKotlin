@@ -40,6 +40,10 @@ class WebBottomFragment constructor(url: String?, mWebView: WebView?) :
     }
 
     override fun getGravity() = Gravity.BOTTOM
+    override fun cancelOnTouchOutSide(): Boolean {
+        return true
+    }
+
     override fun WebBottomDialogBinding.initView() {
         setOnClickListener(webTvCopyUrl,webTvRefreshUrl,webTvOpenBrowser)
     }

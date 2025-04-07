@@ -1,9 +1,11 @@
 package com.knight.kotlin.library_base.fragment
 
 import android.app.Dialog
+import android.content.DialogInterface
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -96,9 +98,23 @@ abstract class BaseDialogFragment<VB: ViewBinding,VM: BaseViewModel> : DialogFra
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.window?.setWindowAnimations(R.style.base_dialog_anim)
         mViewModel = createViewModel()
+        dialog.setCanceledOnTouchOutside(cancelOnTouchOutSide())
+        if (!cancelOnTouchOutSide()) {
+            dialog.setCancelable(false)
+            dialog.setOnKeyListener(DialogInterface.OnKeyListener { dialog, keyCode, event ->
+                keyCode == KeyEvent.KEYCODE_BACK
+            })
+        }
         getGravity()
         return dialog
     }
+
+
+    /**
+     *
+     * 是否屏蔽点击遮罩层消失弹窗
+     */
+    abstract fun cancelOnTouchOutSide() : Boolean
 
     /**
      * 根据资源 id 获取一个 View 对象

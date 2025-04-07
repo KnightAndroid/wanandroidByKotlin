@@ -17,6 +17,9 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class RealTimeRankRuleFragment:BaseDialogFragment<RealtimeRankRuleDialogBinding,EmptyViewModel>() {
     override fun getGravity() = Gravity.BOTTOM
+    override fun cancelOnTouchOutSide(): Boolean {
+        return true
+    }
 
     override fun initObserver() {
 
