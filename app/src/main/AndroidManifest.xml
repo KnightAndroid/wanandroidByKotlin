@@ -4,6 +4,7 @@
     package="com.knight.kotlin.wanandroid">
 
     <application
+
         android:name=".WanandroidApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -15,7 +16,8 @@
         android:theme="@style/base_AppTheme"
         tools:targetApi="n"
         android:enableOnBackInvokedCallback="true"
-        tools:replace="android:name">
+        tools:replace="android:name"
+        >
 
 
         <meta-data
@@ -55,6 +57,15 @@
             android:authorities="${applicationId}.InitProvider"
             tools:node="remove"
             />
+
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="" >
+        </meta-data>
+
+        <service android:name="com.baidu.location.f" android:enabled="true" android:process=":remote"> </service>
+
+
     </application>
 
 </manifest>

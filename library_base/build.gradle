@@ -56,6 +56,7 @@ dependencies {
     api Dependencies.GitHub.ANDROID_EXTRA_AOP
     api Dependencies.GitHub.ANDROID_AOP_ANNOTATION
     api Dependencies.Kotlin.kotlinx_serialization_json
-
-
+    //百度地图
+    api Dependencies.OtherUtils.BAILOCATION
+    api Dependencies.OtherUtils.BAINAVI
 }

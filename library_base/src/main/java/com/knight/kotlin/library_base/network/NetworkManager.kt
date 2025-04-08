@@ -88,6 +88,7 @@ class NetworkManager private constructor() {
         override fun onAvailable(network: Network) {
             super.onAvailable(network)
             postNetworkState(NetworkStateUtils.getNetworkState(mApplication?.applicationContext))
+
         }
 
         override fun onLost(network: Network) {

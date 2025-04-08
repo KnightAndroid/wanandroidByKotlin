@@ -19,6 +19,7 @@ import com.kingja.loadsir.core.LoadService
 import com.kingja.loadsir.core.LoadSir
 import com.knight.kotlin.library_base.R
 import com.knight.kotlin.library_base.annotation.EventBusRegister
+import com.knight.kotlin.library_base.config.Appconfig
 import com.knight.kotlin.library_base.ktx.ClickAction
 import com.knight.kotlin.library_base.ktx.createViewModel
 import com.knight.kotlin.library_base.ktx.subscribeData
@@ -236,6 +237,8 @@ abstract class BaseActivity<VB : ViewBinding,VM : BaseViewModel> : AppCompatActi
     fun onNetWorkStateChange(networkState: NetworkState) {
         when (networkState) {
             NetworkState.NONE -> {
+                CacheUtils.clearIp()
+                Appconfig.IP = ""
                 if (tipView?.parent == null) {
                     mWindowManager?.addView(tipView, mLayoutParams)
                 }

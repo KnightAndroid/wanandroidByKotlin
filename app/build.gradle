@@ -33,7 +33,10 @@ android {
     //签名配置
     signingConfigs {
         debug{
-
+            storeFile file('../wanandroid.jks')//密钥文件路径
+            storePassword "wanandroid"//密钥文件密码
+            keyAlias "wanandroid"//key别名
+            keyPassword "wanandroid"//key密码
         }
 
         release {
@@ -60,7 +63,7 @@ android {
             //混淆规则文件
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             //签名信息配置
-            signingConfig signingConfigs.release
+            signingConfig signingConfigs.debug
         }
 
         release {

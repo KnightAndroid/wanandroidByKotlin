@@ -1,10 +1,13 @@
 package com.knight.kotlin.module_welcome.fragment
 
 import android.annotation.SuppressLint
+import android.os.Build
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.method.LinkMovementMethod
 import android.view.Gravity
+import androidx.annotation.RequiresApi
+import com.baidu.location.LocationClient
 import com.knight.kotlin.library_base.BaseApp
 import com.knight.kotlin.library_base.fragment.BaseDialogFragment
 import com.knight.kotlin.library_base.ktx.setOnClick
@@ -12,6 +15,10 @@ import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.util.ActivityManagerUtils
 import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_base.vm.EmptyViewModel
+import com.knight.kotlin.library_permiss.XXPermissions
+import com.knight.kotlin.library_permiss.listener.OnPermissionCallback
+import com.knight.kotlin.library_permiss.permissions.Permission
+import com.knight.kotlin.library_permiss.utils.PermissionUtils
 import com.knight.kotlin.library_util.TextClickUtils
 import com.knight.kotlin.library_util.ViewInitUtils
 import com.knight.kotlin.library_util.startPage
@@ -39,14 +46,41 @@ class WelcomePrivacyAgreeFragment : BaseDialogFragment<WelcomePrivacyAgreeFragme
     /**
      * 同意后跳到主页页面
      */
+    @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
     private fun goAgreeToMain() {
-       //同意隐私政策
-       CacheUtils.saveIsAgreeMent(true)
-       //初始化危险类sdk
-       BaseApp.application.initDangrousSdk()
-       dismiss()
-       startPage(RouteActivity.Main.MainActivity)
-       activity?.finish()
+       val permission:List<String> = listOf(Permission.ACCESS_FINE_LOCATION,Permission.ACCESS_COARSE_LOCATION,Permission.ACCESS_BACKGROUND_LOCATION)
+        XXPermissions.with(this)
+            ?.permission(permission)
+            ?.request(object : OnPermissionCallback {
+                override fun onGranted(permissions: List<String>, all: Boolean) {
+                    if (all) {
+                        //同意隐私政策
+                        CacheUtils.saveIsAgreeMent(true)
+
+                        //初始化危险类sdk
+                        BaseApp.application.initDangrousSdk()
+                        dismiss()
+                        startPage(RouteActivity.Main.MainActivity)
+                        activity?.finish()
+
+                    }
+                }
+
+                override fun onDenied(permissions: List<String>, doNotAskAgain: Boolean) {
+                    super.onDenied(permissions, doNotAskAgain)
+                    activity?.let {
+                        PermissionUtils.showPermissionSettingDialog(it,permissions,permissions,object :
+                            OnPermissionCallback {
+                            override fun onGranted(permissions: List<String>, all: Boolean) {
+
+                            }
+                        })
+                    }
+                }
+            })
+
+
+
     }
 
     /**
@@ -94,6 +128,11 @@ class WelcomePrivacyAgreeFragment : BaseDialogFragment<WelcomePrivacyAgreeFragme
                             startPageWithParams(RouteActivity.Web.WebPager,
                                 "webUrl" to "file:android_asset/wanandroid_sharesdk_userprivacy.html",
                                 "webTitle" to "ShareSdk隐私政策")
+                        }
+                        "百度地图Sdk隐私政策","Baidu MapSdk Policy"->{
+                            startPageWithParams(RouteActivity.Web.WebPager,
+                                "webUrl" to "file:android_asset/wanandroid_baidu_sdk_userprivacy.html",
+                                "webTitle" to "百度地图Sdk隐私政策")
                         }
                     }
                 }

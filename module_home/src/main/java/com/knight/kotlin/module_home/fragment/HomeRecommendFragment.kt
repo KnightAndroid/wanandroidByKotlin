@@ -376,11 +376,26 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
 
 
     override fun initRequestData() {
+        requestUpdate()
+        initData()
+    }
+
+
+
+    private fun requestUpdate() {
+        mViewModel.checkAppUpdateMessage().observerKt {
+            checkAppMessage(it)
+        }
+
+    }
+
+
+    private fun initData() {
         currentPage = 0
         home_tv_seemorearticles.text = getString(R.string.home_toparticle_expand_foot)
         isShowOnlythree = true
         mViewModel.getEveryDayPushArticle().observerKt {
-             setEveryDayPushArticle(it)
+            setEveryDayPushArticle(it)
         }
         //未读信息请求
         getUser()?.let {
@@ -389,9 +404,6 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
             }
         }
 
-        mViewModel.checkAppUpdateMessage().observerKt {
-            checkAppMessage(it)
-        }
 
         mViewModel.getTwoWeekDayRainFall(22.5256393434,114.0494336236,DateUtils.getCurrentDateFormatted("yyyy-MM-dd"),DateUtils.getTwoWeekDaysLater(),true,"precipitation_sum").observerKt {
             var verticalList: List<Float>
@@ -893,7 +905,7 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
     }
 
     override fun onRefresh(refreshLayout: RefreshLayout) {
-        initRequestData()
+        initData()
     }
 
     override fun onLoadMore(refreshLayout: RefreshLayout) {
@@ -937,7 +949,7 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
     }
 
     override fun reLoadData() {
-        initRequestData()
+        initData()
     }
 
 
@@ -1040,13 +1052,18 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
         when (event.type) {
             //登录成功
             MessageEvent.MessageType.LoginSuccess -> {
-                initRequestData()
+                //未读信息请求
+                getUser()?.let {
+                    mViewModel.getUnreadMessage().observerKt {
+                        setUnreadMessage(it)
+                    }
+                }
                 mBinding.homeRecommentMenu!!.homeBtnLoginName.text = getUser()?.username
             }
             //退出登录
             MessageEvent.MessageType.LogoutSuccess -> {
                 home_rl_message.visibility = View.GONE
-                initRequestData()
+                home_rl_message.visibility = View.GONE
                 //退出登录成功
                 mBinding.homeRecommentMenu!!.homeBtnLoginName.setText(getString(R.string.home_tv_login))
             }

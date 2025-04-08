@@ -19,6 +19,7 @@ class HomeApplication :ApplicationLifecycle{
     override fun onCreate(application: Application) {}
 
     override fun onTerminate(application: Application) {}
+
     override fun initSafeTask(): MutableList<() -> String>  = mutableListOf()
 
     override fun initDangerousTask() {

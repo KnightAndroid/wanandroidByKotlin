@@ -100,6 +100,8 @@ object Dependencies {
        const val SLF4J = "1.7.21"                    //slf4j版本
        const val windowx = "1.3.0"                      //window 版本
        const val kotlinxSerializationJson = "1.7.3"   //kotlin序列化帮助类
+       const val BaiduMapSdkVersion = "9.6.4" //地图定位
+       const val BaiduNaviSdkVersion = "7.6.4" //导航版本
     }
     /**
      * AndroidX相关依赖
@@ -274,6 +276,8 @@ object Dependencies {
         const val BUGLY = "com.tencent.bugly:crashreport:${Version.BUG_LY}"
         const val LOTTIE = "com.airbnb.android:lottie:${Version.LOTTIE}"
         const val SLF4J = "org.slf4j:slf4j-android:${Version.SLF4J}"
+        const val BAILOCATION = "com.baidu.lbsyun:BaiduMapSDK_Location:${Version.BaiduMapSdkVersion}"
+        const val BAINAVI = "com.baidu.lbsyun:BaiduMapSDK_Map-AllNavi:${Version.BaiduNaviSdkVersion}"
     }
 
 

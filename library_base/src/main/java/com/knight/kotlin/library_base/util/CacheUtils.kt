@@ -546,7 +546,15 @@ object CacheUtils {
      * 获取ip
      */
     fun getIp():String {
-        return mmkv?.decodeString(CacheKey.IP,"0.0.0.0") ?: "0.0.0.0"
+        return mmkv?.decodeString(CacheKey.IP,"") ?: ""
+    }
+
+    /**
+     *
+     * 清空ip
+     */
+    fun clearIp() {
+        mmkv?.encode(CacheKey.IP,"")
     }
 
 

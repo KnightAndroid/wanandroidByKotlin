@@ -414,7 +414,7 @@ class XXPermissions constructor(context: Context) {
         return permission(PermissionUtils.asArrayLists(*permissions))
     }
 
-    private fun permission(permissions: List<String>): XXPermissions {
+    fun permission(permissions: List<String>): XXPermissions {
         if (permissions == null || permissions.isEmpty()) {
             return this
         }

@@ -75,5 +75,19 @@ object Appconfig {
       *
       * ip
       */
-     var IP:String = "0.0.0.0"
+     var IP:String = ""
+
+     /**
+      *
+      * 经度
+      *
+      */
+     var longitude:Double = 0.0
+
+     /**
+      *
+      * 维度
+      *
+      */
+     var latitude:Double = 0.0
 }

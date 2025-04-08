@@ -7,7 +7,7 @@
         2、未经你的同意，我们不会从第三方获取墩号共享或对外提供你的信息；\n
         3、你可以访问、更正、删除你的个人信息，我们也将提供注销，投诉方式；\n
         4、如果您同意请点击下面的按钮以接收我们的服务。</string>
-    <string name="welcome_privacy_tip">你可以阅读完整版《用户协议》、《隐私政策》、《ShareSdk隐私政策》来了解详细信息</string>
+    <string name="welcome_privacy_tip">你可以阅读完整版《用户协议》、《隐私政策》、《ShareSdk隐私政策》、《百度地图Sdk隐私政策》来了解详细信息</string>
     <string name="welcome_agree_privacy">同意</string>
     <string name="welcome_disagree_privacy">不同意退出</string>
 </resources>

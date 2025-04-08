@@ -12,9 +12,9 @@ import com.knight.kotlin.library_network.domain.addDomain
 import com.knight.kotlin.library_network.domain.setDomain
 import com.knight.kotlin.library_network.header.HeaderStorage
 import com.knight.kotlin.library_network.interceptor.CacheInterceptor
-import com.knight.kotlin.library_network.interceptor.CommonHeaderInterceptor
 import com.knight.kotlin.library_network.interceptor.EyeAddHeadInterceptor
 import com.knight.kotlin.library_network.interceptor.HttpInterceptor
+import com.knight.kotlin.library_network.interceptor.IpInterceptor
 import com.knight.kotlin.library_network.interceptor.NetworkInterceptor
 import com.knight.kotlin.library_network.interceptor.SignInterceptor
 import com.knight.kotlin.library_network.log.LoggingInterceptor
@@ -54,6 +54,8 @@ class ClientConfig {
         lateinit var cookieManager: CookieManager
     }
 
+
+
     /**
      * [OkHttpClient]依赖提供方法
      * @return OkHttpClient
@@ -64,7 +66,6 @@ class ClientConfig {
         //缓存目录
         val cacheFile: File = File(BaseApp.context.getCacheDir(), "knight_wanandroid")
         val cache = Cache(cacheFile, 1024 * 1024 * 50)
-
         cookieManager= CookieManager(createCookieStore("myCookies",true), CookiePolicy.ACCEPT_ALL)
 
         //设置拦截器
@@ -81,8 +82,7 @@ class ClientConfig {
         return OkHttpClient.Builder()
             .connectTimeout(30L * 1000L, TimeUnit.MILLISECONDS)
             .readTimeout(30L * 1000L,TimeUnit.MILLISECONDS)
-            .addInterceptor(CommonHeaderInterceptor()) //头部拦截器
-
+            .addInterceptor(IpInterceptor()) //Ip拦截器
             .addInterceptor(CacheInterceptor()) //缓存拦截器
             .addInterceptor(NetworkInterceptor()) //配合缓存拦截器
             .addInterceptor(HttpInterceptor())//重复拦截
@@ -163,6 +163,10 @@ class ClientConfig {
     } else {
         InMemoryCookieStore(name)
     }
+
+
+
+
 }
 
 

@@ -65,6 +65,11 @@ class UtilApplication:ApplicationLifecycle {
         CrashReport.initCrashReport(BaseApp.context,"99ea018e83",false,strategy)
         //同意ShareSdk分享
         MobSDK.submitPolicyGrantResult(true)
+        LocationUtils.init(BaseApp.context)
+
+
+
+
     }
 
 

@@ -38,6 +38,7 @@ open class BaseApp : Application() {
 
     private val mLoadModuleProxy by lazy(mode = LazyThreadSafetyMode.NONE) { LoadModuleProxy() }
 
+
     companion object {
         @SuppressLint("StaticFieldLeak")
         lateinit var context: Context
@@ -162,6 +163,7 @@ open class BaseApp : Application() {
     private fun initDarkMode() {
         DarkModeUtils.darkNormal()
     }
+
 
     override fun onTerminate() {
         super.onTerminate()

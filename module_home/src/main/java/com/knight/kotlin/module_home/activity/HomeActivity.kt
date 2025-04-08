@@ -32,6 +32,8 @@ class HomeActivity : BaseActivity<HomeActivityBinding,EmptyViewModel>() {
 
     }
 
+
+
     override fun reLoadData() {
 
     }

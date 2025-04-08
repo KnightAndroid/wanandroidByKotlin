@@ -8,7 +8,7 @@
         2、Without your consent, we will not obtain pier number sharing or provide your information from a third party；\n
         3、You can access, correct and delete your personal information. We will also provide cancellation and complaint methods；\n
         4、If you agree, please click the button below to receive our service。</string>
-    <string name="welcome_privacy_tip">You can read the full user 《User Agreement》、《Privacy Policy》、《ShareSdk Privacy Policy》 for details</string>
+    <string name="welcome_privacy_tip">You can read the full user 《User Agreement》、《Privacy Policy》、《ShareSdk Privacy Policy》、《Baidu MapSdk Policy》 for details</string>
     <string name="welcome_agree_privacy">Agree</string>
     <string name="welcome_disagree_privacy">Do not agree to quit</string>
 </resources>

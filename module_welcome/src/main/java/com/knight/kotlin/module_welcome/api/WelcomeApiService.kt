@@ -1,11 +1,9 @@
 package com.knight.kotlin.module_welcome.api
 
-import com.knight.kotlin.library_base.entity.IpEntity
 import com.knight.kotlin.library_network.bean.BaseResponse
 import com.knight.kotlin.module_welcome.entity.AppThemeBean
 import retrofit2.http.GET
 import retrofit2.http.Headers
-import retrofit2.http.Url
 
 /**
  * Author:Knight
@@ -19,8 +17,4 @@ interface WelcomeApiService {
     @GET("MengSuiXinSuoYuan/wanandroid_server/raw/master/wanandroid_config/config/themeColor.json")
     suspend fun getAppTheme():BaseResponse<AppThemeBean>
 
-
-    @Headers("Domain-Name:ip")
-    @GET
-    suspend fun getIp(@Url url:String):IpEntity
 }

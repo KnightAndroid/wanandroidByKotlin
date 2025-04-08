@@ -21,5 +21,10 @@
     <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
     <!-- 震动 -->
     <uses-permission android:name="android.permission.VIBRATE"/>
-
+    <!-- 定位 -->
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- 定位百度SDK权限配置结束 -->
+    <!-- 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位-->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"></uses-permission>
 </manifest>
