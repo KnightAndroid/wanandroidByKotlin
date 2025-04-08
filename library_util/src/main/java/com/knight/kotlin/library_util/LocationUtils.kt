@@ -89,7 +89,6 @@ object LocationUtils {
 
         mLocationClient?.let {
             it.setLocOption(option)
-            it.start()
         }
 
 
@@ -111,9 +110,6 @@ object LocationUtils {
         mLocationClient?.start()
     }
 
-
-
-
     class MyLocationListener: BDAbstractLocationListener() {
         override fun onReceiveLocation(location: BDLocation?) {
             //此处的BDLocation为定位结果信息类，通过它的各种get方法可获取定位相关的全部结果
@@ -121,10 +117,19 @@ object LocationUtils {
             //更多结果信息获取说明，请参照类参考中BDLocation类中的说明
             location?.run {
                 mOnceLocationListener?.let {
-                    it.onReceiveLocation(location)
+                    //这里因为百度会多次回调，因此屏蔽 只回调一次
+                    var cancelRunnable: Runnable = Runnable { } // 初始化为一个空 Runnable
+                    cancelRunnable = HandlerUtils.postDelayed(Runnable {
+                        it.onReceiveLocation(location)
+                        // 方法执行完成后，取消监听
+                        cancelRunnable.run()
+                    }, 500) // 500毫秒延迟
+
+
+
                 }
                 val latitude = getLatitude()    //获取纬度信息
-                val  longitude = getLongitude()    //获取经度信息
+                val longitude = getLongitude()    //获取经度信息
 
                 Appconfig.longitude = longitude
                 Appconfig.latitude = latitude

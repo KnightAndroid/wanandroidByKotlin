@@ -48,38 +48,13 @@ class WelcomePrivacyAgreeFragment : BaseDialogFragment<WelcomePrivacyAgreeFragme
      */
     @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
     private fun goAgreeToMain() {
-       val permission:List<String> = listOf(Permission.ACCESS_FINE_LOCATION,Permission.ACCESS_COARSE_LOCATION,Permission.ACCESS_BACKGROUND_LOCATION)
-        XXPermissions.with(this)
-            ?.permission(permission)
-            ?.request(object : OnPermissionCallback {
-                override fun onGranted(permissions: List<String>, all: Boolean) {
-                    if (all) {
-                        //同意隐私政策
-                        CacheUtils.saveIsAgreeMent(true)
-
-                        //初始化危险类sdk
-                        BaseApp.application.initDangrousSdk()
-                        dismiss()
-                        startPage(RouteActivity.Main.MainActivity)
-                        activity?.finish()
-
-                    }
-                }
-
-                override fun onDenied(permissions: List<String>, doNotAskAgain: Boolean) {
-                    super.onDenied(permissions, doNotAskAgain)
-                    activity?.let {
-                        PermissionUtils.showPermissionSettingDialog(it,permissions,permissions,object :
-                            OnPermissionCallback {
-                            override fun onGranted(permissions: List<String>, all: Boolean) {
-
-                            }
-                        })
-                    }
-                }
-            })
-
-
+        dismiss()
+        //同意隐私政策
+        CacheUtils.saveIsAgreeMent(true)
+        //初始化危险类sdk
+        BaseApp.application.initDangrousSdk()
+        startPage(RouteActivity.Main.MainActivity)
+        activity?.finish()
 
     }
 

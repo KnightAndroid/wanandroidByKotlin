@@ -86,11 +86,11 @@ object Coordtransform {
     /**
      * 百度坐标系(BD-09)转WGS坐标
      *
-     * @param lng 百度坐标纬度
-     * @param lat 百度坐标经度
+     * @param lng 百度坐标经度
+     * @param lat 百度坐标纬度
      * @return WGS84坐标数组
      */
-    fun BD09toWGS84(lng: Double, lat: Double): DoubleArray {
+    fun BD09toWGS84(lng:Double,lat:Double): DoubleArray {
         val gcj: DoubleArray = BD09toGCJ02(lng, lat)
         val wgs84: DoubleArray = GCJ02toWGS84(gcj[0], gcj[1])
         return wgs84

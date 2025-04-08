@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.baidu.location.BDLocation
 import com.flyjingfish.android_aop_core.annotations.SingleClick
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.gson.reflect.TypeToken
@@ -66,7 +67,10 @@ import com.knight.kotlin.library_permiss.utils.PermissionUtils
 import com.knight.kotlin.library_scan.activity.ScanCodeActivity
 import com.knight.kotlin.library_scan.annoation.ScanStyle
 import com.knight.kotlin.library_scan.decode.ScanCodeConfig
+import com.knight.kotlin.library_util.Coordtransform
 import com.knight.kotlin.library_util.DateUtils
+import com.knight.kotlin.library_util.LocationUtils
+import com.knight.kotlin.library_util.OnceLocationListener
 import com.knight.kotlin.library_util.ResourceProvider
 import com.knight.kotlin.library_util.SystemUtils
 import com.knight.kotlin.library_util.image.ImageLoader
@@ -405,21 +409,9 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
         }
 
 
-        mViewModel.getTwoWeekDayRainFall(22.5256393434,114.0494336236,DateUtils.getCurrentDateFormatted("yyyy-MM-dd"),DateUtils.getTwoWeekDaysLater(),true,"precipitation_sum").observerKt {
-            var verticalList: List<Float>
-            var horizontalList: List<String>
-
-            verticalList = ArrayList()
-            horizontalList = ArrayList()
 
 
-            for (i in 0..it.daily.precipitation_sum.size - 1) {
-                horizontalList.add(DateUtils.getMonthDay(it.daily.time.get(i)))
-                verticalList.add(it.daily.precipitation_sum.get(i))
-            }
-            mBinding.homeRecommentMenu.scrbarChartView.setHorizontalList(horizontalList)
-            mBinding.homeRecommentMenu.scrbarChartView.setVerticalList(verticalList)
-        }
+
 
         //获取置顶文章
 //        mViewModel.getTopArticle().observerKt {
@@ -487,69 +479,101 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
      * 获取详细天气预告
      */
     private fun getDetailWeekWeather() {
-        mViewModel.getDetailWeekWeather("广东省","深圳市","福田区").observerKt {
+        LocationUtils.getLocation(object :OnceLocationListener{
+            override fun onReceiveLocation(location: BDLocation?) {
+                location?.let {
+                    if ((it.latitude != 4.9E-324 && it.longitude != 4.9E-324) && (it.latitude > 0 && it.longitude > 0)) {
+                        val location = Coordtransform.BD09toWGS84(it.longitude,it.latitude)
+                        mViewModel.getTwoWeekDayRainFall(location[1],location[0],DateUtils.getCurrentDateFormatted("yyyy-MM-dd"),DateUtils.getTwoWeekDaysLater(),true,"precipitation_sum").observerKt {
+                            var verticalList: List<Float>
+                            var horizontalList: List<String>
+
+                            verticalList = ArrayList()
+                            horizontalList = ArrayList()
 
 
-            mBinding.todayWeather = it.observe
-            mBinding.airWeather = it.air
-            weatherView.setWeather(
-                getBackGroundByWeather(it.observe.weather),
-                true,null
+                            for (i in 0..it.daily.precipitation_sum.size - 1) {
+                                horizontalList.add(DateUtils.getMonthDay(it.daily.time.get(i)))
+                                verticalList.add(it.daily.precipitation_sum.get(i))
+                            }
+                            mBinding.homeRecommentMenu.scrbarChartView.setHorizontalList(horizontalList)
+                            mBinding.homeRecommentMenu.scrbarChartView.setVerticalList(verticalList)
+                        }
 
-            )//DateUtils.isDaytime()
-
-            HomeWeatherNewsFragment.newInstance(it.observe,it.forecast_24h.get(1).maxDegree,it.forecast_24h.get(1).minDegree).showAllowingStateLoss(parentFragmentManager,"dialog_everyday_weather")
-            mHourWeatherHeadAdapter.setRisks(listOf(it.rise.first()))
-            mHourWeatherAdapter.setWeatherEveryHour(it.forecast_1h)
-            mBinding.homeRecommentMenu.tvWeatherTodayValue.text = it.forecast_24h.get(1).dayWeather
-            mBinding.homeRecommentMenu.tvWeatherTomorrowValue.text = it.forecast_24h.get(2).dayWeather
-            mBinding.homeRecommentMenu.tvWeatherTodayMinmaxDegree.text = it.forecast_24h.get(1).maxDegree + "/" +it.forecast_24h.get(1).minDegree + "°"
-            mBinding.homeRecommentMenu.tvWeatherTomorrowMinmaxDegree.text = it.forecast_24h.get(2).maxDegree + "/" +it.forecast_24h.get(2).minDegree + "°"
-            setAirLevelBackground(mBinding.homeRecommentMenu.tvTodayAirLevel,it.forecast_24h.get(1).aqiLevel)
-            setAirLevelBackground(mBinding.homeRecommentMenu.tvTomorrowAirLevel,it.forecast_24h.get(2).aqiLevel)
-            //画折线
-            mBinding.homeRecommentMenu.weatherView.setLineType(ZzWeatherView.LINE_TYPE_DISCOUNT)
+                        mViewModel.getDetailWeekWeather(it.province,it.city,it.district).observerKt {
 
 
-            //画曲线(已修复不圆滑问题)
-            //        weatherView.setLineType(ZzWeatherView.LINE_TYPE_CURVE);
+                            mBinding.todayWeather = it.observe
+                            mBinding.airWeather = it.air
+                            weatherView.setWeather(
+                                getBackGroundByWeather(it.observe.weather),
+                                true,null
 
-            //设置线宽，单位px
-            mBinding.homeRecommentMenu.weatherView.setLineWidth(6f)
+                            )//DateUtils.isDaytime()
+
+                            HomeWeatherNewsFragment.newInstance(it.observe,it.forecast_24h.get(1).maxDegree,it.forecast_24h.get(1).minDegree).showAllowingStateLoss(parentFragmentManager,"dialog_everyday_weather")
+                            mHourWeatherHeadAdapter.setRisks(listOf(it.rise.first()))
+                            mHourWeatherAdapter.setWeatherEveryHour(it.forecast_1h)
+                            mBinding.homeRecommentMenu.tvWeatherTodayValue.text = it.forecast_24h.get(1).dayWeather
+                            mBinding.homeRecommentMenu.tvWeatherTomorrowValue.text = it.forecast_24h.get(2).dayWeather
+                            mBinding.homeRecommentMenu.tvWeatherTodayMinmaxDegree.text = it.forecast_24h.get(1).maxDegree + "/" +it.forecast_24h.get(1).minDegree + "°"
+                            mBinding.homeRecommentMenu.tvWeatherTomorrowMinmaxDegree.text = it.forecast_24h.get(2).maxDegree + "/" +it.forecast_24h.get(2).minDegree + "°"
+                            setAirLevelBackground(mBinding.homeRecommentMenu.tvTodayAirLevel,it.forecast_24h.get(1).aqiLevel)
+                            setAirLevelBackground(mBinding.homeRecommentMenu.tvTomorrowAirLevel,it.forecast_24h.get(2).aqiLevel)
+                            //画折线
+                            mBinding.homeRecommentMenu.weatherView.setLineType(ZzWeatherView.LINE_TYPE_DISCOUNT)
 
 
-            //设置一屏幕显示几列(最少3列)
-            try {
-                mBinding.homeRecommentMenu.weatherView.setColumnNumber(6)
-            } catch (e: Exception) {
-                e.printStackTrace()
+                            //画曲线(已修复不圆滑问题)
+                            //        weatherView.setLineType(ZzWeatherView.LINE_TYPE_CURVE);
+
+                            //设置线宽，单位px
+                            mBinding.homeRecommentMenu.weatherView.setLineWidth(6f)
+
+
+                            //设置一屏幕显示几列(最少3列)
+                            try {
+                                mBinding.homeRecommentMenu.weatherView.setColumnNumber(6)
+                            } catch (e: Exception) {
+                                e.printStackTrace()
+                            }
+
+
+                            //设置白天和晚上线条的颜色
+                            mBinding.homeRecommentMenu.weatherView.setDayAndNightLineColor(Color.BLUE, Color.RED)
+                            //延迟绘制 进行渲染
+                            mBinding.homeRecommentMenu.weatherView.postInvalidateDelayed(200)
+                            //填充天气数据
+                            mBinding.homeRecommentMenu.weatherView.setData(it.forecast_24h)
+
+
+                            val indexType = object : TypeToken<Map<String, WeatherIndexItem>>() {}.type
+                            val indexMap: Map<String, WeatherIndexItem>? = fromJson(toJson(it.index),indexType)
+                            indexMap?.let {
+                                val indexList: List<WeatherIndexItem> = it.values.toList()
+                                mWeatherIndexAdapter.submitList(indexList)
+                            }
+
+
+
+
+                        }
+                    }
+                }
             }
-
-
-            //设置白天和晚上线条的颜色
-            mBinding.homeRecommentMenu.weatherView.setDayAndNightLineColor(Color.BLUE, Color.RED)
-            //延迟绘制 进行渲染
-            mBinding.homeRecommentMenu.weatherView.postInvalidateDelayed(200)
-            //填充天气数据
-            mBinding.homeRecommentMenu.weatherView.setData(it.forecast_24h)
-
-
-            val indexType = object : TypeToken<Map<String, WeatherIndexItem>>() {}.type
-            val indexMap: Map<String, WeatherIndexItem>? = fromJson(toJson(it.index),indexType)
-            indexMap?.let {
-                val indexList: List<WeatherIndexItem> = it.values.toList()
-                mWeatherIndexAdapter.submitList(indexList)
-            }
+        })
 
 
 
 
-        }
+
+
     }
     /**
      *
      * 检查APP更新
      */
+    @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
     private fun checkAppMessage(data: AppUpdateBean) {
         //如果本地安装包大于远端 证明本地安装的是测试包 无需更新
         if (SystemUtils.getAppVersionCode(requireActivity())  < data.versionCode ) {
@@ -559,7 +583,37 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
 
             }
         } else {
-            getDetailWeekWeather()
+
+
+            val permission:List<String> = listOf(Permission.ACCESS_FINE_LOCATION,Permission.ACCESS_COARSE_LOCATION,Permission.ACCESS_BACKGROUND_LOCATION)
+            XXPermissions.with(this)
+                ?.permission(permission)
+                ?.request(object : OnPermissionCallback {
+                    override fun onGranted(permissions: List<String>, all: Boolean) {
+                        if (all) {
+
+                            getDetailWeekWeather()
+
+                        }
+                    }
+
+                    override fun onDenied(permissions: List<String>, doNotAskAgain: Boolean) {
+                        super.onDenied(permissions, doNotAskAgain)
+                        activity?.let {
+                            PermissionUtils.showPermissionSettingDialog(it,permissions,permissions,object :
+                                OnPermissionCallback {
+                                override fun onGranted(permissions: List<String>, all: Boolean) {
+
+                                }
+                            })
+                        }
+                    }
+                })
+
+
+
+
+
         }
     }
 
