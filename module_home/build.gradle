@@ -11,6 +11,7 @@ dependencies {
     implementation project(path: ':library_scan')
     implementation project(path: ':library_biometric')
     implementation Dependencies.GitHub.BANNER
+    implementation Dependencies.OtherUtils.SUNCALC
 
 
 }

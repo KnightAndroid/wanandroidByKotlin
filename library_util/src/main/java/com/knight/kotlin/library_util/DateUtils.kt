@@ -1,14 +1,18 @@
 package com.knight.kotlin.library_util
 
+import android.os.Build
 import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_base.util.LanguageFontSizeUtils
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
+import java.util.TimeZone
 
 
 /**
@@ -163,7 +167,7 @@ object DateUtils {
      * 将时间格式转成整形
      *
      */
-    fun convertToTimestamp(dateString: String) : Long? {
+    fun convertToTimestamp(dateString: String): Long? {
         val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
         return try {
             // 解析日期字符串并返回时间戳
@@ -180,7 +184,7 @@ object DateUtils {
      *
      * 获取当天月日 自行传入格式
      */
-    fun getCurrentDateFormatted(format:String? = "M月d日"): String {
+    fun getCurrentDateFormatted(format: String? = "M月d日"): String {
         val calendar = Calendar.getInstance()  // 获取当前日期
         val dateFormat = SimpleDateFormat(format, Locale.getDefault())  // 格式化为 "1月1日"
         return dateFormat.format(calendar.time)  // 格式化当前时间并返回
@@ -238,15 +242,15 @@ object DateUtils {
     fun getDayOfWeekName(dayOfWeek: Int): String {
         if (CacheUtils.getLanguageMode() == "English") {
             return when (dayOfWeek) {
-                    Calendar.SUNDAY -> "Sunday"
-                    Calendar.MONDAY -> "Monday"
-                    Calendar.TUESDAY -> "Tuesday"
-                    Calendar.WEDNESDAY -> "Wednesday"
-                    Calendar.THURSDAY -> "Thursday"
-                    Calendar.FRIDAY -> "Friday"
-                    Calendar.SATURDAY -> "Saturday"
-                    else -> "Invalid Day"
-                }
+                Calendar.SUNDAY -> "Sunday"
+                Calendar.MONDAY -> "Monday"
+                Calendar.TUESDAY -> "Tuesday"
+                Calendar.WEDNESDAY -> "Wednesday"
+                Calendar.THURSDAY -> "Thursday"
+                Calendar.FRIDAY -> "Friday"
+                Calendar.SATURDAY -> "Saturday"
+                else -> "Invalid Day"
+            }
         } else {
             return when (dayOfWeek) {
                 Calendar.SUNDAY -> "周日"
@@ -301,7 +305,7 @@ object DateUtils {
      *
      * 获取是星期几
      */
-    fun getWeekday():String {
+    fun getWeekday(): String {
         return if (LanguageFontSizeUtils.isChinese()) {
             getCNWeekday()
         } else {
@@ -336,5 +340,53 @@ object DateUtils {
     fun getEnglishWeekday(): String {
         val calendar = Calendar.getInstance()
         return calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.ENGLISH)
+    }
+
+
+    /**
+     *
+     * 将年月日和 时分 拼接起来 转成时间戳
+     */
+    fun getTimestamp(dateStr: String, timeStr: String, zoneId: String = "Asia/Shanghai"): Long {
+//        val dateTimeStr = "$dateStr $timeStr"  // 合并日期和时间
+//        val format = SimpleDateFormat("yyyyMMdd HH:mm", Locale.getDefault())  // 格式化
+//        val date = format.parse(dateTimeStr)  // 解析日期时间
+//        return date.time  // 返回时间戳
+
+
+        val dateTimeStr = "$dateStr $timeStr"
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val formatter =
+                DateTimeFormatter.ofPattern("yyyyMMdd HH:mm", Locale.getDefault())
+            val localDateTime = LocalDateTime.parse(dateTimeStr, formatter)
+            val zonedDateTime = localDateTime.atZone(ZoneId.of(zoneId))
+            return zonedDateTime.toInstant().toEpochMilli()
+        } else {
+            try {
+                val sdf = SimpleDateFormat("yyyyMMdd HH:mm", Locale.getDefault())
+                sdf.timeZone = TimeZone.getTimeZone(zoneId)
+                val date: Date = sdf.parse(dateTimeStr)
+                val calendar = Calendar.getInstance(TimeZone.getTimeZone(zoneId))
+                calendar.time = date
+                return calendar.timeInMillis
+            } catch (e: ParseException) {
+                throw ParseException("Invalid date time format", e.errorOffset)
+            }
+        }
+
+
+    }
+
+    /**
+     *
+     * 转成时间戳
+     */
+    fun getTimestampCompat(year: Int, month: Int, day: Int, hour: Int, minute: Int, zoneId: TimeZone): Long {
+        val calendar = Calendar.getInstance(zoneId).apply {
+            set(year, month - 1, day, hour, minute, 0)
+            set(Calendar.MILLISECOND, 0)
+        }
+        return calendar.timeInMillis
     }
 }

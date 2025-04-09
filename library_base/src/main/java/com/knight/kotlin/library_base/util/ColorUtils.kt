@@ -3,6 +3,7 @@ package com.knight.kotlin.library_base.util
 import android.R
 import android.content.res.ColorStateList
 import android.graphics.Color
+import androidx.annotation.ColorInt
 import java.util.Locale
 import java.util.Random
 
@@ -159,6 +160,22 @@ object ColorUtils {
         val g = (180 - realFilter / 80f * 170).toInt()
         val b = (60 - realFilter / 80f * 60).toInt()
         return Color.argb(a, r, g, b)
+    }
+
+
+    @ColorInt
+    fun blendColor(@ColorInt foreground: Int, @ColorInt background: Int): Int {
+        val scr = Color.red(foreground)
+        val scg = Color.green(foreground)
+        val scb = Color.blue(foreground)
+        val sa = foreground ushr 24
+        val dcr = Color.red(background)
+        val dcg = Color.green(background)
+        val dcb = Color.blue(background)
+        val colorR = dcr * (0xff - sa) / 0xff + scr * sa / 0xff
+        val colorG = dcg * (0xff - sa) / 0xff + scg * sa / 0xff
+        val colorB = dcb * (0xff - sa) / 0xff + scb * sa / 0xff
+        return (colorR shl 16) + (colorG shl 8) + colorB or -0x1000000
     }
 
 }

@@ -16,6 +16,9 @@ fun Int.dp2px():Int{
     return (0.5f + this * Resources.getSystem().displayMetrics.density).toInt()
 }
 
+fun Float.dp2px(): Float {
+    return (0.5f + this * Resources.getSystem().displayMetrics.density)
+}
 
 fun Context.dp2px(dpValue: Float): Int {
     val scale = resources.displayMetrics.density

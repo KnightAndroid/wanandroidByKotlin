@@ -2,6 +2,8 @@ package com.knight.kotlin.module_home.fragment
 
 import android.animation.Animator
 import android.animation.AnimatorSet
+import android.animation.FloatEvaluator
+import android.animation.TypeEvaluator
 import android.animation.ValueAnimator
 import android.app.Activity
 import android.content.Intent
@@ -12,13 +14,16 @@ import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.animation.DecelerateInterpolator
+import android.view.animation.OvershootInterpolator
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.annotation.RequiresApi
+import androidx.annotation.Size
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.Group
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -73,6 +78,8 @@ import com.knight.kotlin.library_util.LocationUtils
 import com.knight.kotlin.library_util.OnceLocationListener
 import com.knight.kotlin.library_util.ResourceProvider
 import com.knight.kotlin.library_util.SystemUtils
+import com.knight.kotlin.library_util.ThreadUtils
+import com.knight.kotlin.library_util.TimeUtils
 import com.knight.kotlin.library_util.image.ImageLoader
 import com.knight.kotlin.library_util.startPage
 import com.knight.kotlin.library_util.startPageWithRightAnimate
@@ -85,6 +92,7 @@ import com.knight.kotlin.library_widget.ktx.setSafeOnItemClickListener
 import com.knight.kotlin.library_widget.skeleton.Skeleton
 import com.knight.kotlin.library_widget.skeleton.SkeletonScreen
 import com.knight.kotlin.library_widget.slidinglayout.SlidingLayout
+import com.knight.kotlin.library_widget.utils.WeatherUtils
 import com.knight.kotlin.library_widget.weatherview.ThemeManager
 import com.knight.kotlin.library_widget.weatherview.WeatherView
 import com.knight.kotlin.module_home.R
@@ -117,9 +125,17 @@ import com.youth.banner.indicator.CircleIndicator
 import dagger.hilt.android.AndroidEntryPoint
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import org.shredzone.commons.suncalc.MoonTimes
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.ZonedDateTime
+import java.util.Calendar
+import java.util.Date
 import javax.crypto.BadPaddingException
 import javax.crypto.Cipher
 import javax.crypto.IllegalBlockSizeException
+import kotlin.math.max
+import kotlin.math.min
 
 
 /**
@@ -230,6 +246,32 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
     private var knowledgeLabelList = mutableListOf<String>()
 
     var mSlideMenuOpenListener :SlideMenuOpenListener? = null
+
+    /**
+     *
+     * 日出日落
+     */
+    @Size(2)
+    private var mStartTimes: LongArray = LongArray(2)
+
+    /**
+     *
+     * 月出月落
+     */
+    @Size(2)
+    private var mEndTimes: LongArray = LongArray(2)
+
+    /**
+     *
+     * 当前时间
+     */
+    @Size(2)
+    private var mCurrentTimes: LongArray = LongArray(2)
+
+    @Size(2)
+    private var mAnimCurrentTimes: LongArray = LongArray(2)
+    @Size(3)
+    private val mAttachAnimatorSets: Array<AnimatorSet?> = arrayOf(null, null, null)
     override fun setThemeColor(isDarkMode: Boolean) {
         if (!isDarkMode) {
             isWithStatusTheme(CacheUtils.getStatusBarIsWithTheme())
@@ -317,36 +359,19 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
             SpacesItemDecoration(10.dp2px())
         )
 
+        homeRecommentMenu.sunMoonControlView.setSunDrawable(ContextCompat.getDrawable(requireActivity(), R.drawable.home_icon_sun))
+        homeRecommentMenu.sunMoonControlView.setMoonDrawable(ContextCompat.getDrawable(requireActivity(), R.drawable.home_icon_moon))
 
 
-    }
+        homeRecommentMenu.sunMoonControlView.setColors(
+            ContextCompat.getColor(requireActivity(), com.knight.kotlin.library_base.R.color.base_color_theme),
+            androidx.core.graphics.ColorUtils.setAlphaComponent(ContextCompat.getColor(requireActivity(), com.knight.kotlin.library_base.R.color.base_color_theme), (0.5 * 255).toInt()),
+            androidx.core.graphics.ColorUtils.setAlphaComponent(ContextCompat.getColor(requireActivity(), com.knight.kotlin.library_base.R.color.base_color_theme), (0.2 * 255).toInt()),
+            Color.WHITE,
+            false
+        )
 
-    /**
-     *
-     * 根据天气返回背景图片
-     */
-    private fun getBackGroundByWeather(weather:String) : Int {
-        return when (weather) {
-            "晴" -> WeatherView.WEATHER_KIND_CLEAR
-            "多云" -> WeatherView.WEATHER_KIND_CLOUD
-            "阴" -> WeatherView.WEATHER_KIND_CLOUDY
-            "打雷" -> WeatherView.WEATHER_KIND_THUNDER
-            "雷阵雨" -> WeatherView.WEATHER_KIND_THUNDERSTORM
-            "雨夹雪" -> WeatherView.WEATHER_KIND_SLEET
-            "阵雨" -> WeatherView.WEATHER_KIND_RAINY
-            "小雨" -> WeatherView.WEATHER_KIND_RAINY
-            "中雨" -> WeatherView.WEATHER_KIND_RAINY
-            "大雨" -> WeatherView.WEATHER_KIND_RAINY
-            "暴雨" -> WeatherView.WEATHER_KIND_RAINY
-            "小雪" -> WeatherView.WEATHER_KIND_SNOW
-            "大雪" -> WeatherView.WEATHER_KIND_SNOW
-            "中雪" -> WeatherView.WEATHER_KIND_SNOW
-            "暴雪" -> WeatherView.WEATHER_KIND_SNOW
-            "冰雹" -> WeatherView.WEATHER_KIND_HAIL
-            "雾"   -> WeatherView.WEATHER_KIND_FOG
-            "薄雾" -> WeatherView.WEATHER_KIND_HAZE
-            else -> WeatherView.WEATHER_KIND_WIND
-        }
+
     }
 
 
@@ -379,6 +404,7 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
     }
 
 
+    @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
     override fun initRequestData() {
         requestUpdate()
         initData()
@@ -386,6 +412,7 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
 
 
 
+    @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
     private fun requestUpdate() {
         mViewModel.checkAppUpdateMessage().observerKt {
             checkAppMessage(it)
@@ -476,96 +503,138 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
 
     /**
      *
-     * 获取详细天气预告
+     * 获取定位
      */
-    private fun getDetailWeekWeather() {
+    private fun getLocation() {
         LocationUtils.getLocation(object :OnceLocationListener{
             override fun onReceiveLocation(location: BDLocation?) {
                 location?.let {
                     if ((it.latitude != 4.9E-324 && it.longitude != 4.9E-324) && (it.latitude > 0 && it.longitude > 0)) {
-                        val location = Coordtransform.BD09toWGS84(it.longitude,it.latitude)
-                        mViewModel.getTwoWeekDayRainFall(location[1],location[0],DateUtils.getCurrentDateFormatted("yyyy-MM-dd"),DateUtils.getTwoWeekDaysLater(),true,"precipitation_sum").observerKt {
-                            var verticalList: List<Float>
-                            var horizontalList: List<String>
-
-                            verticalList = ArrayList()
-                            horizontalList = ArrayList()
-
-
-                            for (i in 0..it.daily.precipitation_sum.size - 1) {
-                                horizontalList.add(DateUtils.getMonthDay(it.daily.time.get(i)))
-                                verticalList.add(it.daily.precipitation_sum.get(i))
-                            }
-                            mBinding.homeRecommentMenu.scrbarChartView.setHorizontalList(horizontalList)
-                            mBinding.homeRecommentMenu.scrbarChartView.setVerticalList(verticalList)
-                        }
-
-                        mViewModel.getDetailWeekWeather(it.province,it.city,it.district).observerKt {
-
-
-                            mBinding.todayWeather = it.observe
-                            mBinding.airWeather = it.air
-                            weatherView.setWeather(
-                                getBackGroundByWeather(it.observe.weather),
-                                true,null
-
-                            )//DateUtils.isDaytime()
-
-                            HomeWeatherNewsFragment.newInstance(it.observe,it.forecast_24h.get(1).maxDegree,it.forecast_24h.get(1).minDegree).showAllowingStateLoss(parentFragmentManager,"dialog_everyday_weather")
-                            mHourWeatherHeadAdapter.setRisks(listOf(it.rise.first()))
-                            mHourWeatherAdapter.setWeatherEveryHour(it.forecast_1h)
-                            mBinding.homeRecommentMenu.tvWeatherTodayValue.text = it.forecast_24h.get(1).dayWeather
-                            mBinding.homeRecommentMenu.tvWeatherTomorrowValue.text = it.forecast_24h.get(2).dayWeather
-                            mBinding.homeRecommentMenu.tvWeatherTodayMinmaxDegree.text = it.forecast_24h.get(1).maxDegree + "/" +it.forecast_24h.get(1).minDegree + "°"
-                            mBinding.homeRecommentMenu.tvWeatherTomorrowMinmaxDegree.text = it.forecast_24h.get(2).maxDegree + "/" +it.forecast_24h.get(2).minDegree + "°"
-                            setAirLevelBackground(mBinding.homeRecommentMenu.tvTodayAirLevel,it.forecast_24h.get(1).aqiLevel)
-                            setAirLevelBackground(mBinding.homeRecommentMenu.tvTomorrowAirLevel,it.forecast_24h.get(2).aqiLevel)
-                            //画折线
-                            mBinding.homeRecommentMenu.weatherView.setLineType(ZzWeatherView.LINE_TYPE_DISCOUNT)
-
-
-                            //画曲线(已修复不圆滑问题)
-                            //        weatherView.setLineType(ZzWeatherView.LINE_TYPE_CURVE);
-
-                            //设置线宽，单位px
-                            mBinding.homeRecommentMenu.weatherView.setLineWidth(6f)
-
-
-                            //设置一屏幕显示几列(最少3列)
-                            try {
-                                mBinding.homeRecommentMenu.weatherView.setColumnNumber(6)
-                            } catch (e: Exception) {
-                                e.printStackTrace()
-                            }
-
-
-                            //设置白天和晚上线条的颜色
-                            mBinding.homeRecommentMenu.weatherView.setDayAndNightLineColor(Color.BLUE, Color.RED)
-                            //延迟绘制 进行渲染
-                            mBinding.homeRecommentMenu.weatherView.postInvalidateDelayed(200)
-                            //填充天气数据
-                            mBinding.homeRecommentMenu.weatherView.setData(it.forecast_24h)
-
-
-                            val indexType = object : TypeToken<Map<String, WeatherIndexItem>>() {}.type
-                            val indexMap: Map<String, WeatherIndexItem>? = fromJson(toJson(it.index),indexType)
-                            indexMap?.let {
-                                val indexList: List<WeatherIndexItem> = it.values.toList()
-                                mWeatherIndexAdapter.submitList(indexList)
-                            }
-
-
-
-
-                        }
+                        getDetailWeekWeather(it)
                     }
                 }
             }
         })
+    }
 
 
+    /**
+     *
+     * 根据经纬度信息获取详细天气预告
+     */
+    private fun getDetailWeekWeather(location: BDLocation) {
+        val latLng = Coordtransform.BD09toWGS84(location.longitude, location.latitude)
+        mViewModel.getTwoWeekDayRainFall(
+            latLng[1],
+            latLng[0],
+            DateUtils.getCurrentDateFormatted("yyyy-MM-dd"),
+            DateUtils.getTwoWeekDaysLater(),
+            true,
+            "precipitation_sum"
+        ).observerKt {
+            var verticalList: List<Float>
+            var horizontalList: List<String>
+            verticalList = ArrayList()
+            horizontalList = ArrayList()
+
+            for (i in 0..it.daily.precipitation_sum.size - 1) {
+                horizontalList.add(DateUtils.getMonthDay(it.daily.time.get(i)))
+                verticalList.add(it.daily.precipitation_sum.get(i))
+            }
+            mBinding.homeRecommentMenu.scrbarChartView.setHorizontalList(horizontalList)
+            mBinding.homeRecommentMenu.scrbarChartView.setVerticalList(verticalList)
+        }
+
+        mViewModel.getDetailWeekWeather(location.province, location.city, location.district).observerKt {
+            val sunriseTime = DateUtils.getTimestamp(it.rise.get(0).time,it.rise.get(0).sunrise, TimeUtils.getDefaultTimeZoneId())
+            val sunsetTime = DateUtils.getTimestamp(it.rise.get(0).time,it.rise.get(0).sunset,TimeUtils.getDefaultTimeZoneId())
+            mStartTimes[0] = sunriseTime
+            mEndTimes[0] = sunsetTime
 
 
+            val localDateTime = LocalDateTime.now()
+            val zonedDateTime = ZonedDateTime.of(localDateTime, ZoneId.systemDefault())
+            val moonTimes: MoonTimes = MoonTimes.compute()
+                .on(zonedDateTime)
+                .at(latLng[1], latLng[0])
+                .execute()
+
+
+            moonTimes.rise?.let {
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    mStartTimes[1]  = it.withZoneSameInstant(ZoneId.of("Asia/Shanghai")).toInstant().toEpochMilli()
+                }
+            }
+
+            moonTimes.set?.let {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    mEndTimes[1] = it.withZoneSameInstant(ZoneId.of("Asia/Shanghai")).toInstant().toEpochMilli()
+                }
+            }
+
+            val calendar = Calendar.getInstance(TimeUtils.getDefaultTimeZone())
+            val currentTime = calendar.time.time
+            mCurrentTimes[0] = currentTime
+            mCurrentTimes[1] = currentTime
+
+
+            mBinding.homeRecommentMenu.sunMoonControlView.setTime(mStartTimes, mEndTimes, mStartTimes)
+            mBinding.homeRecommentMenu.sunMoonControlView.setDayIndicatorRotation(0f)
+            mBinding.homeRecommentMenu.sunMoonControlView.setNightIndicatorRotation(0f)
+            mBinding.todayWeather = it.observe
+            mBinding.airWeather = it.air
+            weatherView.setWeather(
+                WeatherUtils.getBackgroundByWeather(it.observe.weather),
+                DateUtils.isDaytime(), null
+
+            )
+
+            HomeWeatherNewsFragment.newInstance(it.observe, it.forecast_24h.get(1).maxDegree, it.forecast_24h.get(1).minDegree)
+                .showAllowingStateLoss(parentFragmentManager, "dialog_everyday_weather")
+            mHourWeatherHeadAdapter.setRisks(listOf(it.rise.first()))
+            mHourWeatherAdapter.setWeatherEveryHour(it.forecast_1h)
+            mBinding.homeRecommentMenu.tvWeatherTodayValue.text = it.forecast_24h.get(1).dayWeather
+            mBinding.homeRecommentMenu.tvWeatherTomorrowValue.text = it.forecast_24h.get(2).dayWeather
+            mBinding.homeRecommentMenu.tvWeatherTodayMinmaxDegree.text = it.forecast_24h.get(1).maxDegree + "/" + it.forecast_24h.get(1).minDegree + "°"
+            mBinding.homeRecommentMenu.tvWeatherTomorrowMinmaxDegree.text = it.forecast_24h.get(2).maxDegree + "/" + it.forecast_24h.get(2).minDegree + "°"
+            setAirLevelBackground(mBinding.homeRecommentMenu.tvTodayAirLevel, it.forecast_24h.get(1).aqiLevel)
+            setAirLevelBackground(mBinding.homeRecommentMenu.tvTomorrowAirLevel, it.forecast_24h.get(2).aqiLevel)
+            //画折线
+            mBinding.homeRecommentMenu.weatherView.setLineType(ZzWeatherView.LINE_TYPE_DISCOUNT)
+
+
+            //画曲线(已修复不圆滑问题)
+            //        weatherView.setLineType(ZzWeatherView.LINE_TYPE_CURVE);
+
+            //设置线宽，单位px
+            mBinding.homeRecommentMenu.weatherView.setLineWidth(6f)
+
+
+            //设置一屏幕显示几列(最少3列)
+            try {
+                mBinding.homeRecommentMenu.weatherView.setColumnNumber(6)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+
+
+            //设置白天和晚上线条的颜色
+            mBinding.homeRecommentMenu.weatherView.setDayAndNightLineColor(Color.BLUE, Color.RED)
+            //延迟绘制 进行渲染
+            mBinding.homeRecommentMenu.weatherView.postInvalidateDelayed(200)
+            //填充天气数据
+            mBinding.homeRecommentMenu.weatherView.setData(it.forecast_24h)
+
+
+            val indexType = object : TypeToken<Map<String, WeatherIndexItem>>() {}.type
+            val indexMap: Map<String, WeatherIndexItem>? = fromJson(toJson(it.index), indexType)
+            indexMap?.let {
+                val indexList: List<WeatherIndexItem> = it.values.toList()
+                mWeatherIndexAdapter.submitList(indexList)
+            }
+
+        }
 
 
     }
@@ -583,17 +652,13 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
 
             }
         } else {
-
-
             val permission:List<String> = listOf(Permission.ACCESS_FINE_LOCATION,Permission.ACCESS_COARSE_LOCATION,Permission.ACCESS_BACKGROUND_LOCATION)
             XXPermissions.with(this)
                 ?.permission(permission)
                 ?.request(object : OnPermissionCallback {
                     override fun onGranted(permissions: List<String>, all: Boolean) {
                         if (all) {
-
-                            getDetailWeekWeather()
-
+                            getLocation()
                         }
                     }
 
@@ -1354,9 +1419,78 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
 
     override fun onOpenStatus(open: Boolean) {
         mSlideMenuOpenListener?.onOpenStatus(open)
+        if (open) {
+
+            ThreadUtils.postMainDelayed({
+                val timeDay = ValueAnimator.ofObject(LongEvaluator(), mStartTimes[0], mCurrentTimes[0])
+                timeDay.addUpdateListener { animation: ValueAnimator ->
+                    mAnimCurrentTimes[0] = animation.animatedValue as Long
+                    mBinding.homeRecommentMenu.sunMoonControlView.setTime(mStartTimes, mEndTimes, mAnimCurrentTimes)
+                }
+                val totalRotationDay = 360.0 * 7 * (mCurrentTimes[0] - mStartTimes[0]) / (mEndTimes[0] - mStartTimes[0])
+                val rotateDay = ValueAnimator.ofObject(
+                    FloatEvaluator(),
+                    0,
+                    (totalRotationDay - totalRotationDay % 360).toInt()
+                )
+                rotateDay.addUpdateListener { animation: ValueAnimator ->
+                    mBinding.homeRecommentMenu.sunMoonControlView.setDayIndicatorRotation((animation.animatedValue as Float))
+                }
+                mAttachAnimatorSets[0] = AnimatorSet().apply {
+                    playTogether(timeDay, rotateDay)
+                    interpolator = OvershootInterpolator(1f)
+                    duration = getPathAnimatorDuration(0)
+                }.also { it.start() }
+                val timeNight = ValueAnimator.ofObject(LongEvaluator(), mStartTimes[1], mCurrentTimes[1])
+                timeNight.addUpdateListener { animation: ValueAnimator ->
+                    mAnimCurrentTimes[1] = animation.animatedValue as Long
+                    mBinding.homeRecommentMenu.sunMoonControlView.setTime(mStartTimes, mEndTimes, mAnimCurrentTimes)
+                }
+                val totalRotationNight = 360.0 * 4 * (mCurrentTimes[1] - mStartTimes[1]) / (mEndTimes[1] - mStartTimes[1])
+                //val totalRotationNight = 361f
+                val rotateNight = ValueAnimator.ofObject(
+                    FloatEvaluator(),
+                    0,
+                    (totalRotationNight - totalRotationNight % 360).toInt()
+                )
+                rotateNight.addUpdateListener { animation: ValueAnimator ->
+                    mBinding.homeRecommentMenu.sunMoonControlView.setNightIndicatorRotation(-1 * animation.animatedValue as Float)
+                }
+                mAttachAnimatorSets[1] = AnimatorSet().apply {
+                    playTogether(timeNight, rotateNight)
+                    interpolator = OvershootInterpolator(1f)
+                    duration = getPathAnimatorDuration(1)
+                }.also { it.start() }
+//            if (mPhaseAngle > 0) {
+//                val moonAngle = ValueAnimator.ofObject(FloatEvaluator(), 0, mPhaseAngle)
+//                moonAngle.addUpdateListener { animation: ValueAnimator ->
+//                    mPhaseView.setSurfaceAngle((animation.animatedValue as Float))
+//                }
+//                mAttachAnimatorSets[2] = AnimatorSet().apply {
+//                    playTogether(moonAngle)
+//                    interpolator = DecelerateInterpolator()
+//                    duration = phaseAnimatorDuration
+//                }.also { it.start() }
+//            }
+            },2000)
+
+        }
+    }
+
+    private class LongEvaluator : TypeEvaluator<Long> {
+        override fun evaluate(fraction: Float, startValue: Long, endValue: Long): Long {
+            return startValue + ((endValue - startValue) * fraction).toLong()
+        }
     }
 
 
+    private fun getPathAnimatorDuration(index: Int): Long {
+        val duration = max(
+            1000 + 3000.0 * (mCurrentTimes[index] - mStartTimes[index]) / (mEndTimes[index] - mStartTimes[index]),
+            0.0
+        ).toLong()
+        return min(duration, 4000)
+    }
     /**
      *
      * 侧滑菜单是否打开还是关闭状态
