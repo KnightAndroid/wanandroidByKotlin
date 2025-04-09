@@ -109,6 +109,7 @@ import com.knight.kotlin.module_home.entity.BannerBean
 import com.knight.kotlin.module_home.entity.EveryDayPushArticlesBean
 import com.knight.kotlin.module_home.entity.HomeArticleListBean
 import com.knight.kotlin.module_home.utils.HomeAnimUtils
+import com.knight.kotlin.module_home.utils.MoonRiseSetUtils
 import com.knight.kotlin.module_home.vm.HomeRecommendVm
 import com.knight.library_biometric.control.BiometricControl
 import com.knight.library_biometric.listener.BiometricStatusCallback
@@ -552,32 +553,38 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
             mEndTimes[0] = sunsetTime
 
 
-            val localDateTime = LocalDateTime.now()
-            val zonedDateTime = ZonedDateTime.of(localDateTime, ZoneId.systemDefault())
-            val moonTimes: MoonTimes = MoonTimes.compute()
-                .on(zonedDateTime)
-                .at(latLng[1], latLng[0])
-                .execute()
+          //  val moonRiseSet = MoonRiseSetUtils.getMoonriseAndSetTimestamp(latLng[1],latLng[0],ZoneId.of(TimeUtils.getDefaultTimeZoneId()),Date())
 
+//            val localDateTime = LocalDateTime.now()
+//            val zonedDateTime = ZonedDateTime.of(localDateTime, ZoneId.systemDefault())
+//            val moonTimes: MoonTimes = MoonTimes.compute()
+//                .on(zonedDateTime)
+//                .at(latLng[1], latLng[0])
+//                .execute()
 
-            moonTimes.rise?.let {
+          //  mEndTimes[1] = MoonRiseSetUtils.getMoonriseTimestamp(latLng[1],latLng[0],ZoneId.of(TimeUtils.getDefaultTimeZoneId()),Date())!!
+          //  mStartTimes[1] = MoonRiseSetUtils.getMoonsetTimestamp(latLng[1],latLng[0],ZoneId.of(TimeUtils.getDefaultTimeZoneId()),Date())!!
 
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    mStartTimes[1]  = it.withZoneSameInstant(ZoneId.of("Asia/Shanghai")).toInstant().toEpochMilli()
-                }
-            }
-
-            moonTimes.set?.let {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    mEndTimes[1] = it.withZoneSameInstant(ZoneId.of("Asia/Shanghai")).toInstant().toEpochMilli()
-                }
-            }
+            mEndTimes[1] = 1744405200000
+            mStartTimes[1] =  1744365600000
+//            moonRiseSet.moonrise?.let {
+//
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//                    mEndTimes[1]  = it
+//                }
+//            }
+//
+//            moonRiseSet.moonset?.let {
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//                    mStartTimes[1]   = it
+//                }
+//            }
 
             val calendar = Calendar.getInstance(TimeUtils.getDefaultTimeZone())
             val currentTime = calendar.time.time
             mCurrentTimes[0] = currentTime
             mCurrentTimes[1] = currentTime
-
+            mAnimCurrentTimes = longArrayOf(mCurrentTimes[0], mCurrentTimes[1])
 
             mBinding.homeRecommentMenu.sunMoonControlView.setTime(mStartTimes, mEndTimes, mStartTimes)
             mBinding.homeRecommentMenu.sunMoonControlView.setDayIndicatorRotation(0f)
@@ -1447,7 +1454,7 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
                     mBinding.homeRecommentMenu.sunMoonControlView.setTime(mStartTimes, mEndTimes, mAnimCurrentTimes)
                 }
                 val totalRotationNight = 360.0 * 4 * (mCurrentTimes[1] - mStartTimes[1]) / (mEndTimes[1] - mStartTimes[1])
-                //val totalRotationNight = 361f
+                //val totalRotationNight = 180f
                 val rotateNight = ValueAnimator.ofObject(
                     FloatEvaluator(),
                     0,
