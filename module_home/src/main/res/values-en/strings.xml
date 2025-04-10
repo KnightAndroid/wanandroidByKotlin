@@ -30,4 +30,5 @@
     <string name="home_input_label_empty">Please input label</string>
     <string name="home_eyepetizer_title">Eyepetizer</string>
     <string name="home_eyepetizer_category">category</string>
+    <string  name="home_tv_sun_moon">Sun &amp; moon</string>
 </resources>

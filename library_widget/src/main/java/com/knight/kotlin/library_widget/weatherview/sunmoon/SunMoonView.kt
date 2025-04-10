@@ -92,6 +92,8 @@ class SunMoonView @JvmOverloads constructor(
     private var mMargin = 0f
     private var iconSize = 0
 
+    private var drawStatus:SunMoonDrawStatus = SunMoonDrawStatus.NOTDRAW //0没开始绘制 1开始绘制 2绘制完成
+
     init {
         mLineSize = LINE_SIZE_DIP.dp2px()
         mDottedLineSize = DOTTED_LINE_SIZE_DIP.dp2px()
@@ -368,6 +370,14 @@ class SunMoonView @JvmOverloads constructor(
         }
     }
 
+    fun setDrawStatus(drawaStatus:SunMoonDrawStatus) {
+        this.drawStatus = drawaStatus
+    }
+
+    fun getDrawStatus():SunMoonDrawStatus {
+        return this.drawStatus
+    }
+
     companion object {
         private const val ICON_SIZE_DIP = 24f
         private const val LINE_SIZE_DIP = 5f
@@ -376,5 +386,15 @@ class SunMoonView @JvmOverloads constructor(
         private const val ARC_ANGLE = 135
         private const val SHADOW_ALPHA_FACTOR_LIGHT = 0.1f
         private const val SHADOW_ALPHA_FACTOR_DARK = 0.2f
+    }
+
+
+    enum class SunMoonDrawStatus {
+        // Wi-Fi网络
+        NOTDRAW,
+        // 移动蜂窝网络
+        DRAWING,
+        // 没有网络
+        COMPLETE
     }
 }

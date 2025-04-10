@@ -1,5 +1,8 @@
 package com.knight.kotlin.library_util
 
+import android.os.Build
+import androidx.annotation.RequiresApi
+import java.time.ZoneId
 import java.util.TimeZone
 
 
@@ -25,5 +28,12 @@ object TimeUtils {
      */
     fun getDefaultTimeZone(): TimeZone {
         return TimeZone.getDefault()
+    }
+
+
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun getZonId(zoneId:String): ZoneId {
+        return ZoneId.of(zoneId)
     }
 }

@@ -297,6 +297,13 @@ class SlidingLayout @JvmOverloads constructor(context: Context?, attrs: Attribut
         animator.start()
     }
 
+    /**
+     *
+     * 返回菜单状态
+     */
+    fun getMenuViewIsOpen():Boolean {
+        return menuViewIsOpen
+    }
     override fun setOnTouchListener(l: OnTouchListener?) {
         super.setOnTouchListener(l)
     }

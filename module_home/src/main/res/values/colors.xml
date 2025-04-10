@@ -54,4 +54,6 @@
      <color name="home_tv_weather_index_info">#333333</color>
      <color name="home_tv_weather_new_title_text_color">#333333</color>
      <color name="home_tv_weather_new_title_bg">#ffffff</color>
+     <color name="home_tv_sun_moon_text_color">#333333</color>
+     <color name="home_tv_sun_rise_set_time_text_color">#999999</color>
 </resources>

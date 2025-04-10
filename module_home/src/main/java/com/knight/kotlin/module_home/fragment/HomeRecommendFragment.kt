@@ -78,8 +78,8 @@ import com.knight.kotlin.library_util.LocationUtils
 import com.knight.kotlin.library_util.OnceLocationListener
 import com.knight.kotlin.library_util.ResourceProvider
 import com.knight.kotlin.library_util.SystemUtils
-import com.knight.kotlin.library_util.ThreadUtils
 import com.knight.kotlin.library_util.TimeUtils
+import com.knight.kotlin.library_util.ViewInitUtils
 import com.knight.kotlin.library_util.image.ImageLoader
 import com.knight.kotlin.library_util.startPage
 import com.knight.kotlin.library_util.startPageWithRightAnimate
@@ -95,6 +95,7 @@ import com.knight.kotlin.library_widget.slidinglayout.SlidingLayout
 import com.knight.kotlin.library_widget.utils.WeatherUtils
 import com.knight.kotlin.library_widget.weatherview.ThemeManager
 import com.knight.kotlin.library_widget.weatherview.WeatherView
+import com.knight.kotlin.library_widget.weatherview.sunmoon.SunMoonView
 import com.knight.kotlin.module_home.R
 import com.knight.kotlin.module_home.adapter.BaiduHotSearchAdapter
 import com.knight.kotlin.module_home.adapter.HeadHourWeatherAdapter
@@ -126,12 +127,11 @@ import com.youth.banner.indicator.CircleIndicator
 import dagger.hilt.android.AndroidEntryPoint
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
-import org.shredzone.commons.suncalc.MoonTimes
+import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.util.Calendar
-import java.util.Date
 import javax.crypto.BadPaddingException
 import javax.crypto.Cipher
 import javax.crypto.IllegalBlockSizeException
@@ -279,6 +279,7 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun HomeRecommendFragmentBinding.initView() {
         mBinding.root.rotation = 180f
         homeRecommentConent.homeIconFab.imageTintList = null
@@ -371,6 +372,70 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
             Color.WHITE,
             false
         )
+
+        homeRecommentMenu.homeRecommendMenu.setOnScrollChangeListener { _, _, _, _, _ ->
+            if (ViewInitUtils.isViewVisibleInScroll(homeRecommentMenu.homeRecommendMenu,homeRecommentMenu.sunMoonControlView) &&  homeRecommentMenu.sunMoonControlView.getDrawStatus() == SunMoonView.SunMoonDrawStatus.NOTDRAW){
+                if (homeSlidingMenu.getMenuViewIsOpen()) {
+                        val timeDay = ValueAnimator.ofObject(LongEvaluator(), mStartTimes[0], mCurrentTimes[0])
+                        timeDay.addUpdateListener { animation: ValueAnimator ->
+                            mAnimCurrentTimes[0] = animation.animatedValue as Long
+                            mBinding.homeRecommentMenu.sunMoonControlView.setTime(mStartTimes, mEndTimes, mAnimCurrentTimes)
+                        }
+                        val totalRotationDay = 360.0 * 7 * (mCurrentTimes[0] - mStartTimes[0]) / (mEndTimes[0] - mStartTimes[0])
+                        val rotateDay = ValueAnimator.ofObject(
+                            FloatEvaluator(),
+                            0,
+                            (totalRotationDay - totalRotationDay % 360).toInt()
+                        )
+
+                        rotateDay.addListener(object : Animator.AnimatorListener {
+                            override fun onAnimationStart(animation: Animator) {
+                                homeRecommentMenu.sunMoonControlView.setDrawStatus(SunMoonView.SunMoonDrawStatus.DRAWING)
+                            }
+                            override fun onAnimationRepeat(animation: Animator) {
+
+                            }
+                            override fun onAnimationCancel(animation: Animator) {
+                                homeRecommentMenu.sunMoonControlView.setDrawStatus(SunMoonView.SunMoonDrawStatus.NOTDRAW)
+                            }
+                            override fun onAnimationEnd(animation: Animator) {
+                                homeRecommentMenu.sunMoonControlView.setDrawStatus(SunMoonView.SunMoonDrawStatus.COMPLETE)
+                            }
+                        })
+                        rotateDay.addUpdateListener { animation: ValueAnimator ->
+                            mBinding.homeRecommentMenu.sunMoonControlView.setDayIndicatorRotation((animation.animatedValue as Float))
+                        }
+                        mAttachAnimatorSets[0] = AnimatorSet().apply {
+                            playTogether(timeDay, rotateDay)
+                            interpolator = OvershootInterpolator(1f)
+                            duration = getPathAnimatorDuration(0)
+                        }.also { it.start() }
+                        val timeNight = ValueAnimator.ofObject(LongEvaluator(), mStartTimes[1], mCurrentTimes[1])
+                        timeNight.addUpdateListener { animation: ValueAnimator ->
+                            mAnimCurrentTimes[1] = animation.animatedValue as Long
+                            mBinding.homeRecommentMenu.sunMoonControlView.setTime(mStartTimes, mEndTimes, mAnimCurrentTimes)
+                        }
+                        val totalRotationNight = 360.0 * 4 * (mCurrentTimes[1] - mStartTimes[1]) / (mEndTimes[1] - mStartTimes[1])
+
+                        val rotateNight = ValueAnimator.ofObject(
+                            FloatEvaluator(),
+                            0,
+                            (totalRotationNight - totalRotationNight % 360).toInt()
+                        )
+                        rotateNight.addUpdateListener { animation: ValueAnimator ->
+                            mBinding.homeRecommentMenu.sunMoonControlView.setNightIndicatorRotation(-1 * animation.animatedValue as Float)
+                        }
+                        mAttachAnimatorSets[1] = AnimatorSet().apply {
+                            playTogether(timeNight, rotateNight)
+                            interpolator = OvershootInterpolator(1f)
+                            duration = getPathAnimatorDuration(1)
+                        }.also { it.start() }
+                    }
+
+
+            }
+
+        }
 
 
     }
@@ -508,6 +573,7 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
      */
     private fun getLocation() {
         LocationUtils.getLocation(object :OnceLocationListener{
+            @RequiresApi(Build.VERSION_CODES.O)
             override fun onReceiveLocation(location: BDLocation?) {
                 location?.let {
                     if ((it.latitude != 4.9E-324 && it.longitude != 4.9E-324) && (it.latitude > 0 && it.longitude > 0)) {
@@ -523,6 +589,7 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
      *
      * 根据经纬度信息获取详细天气预告
      */
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun getDetailWeekWeather(location: BDLocation) {
         val latLng = Coordtransform.BD09toWGS84(location.longitude, location.latitude)
         mViewModel.getTwoWeekDayRainFall(
@@ -547,38 +614,27 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
         }
 
         mViewModel.getDetailWeekWeather(location.province, location.city, location.district).observerKt {
+            mBinding.homeRecommentMenu.tvSunSunriseSunsetTime.text = it.rise.get(0).sunrise + "↑\n"  + it.rise.get(0).sunset+ "↓"
             val sunriseTime = DateUtils.getTimestamp(it.rise.get(0).time,it.rise.get(0).sunrise, TimeUtils.getDefaultTimeZoneId())
             val sunsetTime = DateUtils.getTimestamp(it.rise.get(0).time,it.rise.get(0).sunset,TimeUtils.getDefaultTimeZoneId())
             mStartTimes[0] = sunriseTime
             mEndTimes[0] = sunsetTime
+            val moonTimes = MoonRiseSetUtils.getMoonPeriodForNight(LocalDate.now(),latLng[1], latLng[0])
+            var moonRiseSetTime = ""
+            moonTimes.rise?.let {
+                mStartTimes[1] = DateUtils.getTimeStampByZonedDateTime(it,TimeUtils.getZonId(TimeUtils.getDefaultTimeZoneId()))
+                moonRiseSetTime = it.hour.toString() + ":" + it.minute.toString() + "↑\n"
+            }
+            moonTimes.set?.let {
+                mEndTimes[1] =  DateUtils.getTimeStampByZonedDateTime(it,TimeUtils.getZonId(TimeUtils.getDefaultTimeZoneId()))
+                if (!it.hour.toString().contains("0")) {
+                    moonRiseSetTime = moonRiseSetTime + "0" + it.hour.toString() + ":" + it.minute.toString() + "↓"
+                } else {
+                    moonRiseSetTime = moonRiseSetTime + it.hour.toString() + ":" + it.minute.toString() + "↓"
+                }
+            }
 
-
-          //  val moonRiseSet = MoonRiseSetUtils.getMoonriseAndSetTimestamp(latLng[1],latLng[0],ZoneId.of(TimeUtils.getDefaultTimeZoneId()),Date())
-
-//            val localDateTime = LocalDateTime.now()
-//            val zonedDateTime = ZonedDateTime.of(localDateTime, ZoneId.systemDefault())
-//            val moonTimes: MoonTimes = MoonTimes.compute()
-//                .on(zonedDateTime)
-//                .at(latLng[1], latLng[0])
-//                .execute()
-
-          //  mEndTimes[1] = MoonRiseSetUtils.getMoonriseTimestamp(latLng[1],latLng[0],ZoneId.of(TimeUtils.getDefaultTimeZoneId()),Date())!!
-          //  mStartTimes[1] = MoonRiseSetUtils.getMoonsetTimestamp(latLng[1],latLng[0],ZoneId.of(TimeUtils.getDefaultTimeZoneId()),Date())!!
-
-            mEndTimes[1] = 1744405200000
-            mStartTimes[1] =  1744365600000
-//            moonRiseSet.moonrise?.let {
-//
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//                    mEndTimes[1]  = it
-//                }
-//            }
-//
-//            moonRiseSet.moonset?.let {
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//                    mStartTimes[1]   = it
-//                }
-//            }
+            mBinding.homeRecommentMenu.tvMoonSunriseSunsetTime.text = moonRiseSetTime
 
             val calendar = Calendar.getInstance(TimeUtils.getDefaultTimeZone())
             val currentTime = calendar.time.time
@@ -660,27 +716,32 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
             }
         } else {
             val permission:List<String> = listOf(Permission.ACCESS_FINE_LOCATION,Permission.ACCESS_COARSE_LOCATION,Permission.ACCESS_BACKGROUND_LOCATION)
-            XXPermissions.with(this)
-                ?.permission(permission)
-                ?.request(object : OnPermissionCallback {
-                    override fun onGranted(permissions: List<String>, all: Boolean) {
-                        if (all) {
-                            getLocation()
+            if (XXPermissions.isGranted(requireActivity(),permission)) {
+                getLocation()
+            } else {
+                XXPermissions.with(this)
+                    ?.permission(permission)
+                    ?.request(object : OnPermissionCallback {
+                        override fun onGranted(permissions: List<String>, all: Boolean) {
+                            if (all) {
+                                getLocation()
+                            }
                         }
-                    }
 
-                    override fun onDenied(permissions: List<String>, doNotAskAgain: Boolean) {
-                        super.onDenied(permissions, doNotAskAgain)
-                        activity?.let {
-                            PermissionUtils.showPermissionSettingDialog(it,permissions,permissions,object :
-                                OnPermissionCallback {
-                                override fun onGranted(permissions: List<String>, all: Boolean) {
+                        override fun onDenied(permissions: List<String>, doNotAskAgain: Boolean) {
+                            super.onDenied(permissions, doNotAskAgain)
+                            activity?.let {
+                                PermissionUtils.showPermissionSettingDialog(it,permissions,permissions,object :
+                                    OnPermissionCallback {
+                                    override fun onGranted(permissions: List<String>, all: Boolean) {
 
-                                }
-                            })
+                                    }
+                                })
+                            }
                         }
-                    }
-                })
+                    })
+
+            }
 
 
 
@@ -1426,62 +1487,6 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
 
     override fun onOpenStatus(open: Boolean) {
         mSlideMenuOpenListener?.onOpenStatus(open)
-        if (open) {
-
-            ThreadUtils.postMainDelayed({
-                val timeDay = ValueAnimator.ofObject(LongEvaluator(), mStartTimes[0], mCurrentTimes[0])
-                timeDay.addUpdateListener { animation: ValueAnimator ->
-                    mAnimCurrentTimes[0] = animation.animatedValue as Long
-                    mBinding.homeRecommentMenu.sunMoonControlView.setTime(mStartTimes, mEndTimes, mAnimCurrentTimes)
-                }
-                val totalRotationDay = 360.0 * 7 * (mCurrentTimes[0] - mStartTimes[0]) / (mEndTimes[0] - mStartTimes[0])
-                val rotateDay = ValueAnimator.ofObject(
-                    FloatEvaluator(),
-                    0,
-                    (totalRotationDay - totalRotationDay % 360).toInt()
-                )
-                rotateDay.addUpdateListener { animation: ValueAnimator ->
-                    mBinding.homeRecommentMenu.sunMoonControlView.setDayIndicatorRotation((animation.animatedValue as Float))
-                }
-                mAttachAnimatorSets[0] = AnimatorSet().apply {
-                    playTogether(timeDay, rotateDay)
-                    interpolator = OvershootInterpolator(1f)
-                    duration = getPathAnimatorDuration(0)
-                }.also { it.start() }
-                val timeNight = ValueAnimator.ofObject(LongEvaluator(), mStartTimes[1], mCurrentTimes[1])
-                timeNight.addUpdateListener { animation: ValueAnimator ->
-                    mAnimCurrentTimes[1] = animation.animatedValue as Long
-                    mBinding.homeRecommentMenu.sunMoonControlView.setTime(mStartTimes, mEndTimes, mAnimCurrentTimes)
-                }
-                val totalRotationNight = 360.0 * 4 * (mCurrentTimes[1] - mStartTimes[1]) / (mEndTimes[1] - mStartTimes[1])
-                //val totalRotationNight = 180f
-                val rotateNight = ValueAnimator.ofObject(
-                    FloatEvaluator(),
-                    0,
-                    (totalRotationNight - totalRotationNight % 360).toInt()
-                )
-                rotateNight.addUpdateListener { animation: ValueAnimator ->
-                    mBinding.homeRecommentMenu.sunMoonControlView.setNightIndicatorRotation(-1 * animation.animatedValue as Float)
-                }
-                mAttachAnimatorSets[1] = AnimatorSet().apply {
-                    playTogether(timeNight, rotateNight)
-                    interpolator = OvershootInterpolator(1f)
-                    duration = getPathAnimatorDuration(1)
-                }.also { it.start() }
-//            if (mPhaseAngle > 0) {
-//                val moonAngle = ValueAnimator.ofObject(FloatEvaluator(), 0, mPhaseAngle)
-//                moonAngle.addUpdateListener { animation: ValueAnimator ->
-//                    mPhaseView.setSurfaceAngle((animation.animatedValue as Float))
-//                }
-//                mAttachAnimatorSets[2] = AnimatorSet().apply {
-//                    playTogether(moonAngle)
-//                    interpolator = DecelerateInterpolator()
-//                    duration = phaseAnimatorDuration
-//                }.also { it.start() }
-//            }
-            },2000)
-
-        }
     }
 
     private class LongEvaluator : TypeEvaluator<Long> {

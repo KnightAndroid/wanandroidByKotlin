@@ -41,4 +41,6 @@
     <color name="home_inputlabel_et_color">#D3D3D3</color>
     <color name="home_tv_weather_new_title_text_color">#D3D3D3</color>
     <color name="home_tv_weather_new_title_bg">#303030</color>
+    <color name="home_tv_sun_moon_text_color">#D3D3D3</color>
+    <color name="home_tv_sun_rise_set_time_text_color">#666666</color>
 </resources>

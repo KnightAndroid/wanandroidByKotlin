@@ -1,11 +1,13 @@
 package com.knight.kotlin.library_util
 
 import android.graphics.Color
+import android.graphics.Rect
 import android.os.Build
 import android.view.View
 import android.widget.TextView
 import androidx.annotation.NonNull
 import androidx.annotation.RequiresApi
+import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
@@ -48,6 +50,25 @@ object ViewInitUtils {
         if (view is TextView) {
             (view).highlightColor = Color.parseColor("#00000000")
         }
+    }
+
+
+    /**
+     * 判断view是否进入屏幕内
+     */
+    fun isViewVisibleOnScreen(view: View): Boolean {
+        val rect = Rect()
+        return view.isShown && view.getGlobalVisibleRect(rect)
+    }
+
+    /**
+     *
+     * 判断 View 是否在 NestedScrollView 的“可视区域”
+     */
+    fun isViewVisibleInScroll(scrollView: NestedScrollView, view: View): Boolean {
+        val scrollBounds = Rect()
+        scrollView.getHitRect(scrollBounds)
+        return view.getLocalVisibleRect(scrollBounds)
     }
 
 

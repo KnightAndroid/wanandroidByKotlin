@@ -20,15 +20,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-
         >
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cl_slidmenu"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                >
+                android:layout_height="wrap_content">
 
 
 
@@ -294,16 +292,99 @@
                  app:layout_constraintTop_toBottomOf="@id/weather_view"
                  android:layout_marginLeft="10dp"
                  android:layout_marginRight="10dp"
+                 android:layout_marginTop="10dp"
+                 android:padding="10dp"
                  >
+
+
+                 <TextView
+                     android:id="@+id/tv_sun_moon_title"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="@string/home_tv_sun_moon"
+                     android:textColor="@color/home_tv_sun_moon_text_color"
+                     android:textStyle="bold"
+                     android:maxLines="1"
+                     android:ellipsize="end"
+                      />
+
+
 
                  <com.knight.kotlin.library_widget.weatherview.sunmoon.SunMoonView
                      android:id="@+id/sun_moon_controlView"
                      android:layout_width="match_parent"
-                     android:layout_height="wrap_content" />
+                     android:layout_height="wrap_content"
+                     android:layout_below="@id/tv_sun_moon_title"/>
 
 
 
 
+
+                 <RelativeLayout
+                     android:id="@+id/rl_sunContainer"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_alignParentStart="true"
+                     android:layout_below="@id/sun_moon_controlView"
+                     >
+
+                     <androidx.appcompat.widget.AppCompatImageView
+                         android:id="@+id/iv_sun_rise_set"
+                         android:layout_width="20dp"
+                         android:layout_height="20dp"
+                         android:src="@drawable/home_icon_sun_rise_set"
+                         android:layout_alignParentStart="true"
+                         android:layout_centerVertical="true"
+                         android:layout_margin="0dp"
+
+                          />
+
+                     <TextView
+                         android:id="@+id/tv_sun_sunrise_sunset_time"
+                         android:layout_toEndOf="@id/iv_sun_rise_set"
+                         android:layout_centerVertical="true"
+                         android:layout_marginStart="4dp"
+                         android:layout_height="wrap_content"
+                         android:layout_width="wrap_content"
+
+                         android:text="05:45↑\n17:45↓"
+                          />
+<!--                     android:textColor="@color/home_tv_sun_rise_set_text_color"-->
+                 </RelativeLayout>
+
+
+
+                 <RelativeLayout
+                     android:id="@+id/rl_moonContainer"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_alignParentEnd="true"
+                     android:layout_below="@id/sun_moon_controlView"
+                     >
+
+                     <androidx.appcompat.widget.AppCompatImageView
+                         android:id="@+id/iv_moon_rise_set"
+                         android:layout_width="20dp"
+                         android:layout_height="20dp"
+                         android:src="@drawable/home_icon_moon_rise_set"
+                         android:layout_alignParentStart="true"
+                         android:layout_centerVertical="true"
+                         android:layout_margin="0dp"
+
+                         />
+
+                     <TextView
+                         android:id="@+id/tv_moon_sunrise_sunset_time"
+                         android:layout_toEndOf="@id/iv_moon_rise_set"
+                         android:layout_centerVertical="true"
+                         android:layout_marginStart="4dp"
+                         android:layout_height="wrap_content"
+                         android:layout_width="wrap_content"
+                         android:gravity="end"
+                         android:text="05:45↑\n17:45↓"
+                         />
+                     <!--                     android:textColor="@color/home_tv_sun_rise_set_text_color"-->
+                 </RelativeLayout>
 
 
              </RelativeLayout>
@@ -312,7 +393,7 @@
                  android:id="@+id/scrbar_chart_view"
                  android:layout_width="0dp"
                  android:layout_height="400dp"
-                 android:layout_marginTop="20dp"
+                 android:layout_marginTop="10dp"
                  app:layout_constraintTop_toBottomOf="@id/rl_sun_moon"
                  app:layout_constraintRight_toRightOf="parent"
                  app:layout_constraintLeft_toLeftOf="parent"
@@ -337,9 +418,6 @@
 
 
 
-
-
-<!--        </RelativeLayout>-->
 
 
     </com.knight.kotlin.library_widget.IncepterVerticalNestScrollView>

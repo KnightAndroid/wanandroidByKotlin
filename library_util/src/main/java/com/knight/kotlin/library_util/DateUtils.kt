@@ -1,6 +1,7 @@
 package com.knight.kotlin.library_util
 
 import android.os.Build
+import androidx.annotation.RequiresApi
 import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_base.util.LanguageFontSizeUtils
 import java.text.ParseException
@@ -8,6 +9,7 @@ import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZoneId
+import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Calendar
 import java.util.Date
@@ -348,14 +350,7 @@ object DateUtils {
      * 将年月日和 时分 拼接起来 转成时间戳
      */
     fun getTimestamp(dateStr: String, timeStr: String, zoneId: String = "Asia/Shanghai"): Long {
-//        val dateTimeStr = "$dateStr $timeStr"  // 合并日期和时间
-//        val format = SimpleDateFormat("yyyyMMdd HH:mm", Locale.getDefault())  // 格式化
-//        val date = format.parse(dateTimeStr)  // 解析日期时间
-//        return date.time  // 返回时间戳
-
-
         val dateTimeStr = "$dateStr $timeStr"
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val formatter =
                 DateTimeFormatter.ofPattern("yyyyMMdd HH:mm", Locale.getDefault())
@@ -388,5 +383,14 @@ object DateUtils {
             set(Calendar.MILLISECOND, 0)
         }
         return calendar.timeInMillis
+    }
+
+    /**
+     *
+     * 返回时间戳
+     */
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun getTimeStampByZonedDateTime(dateTime: ZonedDateTime, zoneId:ZoneId):Long {
+        return dateTime.withZoneSameInstant(zoneId).toInstant().toEpochMilli()
     }
 }

@@ -58,7 +58,7 @@ object LocationUtils {
         //FirstLocType.SPEED_IN_FIRST_LOC:速度优先，首次定位时会降低定位准确性，提升定位速度；
         //FirstLocType.ACCUARACY_IN_FIRST_LOC:准确性优先，首次定位时会降低速度，提升定位准确性；
 
-        option.setScanSpan(5 * 60 * 1000)
+        option.setScanSpan(0)
         //可选，设置发起定位请求的间隔，int类型，单位ms
         //如果设置为0，则代表单次定位，即仅定位一次，默认为0
         //如果设置非0，需设置1000ms以上才有效
@@ -123,23 +123,14 @@ object LocationUtils {
                         it.onReceiveLocation(location)
                         // 方法执行完成后，取消监听
                         cancelRunnable.run()
+                        mOnceLocationListener = null
                     }, 500) // 500毫秒延迟
-
-
 
                 }
                 val latitude = getLatitude()    //获取纬度信息
                 val longitude = getLongitude()    //获取经度信息
-
                 Appconfig.longitude = longitude
                 Appconfig.latitude = latitude
-                val radius = getRadius()    //获取定位精度，默认值为0.0f
-
-                val coorType = getCoorType()
-                //获取经纬度坐标类型，以LocationClientOption中设置过的坐标类型为准
-
-                val errorCode = getLocType()
-                //获取定位类型、定位错误返回码，具体信息可参照类参考中BDLocation类中的说明
             }
 
         }
