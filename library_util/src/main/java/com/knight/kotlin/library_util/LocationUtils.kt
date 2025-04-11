@@ -116,6 +116,7 @@ object LocationUtils {
             //以下只列举部分获取经纬度相关（常用）的结果信息
             //更多结果信息获取说明，请参照类参考中BDLocation类中的说明
             location?.run {
+                Appconfig.location = this
                 mOnceLocationListener?.let {
                     //这里因为百度会多次回调，因此屏蔽 只回调一次
                     var cancelRunnable: Runnable = Runnable { } // 初始化为一个空 Runnable
@@ -129,8 +130,7 @@ object LocationUtils {
                 }
                 val latitude = getLatitude()    //获取纬度信息
                 val longitude = getLongitude()    //获取经度信息
-                Appconfig.longitude = longitude
-                Appconfig.latitude = latitude
+
             }
 
         }

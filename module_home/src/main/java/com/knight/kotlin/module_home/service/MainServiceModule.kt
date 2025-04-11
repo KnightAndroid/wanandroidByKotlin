@@ -1,5 +1,6 @@
 package com.knight.kotlin.module_home.service
 
+import com.knight.kotlin.module_home.api.HomeNewsApiService
 import com.knight.kotlin.module_home.api.HomeRecommendApiService
 import com.knight.kotlin.module_home.api.HomeSearchApiService
 import com.knight.kotlin.module_home.api.HomeSearchResultApiService
@@ -46,6 +47,12 @@ class MainServiceModule {
         return retrofit.create(HomeWeatherNewsApiService::class.java)
     }
 
+
+    @Singleton
+    @Provides
+    fun provideHomeNewsApiService(retrofit: Retrofit) : HomeNewsApiService {
+        return retrofit.create(HomeNewsApiService::class.java)
+    }
 
 
 

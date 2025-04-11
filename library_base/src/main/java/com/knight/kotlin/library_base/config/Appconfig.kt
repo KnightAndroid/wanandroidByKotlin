@@ -1,5 +1,6 @@
 package com.knight.kotlin.library_base.config
 
+import com.baidu.location.BDLocation
 import com.knight.kotlin.library_base.entity.UserInfoEntity
 import java.util.UUID
 
@@ -77,17 +78,10 @@ object Appconfig {
       */
      var IP:String = ""
 
-     /**
-      *
-      * 经度
-      *
-      */
-     var longitude:Double = 0.0
 
      /**
       *
-      * 维度
-      *
-      */
-     var latitude:Double = 0.0
+      * 定位信息
+       */
+     var location:BDLocation?=null
 }

@@ -40,6 +40,23 @@ fun Context.sp2px(spValue: Float): Int {
     return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,spValue,resources.displayMetrics).toInt()
 }
 
+
+/**
+ * sp 转 px
+ */
+fun Int.sp2px(): Int {
+    val scale = Resources.getSystem().displayMetrics.density
+    return  (this * scale + 0.5f).toInt()
+}
+
+/**
+ * sp 转 px
+ */
+fun Float.sp2px(): Float{
+    val scale = Resources.getSystem().displayMetrics.density
+    return  (this * scale + 0.5f)
+}
+
 /**
  * px 转 sp
  */

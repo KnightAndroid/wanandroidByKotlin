@@ -27,4 +27,5 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- 定位百度SDK权限配置结束 -->
     <!-- 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位-->
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"></uses-permission>
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" /> <!--悬浮窗权限-->
 </manifest>

@@ -2,11 +2,18 @@ package com.knight.kotlin.module_welcome.activity
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
+import android.os.Build
+import androidx.annotation.RequiresApi
+import com.baidu.location.BDLocation
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.config.Appconfig
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_base.util.ColorUtils
+import com.knight.kotlin.library_permiss.XXPermissions
+import com.knight.kotlin.library_permiss.permissions.Permission
+import com.knight.kotlin.library_util.LocationUtils
+import com.knight.kotlin.library_util.OnceLocationListener
 import com.knight.kotlin.module_welcome.databinding.WelcomeActivityBinding
 import com.knight.kotlin.module_welcome.entity.AppThemeBean
 import com.knight.kotlin.module_welcome.fragment.WelcomePrivacyAgreeFragment
@@ -19,6 +26,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @Route(path = RouteActivity.Weclome.WeclmeActivity)
 class WelcomeActivity : BaseActivity<WelcomeActivityBinding, WelcomeVm>() {
 
+    @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
     override fun WelcomeActivityBinding.initView() {
         logoAnim.setTextColor(CacheUtils.getThemeColor())
         logoAnim.addOffsetAnimListener(object : AnimatorListenerAdapter() {
@@ -33,6 +41,16 @@ class WelcomeActivity : BaseActivity<WelcomeActivityBinding, WelcomeVm>() {
             }
         })
         logoAnim.startAnimation()
+        val permission:List<String> = listOf(Permission.ACCESS_FINE_LOCATION, Permission.ACCESS_COARSE_LOCATION, Permission.ACCESS_BACKGROUND_LOCATION)
+        if (XXPermissions.isGranted(this@WelcomeActivity,permission)) {
+            LocationUtils.getLocation(object : OnceLocationListener {
+                @RequiresApi(Build.VERSION_CODES.O)
+                override fun onReceiveLocation(location: BDLocation?) {
+
+                }
+            })
+        }
+
     }
 
 

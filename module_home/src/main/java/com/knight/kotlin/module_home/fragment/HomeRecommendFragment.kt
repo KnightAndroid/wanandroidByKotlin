@@ -128,9 +128,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.ZoneId
-import java.time.ZonedDateTime
 import java.util.Calendar
 import javax.crypto.BadPaddingException
 import javax.crypto.Cipher
@@ -294,7 +291,10 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
         setOnClickListener(homeRecommentConent.homeIncludeToolbar!!.homeScanIcon,homeRecommentMenu.homeBtnLoginName,
             homeRecommentConent.homeIncludeToolbar.homeIvMoreMenu,
             homeRecommentConent.homeIncludeToolbar.homeIvEveryday,
-            homeRecommentConent.homeIncludeToolbar.homeIvAdd,homeRecommentConent.homeIncludeToolbar.homeRlSearch,homeRecommentConent.homeIconFab,homeRecommentConent.homeIconCourse!!,homeRecommentConent.homeIconUtils!!,homeRecommentConent.homeIconScrollUp!!)
+            homeRecommentConent.homeIncludeToolbar.homeIvAdd,
+            homeRecommentConent.homeIncludeToolbar.homeRlSearch,homeRecommentConent.homeIconFab,
+            homeRecommentConent.homeIconCourse!!,homeRecommentConent.homeIconUtils!!,
+            homeRecommentConent.homeIconScrollUp!!,mBinding.homeRecommentMenu.tvZaobaoDayTip)
         getUser()?.let {
             homeRecommentMenu.homeBtnLoginName.text = it.username
         } ?: kotlin.run {
@@ -715,33 +715,41 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
 
             }
         } else {
-            val permission:List<String> = listOf(Permission.ACCESS_FINE_LOCATION,Permission.ACCESS_COARSE_LOCATION,Permission.ACCESS_BACKGROUND_LOCATION)
-            if (XXPermissions.isGranted(requireActivity(),permission)) {
-                getLocation()
-            } else {
-                XXPermissions.with(this)
-                    ?.permission(permission)
-                    ?.request(object : OnPermissionCallback {
-                        override fun onGranted(permissions: List<String>, all: Boolean) {
-                            if (all) {
-                                getLocation()
+            Appconfig.location?.let {
+                if (it.latitude != 0.0 && it.longitude !=0.0 && (it.latitude != 4.9E-324 && it.longitude != 4.9E-324)) {
+                    getDetailWeekWeather(it)
+                }
+            } ?: run{
+                val permission:List<String> = listOf(Permission.ACCESS_FINE_LOCATION,Permission.ACCESS_COARSE_LOCATION,Permission.ACCESS_BACKGROUND_LOCATION)
+                if (XXPermissions.isGranted(requireActivity(),permission)) {
+                    getLocation()
+                } else {
+                    XXPermissions.with(this)
+                        ?.permission(permission)
+                        ?.request(object : OnPermissionCallback {
+                            override fun onGranted(permissions: List<String>, all: Boolean) {
+                                if (all) {
+                                    getLocation()
+                                }
                             }
-                        }
 
-                        override fun onDenied(permissions: List<String>, doNotAskAgain: Boolean) {
-                            super.onDenied(permissions, doNotAskAgain)
-                            activity?.let {
-                                PermissionUtils.showPermissionSettingDialog(it,permissions,permissions,object :
-                                    OnPermissionCallback {
-                                    override fun onGranted(permissions: List<String>, all: Boolean) {
+                            override fun onDenied(permissions: List<String>, doNotAskAgain: Boolean) {
+                                super.onDenied(permissions, doNotAskAgain)
+                                activity?.let {
+                                    PermissionUtils.showPermissionSettingDialog(it,permissions,permissions,object :
+                                        OnPermissionCallback {
+                                        override fun onGranted(permissions: List<String>, all: Boolean) {
 
-                                    }
-                                })
+                                        }
+                                    })
+                                }
                             }
-                        }
-                    })
+                        })
 
+                }
             }
+
+
 
 
 
@@ -1219,6 +1227,10 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
 
             mBinding.homeRecommentConent.homeIncludeToolbar!!.homeRlSearch ->{
                 startPage(RouteActivity.Home.HomeSearchActivity)
+            }
+
+            mBinding.homeRecommentMenu.tvZaobaoDayTip -> {
+                startPage(RouteActivity.Home.HomeNewsActivty)
             }
 
 //            mBinding.homeIvLabelmore -> {

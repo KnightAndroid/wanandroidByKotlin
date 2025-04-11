@@ -29,6 +29,7 @@ object RouteActivity {
         const val HomeSearchResultActivity = "$HOME/HomeSearchResultActivity"
         const val HomeKnowLedgeLabelActivity = "$HOME/KnowLedgeLabelActivity"
         const val AddKnowLedgeLableActivity = "$HOME/AddKnowLedgeLabelActivity"
+        const val HomeNewsActivty = "$HOME/HomeNewsActivity"
     }
 
 

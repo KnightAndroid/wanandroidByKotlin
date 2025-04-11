@@ -63,6 +63,7 @@
             android:value="929JduF7WMY53BuMS8LBm12K0yma7plU" >
         </meta-data>
 
+        <!-- 百度 地图开启子进程 -->
         <service android:name="com.baidu.location.f" android:enabled="true" android:process=":remote"> </service>
 
 

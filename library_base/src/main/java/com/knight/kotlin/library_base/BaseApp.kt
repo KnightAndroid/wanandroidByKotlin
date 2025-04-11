@@ -13,6 +13,7 @@ import com.knight.kotlin.library_base.util.ActivityManagerUtils
 import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_base.util.DarkModeUtils
 import com.knight.kotlin.library_base.util.HookUtils
+import com.knight.kotlin.library_base.util.ProcessUtil
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
 import kotlin.system.measureTimeMillis
@@ -50,33 +51,40 @@ open class BaseApp : Application() {
 
 
     override fun attachBaseContext(base: Context) {
-        context = base
-        application = this
-        //初始化MMKV
-        CacheUtils.init(base)
-        userAgree = CacheUtils.getAgreeStatus()
-        if (!userAgree) {
-            try {
-                HookUtils.attachContext()
-            } catch (e: Exception) {
-                e.printStackTrace()
+        //在主进程初始化
+        if (ProcessUtil.isMainProcess(base)) {
+            context = base
+            application = this
+            //初始化MMKV
+            CacheUtils.init(base)
+            userAgree = CacheUtils.getAgreeStatus()
+            if (!userAgree) {
+                try {
+                    HookUtils.attachContext()
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
             }
+            mLoadModuleProxy.onAttachBaseContext(base)
         }
-        mLoadModuleProxy.onAttachBaseContext(base)
+
         super.attachBaseContext(base)
     }
 
 
     override fun onCreate() {
         super.onCreate()
-        //全局监听Activity 生命周期
-        registerActivityLifecycleCallbacks(ActivityManagerUtils.getInstance())
-        mLoadModuleProxy.onCreate(this)
-        //策略初始化安全第三方依赖
-        initSafeSdk()
-        if (userAgree) {
-            initDangrousSdk()
+        if (ProcessUtil.isMainProcess(this)) {
+            //全局监听Activity 生命周期
+            registerActivityLifecycleCallbacks(ActivityManagerUtils.getInstance())
+            mLoadModuleProxy.onCreate(this)
+            //策略初始化安全第三方依赖
+            initSafeSdk()
+            if (userAgree) {
+                initDangrousSdk()
+            }
         }
+
 
 
     }

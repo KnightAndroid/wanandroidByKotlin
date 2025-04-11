@@ -14,10 +14,14 @@ import java.time.ZoneId
  * @author created by luguian
  * @organize 
  * @Date 2025/4/10 18:22
- * @descript:
+ * @descript:日月升落帮助类
  */
 object MoonRiseSetUtils {
-
+    /**
+     *
+     * 获取今天月出和明天的月落
+     *
+     */
     @RequiresApi(Build.VERSION_CODES.O)
     fun getMoonPeriodForNight(date: LocalDate, lat: Double, lng: Double): MoonPeriodEntity {
         val today = MoonTimes.compute().on(date).at(lat, lng).execute()

@@ -8,6 +8,7 @@
         <activity android:name=".activity.SearchResultActivity"/>
         <activity android:name=".activity.KnowLedgeLabelActivity"/>
         <activity android:name=".activity.AddKnowLedgeLabelActivity"/>
+        <activity android:name=".activity.HomeNewsActivity"/>
     </application>
 
 </manifest>
