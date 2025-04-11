@@ -83,6 +83,9 @@ class HomeNewsActivity:BaseActivity<HomeNewsActivityBinding,HomeNewsVm>(), OnRef
 //                    params.height = height
 //                    mNewsHeaderBinding.root.layoutParams = params
                     mBinding.includeNews.baseBodyRv.addHeaderView(mNewsHeaderBinding.root)
+                    mBinding.includeNews.baseBodyRv.post {
+                        mBinding.includeNews.baseBodyRv.scrollToPosition(0)
+                    }
                 })
 
             }
