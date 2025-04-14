@@ -4,12 +4,17 @@ import android.view.LayoutInflater
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.ktx.getScreenWidth
+import com.knight.kotlin.library_base.ktx.setOnClick
 import com.knight.kotlin.library_base.route.RouteActivity
+import com.knight.kotlin.library_util.DateUtils
 import com.knight.kotlin.library_util.image.ImageLoader
 import com.knight.kotlin.library_widget.ktx.init
+import com.knight.kotlin.module_home.R
 import com.knight.kotlin.module_home.adapter.HomeNewsAdapter
 import com.knight.kotlin.module_home.databinding.HomeNewsActivityBinding
+import com.knight.kotlin.module_home.databinding.HomeNewsFootBinding
 import com.knight.kotlin.module_home.databinding.HomeNewsHeadBinding
+import com.knight.kotlin.module_home.entity.ZaoBaoBean
 import com.knight.kotlin.module_home.vm.HomeNewsVm
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener
@@ -29,7 +34,7 @@ class HomeNewsActivity:BaseActivity<HomeNewsActivityBinding,HomeNewsVm>(), OnRef
 
 
     private lateinit var mNewsHeaderBinding: HomeNewsHeadBinding
-
+    private lateinit var mNewsFootBinding:HomeNewsFootBinding
     private val mNewsAdapter: HomeNewsAdapter by lazy { HomeNewsAdapter() }
     override fun setThemeColor(isDarkMode: Boolean) {
 
@@ -41,10 +46,9 @@ class HomeNewsActivity:BaseActivity<HomeNewsActivityBinding,HomeNewsVm>(), OnRef
 
     override fun initRequestData() {
         mViewModel.getNews().observerKt {
-
             mBinding.includeNews.baseFreshlayout.finishRefresh()
-            mNewsAdapter.submitList(it.news)
-            initHeaderView(it.head_image)
+            requestSuccess()
+            initHeaderView(it)
         }
     }
 
@@ -53,13 +57,18 @@ class HomeNewsActivity:BaseActivity<HomeNewsActivityBinding,HomeNewsVm>(), OnRef
     }
 
     override fun HomeNewsActivityBinding.initView() {
+        mBinding.title = getString(R.string.home_tv_zaobao)
+        requestLoading(mBinding.includeNews.baseFreshlayout)
+        includeNews.baseFreshlayout.setEnableLoadMore(false)
         includeNews.baseBodyRv.init(
             LinearLayoutManager(this@HomeNewsActivity),
             mNewsAdapter,
             true
         )
         includeNews.baseFreshlayout.setOnRefreshListener(this@HomeNewsActivity)
-
+        includeNewsToolbar.baseIvBack.setOnClick {
+            finish()
+        }
     }
 
     override fun onRefresh(refreshLayout: RefreshLayout) {
@@ -70,27 +79,28 @@ class HomeNewsActivity:BaseActivity<HomeNewsActivityBinding,HomeNewsVm>(), OnRef
     /**
      * 初始化头像
      */
-    private fun initHeaderView(imageUrl:String) {
-        if (mBinding.includeNews.baseBodyRv.headerCount == 0) {
+    private fun initHeaderView(zaoBao: ZaoBaoBean) {
+        if (mBinding.includeNews.baseBodyRv.headerCount == 0 || mBinding.includeNews.baseBodyRv.footerCount == 0) {
             if (!::mNewsHeaderBinding.isInitialized) {
                 mNewsHeaderBinding =
                 HomeNewsHeadBinding.inflate(LayoutInflater.from(this@HomeNewsActivity))
-                ImageLoader.loadImageWithAdaptiveSize(mNewsHeaderBinding.homeNewsHeadIv, getScreenWidth(), 0,imageUrl,{
+                ImageLoader.loadImageWithAdaptiveSize(mNewsHeaderBinding.homeNewsHeadIv, getScreenWidth(), 0,zaoBao.head_image,{
                         width,height->
-
-//                    val params = mNewsHeaderBinding.root.layoutParams
-//                    params.width = width
-//                    params.height = height
-//                    mNewsHeaderBinding.root.layoutParams = params
+                    mNewsAdapter.submitList(zaoBao.news)
                     mBinding.includeNews.baseBodyRv.addHeaderView(mNewsHeaderBinding.root)
-                    mBinding.includeNews.baseBodyRv.post {
-                        mBinding.includeNews.baseBodyRv.scrollToPosition(0)
-                    }
-                })
 
+                })
+                mNewsHeaderBinding.tvNewsDate.text = DateUtils.formatDate(zaoBao.date,"yyyy-MM-dd", "yyyy年M月d日")
+            }
+
+            if (!::mNewsFootBinding.isInitialized) {
+                mNewsFootBinding =
+                    HomeNewsFootBinding.inflate(LayoutInflater.from(this@HomeNewsActivity))
+                mBinding.includeNews.baseBodyRv.addFooterView(mNewsFootBinding.root)
+                mNewsFootBinding.weiyu = zaoBao.weiyu
             }
         } else {
-
+            mNewsAdapter.submitList(zaoBao.news)
         }
     }
 

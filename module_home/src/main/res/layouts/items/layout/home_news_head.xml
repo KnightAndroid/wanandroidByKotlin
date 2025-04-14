@@ -16,4 +16,15 @@
         app:layout_constraintTop_toTopOf="parent"
         />
 
+    <TextView
+        android:id="@+id/tv_news_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="@dimen/home_tv_news_date_margin_top"
+        android:layout_marginLeft="@dimen/home_tv_news_date_margin_left"
+        android:textSize="@dimen/home_tv_news_date_text_size"
+        android:textColor="@android:color/white"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>

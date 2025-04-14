@@ -182,6 +182,23 @@ object DateUtils {
         }
     }
 
+
+    /**
+     *
+     * 根据传入的Date String 转换目标时间输出
+     */
+    fun formatDate(input: String, inputPattern: String, outputPattern: String): String {
+        return try {
+            val inputFormat = SimpleDateFormat(inputPattern, Locale.getDefault())
+            val outputFormat = SimpleDateFormat(outputPattern, Locale.getDefault())
+            val date = inputFormat.parse(input)
+            outputFormat.format(date!!)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            ""
+        }
+    }
+
     /**
      *
      * 获取当天月日 自行传入格式

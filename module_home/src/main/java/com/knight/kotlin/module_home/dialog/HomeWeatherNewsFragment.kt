@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.view.Gravity
 import com.knight.kotlin.library_base.entity.TodayWeatherDataBean
 import com.knight.kotlin.library_base.fragment.BaseDialogFragment
+import com.knight.kotlin.library_base.ktx.getLatitude
+import com.knight.kotlin.library_base.ktx.getLongitude
 import com.knight.kotlin.library_base.ktx.getScreenWidth
 import com.knight.kotlin.library_base.ktx.setOnClick
 import com.knight.kotlin.library_base.util.dp2px
@@ -66,8 +68,9 @@ class HomeWeatherNewsFragment:BaseDialogFragment<HomeTodayWeatherNewsDialogBindi
                          params.width = width
                          params.height = height + 130.dp2px()
                          mBinding.flipView.layoutParams = params
-
                          mViewModel.getTodayImage("js","0","1").observe(this,{ data ->
+
+
                              ImageLoader.loadStringPhoto(requireActivity(), "https://cn.bing.com" + data.images.get(0).urlbase + "_640x480.jpg",mBinding.homeTodayWeatherItem.ivTodayBg)
                          })
 
@@ -76,7 +79,7 @@ class HomeWeatherNewsFragment:BaseDialogFragment<HomeTodayWeatherNewsDialogBindi
             })
 
 
-         mViewModel.getTwoHourRainFall(22.5256393434,114.0494336236,"precipitation",2,TimeUtils.getDefaultTimeZoneId()).observe(this,{data->
+         mViewModel.getTwoHourRainFall(getLatitude(), getLongitude(),"precipitation",2,TimeUtils.getDefaultTimeZoneId()).observe(this,{ data->
              var rainAmount:Float = 0f
              for (number in data.hourly.precipitation) {
                  rainAmount + number

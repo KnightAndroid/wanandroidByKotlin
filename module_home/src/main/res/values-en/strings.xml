@@ -31,4 +31,5 @@
     <string name="home_eyepetizer_title">Eyepetizer</string>
     <string name="home_eyepetizer_category">category</string>
     <string  name="home_tv_sun_moon">Sun &amp; moon</string>
+    <string name="home_tv_zaobao">News</string>
 </resources>

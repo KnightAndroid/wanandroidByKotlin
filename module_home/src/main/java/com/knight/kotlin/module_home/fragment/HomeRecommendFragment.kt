@@ -46,6 +46,7 @@ import com.knight.kotlin.library_base.event.MessageEvent
 import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.knight.kotlin.library_base.ktx.SettingsManager
 import com.knight.kotlin.library_base.ktx.fromJson
+import com.knight.kotlin.library_base.ktx.getLocation
 import com.knight.kotlin.library_base.ktx.getUser
 import com.knight.kotlin.library_base.ktx.init
 import com.knight.kotlin.library_base.ktx.setOnClick
@@ -571,7 +572,7 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
      *
      * 获取定位
      */
-    private fun getLocation() {
+    private fun requestOnceLocation() {
         LocationUtils.getLocation(object :OnceLocationListener{
             @RequiresApi(Build.VERSION_CODES.O)
             override fun onReceiveLocation(location: BDLocation?) {
@@ -623,14 +624,14 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
             var moonRiseSetTime = ""
             moonTimes.rise?.let {
                 mStartTimes[1] = DateUtils.getTimeStampByZonedDateTime(it,TimeUtils.getZonId(TimeUtils.getDefaultTimeZoneId()))
-                moonRiseSetTime = it.hour.toString() + ":" + it.minute.toString() + "↑\n"
+                moonRiseSetTime = it.hour.toString() + ":" + paddingZeroMinuter(it.minute) + "↑\n"
             }
             moonTimes.set?.let {
                 mEndTimes[1] =  DateUtils.getTimeStampByZonedDateTime(it,TimeUtils.getZonId(TimeUtils.getDefaultTimeZoneId()))
                 if (!it.hour.toString().contains("0")) {
-                    moonRiseSetTime = moonRiseSetTime + "0" + it.hour.toString() + ":" + it.minute.toString() + "↓"
+                    moonRiseSetTime = moonRiseSetTime + "0" + it.hour.toString() + ":" + paddingZeroMinuter(it.minute) + "↓"
                 } else {
-                    moonRiseSetTime = moonRiseSetTime + it.hour.toString() + ":" + it.minute.toString() + "↓"
+                    moonRiseSetTime = moonRiseSetTime + it.hour.toString() + ":" + paddingZeroMinuter(it.minute) + "↓"
                 }
             }
 
@@ -701,6 +702,20 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
 
 
     }
+
+    /**
+     *
+     * 补0
+     */
+    private fun paddingZeroMinuter(minute:Int):String {
+        var moonSetMinute:String = ""
+        if (minute > 0 && minute < 10) {
+            moonSetMinute = "0"+ minute
+        } else {
+            moonSetMinute = minute.toString()
+        }
+        return moonSetMinute
+    }
     /**
      *
      * 检查APP更新
@@ -715,21 +730,21 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
 
             }
         } else {
-            Appconfig.location?.let {
+            getLocation()?.let {
                 if (it.latitude != 0.0 && it.longitude !=0.0 && (it.latitude != 4.9E-324 && it.longitude != 4.9E-324)) {
                     getDetailWeekWeather(it)
                 }
             } ?: run{
                 val permission:List<String> = listOf(Permission.ACCESS_FINE_LOCATION,Permission.ACCESS_COARSE_LOCATION,Permission.ACCESS_BACKGROUND_LOCATION)
                 if (XXPermissions.isGranted(requireActivity(),permission)) {
-                    getLocation()
+                    requestOnceLocation()
                 } else {
                     XXPermissions.with(this)
                         ?.permission(permission)
                         ?.request(object : OnPermissionCallback {
                             override fun onGranted(permissions: List<String>, all: Boolean) {
                                 if (all) {
-                                    getLocation()
+                                    requestOnceLocation()
                                 }
                             }
 

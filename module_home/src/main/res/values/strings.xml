@@ -29,7 +29,8 @@
     <string name="home_input_label_empty">还没输入标签</string>
     <string name="home_eyepetizer_title">开眼</string>
     <string name="home_eyepetizer_category">分类</string>
-    <string  name="home_tv_sun_moon">日月升落</string>
+    <string name="home_tv_sun_moon">日月升落</string>
+    <string name="home_tv_zaobao">早报</string>
 
 
 </resources>

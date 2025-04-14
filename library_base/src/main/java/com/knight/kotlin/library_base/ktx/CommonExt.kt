@@ -11,6 +11,7 @@ import androidx.annotation.MainThread
 import androidx.annotation.Px
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
+import com.baidu.location.BDLocation
 import com.knight.kotlin.library_base.BaseApp
 import com.knight.kotlin.library_base.R
 import com.knight.kotlin.library_base.activity.BaseActivity
@@ -171,6 +172,39 @@ fun getUser():UserInfoEntity? {
         return Appconfig.user
     }
 
+}
+
+
+/**
+ * 返回维度
+ */
+fun getLatitude():Double {
+    Appconfig.location?.let {
+        return it.latitude
+    } ?:run {
+       return 4.9E-324
+    }
+
+
+}
+
+/**
+ *
+ * 返回经纬度信息
+ */
+fun getLocation():BDLocation? {
+    return Appconfig.location
+}
+
+/**
+ * 返回经度
+ */
+fun getLongitude():Double {
+    Appconfig.location?.let {
+        return it.longitude
+    } ?:run {
+        return 4.9E-324
+    }
 }
 
 /**

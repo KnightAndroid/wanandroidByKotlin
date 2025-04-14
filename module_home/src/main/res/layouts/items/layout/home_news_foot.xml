@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/tools">
 
 
     <data>
 
         <variable
-            name="title"
+            name="weiyu"
             type="String" />
 
 
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        tools:context="com.knight.kotlin.module_home.adapter.BaiduHotSearchAdapter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:foreground="?android:attr/selectableItemBackground"
@@ -24,15 +22,13 @@
 
 
         <TextView
-            android:id="@+id/home_tv_top_article_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/home_top_baidu_title_margin_left"
             android:layout_marginRight="@dimen/home_top_article_title_margin_right"
-            tools:text="大小厂都问源码，到底有多难小厂都问源码小厂都问源码小厂都问源码"
             android:maxLines="3"
             android:ellipsize="end"
-            android:text="@{title}"
+            android:text="@{weiyu}"
             android:textColor="@color/home_top_article_title"
             android:textSize="@dimen/home_top_article_title_text_size"
             app:layout_constraintLeft_toLeftOf="parent"

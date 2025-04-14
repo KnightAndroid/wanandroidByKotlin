@@ -19,7 +19,6 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:shapeAppearance="@style/home_news_weather_RoundedCorners"
-
         />
 
 
@@ -42,8 +41,8 @@
         android:layout_marginTop="@dimen/home_tv_week_day_margin_top"
         android:textSize="@dimen/home_tv_week_day_text_size"
         android:shadowColor="#80000000"
-        android:shadowDx="1"
-        android:shadowDy="1"
+        android:shadowDx="2"
+        android:shadowDy="2"
         android:shadowRadius="2"
         android:textColor="@android:color/white"
         />
@@ -59,8 +58,8 @@
         android:layout_marginTop="@dimen/home_tv_today_temperature_margin_top"
         android:textSize="@dimen/home_tv_today_temperature_text_size"
         android:shadowColor="#80000000"
-        android:shadowDx="1"
-        android:shadowDy="1"
+        android:shadowDx="2"
+        android:shadowDy="2"
         android:shadowRadius="2"
         android:textColor="@android:color/white"
         />
@@ -75,8 +74,8 @@
         android:layout_marginTop="@dimen/home_tv_today_weather_margin_top"
         android:textSize="@dimen/home_tv_today_weather_text_size"
         android:shadowColor="#80000000"
-        android:shadowDx="1"
-        android:shadowDy="1"
+        android:shadowDx="2"
+        android:shadowDy="2"
         android:shadowRadius="2"
         android:textColor="@android:color/white"
         />
@@ -92,8 +91,8 @@
         android:textSize="@dimen/home_tv_rain_info_text_size"
         android:drawableLeft="@drawable/home_icon_rainfall"
         android:shadowColor="#80000000"
-        android:shadowDx="1"
-        android:shadowDy="1"
+        android:shadowDx="2"
+        android:shadowDy="2"
         android:shadowRadius="2"
         android:textColor="@android:color/white"/>
 
@@ -111,8 +110,8 @@
         app:layout_constraintTop_toBottomOf="@id/tv_rain_info"
         android:textSize="@dimen/home_tv_tip_info_text_size"
         android:shadowColor="#80000000"
-        android:shadowDx="1"
-        android:shadowDy="1"
+        android:shadowDx="2"
+        android:shadowDy="2"
         android:shadowRadius="2"
         android:textColor="@android:color/white"
      />
