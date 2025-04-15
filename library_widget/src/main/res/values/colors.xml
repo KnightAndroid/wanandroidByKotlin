@@ -9,4 +9,17 @@
     <color name="widget_gesturelock_line_color">#55CCCCCC</color>
     <color name="widget_gray_color">#DEDEDE</color>
     <color name="widget_light_transparent">#16000000</color>
+    <color name="widget_air_colorLevel_1">#72d572</color>
+    <color name="widget_air_colorLevel_2">#ffca28</color>
+    <color name="widget_air_colorLevel_3">#ffa726</color>
+    <color name="widget_air_colorLevel_4">#e52f35</color>
+    <color name="widget_air_colorLevel_5">#99004c</color>
+    <color name="widget_air_colorLevel_6">#7e0023</color>
+
+       <color name="widget_aqiLevel_1">#00e59b</color>
+       <color name="widget_aqiLevel_2">#ffc302</color>
+       <color name="widget_aqiLevel_3">#ff712b</color>
+       <color name="widget_aqiLevel_4">#f62a55</color>
+       <color name="widget_aqiLevel_5">#c72eaa</color>
+       <color name="widget_aqiLevel_6">#9930ff</color>
 </resources>

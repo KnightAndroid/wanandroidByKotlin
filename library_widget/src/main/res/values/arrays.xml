@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- air quality levels -->
+    <string-array name="widget_air_quality_levels">
+        <item>@string/widget_air_quality_level_1</item>
+        <item>@string/widget_air_quality_level_2</item>
+        <item>@string/widget_air_quality_level_3</item>
+        <item>@string/widget_air_quality_level_4</item>
+        <item>@string/widget_air_quality_level_5</item>
+        <item>@string/widget_air_quality_level_6</item>
+    </string-array>
+
+
+    <integer-array name="widget_air_quality_level_colors">
+        <item>@color/widget_aqiLevel_1</item>
+        <item>@color/widget_aqiLevel_2</item>
+        <item>@color/widget_aqiLevel_3</item>
+        <item>@color/widget_aqiLevel_4</item>
+        <item>@color/widget_aqiLevel_5</item>
+        <item>@color/widget_aqiLevel_6</item>
+    </integer-array>
+
+</resources>

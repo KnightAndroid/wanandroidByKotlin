@@ -1,5 +1,8 @@
 package com.knight.kotlin.library_widget.utils
 
+import android.content.Context
+import androidx.annotation.ColorInt
+import com.knight.kotlin.library_widget.R
 import com.knight.kotlin.library_widget.weatherview.WeatherView
 
 
@@ -38,6 +41,23 @@ object WeatherUtils {
             "薄雾" -> WeatherView.WEATHER_KIND_HAZE
             else -> WeatherView.WEATHER_KIND_WIND
         }
+    }
+
+    /**
+     *
+     * 返回空气质量等级
+     */
+    fun getAqiToName(context: Context, aqiLevel: Int): String? {
+        return context.resources.getStringArray(R.array.widget_air_quality_levels).getOrNull(aqiLevel)
+    }
+
+    /**
+     *
+     * 返回进度条颜色
+     */
+    @ColorInt
+    fun getColor(context: Context,aqiLevel: Int): Int {
+        return context.resources.getIntArray(R.array.widget_air_quality_level_colors).getOrNull(aqiLevel) ?: android.graphics.Color.TRANSPARENT
     }
 
 

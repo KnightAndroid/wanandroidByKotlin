@@ -8,4 +8,18 @@
     <string name="widget_gesture_password_success">Successfully set gesture password</string>
     <string name="widget_expand_hint">Expand</string>
     <string name="widget_shrink_hint">Shrink</string>
+
+
+    <string name="widget_air_quality_level_1">Excellent</string>
+    <string name="widget_air_quality_level_1_description">The air quality is ideal for most individuals; enjoy your normal outdoor activities.</string>
+    <string name="widget_air_quality_level_2">Fair</string>
+    <string name="widget_air_quality_level_2_description">The air quality is generally acceptable for most individuals. However, sensitive groups may experience minor to moderate symptoms from long-term exposure.</string>
+    <string name="widget_air_quality_level_3">Poor</string>
+    <string name="widget_air_quality_level_3_description">The air has reached a high level of pollution and is unhealthy for sensitive groups. Reduce time spent outside if you are feeling symptoms such as difficulty breathing or throat irritation.</string>
+    <string name="widget_air_quality_level_4">Unhealthy</string>
+    <string name="widget_air_quality_level_4_description">Health effects can be immediately felt by sensitive groups. Healthy individuals may experience difficulty breathing and throat irritation with prolonged exposure. Limit outdoor activity.</string>
+    <string name="widget_air_quality_level_5">Very unhealthy</string>
+    <string name="widget_air_quality_level_5_description">Health effects will be immediately felt by sensitive groups and should avoid outdoor activity. Healthy individuals are likely to experience difficulty breathing and throat irritation; consider staying indoors and rescheduling outdoor activities.</string>
+    <string name="widget_air_quality_level_6">Dangerous</string>
+    <string name="widget_air_quality_level_6_description">Any exposure to the air, even for a few minutes, can lead to serious health effects on everybody. Avoid outdoor activities.</string>
 </resources>

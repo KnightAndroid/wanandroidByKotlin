@@ -284,12 +284,61 @@
                   />
 
 
-             <RelativeLayout
+
+                <RelativeLayout
+                    android:id="@+id/rl_air_aqi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:padding="10dp"
+                    app:layout_constraintTop_toBottomOf="@id/weather_view"
+                    android:background="@drawable/home_weather_corners_bg">
+
+                    <TextView
+                        android:id="@+id/tv_air_quality_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/home_weather_air_quality"
+                        android:textColor="@color/home_air_quality_text_color"
+                        android:textStyle="bold"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        />
+
+
+
+                    <com.knight.kotlin.library_widget.weatherview.ArcProgress
+                        android:id="@+id/weather_main_aqi_progress"
+                        android:layout_width="172dp"
+                        android:layout_height="172dp"
+                        android:layout_margin="@dimen/base_dimen_10"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_below="@id/tv_air_quality_title"
+                        app:max="400"
+                        app:text_size="56dp"
+                        app:arc_angle="270"
+                        app:progress_width="14dp"
+                        app:progress="126"
+                        app:text="126"
+                    />
+
+                </RelativeLayout>
+
+
+
+
+
+
+
+                <RelativeLayout
                  android:id="@+id/rl_sun_moon"
                  android:layout_width="match_parent"
                  android:layout_height="wrap_content"
                  android:background="@drawable/home_weather_corners_bg"
-                 app:layout_constraintTop_toBottomOf="@id/weather_view"
+                 app:layout_constraintTop_toBottomOf="@id/rl_air_aqi"
                  android:layout_marginLeft="10dp"
                  android:layout_marginRight="10dp"
                  android:layout_marginTop="10dp"

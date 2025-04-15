@@ -2,6 +2,7 @@ package com.knight.kotlin.module_home.fragment
 
 import android.animation.Animator
 import android.animation.AnimatorSet
+import android.animation.ArgbEvaluator
 import android.animation.FloatEvaluator
 import android.animation.TypeEvaluator
 import android.animation.ValueAnimator
@@ -94,6 +95,7 @@ import com.knight.kotlin.library_widget.skeleton.Skeleton
 import com.knight.kotlin.library_widget.skeleton.SkeletonScreen
 import com.knight.kotlin.library_widget.slidinglayout.SlidingLayout
 import com.knight.kotlin.library_widget.utils.WeatherUtils
+import com.knight.kotlin.library_widget.weatherview.ArcProgress
 import com.knight.kotlin.library_widget.weatherview.ThemeManager
 import com.knight.kotlin.library_widget.weatherview.WeatherView
 import com.knight.kotlin.library_widget.weatherview.sunmoon.SunMoonView
@@ -271,6 +273,8 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
     private var mAnimCurrentTimes: LongArray = LongArray(2)
     @Size(3)
     private val mAttachAnimatorSets: Array<AnimatorSet?> = arrayOf(null, null, null)
+
+    private var mAttachAnimatorSet: AnimatorSet? = null
     override fun setThemeColor(isDarkMode: Boolean) {
         if (!isDarkMode) {
             isWithStatusTheme(CacheUtils.getStatusBarIsWithTheme())
@@ -436,6 +440,79 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
 
             }
 
+            if (ViewInitUtils.isViewVisibleInScroll(homeRecommentMenu.homeRecommendMenu,homeRecommentMenu.rlAirAqi) &&  homeRecommentMenu.weatherMainAqiProgress.getDrawStatus() == ArcProgress.ArcProgressDrawStatus.NOTDRAW) {
+                val aqiColor = WeatherUtils.getColor(homeRecommentMenu.weatherMainAqiProgress.context,1)
+                val progressColor = ValueAnimator.ofObject(
+                    ArgbEvaluator(),
+                    ContextCompat.getColor(requireActivity(), com.knight.kotlin.library_widget.R.color.widget_air_colorLevel_1),
+                    aqiColor
+                )
+                progressColor.addUpdateListener { animation: ValueAnimator ->
+                    homeRecommentMenu.weatherMainAqiProgress.setProgressColor(
+                        animation.animatedValue as Int,
+                        DateUtils.isDaytime()
+                    )
+                }
+                val backgroundColor = ValueAnimator.ofObject(
+                    ArgbEvaluator(),
+                    com.google.android.material.R.attr.colorOutline,
+                    androidx.core.graphics.ColorUtils.setAlphaComponent(aqiColor, (255 * 0.1).toInt())
+                )
+                backgroundColor.addUpdateListener { animation: ValueAnimator ->
+                    (homeRecommentMenu.weatherMainAqiProgress.setArcBackgroundColor((animation.animatedValue as Int)))
+                }
+                val aqiNumber = ValueAnimator.ofObject(FloatEvaluator(), 0, 77)
+                aqiNumber.addUpdateListener { animation: ValueAnimator ->
+                    homeRecommentMenu.weatherMainAqiProgress.apply {
+                        progress = (animation.animatedValue as Float)
+                        setText(String.format("%d", homeRecommentMenu.weatherMainAqiProgress.progress.toInt()))
+                    }
+                }
+                aqiNumber.addListener(object : Animator.AnimatorListener {
+                        override fun onAnimationStart(animation: Animator) {
+                            homeRecommentMenu.weatherMainAqiProgress.setDrawStatus(ArcProgress.ArcProgressDrawStatus.DRAWING)
+                        }
+                        override fun onAnimationRepeat(animation: Animator) {
+
+                        }
+                        override fun onAnimationCancel(animation: Animator) {
+                            homeRecommentMenu.weatherMainAqiProgress.setDrawStatus(ArcProgress.ArcProgressDrawStatus.NOTDRAW)
+                        }
+                        override fun onAnimationEnd(animation: Animator) {
+                            homeRecommentMenu.weatherMainAqiProgress.setDrawStatus(ArcProgress.ArcProgressDrawStatus.COMPLETE)
+                        }
+                    })
+
+                mAttachAnimatorSet = AnimatorSet().apply {
+                    playTogether(progressColor, backgroundColor, aqiNumber)
+                    interpolator = DecelerateInterpolator()
+                    duration = (1500 + 1 / 400f * 1500).toLong()
+                    start()
+                }
+            }
+
+        }
+
+
+        homeRecommentMenu.weatherMainAqiProgress.apply {
+            progress = 0f
+            setText(String.format("%d", 0))
+            setProgressColor(
+                ContextCompat.getColor(context, com.knight.kotlin.library_widget.R.color.widget_air_colorLevel_1),
+                DateUtils.isDaytime()
+            )
+            setArcBackgroundColor(
+                com.google.android.material.R.attr.colorOutline
+            )
+        }
+
+
+        homeRecommentMenu.weatherMainAqiProgress.apply {
+            setTextColor(Color.BLACK)
+            setBottomText(WeatherUtils.getAqiToName(context,1))
+            setBottomTextColor(ContextCompat.getColor(context, R.color.home_weather_arc_bottom_text_color))
+            contentDescription = 1.toString() + ", " + WeatherUtils.getAqiToName(context,1)
+            max = 400f
         }
 
 
@@ -1538,5 +1615,21 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
         fun onOpenStatus(open: Boolean)
     }
 
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mAttachAnimatorSet?.let {
+            if (it.isRunning) it.cancel()
+        }
+        mAttachAnimatorSet = null
+        for (i in mAttachAnimatorSets.indices) {
+            mAttachAnimatorSets[i]?.let {
+                if (it.isRunning) {
+                    it.cancel()
+                }
+            }
+            mAttachAnimatorSets[i] = null
+        }
+    }
 
 }

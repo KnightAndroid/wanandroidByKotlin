@@ -1,12 +1,16 @@
 package com.knight.kotlin.library_base.util
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Build
 import android.provider.Settings
 import android.provider.Settings.SettingNotFoundException
 import android.view.Window
+import androidx.annotation.StyleRes
 import androidx.core.view.WindowInsetsControllerCompat
+import com.google.android.material.resources.TextAppearance
 
 
 /**
@@ -73,3 +77,13 @@ val Context.isMotionReduced: Boolean
             false
         }
     }
+
+
+
+
+@SuppressLint("RestrictedApi", "VisibleForTests")
+fun Context.getTypefaceFromTextAppearance(
+    @StyleRes textAppearanceId: Int,
+): Typeface {
+    return TextAppearance(this, textAppearanceId).getFont(this)
+}

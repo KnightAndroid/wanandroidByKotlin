@@ -107,4 +107,26 @@
             <flag name="fp_corner_rightBottom" value="0x1000"/>
         </attr>
     </declare-styleable>
+
+
+    <style name="large_title_text" parent="TextAppearance.Material3.TitleLarge">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/base_dimen_16</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="title_text" parent="TextAppearance.Material3.TitleMedium">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/base_dimen_16</item>
+        <item name="android:textColor">@color/widget_title_color</item>
+    </style>
+
+    <style name="content_text" parent="TextAppearance.Material3.BodyMedium">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/base_dimen_14</item>
+        <item name="android:textColor">@color/widget_title_color</item>
+    </style>
 </resources>

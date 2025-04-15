@@ -178,4 +178,12 @@ object ColorUtils {
         return (colorR shl 16) + (colorG shl 8) + colorB or -0x1000000
     }
 
+    fun getDarkerColor(@ColorInt color: Int): Int {
+        val hsv = FloatArray(3)
+        Color.colorToHSV(color, hsv)
+        hsv[1] = hsv[1] + 0.15f
+        hsv[2] = hsv[2] - 0.15f
+        return Color.HSVToColor(hsv)
+    }
+
 }
