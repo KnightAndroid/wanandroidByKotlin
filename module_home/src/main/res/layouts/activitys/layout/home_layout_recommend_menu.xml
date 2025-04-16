@@ -311,19 +311,31 @@
 
                     <com.knight.kotlin.library_widget.weatherview.ArcProgress
                         android:id="@+id/weather_main_aqi_progress"
-                        android:layout_width="172dp"
-                        android:layout_height="172dp"
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
                         android:layout_margin="@dimen/base_dimen_10"
                         android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:layout_below="@id/tv_air_quality_title"
+                        android:layout_centerInParent="true"
                         app:max="400"
-                        app:text_size="56dp"
+                        app:text_size="36dp"
                         app:arc_angle="270"
                         app:progress_width="14dp"
                         app:progress="126"
                         app:text="126"
                     />
+
+
+                    <com.yanzhenjie.recyclerview.SwipeRecyclerView
+                        android:id="@+id/rv_weather_aqi"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/weather_main_aqi_progress"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        />
+
+
 
                 </RelativeLayout>
 

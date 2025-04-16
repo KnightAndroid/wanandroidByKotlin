@@ -43,6 +43,7 @@ import com.knight.kotlin.library_base.entity.LoginEntity
 import com.knight.kotlin.library_base.entity.UserInfoEntity
 import com.knight.kotlin.library_base.entity.WeatherIndexItem
 import com.knight.kotlin.library_base.enum.BackgroundAnimationMode
+import com.knight.kotlin.library_base.enum.PollutantIndex
 import com.knight.kotlin.library_base.event.MessageEvent
 import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.knight.kotlin.library_base.ktx.SettingsManager
@@ -76,12 +77,14 @@ import com.knight.kotlin.library_scan.annoation.ScanStyle
 import com.knight.kotlin.library_scan.decode.ScanCodeConfig
 import com.knight.kotlin.library_util.Coordtransform
 import com.knight.kotlin.library_util.DateUtils
-import com.knight.kotlin.library_util.LocationUtils
-import com.knight.kotlin.library_util.OnceLocationListener
+import com.knight.kotlin.library_util.LogUtils
 import com.knight.kotlin.library_util.ResourceProvider
 import com.knight.kotlin.library_util.SystemUtils
 import com.knight.kotlin.library_util.TimeUtils
 import com.knight.kotlin.library_util.ViewInitUtils
+import com.knight.kotlin.library_util.baidu.GeoCodeUtils
+import com.knight.kotlin.library_util.baidu.LocationUtils
+import com.knight.kotlin.library_util.baidu.OnceLocationListener
 import com.knight.kotlin.library_util.image.ImageLoader
 import com.knight.kotlin.library_util.startPage
 import com.knight.kotlin.library_util.startPageWithRightAnimate
@@ -106,12 +109,14 @@ import com.knight.kotlin.module_home.adapter.HomeArticleAdapter
 import com.knight.kotlin.module_home.adapter.HourWeatherAdapter
 import com.knight.kotlin.module_home.adapter.OfficialAccountAdapter
 import com.knight.kotlin.module_home.adapter.WeatherIndexAdapter
+import com.knight.kotlin.module_home.adapter.WeatherPullutantAdapter
 import com.knight.kotlin.module_home.databinding.HomeRecommendFragmentBinding
 import com.knight.kotlin.module_home.dialog.HomePushArticleFragment
 import com.knight.kotlin.module_home.dialog.HomeWeatherNewsFragment
 import com.knight.kotlin.module_home.entity.BannerBean
 import com.knight.kotlin.module_home.entity.EveryDayPushArticlesBean
 import com.knight.kotlin.module_home.entity.HomeArticleListBean
+import com.knight.kotlin.module_home.entity.PollutantBean
 import com.knight.kotlin.module_home.utils.HomeAnimUtils
 import com.knight.kotlin.module_home.utils.MoonRiseSetUtils
 import com.knight.kotlin.module_home.vm.HomeRecommendVm
@@ -175,6 +180,14 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
     //今日提示
     private val mWeatherIndexAdapter:WeatherIndexAdapter by lazy {
         WeatherIndexAdapter()
+
+    }
+
+
+
+    //今日提示
+    private val mWeatherPullutantAdapter:WeatherPullutantAdapter by lazy {
+        WeatherPullutantAdapter()
 
     }
     //private lateinit var mHourWeatherHeaderBinding: HomeHourWeatherHeadBinding
@@ -275,6 +288,13 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
     private val mAttachAnimatorSets: Array<AnimatorSet?> = arrayOf(null, null, null)
 
     private var mAttachAnimatorSet: AnimatorSet? = null
+
+    /**
+     *
+     * 空气质量指数
+     */
+    private var mAqiQuality:Int = 0
+    private var mAqiQualityLevel:Int = 0
     override fun setThemeColor(isDarkMode: Boolean) {
         if (!isDarkMode) {
             isWithStatusTheme(CacheUtils.getStatusBarIsWithTheme())
@@ -441,7 +461,7 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
             }
 
             if (ViewInitUtils.isViewVisibleInScroll(homeRecommentMenu.homeRecommendMenu,homeRecommentMenu.rlAirAqi) &&  homeRecommentMenu.weatherMainAqiProgress.getDrawStatus() == ArcProgress.ArcProgressDrawStatus.NOTDRAW) {
-                val aqiColor = WeatherUtils.getColor(homeRecommentMenu.weatherMainAqiProgress.context,1)
+                val aqiColor = WeatherUtils.getColor(homeRecommentMenu.weatherMainAqiProgress.context,mAqiQualityLevel)
                 val progressColor = ValueAnimator.ofObject(
                     ArgbEvaluator(),
                     ContextCompat.getColor(requireActivity(), com.knight.kotlin.library_widget.R.color.widget_air_colorLevel_1),
@@ -461,7 +481,7 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
                 backgroundColor.addUpdateListener { animation: ValueAnimator ->
                     (homeRecommentMenu.weatherMainAqiProgress.setArcBackgroundColor((animation.animatedValue as Int)))
                 }
-                val aqiNumber = ValueAnimator.ofObject(FloatEvaluator(), 0, 77)
+                val aqiNumber = ValueAnimator.ofObject(FloatEvaluator(), 0, mAqiQuality)
                 aqiNumber.addUpdateListener { animation: ValueAnimator ->
                     homeRecommentMenu.weatherMainAqiProgress.apply {
                         progress = (animation.animatedValue as Float)
@@ -489,6 +509,8 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
                     duration = (1500 + 1 / 400f * 1500).toLong()
                     start()
                 }
+                mWeatherPullutantAdapter.executeAnimation()
+
             }
 
         }
@@ -509,11 +531,27 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
 
         homeRecommentMenu.weatherMainAqiProgress.apply {
             setTextColor(Color.BLACK)
-            setBottomText(WeatherUtils.getAqiToName(context,1))
             setBottomTextColor(ContextCompat.getColor(context, R.color.home_weather_arc_bottom_text_color))
-            contentDescription = 1.toString() + ", " + WeatherUtils.getAqiToName(context,1)
             max = 400f
         }
+
+
+        homeRecommentMenu.rvWeatherAqi.init(
+            LinearLayoutManager(requireActivity()),
+            mWeatherPullutantAdapter,
+            false
+        )
+
+        GeoCodeUtils.getGeocode(
+            city = "北京",
+            address = "北京市",
+            onSuccess = { lat, lng ->
+                LogUtils.d("GeoResult"+ "纬度: $lat，经度: $lng")
+            },
+            onFail = {
+               // Log.e("GeoResult", "地理编码失败")
+            }
+        )
 
 
     }
@@ -650,7 +688,7 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
      * 获取定位
      */
     private fun requestOnceLocation() {
-        LocationUtils.getLocation(object :OnceLocationListener{
+        LocationUtils.getLocation(object : OnceLocationListener {
             @RequiresApi(Build.VERSION_CODES.O)
             override fun onReceiveLocation(location: BDLocation?) {
                 location?.let {
@@ -775,6 +813,21 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
                 mWeatherIndexAdapter.submitList(indexList)
             }
 
+            mAqiQuality = it.air.aqi
+            mAqiQualityLevel = it.air.aqi_level - 1
+            mBinding.homeRecommentMenu.weatherMainAqiProgress.apply {
+                setBottomText(WeatherUtils.getAqiToName(context,mAqiQualityLevel))
+                contentDescription = mAqiQualityLevel.toString() + ", " + WeatherUtils.getAqiToName(context,mAqiQualityLevel)
+            }
+
+            val mPollutantList :MutableList<PollutantBean> = mutableListOf()
+            mPollutantList.add(PollutantBean(PollutantIndex.PM25,it.air.pm10.toFloat(),getString(com.knight.kotlin.library_base.R.string.base_unit_mugpcum)))
+            mPollutantList.add(PollutantBean(PollutantIndex.PM10,it.air.pm10.toFloat(),getString(com.knight.kotlin.library_base.R.string.base_unit_mugpcum)))
+            mPollutantList.add(PollutantBean(PollutantIndex.O3,it.air.o3.toFloat(),getString(com.knight.kotlin.library_base.R.string.base_unit_mugpcum)))
+            mPollutantList.add(PollutantBean(PollutantIndex.NO2,it.air.no2.toFloat(),getString(com.knight.kotlin.library_base.R.string.base_unit_mugpcum)))
+            mPollutantList.add(PollutantBean(PollutantIndex.SO2,it.air.so2.toFloat(),getString(com.knight.kotlin.library_base.R.string.base_unit_mugpcum)))
+            mPollutantList.add(PollutantBean(PollutantIndex.CO,it.air.co.toFloat(),getString(com.knight.kotlin.library_base.R.string.base_unit_mgpcum)))
+            mWeatherPullutantAdapter.submitList(mPollutantList)
         }
 
 
@@ -1630,6 +1683,7 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
             }
             mAttachAnimatorSets[i] = null
         }
+        mWeatherPullutantAdapter.cancelAnimation()
     }
 
 }

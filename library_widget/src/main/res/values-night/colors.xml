@@ -3,4 +3,5 @@
     <color name="widget_title_color">#D3D3D3</color>
     <color name="widget_toolbar_text_right_color">#D3D3D3</color>
     <color name="widget_recycleview_bg_color">#303030</color>
+    <color name="widget_content_color">#999999</color>
 </resources>

@@ -22,4 +22,5 @@
        <color name="widget_aqiLevel_4">#f62a55</color>
        <color name="widget_aqiLevel_5">#c72eaa</color>
        <color name="widget_aqiLevel_6">#9930ff</color>
+       <color name="widget_content_color">#666666</color>
 </resources>

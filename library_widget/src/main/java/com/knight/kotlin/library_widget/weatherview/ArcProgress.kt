@@ -155,22 +155,18 @@ class ArcProgress @JvmOverloads constructor(
 
     fun setText(text: String?) {
         mText = text
-        invalidate()
     }
 
     fun setTextColor(@ColorInt textColor: Int) {
         mTextColor = textColor
-        invalidate()
     }
 
     fun setBottomText(bottomText: String?) {
         mBottomText = bottomText
-        invalidate()
     }
 
     fun setBottomTextColor(@ColorInt bottomTextColor: Int) {
         mBottomTextColor = bottomTextColor
-        invalidate()
     }
 
     private fun ensureShadowShader() {

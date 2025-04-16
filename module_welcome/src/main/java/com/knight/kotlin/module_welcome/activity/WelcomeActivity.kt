@@ -12,8 +12,8 @@ import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_base.util.ColorUtils
 import com.knight.kotlin.library_permiss.XXPermissions
 import com.knight.kotlin.library_permiss.permissions.Permission
-import com.knight.kotlin.library_util.LocationUtils
-import com.knight.kotlin.library_util.OnceLocationListener
+import com.knight.kotlin.library_util.baidu.LocationUtils
+import com.knight.kotlin.library_util.baidu.OnceLocationListener
 import com.knight.kotlin.module_welcome.databinding.WelcomeActivityBinding
 import com.knight.kotlin.module_welcome.entity.AppThemeBean
 import com.knight.kotlin.module_welcome.fragment.WelcomePrivacyAgreeFragment

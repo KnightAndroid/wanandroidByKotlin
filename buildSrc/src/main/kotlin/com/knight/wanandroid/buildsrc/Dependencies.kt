@@ -277,8 +277,10 @@ object Dependencies {
         const val BUGLY = "com.tencent.bugly:crashreport:${Version.BUG_LY}"
         const val LOTTIE = "com.airbnb.android:lottie:${Version.LOTTIE}"
         const val SLF4J = "org.slf4j:slf4j-android:${Version.SLF4J}"
-        const val BAILOCATION = "com.baidu.lbsyun:BaiduMapSDK_Location:${Version.BaiduMapSdkVersion}"
-        const val BAINAVI = "com.baidu.lbsyun:BaiduMapSDK_Map-AllNavi:${Version.BaiduNaviSdkVersion}"
+        const val BAIDULOCATION = "com.baidu.lbsyun:BaiduMapSDK_Location:${Version.BaiduMapSdkVersion}"
+        const val BAIDUNAVI = "com.baidu.lbsyun:BaiduMapSDK_Map-AllNavi:${Version.BaiduNaviSdkVersion}"
+        const val BAIDUSEARCH = "com.baidu.lbsyun:BaiduMapSDK_Search:${Version.BaiduNaviSdkVersion}"
+        const val BAIDUUTIL = "com.baidu.lbsyun:BaiduMapSDK_Util:${Version.BaiduNaviSdkVersion}"
         const val SUNCALC = "org.shredzone.commons:commons-suncalc:${Version.Suncalc}"
     }
 

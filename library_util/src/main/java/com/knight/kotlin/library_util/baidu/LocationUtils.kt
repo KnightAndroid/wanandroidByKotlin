@@ -1,4 +1,4 @@
-package com.knight.kotlin.library_util
+package com.knight.kotlin.library_util.baidu
 
 import android.content.Context
 import com.baidu.location.BDAbstractLocationListener
@@ -8,6 +8,7 @@ import com.baidu.location.LocationClientOption
 import com.baidu.mapapi.SDKInitializer
 import com.knight.kotlin.library_base.BaseApp
 import com.knight.kotlin.library_base.config.Appconfig
+import com.knight.kotlin.library_util.HandlerUtils
 
 
 /**
@@ -25,7 +26,7 @@ object LocationUtils {
      * 百度地图客户端
      */
     var mLocationClient: LocationClient? = null
-    var mOnceLocationListener:OnceLocationListener? = null
+    var mOnceLocationListener: OnceLocationListener? = null
     private val myListener = MyLocationListener()
 
     fun init(context: Context) {
