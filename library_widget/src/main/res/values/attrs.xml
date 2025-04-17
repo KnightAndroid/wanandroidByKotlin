@@ -1208,4 +1208,17 @@
         <attr name="bottom_text_size" format="dimension"/>
         <attr name="bottom_text_color" format="color"/>
     </declare-styleable>
+
+    <attr name="indexBarTextSize" format="reference" />
+    <attr name="indexBarNormalTextColor" format="reference" />
+    <attr name="indexBarSelectedTextColor" format="reference" />
+
+
+    <declare-styleable name="SideIndexView">
+
+        <attr name="side_text_size" format="dimension" />
+        <attr name="side_text_color" format="color"/>
+        <attr name="side_text_touch_color" format="color"/>
+
+    </declare-styleable>
 </resources>

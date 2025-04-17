@@ -43,6 +43,21 @@
                     android:text="请登录"
                     android:background="@drawable/home_btn_login_shape"/>
 
+
+                <TextView
+                    android:id="@+id/home_tv_location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/home_tv_location_text_color"
+                    android:textSize="@dimen/home_tv_location_text_size"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:layout_marginTop="@dimen/home_tv_location_margin_top"
+                    android:layout_marginRight="@dimen/home_tv_location_margin_right"
+                    android:text="@string/home_unknown_location"
+                    android:background="@drawable/home_btn_login_shape"/>
+
+
                  <TextView
                      android:id="@+id/tv_weather_degree"
                      android:layout_width="wrap_content"

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/city_grid_item_layout"
+    android:layout_width="wrap_content"
+    android:layout_height="40dp"
+    android:foreground="?attr/selectableItemBackground">
+
+    <TextView
+        android:id="@+id/city_gird_item_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/widget_grid_item_padding_top"
+        android:paddingBottom="@dimen/widget_grid_item_padding_bottom"
+        android:gravity="center"
+        android:textSize="@dimen/base_dimen_16"
+        android:textColor="@color/base_tv_title_color"
+        />
+</FrameLayout>

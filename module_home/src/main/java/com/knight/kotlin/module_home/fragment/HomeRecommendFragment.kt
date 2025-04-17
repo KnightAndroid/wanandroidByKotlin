@@ -77,12 +77,10 @@ import com.knight.kotlin.library_scan.annoation.ScanStyle
 import com.knight.kotlin.library_scan.decode.ScanCodeConfig
 import com.knight.kotlin.library_util.Coordtransform
 import com.knight.kotlin.library_util.DateUtils
-import com.knight.kotlin.library_util.LogUtils
 import com.knight.kotlin.library_util.ResourceProvider
 import com.knight.kotlin.library_util.SystemUtils
 import com.knight.kotlin.library_util.TimeUtils
 import com.knight.kotlin.library_util.ViewInitUtils
-import com.knight.kotlin.library_util.baidu.GeoCodeUtils
 import com.knight.kotlin.library_util.baidu.LocationUtils
 import com.knight.kotlin.library_util.baidu.OnceLocationListener
 import com.knight.kotlin.library_util.image.ImageLoader
@@ -111,6 +109,7 @@ import com.knight.kotlin.module_home.adapter.OfficialAccountAdapter
 import com.knight.kotlin.module_home.adapter.WeatherIndexAdapter
 import com.knight.kotlin.module_home.adapter.WeatherPullutantAdapter
 import com.knight.kotlin.module_home.databinding.HomeRecommendFragmentBinding
+import com.knight.kotlin.module_home.dialog.HomeCityGroupFragment
 import com.knight.kotlin.module_home.dialog.HomePushArticleFragment
 import com.knight.kotlin.module_home.dialog.HomeWeatherNewsFragment
 import com.knight.kotlin.module_home.entity.BannerBean
@@ -319,7 +318,8 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
             homeRecommentConent.homeIncludeToolbar.homeIvAdd,
             homeRecommentConent.homeIncludeToolbar.homeRlSearch,homeRecommentConent.homeIconFab,
             homeRecommentConent.homeIconCourse!!,homeRecommentConent.homeIconUtils!!,
-            homeRecommentConent.homeIconScrollUp!!,mBinding.homeRecommentMenu.tvZaobaoDayTip)
+            homeRecommentConent.homeIconScrollUp!!,mBinding.homeRecommentMenu.tvZaobaoDayTip,
+            mBinding.homeRecommentMenu.homeTvLocation)
         getUser()?.let {
             homeRecommentMenu.homeBtnLoginName.text = it.username
         } ?: kotlin.run {
@@ -542,16 +542,16 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
             false
         )
 
-        GeoCodeUtils.getGeocode(
-            city = "北京",
-            address = "北京市",
-            onSuccess = { lat, lng ->
-                LogUtils.d("GeoResult"+ "纬度: $lat，经度: $lng")
-            },
-            onFail = {
-               // Log.e("GeoResult", "地理编码失败")
-            }
-        )
+//        GeoCodeUtils.getGeocode(
+//            city = "北京",
+//            address = "北京市",
+//            onSuccess = { lat, lng ->
+//                LogUtils.d("GeoResult"+ "纬度: $lat，经度: $lng")
+//            },
+//            onFail = {
+//               // Log.e("GeoResult", "地理编码失败")
+//            }
+//        )
 
 
     }
@@ -707,6 +707,7 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
      */
     @RequiresApi(Build.VERSION_CODES.O)
     private fun getDetailWeekWeather(location: BDLocation) {
+        mBinding.homeRecommentMenu.homeTvLocation.text = location.city
         val latLng = Coordtransform.BD09toWGS84(location.longitude, location.latitude)
         mViewModel.getTwoWeekDayRainFall(
             latLng[1],
@@ -1376,6 +1377,10 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
 
             mBinding.homeRecommentMenu.tvZaobaoDayTip -> {
                 startPage(RouteActivity.Home.HomeNewsActivty)
+            }
+
+            mBinding.homeRecommentMenu.homeTvLocation -> {
+                HomeCityGroupFragment().showAllowingStateLoss(parentFragmentManager, "group_city")
             }
 
 //            mBinding.homeIvLabelmore -> {

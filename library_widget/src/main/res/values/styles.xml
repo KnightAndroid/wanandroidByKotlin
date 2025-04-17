@@ -129,4 +129,5 @@
         <item name="android:textSize">@dimen/base_dimen_14</item>
         <item name="android:textColor">@color/widget_content_color</item>
     </style>
+
 </resources>

@@ -32,5 +32,6 @@
     <string name="home_tv_sun_moon">日月升落</string>
     <string name="home_tv_zaobao">早报</string>
     <string name="home_weather_air_quality">空气质量</string>
+    <string name="home_unknown_location">未知城市</string>
 
 </resources>

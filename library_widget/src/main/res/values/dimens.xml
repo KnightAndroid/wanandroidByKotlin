@@ -10,4 +10,8 @@
     <dimen name="widget_gesture_default_dot_pressed_radius">4dp</dimen>
     <dimen name="widget_material3_card_list_item_corner_radius">16dp</dimen>
     <dimen name="widget_little_margin">8dp</dimen>
+    <dimen name="widget_city_index_bar_width">36dp</dimen>
+    <dimen name="widget_city_default_padding">16dp</dimen>
+    <dimen name="widget_grid_item_padding_top">10dp</dimen>
+    <dimen name="widget_grid_item_padding_bottom">10dp</dimen>
 </resources>
