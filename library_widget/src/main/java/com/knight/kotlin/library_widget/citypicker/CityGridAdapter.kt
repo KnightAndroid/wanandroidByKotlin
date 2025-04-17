@@ -8,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter4.BaseQuickAdapter
+import com.knight.kotlin.library_base.ktx.getScreenWidth
+import com.knight.kotlin.library_base.util.dp2px
 import com.knight.kotlin.library_widget.databinding.CityHotGridItemBinding
 
 
@@ -36,14 +38,10 @@ class CityGridAdapter(val mInnerListener:InnerListener):BaseQuickAdapter<CityBea
             val pos = holder.getAbsoluteAdapterPosition()
 
             //设置item宽高
-            val dm = context.resources.displayMetrics
-            val screenWidth = dm.widthPixels
-            val typedValue = TypedValue()
-            //  mContext.theme.resolveAttribute(R.attr.cpGridItemSpace, typedValue, true)
-            val space = context.resources.getDimensionPixelSize(typedValue.resourceId)
+            val space = 16.dp2px()
             val padding = context.resources.getDimensionPixelSize(com.knight.kotlin.library_widget.R.dimen.widget_city_default_padding)
             val indexBarWidth = context.resources.getDimensionPixelSize(com.knight.kotlin.library_widget.R.dimen.widget_city_index_bar_width)
-            val itemWidth: Int = (screenWidth - padding - space * (3 - 1) - indexBarWidth) / 3
+            val itemWidth: Int = (getScreenWidth() - padding - space * (3 - 1) - indexBarWidth) / 3
             val lp: ViewGroup.LayoutParams = holder.binding.cityGridItemLayout.getLayoutParams()
             lp.width = itemWidth
             lp.height = ViewGroup.LayoutParams.WRAP_CONTENT

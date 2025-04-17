@@ -1221,4 +1221,13 @@
         <attr name="side_text_touch_color" format="color"/>
 
     </declare-styleable>
+
+
+    <declare-styleable name="CitySectionView">
+
+        <attr name="section_height" format="dimension" />
+        <attr name="section_background" format="color"/>
+        <attr name="section_text_size" format="dimension"/>
+        <attr name="section_text_color" format="dimension"/>
+    </declare-styleable>
 </resources>

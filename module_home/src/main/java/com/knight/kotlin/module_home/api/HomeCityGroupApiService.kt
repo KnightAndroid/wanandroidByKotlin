@@ -1,7 +1,7 @@
 package com.knight.kotlin.module_home.api
 
 import com.knight.kotlin.library_network.bean.BaseResponse
-import com.knight.kotlin.module_home.entity.GroupCityListBean
+import com.knight.kotlin.library_widget.GroupCityListBean
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Query
@@ -23,5 +23,5 @@ interface HomeCityGroupApiService {
     @GET("city/group")
     suspend fun getCityGroupData(
         @Query("source") source: String
-    ): BaseResponse<List<GroupCityListBean>>
+    ): BaseResponse<MutableList<GroupCityListBean>>
 }

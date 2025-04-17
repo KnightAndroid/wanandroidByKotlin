@@ -111,9 +111,9 @@ val Context.screenHeight
 fun getScreenHeight():Int {
     val wm = BaseApp.application.getSystemService(Context.WINDOW_SERVICE) as WindowManager
     return if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
-        wm.currentWindowMetrics.bounds.width()
+        wm.currentWindowMetrics.bounds.height()
     } else {
-        wm.defaultDisplay.width
+        wm.defaultDisplay.height
     }
 }
 

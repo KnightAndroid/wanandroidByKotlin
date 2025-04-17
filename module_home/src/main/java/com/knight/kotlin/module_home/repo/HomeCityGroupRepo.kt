@@ -4,7 +4,7 @@ import com.knight.kotlin.library_base.repository.BaseRepository
 import com.knight.kotlin.library_network.model.responseCodeExceptionHandler
 import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_home.api.HomeCityGroupApiService
-import com.knight.kotlin.module_home.entity.GroupCityListBean
+import com.knight.kotlin.library_widget.GroupCityListBean
 import javax.inject.Inject
 
 
@@ -22,7 +22,7 @@ class HomeCityGroupRepo @Inject constructor(): BaseRepository() {
      *
      * 获取早报新闻
      */
-    fun getCityGroupData(source:String) = request<List<GroupCityListBean>>({
+    fun getCityGroupData(source:String) = request<MutableList<GroupCityListBean>>({
         mHomeCityGroupApiService.getCityGroupData(source).run {
             responseCodeExceptionHandler(0,msg)
             emit(data)

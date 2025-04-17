@@ -13,5 +13,5 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class CityBean (
     val city:String,
-    val province:String,
+    val province:String
 ) : Parcelable

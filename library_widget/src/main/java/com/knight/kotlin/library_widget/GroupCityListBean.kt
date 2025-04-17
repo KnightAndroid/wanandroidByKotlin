@@ -1,4 +1,4 @@
-package com.knight.kotlin.module_home.entity
+package com.knight.kotlin.library_widget
 
 import android.os.Parcelable
 import com.knight.kotlin.library_widget.citypicker.CityBean
