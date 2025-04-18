@@ -122,7 +122,7 @@ class SideIndexBar @JvmOverloads constructor(context: Context, attrs: AttributeS
                             mOverlayTextView!!.visibility = VISIBLE
                             mOverlayTextView!!.text = mIndexItems!![touchedIndex]
                         }
-                        mOnIndexChangedListener!!.onIndexChanged(mIndexItems!![touchedIndex], touchedIndex)
+                        mOnIndexChangedListener!!.onIndexChanged(mIndexItems[touchedIndex], touchedIndex)
                         invalidate()
                     }
                 }
@@ -150,7 +150,7 @@ class SideIndexBar @JvmOverloads constructor(context: Context, attrs: AttributeS
     }
 
     interface OnIndexTouchedChangedListener {
-        fun onIndexChanged(index: String?, position: Int)
+        fun onIndexChanged(index: String, position: Int)
     }
 
     companion object {

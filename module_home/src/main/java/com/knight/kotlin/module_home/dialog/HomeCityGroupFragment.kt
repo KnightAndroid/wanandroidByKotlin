@@ -8,13 +8,11 @@ import com.knight.kotlin.library_base.ktx.getScreenHeight
 import com.knight.kotlin.library_base.ktx.init
 import com.knight.kotlin.library_base.util.StatusBarUtils
 import com.knight.kotlin.library_base.util.dp2px
-import com.knight.kotlin.library_widget.DividerItemDecoration
+import com.knight.kotlin.library_widget.GroupCityListBean
 import com.knight.kotlin.library_widget.citypicker.CityBean
-import com.knight.kotlin.library_widget.citypicker.CityEnum
 import com.knight.kotlin.library_widget.citypicker.CityListAdapter
-import com.knight.kotlin.library_widget.citypicker.CityListBean
+import com.knight.kotlin.library_widget.citypicker.CityNormalSectionItemDecoration
 import com.knight.kotlin.library_widget.citypicker.InnerListener
-import com.knight.kotlin.library_widget.citypicker.SectionItemDecoration
 import com.knight.kotlin.library_widget.citypicker.view.SideIndexBar
 import com.knight.kotlin.module_home.databinding.HomeCityDialogPickerBinding
 import com.knight.kotlin.module_home.vm.HomeCityGroupVm
@@ -37,7 +35,7 @@ class HomeCityGroupFragment:BaseDialogFragment<HomeCityDialogPickerBinding,HomeC
 
     }
 
-    private val mCityListAdapter: CityListAdapter by lazy { CityListAdapter(mutableListOf()) }
+    private val mCityListAdapter: CityListAdapter by lazy { CityListAdapter(this) }
 
 
     override fun initRequestData() {
@@ -47,32 +45,21 @@ class HomeCityGroupFragment:BaseDialogFragment<HomeCityDialogPickerBinding,HomeC
            val locations = mutableListOf<CityBean>()
            locations.add(locationData)
 
+           val locationGroups = GroupCityListBean("定位",locations)
 
            val hotCitys= mutableListOf<CityBean>()
            hotCitys.add(CityBean("北京", "北京"))
            hotCitys.add(CityBean("上海", "上海"))
            hotCitys.add(CityBean("广州", "广东"))
            hotCitys.add(CityBean("深圳", "广东"))
+           val hotGroups = GroupCityListBean("热门",locations)
 
-
-           val size = data.size
-           val normalCity = mutableListOf<CityBean>()
-           for (i in 0 until size) {
-               data[i].group
-               normalCity.addAll(data[i].city)
-           }
-           val allCitys:MutableList<CityListBean> = mutableListOf()
-           allCitys.add(0,CityListBean(CityEnum.LOCATION.type,locations))
-           allCitys.add(1,CityListBean(CityEnum.HOT.type,hotCitys))
-           allCitys.add(2,CityListBean(CityEnum.NORMAL.type,normalCity))
-
-
-//           val seconds : MutableList<CityBean> = mutableListOf()
-//           seconds.addAll(locations)
-//           seconds.addAll(hotCitys)
-           mBinding.cityRecyclerview.addItemDecoration(SectionItemDecoration(requireActivity(), normalCity), 0)
-           mBinding.cityRecyclerview.addItemDecoration(DividerItemDecoration(requireActivity(),), 1)
-           mCityListAdapter.submitList(allCitys)
+           data.add(0,locationGroups)
+           data.add(1,hotGroups)
+           mBinding.cityRecyclerview.addItemDecoration(CityNormalSectionItemDecoration(data), 0)
+          // mBinding.cityRecyclerview.addItemDecoration(DividerItemDecoration(requireActivity(),), 1)
+          // mCityListAdapter.mGroupCityList = data
+           mCityListAdapter.submitList(data)
     })
     }
 
@@ -93,7 +80,6 @@ class HomeCityGroupFragment:BaseDialogFragment<HomeCityDialogPickerBinding,HomeC
     override fun HomeCityDialogPickerBinding.initView() {
         sideIndexBar.setNavigationBarHeight(StatusBarUtils.getStatusBarHeight(requireActivity()))
         sideIndexBar.setOverlayTextView(indexOverlay).setOnIndexChangedListener(this@HomeCityGroupFragment)
-        mCityListAdapter.mInnerListener = this@HomeCityGroupFragment
 
         val mLinearLayoutManager = LinearLayoutManager(requireActivity())
         mCityListAdapter.mLayoutManager = mLinearLayoutManager
@@ -104,8 +90,8 @@ class HomeCityGroupFragment:BaseDialogFragment<HomeCityDialogPickerBinding,HomeC
         )
     }
 
-    override fun onIndexChanged(index: String?, position: Int) {
-
+    override fun onIndexChanged(index: String, position: Int) {
+        mCityListAdapter.scrollToSection(index)
     }
 
     override fun dismiss(position: Int, data: CityBean) {

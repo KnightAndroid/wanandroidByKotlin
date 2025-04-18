@@ -8,8 +8,7 @@ package com.knight.kotlin.library_widget.citypicker
  * @descript:城市类型
  */
 enum class CityEnum(val type: Int) {
-
-    HOT(0),//热门
-    LOCATION(1),//定位
+    LOCATION(0),//定位
+    HOT(1),//热门
     NORMAL(2) //普通
 }

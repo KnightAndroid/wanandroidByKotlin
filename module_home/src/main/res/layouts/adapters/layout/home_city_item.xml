@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.knight.kotlin.module_home.adapter.HomeHotKeyAdapter"
+    android:id="@+id/home_tv_city"
+    android:layout_width="wrap_content"
+    android:layout_height="@dimen/home_tv_hotkey_height"
+    android:textColor="@color/base_color_theme"
+    android:textSize="@dimen/home_tv_hotkey_text_size"
+    android:paddingLeft="@dimen/home_tv_hotkey_padding_left"
+    android:paddingRight="@dimen/home_tv_hotkey_padding_right"
+    android:layout_marginTop="@dimen/home_tv_hotkey_margin_top"
+    android:layout_marginBottom="@dimen/home_tv_hotkey_margin_bottom"
+    android:gravity="center"
+    android:background="@drawable/home_hotkeyframe_shape"
+    android:layout_marginLeft="@dimen/home_tv_hotkey_margin_right"
+    android:layout_marginRight="@dimen/home_tv_hotkey_margin_right"
+    >
+</TextView>

@@ -12,6 +12,6 @@ import kotlinx.parcelize.Parcelize
  */
 @Parcelize
 data class CityListBean (
-    val type:Int = 0, //0是当前城市 1是热门城市 2是普通
+    val type:Int = 0, //0是定位城市 1是热门城市 2是普通
     val data:List<CityBean>
 ): Parcelable

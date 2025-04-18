@@ -1,62 +1,45 @@
 package com.knight.kotlin.library_widget.citypicker
 
-
 import android.content.Context
-import android.os.Handler
-import android.os.Looper
+import android.graphics.Color
 import android.text.TextUtils
-import android.util.TypedValue
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.appcompat.view.ContextThemeWrapper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.chad.library.adapter4.BaseMultiItemAdapter
-import com.knight.kotlin.library_base.ktx.getScreenWidth
+import com.chad.library.adapter4.BaseQuickAdapter
+import com.google.android.material.R
+import com.google.android.material.chip.Chip
+import com.google.android.material.shape.ShapeAppearanceModel
 import com.knight.kotlin.library_base.util.dp2px
-import com.knight.kotlin.library_widget.SpacesItemDecoration
-import com.knight.kotlin.library_widget.databinding.CityDefaultListItemBinding
-import com.knight.kotlin.library_widget.databinding.CityHotItemBinding
-import com.knight.kotlin.library_widget.databinding.CityLocationItemBinding
-import com.knight.kotlin.library_widget.ktx.init
+import com.knight.kotlin.library_widget.GroupCityListBean
+import com.knight.kotlin.library_widget.databinding.CityDefaultItemBinding
 
 
 /**
  * @author created by luguian
  * @organize
- * @Date 2025/4/17 14:00
- * @descript:城市列表适配器
+ * @Date 2025/4/17 16:05
+ * @descript:城市item布局
  */
-class CityListAdapter(val data:MutableList<CityListBean>):BaseMultiItemAdapter<CityListBean>(data) {
+class CityListAdapter(val mInnerListener:InnerListener): BaseQuickAdapter<GroupCityListBean, CityListAdapter.VH>() {
 
-
-
-    lateinit var mInnerListener: InnerListener
-    lateinit var mLayoutManager:LinearLayoutManager
-
-
-
-
-    //当前城市
-    class LocationCityVH(viewBinding:CityLocationItemBinding): RecyclerView.ViewHolder(viewBinding.root)
-    //热门城市
-    class HotListCityVH(viewBinding:CityHotItemBinding): RecyclerView.ViewHolder(viewBinding.root)
-    //普通城市
-    class DefaultListCityVh(viewBinding:CityDefaultListItemBinding): RecyclerView.ViewHolder(viewBinding.root)
 
 
     var stateChanged:Boolean = false
-
+    lateinit var mLayoutManager:LinearLayoutManager
     /**
      *
      * 更新定位城市
      */
     fun updateLocateState(location: CityBean) {
-        data.removeAt(0)
-        val locationListData = CityListBean(CityEnum.LOCATION.type, mutableListOf(location))
-        data.add(0, locationListData)
-        stateChanged = true
-        refreshLocationItem()
+//        data.removeAt(0)
+//        val locationListData = CityListBean(CityEnum.LOCATION.type, mutableListOf(location))
+//        data.add(0, locationListData)
+//        stateChanged = true
+//        refreshLocationItem()
     }
 
     fun refreshLocationItem() {
@@ -67,130 +50,154 @@ class CityListAdapter(val data:MutableList<CityListBean>):BaseMultiItemAdapter<C
         }
     }
 
+
     /**
      * 滚动RecyclerView到索引位置
      * @param index
      */
     fun scrollToSection(index: String) {
-        if (TextUtils.equals(index.substring(0, 1),"定位")){
-            mLayoutManager.scrollToPositionWithOffset(0, 0)
-            return
-        }
-
-        if (TextUtils.equals(index,"热门")){
-            mLayoutManager.scrollToPositionWithOffset(1, 0)
-            return
-        }
-
-        val size: Int =  data.get(2).data.size
+        val size = items.size
         for (i in 0 until size) {
-            if (TextUtils.equals(index.substring(0, 1), data.get(2).data.get(i).city.substring(0, 1))) {
-                mLayoutManager.scrollToPositionWithOffset(i+2, 0)
-                return
+            if (TextUtils.equals(index, items.get(i).group)) {
+                if (mLayoutManager != null) {
+                    mLayoutManager.scrollToPositionWithOffset(i, 0)
+                    return
+                }
             }
-
-
         }
-
-//        for (i in 0 until size) {
-//            if (TextUtils.equals(index.substring(0, 1), data.get(i)..substring(0, 1))) {
-//                if (mLayoutManager != null) {
-//                    mLayoutManager.scrollToPositionWithOffset(i, 0)
-//                    if (TextUtils.equals(index.substring(0, 1), "当")) {
-//                        //防止滚动时进行刷新
-//                        Handler().postDelayed(Runnable { if (stateChanged) notifyItemChanged(0) }, 1000)
-//                    }
-//                    return
-//                }
-//            }
-//        }
     }
 
 
-    init {
-        addItemType(CityEnum.LOCATION.type,object :OnMultiItemAdapterListener<CityListBean,LocationCityVH>{
-            override fun onBind(holder: LocationCityVH, position: Int, item: CityListBean?) {
-                item?.let {
-                    val binding = CityLocationItemBinding.bind(holder.itemView)
-                    val pos = holder.absoluteAdapterPosition
-                    //设置宽高
+    // 自定义ViewHolder类
 
-                    val padding = context.resources.getDimensionPixelSize(com.knight.kotlin.library_widget.R.dimen.widget_city_default_padding)
-                    val indexBarWidth = context.resources.getDimensionPixelSize(com.knight.kotlin.library_widget.R.dimen.widget_city_index_bar_width)
-                    val itemWidth: Int = (getScreenWidth() - padding - 10.dp2px() * (3 - 1) - indexBarWidth) / 3
-                    val lp: ViewGroup.LayoutParams = binding.listItemLocationLayout.getLayoutParams()
-                    lp.width = itemWidth
-                    lp.height = ViewGroup.LayoutParams.WRAP_CONTENT
-                    binding.listItemLocationLayout.setLayoutParams(lp)
-
+    class VH(
+        parent: ViewGroup,
+        val binding: CityDefaultItemBinding = CityDefaultItemBinding.inflate(
+            LayoutInflater.from(parent.context), parent, false
+        ),
+        val chipCache: MutableList<Chip> = mutableListOf() // 缓存 Chip 视图
+    ) : RecyclerView.ViewHolder(binding.root) {
+        init {
+            // 预先创建一些 Chip 视图并添加到 chipCache，初始时隐藏
+            for (i in 0 until 10) { // 假设每个 Item 最多显示 10 个 Chip，根据实际情况调整
+                val chip = Chip(ContextThemeWrapper(itemView.context, R.style.Widget_Material3_Chip_Assist)).apply {
+                    shapeAppearanceModel = ShapeAppearanceModel.Builder()
+                        .setAllCornerSizes(12f)
+                        .build()
+                    chipStartPadding = 16.dp2px().toFloat()
+                    chipEndPadding = 16.dp2px().toFloat()
+                    textStartPadding = 8.dp2px().toFloat()
+                    textEndPadding = 8.dp2px().toFloat()
+                    chipMinHeight = 48.dp2px().toFloat()
+                    setBackgroundColor(Color.parseColor("#EDEDED"))
+                    visibility = View.GONE // 初始时隐藏
+                    setOnClickListener { /* 在这里处理点击事件 */ }
                 }
-
-
+                binding.cityChipGroup.addView(chip)
+                chipCache.add(chip)
             }
-
-            override fun onCreate(context: Context, parent: ViewGroup, viewType: Int): LocationCityVH {
-                // 创建 viewholder
-                val viewBinding = CityLocationItemBinding.inflate(LayoutInflater.from(context), parent, false)
-                return LocationCityVH(viewBinding)
-            }
-        })
-
-
-        addItemType(CityEnum.HOT.type,object:OnMultiItemAdapterListener<CityListBean,HotListCityVH>{
-            override fun onBind(holder: HotListCityVH, position: Int, item: CityListBean?) {
-                item?.run {
-                    val binding = CityHotItemBinding.bind(holder.itemView)
-                    val cityGridAdapter = CityGridAdapter(mInnerListener)
-                    // 绑定 item 数据
-
-                    //binding.cityHotList.setHasFixedSize(true)
-                    binding.cityHotList.init(
-                        GridLayoutManager(context,3, LinearLayoutManager.VERTICAL, false),
-                        cityGridAdapter,
-                        true
-                    )
-                    binding.cityHotList.addItemDecoration(
-                        SpacesItemDecoration(10)
-                    )
-                    cityGridAdapter.submitList(item.data)
-                }
-
-            }
-
-            override fun onCreate(context: Context, parent: ViewGroup, viewType: Int): HotListCityVH {
-                // 创建 viewholder
-                val viewBinding = CityHotItemBinding.inflate(LayoutInflater.from(context), parent, false)
-                return HotListCityVH(viewBinding)
-            }
-
-        })
-
-        addItemType(CityEnum.NORMAL.type,object :OnMultiItemAdapterListener<CityListBean,DefaultListCityVh>{
-            override fun onBind(holder: DefaultListCityVh, position: Int, item: CityListBean?) {
-                item?.let {
-                    val binding = CityDefaultListItemBinding.bind(holder.itemView)
-                    val mDefaultCityAdapter = CityDefaultAdapter(mInnerListener)
-                    binding.cityDefaultList.init(
-                        LinearLayoutManager(context),
-                        mDefaultCityAdapter,
-                        true
-                    )
-                    mDefaultCityAdapter.submitList(item.data)
-                 //   binding.cityDefaultList.addItemDecoration(SectionItemDecoration(context, item.data), 0)
-
-                }
-            }
-
-            override fun onCreate(context: Context, parent: ViewGroup, viewType: Int): DefaultListCityVh {
-                // 创建 viewholder
-                val viewBinding = CityDefaultListItemBinding.inflate(LayoutInflater.from(context), parent, false)
-                return DefaultListCityVh(viewBinding)
-            }
-        }).onItemViewType { position, list -> // 根据数据，返回对应的 ItemViewType
-            list[position].type
+            binding.cityChipGroup.setTag(com.knight.kotlin.library_widget.R.id.city_tag, emptyList<CityBean>())
         }
+    }
 
+    override fun onBindViewHolder(holder: VH, position: Int, item: GroupCityListBean?) {
+        item?.run {
+            val binding = holder.binding
+            val chipGroup = binding.cityChipGroup
+            val newCities = item.city
+
+            val currentTag = chipGroup.getTag(com.knight.kotlin.library_widget.R.id.city_tag) as? List<CityBean>
+
+            if (currentTag != newCities) {
+                chipGroup.setTag(com.knight.kotlin.library_widget.R.id.city_tag, newCities)
+
+                // 显示和更新必要的 Chip 视图
+                for (i in newCities.indices) {
+                    if (i < holder.chipCache.size) {
+                        val chip = holder.chipCache[i]
+                        chip.text = newCities[i].city
+                        chip.visibility = View.VISIBLE
+                        if (chip.parent != chipGroup) {
+                            chipGroup.addView(chip)
+                        }
+                    } else {
+                        // 如果预创建的不够，仍然需要创建新的（这种情况应该尽量避免）
+                        val newChip = createChip(holder.itemView.context, newCities[i].city)
+                        chipGroup.addView(newChip)
+                        holder.chipCache.add(newChip)
+                    }
+                }
+
+                // 隐藏多余的 Chip 视图
+                for (i in newCities.size until holder.chipCache.size) {
+                    holder.chipCache[i].visibility = View.GONE
+                }
+            }
+        }
+    }
+
+    override fun onBindViewHolder(holder: VH, position: Int, item: GroupCityListBean?, payloads: List<Any>) {
+        if (payloads.isEmpty()) {
+            super.onBindViewHolder(holder, position)
+        } else {
+            val binding = holder.binding
+            val chipGroup = binding.cityChipGroup
+            val newCities = payloads.firstOrNull() as? List<CityBean>
+
+            if (newCities != null) {
+                chipGroup.setTag(com.knight.kotlin.library_widget.R.id.city_tag, newCities)
+
+                for (i in newCities.indices) {
+                    if (i < holder.chipCache.size) {
+                        val chip = holder.chipCache[i]
+                        chip.text = newCities[i].city
+                        chip.visibility = View.VISIBLE
+                        if (chip.parent != chipGroup) {
+                            chipGroup.addView(chip)
+                        }
+                    } else {
+                        val newChip = createChip(holder.itemView.context, newCities[i].city)
+                        chipGroup.addView(newChip)
+                        holder.chipCache.add(newChip)
+                    }
+                }
+
+                for (i in newCities.size until holder.chipCache.size) {
+                    holder.chipCache[i].visibility = View.GONE
+                }
+            }
+        }
     }
 
 
+
+
+    // 新增创建 Chip 的方法
+    private fun createChip(context: Context, cityName: String): Chip {
+        return Chip(ContextThemeWrapper(context, R.style.Widget_Material3_Chip_Assist)).apply {
+            shapeAppearanceModel = ShapeAppearanceModel.Builder()
+                .setAllCornerSizes(12f)  // 设置圆角
+                .build()
+            chipStartPadding = 16.dp2px().toFloat()
+            chipEndPadding = 16.dp2px().toFloat()
+            textStartPadding = 8.dp2px().toFloat()
+            textEndPadding = 8.dp2px().toFloat()
+            chipMinHeight = 48.dp2px().toFloat()
+            setBackgroundColor(Color.parseColor("#EDEDED"))
+            text = cityName  // 设置文字内容
+            val marginLayoutParams = ViewGroup.MarginLayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            )
+            marginLayoutParams.setMargins(8.dp2px(), 5.dp2px(), 8.dp2px(), 5.dp2px()) // 设置左、上、右、下边距
+            layoutParams = marginLayoutParams
+            setOnClickListener {
+                // 在此处理点击事件
+            }
+        }
+    }
+
+    override fun onCreateViewHolder(context: Context, parent: ViewGroup, viewType: Int): VH {
+        return VH(parent)
+    }
 }
