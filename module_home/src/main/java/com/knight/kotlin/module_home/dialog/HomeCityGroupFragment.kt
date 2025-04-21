@@ -122,11 +122,9 @@ class HomeCityGroupFragment : BaseDialogFragment<HomeCityDialogPickerBinding, Ho
             mSearchCityAdpter,
             true
         )
-
         ivClose.setOnClick {
             dismiss()
         }
-
         homeTvSearchCityCancel.setOnClick {
             homeSearchCityEt.setText("")
             homeSearchCityEt.clearFocus()
