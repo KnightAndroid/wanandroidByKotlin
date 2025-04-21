@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.appcompat.view.ContextThemeWrapper
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.R
 import com.google.android.material.chip.Chip
 import com.google.android.material.shape.ShapeAppearanceModel
 import com.knight.kotlin.library_base.fragment.BaseFragment
@@ -14,10 +13,8 @@ import com.knight.kotlin.library_base.ktx.init
 import com.knight.kotlin.library_base.ktx.setOnClick
 import com.knight.kotlin.library_base.route.RouteFragment
 import com.knight.kotlin.library_base.util.dp2px
-import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_eye_discover.activity.EyeDiscoverActivity
 import com.knight.kotlin.module_eye_discover.adapter.EyeDiscoverSearchRecommendVideoAdapter
-
 import com.knight.kotlin.module_eye_discover.databinding.EyeDiscoverRecommendFragmentBinding
 import com.knight.kotlin.module_eye_discover.databinding.EyeDiscoverRecommendSearchHotItemBinding
 import com.knight.kotlin.module_eye_discover.vm.EyeDiscoverSearchRecommendVm
@@ -66,7 +63,7 @@ class EyeDiscoverSearchRecommendFragment : BaseFragment<EyeDiscoverRecommendFrag
                  mBinding.rvDiscoverRecommendVideo.addHeaderView(mHeaderBinding.root)
                  for (key in it.result?.item_list!!) {
                     // val chip = Chip(context)
-                     val chip = Chip(ContextThemeWrapper(context, R.style.Widget_Material3_Chip_Assist))
+                     val chip = Chip(ContextThemeWrapper(context, com.knight.kotlin.library_base.R.style.base_MyChipTheme), null, 0)
                      val shapeAppearanceModel = ShapeAppearanceModel.Builder()
                          .setAllCornerSizes(12f) // 设置所有角的圆角半径（单位：像素）
                          .build()

@@ -158,4 +158,11 @@ object CacheKey {
      */
     const val IP = "ip"
 
+    /**
+     *
+     * 定位
+     *
+     */
+    const val CURRENTLOCATION = "current_location"
+
 }

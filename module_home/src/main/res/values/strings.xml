@@ -33,5 +33,6 @@
     <string name="home_tv_zaobao">早报</string>
     <string name="home_weather_air_quality">空气质量</string>
     <string name="home_unknown_location">未知城市</string>
-
+    <string name="home_choose_city_title">选择城市</string>
+    <string name="home_search_city_hint">搜索地区</string>
 </resources>

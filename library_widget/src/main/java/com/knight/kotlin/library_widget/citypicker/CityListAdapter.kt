@@ -10,9 +10,9 @@ import androidx.appcompat.view.ContextThemeWrapper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter4.BaseQuickAdapter
-import com.google.android.material.R
 import com.google.android.material.chip.Chip
 import com.google.android.material.shape.ShapeAppearanceModel
+import com.knight.kotlin.library_base.ktx.setOnClick
 import com.knight.kotlin.library_base.util.dp2px
 import com.knight.kotlin.library_widget.GroupCityListBean
 import com.knight.kotlin.library_widget.databinding.CityDefaultItemBinding
@@ -75,23 +75,30 @@ class CityListAdapter(val mInnerListener:InnerListener): BaseQuickAdapter<GroupC
         val binding: CityDefaultItemBinding = CityDefaultItemBinding.inflate(
             LayoutInflater.from(parent.context), parent, false
         ),
-        val chipCache: MutableList<Chip> = mutableListOf() // 缓存 Chip 视图
+        val chipCache: MutableList<Chip> = mutableListOf(), // 缓存 Chip 视图
+        val mInnerListener: InnerListener
     ) : RecyclerView.ViewHolder(binding.root) {
         init {
             // 预先创建一些 Chip 视图并添加到 chipCache，初始时隐藏
-            for (i in 0 until 10) { // 假设每个 Item 最多显示 10 个 Chip，根据实际情况调整
-                val chip = Chip(ContextThemeWrapper(itemView.context, R.style.Widget_Material3_Chip_Assist)).apply {
+            for (i in 0 until 15) { // 假设每个 Item 最多显示 15 个 Chip，根据实际情况调整
+                val chip = Chip(ContextThemeWrapper(itemView.context, com.knight.kotlin.library_base.R.style.base_MyChipTheme), null, 0).apply {
                     shapeAppearanceModel = ShapeAppearanceModel.Builder()
                         .setAllCornerSizes(12f)
                         .build()
-                    chipStartPadding = 16.dp2px().toFloat()
-                    chipEndPadding = 16.dp2px().toFloat()
+                    chipStartPadding = 10.dp2px().toFloat()
+                    chipEndPadding = 10.dp2px().toFloat()
                     textStartPadding = 8.dp2px().toFloat()
                     textEndPadding = 8.dp2px().toFloat()
                     chipMinHeight = 48.dp2px().toFloat()
                     setBackgroundColor(Color.parseColor("#EDEDED"))
+                    val marginLayoutParams = ViewGroup.MarginLayoutParams(
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT
+                    )
+                    marginLayoutParams.setMargins(10.dp2px(), 5.dp2px(), 10.dp2px(), 5.dp2px()) // 设置左、上、右、下边距
+                    layoutParams = marginLayoutParams
                     visibility = View.GONE // 初始时隐藏
-                    setOnClickListener { /* 在这里处理点击事件 */ }
+
                 }
                 binding.cityChipGroup.addView(chip)
                 chipCache.add(chip)
@@ -117,12 +124,18 @@ class CityListAdapter(val mInnerListener:InnerListener): BaseQuickAdapter<GroupC
                         val chip = holder.chipCache[i]
                         chip.text = newCities[i].city
                         chip.visibility = View.VISIBLE
+                        chip.setOnClick {
+
+                           /* 在这里处理点击事件 */
+                           mInnerListener.click(position,newCities[i])
+
+                        }
                         if (chip.parent != chipGroup) {
                             chipGroup.addView(chip)
                         }
                     } else {
                         // 如果预创建的不够，仍然需要创建新的（这种情况应该尽量避免）
-                        val newChip = createChip(holder.itemView.context, newCities[i].city)
+                        val newChip = createChip(holder.itemView.context, position,newCities[i])
                         chipGroup.addView(newChip)
                         holder.chipCache.add(newChip)
                     }
@@ -156,7 +169,7 @@ class CityListAdapter(val mInnerListener:InnerListener): BaseQuickAdapter<GroupC
                             chipGroup.addView(chip)
                         }
                     } else {
-                        val newChip = createChip(holder.itemView.context, newCities[i].city)
+                        val newChip = createChip(holder.itemView.context,position, newCities[i])
                         chipGroup.addView(newChip)
                         holder.chipCache.add(newChip)
                     }
@@ -173,31 +186,32 @@ class CityListAdapter(val mInnerListener:InnerListener): BaseQuickAdapter<GroupC
 
 
     // 新增创建 Chip 的方法
-    private fun createChip(context: Context, cityName: String): Chip {
-        return Chip(ContextThemeWrapper(context, R.style.Widget_Material3_Chip_Assist)).apply {
+    private fun createChip(context: Context,position:Int, city :CityBean): Chip {
+        return Chip(ContextThemeWrapper(context, com.knight.kotlin.library_base.R.style.base_MyChipTheme), null, 0).apply {
             shapeAppearanceModel = ShapeAppearanceModel.Builder()
                 .setAllCornerSizes(12f)  // 设置圆角
                 .build()
-            chipStartPadding = 16.dp2px().toFloat()
-            chipEndPadding = 16.dp2px().toFloat()
+            chipStartPadding = 10.dp2px().toFloat()
+            chipEndPadding = 10.dp2px().toFloat()
             textStartPadding = 8.dp2px().toFloat()
             textEndPadding = 8.dp2px().toFloat()
             chipMinHeight = 48.dp2px().toFloat()
             setBackgroundColor(Color.parseColor("#EDEDED"))
-            text = cityName  // 设置文字内容
+            text = city.city // 设置文字内容
             val marginLayoutParams = ViewGroup.MarginLayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT
             )
-            marginLayoutParams.setMargins(8.dp2px(), 5.dp2px(), 8.dp2px(), 5.dp2px()) // 设置左、上、右、下边距
+            marginLayoutParams.setMargins(10.dp2px(), 5.dp2px(), 10.dp2px(), 5.dp2px()) // 设置左、上、右、下边距
             layoutParams = marginLayoutParams
             setOnClickListener {
                 // 在此处理点击事件
+                mInnerListener.click(position,city)
             }
         }
     }
 
     override fun onCreateViewHolder(context: Context, parent: ViewGroup, viewType: Int): VH {
-        return VH(parent)
+        return VH(parent, mInnerListener = mInnerListener)
     }
 }

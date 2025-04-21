@@ -54,7 +54,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:button="@drawable/set_selectdark_selector" />
+                android:button="@drawable/set_selectdark_selector"
+                android:buttonTint="@null"/>
 
 
         </RelativeLayout>

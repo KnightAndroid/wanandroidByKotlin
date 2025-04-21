@@ -744,7 +744,7 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
             }
             moonTimes.set?.let {
                 mEndTimes[1] =  DateUtils.getTimeStampByZonedDateTime(it,TimeUtils.getZonId(TimeUtils.getDefaultTimeZoneId()))
-                if (!it.hour.toString().contains("0")) {
+                if (it.hour < 10 && !it.hour.toString().contains("0")) {
                     moonRiseSetTime = moonRiseSetTime + "0" + it.hour.toString() + ":" + paddingZeroMinuter(it.minute) + "↓"
                 } else {
                     moonRiseSetTime = moonRiseSetTime + it.hour.toString() + ":" + paddingZeroMinuter(it.minute) + "↓"

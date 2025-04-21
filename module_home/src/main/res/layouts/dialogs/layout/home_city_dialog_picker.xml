@@ -2,31 +2,116 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/rl_city_data"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    >
+    android:layout_height="match_parent"
+    android:background="@drawable/home_choose_city_bg">
+
+
+
+
+    <RelativeLayout
+        android:id="@+id/rl_choose_city_title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/home_rl_choose_city_height"
+        >
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/home_choose_city_title"
+            android:layout_centerInParent="true"/>
+
+        <ImageView
+            android:id="@+id/iv_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/base_icon_close"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_search_city"
+        android:layout_width="wrap_content"
+        android:layout_height="44dp"
+        android:layout_marginLeft="@dimen/base_dimen_4"
+        android:layout_marginRight="@dimen/base_dimen_10"
+        android:layout_marginBottom="10dp"
+        android:layout_below="@id/rl_choose_city_title">
+
+        <com.knight.kotlin.library_widget.ClearEditText
+            android:id="@+id/home_search_city_et"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/home_search_city_et_margin_start"
+            android:layout_marginLeft="@dimen/home_search_city_et_margin_left"
+            android:layout_toLeftOf="@+id/home_tv_search_city_cancel"
+            android:background="@drawable/base_bg_filtrate_shape"
+            android:gravity="center_vertical"
+            android:hint="@string/home_search_city_hint"
+            android:imeOptions="actionSearch"
+            android:paddingLeft="@dimen/home_search_et_padding_left"
+            android:paddingRight="@dimen/home_search_et_padding_right"
+            android:singleLine="true"
+            android:drawableLeft="@drawable/base_icon_search_edittext"
+            android:textColor="@color/home_search_et_text_color"
+            android:textColorHint="@color/home_search_et_hint_color"
+            android:textCursorDrawable="@drawable/base_textcursorcolor"
+            android:textSize="@dimen/home_search_et_text_size"
+
+            />
+
+        <TextView
+            android:id="@+id/home_tv_search_city_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/home_tv_search_cancel_margin_left"
+            android:text="@string/home_cancel"
+            android:textColor="@color/home_tv_search_cancel_color"
+            android:textSize="@dimen/home_tv_search_cancel_text_size"
+            android:visibility="gone"/>
+    </RelativeLayout>
+
+
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/city_recyclerview"
+        android:id="@+id/rv_city"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/white" />
+        android:layout_below="@id/rl_search_city"
+
+         />
 
     <TextView
         android:id="@+id/index_overlay"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
         android:layout_centerInParent="true"
         android:background="#666666"
         android:gravity="center"
         android:textColor="@android:color/white"
-        android:textSize="18sp"
+        android:textSize="21sp"
         android:visibility="gone" />
 
     <!--右侧字母导航-->
     <com.knight.kotlin.library_widget.citypicker.view.SideIndexBar
         android:id="@+id/side_index_bar"
         android:layout_width="@dimen/widget_city_index_bar_width"
+        android:layout_below="@id/rl_search_city"
         android:layout_height="match_parent"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_search_city"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/rl_search_city"
+        />
 </RelativeLayout>

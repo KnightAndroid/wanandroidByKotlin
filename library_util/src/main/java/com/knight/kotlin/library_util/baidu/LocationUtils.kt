@@ -8,6 +8,8 @@ import com.baidu.location.LocationClientOption
 import com.baidu.mapapi.SDKInitializer
 import com.knight.kotlin.library_base.BaseApp
 import com.knight.kotlin.library_base.config.Appconfig
+import com.knight.kotlin.library_base.config.CacheKey
+import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_util.HandlerUtils
 
 
@@ -122,6 +124,7 @@ object LocationUtils {
                     //这里因为百度会多次回调，因此屏蔽 只回调一次
                     var cancelRunnable: Runnable = Runnable { } // 初始化为一个空 Runnable
                     cancelRunnable = HandlerUtils.postDelayed(Runnable {
+                        CacheUtils.saveDataInfo(CacheKey.CURRENTLOCATION,Appconfig.location)
                         it.onReceiveLocation(location)
                         // 方法执行完成后，取消监听
                         cancelRunnable.run()

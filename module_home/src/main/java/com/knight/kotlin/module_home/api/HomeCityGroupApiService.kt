@@ -24,4 +24,16 @@ interface HomeCityGroupApiService {
     suspend fun getCityGroupData(
         @Query("source") source: String
     ): BaseResponse<MutableList<GroupCityListBean>>
+
+
+    /**
+     *
+     * 搜索城市
+     */
+    @Headers("Domain-Name:weather")
+    @GET("city/like")
+    suspend fun getSearchCityByKey(
+        @Query("source") source: String,
+        @Query("city") city:String
+    ): BaseResponse<Map<String, String>>
 }

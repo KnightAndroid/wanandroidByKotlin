@@ -47,6 +47,11 @@
         <item name="cornerSize">@dimen/base_dimen_4</item>
     </style>
 
+    <!-- res/values/styles.xml -->
+    <style name="base_MyChipTheme" parent="Theme.Material3.DayNight">
+        <item name="chipStyle">@style/Widget.Material3.Chip.Assist</item>
+    </style>
+
 
 
 

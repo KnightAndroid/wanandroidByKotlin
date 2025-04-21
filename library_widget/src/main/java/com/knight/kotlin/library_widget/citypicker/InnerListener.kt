@@ -8,6 +8,6 @@ package com.knight.kotlin.library_widget.citypicker
  * @descript:
  */
 interface InnerListener {
-    fun dismiss(position: Int, data: CityBean)
-    fun locate()
+    fun click(position: Int, data: CityBean)
+
 }

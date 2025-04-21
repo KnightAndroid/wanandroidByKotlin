@@ -193,7 +193,12 @@ fun getLatitude():Double {
  * 返回经纬度信息
  */
 fun getLocation():BDLocation? {
-    return Appconfig.location
+    Appconfig.location ?.let {
+        return it
+    } ?:run {
+        Appconfig.location= CacheUtils.getDataInfo(CacheKey.CURRENTLOCATION, BDLocation::class.java)
+        return Appconfig.location
+    }
 }
 
 /**

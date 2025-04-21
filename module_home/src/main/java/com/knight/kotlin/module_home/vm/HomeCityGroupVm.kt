@@ -25,4 +25,13 @@ class HomeCityGroupVm @Inject constructor(private val mRepo: HomeCityGroupRepo) 
     fun getCityGroupData(source:String): LiveData<MutableList<GroupCityListBean>> {
         return mRepo.getCityGroupData(source).asLiveData()
     }
+
+    /**
+     *
+     * 根据搜索城市
+      */
+    fun getSearchCityByKey(source: String,
+                          city:String): LiveData<Map<String, String>> {
+        return mRepo.getSearchCityByKey(source, city).asLiveData()
+    }
 }

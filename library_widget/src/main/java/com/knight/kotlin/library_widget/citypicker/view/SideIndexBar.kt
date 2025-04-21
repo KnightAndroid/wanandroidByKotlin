@@ -155,7 +155,7 @@ class SideIndexBar @JvmOverloads constructor(context: Context, attrs: AttributeS
 
     companion object {
         private val DEFAULT_INDEX_ITEMS = arrayOf(
-            "定位", "热门", "A", "B", "C", "D", "E", "F", "G", "H",
+            "当前", "热门", "A", "B", "C", "D", "E", "F", "G", "H",
             "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "#"
         )
     }

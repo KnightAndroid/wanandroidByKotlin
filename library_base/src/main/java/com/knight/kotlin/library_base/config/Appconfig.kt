@@ -81,7 +81,8 @@ object Appconfig {
 
      /**
       *
-      * 定位信息
+      * 百度定位信息
        */
      var location:BDLocation?=null
+
 }
