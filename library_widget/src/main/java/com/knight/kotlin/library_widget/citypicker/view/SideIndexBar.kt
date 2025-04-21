@@ -9,6 +9,7 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import android.widget.TextView
+import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_base.util.dp2px
 import com.knight.kotlin.library_widget.R
 import java.util.Arrays
@@ -58,7 +59,7 @@ class SideIndexBar @JvmOverloads constructor(context: Context, attrs: AttributeS
 
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.SideIndexView)
         mTextSize = typedArray.getDimensionPixelSize(R.styleable.SideIndexView_side_text_size,14.dp2px())
-        mTextColor = typedArray.getColor(R.styleable.SideIndexView_side_text_color, Color.BLACK)
+        mTextColor = typedArray.getColor(R.styleable.SideIndexView_side_text_color, if(CacheUtils.getNormalDark()) Color.parseColor("#D3D3D3") else Color.BLACK)
         mTextTouchedColor = typedArray.getColor(R.styleable.SideIndexView_side_text_touch_color, Color.BLACK)
 
         mPaint = Paint(Paint.ANTI_ALIAS_FLAG)

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 夜间模式 -->
+    <item android:color="#444444" ></item>
+
+</selector>

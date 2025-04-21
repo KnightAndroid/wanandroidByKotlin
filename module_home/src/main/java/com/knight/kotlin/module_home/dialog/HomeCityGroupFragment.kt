@@ -127,18 +127,6 @@ class HomeCityGroupFragment : BaseDialogFragment<HomeCityDialogPickerBinding, Ho
             dismiss()
         }
 
-
-            homeSearchCityEt.clearFocus()
-            // 可选：请求父 View 获取焦点，以确保没有其他子 View 意外获得焦点
-            if (homeSearchCityEt.getParent() != null && homeSearchCityEt.getParent() is ViewGroup) {
-                (homeSearchCityEt.getParent() as ViewGroup).requestFocus()
-            }
-        rvCity.setOnTouchListener(OnTouchListener { v, event ->
-            if (event.action == MotionEvent.ACTION_DOWN) {
-                v.parent.requestDisallowInterceptTouchEvent(true)
-            }
-            false // 返回 false，让 RecyclerView 继续处理触摸事件
-        })
         homeTvSearchCityCancel.setOnClick {
             homeSearchCityEt.setText("")
             homeSearchCityEt.clearFocus()
@@ -150,11 +138,11 @@ class HomeCityGroupFragment : BaseDialogFragment<HomeCityDialogPickerBinding, Ho
 
         homeSearchCityEt.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) {
-                homeTvSearchCityCancel.visibility = View.VISIBLE
-                rvCity.visibility = View.GONE
-                rvSearchCity.visibility = View.VISIBLE
-            }
+            homeTvSearchCityCancel.visibility = View.VISIBLE
+            rvCity.visibility = View.GONE
+            rvSearchCity.visibility = View.VISIBLE
         }
+    }
 
 
         homeSearchCityEt.addTextChangedListener(object : TextWatcher {

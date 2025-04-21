@@ -45,24 +45,23 @@
             android:id="@+id/home_search_city_et"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/home_search_city_et_margin_start"
             android:layout_marginLeft="@dimen/home_search_city_et_margin_left"
+            android:layout_marginRight="-397dp"
             android:layout_toLeftOf="@+id/home_tv_search_city_cancel"
-            android:background="@drawable/base_bg_filtrate_shape"
+            android:background="@drawable/home_choose_city_shape"
+            android:drawableLeft="@drawable/base_icon_search_edittext"
             android:gravity="center_vertical"
             android:hint="@string/home_search_city_hint"
             android:imeOptions="actionSearch"
             android:paddingLeft="@dimen/home_search_et_padding_left"
             android:paddingRight="@dimen/home_search_et_padding_right"
             android:singleLine="true"
-            android:drawableLeft="@drawable/base_icon_search_edittext"
             android:textColor="@color/home_search_et_text_color"
             android:textColorHint="@color/home_search_et_hint_color"
             android:textCursorDrawable="@drawable/base_textcursorcolor"
-            android:textSize="@dimen/home_search_et_text_size"
 
-            />
+            android:textSize="@dimen/home_search_et_text_size" />
 
         <TextView
             android:id="@+id/home_tv_search_city_cancel"
@@ -113,5 +112,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/rl_search_city"
+        android:visibility="gone"
         />
 </RelativeLayout>

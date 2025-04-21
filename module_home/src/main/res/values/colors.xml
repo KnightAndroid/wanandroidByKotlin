@@ -59,4 +59,6 @@
      <color name="home_weather_arc_bottom_text_color">#666666</color>
      <color name="home_air_quality_text_color">#333333</color>
      <color name="home_tv_location_text_color">#ffffff</color>
+     <color name="home_search_city_bg">#cfcfcf</color>
+     <color name="home_search_edittext_bg">#1f767680</color>
 </resources>

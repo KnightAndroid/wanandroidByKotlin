@@ -1,12 +1,15 @@
 package com.knight.kotlin.library_widget.citypicker
 
+import android.app.Activity
 import android.content.Context
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.view.ContextThemeWrapper
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter4.BaseQuickAdapter
@@ -24,7 +27,7 @@ import com.knight.kotlin.library_widget.databinding.CityDefaultItemBinding
  * @Date 2025/4/17 16:05
  * @descript:城市item布局
  */
-class CityListAdapter(val mInnerListener:InnerListener): BaseQuickAdapter<GroupCityListBean, CityListAdapter.VH>() {
+class CityListAdapter( val mInnerListener:InnerListener): BaseQuickAdapter<GroupCityListBean, CityListAdapter.VH>() {
 
 
 
@@ -76,12 +79,15 @@ class CityListAdapter(val mInnerListener:InnerListener): BaseQuickAdapter<GroupC
             LayoutInflater.from(parent.context), parent, false
         ),
         val chipCache: MutableList<Chip> = mutableListOf(), // 缓存 Chip 视图
-        val mInnerListener: InnerListener
+
     ) : RecyclerView.ViewHolder(binding.root) {
         init {
             // 预先创建一些 Chip 视图并添加到 chipCache，初始时隐藏
             for (i in 0 until 15) { // 假设每个 Item 最多显示 15 个 Chip，根据实际情况调整
-                val chip = Chip(ContextThemeWrapper(itemView.context, com.knight.kotlin.library_base.R.style.base_MyChipTheme), null, 0).apply {
+               //
+                // 强制使用 MaterialComponents 包裹 Context
+                val materialContext = ContextThemeWrapper(itemView.context, com.google.android.material.R.style.Theme_MaterialComponents_DayNight)
+                val chip =Chip(materialContext).apply {
                     shapeAppearanceModel = ShapeAppearanceModel.Builder()
                         .setAllCornerSizes(12f)
                         .build()
@@ -90,7 +96,11 @@ class CityListAdapter(val mInnerListener:InnerListener): BaseQuickAdapter<GroupC
                     textStartPadding = 8.dp2px().toFloat()
                     textEndPadding = 8.dp2px().toFloat()
                     chipMinHeight = 48.dp2px().toFloat()
-                    setBackgroundColor(Color.parseColor("#EDEDED"))
+                   // setBackgroundColor(Color.parseColor("#FFFFFF"))
+                   // setBackgroundColor(Color.parseColor("#ec2222"))
+                 //   chipBackgroundColor = ColorStateList.valueOf(Color.parseColor("#cfcfcf"))
+
+                    chipBackgroundColor =  ContextCompat.getColorStateList(itemView.context,com.knight.kotlin.library_widget.R.color.widget_tv_city_search_shape)
                     val marginLayoutParams = ViewGroup.MarginLayoutParams(
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT
@@ -135,7 +145,7 @@ class CityListAdapter(val mInnerListener:InnerListener): BaseQuickAdapter<GroupC
                         }
                     } else {
                         // 如果预创建的不够，仍然需要创建新的（这种情况应该尽量避免）
-                        val newChip = createChip(holder.itemView.context, position,newCities[i])
+                        val newChip = createChip(context, position,newCities[i])
                         chipGroup.addView(newChip)
                         holder.chipCache.add(newChip)
                     }
@@ -169,7 +179,7 @@ class CityListAdapter(val mInnerListener:InnerListener): BaseQuickAdapter<GroupC
                             chipGroup.addView(chip)
                         }
                     } else {
-                        val newChip = createChip(holder.itemView.context,position, newCities[i])
+                        val newChip = createChip(context,position, newCities[i])
                         chipGroup.addView(newChip)
                         holder.chipCache.add(newChip)
                     }
@@ -187,7 +197,11 @@ class CityListAdapter(val mInnerListener:InnerListener): BaseQuickAdapter<GroupC
 
     // 新增创建 Chip 的方法
     private fun createChip(context: Context,position:Int, city :CityBean): Chip {
-        return Chip(ContextThemeWrapper(context, com.knight.kotlin.library_base.R.style.base_MyChipTheme), null, 0).apply {
+
+       // Chip(ContextThemeWrapper(context, com.knight.kotlin.library_base.R.style.base_MyChipTheme), null, 0).
+        val materialContext = ContextThemeWrapper(context, com.google.android.material.R.style.Theme_MaterialComponents_DayNight)
+
+        return Chip(materialContext).apply {
             shapeAppearanceModel = ShapeAppearanceModel.Builder()
                 .setAllCornerSizes(12f)  // 设置圆角
                 .build()
@@ -196,7 +210,10 @@ class CityListAdapter(val mInnerListener:InnerListener): BaseQuickAdapter<GroupC
             textStartPadding = 8.dp2px().toFloat()
             textEndPadding = 8.dp2px().toFloat()
             chipMinHeight = 48.dp2px().toFloat()
-            setBackgroundColor(Color.parseColor("#EDEDED"))
+           // chipBackgroundColor = ColorStateList.valueOf(Color.parseColor("#EDEDED"))
+           // chipBackgroundColor = ColorStateList.valueOf(Color.parseColor("#cfcfcf"))
+
+            chipBackgroundColor = ContextCompat.getColorStateList(context,com.knight.kotlin.library_widget.R.color.widget_tv_city_search_shape)
             text = city.city // 设置文字内容
             val marginLayoutParams = ViewGroup.MarginLayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,
@@ -212,6 +229,6 @@ class CityListAdapter(val mInnerListener:InnerListener): BaseQuickAdapter<GroupC
     }
 
     override fun onCreateViewHolder(context: Context, parent: ViewGroup, viewType: Int): VH {
-        return VH(parent, mInnerListener = mInnerListener)
+        return VH(parent)
     }
 }

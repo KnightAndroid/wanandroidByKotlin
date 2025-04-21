@@ -8,6 +8,7 @@ import android.text.TextPaint
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_base.util.dp2px
 import com.knight.kotlin.library_widget.GroupCityListBean
 
@@ -24,12 +25,12 @@ class CityNormalSectionItemDecoration(data: List<GroupCityListBean>) :
     private var mData: List<GroupCityListBean> = data
 
     private val mBgPaint: Paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = Color.parseColor("#EDEDED")
+        color = if(CacheUtils.getNormalDark())  Color.parseColor("#444444") else Color.parseColor("#EDEDED")
     }
 
     private val mTextPaint: TextPaint = TextPaint(Paint.ANTI_ALIAS_FLAG).apply {
         textSize = 14.dp2px().toFloat()
-        color = Color.parseColor("#999999")
+        color = if(CacheUtils.getNormalDark()) Color.parseColor("#D3D3D3") else Color.parseColor("#999999")
     }
 
     private val mBounds: Rect = Rect()
