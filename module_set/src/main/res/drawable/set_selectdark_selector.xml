@@ -3,4 +3,7 @@
     <item android:state_checked="true" android:drawable="@drawable/set_selectdark_yes"/>
     <item android:state_checked="false" android:drawable="@drawable/set_selectdark_no"/>
     <item android:drawable="@drawable/set_selectdark_no"/>
+
+
+
 </selector>

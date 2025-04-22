@@ -81,6 +81,7 @@ import com.knight.kotlin.library_util.ResourceProvider
 import com.knight.kotlin.library_util.SystemUtils
 import com.knight.kotlin.library_util.TimeUtils
 import com.knight.kotlin.library_util.ViewInitUtils
+import com.knight.kotlin.library_util.baidu.GeoCodeUtils
 import com.knight.kotlin.library_util.baidu.LocationUtils
 import com.knight.kotlin.library_util.baidu.OnceLocationListener
 import com.knight.kotlin.library_util.image.ImageLoader
@@ -89,6 +90,7 @@ import com.knight.kotlin.library_util.startPageWithRightAnimate
 import com.knight.kotlin.library_util.toast.ToastUtils
 import com.knight.kotlin.library_widget.SpacesItemDecoration
 import com.knight.kotlin.library_widget.ZzWeatherView
+import com.knight.kotlin.library_widget.citypicker.CityBean
 import com.knight.kotlin.library_widget.ktx.init
 import com.knight.kotlin.library_widget.ktx.setSafeOnItemChildClickListener
 import com.knight.kotlin.library_widget.ktx.setSafeOnItemClickListener
@@ -152,7 +154,7 @@ import kotlin.math.min
 @AndroidEntryPoint
 @Route(path = RouteFragment.Home.RecommendFragment)
 class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRecommendVm>(),
-    OnRefreshListener, OnLoadMoreListener, SlidingLayout.MenuStatusListener {
+    OnRefreshListener, OnLoadMoreListener, SlidingLayout.MenuStatusListener,HomeCityGroupFragment.OnChooseCityListener {
     //天气背景
     private lateinit var weatherView: WeatherView
     private var resourceProvider: ResourceProvider? = null
@@ -530,7 +532,7 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
 
 
         homeRecommentMenu.weatherMainAqiProgress.apply {
-            setTextColor(Color.BLACK)
+            setTextColor(if (CacheUtils.getNormalDark()) Color.parseColor("#D3D3D3") else Color.BLACK)
             setBottomTextColor(ContextCompat.getColor(context, R.color.home_weather_arc_bottom_text_color))
             max = 400f
         }
@@ -542,16 +544,7 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
             false
         )
 
-//        GeoCodeUtils.getGeocode(
-//            city = "北京",
-//            address = "北京市",
-//            onSuccess = { lat, lng ->
-//                LogUtils.d("GeoResult"+ "纬度: $lat，经度: $lng")
-//            },
-//            onFail = {
-//               // Log.e("GeoResult", "地理编码失败")
-//            }
-//        )
+
 
 
     }
@@ -701,6 +694,136 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
     }
 
 
+
+
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun getDetailWeekWeatherByCity(city:CityBean, lng:Double, lat:Double) {
+        mBinding.homeRecommentMenu.homeTvLocation.text = city.city
+        val latLng = Coordtransform.BD09toWGS84(lng, lat)
+        mViewModel.getTwoWeekDayRainFall(
+            latLng[1],
+            latLng[0],
+            DateUtils.getCurrentDateFormatted("yyyy-MM-dd"),
+            DateUtils.getTwoWeekDaysLater(),
+            true,
+            "precipitation_sum"
+        ).observerKt {
+            var verticalList: List<Float>
+            var horizontalList: List<String>
+            verticalList = ArrayList()
+            horizontalList = ArrayList()
+
+            for (i in 0..it.daily.precipitation_sum.size - 1) {
+                horizontalList.add(DateUtils.getMonthDay(it.daily.time.get(i)))
+                verticalList.add(it.daily.precipitation_sum.get(i))
+            }
+            mBinding.homeRecommentMenu.scrbarChartView.setHorizontalList(horizontalList)
+            mBinding.homeRecommentMenu.scrbarChartView.setVerticalList(verticalList)
+        }
+
+        mViewModel.getDetailWeekWeather(city.province, city.city, city.city).observerKt {
+            mBinding.homeRecommentMenu.tvSunSunriseSunsetTime.text = it.rise.get(0).sunrise + "↑\n"  + it.rise.get(0).sunset+ "↓"
+            val sunriseTime = DateUtils.getTimestamp(it.rise.get(0).time,it.rise.get(0).sunrise, TimeUtils.getDefaultTimeZoneId())
+            val sunsetTime = DateUtils.getTimestamp(it.rise.get(0).time,it.rise.get(0).sunset,TimeUtils.getDefaultTimeZoneId())
+            mStartTimes[0] = sunriseTime
+            mEndTimes[0] = sunsetTime
+            val moonTimes = MoonRiseSetUtils.getMoonPeriodForNight(LocalDate.now(),latLng[1], latLng[0])
+            var moonRiseSetTime = ""
+            moonTimes.rise?.let {
+                mStartTimes[1] = DateUtils.getTimeStampByZonedDateTime(it,TimeUtils.getZonId(TimeUtils.getDefaultTimeZoneId()))
+                moonRiseSetTime = it.hour.toString() + ":" + paddingZeroMinuter(it.minute) + "↑\n"
+            }
+            moonTimes.set?.let {
+                mEndTimes[1] =  DateUtils.getTimeStampByZonedDateTime(it,TimeUtils.getZonId(TimeUtils.getDefaultTimeZoneId()))
+                if (it.hour < 10 && !it.hour.toString().contains("0")) {
+                    moonRiseSetTime = moonRiseSetTime + "0" + it.hour.toString() + ":" + paddingZeroMinuter(it.minute) + "↓"
+                } else {
+                    moonRiseSetTime = moonRiseSetTime + it.hour.toString() + ":" + paddingZeroMinuter(it.minute) + "↓"
+                }
+            }
+
+            mBinding.homeRecommentMenu.tvMoonSunriseSunsetTime.text = moonRiseSetTime
+
+            val calendar = Calendar.getInstance(TimeUtils.getDefaultTimeZone())
+            val currentTime = calendar.time.time
+            mCurrentTimes[0] = currentTime
+            mCurrentTimes[1] = currentTime
+            mAnimCurrentTimes = longArrayOf(mCurrentTimes[0], mCurrentTimes[1])
+
+            mBinding.homeRecommentMenu.sunMoonControlView.setTime(mStartTimes, mEndTimes, mStartTimes)
+            mBinding.homeRecommentMenu.sunMoonControlView.setDayIndicatorRotation(0f)
+            mBinding.homeRecommentMenu.sunMoonControlView.setNightIndicatorRotation(0f)
+            mBinding.todayWeather = it.observe
+            mBinding.airWeather = it.air
+            weatherView.setWeather(
+                WeatherUtils.getBackgroundByWeather(it.observe.weather),
+                DateUtils.isDaytime(), null
+
+            )
+
+            HomeWeatherNewsFragment.newInstance(it.observe, it.forecast_24h.get(1).maxDegree, it.forecast_24h.get(1).minDegree)
+                .showAllowingStateLoss(parentFragmentManager, "dialog_everyday_weather")
+            mHourWeatherHeadAdapter.setRisks(listOf(it.rise.first()))
+            mHourWeatherAdapter.setWeatherEveryHour(it.forecast_1h)
+            mBinding.homeRecommentMenu.tvWeatherTodayValue.text = it.forecast_24h.get(1).dayWeather
+            mBinding.homeRecommentMenu.tvWeatherTomorrowValue.text = it.forecast_24h.get(2).dayWeather
+            mBinding.homeRecommentMenu.tvWeatherTodayMinmaxDegree.text = it.forecast_24h.get(1).maxDegree + "/" + it.forecast_24h.get(1).minDegree + "°"
+            mBinding.homeRecommentMenu.tvWeatherTomorrowMinmaxDegree.text = it.forecast_24h.get(2).maxDegree + "/" + it.forecast_24h.get(2).minDegree + "°"
+            setAirLevelBackground(mBinding.homeRecommentMenu.tvTodayAirLevel, it.forecast_24h.get(1).aqiLevel)
+            setAirLevelBackground(mBinding.homeRecommentMenu.tvTomorrowAirLevel, it.forecast_24h.get(2).aqiLevel)
+            //画折线
+            mBinding.homeRecommentMenu.weatherView.setLineType(ZzWeatherView.LINE_TYPE_DISCOUNT)
+
+
+            //画曲线(已修复不圆滑问题)
+            //        weatherView.setLineType(ZzWeatherView.LINE_TYPE_CURVE);
+
+            //设置线宽，单位px
+            mBinding.homeRecommentMenu.weatherView.setLineWidth(6f)
+
+
+            //设置一屏幕显示几列(最少3列)
+            try {
+                mBinding.homeRecommentMenu.weatherView.setColumnNumber(6)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+
+
+            //设置白天和晚上线条的颜色
+            mBinding.homeRecommentMenu.weatherView.setDayAndNightLineColor(Color.BLUE, Color.RED)
+            //延迟绘制 进行渲染
+            mBinding.homeRecommentMenu.weatherView.postInvalidateDelayed(200)
+            //填充天气数据
+            mBinding.homeRecommentMenu.weatherView.setData(it.forecast_24h)
+
+
+            val indexType = object : TypeToken<Map<String, WeatherIndexItem>>() {}.type
+            val indexMap: Map<String, WeatherIndexItem>? = fromJson(toJson(it.index), indexType)
+            indexMap?.let {
+                val indexList: List<WeatherIndexItem> = it.values.toList()
+                mWeatherIndexAdapter.submitList(indexList)
+            }
+
+            mAqiQuality = it.air.aqi
+            mAqiQualityLevel = it.air.aqi_level - 1
+            mBinding.homeRecommentMenu.weatherMainAqiProgress.apply {
+                setBottomText(WeatherUtils.getAqiToName(context,mAqiQualityLevel))
+                contentDescription = mAqiQualityLevel.toString() + ", " + WeatherUtils.getAqiToName(context,mAqiQualityLevel)
+            }
+
+            val mPollutantList :MutableList<PollutantBean> = mutableListOf()
+            mPollutantList.add(PollutantBean(PollutantIndex.PM25,it.air.pm10.toFloat(),getString(com.knight.kotlin.library_base.R.string.base_unit_mugpcum)))
+            mPollutantList.add(PollutantBean(PollutantIndex.PM10,it.air.pm10.toFloat(),getString(com.knight.kotlin.library_base.R.string.base_unit_mugpcum)))
+            mPollutantList.add(PollutantBean(PollutantIndex.O3,it.air.o3.toFloat(),getString(com.knight.kotlin.library_base.R.string.base_unit_mugpcum)))
+            mPollutantList.add(PollutantBean(PollutantIndex.NO2,it.air.no2.toFloat(),getString(com.knight.kotlin.library_base.R.string.base_unit_mugpcum)))
+            mPollutantList.add(PollutantBean(PollutantIndex.SO2,it.air.so2.toFloat(),getString(com.knight.kotlin.library_base.R.string.base_unit_mugpcum)))
+            mPollutantList.add(PollutantBean(PollutantIndex.CO,it.air.co.toFloat(),getString(com.knight.kotlin.library_base.R.string.base_unit_mgpcum)))
+            mWeatherPullutantAdapter.submitList(mPollutantList)
+        }
+
+    }
     /**
      *
      * 根据经纬度信息获取详细天气预告
@@ -1689,6 +1812,20 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
             mAttachAnimatorSets[i] = null
         }
         mWeatherPullutantAdapter.cancelAnimation()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun onChooseCity(data: CityBean) {
+        GeoCodeUtils.getGeocode(
+            city = data.city,
+            address = data.city,
+            onSuccess = { lat, lng ->
+                getDetailWeekWeatherByCity(data,lng,lat)
+            },
+            onFail = {
+
+            }
+        )
     }
 
 }

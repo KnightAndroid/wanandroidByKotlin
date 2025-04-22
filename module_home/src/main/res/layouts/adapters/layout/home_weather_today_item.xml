@@ -46,7 +46,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{model.degree + '°'}"
-            android:textColor="#606061"/>
+            android:textColor="@color/home_tv_hour_degree_text_color"/>
 
     </LinearLayout>
 

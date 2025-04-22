@@ -58,7 +58,18 @@
      <color name="home_tv_sun_rise_set_time_text_color">#999999</color>
      <color name="home_weather_arc_bottom_text_color">#666666</color>
      <color name="home_air_quality_text_color">#333333</color>
-     <color name="home_tv_location_text_color">#ffffff</color>
+
      <color name="home_search_city_bg">#cfcfcf</color>
      <color name="home_search_edittext_bg">#1f767680</color>
+     <color name="home_tv_weather_today_minmax_degree_text_color">#000000</color>
+     <color name="home_tv_hour_weather_title">#333333</color>
+     <color name="home_tv_sunrist_time_text_color">#545455</color>
+     <color name="home_tv_sunset_time_text_color">#545455</color>
+     <color name="home_tv_hour_degree_text_color">#606061</color>
+     <color name="home_btn_login_name_text_color">#ffffff</color>
+     <color name="home_tv_weather_degree_text_color">#ffffff</color>
+     <color name="home_tv_weather_text_color">#ffffff</color>
+     <color name="home_tv_location_text_color">#ffffff</color>
+     <color name="home_tv_weather_wind_text_color">#ffffff</color>
+     <color name="home_air_quality_level_text_color">#ffffff</color>
 </resources>

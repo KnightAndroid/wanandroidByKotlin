@@ -279,9 +279,9 @@
      <dimen name="home_tv_news_date_text_size">18sp</dimen>
      <dimen name="home_tv_news_date_margin_top">10dp</dimen>
      <dimen name="home_tv_news_date_margin_left">10dp</dimen>
-     <dimen name="home_tv_location_margin_top">30dp</dimen>
-     <dimen name="home_tv_location_margin_right">10dp</dimen>
-     <dimen name="home_tv_location_text_size">16sp</dimen>
+     <dimen name="home_tv_location_margin_left">5dp</dimen>
+     <dimen name="home_tv_location_padding_right">5dp</dimen>
+     <dimen name="home_tv_location_text_size">14sp</dimen>
      <dimen name="home_rl_choose_city_height">52dp</dimen>
      <dimen name="home_search_city_et_margin_start">5dp</dimen>
      <dimen name="home_search_city_et_margin_left">5dp</dimen>

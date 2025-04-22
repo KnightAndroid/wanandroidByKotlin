@@ -48,14 +48,15 @@
                 android:textSize="@dimen/set_tv_followsystem_tip_text_size" />
 
 
-            <CheckBox
+            <androidx.appcompat.widget.AppCompatCheckBox
                 android:id="@+id/set_cb_select_system"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:button="@drawable/set_selectdark_selector"
-                android:buttonTint="@null"/>
+                android:buttonTint="@null"
+                />
 
 
         </RelativeLayout>

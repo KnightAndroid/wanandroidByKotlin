@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.View
+import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_base.util.dp2px
 
 
@@ -61,7 +62,7 @@ class TemperatureView @JvmOverloads constructor(context: Context, attrs: Attribu
 
     private fun initAttrs(context: Context, attrs: AttributeSet?) {
         lineColor = 0xff93a122.toInt()
-        textColor = Color.parseColor("#565657")
+        textColor = if (CacheUtils.getNormalDark()) Color.parseColor("#8D8D8E") else Color.parseColor("#565657")
         dayPointColor = Color.parseColor("#102BF8")
         nightPointColor = Color.parseColor("#ED106A")
     }

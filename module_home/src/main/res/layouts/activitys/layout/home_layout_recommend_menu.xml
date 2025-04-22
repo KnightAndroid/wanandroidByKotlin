@@ -34,7 +34,7 @@
                     android:id="@+id/home_btn_login_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@android:color/white"
+                    android:textColor="@color/home_btn_login_name_text_color"
                     android:textSize="@dimen/home_tv_user_name_text_size"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
@@ -44,25 +44,14 @@
                     android:background="@drawable/home_btn_login_shape"/>
 
 
-                <TextView
-                    android:id="@+id/home_tv_location"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/home_tv_location_text_color"
-                    android:textSize="@dimen/home_tv_location_text_size"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    android:layout_marginTop="@dimen/home_tv_location_margin_top"
-                    android:layout_marginRight="@dimen/home_tv_location_margin_right"
-                    android:text="@string/home_unknown_location"
-                    android:background="@drawable/home_btn_login_shape"/>
+
 
 
                  <TextView
                      android:id="@+id/tv_weather_degree"
                      android:layout_width="wrap_content"
                      android:layout_height="wrap_content"
-                     android:textColor="@android:color/white"
+                     android:textColor="@color/home_tv_weather_degree_text_color"
                      android:textSize="@dimen/home_tv_degree_text_size"
                      android:text="@{todayWeather.degree + '°'}"
                      android:textStyle="bold"
@@ -98,6 +87,7 @@
                         android:layout_height="wrap_content"
                         android:layout_toRightOf="@id/iv_air_quality"
                         android:layout_centerVertical="true"
+                        android:textColor="@color/home_air_quality_level_text_color"
                         android:text="@{airWeather.aqi_name + ' ' + airWeather.aqi}"
                         />
 
@@ -107,9 +97,10 @@
 
 
                 <TextView
+                    android:id="@+id/tv_weather"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@android:color/white"
+                    android:textColor="@color/home_tv_weather_text_color"
                     app:layout_constraintLeft_toRightOf="@id/tv_weather_degree"
                     app:layout_constraintBottom_toTopOf="@id/tv_weather_wind"
                     android:textSize="@dimen/home_tv_wind_direction_text_size"
@@ -118,10 +109,25 @@
 
 
                 <TextView
+                    android:id="@+id/home_tv_location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/home_tv_location_text_color"
+                    android:textSize="@dimen/home_tv_location_text_size"
+                    app:layout_constraintLeft_toRightOf="@id/tv_weather"
+                    app:layout_constraintBottom_toTopOf="@id/tv_weather_wind"
+                    android:layout_marginLeft="@dimen/home_tv_location_margin_left"
+                    android:paddingRight="@dimen/home_tv_location_padding_right"
+                    android:text="@string/home_unknown_location"
+                    android:drawableRight="@drawable/home_location_icon"
+                    />
+
+
+                <TextView
                     android:id="@+id/tv_weather_wind"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@android:color/white"
+                    android:textColor="@color/home_tv_weather_wind_text_color"
                     app:layout_constraintLeft_toRightOf="@id/tv_weather_degree"
                     app:layout_constraintBottom_toBottomOf="@id/tv_weather_degree"
                     android:text="@{todayWeather.wind_direction_name + ' ' + todayWeather.wind_power + '级' }"
@@ -188,7 +194,7 @@
                             app:layout_constraintLeft_toLeftOf="parent"
                             android:textSize="16sp"
                             android:textStyle="bold"
-                            android:textColor="@android:color/black"/>
+                            android:textColor="@color/home_tv_weather_today_minmax_degree_text_color"/>
 
 
                         <TextView
@@ -244,7 +250,7 @@
                             app:layout_constraintLeft_toLeftOf="parent"
                             android:textSize="16sp"
                             android:textStyle="bold"
-                            android:textColor="@android:color/black"/>
+                            android:textColor="@color/home_tv_weather_today_minmax_degree_text_color"/>
 
 
                         <TextView

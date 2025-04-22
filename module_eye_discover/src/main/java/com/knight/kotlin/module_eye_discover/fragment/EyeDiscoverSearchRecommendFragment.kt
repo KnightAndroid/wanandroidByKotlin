@@ -63,7 +63,10 @@ class EyeDiscoverSearchRecommendFragment : BaseFragment<EyeDiscoverRecommendFrag
                  mBinding.rvDiscoverRecommendVideo.addHeaderView(mHeaderBinding.root)
                  for (key in it.result?.item_list!!) {
                     // val chip = Chip(context)
-                     val chip = Chip(ContextThemeWrapper(context, com.knight.kotlin.library_base.R.style.base_MyChipTheme), null, 0)
+
+                     val materialContext = ContextThemeWrapper(context, com.google.android.material.R.style.Theme_MaterialComponents_DayNight)
+
+                     val chip = Chip(materialContext)
                      val shapeAppearanceModel = ShapeAppearanceModel.Builder()
                          .setAllCornerSizes(12f) // 设置所有角的圆角半径（单位：像素）
                          .build()

@@ -33,7 +33,7 @@
     <string  name="home_tv_sun_moon">Sun &amp; moon</string>
     <string name="home_tv_zaobao">News</string>
     <string name="home_weather_air_quality">Air quality</string>
-    <string name="home_unknown_location">Unknown City</string>
+    <string name="home_unknown_location">Unknown City》</string>
     <string name="home_choose_city_title">Choose City</string>
     <string name="home_search_city_hint">Search City</string>
 </resources>

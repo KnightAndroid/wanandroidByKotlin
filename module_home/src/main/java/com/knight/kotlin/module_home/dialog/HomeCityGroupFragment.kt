@@ -1,11 +1,10 @@
 package com.knight.kotlin.module_home.dialog
 
+import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.Gravity
-import android.view.MotionEvent
 import android.view.View
-import android.view.View.OnTouchListener
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.knight.kotlin.library_base.fragment.BaseDialogFragment
@@ -45,7 +44,9 @@ import kotlinx.coroutines.launch
 class HomeCityGroupFragment : BaseDialogFragment<HomeCityDialogPickerBinding, HomeCityGroupVm>(),
     SideIndexBar.OnIndexTouchedChangedListener, InnerListener {
 
-
+    interface OnChooseCityListener {
+        fun onChooseCity(data: CityBean)
+    }
     private var searchJob: Job? = null
 
 
@@ -58,7 +59,7 @@ class HomeCityGroupFragment : BaseDialogFragment<HomeCityDialogPickerBinding, Ho
 
     private val mCityListAdapter: CityListAdapter by lazy { CityListAdapter(this) }
     private val mSearchCityAdpter: SearchCityAdpter by lazy {SearchCityAdpter()  }
-
+    private var listener: OnChooseCityListener? = null
     override fun initRequestData() {
         showLoadingDialog()
         mViewModel.getCityGroupData("pc").observe(this, { data ->
@@ -94,6 +95,13 @@ class HomeCityGroupFragment : BaseDialogFragment<HomeCityDialogPickerBinding, Ho
     override fun reLoadData() {
 
     }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        listener = parentFragment as? OnChooseCityListener
+            ?: throw RuntimeException("父 Fragment 必须实现 OnChooseCityListener 接口")
+    }
+
 
 
     override fun onStart() {
@@ -164,7 +172,9 @@ class HomeCityGroupFragment : BaseDialogFragment<HomeCityDialogPickerBinding, Ho
     }
 
     override fun click(position: Int, data: CityBean) {
-
+       listener?.let {
+           it.onChooseCity(data)
+       }
     }
 
     /**
@@ -177,5 +187,12 @@ class HomeCityGroupFragment : BaseDialogFragment<HomeCityDialogPickerBinding, Ho
             mSearchCityAdpter.submitList(data.values.toList())
         })
     }
+
+
+    override fun onDetach() {
+        super.onDetach()
+        listener = null
+    }
+
 
 }
