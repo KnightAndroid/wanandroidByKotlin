@@ -296,11 +296,11 @@ class ArcProgress @JvmOverloads constructor(
     }
 
     enum class ArcProgressDrawStatus {
-        // Wi-Fi网络
+        // 没有绘制
         NOTDRAW,
-        // 移动蜂窝网络
+        // 绘制中
         DRAWING,
-        // 没有网络
+        // 绘制完成
         COMPLETE
     }
 }

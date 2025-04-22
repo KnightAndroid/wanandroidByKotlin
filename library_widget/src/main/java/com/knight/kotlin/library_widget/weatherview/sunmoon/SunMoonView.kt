@@ -390,11 +390,11 @@ class SunMoonView @JvmOverloads constructor(
 
 
     enum class SunMoonDrawStatus {
-        // Wi-Fi网络
+        // 还没绘制
         NOTDRAW,
-        // 移动蜂窝网络
+        // 绘制中
         DRAWING,
-        // 没有网络
+        // 没有绘制
         COMPLETE
     }
 }

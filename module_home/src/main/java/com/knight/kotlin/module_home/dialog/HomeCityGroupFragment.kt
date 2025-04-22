@@ -6,7 +6,9 @@ import android.text.TextWatcher
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.knight.kotlin.library_base.fragment.BaseDialogFragment
 import com.knight.kotlin.library_base.ktx.dimissLoadingDialog
 import com.knight.kotlin.library_base.ktx.getLocation
@@ -130,6 +132,8 @@ class HomeCityGroupFragment : BaseDialogFragment<HomeCityDialogPickerBinding, Ho
             mSearchCityAdpter,
             true
         )
+        
+        rvSearchCity.addItemDecoration(DividerItemDecoration(context, RecyclerView.VERTICAL))
         ivClose.setOnClick {
             dismiss()
         }
@@ -174,6 +178,7 @@ class HomeCityGroupFragment : BaseDialogFragment<HomeCityDialogPickerBinding, Ho
     override fun click(position: Int, data: CityBean) {
        listener?.let {
            it.onChooseCity(data)
+           dismiss()
        }
     }
 
