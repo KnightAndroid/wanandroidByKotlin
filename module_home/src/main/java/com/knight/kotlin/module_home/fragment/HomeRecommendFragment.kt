@@ -1503,7 +1503,7 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
             }
 
             mBinding.homeRecommentMenu.homeTvLocation -> {
-                HomeCityGroupFragment().showAllowingStateLoss(parentFragmentManager, "group_city")
+                HomeCityGroupFragment().showAllowingStateLoss(childFragmentManager, "group_city")
             }
 
 //            mBinding.homeIvLabelmore -> {
