@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/home_news_float_menu"
+    android:clickable="true"
+    android:gravity="center"
+    android:paddingLeft="5dp"
+    android:paddingTop="5dp"
+    android:paddingRight="5dp"
+    android:paddingBottom="5dp"
+    android:id="@+id/ll_root_float_menu">
+
+    <ImageView
+        android:id="@+id/iv_float_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/home_news_logo"
+        android:clickable="true"
+        android:padding="2dp"
+        android:scaleType="centerCrop" />
+
+    <LinearLayout
+        android:id="@+id/ll_float_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:visibility="visible">
+
+        <ImageView
+            android:id="@+id/iv_float_play"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/home_news_pause_icon" />
+
+        <ImageView
+            android:id="@+id/iv_float_close"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/home_news_close_icon" />
+    </LinearLayout>
+</LinearLayout>

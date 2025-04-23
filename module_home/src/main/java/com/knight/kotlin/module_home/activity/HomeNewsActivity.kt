@@ -1,5 +1,6 @@
 package com.knight.kotlin.module_home.activity
 
+
 import android.view.LayoutInflater
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.knight.kotlin.library_base.activity.BaseActivity
@@ -9,12 +10,12 @@ import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_util.DateUtils
 import com.knight.kotlin.library_util.image.ImageLoader
 import com.knight.kotlin.library_widget.ktx.init
-import com.knight.kotlin.module_home.R
 import com.knight.kotlin.module_home.adapter.HomeNewsAdapter
 import com.knight.kotlin.module_home.databinding.HomeNewsActivityBinding
 import com.knight.kotlin.module_home.databinding.HomeNewsFootBinding
 import com.knight.kotlin.module_home.databinding.HomeNewsHeadBinding
 import com.knight.kotlin.module_home.entity.ZaoBaoBean
+import com.knight.kotlin.module_home.utils.FloatMenuManager
 import com.knight.kotlin.module_home.vm.HomeNewsVm
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener
@@ -57,7 +58,8 @@ class HomeNewsActivity:BaseActivity<HomeNewsActivityBinding,HomeNewsVm>(), OnRef
     }
 
     override fun HomeNewsActivityBinding.initView() {
-        mBinding.title = getString(R.string.home_tv_zaobao)
+        FloatMenuManager.showNormal(this@HomeNewsActivity)
+        mBinding.title = getString(com.knight.kotlin.module_home.R.string.home_tv_zaobao)
         requestLoading(mBinding.includeNews.baseFreshlayout)
         includeNews.baseFreshlayout.setEnableLoadMore(false)
         includeNews.baseBodyRv.init(
@@ -69,6 +71,7 @@ class HomeNewsActivity:BaseActivity<HomeNewsActivityBinding,HomeNewsVm>(), OnRef
         includeNewsToolbar.baseIvBack.setOnClick {
             finish()
         }
+
     }
 
     override fun onRefresh(refreshLayout: RefreshLayout) {
@@ -103,5 +106,6 @@ class HomeNewsActivity:BaseActivity<HomeNewsActivityBinding,HomeNewsVm>(), OnRef
             mNewsAdapter.submitList(zaoBao.news)
         }
     }
+
 
 }

@@ -26,7 +26,7 @@ import java.io.IOException
 /**
  * Author:Knight
  * Time:2022/5/18 9:50
- * Description:FloatMenu
+ * Description:FloatMenu 方方正正悬浮窗
  */
 class FloatMenu constructor(mContext: Context,mView: View):PopupWindow(mContext) {
     /** Menu tag name in XML.  */
