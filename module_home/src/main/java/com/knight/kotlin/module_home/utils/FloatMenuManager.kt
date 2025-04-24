@@ -10,14 +10,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
-import android.widget.LinearLayout
+import androidx.annotation.LayoutRes
+import androidx.annotation.OptIn
 import com.knight.kotlin.library_base.ktx.getScreenHeight
-import com.knight.kotlin.library_base.ktx.setOnClick
-import com.knight.kotlin.library_base.util.dp2px
-import com.knight.kotlin.library_util.LogUtils
 import com.knight.kotlin.library_widget.overlaymenu.EasyFloat
 import com.knight.kotlin.library_widget.overlaymenu.FloatWindow
-import com.knight.kotlin.library_widget.overlaymenu.FloatingMagnetView
 import com.knight.kotlin.module_home.R
 
 
@@ -68,9 +65,11 @@ object FloatMenuManager {
             .create()
     }
 
-    fun showNormal(context: Activity) {
+    //必须显式地声明你愿意使用这个 API，否则会有警告
+    @OptIn(androidx.media3.common.util.UnstableApi::class)
+    fun showNormal(context: Activity, @LayoutRes layoutId: Int) {
         EasyFloat
-            .layout(R.layout.home_float_news_menu)
+            .layout(layoutId)
             .layoutParams(initLayoutParams())
             .listener {
                 initListener(it)
@@ -78,28 +77,8 @@ object FloatMenuManager {
             .show(context)
 
 
-        val floatMagnetView: FloatingMagnetView? = EasyFloat.getCustomView()
-        val play = floatMagnetView?.findViewById<ImageView>(R.id.iv_float_play)
-        val logo = floatMagnetView?.findViewById<ImageView>(R.id.iv_float_img)
-        val llRoot = floatMagnetView?.findViewById<LinearLayout>(R.id.ll_root_float_menu)
-        var rootWidth = 0
-        llRoot?.post {
-           rootWidth = llRoot.width
-        }
-
-        play!!.setOnClickListener {
-            LogUtils.d("点击sss")
-        }
-
-        logo?.setOnClick {
-            if (llRoot?.width == (logo.width + 10.dp2px())) {
-                animateViewWidth(llRoot!!,rootWidth)
-            } else {
-                animateViewWidth(llRoot!!,logo.width + 10.dp2px())
-            }
-
-        }
     }
+
 
 
 
@@ -114,22 +93,7 @@ object FloatMenuManager {
     }
 
     private fun initListener(root: View?) {
-//        val play = root?.findViewById<ImageView>(R.id.iv_float_play)
-//        val logo = root?.findViewById<ImageView>(R.id.iv_float_img)
-//        val llRoot = root?.findViewById<ImageView>(R.id.ll_root_float_menu)
-//        play?.setOnClick {
-//
-//            LogUtils.d("点击sss")
-//
-//        }
-//        logo?.setOnClick {
-//            if (llRoot!!.width == logo!!.width) {
-//                animateViewWidth(llRoot!!,false,logo.width)
-//            } else {
-//                animateViewWidth(llRoot!!,true,logo.width)
-//            }
-//
-//        }
+
     }
 
     fun destroyFloatMenu() {

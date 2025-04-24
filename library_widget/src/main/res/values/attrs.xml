@@ -1230,4 +1230,20 @@
         <attr name="section_text_size" format="dimension"/>
         <attr name="section_text_color" format="dimension"/>
     </declare-styleable>
+
+
+    <declare-styleable name="CircularMusicProgressBar">
+
+        <attr name="border_width" format="dimension" />
+        <attr name="border_color" format="color|reference" />
+        <attr name="border_overlay" format="boolean" />
+        <attr name="draw_anticlockwise" format="boolean" />
+        <attr name="enable_touch" format="boolean" />
+        <attr name="fill_color" format="color|reference" />
+        <attr name="cir_progress_color" format="color|reference" />
+        <attr name="centercircle_diammterer" format="float|reference" />
+        <attr name="progress_startAngle" format="float|reference" />
+        <attr name="indeterminate" format="boolean" />
+        <attr name="indeterminate_angle" format="float|reference"/>
+    </declare-styleable>
 </resources>

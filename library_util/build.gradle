@@ -24,9 +24,9 @@ dependencies {
 
     kapt Dependencies.GitHub.AUTO_SERVICE_ANNOTATIONS
     kapt Dependencies.GitHub.GO_ROUTER_COMPILER
-
-
-
+    implementation Dependencies.OtherUtils.Exoplayer
+    implementation Dependencies.OtherUtils.ExoplayerDataSource
+    api Dependencies.OtherUtils.ExoPlayerCommon
 
 
 }

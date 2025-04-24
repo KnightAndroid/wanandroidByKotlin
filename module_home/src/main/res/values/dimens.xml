@@ -285,4 +285,6 @@
      <dimen name="home_rl_choose_city_height">52dp</dimen>
      <dimen name="home_search_city_et_margin_start">5dp</dimen>
      <dimen name="home_search_city_et_margin_left">5dp</dimen>
+     <dimen name="home_news_iv_float_play_margin_left">10dp</dimen>
+     <dimen name="home_news_iv_float_play_margin_right">10dp</dimen>
 </resources>

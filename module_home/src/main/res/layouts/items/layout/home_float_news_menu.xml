@@ -13,14 +13,18 @@
     android:paddingBottom="5dp"
     android:id="@+id/ll_root_float_menu">
 
-    <ImageView
+    <com.knight.kotlin.library_widget.circleimagebar.CircularMusicProgressBar
         android:id="@+id/iv_float_img"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/home_news_logo"
-        android:clickable="true"
-        android:padding="2dp"
-        android:scaleType="centerCrop" />
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/home_news_logo"
+        app:border_color="#80CBC4"
+        app:border_width="2dp"
+        app:centercircle_diammterer="1"
+        app:cir_progress_color="#00796B"
+        app:draw_anticlockwise="false"
+        app:progress_startAngle="0"
+        app:enable_touch="true"/>
 
     <LinearLayout
         android:id="@+id/ll_float_menu"
@@ -32,16 +36,18 @@
 
         <ImageView
             android:id="@+id/iv_float_play"
-            android:layout_width="38dp"
-            android:layout_height="38dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:scaleType="centerInside"
-            android:src="@drawable/home_news_pause_icon" />
+            android:src="@drawable/home_news_pause_icon"
+            android:layout_marginLeft="@dimen/home_news_iv_float_play_margin_left"
+            android:layout_marginRight="@dimen/home_news_iv_float_play_margin_right"/>
 
         <ImageView
             android:id="@+id/iv_float_close"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:scaleType="centerInside"
-            android:src="@drawable/home_news_close_icon" />
+            android:background="@drawable/home_news_close_icon" />
     </LinearLayout>
 </LinearLayout>
