@@ -46,7 +46,7 @@
             android:id="@+id/base_iv_right"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/base_icon_more"
+            android:src="@drawable/base_icon_more"
             android:layout_gravity="right|center"
             android:layout_marginRight="@dimen/widget_compat_toolbar_iv_right"
             android:visibility="gone"/>

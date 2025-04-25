@@ -24,15 +24,15 @@
         app:cir_progress_color="#00796B"
         app:draw_anticlockwise="false"
         app:progress_startAngle="0"
-        app:enable_touch="true"/>
+        app:enable_touch="false"/>
 
     <LinearLayout
         android:id="@+id/ll_float_menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="center"
-        android:visibility="visible">
+        android:layout_gravity="start|center_vertical"
+        android:gravity="center_vertical">
 
         <ImageView
             android:id="@+id/iv_float_play"

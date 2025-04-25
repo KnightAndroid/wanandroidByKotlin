@@ -2,7 +2,6 @@ package com.knight.kotlin.library_widget.circleimagebar
 
 import android.animation.TimeInterpolator
 import android.animation.ValueAnimator
-import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapShader
@@ -671,12 +670,12 @@ open class CircularMusicProgressBar(
     }
 
 
-    @SuppressLint("ClickableViewAccessibility")
-    override fun onTouchEvent(event: MotionEvent?): Boolean {
-        return if (gestureListener == null || !mEnableTouch) {
-            false
-        } else gestureListener!!.onTouchEvent(event!!)
-    }
+//    @SuppressLint("ClickableViewAccessibility")
+//    override fun onTouchEvent(event: MotionEvent?): Boolean {
+//        return if (gestureListener == null || !mEnableTouch) {
+//            false
+//        } else gestureListener!!.onTouchEvent(event!!)
+//    }
 
     private fun setBaseAngle(newAngle: Float) {
         mBaseAngle = newAngle

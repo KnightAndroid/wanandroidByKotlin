@@ -38,6 +38,7 @@ open class FloatingMagnetView @JvmOverloads constructor(context: Context, attrs:
     private var dragEnable = true
     private var autoMoveToEdge = true
 
+
     fun setMagnetViewListener(magnetViewListener: MagnetViewListener?) {
         this.mMagnetViewListener = magnetViewListener
     }
@@ -160,7 +161,7 @@ open class FloatingMagnetView @JvmOverloads constructor(context: Context, attrs:
         mPortraitY = 0f
     }
 
-    protected fun isNearestLeft(): Boolean {
+    fun isNearestLeft(): Boolean {
         val middle = mScreenWidth / 2
         isNearestLeft = getX() < middle
         return isNearestLeft
@@ -255,4 +256,6 @@ open class FloatingMagnetView @JvmOverloads constructor(context: Context, attrs:
         const val MARGIN_EDGE: Int = 13
         private const val TOUCH_TIME_THRESHOLD = 150
     }
+
+
 }

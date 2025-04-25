@@ -1,10 +1,13 @@
 package com.knight.kotlin.module_home.activity
 
 
+import androidx.annotation.OptIn
 import androidx.fragment.app.FragmentTransaction
+import androidx.media3.common.util.UnstableApi
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.vm.EmptyViewModel
+import com.knight.kotlin.library_util.Mp3PlayerUtils
 import com.knight.kotlin.module_home.R
 import com.knight.kotlin.module_home.databinding.HomeActivityBinding
 import com.knight.kotlin.module_home.fragment.HomeFragment
@@ -43,5 +46,13 @@ class HomeActivity : BaseActivity<HomeActivityBinding,EmptyViewModel>() {
         val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
         transaction.add(R.id.home_ll, mHomeFragment)
         transaction.commit()
+    }
+
+
+    @OptIn(UnstableApi::class)
+    override fun onDestroy() {
+        super.onDestroy()
+        //释放资源
+        Mp3PlayerUtils.getInstance().release()
     }
 }

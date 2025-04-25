@@ -66,6 +66,15 @@ object EasyFloat : Application.ActivityLifecycleCallbacks {
     fun getCustomView() :FloatingMagnetView?{
         return FloatingView.get()?.getView()
     }
+
+
+    fun show() {
+        FloatingView.get()?.getView()!!.visibility = View.VISIBLE
+    }
+
+    fun dimiss() {
+        FloatingView.get()?.getView()!!.visibility = View.GONE
+    }
     /**
      * 是否自动靠边
      */

@@ -42,6 +42,7 @@ class FloatingView private constructor() : IFloatingView {
             }
             if (ViewCompat.isAttachedToWindow(mEnFloatingView!!) && getContainer() != null) {
                 getContainer()?.removeView(mEnFloatingView)
+                mEnFloatingView?.onRemove()
             }
             mEnFloatingView = null
         })

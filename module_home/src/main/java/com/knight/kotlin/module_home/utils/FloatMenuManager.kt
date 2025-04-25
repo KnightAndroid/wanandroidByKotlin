@@ -31,11 +31,26 @@ object FloatMenuManager {
 
 
     fun hidden() {
-        float?.hidden()
+        float?.let {
+            it.hidden()
+        } ?:run {
+            EasyFloat.dimiss()
+        }
+
     }
 
-    fun show() {
-        float?.show()
+    fun show(context: Activity) {
+        float?.let {
+            it.show()
+        } ?:run {
+            EasyFloat.getCustomView()?.let {
+                EasyFloat.show()
+            } ?:run {
+                EasyFloat.show(context)
+            }
+
+        }
+
 
     }
 
@@ -48,7 +63,7 @@ object FloatMenuManager {
         val play = view!!.findViewById<ImageView>(R.id.iv_float_play)
         val logo = view!!.findViewById<ImageView>(R.id.iv_float_img)
         close.setOnClickListener {
-
+            hidden()
         }
 
 
@@ -67,14 +82,13 @@ object FloatMenuManager {
 
     //必须显式地声明你愿意使用这个 API，否则会有警告
     @OptIn(androidx.media3.common.util.UnstableApi::class)
-    fun showNormal(context: Activity, @LayoutRes layoutId: Int) {
+    fun initNormal(context: Activity, @LayoutRes layoutId: Int) {
         EasyFloat
             .layout(layoutId)
             .layoutParams(initLayoutParams())
             .listener {
                 initListener(it)
             }
-            .show(context)
 
 
     }
@@ -107,6 +121,7 @@ object FloatMenuManager {
 
     fun animateViewWidth(
         view: View,
+        expand: Boolean,
         targetWidth: Int,
         duration: Long = 300
     ) {
@@ -114,16 +129,25 @@ object FloatMenuManager {
         val isAnimating = view.getTag(R.id.home_news_floatmenu_animating_tag) as? Boolean ?: false
         if (isAnimating) return
 
-        val startWidth = view.width
-        if (startWidth == targetWidth) return // 不需要动画
+        val startWidth= if (expand) 0 else targetWidth
+        val targetWidth = if (expand) targetWidth else 0
+
 
         view.setTag(R.id.home_news_floatmenu_animating_tag, true) // 设置动画标记
 
         val animator = ValueAnimator.ofInt(startWidth, targetWidth)
         animator.addUpdateListener { valueAnimator ->
+//            val newWidth = valueAnimator.animatedValue as Int
+//            view.layoutParams.width = newWidth
+//            view.requestLayout()
+
+
             val newWidth = valueAnimator.animatedValue as Int
-            view.layoutParams.width = newWidth
-            view.requestLayout()
+            val lp = view.layoutParams
+            lp.width = newWidth
+            view.layoutParams = lp
+
+
         }
 
         animator.duration = duration
@@ -138,4 +162,7 @@ object FloatMenuManager {
         })
         animator.start()
     }
+
+
+
 }
