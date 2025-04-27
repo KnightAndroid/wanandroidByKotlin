@@ -1,24 +1,30 @@
 package com.knight.kotlin.module_home.activity
 
 
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.annotation.OptIn
+import androidx.annotation.RequiresApi
 import androidx.media3.common.util.UnstableApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.ktx.getScreenWidth
 import com.knight.kotlin.library_base.ktx.setOnClick
 import com.knight.kotlin.library_base.route.RouteActivity
+import com.knight.kotlin.library_permiss.XXPermissions
+import com.knight.kotlin.library_permiss.listener.OnPermissionCallback
+import com.knight.kotlin.library_permiss.permissions.Permission
+import com.knight.kotlin.library_permiss.utils.PermissionUtils
 import com.knight.kotlin.library_util.DateUtils
+import com.knight.kotlin.library_util.DialogUtils
 import com.knight.kotlin.library_util.Mp3PlayerUtils
 import com.knight.kotlin.library_util.image.ImageLoader
+import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.library_widget.circleimagebar.CircularMusicProgressBar
 import com.knight.kotlin.library_widget.ktx.init
-import com.knight.kotlin.library_widget.overlaymenu.EasyFloat
-import com.knight.kotlin.library_widget.overlaymenu.FloatingMagnetView
 import com.knight.kotlin.module_home.R
 import com.knight.kotlin.module_home.adapter.HomeNewsAdapter
 import com.knight.kotlin.module_home.databinding.HomeNewsActivityBinding
@@ -72,10 +78,11 @@ class HomeNewsActivity:BaseActivity<HomeNewsActivityBinding,HomeNewsVm>(), OnRef
 
     }
 
+    @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
     override fun HomeNewsActivityBinding.initView() {
         includeNewsToolbar.baseIvRight.setImageResource(R.drawable.home_news_float_menu_icon)
         includeNewsToolbar.baseIvRight.visibility = View.VISIBLE
-        FloatMenuManager.initNormal(this@HomeNewsActivity, R.layout.home_float_news_menu)
+            // FloatMenuManager.initNormal(this@HomeNewsActivity, R.layout.home_float_news_menu)
         initFloatViewActions()
         mBinding.title = getString(com.knight.kotlin.module_home.R.string.home_tv_zaobao)
         requestLoading(mBinding.includeNews.baseFreshlayout)
@@ -93,9 +100,52 @@ class HomeNewsActivity:BaseActivity<HomeNewsActivityBinding,HomeNewsVm>(), OnRef
             if (showFloatMenu) {
                 FloatMenuManager.hidden()
             } else {
-                FloatMenuManager.show(this@HomeNewsActivity)
+                if (FloatMenuManager.checkInitialized()) {
+                    DialogUtils.getConfirmDialog(this@HomeNewsActivity,getString(R.string.home_open_floatmenu_title),
+                        getString(R.string.home_open_floatmenu_message),getString(R.string.home_in_app_floating_window),
+                        getString(R.string.home_out_of_app_floating_window),
+                        { dialog, which ->
+                            FloatMenuManager.initFloatMenu(this@HomeNewsActivity,initFloatViewActions(),false)
+                            FloatMenuManager.show()
+                            showFloatMenu = !showFloatMenu
+                        }) {
+                            dialog, which ->
+                        if (XXPermissions.isGranted(this@HomeNewsActivity,Permission.SYSTEM_ALERT_WINDOW)) {
+                            FloatMenuManager.initFloatMenu(this@HomeNewsActivity,initFloatViewActions(),true)
+                            FloatMenuManager.show()
+                        } else {
+                            XXPermissions.with(this@HomeNewsActivity)
+                                ?.permission(Permission.SYSTEM_ALERT_WINDOW)
+                                ?.request(object : OnPermissionCallback {
+                                    override fun onGranted(permissions: List<String>, all: Boolean) {
+                                        if (all) {
+                                            FloatMenuManager.initFloatMenu(this@HomeNewsActivity,initFloatViewActions(),true)
+                                            FloatMenuManager.show()
+                                            showFloatMenu = !showFloatMenu
+                                        }
+                                    }
+
+                                    override fun onDenied(permissions: List<String>, doNotAskAgain: Boolean) {
+                                        super.onDenied(permissions, doNotAskAgain)
+                                            PermissionUtils.showPermissionSettingDialog(this@HomeNewsActivity,permissions,permissions,object :
+                                                OnPermissionCallback {
+                                                override fun onGranted(permissions: List<String>, all: Boolean) {
+
+                                                }
+                                            })
+
+                                    }
+                                })
+
+                        }
+
+                    }
+
+                } else {
+                    FloatMenuManager.show()
+                }
             }
-            showFloatMenu = !showFloatMenu
+
         }
 
 
@@ -108,11 +158,15 @@ class HomeNewsActivity:BaseActivity<HomeNewsActivityBinding,HomeNewsVm>(), OnRef
 
 
     @OptIn(UnstableApi::class)
-    private fun initFloatViewActions() {
-        val floatMagnetView: FloatingMagnetView? = EasyFloat.getCustomView()
-        val play = floatMagnetView?.findViewById<ImageView>(R.id.iv_float_play)
-        val llRoot = floatMagnetView?.findViewById<LinearLayout>(R.id.ll_float_menu)
-        val iv_float_img = floatMagnetView?.findViewById<CircularMusicProgressBar>(R.id.iv_float_img)
+    private fun initFloatViewActions():View {
+        val view = LayoutInflater.from(this@HomeNewsActivity).inflate(R.layout.home_float_news_menu, null)
+        val close = view!!.findViewById<View>(R.id.iv_float_close)
+        val play = view!!.findViewById<ImageView>(R.id.iv_float_play)
+        val llRoot = view!!.findViewById<LinearLayout>(R.id.ll_float_menu)
+        val iv_float_img = view!!.findViewById<CircularMusicProgressBar>(R.id.iv_float_img)
+        close.setOnClickListener {
+            FloatMenuManager.hidden()
+        }
 
         var rootWidth = 0
         llRoot?.post {
@@ -120,17 +174,22 @@ class HomeNewsActivity:BaseActivity<HomeNewsActivityBinding,HomeNewsVm>(), OnRef
         }
 
         play?.setOnClickListener {
-            Mp3PlayerUtils.getInstance().smartTogglePlay(mp3Url, onProgress = { pos, dur ->
-                iv_float_img?.setValue((pos * 100 / dur).toInt().toFloat())
-                                                                              // 这里可以添加播放进度更新逻辑
-            }, onStateChanged = { isPlaying ->
-                if (isPlaying) {
-                    play.setImageResource(R.drawable.home_news_play_icon)
-                } else {
-                    play.setImageResource(R.drawable.home_news_pause_icon)
-                }
+            if (::mp3Url.isInitialized) {
+                Mp3PlayerUtils.getInstance().smartTogglePlay(mp3Url, onProgress = { pos, dur ->
+                    iv_float_img?.setValue((pos * 100 / dur).toInt().toFloat())
+                    // 这里可以添加播放进度更新逻辑
+                }, onStateChanged = { isPlaying ->
+                    if (isPlaying) {
+                        play.setImageResource(R.drawable.home_news_play_icon)
+                    } else {
+                        play.setImageResource(R.drawable.home_news_pause_icon)
+                    }
 
-            })
+                })
+            } else {
+                toast(R.string.home_mp3url_empty_hint)
+            }
+
 
         }
 
@@ -142,6 +201,7 @@ class HomeNewsActivity:BaseActivity<HomeNewsActivityBinding,HomeNewsVm>(), OnRef
             }
         }
 
+        return view
 //        iv_float_img?.setOnCircularBarChangeListener(object :OnCircularSeekBarChangeListener{
 //            override fun onProgressChanged(circularBar: CircularMusicProgressBar?, progress: Int, fromUser: Boolean) {
 //

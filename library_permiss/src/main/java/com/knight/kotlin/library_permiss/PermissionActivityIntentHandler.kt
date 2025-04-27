@@ -1,7 +1,6 @@
 package com.knight.kotlin.library_permiss
 
 import android.app.Activity
-
 import android.content.Context
 import android.content.Intent
 import androidx.fragment.app.Fragment
@@ -12,9 +11,9 @@ import com.knight.kotlin.library_permiss.utils.PermissionUtils.findActivity
 /**
  * Author:Knight
  * Time:2023/8/30 17:32
- * Description:StartActivityManager
+ * Description:PermissionActivityIntentHandler
  */
-class StartActivityManager {
+class PermissionActivityIntentHandler {
 
     interface IStartActivityDelegate {
         fun startActivity(intent: Intent)
@@ -27,7 +26,7 @@ class StartActivityManager {
         /**
          * 从父意图中获取子意图
          */
-        fun getSubIntentInMainIntent( mainIntent: Intent?): Intent? {
+        fun findSubIntentBySuperIntent( mainIntent: Intent?): Intent? {
             val subIntent: Intent?
             subIntent = if (isAndroid13()) {
                 mainIntent!!.getParcelableExtra(SUB_INTENT_KEY, Intent::class.java)
@@ -40,14 +39,14 @@ class StartActivityManager {
         /**
          * 获取意图中最底层的子意图
          */
-        fun getDeepSubIntent( superIntent: Intent?): Intent? {
-            val subIntent = getSubIntentInMainIntent(superIntent)
-            return subIntent?.let { getDeepSubIntent(it) } ?: superIntent
+        fun findDeepIntent( superIntent: Intent?): Intent? {
+            val subIntent = findSubIntentBySuperIntent(superIntent)
+            return subIntent?.let { findDeepIntent(it) } ?: superIntent
         }
         /**
          * 将子意图添加到主意图中
          */
-        fun addSubIntentToMainIntent(
+        fun addSubIntentForMainIntent(
              mainIntent: Intent?,
              subIntent: Intent?
         ): Intent? {
@@ -57,7 +56,7 @@ class StartActivityManager {
             if (subIntent == null) {
                 return mainIntent
             }
-            val deepSubIntent = getDeepSubIntent(mainIntent)
+            val deepSubIntent = findDeepIntent(mainIntent)
             deepSubIntent?.putExtra(SUB_INTENT_KEY, subIntent)
             return mainIntent
         }
@@ -83,7 +82,7 @@ class StartActivityManager {
                 true
             } catch (e: Exception) {
                 e.printStackTrace()
-                val subIntent = getSubIntentInMainIntent(intent) ?: return false
+                val subIntent = findSubIntentBySuperIntent(intent) ?: return false
                 startActivity(delegate, subIntent)
             }
         }
@@ -123,7 +122,7 @@ class StartActivityManager {
                 true
             } catch (e: Exception) {
                 e.printStackTrace()
-                val subIntent = getSubIntentInMainIntent(intent) ?: return false
+                val subIntent = findSubIntentBySuperIntent(intent) ?: return false
                 startActivityForResult(delegate, subIntent, requestCode)
             }
         }

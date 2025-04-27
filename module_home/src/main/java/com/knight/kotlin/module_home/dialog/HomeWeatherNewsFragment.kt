@@ -9,6 +9,7 @@ import com.knight.kotlin.library_base.ktx.getLatitude
 import com.knight.kotlin.library_base.ktx.getLongitude
 import com.knight.kotlin.library_base.ktx.getScreenWidth
 import com.knight.kotlin.library_base.ktx.setOnClick
+import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_base.util.dp2px
 import com.knight.kotlin.library_util.DateUtils
 import com.knight.kotlin.library_util.TimeUtils
@@ -30,6 +31,7 @@ class HomeWeatherNewsFragment:BaseDialogFragment<HomeTodayWeatherNewsDialogBindi
 
     private var weather: TodayWeatherDataBean?=null
 
+    private var zaoBaoDate:String = ""
     companion object {
         fun newInstance(todayWeather: TodayWeatherDataBean,max_degree:String,min_degree:String) : HomeWeatherNewsFragment {
             val mHomeWeatherNewsFragment = HomeWeatherNewsFragment()
@@ -61,6 +63,7 @@ class HomeWeatherNewsFragment:BaseDialogFragment<HomeTodayWeatherNewsDialogBindi
 
             //获取日报新闻
             mViewModel.getZaoBao().observe(this,{data->
+                zaoBaoDate = data.date
                      mBinding.homeTodayNewsItem.tvNewsTop.text = data.news.get(0)
                      ImageLoader.loadImageWithAdaptiveSize(mBinding.homeTodayNewsItem.ivZaobaoHead,getScreenWidth() - 20.dp2px(), 0,data.head_image,{
                          width,height->
@@ -124,6 +127,16 @@ class HomeWeatherNewsFragment:BaseDialogFragment<HomeTodayWeatherNewsDialogBindi
                  }
             }
         })
+
+        cbWeather.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                // 勾选状态
+                CacheUtils.setWeatherDialogHidden(zaoBaoDate)
+            } else {
+                // 未勾选状态
+                CacheUtils.setWeatherDialogHidden("")
+            }
+        }
 
 
     }

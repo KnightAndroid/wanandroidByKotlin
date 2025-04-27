@@ -44,4 +44,28 @@ object DialogUtils {
         dialog.show()
         dialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(CacheUtils.getThemeColor())
     }
+
+
+    /**
+     *
+     * 指定弹窗
+     */
+    fun getConfirmDialog(
+        context: Context,
+        title:String,
+        message: String?,
+        positiveBtnTip:String,
+        negativeBtnTip:String,
+        okClickListener: DialogInterface.OnClickListener?,
+        cancelClickListener: DialogInterface.OnClickListener?
+    ) {
+        val builder = getDialog(context)
+        builder.setTitle(title)
+        builder.setMessage(message)
+        builder.setPositiveButton(positiveBtnTip, okClickListener)
+        builder.setNegativeButton(negativeBtnTip, cancelClickListener)
+        val dialog = builder.create()
+        dialog.show()
+        dialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(CacheUtils.getThemeColor())
+    }
 }

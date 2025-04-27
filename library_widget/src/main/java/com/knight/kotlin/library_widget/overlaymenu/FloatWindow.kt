@@ -213,6 +213,7 @@ class FloatWindow private constructor(with: With) {
         }
     }
 
+
     fun hidden() {
         isShowing = false
         if (floatView != null) {

@@ -79,11 +79,16 @@ object GetInstalledAppsPermissionCompat {
                 intent = PermissionIntentManager.getMiuiPermissionPageIntent(context)
             }
             // 另外跳转到应用详情页也可以开启读取应用列表权限
-            intent = StartActivityManager.addSubIntentToMainIntent(
-                intent,
-                PermissionIntentManager.getApplicationDetailsIntent(context)
-            )
-            return intent
+//            intent = PermissionActivityIntentHandler.addSubIntentToMainIntent(
+//                intent,
+//                PermissionIntentManager.getApplicationDetailsIntent(context)
+//            )
+//
+//            return intent
+
+            // 另外跳转到应用详情页也可以开启读取应用列表权限
+            intent = PermissionActivityIntentHandler.addSubIntentForMainIntent(intent, PermissionIntentManager.getApplicationDetailsIntent(context));
+            return intent;
         }
         return PermissionIntentManager.getApplicationDetailsIntent(context)
     }

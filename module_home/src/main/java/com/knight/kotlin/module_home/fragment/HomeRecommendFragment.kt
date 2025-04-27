@@ -770,8 +770,11 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
 
             )
             if (showDialog) {
-                HomeWeatherNewsFragment.newInstance(it.observe, it.forecast_24h.get(1).maxDegree, it.forecast_24h.get(1).minDegree)
-                    .showAllowingStateLoss(parentFragmentManager, "dialog_everyday_weather")
+                if (CacheUtils.getWeatherDialogShow() != DateUtils.getCurrentDateByFormat()) {
+                    HomeWeatherNewsFragment.newInstance(it.observe, it.forecast_24h.get(1).maxDegree, it.forecast_24h.get(1).minDegree)
+                        .showAllowingStateLoss(parentFragmentManager, "dialog_everyday_weather")
+                }
+
             }
 
             mHourWeatherHeadAdapter.setRisks(listOf(it.rise.first()))

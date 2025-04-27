@@ -3,6 +3,7 @@ package com.knight.kotlin.library_permiss
 import android.content.Context
 import android.content.Intent
 import android.provider.Settings
+import androidx.annotation.RequiresApi
 import com.knight.kotlin.library_permiss.AndroidVersion.isAndroid11
 import com.knight.kotlin.library_permiss.AndroidVersion.isAndroid4_4
 import com.knight.kotlin.library_permiss.AndroidVersion.isAndroid6
@@ -13,9 +14,8 @@ import com.knight.kotlin.library_permiss.PermissionIntentManager.getMiuiPermissi
 import com.knight.kotlin.library_permiss.PermissionIntentManager.getMiuiWindowPermissionPageIntent
 import com.knight.kotlin.library_permiss.PermissionIntentManager.getOneUiWindowPermissionPageIntent
 import com.knight.kotlin.library_permiss.PermissionIntentManager.getOriginOsWindowPermissionPageIntent
-import com.knight.kotlin.library_permiss.utils.PermissionUtils.areActivityIntent
-import com.knight.kotlin.library_permiss.utils.PermissionUtils.checkOpNoThrow
-import com.knight.kotlin.library_permiss.utils.PermissionUtils.getPackageNameUri
+import com.knight.kotlin.library_permiss.utils.PermissionUtils
+import com.knight.kotlin.library_permiss.utils.PhoneRomUtils
 import com.knight.kotlin.library_permiss.utils.PhoneRomUtils.isColorOs
 import com.knight.kotlin.library_permiss.utils.PhoneRomUtils.isEmui
 import com.knight.kotlin.library_permiss.utils.PhoneRomUtils.isMiui
@@ -31,48 +31,52 @@ import com.knight.kotlin.library_permiss.utils.PhoneRomUtils.isOriginOs
  */
 object WindowPermissionCompat {
 
-    private const val OP_SYSTEM_ALERT_WINDOW_FIELD_NAME = "OP_SYSTEM_ALERT_WINDOW"
-    private const val OP_SYSTEM_ALERT_WINDOW_DEFAULT_VALUE = 24
+    private const val OP_SYSTEM_ALERT_WINDOW_FIELD_NAME: String = "OP_SYSTEM_ALERT_WINDOW"
+    private const val OP_SYSTEM_ALERT_WINDOW_DEFAULT_VALUE: Int = 24
 
-    fun isGrantedPermission(context: Context): Boolean {
+    fun isGrantedPermission( context: Context): Boolean {
         if (isAndroid6()) {
             return Settings.canDrawOverlays(context)
         }
-        return if (isAndroid4_4()) {
+
+        if (isAndroid4_4()) {
             // 经过测试在 vivo x7 Plus（Android 5.1）和 OPPO A53 （Android 5.1 ColorOs 2.1）的机子上面判断不准确
             // 经过 debug 发现并不是 vivo 和 oppo 修改了 OP_SYSTEM_ALERT_WINDOW 的赋值导致的
             // 估计是 vivo 和 oppo 的机子修改了整个悬浮窗机制，这种就没有办法了
-            checkOpNoThrow(
-                context,
-                OP_SYSTEM_ALERT_WINDOW_FIELD_NAME,
-                OP_SYSTEM_ALERT_WINDOW_DEFAULT_VALUE
-            )
-        } else true
+            return PermissionUtils.checkOpNoThrow(context, OP_SYSTEM_ALERT_WINDOW_FIELD_NAME, OP_SYSTEM_ALERT_WINDOW_DEFAULT_VALUE)
+        }
+
+        return true
     }
 
-    fun getPermissionIntent(context: Context): Intent? {
+    fun getPermissionIntent( context: Context): Intent? {
         if (isAndroid6()) {
+            // 如果当前系统是 HyperOs，那么就不要跳转到 miui 权限设置页了，因为还要点一下《其他权限》入口才能找到悬浮窗权限设置选项
+            // 这样的效果还不如直接跳转到所有应用的悬浮窗权限设置列表，然后再点进去来得更直观
+            // 需要注意的是：该逻辑需要在判断 miui 系统之前判断，因为在 HyperOs 系统上面判断当前系统是否为 miui 系统也会返回 true
+            // 这是因为 HyperOs 系统本身就是从 miui 系统演变而来，有这个问题也很正常，主要是厂商为了系统兼容性而保留的
+            // 相关 Github issue 地址：https://github.com/getActivity/XXPermissions/issues/342
+            if (PhoneRomUtils.isHyperOs()) {
+                val intent = getManageOverlayPermissionIntent(context)
+                if (PermissionUtils.areActivityIntent(context, intent)) {
+                    return intent
+                }
+            }
+
             if (isAndroid11() && isMiui() && isMiuiOptimization()) {
                 // 因为 Android 11 及后面的版本无法直接跳转到具体权限设置页面，只能跳转到悬浮窗权限应用列表，十分地麻烦的，这里做了一下简化
                 // miui 做得比较人性化的，不会出现跳转不过去的问题，其他厂商就不一定了，就是不想让你跳转过去
                 var intent = getMiuiPermissionPageIntent(context)
                 // 另外跳转到应用详情页也可以开启悬浮窗权限
-                intent = StartActivityManager.addSubIntentToMainIntent(
-                    intent, getApplicationDetailsIntent(
-                        context
-                    )
-                )
+                intent = PermissionActivityIntentHandler.addSubIntentForMainIntent(intent, getApplicationDetailsIntent(context))
                 return intent
             }
-            var intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION)
-            // 在 Android 11 加包名跳转也是没有效果的，官方文档链接：
-            // https://developer.android.google.cn/reference/android/provider/Settings#ACTION_MANAGE_OVERLAY_PERMISSION
-            intent.data = getPackageNameUri(
-                context
-            )
-            if (areActivityIntent(context, intent)) {
+
+            var intent = getManageOverlayPermissionIntent(context)
+            if (PermissionUtils.areActivityIntent(context, intent)) {
                 return intent
             }
+
             intent = getApplicationDetailsIntent(context)
             return intent
         }
@@ -80,13 +84,10 @@ object WindowPermissionCompat {
         // 需要注意的是，这里不需要判断鸿蒙，因为鸿蒙 2.0 用代码判断是 API 等级是 29（Android 10）会直接走上面的逻辑，而不会走到下面来
         if (isEmui()) {
             var intent = getEmuiWindowPermissionPageIntent(context)
-            intent = StartActivityManager.addSubIntentToMainIntent(
-                intent!!, getApplicationDetailsIntent(
-                    context
-                )
-            )
+            intent = PermissionActivityIntentHandler.addSubIntentForMainIntent(intent, getApplicationDetailsIntent(context))
             return intent
         }
+
         if (isMiui()) {
             var intent: Intent? = null
             if (isMiuiOptimization()) {
@@ -95,38 +96,25 @@ object WindowPermissionCompat {
             }
 
             // 小米手机也可以通过应用详情页开启悬浮窗权限（只不过会多一步操作）
-            intent = StartActivityManager.addSubIntentToMainIntent(
-                intent!!, getApplicationDetailsIntent(
-                    context!!
-                )
-            )
+            intent = PermissionActivityIntentHandler.addSubIntentForMainIntent(intent, getApplicationDetailsIntent(context))
             return intent
         }
+
         if (isColorOs()) {
             var intent = getColorOsWindowPermissionPageIntent(context)
-            intent = StartActivityManager.addSubIntentToMainIntent(
-                intent!!, getApplicationDetailsIntent(
-                    context
-                )
-            )
+            intent = PermissionActivityIntentHandler.addSubIntentForMainIntent(intent, getApplicationDetailsIntent(context))
             return intent
         }
+
         if (isOriginOs()) {
             var intent = getOriginOsWindowPermissionPageIntent(context)
-            intent = StartActivityManager.addSubIntentToMainIntent(
-                intent!!, getApplicationDetailsIntent(
-                    context
-                )
-            )
+            intent = PermissionActivityIntentHandler.addSubIntentForMainIntent(intent, getApplicationDetailsIntent(context))
             return intent
         }
+
         if (isOneUi()) {
             var intent = getOneUiWindowPermissionPageIntent(context)
-            intent = StartActivityManager.addSubIntentToMainIntent(
-                intent!!, getApplicationDetailsIntent(
-                    context
-                )
-            )
+            intent = PermissionActivityIntentHandler.addSubIntentForMainIntent(intent, getApplicationDetailsIntent(context))
             return intent
         }
 
@@ -134,5 +122,16 @@ object WindowPermissionCompat {
         // 经过测试，锤子手机 6.0 以下手机的可以直接通过直接跳转到应用详情开启悬浮窗权限
         // 经过测试，魅族手机 6.0 可以直接通过直接跳转到应用详情开启悬浮窗权限
         return getApplicationDetailsIntent(context)
+    }
+
+    @RequiresApi(AndroidVersion.ANDROID_6)
+    private fun getManageOverlayPermissionIntent(context: Context): Intent {
+        val intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION)
+        // 在 Android 11 加包名跳转也是没有效果的，官方文档链接：
+        // https://developer.android.google.cn/reference/android/provider/Settings#ACTION_MANAGE_OVERLAY_PERMISSION
+        if (!isAndroid11()) {
+            intent.setData(PermissionUtils.getPackageNameUri(context))
+        }
+        return intent
     }
 }

@@ -18,17 +18,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:foreground="?android:attr/selectableItemBackground"
-        android:padding="10dp">
+       >
 
 
 
 
         <TextView
-            android:id="@+id/home_tv_top_article_title"
-            android:layout_width="wrap_content"
+            android:id="@+id/home_tv_new_title"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/home_top_baidu_title_margin_left"
-            android:layout_marginRight="@dimen/home_top_article_title_margin_right"
+            android:layout_marginLeft="@dimen/home_tv_new_title_margin_left"
+            android:layout_marginRight="@dimen/home_tv_new_title_margin_right"
+            android:layout_marginBottom="@dimen/home_tv_new_title_margin_bottom"
+            android:layout_marginTop="@dimen/home_tv_new_title_margin_bottom"
             tools:text="大小厂都问源码，到底有多难小厂都问源码小厂都问源码小厂都问源码"
             android:maxLines="3"
             android:ellipsize="end"
@@ -36,6 +38,7 @@
             android:textColor="@color/home_top_article_title"
             android:textSize="@dimen/home_top_article_title_text_size"
             app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
 

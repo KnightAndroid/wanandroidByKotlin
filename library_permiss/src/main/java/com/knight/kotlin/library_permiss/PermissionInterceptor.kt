@@ -2,7 +2,7 @@ package com.knight.kotlin.library_permiss
 
 import android.app.Activity
 import android.app.AlertDialog
-import android.content.Context
+import android.content.DialogInterface
 import android.content.res.Configuration
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -17,10 +17,11 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.PopupWindow
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.FragmentActivity
-import com.knight.kotlin.library_permiss.fragment.PermissionFragment
-import com.knight.kotlin.library_permiss.listener.IPermissionInterceptor
+import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_permiss.listener.OnPermissionCallback
+import com.knight.kotlin.library_permiss.listener.OnPermissionInterceptor
 import com.knight.kotlin.library_permiss.permissions.Permission
 
 
@@ -29,7 +30,7 @@ import com.knight.kotlin.library_permiss.permissions.Permission
  * Time:2022/1/21 11:45
  * Description:PermissionInterceptor
  */
-class PermissionInterceptor: IPermissionInterceptor {
+class PermissionInterceptor: OnPermissionInterceptor {
 
     val HANDLER: Handler = Handler(Looper.getMainLooper())
 
@@ -39,6 +40,7 @@ class PermissionInterceptor: IPermissionInterceptor {
     /** 权限申请说明 Popup  */
     private var mPermissionPopup: PopupWindow? = null
 
+    @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
     override fun launchPermissionRequest(
          activity: FragmentActivity,
          allPermissions: List<String>,
@@ -71,10 +73,7 @@ class PermissionInterceptor: IPermissionInterceptor {
             break
         }
         if (showPopupWindow) {
-            PermissionFragment.launch(
-                activity,ArrayList(allPermissions), this,
-                callback
-            )
+            PermissionHandler.request(activity, allPermissions, callback, this)
             // 延迟 300 毫秒是为了避免出现 PopupWindow 显示然后立马消失的情况
             // 因为框架没有办法在还没有申请权限的情况下，去判断权限是否永久拒绝了，必须要在发起权限申请之后
             // 所以只能通过延迟显示 PopupWindow 来做这件事，如果 300 毫秒内权限申请没有结束，证明本次申请的权限没有永久拒绝
@@ -90,16 +89,13 @@ class PermissionInterceptor: IPermissionInterceptor {
             }, 300)
         } else {
             // 注意：这里的 Dialog 只是示例，没有用 DialogFragment 来处理 Dialog 生命周期
-            AlertDialog.Builder(activity)
+            val dialog = AlertDialog.Builder(activity)
                 .setTitle(R.string.permission_description)
                 .setMessage(message)
                 .setCancelable(false)
                 .setPositiveButton(R.string.permission_granted) { dialog, which ->
                     dialog.dismiss()
-                    PermissionFragment.launch(
-                        activity, ArrayList(allPermissions),
-                        this@PermissionInterceptor, callback
-                    )
+                    PermissionHandler.request(activity, allPermissions, callback, this)
                 }
                 .setNegativeButton(R.string.permission_denied) { dialog, which ->
                     dialog.dismiss()
@@ -109,6 +105,8 @@ class PermissionInterceptor: IPermissionInterceptor {
                     callback.onDenied(deniedPermissions, false)
                 }
                 .show()
+            dialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(CacheUtils.getThemeColor())
+            dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(com.knight.kotlin.library_base.R.color.base_cancel)
         }
     }
 
@@ -177,7 +175,7 @@ class PermissionInterceptor: IPermissionInterceptor {
 //    }
 
     override fun finishPermissionRequest(
-         activity: Activity,  allPermissions: List<String>,
+        activity: Activity,  allPermissions: List<String>,
         skipRequest: Boolean,  callback: OnPermissionCallback
     ) {
         mRequestFlag = false

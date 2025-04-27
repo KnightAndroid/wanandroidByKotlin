@@ -14,7 +14,6 @@ import com.knight.kotlin.library_permiss.AndroidVersion.isAndroid4_2
 import com.knight.kotlin.library_permiss.AndroidVersion.isAndroid7
 import com.knight.kotlin.library_permiss.AndroidVersion.isAndroid8
 import com.knight.kotlin.library_permiss.permissions.Permission
-import com.knight.kotlin.library_permiss.utils.PermissionUtils
 import com.knight.kotlin.library_permiss.utils.PermissionUtils.containsPermission
 import com.knight.kotlin.library_permiss.utils.PermissionUtils.equalsPermission
 import com.knight.kotlin.library_permiss.utils.PermissionUtils.isScopedStorage
@@ -426,7 +425,7 @@ object PermissionChecker {
     }
 
     /**
-     * 检查通知栏监听权限
+     * 检查画中画权限
      */
     fun checkNotificationListenerPermission(
         requestPermissions: List<String>,

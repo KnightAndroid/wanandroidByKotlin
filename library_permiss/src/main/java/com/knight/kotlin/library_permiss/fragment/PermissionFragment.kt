@@ -13,8 +13,8 @@ import com.knight.kotlin.library_permiss.AndroidVersion.isAndroid10
 import com.knight.kotlin.library_permiss.AndroidVersion.isAndroid11
 import com.knight.kotlin.library_permiss.AndroidVersion.isAndroid13
 import com.knight.kotlin.library_permiss.AndroidVersion.isAndroid6
-import com.knight.kotlin.library_permiss.StartActivityManager
-import com.knight.kotlin.library_permiss.listener.IPermissionInterceptor
+import com.knight.kotlin.library_permiss.PermissionActivityIntentHandler
+import com.knight.kotlin.library_permiss.listener.OnPermissionInterceptor
 import com.knight.kotlin.library_permiss.listener.OnPermissionCallback
 import com.knight.kotlin.library_permiss.permissions.Permission
 import com.knight.kotlin.library_permiss.permissions.PermissionApi
@@ -55,7 +55,7 @@ class PermissionFragment: Fragment(),Runnable {
          */
         fun launch(
             activity: FragmentActivity, permissions: ArrayList<String>,
-            interceptor: IPermissionInterceptor,  callback: OnPermissionCallback
+            interceptor: OnPermissionInterceptor, callback: OnPermissionCallback
         ) {
             val fragment = PermissionFragment()
             val bundle = Bundle()
@@ -98,7 +98,7 @@ class PermissionFragment: Fragment(),Runnable {
     private var mCallBack: OnPermissionCallback? = null
 
     /** 权限请求拦截器  */
-    private var mInterceptor: IPermissionInterceptor? = null
+    private var mInterceptor: OnPermissionInterceptor? = null
 
     /** Activity 屏幕方向  */
     private var mScreenOrientation = 0
@@ -139,7 +139,7 @@ class PermissionFragment: Fragment(),Runnable {
     /**
      * 设置权限请求拦截器
      */
-    fun setOnPermissionInterceptor( interceptor: IPermissionInterceptor) {
+    fun setOnPermissionInterceptor( interceptor: OnPermissionInterceptor) {
         mInterceptor = interceptor
     }
 
@@ -233,7 +233,7 @@ class PermissionFragment: Fragment(),Runnable {
                 activity,
                 asArrayList<String>(permission)
             )?.let {
-                StartActivityManager.startActivityForResult(
+                PermissionActivityIntentHandler.startActivityForResult(
                     this, it, getArguments()!!.getInt(REQUEST_CODE)
                 )
             }
@@ -339,7 +339,7 @@ class PermissionFragment: Fragment(),Runnable {
         PermissionFragment.launch(
             activity,
             firstPermissions,
-            object : IPermissionInterceptor {},
+            object : OnPermissionInterceptor {},
             object : OnPermissionCallback {
                 override fun onGranted( permissions: List<String>, allGranted: Boolean) {
                     if (!allGranted || !isAdded) {
@@ -352,7 +352,7 @@ class PermissionFragment: Fragment(),Runnable {
                     val delayMillis = (if (isAndroid13()) 150 else 0).toLong()
                     postDelayed({
                         PermissionFragment.launch(activity, secondPermissions,
-                            object : IPermissionInterceptor {}, object : OnPermissionCallback {
+                            object : OnPermissionInterceptor {}, object : OnPermissionCallback {
                                 override fun onGranted(
                                     permissions: List<String>,
                                     allGranted: Boolean
@@ -440,7 +440,7 @@ class PermissionFragment: Fragment(),Runnable {
         val callback = mCallBack
         mCallBack = null
 
-        val interceptor: IPermissionInterceptor? = mInterceptor
+        val interceptor: OnPermissionInterceptor? = mInterceptor
         mInterceptor = null
 
         // 优化权限回调结果

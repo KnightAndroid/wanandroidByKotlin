@@ -1,7 +1,9 @@
 package com.knight.kotlin.library_permiss
 
 import com.knight.kotlin.library_permiss.permissions.Permission
+import com.knight.kotlin.library_permiss.permissions.PermissionGroupType
 import com.knight.kotlin.library_permiss.utils.PermissionUtils.containsPermission
+import java.util.Arrays
 
 
 /**
@@ -20,6 +22,18 @@ internal object PermissionHelper {
     /** 框架自己虚拟出来的权限列表（此类权限不需要清单文件中静态注册也能动态申请）  */
     private val VIRTUAL_PERMISSION_LIST: MutableList<String> = ArrayList(4)
 
+
+    /** 新旧权限映射集合  */
+    private val NEW_AND_OLD_PERMISSION_MAP: HashMap<String, Array<String>> = HashMap(10)
+
+    /** 后台权限列表  */
+    private val BACKGROUND_PERMISSION_LIST: MutableList<String> = ArrayList(2)
+
+    /** 危险权限组集合  */
+    private val DANGEROUS_PERMISSION_GROUP_MAP: HashMap<PermissionGroupType, List<String>> = HashMap(9)
+
+    /** 危险权限对应的类型集合  */
+    private val DANGEROUS_PERMISSION_GROUP_TYPE_MAP: HashMap<String, PermissionGroupType> = HashMap(25)
     init {
         SPECIAL_PERMISSION_LIST.add(Permission.SCHEDULE_EXACT_ALARM)
         SPECIAL_PERMISSION_LIST.add(Permission.MANAGE_EXTERNAL_STORAGE)
@@ -93,6 +107,135 @@ internal object PermissionHelper {
         VIRTUAL_PERMISSION_LIST.add(Permission.BIND_NOTIFICATION_LISTENER_SERVICE)
         VIRTUAL_PERMISSION_LIST.add(Permission.BIND_VPN_SERVICE)
         VIRTUAL_PERMISSION_LIST.add(Permission.PICTURE_IN_PICTURE)
+
+
+        // Android 13 以下开启通知栏服务，需要用到旧的通知栏权限（框架自己虚拟出来的）
+        NEW_AND_OLD_PERMISSION_MAP.put(Permission.POST_NOTIFICATIONS, arrayOf<String>(Permission.NOTIFICATION_SERVICE))
+
+        // Android 13 以下使用 WIFI 功能需要用到精确定位的权限
+        NEW_AND_OLD_PERMISSION_MAP.put(Permission.NEARBY_WIFI_DEVICES, arrayOf<String>(Permission.ACCESS_FINE_LOCATION))
+
+        // Android 13 以下访问媒体文件需要用到读取外部存储的权限
+        NEW_AND_OLD_PERMISSION_MAP.put(Permission.READ_MEDIA_IMAGES, arrayOf<String>(Permission.READ_EXTERNAL_STORAGE))
+        NEW_AND_OLD_PERMISSION_MAP.put(Permission.READ_MEDIA_VIDEO, arrayOf<String>(Permission.READ_EXTERNAL_STORAGE))
+        NEW_AND_OLD_PERMISSION_MAP.put(Permission.READ_MEDIA_AUDIO, arrayOf<String>(Permission.READ_EXTERNAL_STORAGE))
+
+        // Android 12 以下扫描蓝牙需要精确定位权限
+        NEW_AND_OLD_PERMISSION_MAP.put(Permission.BLUETOOTH_SCAN, arrayOf<String>(Permission.ACCESS_FINE_LOCATION))
+
+        // Android 11 以下访问完整的文件管理需要用到读写外部存储的权限
+        NEW_AND_OLD_PERMISSION_MAP.put(Permission.MANAGE_EXTERNAL_STORAGE, arrayOf<String>(Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE))
+
+        // Android 10 以下获取运动步数需要用到传感器权限（因为 ACTIVITY_RECOGNITION 是从 Android 10 开始才从传感器权限中剥离成独立权限）
+        NEW_AND_OLD_PERMISSION_MAP.put(Permission.ACTIVITY_RECOGNITION, arrayOf<String>(Permission.BODY_SENSORS))
+
+        // Android 8.0 以下读取电话号码需要用到读取电话状态的权限
+        NEW_AND_OLD_PERMISSION_MAP.put(Permission.READ_PHONE_NUMBERS, arrayOf<String>(Permission.READ_PHONE_STATE))
+
+
+        // 后台定位权限
+        BACKGROUND_PERMISSION_LIST.add(Permission.ACCESS_BACKGROUND_LOCATION)
+
+        // 后台传感器权限
+        BACKGROUND_PERMISSION_LIST.add(Permission.BODY_SENSORS_BACKGROUND)
+
+
+        // 存储权限组
+        val storagePermissionGroup = Arrays.asList(
+            Permission.READ_EXTERNAL_STORAGE,
+            Permission.WRITE_EXTERNAL_STORAGE
+        )
+        DANGEROUS_PERMISSION_GROUP_MAP.put(PermissionGroupType.STORAGE, storagePermissionGroup)
+        for (permission in storagePermissionGroup) {
+            DANGEROUS_PERMISSION_GROUP_TYPE_MAP.put(permission, PermissionGroupType.STORAGE)
+        }
+
+        // 日历权限组
+        val calendarPermissionGroup = Arrays.asList(
+            Permission.READ_CALENDAR,
+            Permission.WRITE_CALENDAR
+        )
+        DANGEROUS_PERMISSION_GROUP_MAP.put(PermissionGroupType.CALENDAR, calendarPermissionGroup)
+        for (permission in calendarPermissionGroup) {
+            DANGEROUS_PERMISSION_GROUP_TYPE_MAP.put(permission, PermissionGroupType.CALENDAR)
+        }
+
+        // 联系人权限组
+        val contactsPermissionGroup = Arrays.asList(
+            Permission.READ_CONTACTS,
+            Permission.WRITE_CONTACTS
+        )
+        DANGEROUS_PERMISSION_GROUP_MAP.put(PermissionGroupType.CONTACTS, contactsPermissionGroup)
+        for (permission in contactsPermissionGroup) {
+            DANGEROUS_PERMISSION_GROUP_TYPE_MAP.put(permission, PermissionGroupType.CONTACTS)
+        }
+
+        // 短信权限组
+        val smsPermissionGroup = Arrays.asList(
+            Permission.SEND_SMS,
+            Permission.READ_SMS,
+            Permission.RECEIVE_SMS,
+            Permission.RECEIVE_WAP_PUSH,
+            Permission.RECEIVE_MMS
+        )
+        DANGEROUS_PERMISSION_GROUP_MAP.put(PermissionGroupType.SMS, smsPermissionGroup)
+        for (permission in smsPermissionGroup) {
+            DANGEROUS_PERMISSION_GROUP_TYPE_MAP.put(permission, PermissionGroupType.SMS)
+        }
+
+        // 定位权限组
+        val locationPermissionGroup = Arrays.asList(
+            Permission.ACCESS_COARSE_LOCATION,
+            Permission.ACCESS_FINE_LOCATION,
+            Permission.ACCESS_BACKGROUND_LOCATION
+        )
+        DANGEROUS_PERMISSION_GROUP_MAP.put(PermissionGroupType.LOCATION, locationPermissionGroup)
+        for (permission in locationPermissionGroup) {
+            DANGEROUS_PERMISSION_GROUP_TYPE_MAP.put(permission, PermissionGroupType.LOCATION)
+        }
+
+        // 传感器权限组
+        val sensorsPermissionGroup = Arrays.asList(
+            Permission.BODY_SENSORS,
+            Permission.BODY_SENSORS_BACKGROUND
+        )
+        DANGEROUS_PERMISSION_GROUP_MAP.put(PermissionGroupType.SENSORS, sensorsPermissionGroup)
+        for (permission in sensorsPermissionGroup) {
+            DANGEROUS_PERMISSION_GROUP_TYPE_MAP.put(permission, PermissionGroupType.SENSORS)
+        }
+
+        // 通话记录权限组
+        val callLogPermissionGroup = Arrays.asList(
+            Permission.READ_CALL_LOG,
+            Permission.WRITE_CALL_LOG
+        )
+        DANGEROUS_PERMISSION_GROUP_MAP.put(PermissionGroupType.CALL_LOG, callLogPermissionGroup)
+        for (permission in callLogPermissionGroup) {
+            DANGEROUS_PERMISSION_GROUP_TYPE_MAP.put(permission, PermissionGroupType.CALL_LOG)
+        }
+
+        // 附近设备权限组
+        val nearbyDevicesPermissionGroup = Arrays.asList(
+            Permission.BLUETOOTH_SCAN,
+            Permission.BLUETOOTH_CONNECT,
+            Permission.BLUETOOTH_ADVERTISE,
+            Permission.NEARBY_WIFI_DEVICES
+        )
+        DANGEROUS_PERMISSION_GROUP_MAP.put(PermissionGroupType.NEARBY_DEVICES, nearbyDevicesPermissionGroup)
+        for (permission in nearbyDevicesPermissionGroup) {
+            DANGEROUS_PERMISSION_GROUP_TYPE_MAP.put(permission, PermissionGroupType.NEARBY_DEVICES)
+        }
+
+        // 读取照片和视频媒体文件权限组
+        val imageAndVideoPermissionGroup = Arrays.asList(
+            Permission.READ_MEDIA_IMAGES,
+            Permission.READ_MEDIA_VIDEO,
+            Permission.READ_MEDIA_VISUAL_USER_SELECTED
+        )
+        DANGEROUS_PERMISSION_GROUP_MAP.put(PermissionGroupType.IMAGE_AND_VIDEO_MEDIA, imageAndVideoPermissionGroup)
+        for (permission in imageAndVideoPermissionGroup) {
+            DANGEROUS_PERMISSION_GROUP_TYPE_MAP.put(permission, PermissionGroupType.IMAGE_AND_VIDEO_MEDIA)
+        }
     }
 
     /**
@@ -115,5 +258,60 @@ internal object PermissionHelper {
      */
     fun isVirtualPermission(permission: String): Boolean {
         return containsPermission(VIRTUAL_PERMISSION_LIST, permission)
+    }
+
+    /**
+     * 通过新权限查询到对应的旧权限
+     */
+    fun queryOldPermissionByNewPermission(permission: String?): Array<String>? {
+        return NEW_AND_OLD_PERMISSION_MAP[permission]
+    }
+
+    /**
+     * 查询危险权限所在的权限组类型
+     */
+
+    fun queryDangerousPermissionGroupType( permission: String): PermissionGroupType? {
+        return DANGEROUS_PERMISSION_GROUP_TYPE_MAP[permission]
+    }
+
+    /**
+     * 查询危险权限所在的权限组
+     */
+
+    fun getDangerousPermissionGroup(permissionsGroupType: PermissionGroupType): List<String>? {
+        return DANGEROUS_PERMISSION_GROUP_MAP[permissionsGroupType]
+    }
+
+    /**
+     * 判断申请的权限列表中是否包含后台权限
+     */
+    fun containsBackgroundPermission(permissions: List<String?>): Boolean {
+        for (backgroundPermission in BACKGROUND_PERMISSION_LIST) {
+            if (permissions.contains(backgroundPermission)) {
+                return true
+            }
+        }
+        return false
+    }
+
+    /**
+     * 判断某个权限是否为后台权限
+     */
+    fun isBackgroundPermission(permission: String?): Boolean {
+        return BACKGROUND_PERMISSION_LIST.contains(permission)
+    }
+
+    /**
+     * 从权限组中获取到后台权限
+     */
+
+    fun getBackgroundPermissionByGroup(permissions: List<String>): String? {
+        for (permission in permissions) {
+            if (isBackgroundPermission(permission)) {
+                return permission
+            }
+        }
+        return null
     }
 }

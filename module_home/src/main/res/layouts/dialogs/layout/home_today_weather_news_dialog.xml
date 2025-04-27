@@ -29,6 +29,18 @@
 
     </com.knight.kotlin.library_widget.EasyFlipView>
 
+
+
+
+    <CheckBox
+        android:id="@+id/cb_weather"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="今日不再弹出"
+        android:buttonTint="@android:color/white"
+        android:textColor="@android:color/white"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/home_cb_weather_margin_top"/>
     <ImageView
         android:id="@+id/iv_weather_news_close"
         android:layout_width="@dimen/home_iv_weather_news_close_width"

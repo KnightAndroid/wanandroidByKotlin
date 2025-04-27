@@ -3,17 +3,9 @@ package com.knight.kotlin.module_home.utils
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ValueAnimator
-import android.app.Activity
 import android.content.Context
-import android.view.Gravity
-import android.view.LayoutInflater
 import android.view.View
-import android.widget.FrameLayout
-import android.widget.ImageView
-import androidx.annotation.LayoutRes
-import androidx.annotation.OptIn
 import com.knight.kotlin.library_base.ktx.getScreenHeight
-import com.knight.kotlin.library_widget.overlaymenu.EasyFloat
 import com.knight.kotlin.library_widget.overlaymenu.FloatWindow
 import com.knight.kotlin.module_home.R
 
@@ -33,85 +25,45 @@ object FloatMenuManager {
     fun hidden() {
         float?.let {
             it.hidden()
-        } ?:run {
-            EasyFloat.dimiss()
         }
 
     }
 
-    fun show(context: Activity) {
+    fun show() {
         float?.let {
             it.show()
-        } ?:run {
-            EasyFloat.getCustomView()?.let {
-                EasyFloat.show()
-            } ?:run {
-                EasyFloat.show(context)
-            }
-
         }
 
 
     }
 
 
-
-
-    fun showDesktop(context: Context) {
-        val view = LayoutInflater.from(context).inflate(R.layout.home_float_news_menu, null)
-        val close = view!!.findViewById<View>(R.id.iv_float_close)
-        val play = view!!.findViewById<ImageView>(R.id.iv_float_play)
-        val logo = view!!.findViewById<ImageView>(R.id.iv_float_img)
-        close.setOnClickListener {
-            hidden()
-        }
-
-
-        play.setOnClickListener {
-
-        }
-
+    /**
+     *
+     * 开启悬浮窗
+     */
+    fun initFloatMenu(context: Context,view:View,showDesktop:Boolean) {
         float = FloatWindow.With(context, view)
             .setAutoAlign(true)  // 是否自动贴边
             .setModality(false)  // 是否模态窗口（事件是否可穿透当前窗口）
             .setMoveAble(true)   // 是否可拖动
             .setStartLocation(0, (getScreenHeight() * 0.7).toInt()) //设置起始位置
-            .setDeskTopWindow(true) //桌面也要显示
+            .setDeskTopWindow(showDesktop) //桌面也要显示
             .create()
-    }
-
-    //必须显式地声明你愿意使用这个 API，否则会有警告
-    @OptIn(androidx.media3.common.util.UnstableApi::class)
-    fun initNormal(context: Activity, @LayoutRes layoutId: Int) {
-        EasyFloat
-            .layout(layoutId)
-            .layoutParams(initLayoutParams())
-            .listener {
-                initListener(it)
-            }
-
 
     }
 
 
 
-
-    private fun initLayoutParams(): FrameLayout.LayoutParams {
-        val params = FrameLayout.LayoutParams(
-            FrameLayout.LayoutParams.WRAP_CONTENT,
-            FrameLayout.LayoutParams.WRAP_CONTENT
-        )
-        params.gravity = Gravity.BOTTOM or Gravity.END
-        params.setMargins(0, params.topMargin, params.rightMargin, 500)
-        return params
-    }
-
-    private fun initListener(root: View?) {
-
-    }
 
     fun destroyFloatMenu() {
         float?.remove()
+    }
+
+
+
+    fun checkInitialized():Boolean {
+        return float == null
     }
 
     fun getFloatWindow(): FloatWindow? {

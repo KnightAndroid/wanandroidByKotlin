@@ -5,6 +5,7 @@ import android.app.AppOpsManager
 import android.content.Context
 import android.content.Intent
 import android.provider.Settings
+import com.knight.kotlin.library_permiss.AndroidVersion
 import com.knight.kotlin.library_permiss.AndroidVersion.isAndroid10
 import com.knight.kotlin.library_permiss.PermissionIntentManager
 import com.knight.kotlin.library_permiss.permissions.Permission
@@ -47,7 +48,13 @@ open class PermissionDelegateImplV21 : PermissionDelegateImplV19(){
                 permission, Permission.PACKAGE_USAGE_STATS
             )
         ) {
-            getPackagePermissionIntent(context)
+
+            if (!AndroidVersion.isAndroid5()) {
+                getApplicationDetailsIntent(context)
+            } else {
+                getPackagePermissionIntent(context)
+            }
+
         } else super.getPermissionSettingIntent(context, permission)
     }
 

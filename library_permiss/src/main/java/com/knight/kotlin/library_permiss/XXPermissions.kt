@@ -12,9 +12,9 @@ import com.knight.kotlin.library_permiss.AndroidVersion.isAndroid4_2
 import com.knight.kotlin.library_permiss.PermissionChecker.checkActivityStatus
 import com.knight.kotlin.library_permiss.PermissionChecker.checkPermissionArgument
 import com.knight.kotlin.library_permiss.PermissionIntentManager.getApplicationDetailsIntent
-import com.knight.kotlin.library_permiss.fragment.PermissionPageFragment
-import com.knight.kotlin.library_permiss.listener.IPermissionInterceptor
+import com.knight.kotlin.library_permiss.fragment.RequestSpecialPermissionFragment
 import com.knight.kotlin.library_permiss.listener.OnPermissionCallback
+import com.knight.kotlin.library_permiss.listener.OnPermissionInterceptor
 import com.knight.kotlin.library_permiss.listener.OnPermissionPageCallback
 import com.knight.kotlin.library_permiss.permissions.PermissionApi
 import com.knight.kotlin.library_permiss.permissions.PermissionApi.containsSpecialPermission
@@ -46,7 +46,7 @@ class XXPermissions constructor(context: Context) {
         const val REQUEST_CODE = 1024 + 1
 
         /** 权限请求拦截器  */
-        private var sInterceptor: IPermissionInterceptor? = null
+        private var sInterceptor: OnPermissionInterceptor? = null
 
         /** 当前是否为检查模式  */
         private var sCheckMode: Boolean = false
@@ -76,16 +76,16 @@ class XXPermissions constructor(context: Context) {
         /**
          * 设置全局权限请求拦截器
          */
-        fun setInterceptor(interceptor: IPermissionInterceptor?) {
+        fun setInterceptor(interceptor: OnPermissionInterceptor) {
             sInterceptor = interceptor
         }
 
         /**
          * 获取全局权限请求拦截器
          */
-        fun getInterceptor(): IPermissionInterceptor? {
+        fun getInterceptor(): OnPermissionInterceptor? {
             if (sInterceptor == null) {
-                sInterceptor = object : IPermissionInterceptor {}
+                sInterceptor = object : OnPermissionInterceptor {}
             }
             return sInterceptor
         }
@@ -190,14 +190,17 @@ class XXPermissions constructor(context: Context) {
         /* android.content.Context */
 
         /* android.content.Context */
-        fun startPermissionActivity( context: Context) {
+        @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
+        fun startPermissionActivity(context: Context) {
             startPermissionActivity(context, ArrayList(0))
         }
 
-        fun startPermissionActivity(context: Context,  vararg permissions: String) {
+        @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
+        fun startPermissionActivity(context: Context, vararg permissions: String) {
             startPermissionActivity(context, asArrayList<String>(*permissions))
         }
 
+        @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
         fun startPermissionActivity(
             context: Context,
             vararg permissions: Array<String>
@@ -210,7 +213,8 @@ class XXPermissions constructor(context: Context) {
          *
          * @param permissions           没有授予或者被拒绝的权限组
          */
-        fun startPermissionActivity(context: Context,  permissions: List<String>) {
+        @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
+        fun startPermissionActivity(context: Context, permissions: List<String>) {
             val activity = findActivity(
                 context
             )
@@ -218,22 +222,24 @@ class XXPermissions constructor(context: Context) {
                 startPermissionActivity(activity, permissions)
                 return
             }
-            val intent = getSmartPermissionIntent(
+            val intent = PermissionApi.getSmartPermissionIntent(
                 context, permissions
             )
             if (context !is Activity) {
                 intent!!.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             }
-            StartActivityManager.startActivity(context, intent!!)
+            PermissionActivityIntentHandler.startActivity(context, intent!!)
         }
 
         /* android.app.Activity */
 
         /* android.app.Activity */
-        fun startPermissionActivity( activity: Activity) {
+        @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
+        fun startPermissionActivity(activity: Activity) {
             startPermissionActivity(activity, ArrayList(0))
         }
 
+        @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
         fun startPermissionActivity(
             activity: Activity,
             vararg permissions: String
@@ -241,6 +247,7 @@ class XXPermissions constructor(context: Context) {
             startPermissionActivity(activity, asArrayList<String>(*permissions))
         }
 
+        @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
         fun startPermissionActivity(
             activity: Activity,
             vararg permissions: Array<String>
@@ -248,6 +255,7 @@ class XXPermissions constructor(context: Context) {
             startPermissionActivity(activity, asArrayLists<String>(*permissions))
         }
 
+        @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
         fun startPermissionActivity(
             activity: Activity,
             permissions: List<String>
@@ -255,6 +263,7 @@ class XXPermissions constructor(context: Context) {
             startPermissionActivity(activity, permissions, REQUEST_CODE)
         }
 
+        @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
         fun startPermissionActivity(
             activity: Activity,
             permissions: List<String>,
@@ -263,7 +272,7 @@ class XXPermissions constructor(context: Context) {
             val intent = getSmartPermissionIntent(
                 activity, permissions
             )
-            StartActivityManager.startActivityForResult(activity, intent!!, requestCode)
+            PermissionActivityIntentHandler.startActivityForResult(activity, intent!!, requestCode)
         }
 
         fun startPermissionActivity(
@@ -288,17 +297,18 @@ class XXPermissions constructor(context: Context) {
             callback: OnPermissionPageCallback
         ) {
             if (permissions.isEmpty()) {
-                StartActivityManager.startActivity(
+                PermissionActivityIntentHandler.startActivity(
                     activity, getApplicationDetailsIntent(
                         activity
                     )
                 )
                 return
             }
-            PermissionPageFragment.beginRequest(activity, permissions as ArrayList<String>, callback)
+            RequestSpecialPermissionFragment.launch(activity, permissions, callback);
         }
 
 
+        @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
         fun startPermissionActivity(
             fragment: Fragment,
             vararg permissions: String
@@ -306,6 +316,7 @@ class XXPermissions constructor(context: Context) {
             startPermissionActivity(fragment, asArrayList<String>(*permissions))
         }
 
+        @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
         fun startPermissionActivity(
             fragment: Fragment,
             vararg permissions: Array<String>
@@ -313,6 +324,7 @@ class XXPermissions constructor(context: Context) {
             startPermissionActivity(fragment, asArrayLists<String>(*permissions))
         }
 
+        @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
         fun startPermissionActivity(
             fragment: Fragment,
             permissions: List<String>
@@ -340,14 +352,15 @@ class XXPermissions constructor(context: Context) {
 
         /* android.support.v4.app.Fragment */
 
-        /* android.support.v4.app.Fragment */
-        fun startPermissionActivity( fragment: Fragment) {
+        @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
+        fun startPermissionActivity(fragment: Fragment) {
             startPermissionActivity(fragment, ArrayList())
         }
 
 
 
 
+        @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
         fun startPermissionActivity(
             fragment: Fragment,
             permissions: List<String>,
@@ -355,11 +368,11 @@ class XXPermissions constructor(context: Context) {
         ) {
             val activity: Activity = fragment.getActivity() ?: return
             if (permissions.isEmpty()) {
-                StartActivityManager.startActivity(fragment, getApplicationDetailsIntent(activity))
+                PermissionActivityIntentHandler.startActivity(fragment, getApplicationDetailsIntent(activity))
                 return
             }
             val intent = getSmartPermissionIntent(activity, permissions)
-            intent?.let { StartActivityManager.startActivityForResult(fragment, it, requestCode) }
+            intent?.let { PermissionActivityIntentHandler.startActivityForResult(fragment, it, requestCode) }
         }
 
 
@@ -376,10 +389,10 @@ class XXPermissions constructor(context: Context) {
                 return
             }
             if (permissions.isEmpty()) {
-                StartActivityManager.startActivity(fragment, getApplicationDetailsIntent(activity))
+                PermissionActivityIntentHandler.startActivity(fragment, getApplicationDetailsIntent(activity))
                 return
             }
-            PermissionPageFragment.beginRequest(activity, permissions as ArrayList<String>, callback)
+            RequestSpecialPermissionFragment.launch(activity, permissions as ArrayList<String>, callback)
         }
 
     }
@@ -388,7 +401,7 @@ class XXPermissions constructor(context: Context) {
     private var mPermissions: MutableList<String> = mutableListOf()
 
     /** 权限请求拦截器  */
-    private var mInterceptor: IPermissionInterceptor? = null
+    private var mInterceptor: OnPermissionInterceptor? = null
 
     /** 设置不检查  */
     private var mCheckMode: Boolean = false
@@ -434,7 +447,7 @@ class XXPermissions constructor(context: Context) {
     /**
      * 设置权限请求拦截器
      */
-    fun interceptor(interceptor: IPermissionInterceptor?): XXPermissions {
+    fun interceptor(interceptor: OnPermissionInterceptor?): XXPermissions {
         mInterceptor = interceptor
         return this
     }
@@ -504,7 +517,7 @@ class XXPermissions constructor(context: Context) {
         PermissionChecker.optimizeDeprecatedPermission(permissions)
         if (isGrantedPermissions(context, permissions)) {
             // 证明这些权限已经全部授予过，直接回调成功
-            if (callback != null) {
+            if (callback != null && activity!=null) {
                 interceptor.grantedPermissionRequest(
                     activity,
                     permissions,

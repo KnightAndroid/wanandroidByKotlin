@@ -558,6 +558,23 @@ object CacheUtils {
     }
 
 
+    /**
+     *
+     * 获取天气弹窗是否弹出
+     */
+    fun getWeatherDialogShow():String {
+        return mmkv?.decodeString(CacheKey.IS_WEATHER_HIDDEN,"") ?:""
+    }
+
+    /**
+     *
+     * 设置是否弹出
+     */
+    fun setWeatherDialogHidden(date:String){
+        mmkv?.encode(CacheKey.IS_WEATHER_HIDDEN,date)
+    }
+
+
 
 
 }

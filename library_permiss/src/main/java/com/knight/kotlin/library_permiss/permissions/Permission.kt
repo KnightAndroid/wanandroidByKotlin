@@ -68,7 +68,7 @@ object Permission {
      */
     const val SYSTEM_ALERT_WINDOW = "android.permission.SYSTEM_ALERT_WINDOW"
 
-    /** 系统设置权限（特殊权限，Android 6.0 新增的权限）  */
+    /** 写入系统设置权限（特殊权限，Android 6.0 新增的权限）  */
     const val WRITE_SETTINGS = "android.permission.WRITE_SETTINGS"
 
     /** 请求忽略电池优化选项权限（特殊权限，Android 6.0 新增的权限） */

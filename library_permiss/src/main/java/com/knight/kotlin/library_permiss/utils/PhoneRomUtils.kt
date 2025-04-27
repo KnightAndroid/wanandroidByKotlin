@@ -5,6 +5,7 @@ import android.os.Build
 import android.os.Environment
 import android.text.TextUtils
 import com.knight.kotlin.library_permiss.AndroidVersion.isAndroid10
+import com.knight.kotlin.library_permiss.utils.PermissionUtils.getSystemPropertyValue
 import java.io.BufferedReader
 import java.io.File
 import java.io.FileInputStream
@@ -23,30 +24,31 @@ import java.util.Properties
  */
 object PhoneRomUtils {
 
-    private val ROM_HUAWEI = arrayOf("huawei")
-    private val ROM_VIVO = arrayOf("vivo")
-    private val ROM_XIAOMI = arrayOf("xiaomi")
-    private val ROM_OPPO = arrayOf("oppo")
-    private val ROM_LEECO = arrayOf("leeco", "letv")
-    private val ROM_360 = arrayOf("360", "qiku")
-    private val ROM_ZTE = arrayOf("zte")
-    private val ROM_ONEPLUS = arrayOf("oneplus")
-    private val ROM_NUBIA = arrayOf("nubia")
-    private val ROM_SAMSUNG = arrayOf("samsung")
-    private val ROM_HONOR = arrayOf("honor")
+    private val ROM_HUAWEI: Array<String> = arrayOf("huawei")
+    private
+    val ROM_VIVO: Array<String> = arrayOf("vivo")
+    private val ROM_XIAOMI: Array<String> = arrayOf("xiaomi")
+    private val ROM_OPPO: Array<String> = arrayOf("oppo")
+    private val ROM_LEECO: Array<String> = arrayOf("leeco", "letv")
+    private val ROM_360: Array<String> = arrayOf("360", "qiku")
+    private val ROM_ZTE: Array<String> = arrayOf("zte")
+    private val ROM_ONEPLUS: Array<String> = arrayOf("oneplus")
+    private val ROM_NUBIA: Array<String> = arrayOf("nubia")
+    private val ROM_SAMSUNG: Array<String> = arrayOf("samsung")
+    private val ROM_HONOR: Array<String> = arrayOf("honor")
 
-    private const val ROM_NAME_MIUI = "ro.miui.ui.version.name"
+    private const val ROM_NAME_MIUI: String = "ro.miui.ui.version.name"
+    private const val ROM_NAME_HYPER_OS: String = "ro.mi.os.version.name"
 
-    private const val VERSION_PROPERTY_HUAWEI = "ro.build.version.emui"
-    private const val VERSION_PROPERTY_VIVO = "ro.vivo.os.build.display.id"
-    private const val VERSION_PROPERTY_XIAOMI = "ro.build.version.incremental"
-    private val VERSION_PROPERTY_OPPO =
-        arrayOf("ro.build.version.opporom", "ro.build.version.oplusrom.display")
-    private const val VERSION_PROPERTY_LEECO = "ro.letv.release.version"
-    private const val VERSION_PROPERTY_360 = "ro.build.uiversion"
-    private const val VERSION_PROPERTY_ZTE = "ro.build.MiFavor_version"
-    private const val VERSION_PROPERTY_ONEPLUS = "ro.rom.version"
-    private const val VERSION_PROPERTY_NUBIA = "ro.build.rom.id"
+    private const val VERSION_PROPERTY_HUAWEI: String = "ro.build.version.emui"
+    private const val VERSION_PROPERTY_VIVO: String = "ro.vivo.os.build.display.id"
+    private const val VERSION_PROPERTY_XIAOMI: String = "ro.build.version.incremental"
+    private val VERSION_PROPERTY_OPPO: Array<String> = arrayOf("ro.build.version.opporom", "ro.build.version.oplusrom.display")
+    private const val VERSION_PROPERTY_LEECO: String = "ro.letv.release.version"
+    private const val VERSION_PROPERTY_360: String = "ro.build.uiversion"
+    private const val VERSION_PROPERTY_ZTE: String = "ro.build.MiFavor_version"
+    private const val VERSION_PROPERTY_ONEPLUS: String = "ro.rom.version"
+    private const val VERSION_PROPERTY_NUBIA: String = "ro.build.rom.id"
 
     /**
      * 经过测试，得出以下结论
@@ -68,6 +70,13 @@ object PhoneRomUtils {
      */
     fun isMiui(): Boolean {
         return !TextUtils.isEmpty(getPropertyName(ROM_NAME_MIUI))
+    }
+
+    /**
+     * 判断当前厂商系统是否为澎湃系统
+     */
+    fun isHyperOs(): Boolean {
+        return !TextUtils.isEmpty(getSystemPropertyValue(ROM_NAME_HYPER_OS))
     }
 
     /**
@@ -197,14 +206,14 @@ object PhoneRomUtils {
         }
         if (isRightRom(brand, manufacturer, *ROM_VIVO)) {
             // 需要注意的是 vivo iQOO 9 Pro Android 12 获取到的厂商版本号是 OriginOS Ocean
-            return getPropertyName(VERSION_PROPERTY_VIVO)
+            return getSystemPropertyValue(VERSION_PROPERTY_VIVO)
         }
         if (isRightRom(brand, manufacturer, *ROM_XIAOMI)) {
-            return getPropertyName(VERSION_PROPERTY_XIAOMI)
+            return getSystemPropertyValue(VERSION_PROPERTY_XIAOMI)
         }
         if (isRightRom(brand, manufacturer, *ROM_OPPO)) {
             for (property in VERSION_PROPERTY_OPPO) {
-                val versionName = getPropertyName(property)
+                val versionName = getSystemPropertyValue(property!!)
                 if (TextUtils.isEmpty(property)) {
                     continue
                 }
@@ -213,23 +222,24 @@ object PhoneRomUtils {
             return ""
         }
         if (isRightRom(brand, manufacturer, *ROM_LEECO)) {
-            return getPropertyName(VERSION_PROPERTY_LEECO)
+            return getSystemPropertyValue(VERSION_PROPERTY_LEECO)
         }
+
         if (isRightRom(brand, manufacturer, *ROM_360)) {
-            return getPropertyName(VERSION_PROPERTY_360)
+            return getSystemPropertyValue(VERSION_PROPERTY_360)
         }
         if (isRightRom(brand, manufacturer, *ROM_ZTE)) {
-            return getPropertyName(VERSION_PROPERTY_ZTE)
+            return getSystemPropertyValue(VERSION_PROPERTY_ZTE)
         }
         if (isRightRom(brand, manufacturer, *ROM_ONEPLUS)) {
-            return getPropertyName(VERSION_PROPERTY_ONEPLUS)
+            return getSystemPropertyValue(VERSION_PROPERTY_ONEPLUS)
         }
         if (isRightRom(brand, manufacturer, *ROM_NUBIA)) {
-            return getPropertyName(VERSION_PROPERTY_NUBIA)
+            return getSystemPropertyValue(VERSION_PROPERTY_NUBIA)
         }
         if (isRightRom(brand, manufacturer, *ROM_HONOR)) {
             for (property in VERSION_PROPERTY_MAGIC) {
-                val versionName = getPropertyName(property)
+                val versionName = getSystemPropertyValue(property!!)
                 if (TextUtils.isEmpty(property)) {
                     continue
                 }
@@ -237,7 +247,8 @@ object PhoneRomUtils {
             }
             return ""
         }
-        return getPropertyName("")
+
+        return getSystemPropertyValue("")
     }
 
     private fun isRightRom(brand: String, manufacturer: String, vararg names: String): Boolean {

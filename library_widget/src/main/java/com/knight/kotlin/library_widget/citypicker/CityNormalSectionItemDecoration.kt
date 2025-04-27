@@ -25,7 +25,7 @@ class CityNormalSectionItemDecoration(data: List<GroupCityListBean>) :
     private var mData: List<GroupCityListBean> = data
 
     private val mBgPaint: Paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = if(CacheUtils.getNormalDark())  Color.parseColor("#444444") else Color.parseColor("#EDEDED")
+        color = if(CacheUtils.getNormalDark())  Color.parseColor("#EEEEEF") else Color.parseColor("#EDEDED")
     }
 
     private val mTextPaint: TextPaint = TextPaint(Paint.ANTI_ALIAS_FLAG).apply {

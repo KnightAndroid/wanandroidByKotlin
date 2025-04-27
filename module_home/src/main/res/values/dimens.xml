@@ -287,4 +287,9 @@
      <dimen name="home_search_city_et_margin_left">5dp</dimen>
      <dimen name="home_news_iv_float_play_margin_left">10dp</dimen>
      <dimen name="home_news_iv_float_play_margin_right">10dp</dimen>
+     <dimen name="home_tv_new_title_margin_left">10dp</dimen>
+     <dimen name="home_tv_new_title_margin_right">10dp</dimen>
+     <dimen name="home_tv_new_title_margin_bottom">10dp</dimen>
+     <dimen name="home_tv_new_title_margin_top">5dp</dimen>
+     <dimen name="home_cb_weather_margin_top">10dp</dimen>
 </resources>

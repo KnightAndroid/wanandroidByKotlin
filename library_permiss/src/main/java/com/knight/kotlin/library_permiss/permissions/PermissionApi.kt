@@ -7,12 +7,15 @@ import android.content.pm.PackageManager
 import android.os.Build
 import androidx.annotation.NonNull
 import androidx.annotation.RequiresApi
+import com.knight.kotlin.library_permiss.AndroidVersion.getAndroidVersionCode
 import com.knight.kotlin.library_permiss.AndroidVersion.isAndroid11
 import com.knight.kotlin.library_permiss.AndroidVersion.isAndroid13
 import com.knight.kotlin.library_permiss.PermissionHelper
+import com.knight.kotlin.library_permiss.PermissionHelper.findAndroidVersionByPermission
 import com.knight.kotlin.library_permiss.PermissionIntentManager.getApplicationDetailsIntent
 import com.knight.kotlin.library_permiss.delegate.PermissionDelegateImplV34
 import com.knight.kotlin.library_permiss.listener.PermissionDelegate
+import com.knight.kotlin.library_permiss.utils.PermissionUtils
 import com.knight.kotlin.library_permiss.utils.PermissionUtils.containsPermission
 
 
@@ -73,7 +76,7 @@ object PermissionApi {
     /**
      * 获取权限设置页的意图
      */
-    @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
+
     fun getPermissionSettingIntent(context: Context, permission: String): Intent? {
         return DELEGATE.getPermissionSettingIntent(context, permission)
     }
@@ -210,7 +213,7 @@ object PermissionApi {
      *
      * @param permissions                 请求失败的权限
      */
-    @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
+
     fun getSmartPermissionIntent(context: Context, permissions: List<String>?): Intent? {
         // 如果失败的权限里面不包含特殊权限
         if (permissions == null || permissions.isEmpty()) {
@@ -250,165 +253,29 @@ object PermissionApi {
         return getApplicationDetailsIntent(context)
     }
 
-//    /**
-//     * 获取某个权限的申请结果
-//     */
-//    fun getPermissionResult(context: Context, permission: String): Int {
-//        return if (isGrantedPermission(context, permission)) PackageManager.PERMISSION_GRANTED else PackageManager.PERMISSION_DENIED
-//    }
-//
-//
-//    /**
-//     * 判断某个权限是否授予
-//     */
-//    fun isGrantedPermission(context: Context, permission: String): Boolean {
-//        return DELEGATE.isGrantedPermission(context, permission)
-//    }
-//
-//    /**
-//     * 判断某个权限是否被永久拒绝
-//     */
-//    fun isDoNotAskAgainPermission(
-//        activity: Activity,
-//        permission: String
-//    ): Boolean {
-//        return DELEGATE.isDoNotAskAgainPermission(activity, permission)
-//    }
-//
-//    /**
-//     * 获取权限设置页意图
-//     */
-//    fun getPermissionIntent(context: Context, permission: String): Intent? {
-//        return DELEGATE.getPermissionIntent(context, permission)
-//    }
-//
-//    /**
-//     * 判断某个权限是否是特殊权限
-//     */
-//    fun isSpecialPermission(permission: String): Boolean {
-//        return Permission.isSpecialPermission(permission)
-//    }
-//
-//    /**
-//     * 判断某个权限集合是否包含特殊权限
-//     */
-//    fun containsSpecialPermission(permissions: List<String>): Boolean {
-//        if (permissions == null || permissions.isEmpty()) {
-//            return false
-//        }
-//        for (permission in permissions) {
-//            if (isSpecialPermission(permission)) {
-//                return true
-//            }
-//        }
-//        return false
-//    }
-//
-//    /**
-//     * 判断某些权限是否全部被授予
-//     */
-//    fun isGrantedPermissions(
-//        context: Context,
-//        permissions: List<String>
-//    ): Boolean {
-//        if (permissions.isEmpty()) {
-//            return false
-//        }
-//        for (permission in permissions) {
-//            if (!isGrantedPermission(context, permission)) {
-//                return false
-//            }
-//        }
-//        return true
-//    }
-//
-//    /**
-//     * 获取已经授予的权限
-//     */
-//    fun getGrantedPermissions(
-//        context: Context,
-//        permissions: List<String>
-//    ): List<String> {
-//        val grantedPermission: MutableList<String> = ArrayList(permissions.size)
-//        for (permission in permissions) {
-//            if (isGrantedPermission(context, permission)) {
-//                grantedPermission.add(permission)
-//            }
-//        }
-//        return grantedPermission
-//    }
-//
-//    /**
-//     * 获取已经拒绝的权限
-//     */
-//    fun getDeniedPermissions(
-//        context: Context,
-//        permissions: List<String>
-//    ): List<String> {
-//        val deniedPermission: MutableList<String> = ArrayList(permissions.size)
-//        for (permission in permissions) {
-//            if (!isGrantedPermission(context, permission)) {
-//                deniedPermission.add(permission)
-//            }
-//        }
-//        return deniedPermission
-//    }
-//
-//    /**
-//     * 在权限组中检查是否有某个权限是否被永久拒绝
-//     *
-//     * @param activity              Activity对象
-//     * @param permissions            请求的权限
-//     */
-//    fun isDoNotAskAgainPermissions(
-//        activity: Activity,
-//        permissions: List<String>
-//    ): Boolean {
-//        for (permission in permissions) {
-//            if (isDoNotAskAgainPermission(activity, permission)) {
-//                return true
-//            }
-//        }
-//        return false
-//    }
-//
-//    /**
-//     * 获取没有授予的权限
-//     *
-//     * @param permissions           需要请求的权限组
-//     * @param grantResults          允许结果组
-//     */
-//    fun getDeniedPermissions(
-//        permissions: List<String>,
-//        grantResults: IntArray
-//    ): List<String> {
-//        val deniedPermissions: MutableList<String> = ArrayList()
-//        for (i in grantResults.indices) {
-//            // 把没有授予过的权限加入到集合中
-//            if (grantResults[i] == PackageManager.PERMISSION_DENIED) {
-//                deniedPermissions.add(permissions[i])
-//            }
-//        }
-//        return deniedPermissions
-//    }
-//
-//    /**
-//     * 获取已授予的权限
-//     *
-//     * @param permissions       需要请求的权限组
-//     * @param grantResults      允许结果组
-//     */
-//    fun getGrantedPermissions(
-//        permissions: List<String>,
-//        grantResults: IntArray
-//    ): List<String> {
-//        val grantedPermissions: MutableList<String> = ArrayList()
-//        for (i in grantResults.indices) {
-//            // 把授予过的权限加入到集合中
-//            if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
-//                grantedPermissions.add(permissions[i])
-//            }
-//        }
-//        return grantedPermissions
-//    }
+    /**
+     * 通过新权限兼容旧权限
+     *
+     * @param requestPermissions            请求的权限组
+     */
+    fun compatibleOldPermissionByNewPermission(@NonNull requestPermissions: List<String>): List<String> {
+        val permissions: MutableList<String> = ArrayList(requestPermissions)
+        for (permission in requestPermissions) {
+            // 如果当前运行的 Android 版本大于权限出现的 Android 版本，则证明这个权限在当前设备上不用向下兼容
+            if (getAndroidVersionCode() >= findAndroidVersionByPermission(permission!!)) {
+                continue
+            }
+            // 通过新权限查询到对应的旧权限
+            val oldPermissions: Array<String> = PermissionHelper.queryOldPermissionByNewPermission(permission) ?: continue
+            for (oldPermission in oldPermissions) {
+                // 如果请求列表已经包含此权限，就不重复添加，直接跳过
+                if (PermissionUtils.containsPermission(permissions, oldPermission)) {
+                    continue
+                }
+                // 添加旧版的权限
+                permissions.add(oldPermission)
+            }
+        }
+        return permissions
+    }
 }

@@ -1,30 +1,30 @@
 package com.knight.kotlin.library_permiss.listener
 
 import android.app.Activity
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.FragmentActivity
-import com.knight.kotlin.library_permiss.fragment.PermissionFragment
+import com.knight.kotlin.library_permiss.PermissionHandler
 
 
 /**
  * Author:Knight
  * Time:2022/1/20 15:06
- * Description:IPermissionInterceptor
+ * Description:OnPermissionInterceptor
  */
-interface IPermissionInterceptor {
+interface OnPermissionInterceptor {
     /**
      * 发起权限申请（可在此处先弹 Dialog 再申请权限，如果用户已经授予权限，则不会触发此回调）
      *
      * @param allPermissions            申请的权限
      * @param callback                  权限申请回调
      */
+    @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
     fun launchPermissionRequest(
         activity: FragmentActivity, allPermissions: List<String>,
-         callback: OnPermissionCallback
+       callback: OnPermissionCallback
     ) {
-        PermissionFragment.launch(
-            activity, ArrayList(allPermissions), this,
-            callback
-        )
+        PermissionHandler.request(activity, allPermissions, callback, this)
     }
 
     /**
@@ -36,9 +36,9 @@ interface IPermissionInterceptor {
      * @param callback                   权限申请回调
      */
     fun grantedPermissionRequest(
-         activity: Activity?, allPermissions: List<String>,
+         activity: Activity,  allPermissions: List<String>,
          grantedPermissions: List<String>, allGranted: Boolean,
-         callback: OnPermissionCallback
+       callback: OnPermissionCallback?
     ) {
         if (callback == null) {
             return
@@ -55,7 +55,7 @@ interface IPermissionInterceptor {
      * @param callback                  权限申请回调
      */
     fun deniedPermissionRequest(
-         activity: Activity?, allPermissions: List<String>,
+         activity: Activity, allPermissions: List<String>,
          deniedPermissions: List<String>, doNotAskAgain: Boolean,
          callback: OnPermissionCallback
     ) {
@@ -74,7 +74,7 @@ interface IPermissionInterceptor {
      * @param callback                  权限申请回调
      */
     fun finishPermissionRequest(
-         activity: Activity,  allPermissions: List<String>,
+        activity: Activity,  allPermissions: List<String>,
         skipRequest: Boolean,  callback: OnPermissionCallback
     ) {
     }

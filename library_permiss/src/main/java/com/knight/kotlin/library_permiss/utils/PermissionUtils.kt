@@ -13,6 +13,7 @@ import android.content.res.AssetManager
 import android.content.res.Configuration
 import android.net.Uri
 import android.os.Build
+import android.os.Environment
 import android.os.Handler
 import android.os.Looper
 import android.text.TextUtils
@@ -30,10 +31,16 @@ import com.knight.kotlin.library_permiss.listener.OnPermissionPageCallback
 import com.knight.kotlin.library_permiss.permissions.Permission
 import com.knight.kotlin.library_util.DialogUtils
 import org.xmlpull.v1.XmlPullParserException
+import java.io.BufferedReader
+import java.io.File
+import java.io.FileInputStream
 import java.io.IOException
+import java.io.InputStreamReader
 import java.lang.reflect.Field
 import java.lang.reflect.InvocationTargetException
 import java.lang.reflect.Method
+import java.util.Arrays
+import java.util.Properties
 
 
 /**
@@ -46,23 +53,6 @@ object PermissionUtils {
     /** Handler 对象  */
     private val HANDLER: Handler = Handler(Looper.getMainLooper())
 
-    /**
-     * 判断某个权限是否是特殊权限
-     */
-    fun isSpecialPermission(permission: String): Boolean {
-        return equalsPermission(permission, Permission.MANAGE_EXTERNAL_STORAGE) ||
-                equalsPermission(permission, Permission.REQUEST_INSTALL_PACKAGES) ||
-                equalsPermission(permission, Permission.SYSTEM_ALERT_WINDOW) ||
-                equalsPermission(permission, Permission.WRITE_SETTINGS) ||
-                equalsPermission(permission, Permission.NOTIFICATION_SERVICE) ||
-                equalsPermission(permission, Permission.PACKAGE_USAGE_STATS) ||
-                equalsPermission(permission, Permission.SCHEDULE_EXACT_ALARM) ||
-                equalsPermission(permission, Permission.BIND_NOTIFICATION_LISTENER_SERVICE) ||
-                equalsPermission(permission, Permission.ACCESS_NOTIFICATION_POLICY) ||
-                equalsPermission(permission, Permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS) ||
-                equalsPermission(permission, Permission.BIND_VPN_SERVICE) ||
-                equalsPermission(permission, Permission.PICTURE_IN_PICTURE)
-    }
 
     /**
      * 判断某个危险权限是否授予了
@@ -395,7 +385,7 @@ object PermissionUtils {
                 context.packageName, PackageManager.GET_META_DATA
             ).metaData
             if (metaData != null && metaData.containsKey(metaKey)) {
-                return java.lang.Boolean.parseBoolean(metaData[metaKey].toString())
+                return metaData.getBoolean(metaKey)
             }
         } catch (e: PackageManager.NameNotFoundException) {
             e.printStackTrace()
@@ -532,6 +522,13 @@ object PermissionUtils {
     /**
      * 判断权限集合中是否包含某个权限
      */
+    fun containsPermission(permissions: Array<String>,  permission: String): Boolean {
+        return containsPermission(Arrays.asList(*permissions), permission)
+    }
+
+    /**
+     * 判断权限集合中是否包含某个权限
+     */
     fun containsPermission(
         permissions: Collection<String>,
         permission: String
@@ -553,6 +550,98 @@ object PermissionUtils {
      */
     fun getPackageNameUri(context: Context): Uri? {
         return Uri.parse("package:" + context.packageName)
+    }
+
+
+    fun getSystemPropertyValue(propertyName: String): String {
+        var prop: String?
+        try {
+            prop = getSystemPropertyByReflect(propertyName)
+            if (prop != null && !prop.isEmpty()) {
+                return prop
+            }
+        } catch (ignored: Exception) {
+        }
+
+        try {
+            prop = getSystemPropertyByShell(propertyName)
+            if (prop != null && !prop.isEmpty()) {
+                return prop
+            }
+        } catch (ignored: IOException) {
+        }
+
+        try {
+            prop = getSystemPropertyByStream(propertyName)
+            if (prop != null && !prop.isEmpty()) {
+                return prop
+            }
+        } catch (ignored: IOException) {
+        }
+
+        return ""
+    }
+
+    /**
+     * 获取系统属性值（通过反射系统类）
+     */
+    @SuppressLint("PrivateApi")
+    @Throws(
+        ClassNotFoundException::class,
+        InvocationTargetException::class,
+        NoSuchMethodException::class,
+        IllegalAccessException::class
+    )
+    private fun getSystemPropertyByReflect(key: String): String {
+        val clz = Class.forName("android.os.SystemProperties")
+        val getMethod = clz.getMethod("get", String::class.java, String::class.java)
+        return getMethod.invoke(clz, key, "") as String
+    }
+
+    /**
+     * 获取系统属性值（通过 shell 命令）
+     */
+    @Throws(IOException::class)
+    private fun getSystemPropertyByShell(propName: String): String? {
+        var input: BufferedReader? = null
+        try {
+            val p = Runtime.getRuntime().exec("getprop $propName")
+            input = BufferedReader(InputStreamReader(p.inputStream), 1024)
+            val firstLine = input.readLine()
+            if (firstLine != null) {
+                return firstLine
+            }
+        } finally {
+            if (input != null) {
+                try {
+                    input.close()
+                } catch (ignored: IOException) {
+                }
+            }
+        }
+        return null
+    }
+
+    /**
+     * 获取系统属性值（通过读取系统文件）
+     */
+    @Throws(IOException::class)
+    private fun getSystemPropertyByStream(key: String): String {
+        var inputStream: FileInputStream? = null
+        try {
+            val prop: Properties = Properties()
+            val file = File(Environment.getRootDirectory(), "build.prop")
+            inputStream = FileInputStream(file)
+            prop.load(inputStream)
+            return prop.getProperty(key, "")
+        } finally {
+            if (inputStream != null) {
+                try {
+                    inputStream.close()
+                } catch (ignored: IOException) {
+                }
+            }
+        }
     }
 
 

@@ -410,4 +410,12 @@ object DateUtils {
     fun getTimeStampByZonedDateTime(dateTime: ZonedDateTime, zoneId:ZoneId):Long {
         return dateTime.withZoneSameInstant(zoneId).toInstant().toEpochMilli()
     }
+
+    /**
+     *
+     * 根据格式获取当前时间
+     */
+    fun getCurrentDateByFormat(format:String = "yyyy-MM-dd"):String {
+        return SimpleDateFormat(format, Locale.getDefault()).format(Date())
+    }
 }

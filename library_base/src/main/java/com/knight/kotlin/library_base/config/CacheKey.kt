@@ -165,4 +165,10 @@ object CacheKey {
      */
     const val CURRENTLOCATION = "current_location"
 
+    /**
+     *
+     * 天气提醒弹窗是否弹出
+     */
+    const val IS_WEATHER_HIDDEN = "isWeatherDialogHidden"
+
 }
