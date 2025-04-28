@@ -28,6 +28,7 @@ dependencies {
     api Dependencies.GitHub.MAGIC_INDICATOR
     api Dependencies.Android.FLEXLAYOUT
     implementation Dependencies.GitHub.SHIMMER_LAYOUT
-
+    //依赖dataBase 数据库
+    implementation project(path:':library_database')
 
 }

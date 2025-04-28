@@ -67,6 +67,7 @@ import com.knight.kotlin.library_base.util.isMotionReduced
 import com.knight.kotlin.library_common.entity.AppUpdateBean
 import com.knight.kotlin.library_common.entity.OfficialAccountEntity
 import com.knight.kotlin.library_common.fragment.UpdateAppDialogFragment
+import com.knight.kotlin.library_database.entity.CityBean
 import com.knight.kotlin.library_database.entity.PushDateEntity
 import com.knight.kotlin.library_permiss.XXPermissions
 import com.knight.kotlin.library_permiss.listener.OnPermissionCallback
@@ -90,7 +91,6 @@ import com.knight.kotlin.library_util.startPageWithRightAnimate
 import com.knight.kotlin.library_util.toast.ToastUtils
 import com.knight.kotlin.library_widget.SpacesItemDecoration
 import com.knight.kotlin.library_widget.ZzWeatherView
-import com.knight.kotlin.library_widget.citypicker.CityBean
 import com.knight.kotlin.library_widget.ktx.init
 import com.knight.kotlin.library_widget.ktx.setSafeOnItemChildClickListener
 import com.knight.kotlin.library_widget.ktx.setSafeOnItemClickListener
@@ -698,7 +698,7 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
 
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun getDetailWeekWeatherByCity(city:CityBean, lng:Double, lat:Double) {
+    private fun getDetailWeekWeatherByCity(city: CityBean, lng:Double, lat:Double) {
         mBinding.homeRecommentMenu.weatherMainAqiProgress.setDrawStatus(ArcProgress.ArcProgressDrawStatus.NOTDRAW)
         mBinding.homeRecommentMenu.sunMoonControlView.setDrawStatus(SunMoonView.SunMoonDrawStatus.NOTDRAW)
         mBinding.homeRecommentMenu.homeTvLocation.text = city.city

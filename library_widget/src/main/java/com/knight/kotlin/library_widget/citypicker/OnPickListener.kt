@@ -9,7 +9,7 @@ package com.knight.kotlin.library_widget.citypicker
  */
 interface OnPickListener {
 
-    fun onPick(position: Int, data: CityBean)
+    fun onPick(position: Int, data: com.knight.kotlin.library_database.entity.CityBean)
     fun onLocate()
     fun onCancel()
 }

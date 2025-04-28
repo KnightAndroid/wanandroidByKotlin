@@ -1,5 +1,6 @@
 package com.knight.kotlin.library_base.repository
 
+import android.util.Log
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
@@ -36,6 +37,7 @@ open class BaseRepository {
                //结束
            }
            .catch {
+               Log.d("sdsd",it.cause?.message + it.message)
            }
     }
 

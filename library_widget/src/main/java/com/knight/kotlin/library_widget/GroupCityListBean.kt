@@ -1,7 +1,7 @@
 package com.knight.kotlin.library_widget
 
 import android.os.Parcelable
-import com.knight.kotlin.library_widget.citypicker.CityBean
+import com.knight.kotlin.library_database.entity.CityBean
 import kotlinx.parcelize.Parcelize
 
 
@@ -14,5 +14,5 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class GroupCityListBean (
     val group:String,
-    val city:List<CityBean>
+    val city:List<com.knight.kotlin.library_database.entity.CityBean>
 ): Parcelable

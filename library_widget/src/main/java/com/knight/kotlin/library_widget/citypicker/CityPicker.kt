@@ -23,8 +23,8 @@ class CityPicker {
 
     private var enableAnim = false
     private var mAnimStyle = 0
-    private var mLocation: CityBean? = null
-    private var mHotCities: List<CityBean>? = null
+    private var mLocation: com.knight.kotlin.library_database.entity.CityBean? = null
+    private var mHotCities: List<com.knight.kotlin.library_database.entity.CityBean>? = null
     private var mOnPickListener: OnPickListener? = null
 
     private constructor()
@@ -57,12 +57,12 @@ class CityPicker {
      * @param location
      * @return
      */
-    fun setLocatedCity(location: CityBean?): CityPicker {
+    fun setLocatedCity(location: com.knight.kotlin.library_database.entity.CityBean?): CityPicker {
         this.mLocation = location
         return this
     }
 
-    fun setHotCities(data: List<CityBean>?): CityPicker {
+    fun setHotCities(data: List<com.knight.kotlin.library_database.entity.CityBean>?): CityPicker {
         this.mHotCities = data
         return this
     }
@@ -113,7 +113,7 @@ class CityPicker {
      * @param location
      * @param state
      */
-    fun locateComplete(location: CityBean) {
+    fun locateComplete(location: com.knight.kotlin.library_database.entity.CityBean) {
        // val fragment: CityPickerDialogFragment = mFragmentManager!!.get()?.findFragmentByTag(TAG) as CityPickerDialogFragment
       //  if (fragment != null) {
           //  fragment.locationChanged(location)

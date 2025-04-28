@@ -78,7 +78,7 @@
 
 
 
-    <androidx.recyclerview.widget.RecyclerView
+    <com.yanzhenjie.recyclerview.SwipeRecyclerView
         android:id="@+id/rv_city"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -107,7 +107,7 @@
         android:layout_alignParentRight="true" />
 
 
-    <androidx.recyclerview.widget.RecyclerView
+    <com.yanzhenjie.recyclerview.SwipeRecyclerView
         android:id="@+id/rv_search_city"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

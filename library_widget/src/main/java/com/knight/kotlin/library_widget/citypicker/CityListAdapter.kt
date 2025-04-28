@@ -1,9 +1,6 @@
 package com.knight.kotlin.library_widget.citypicker
 
-import android.app.Activity
 import android.content.Context
-import android.content.res.ColorStateList
-import android.graphics.Color
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +14,7 @@ import com.google.android.material.chip.Chip
 import com.google.android.material.shape.ShapeAppearanceModel
 import com.knight.kotlin.library_base.ktx.setOnClick
 import com.knight.kotlin.library_base.util.dp2px
+import com.knight.kotlin.library_database.entity.CityBean
 import com.knight.kotlin.library_widget.GroupCityListBean
 import com.knight.kotlin.library_widget.databinding.CityDefaultItemBinding
 
@@ -33,17 +31,7 @@ class CityListAdapter( val mInnerListener:InnerListener): BaseQuickAdapter<Group
 
     var stateChanged:Boolean = false
     lateinit var mLayoutManager:LinearLayoutManager
-    /**
-     *
-     * 更新定位城市
-     */
-    fun updateLocateState(location: CityBean) {
-//        data.removeAt(0)
-//        val locationListData = CityListBean(CityEnum.LOCATION.type, mutableListOf(location))
-//        data.add(0, locationListData)
-//        stateChanged = true
-//        refreshLocationItem()
-    }
+
 
     fun refreshLocationItem() {
         //如果定位城市的item可见则进行刷新
@@ -165,7 +153,7 @@ class CityListAdapter( val mInnerListener:InnerListener): BaseQuickAdapter<Group
         } else {
             val binding = holder.binding
             val chipGroup = binding.cityChipGroup
-            val newCities = payloads.firstOrNull() as? List<CityBean>
+            val newCities = payloads.firstOrNull() as? List<com.knight.kotlin.library_database.entity.CityBean>
 
             if (newCities != null) {
                 chipGroup.setTag(com.knight.kotlin.library_widget.R.id.city_tag, newCities)
@@ -196,7 +184,7 @@ class CityListAdapter( val mInnerListener:InnerListener): BaseQuickAdapter<Group
 
 
     // 新增创建 Chip 的方法
-    private fun createChip(context: Context,position:Int, city :CityBean): Chip {
+    private fun createChip(context: Context,position:Int, city : CityBean): Chip {
 
        // Chip(ContextThemeWrapper(context, com.knight.kotlin.library_base.R.style.base_MyChipTheme), null, 0).
         val materialContext = ContextThemeWrapper(context, com.google.android.material.R.style.Theme_MaterialComponents_DayNight)
