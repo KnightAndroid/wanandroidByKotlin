@@ -12,6 +12,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.R
 import com.google.android.material.chip.Chip
 import com.google.android.material.shape.ShapeAppearanceModel
 import com.knight.kotlin.library_base.fragment.BaseDialogFragment
@@ -65,13 +66,27 @@ class HomeCityGroupFragment : BaseDialogFragment<HomeCityDialogPickerBinding, Ho
     override fun initObserver() {
 
     }
-
+    private lateinit var mCityNormalSectionItemDecoration:CityNormalSectionItemDecoration
     private lateinit var mHomeCityGroupHeadBinding: HomeCityGroupHeadBinding
 
     private val mCityListAdapter: CityListAdapter by lazy { CityListAdapter(this) }
     private val mSearchCityAdpter: SearchCityAdpter by lazy { SearchCityAdpter() }
     private var listener: OnChooseCityListener? = null
+
     override fun initRequestData() {
+
+    }
+
+    override fun reLoadData() {
+
+    }
+
+
+    /**
+     *
+     * 加载城市数据
+     */
+    private fun initCityData(isLocalData:Boolean) {
         showLoadingDialog()
         mViewModel.getCityGroupData("pc").observe(this, { data ->
             dimissLoadingDialog()
@@ -98,16 +113,11 @@ class HomeCityGroupFragment : BaseDialogFragment<HomeCityDialogPickerBinding, Ho
 
             data.add(0, locationGroups)
             data.add(1, hotGroups)
-            mBinding.rvCity.addItemDecoration(CityNormalSectionItemDecoration(data), 0)
-
-
-
+            mCityNormalSectionItemDecoration = CityNormalSectionItemDecoration(data,isLocalData)
+            mBinding.rvCity.addItemDecoration(mCityNormalSectionItemDecoration, 0)
+            mCityListAdapter.setLocalData(isLocalData)
             mCityListAdapter.submitList(data)
         })
-    }
-
-    override fun reLoadData() {
-
     }
 
     override fun onAttach(context: Context) {
@@ -207,7 +217,6 @@ class HomeCityGroupFragment : BaseDialogFragment<HomeCityDialogPickerBinding, Ho
                 }
             }
         })
-        initCityGroupHeaderView()
         initHeadData()
 
     }
@@ -232,6 +241,19 @@ class HomeCityGroupFragment : BaseDialogFragment<HomeCityDialogPickerBinding, Ho
                 mBinding.rvCity.addHeaderView(mHomeCityGroupHeadBinding.root)
             }
         }
+
+        mHomeCityGroupHeadBinding.ivCityDelete.setOnClick {
+            mViewModel.deleteAllSearchCitys().observe(requireActivity(), { data ->
+                mHomeCityGroupHeadBinding.localCityChipGroup.removeAllViews()
+                mBinding.rvCity.removeHeaderView(mHomeCityGroupHeadBinding.root)
+                mCityListAdapter.setLocalData(false)
+                val decorationDatas = mCityNormalSectionItemDecoration.getData()
+                decorationDatas.removeAt(0)
+                mCityNormalSectionItemDecoration.setData(decorationDatas)
+                mBinding.rvCity.invalidateItemDecorations()
+            })
+        }
+
     }
 
     /**
@@ -240,9 +262,12 @@ class HomeCityGroupFragment : BaseDialogFragment<HomeCityDialogPickerBinding, Ho
      */
     private fun initHeadData() {
         mViewModel.queryLocalSearchCitys().observe(this, { data ->
+            if (data.size > 0) {
+                initCityGroupHeaderView()
+            }
             for (i in 0 until data.size) {
                 // 强制使用 MaterialComponents 包裹 Context
-                val materialContext = ContextThemeWrapper(requireActivity(), com.google.android.material.R.style.Theme_MaterialComponents_DayNight)
+                val materialContext = ContextThemeWrapper(requireActivity(), R.style.Theme_MaterialComponents_DayNight)
                 val chip = Chip(materialContext).apply {
                     shapeAppearanceModel  = ShapeAppearanceModel.Builder()
                         .setAllCornerSizes(12f)
@@ -253,6 +278,15 @@ class HomeCityGroupFragment : BaseDialogFragment<HomeCityDialogPickerBinding, Ho
                     textEndPadding = 8.dp2px().toFloat()
                     chipMinHeight = 48.dp2px().toFloat()
                     text = data[i].city
+
+                    setOnClick {
+                        listener?.let {
+                            it.onChooseCity(data[i])
+                            dismiss()
+                        }
+
+                    }
+
                     chipBackgroundColor =
                         ContextCompat.getColorStateList(requireActivity(), com.knight.kotlin.library_widget.R.color.widget_tv_city_search_shape)
                     chipIcon = null
@@ -267,6 +301,14 @@ class HomeCityGroupFragment : BaseDialogFragment<HomeCityDialogPickerBinding, Ho
 
                 mHomeCityGroupHeadBinding.localCityChipGroup.addView(chip)
             }
+            if (data.size > 0) {
+
+                initCityData(true)
+
+            } else {
+                initCityData(false)
+            }
+
 
         })
     }

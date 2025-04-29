@@ -19,10 +19,10 @@ import com.knight.kotlin.library_widget.GroupCityListBean
  * @Date 2025/4/18 9:53
  * @descript:普通城市分割线
  */
-class CityNormalSectionItemDecoration(data: List<GroupCityListBean>) :
+class CityNormalSectionItemDecoration(data: List<GroupCityListBean>,isLocalData: Boolean) :
     RecyclerView.ItemDecoration() {
 
-    private var mData: List<GroupCityListBean> = data
+    private lateinit var mData: MutableList<GroupCityListBean>
 
     private val mBgPaint: Paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = if(CacheUtils.getNormalDark())  Color.parseColor("#EEEEEF") else Color.parseColor("#EDEDED")
@@ -38,13 +38,24 @@ class CityNormalSectionItemDecoration(data: List<GroupCityListBean>) :
     private val mTextHeight: Int
 
     init {
+        mData = mutableListOf()
+        if (isLocalData) {
+            val localData = GroupCityListBean("历史", listOf())
+            mData.add(localData)
+        }
+        mData.addAll(data)
         // 只计算一次文字高度
         mTextPaint.getTextBounds("A", 0, 1, mBounds)
         mTextHeight = mBounds.height()
+
     }
 
-    fun setData(data: List<GroupCityListBean>) {
+    fun setData(data: MutableList<GroupCityListBean>) {
         this.mData = data
+    }
+
+    fun getData() :MutableList<GroupCityListBean>{
+        return mData
     }
 
     private fun isFirstInGroup(position: Int): Boolean {

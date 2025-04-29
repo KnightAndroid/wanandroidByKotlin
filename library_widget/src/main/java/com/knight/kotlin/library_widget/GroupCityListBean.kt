@@ -14,5 +14,5 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class GroupCityListBean (
     val group:String,
-    val city:List<com.knight.kotlin.library_database.entity.CityBean>
+    val city:List<CityBean>
 ): Parcelable

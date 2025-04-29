@@ -94,9 +94,9 @@ class SearchCityRepository : BaseRepository(){
      *
      * 删除全部
      */
-    fun deleteAllCitys(failureCallBack:((String?) ->Unit) ?= null) = request<Unit> ({
+    fun deleteAllCitys(failureCallBack:((String?) ->Unit) ?= null) = request<Int> ({
         mDao.deleteAllCitys().run {
-            emit(Unit)
+            emit(this)
         }
     }){
         failureCallBack?.run {

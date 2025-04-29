@@ -38,5 +38,5 @@ interface SearchCityDao {
 
     //删除全部
     @Query("delete from searchcity_table")
-    suspend fun deleteAllCitys()
+    suspend fun deleteAllCitys():Int
 }

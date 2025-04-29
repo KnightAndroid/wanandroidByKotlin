@@ -1,32 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingLeft="16dp">
-
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="历史记录"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:textSize="16sp"
-        android:textColor="@color/home_search_history_city_title_color"/>
-
-
-    <com.google.android.flexbox.FlexboxLayout
-        android:id="@+id/local_cityChipGroup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:flexWrap="wrap"
-        app:alignItems="flex_start"
-        app:justifyContent="flex_start">
-    </com.google.android.flexbox.FlexboxLayout>
+    android:padding="16dp"
+>
 
 
 
-</LinearLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/rl_delete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+            <ImageView
+                android:id="@+id/iv_city_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/home_local_city_delete_icon"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="20dp"/>
+
+        </RelativeLayout>
+
+
+        <com.google.android.flexbox.FlexboxLayout
+            android:id="@+id/local_cityChipGroup"
+            app:layout_constraintTop_toBottomOf="@id/rl_delete"
+            android:layout_width="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_height="wrap_content"
+            app:flexWrap="wrap"
+            app:alignItems="flex_start"
+            app:justifyContent="flex_start"
+         >
+        </com.google.android.flexbox.FlexboxLayout>
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout >

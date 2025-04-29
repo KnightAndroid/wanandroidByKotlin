@@ -29,19 +29,15 @@ class CityListAdapter( val mInnerListener:InnerListener): BaseQuickAdapter<Group
 
 
 
-    var stateChanged:Boolean = false
     lateinit var mLayoutManager:LinearLayoutManager
 
+    private var isLocalData : Boolean = false
 
-    fun refreshLocationItem() {
-        //如果定位城市的item可见则进行刷新
-        if (stateChanged) {
-            stateChanged = false
-            notifyItemChanged(0)
-        }
+
+
+    fun setLocalData(isLocalData:Boolean) {
+        this.isLocalData = isLocalData
     }
-
-
     /**
      * 滚动RecyclerView到索引位置
      * @param index
@@ -51,7 +47,12 @@ class CityListAdapter( val mInnerListener:InnerListener): BaseQuickAdapter<Group
         for (i in 0 until size) {
             if (TextUtils.equals(index, items.get(i).group)) {
                 if (mLayoutManager != null) {
-                    mLayoutManager.scrollToPositionWithOffset(i, 0)
+                    if (isLocalData) {
+                        mLayoutManager.scrollToPositionWithOffset(i+1, 0)
+                    } else {
+                        mLayoutManager.scrollToPositionWithOffset(i, 0)
+                    }
+
                     return
                 }
             }

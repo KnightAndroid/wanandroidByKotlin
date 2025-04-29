@@ -58,5 +58,4 @@
     <color name="home_tv_location_text_color">#F4F2F2</color>
     <color name="home_tv_weather_wind_text_color">#F4F2F2</color>
     <color name="home_air_quality_level_text_color">#F4F2F2</color>
-    <color name="home_search_history_city_title_color">#D3D3D3</color>
 </resources>

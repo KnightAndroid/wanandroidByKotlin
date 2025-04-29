@@ -53,7 +53,7 @@ class HomeCityGroupVm @Inject constructor(private val mRepo: HomeCityGroupRepo) 
      *
      * 删除全部本地搜索城市数据
      */
-    fun deleteAllSearchCitys():LiveData<Unit> {
+    fun deleteAllSearchCitys():LiveData<Int> {
         return repository.deleteAllCitys().asLiveData()
     }
 
