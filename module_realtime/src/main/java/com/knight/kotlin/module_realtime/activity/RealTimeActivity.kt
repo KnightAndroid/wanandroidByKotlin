@@ -10,6 +10,7 @@ import com.knight.kotlin.library_base.event.MessageEvent
 import com.knight.kotlin.library_base.ktx.setOnClick
 import com.knight.kotlin.library_base.ktx.statusHeight
 import com.knight.kotlin.library_base.route.RouteActivity
+import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_base.util.dp2px
 import com.knight.kotlin.library_base.vm.EmptyViewModel
 import com.knight.kotlin.module_realtime.databinding.RealtimeMainActivityBinding
@@ -73,7 +74,11 @@ class RealTimeActivity : BaseActivity<RealtimeMainActivityBinding,EmptyViewModel
                  val mOffsetY = abs(event.getInt(EventBusKeys.OFFSET)).toFloat()
                  val scale: Float = if (mOffsetY / mHeight > 1) 1.toFloat() else mOffsetY / mHeight
                  val alpha: Int =(scale * 255).toInt()
-                 mBinding.layoutParentTabSegment.setBackgroundColor(Color.argb(alpha, 254, 79, 76))
+                 if (CacheUtils.getNormalDark()) {
+                     mBinding.layoutParentTabSegment.setBackgroundColor(Color.argb(alpha, 186,5,2))
+                 } else {
+                     mBinding.layoutParentTabSegment.setBackgroundColor(Color.argb(alpha, 254, 79, 76))
+                 }
                  if (event.getInt(EventBusKeys.REALTIMESCROLLORIENTATION) == 0) {
                      val color = ArgbEvaluator().evaluate(scale, Color.argb(255, 255, 255, 255), Color.argb(255, 34, 22, 19)) as Int
                      mBinding.imgMore.setColorFilter(color)

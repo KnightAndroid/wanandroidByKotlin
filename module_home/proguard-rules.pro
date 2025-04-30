@@ -25,3 +25,9 @@
 -dontwarn com.knight.kotlin.library_base.R$layout
 -dontwarn com.knight.kotlin.library_base.R$string
 
+-dontwarn com.google.android.material.R$attr
+-dontwarn com.google.android.material.R$style
+-dontwarn com.knight.kotlin.library_widget.R$color
+-dontwarn com.knight.kotlin.library_widget.R$drawable
+-dontwarn com.knight.kotlin.library_widget.R$layout
+

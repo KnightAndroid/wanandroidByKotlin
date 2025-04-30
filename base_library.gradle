@@ -80,13 +80,13 @@ dependencies {
 
 //ShareSDK分享APP平台配置。
 MobSDK {
-    appKey ""
-    appSecret ""
+    appKey "3a276aad64271"
+    appSecret "29ce1dd3b30471624c4ac58dfb9d1c22"
     ShareSDK {
         devInfo {
             Wechat { //微信 开放公众平台
-                appId ""
-                appSecret ""
+                appId "wx3eca5a44fe87d60a"
+                appSecret "05cf98d91331c7f67d404d22cdb1b0da"
                 sortId 1
                 enable true
 

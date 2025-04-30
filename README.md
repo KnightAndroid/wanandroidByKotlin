@@ -45,6 +45,7 @@
 - 自动夜间模式切换
 - 开眼功能浏览图片和视频等
 - 天气功能，日月升落图，降雨量，温度折线图等
+- 热搜新闻功能
 
 
 
@@ -58,7 +59,7 @@
 | ![11.jpg](https://gitee.com/MengSuiXinSuoYuan/wanandroid_server/raw/master/wanandroid_picture/wanandroid_knowledgeLabel.jpg) | ![12.jpg](https://gitee.com/MengSuiXinSuoYuan/wanandroid_server/raw/master/wanandroid_picture/wanandroid_message_remind.jpg) | ![13.jpg](https://gitee.com/MengSuiXinSuoYuan/wanandroid_server/raw/master/wanandroid_picture/wanandroid_messagecenter.jpg) |
 | ![14.jpg](https://gitee.com/MengSuiXinSuoYuan/wanandroid_server/raw/master/wanandroid_picture/set_changesize.png) | ![wanandroid_biometric_finger.jpg](https://gitee.com/MengSuiXinSuoYuan/wanandroid_server/raw/master/wanandroid_picture/wanandroid_biometric_finger.jpg) |![wanandroid_gesturelock.jpg](https://gitee.com/MengSuiXinSuoYuan/wanandroid_server/raw/master/wanandroid_picture/wanandroid_gesturelock.jpg) |
 | ![15.jpg](https://gitee.com/MengSuiXinSuoYuan/wanandroid_server/raw/master/wanandroid_picture/home_feedback_article.png) |![wanandroid_shortcuts.jpg](https://gitee.com/MengSuiXinSuoYuan/wanandroid_server/raw/master/wanandroid_picture/wanandroid_shortcuts.jpg) |![wanandroid_home_eye_category.jpg](https://gitee.com/MengSuiXinSuoYuan/wanandroid_server/raw/master/wanandroid_picture/wanandroid_home_eye_category.jpg) |
-| ![wanandroid_home_weather_detail.jpg](https://gitee.com/MengSuiXinSuoYuan/wanandroid_server/raw/master/wanandroid_picture/wanandroid_home_weather_detail.jpg) |![wanandroid_home_select_city.jpg](https://gitee.com/MengSuiXinSuoYuan/wanandroid_server/raw/master/wanandroid_picture/wanandroid_home_select_city.jpg)
+| ![wanandroid_home_weather_detail.jpg](https://gitee.com/MengSuiXinSuoYuan/wanandroid_server/raw/master/wanandroid_picture/wanandroid_home_weather_detail.jpg) |![wanandroid_home_select_city.jpg](https://gitee.com/MengSuiXinSuoYuan/wanandroid_server/raw/master/wanandroid_picture/wanandroid_home_select_city.jpg)|![home_wanandroid_realtime.png](https://gitee.com/MengSuiXinSuoYuan/wanandroid_server/raw/master/wanandroid_picture/home_wanandroid_realtime.png)
 
 ### 深色模式
 | ![dark_01.jpg](https://gitee.com/MengSuiXinSuoYuan/wanandroid_server/raw/master/wanandroid_picture/home_dark_01.jpg) | ![dark_02.jpg](https://gitee.com/MengSuiXinSuoYuan/wanandroid_server/raw/master/wanandroid_picture/square_dark_02.jpg) | ![dark_03.jpg](https://gitee.com/MengSuiXinSuoYuan/wanandroid_server/raw/master/wanandroid_picture/navigate_dark_03.jpg) |
@@ -126,8 +127,18 @@
 升级到1.2.1版本后用resguardRelease打包命令导致首页收藏按钮动画异常，所以采取普通的assembleRelease,如下
 
 ![wanandroid_normal_release.png](https://gitee.com/MengSuiXinSuoYuan/wanandroid_server/raw/master/wanandroid_picture/wanandroid_normal_release.png)
+为了安全，本库用了一些第三方sdk，密钥不公开。如需下载本项目，运行前请重新生成密钥文件，并更改app目录下**build.gradle**指定此目录
+
+
 
 ## 更新日志
+### 2.1.0(8)
+-  wanandroid 第八版发布
+-  新增热搜功能
+-  新增天气功能
+-  修复解决一些问题
+-  发布时间：2025/04/30
+
 
 ### 2.0.0(7)
 -  wanandroid 第七版发布
@@ -193,8 +204,9 @@
 -  链接下载 [APP下载链接](https://www.pgyer.com/uf4k)
 
 ## Thanks
-感谢鸿洋大大开放的[API](https://github.com/hongyangAndroid/wanandroid)
-感谢开眼的API
+- 感谢鸿洋大大开放的[API](https://github.com/hongyangAndroid/wanandroid)
+- [https://github.com/breezy-weather/breezy-weather](https://github.com/breezy-weather/breezy-weather)
+- 感谢开眼的API
 
 ## 非商业用途声明
 

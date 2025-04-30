@@ -92,7 +92,7 @@ object Dependencies {
        //第三方其他相关------------------------------------------------------
        const val LEAKCANARY_VERSION = "2.8.1"               // 内存泄漏相关
        const val BUG_LY = "4.1.9.2"                   // bugly异常上报
-       const val ANDROID_AOP = "2.4.8"                       //aop相关
+       const val ANDROID_AOP = "2.6.2"                       //aop相关
        const val ANDROID_KSP_VERSION = "2.0.21-1.0.25"         //ksp版本  https://github.com/google/ksp/releases?page=1
 
        const val EXOPLAYER = "2.17.0"                //视频播放器版本

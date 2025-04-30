@@ -18,8 +18,8 @@
     <color name="realtime_movie_chip_background">#F5F5F5</color>
     <color name="realtime_indicator_background">#ffffff</color>
 
-<color name="realtime_tv_car_name_color">#333333</color>
-<color name="realtime_tv_car_desc_color">#999999</color>
+    <color name="realtime_tv_car_name_color">#333333</color>
+    <color name="realtime_tv_car_desc_color">#999999</color>
 
     <color name="realtime_tv_rank_car_hot_score_text_color">#333333</color>
     <color name="realtime_tv_rank_car_hot_score_title_text_color">#999999</color>
@@ -27,6 +27,8 @@
     <color name="realtime_tv_game_name_color">#333333</color>
     <color name="realtime_tv_game_desc_color">#999999</color>
 
-        <color name="realtime_tv_rank_game_hot_score_text_color">#333333</color>
-        <color name="realtime_tv_rank_game_hot_score_title_text_color">#999999</color>
+    <color name="realtime_tv_rank_game_hot_score_text_color">#333333</color>
+    <color name="realtime_tv_rank_game_hot_score_title_text_color">#999999</color>
+    <color name="realtime_root_bg">#f7f7f7</color>
+    <color name="realtime_tv_rank_rule_text_color">#999999</color>
 </resources>

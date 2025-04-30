@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/base_top_round_white"
+    android:background="@drawable/base_top_round"
 
     android:orientation="vertical">
 
@@ -43,7 +43,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
-                android:paddingBottom="10dp"/>
+                android:paddingBottom="10dp"
+                android:textColor="@color/realtime_tv_rank_rule_text_color"/>
 
 
         </LinearLayout>
