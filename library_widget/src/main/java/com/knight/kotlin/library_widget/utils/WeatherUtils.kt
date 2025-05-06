@@ -27,13 +27,14 @@ object WeatherUtils {
             "打雷" -> WeatherView.WEATHER_KIND_THUNDER
             "雷阵雨" -> WeatherView.WEATHER_KIND_THUNDERSTORM
             "雨夹雪" -> WeatherView.WEATHER_KIND_SLEET
+            "雨" -> WeatherView.WEATHER_KIND_RAINY
             "阵雨" -> WeatherView.WEATHER_KIND_RAINY
             "小雨" -> WeatherView.WEATHER_KIND_RAINY
             "中雨" -> WeatherView.WEATHER_KIND_RAINY
             "大雨" -> WeatherView.WEATHER_KIND_RAINY
             "暴雨","大暴雨","特大暴雨","降雨" -> WeatherView.WEATHER_KIND_RAINY
             "雷雨" -> WeatherView.WEATHER_KIND_RAINY
-            "小雪","降雪","下雪" -> WeatherView.WEATHER_KIND_SNOW
+            "小雪","降雪","下雪","雪" -> WeatherView.WEATHER_KIND_SNOW
             "大雪" -> WeatherView.WEATHER_KIND_SNOW
             "中雪" -> WeatherView.WEATHER_KIND_SNOW
             "暴雪" -> WeatherView.WEATHER_KIND_SNOW

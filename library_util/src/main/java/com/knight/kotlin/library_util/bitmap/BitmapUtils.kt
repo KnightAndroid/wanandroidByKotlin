@@ -13,6 +13,7 @@ import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
+import java.io.IOException
 import kotlin.math.max
 
 
@@ -232,6 +233,25 @@ object BitmapUtils {
         val isBm = ByteArrayInputStream(baos.toByteArray()) // 把压缩后的数据baos存放到ByteArrayInputStream中
         val bitmap = BitmapFactory.decodeStream(isBm, null, null) // 把ByteArrayInputStream数据生成图片
         return bitmap
+    }
+
+    /**
+     *
+     * Bitmap 转换为 byte[]
+     */
+    fun bmpToByteArray(bmp: Bitmap, needRecycle: Boolean): ByteArray {
+        val output = ByteArrayOutputStream()
+        bmp.compress(Bitmap.CompressFormat.PNG, 100, output) // 可选 JPEG，但 PNG 无损
+        if (needRecycle) {
+            bmp.recycle()
+        }
+        val result = output.toByteArray()
+        try {
+            output.close()
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+        return result
     }
 
 

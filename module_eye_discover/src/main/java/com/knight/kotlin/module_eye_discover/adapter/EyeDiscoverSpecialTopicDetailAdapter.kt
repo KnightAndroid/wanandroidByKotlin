@@ -51,7 +51,7 @@ class EyeDiscoverSpecialTopicDetailAdapter(private val mActivity: FragmentActivi
             binding?.activity = mActivity
             val container = binding!!.surfaceContainer
             binding.tvShare.setOnClick {
-                ShareDialog.newInstance(data.content.data).show(mActivity.supportFragmentManager, "dialog_share")
+                ShareDialog.newInstance(data.content.data).showAllowingStateLoss(mActivity.supportFragmentManager, "dialog_share")
             }
             dealJzvdStdRv(container, this)
         }

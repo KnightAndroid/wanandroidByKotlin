@@ -2,4 +2,22 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.knight.kotlin.library_util">
 
+   <application>
+      <receiver
+          android:name=".AppWxToRegister"
+          android:exported="true"
+          android:permission="com.tencent.mm.plugin.permission.SEND" >
+         <intent-filter>
+            <action android:name="com.tencent.mm.plugin.openapi.Intent.ACTION_REFRESH_WXAPP" />
+         </intent-filter>
+      </receiver>
+
+      <activity
+          android:name=".wxapi.WXEntryActivity"
+          android:exported="true"
+          android:launchMode="singleTask"
+          android:theme="@android:style/Theme.Translucent.NoTitleBar"
+          android:taskAffinity="com.knight.kotlin.wanandroid" />
+   </application>
+
 </manifest>

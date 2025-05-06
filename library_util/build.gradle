@@ -27,6 +27,6 @@ dependencies {
     implementation Dependencies.OtherUtils.Exoplayer
     implementation Dependencies.OtherUtils.ExoplayerDataSource
     api Dependencies.OtherUtils.ExoPlayerCommon
-
+    implementation Dependencies.OtherUtils.WechatSdk
 
 }

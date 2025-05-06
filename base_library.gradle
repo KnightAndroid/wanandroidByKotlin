@@ -6,7 +6,7 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'dagger.hilt.android.plugin'
 apply plugin: 'kotlin-parcelize'
 apply plugin: 'kotlinx-serialization'
-apply plugin: 'com.mob.sdk'
+//apply plugin: 'com.mob.sdk'
 android {
     compileSdkVersion ProjectBuildDencies.COMPILE_SDK_VERSION
     buildToolsVersion ProjectBuildDencies.BUILD_TOOLS_VERSION
@@ -79,18 +79,18 @@ dependencies {
 
 
 //ShareSDK分享APP平台配置。
-MobSDK {
-    appKey "3a276aad64271"
-    appSecret "29ce1dd3b30471624c4ac58dfb9d1c22"
-    ShareSDK {
-        devInfo {
-            Wechat { //微信 开放公众平台
-                appId "wx3eca5a44fe87d60a"
-                appSecret "05cf98d91331c7f67d404d22cdb1b0da"
-                sortId 1
-                enable true
-
-            }
-        }
-    }
-}
+//MobSDK {
+//    appKey "3a276aad64271"
+//    appSecret "29ce1dd3b30471624c4ac58dfb9d1c22"
+//    ShareSDK {
+//        devInfo {
+//            Wechat { //微信 开放公众平台
+//                appId "wx3eca5a44fe87d60a"
+//                appSecret "05cf98d91331c7f67d404d22cdb1b0da"
+//                sortId 1
+//                enable true
+//
+//            }
+//        }
+//    }
+//}

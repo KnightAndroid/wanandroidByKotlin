@@ -1,9 +1,14 @@
 package com.knight.kotlin.library_util
 
-import cn.sharesdk.framework.Platform
-import cn.sharesdk.framework.PlatformActionListener
-import cn.sharesdk.onekeyshare.OnekeyShare
-import com.mob.MobSDK
+import android.graphics.Bitmap
+import com.baidu.navisdk.vi.EnvDrawText
+import com.knight.kotlin.library_base.BaseApp
+import com.knight.kotlin.library_util.bitmap.BitmapUtils
+import com.tencent.mm.opensdk.modelmsg.SendMessageToWX
+import com.tencent.mm.opensdk.modelmsg.WXImageObject
+import com.tencent.mm.opensdk.modelmsg.WXMediaMessage
+import com.tencent.mm.opensdk.modelmsg.WXTextObject
+import com.tencent.mm.opensdk.openapi.WXAPIFactory
 
 
 /**
@@ -14,38 +19,64 @@ import com.mob.MobSDK
  */
 object ShareSdkUtils {
 
+    private const val mTargetScene = SendMessageToWX.Req.WXSceneSession
     /**
      *
-     * 分享第三方app平台方法
+     * 分享文字到微信
       */
-    fun sharePlatform() {
-         val oks = OnekeyShare()
-         // title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
-         oks.setTitle("标题")
-         // titleUrl是标题的网络链接，仅在Linked-in,QQ和QQ空间使用
-         oks.setTitleUrl("http://sharesdk.cn")
-         // text是分享文本，所有平台都需要这个字段
-         oks.text = "我是分享文本"
-         //分享网络图片，新浪微博分享网络图片需要通过审核后申请高级写入接口，否则请注释掉测试新浪微博
-         oks.setImageUrl("https://download.sdk.mob.com/web/images/2019/07/30/14/1564468183056/750_750_65.12.png")
-         // url仅在微信（包括好友和朋友圈）中使用
-         oks.setUrl("http://sharesdk.cn")
-         //分享回调
-         oks.callback = object : PlatformActionListener {
-             override fun onComplete(platform: Platform, i: Int, hashMap: HashMap<String, Any>) {
-                 // 分享成功回调
-                 toast("分享成功")
-             }
+    fun shareWxText(title:String,desc:String) {
+        //初始化一个 WXTextObject 对象，填写分享的文本内容
+        val api = WXAPIFactory.createWXAPI(BaseApp.context, "wx3eca5a44fe87d60a",false)
+        val textObj = WXTextObject()
+        textObj.text = title
 
-             override fun onError(platform: Platform, i: Int, throwable: Throwable) {
-                 // 分享失败回调   platform:平台对象，i:表示当前的动作(9表示分享)，throwable:异常信息
-             }
+        //用 WXTextObject 对象初始化一个 WXMediaMessage 对象
+        val msg = WXMediaMessage()
+        msg.mediaObject = textObj
+        msg.description = desc
 
-             override fun onCancel(platform: Platform, i: Int) {
-                 // 分享取消回调
-             }
-         }
-         // 启动分享
-         oks.show(MobSDK.getContext())
+        val req = SendMessageToWX.Req()
+        req.transaction = buildTransaction("text")
+        req.message = msg
+        req.scene = mTargetScene
+
+        //调用api接口，发送数据到微信
+        api.sendReq(req)
+
+
      }
+
+    /**
+     *
+     * 分享图片到微信
+     */
+    fun shareWxImg(bmp : Bitmap) {
+        val api = WXAPIFactory.createWXAPI(BaseApp.context, "wx3eca5a44fe87d60a",false)
+        //初始化 WXImageObject 和 WXMediaMessage 对象
+        val imgObj = WXImageObject(bmp)
+        val msg = WXMediaMessage()
+        msg.mediaObject = imgObj
+
+
+        //设置缩略图
+        val thumbBmp = Bitmap.createScaledBitmap(bmp, 150, 150, true)
+        EnvDrawText.bmp.recycle()
+        msg.thumbData = BitmapUtils.bmpToByteArray(thumbBmp, true)
+        //构造一个Req
+        val req = SendMessageToWX.Req()
+        req.transaction = buildTransaction("img")
+        req.message = msg
+        req.scene = mTargetScene
+         //调用api接口，发送数据到微信
+        api.sendReq(req)
+
+
+    }
+
+
+
+
+    private fun buildTransaction(type: String?): String {
+        return if ((type == null)) System.currentTimeMillis().toString() else type + System.currentTimeMillis()
+    }
 }

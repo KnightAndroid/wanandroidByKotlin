@@ -67,6 +67,10 @@
         <service android:name="com.baidu.location.f" android:enabled="true" android:process=":remote"> </service>
 
 
-    </application>
 
+    </application>
+    <!--         在应用的AndroidManifest.xml添加如下<queries>标签-->
+    <queries>
+        <package android:name="com.tencent.mm" />
+    </queries>
 </manifest>
