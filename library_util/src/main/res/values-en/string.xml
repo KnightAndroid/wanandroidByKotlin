@@ -2,4 +2,9 @@
 <resources>
     <string name="util_confim">Determine</string>
     <string name="util_cancel">Cancel</string>
+    <string name="util_errcode_success">success</string>
+    <string name="util_errcode_cancel">cancel</string>
+    <string name="util_errcode_deny">deny</string>
+    <string name="util_errcode_unsupported">unsupported</string>
+    <string name="util_errcode_unknown">back</string>
 </resources>

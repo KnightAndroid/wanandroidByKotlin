@@ -1,7 +1,9 @@
 package com.knight.kotlin.library_share
 
 import android.graphics.Bitmap
+import android.os.Bundle
 import android.view.Gravity
+import android.view.View
 import androidx.lifecycle.lifecycleScope
 import com.knight.kotlin.library_base.entity.EyeData
 import com.knight.kotlin.library_base.fragment.BaseDialogFragment
@@ -12,6 +14,7 @@ import com.knight.kotlin.library_util.FileUtils
 import com.knight.kotlin.library_util.ShareSdkUtils
 import com.knight.kotlin.library_util.bitmap.BitmapUtils
 import com.knight.kotlin.library_util.bitmap.saveToAlbum
+import com.knight.kotlin.library_util.image.ImageLoader
 import com.knight.kotlin.library_util.toast
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -26,13 +29,19 @@ import kotlinx.coroutines.withContext
  */
 class ShareDialog : BaseDialogFragment<ShareDialogBinding, EmptyViewModel>() {
 
-    private  var data: EyeData? =null
+    private lateinit var title: String
+    private lateinit var desc: String
+    private lateinit var imgUrl: String
+
+
     companion object {
-        fun newInstance(data: EyeData): ShareDialog {
+        fun newInstance(title: String, desc: String, imgUrl: String): ShareDialog {
             val downLoadDialogFragment = ShareDialog()
-//            val args = Bundle()
-//            args.putParcelable("data",data)
-//            downLoadDialogFragment.arguments = args
+            val args = Bundle()
+            args.putString("title", title)
+            args.putString("desc", desc)
+            args.putString("imgUrl", imgUrl)
+            downLoadDialogFragment.arguments = args
             return downLoadDialogFragment
         }
     }
@@ -55,54 +64,29 @@ class ShareDialog : BaseDialogFragment<ShareDialogBinding, EmptyViewModel>() {
     }
 
     override fun ShareDialogBinding.initView() {
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-//            data = arguments?.getParcelable("data",EyeData::class.java)
-//        } else {
-//            data = arguments?.getParcelable("data")
-//        }
-//        data?.run {
-//            tvShareTitle.text = title
-//            tvShareDesc.text = description
-//            ImageLoader.getInstance().loadStringPhoto(requireActivity(),cover!!.feed,ivPhoto)
-//        }
+        title = arguments?.getString("title") ?: ""
+        desc = arguments?.getString("desc") ?: ""
+        imgUrl = arguments?.getString("imgUrl") ?: ""
+
+        tvShareTitle.text = title
+        tvShareDesc.text = desc
+        ImageLoader.getInstance().loadStringPhoto(requireActivity(), imgUrl, ivPhoto)
+
 
 
         tvSaveLocal.setOnClick {
-//            val bitmapList = mutableListOf<Bitmap>()
-//            val bitmapQrcode = BitmapUtils.getViewBitmap(rlQrcode)
-//            val bitmapPhoto = BitmapUtils.getViewBitmap(ivPhoto)
-//            val bitmapDesc = BitmapUtils.getViewBitmap(rlShareDesc)
-//            bitmapList.add(bitmapQrcode)
-//            bitmapList.add(bitmapPhoto)
-//            bitmapList.add(bitmapDesc)
-//            val saveBitmap = BitmapUtils.compressImage(BitmapUtils.puzzleBitmap(bitmapList))
-//            saveBitmap?.run {
-//                val uri = saveToAlbum(requireActivity(), FileUtils.getDateName("wanandroid") + ".jpg",null)
-//                uri?.run {
-//                    toast(getString(R.string.share_save_photo_success))
-//                } ?: run{
-//                    toast(getString(R.string.share_save_photo_failure))
-//                }
-//            }
-
-
-
-
             // 异步处理
             lifecycleScope.launch(Dispatchers.IO) {
-                val bitmapQrcode = BitmapUtils.getViewBitmap(rlQrcode)
-                val bitmapPhoto = BitmapUtils.getViewBitmap(ivPhoto)
-                val bitmapDesc = BitmapUtils.getViewBitmap(rlShareDesc)
 
-                val bitmapList = listOfNotNull(bitmapQrcode, bitmapPhoto, bitmapDesc) // 使用 listOfNotNull 避免 null
-
-                val puzzleBitmap = BitmapUtils.puzzleBitmap(bitmapList)
-                val saveBitmap = puzzleBitmap?.let { BitmapUtils.compressImage(it) }
-
+                val saveBitmap = generateShareBitmap(rlQrcode, ivPhoto, rlShareDesc)
                 // 切换回主线程更新 UI
                 withContext(Dispatchers.Main) {
                     saveBitmap?.run {
-                        val uri = saveToAlbum(requireActivity(), FileUtils.getDateName("wanandroid") + ".jpg", null)
+                        val uri = saveToAlbum(
+                            requireActivity(),
+                            FileUtils.getDateName("wanandroid") + ".jpg",
+                            null
+                        )
                         uri?.run {
                             toast(getString(R.string.share_save_photo_success))
                         } ?: run {
@@ -113,26 +97,52 @@ class ShareDialog : BaseDialogFragment<ShareDialogBinding, EmptyViewModel>() {
                     } ?: run {
                         toast(getString(R.string.share_save_photo_failure))
                     }
-                    // 及时释放中间 Bitmap
-                    recycleSafely(puzzleBitmap)
-                    recycleSafely(bitmapQrcode)
-                    recycleSafely(bitmapPhoto)
-                    recycleSafely(bitmapDesc)
                 }
             }
 
         }
 
         tvWechat.setOnClick {
-            data?.run {
-                ShareSdkUtils.shareWxText(title,description)
+            val saveBitmap = generateShareBitmap(rlQrcode, ivPhoto, rlShareDesc)
+            saveBitmap?.let {
+                ShareSdkUtils.shareWxImgToSession(it)
             }
+        }
 
+        tvTimeLine.setOnClick {
+            val saveBitmap = generateShareBitmap(rlQrcode, ivPhoto, rlShareDesc)
+            saveBitmap?.let {
+                ShareSdkUtils.shareWxImgToTimeline(it)
+            }
         }
 
     }
 
 
+    fun generateShareBitmap(
+        rlQrcode: View,
+        ivPhoto: View,
+        rlShareDesc: View
+    ): Bitmap? {
+        val bitmapQrcode = BitmapUtils.getViewBitmap(rlQrcode)
+        val bitmapPhoto = BitmapUtils.getViewBitmap(ivPhoto)
+        val bitmapDesc = BitmapUtils.getViewBitmap(rlShareDesc)
+
+        val bitmapList = listOfNotNull(bitmapQrcode, bitmapPhoto, bitmapDesc)
+
+        val puzzleBitmap = BitmapUtils.puzzleBitmap(bitmapList)
+        val saveBitmap = puzzleBitmap?.let { BitmapUtils.compressImage(it) }
+
+        // 回收中间过程使用的 Bitmap
+        bitmapQrcode?.recycle()
+        bitmapPhoto?.recycle()
+        bitmapDesc?.recycle()
+        if (puzzleBitmap != saveBitmap) {
+            puzzleBitmap?.recycle()
+        }
+
+        return saveBitmap
+    }
 
     fun recycleSafely(bitmap: Bitmap?) {
         if (bitmap != null && !bitmap.isRecycled) {

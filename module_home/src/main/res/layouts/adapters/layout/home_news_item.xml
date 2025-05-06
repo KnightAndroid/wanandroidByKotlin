@@ -32,7 +32,7 @@
             android:layout_marginBottom="@dimen/home_tv_new_title_margin_bottom"
             android:layout_marginTop="@dimen/home_tv_new_title_margin_bottom"
             tools:text="大小厂都问源码，到底有多难小厂都问源码小厂都问源码小厂都问源码"
-            android:maxLines="3"
+            android:maxLines="4"
             android:ellipsize="end"
             android:text="@{title}"
             android:textColor="@color/home_top_article_title"

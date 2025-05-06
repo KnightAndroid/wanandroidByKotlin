@@ -69,8 +69,5 @@
 
 
     </application>
-    <!--         在应用的AndroidManifest.xml添加如下<queries>标签-->
-    <queries>
-        <package android:name="com.tencent.mm" />
-    </queries>
+
 </manifest>

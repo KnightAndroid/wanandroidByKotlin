@@ -85,4 +85,10 @@ object Appconfig {
        */
      var location:BDLocation?=null
 
+     /**
+      *
+      * 微信开放平台appid
+      */
+     const val WX_APP_ID = "wx3eca5a44fe87d60a"
+
 }

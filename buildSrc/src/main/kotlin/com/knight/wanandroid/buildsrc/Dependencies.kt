@@ -105,7 +105,6 @@ object Dependencies {
        const val Suncalc = "3.11" //日月日出日落月出月落 计算
        const val Media3Exoplayer  = "1.6.1" //播放音频
        const val MediaCache = "1.6.1"
-       const val wechatSdkAndroid = "6.8.23"
     }
     /**
      * AndroidX相关依赖

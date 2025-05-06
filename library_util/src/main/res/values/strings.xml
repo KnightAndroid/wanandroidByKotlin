@@ -2,4 +2,9 @@
 <resources>
     <string name="util_confim">确定</string>
     <string name="util_cancel">取消</string>
+    <string name="util_errcode_success">发送成功</string>
+    <string name="util_errcode_cancel">发送取消</string>
+    <string name="util_errcode_deny">发送被拒绝</string>
+    <string name="util_errcode_unsupported">不支持错误</string>
+    <string name="util_errcode_unknown">发送返回</string>
 </resources>
