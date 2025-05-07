@@ -128,6 +128,8 @@
 升级到1.2.1版本后用resguardRelease打包命令导致首页收藏按钮动画异常，所以采取普通的assembleRelease,如下
 
 ![wanandroid_normal_release.png](https://gitee.com/MengSuiXinSuoYuan/wanandroid_server/raw/master/wanandroid_picture/wanandroid_normal_release.png)
+
+
 为了安全，本库用了一些第三方sdk，密钥不公开。如需下载本项目，运行前请重新生成密钥文件，并更改app目录下**build.gradle**指定此目录
 
 百度定位每天5000次,微信分享每天100次
