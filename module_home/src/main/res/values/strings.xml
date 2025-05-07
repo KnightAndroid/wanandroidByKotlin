@@ -38,6 +38,6 @@
     <string name="home_mp3url_empty_hint">音频数据为空，暂不能播放~</string>
     <string name="home_open_floatmenu_title">请选择您想使用的悬浮窗方式</string>
     <string name="home_open_floatmenu_message">- 应用内悬浮窗（仅在应用内显示）\n- 应用外悬浮窗（可在其他应用上显示）</string>
-    <string name="home_in_app_floating_window">应用内悬浮窗</string>
-    <string name="home_out_of_app_floating_window">应用外悬浮窗</string>
+    <string name="home_in_app_floating_window">本页面悬浮窗</string>
+    <string name="home_out_of_app_floating_window">应用全局悬浮窗</string>
 </resources>

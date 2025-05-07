@@ -202,28 +202,6 @@ class HomeNewsActivity:BaseActivity<HomeNewsActivityBinding,HomeNewsVm>(), OnRef
         }
 
         return view
-//        iv_float_img?.setOnCircularBarChangeListener(object :OnCircularSeekBarChangeListener{
-//            override fun onProgressChanged(circularBar: CircularMusicProgressBar?, progress: Int, fromUser: Boolean) {
-//
-//            }
-//
-//            override fun onClick(circularBar: CircularMusicProgressBar?) {
-//                if (llRoot?.width == 0) {
-//                   animateViewWidth(llRoot!!, true,rootWidth)
-//                } else {
-//                    animateViewWidth(llRoot!!, false,rootWidth)
-//                }
-//
-//
-//
-//
-//            }
-//
-//            override fun onLongPress(circularBar: CircularMusicProgressBar?) {
-//
-//            }
-//        })
-
     }
 
     /**
@@ -252,6 +230,17 @@ class HomeNewsActivity:BaseActivity<HomeNewsActivityBinding,HomeNewsVm>(), OnRef
         } else {
             mNewsAdapter.submitList(zaoBao.news)
         }
+    }
+
+
+
+    override fun onDestroy() {
+        FloatMenuManager.getFloatWindow()?.let {
+            if (!it.getDesktopWindow()) {
+                FloatMenuManager.destroyFloatMenu()
+            }
+        }
+        super.onDestroy()
     }
 
 

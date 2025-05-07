@@ -901,7 +901,7 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
                                     PermissionUtils.showPermissionSettingDialog(it,permissions,permissions,object :
                                         OnPermissionCallback {
                                         override fun onGranted(permissions: List<String>, all: Boolean) {
-
+                                            requestOnceLocation()
                                         }
                                     })
                                 }

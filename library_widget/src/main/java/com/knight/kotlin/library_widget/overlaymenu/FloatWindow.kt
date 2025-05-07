@@ -25,7 +25,7 @@ import kotlin.math.abs
  * @author created by luguian
  * @organize
  * @Date 2025/4/23 10:36
- * @descript:
+ * @descript: https://github.com/fenggit/FloatWindow
  */
 class FloatWindow private constructor(with: With) {
     private var mLayoutParams: WindowManager.LayoutParams? = null
@@ -178,6 +178,10 @@ class FloatWindow private constructor(with: With) {
         return isAddView
     }
 
+    fun getDesktopWindow():Boolean {
+        return isDesktopWindow
+    }
+
    // private val mFloatPermission: FloatPermission = FloatPermission()
 
     init {
@@ -241,6 +245,7 @@ class FloatWindow private constructor(with: With) {
         mWindowManager!!.removeView(floatView)
         isShowing = false
         isAddView = false
+
 
     }
 

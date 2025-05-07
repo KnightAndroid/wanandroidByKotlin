@@ -9,6 +9,7 @@
 
 如果你也觉得好用，欢迎提供建议和想法(issues)，谢谢。
 
+
 ## 代码模式
 ![代码模式架构图.png](https://gitee.com/MengSuiXinSuoYuan/wanandroid_server/raw/master/wanandroid_picture/MVVM%E4%BB%A3%E7%A0%81%E6%9E%B6%E6%9E%84%E5%9B%BE.png)
 
@@ -129,6 +130,8 @@
 ![wanandroid_normal_release.png](https://gitee.com/MengSuiXinSuoYuan/wanandroid_server/raw/master/wanandroid_picture/wanandroid_normal_release.png)
 为了安全，本库用了一些第三方sdk，密钥不公开。如需下载本项目，运行前请重新生成密钥文件，并更改app目录下**build.gradle**指定此目录
 
+百度定位每天5000次,微信分享每天100次
+
 
 
 ## 更新日志
@@ -136,8 +139,9 @@
 -  wanandroid 第八版发布
 -  新增热搜功能
 -  新增天气功能
--  修复解决一些问题
--  发布时间：2025/04/30
+-  新增每天新闻
+-  修复一些问题
+-  发布时间：2025/05/07
 
 
 ### 2.0.0(7)

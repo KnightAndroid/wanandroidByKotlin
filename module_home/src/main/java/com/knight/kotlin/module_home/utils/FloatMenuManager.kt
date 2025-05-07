@@ -20,8 +20,6 @@ object FloatMenuManager {
     var float: FloatWindow? = null
     var with:FloatWindow.With? =null
 
-
-
     fun hidden() {
         float?.let {
             it.hidden()
@@ -58,13 +56,13 @@ object FloatMenuManager {
 
     fun destroyFloatMenu() {
         float?.remove()
+        float = null
     }
-
-
 
     fun checkInitialized():Boolean {
         return float == null
     }
+
 
     fun getFloatWindow(): FloatWindow? {
         return float
