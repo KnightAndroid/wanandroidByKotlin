@@ -72,7 +72,7 @@
             android:gravity="center"
             android:textSize="12sp"
             android:text="+关注"
-            android:textColor="@color/eye_dicover_brief_item_follow_btn_text_color"
+            android:textColor="@color/eye_discover_brief_item_follow_btn_text_color"
             app:backgroundTint="@android:color/white"
             android:insetTop="0dp"
             android:insetBottom="0dp"

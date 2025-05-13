@@ -78,7 +78,7 @@ class EyeDiscoverSearchResultFragment:BaseFragment<EyeDiscoverSearchResultFragme
                      tab.text = mNavDatas[pos].title }.attach()
 
                  mBinding.searchResultItemIndicator.setSelectedTabIndicatorColor(CacheUtils.getThemeColor())
-                 mBinding.searchResultItemIndicator.setTabTextColors(Color.parseColor("#CC000000"),CacheUtils.getThemeColor())
+                 mBinding.searchResultItemIndicator.setTabTextColors(if (CacheUtils.getNormalDark() ) Color.parseColor("#D3D3D3") else Color.parseColor("#CC000000"),CacheUtils.getThemeColor())
              }
 
          }

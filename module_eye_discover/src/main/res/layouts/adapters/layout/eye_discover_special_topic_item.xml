@@ -40,7 +40,7 @@
             android:layout_marginStart="@dimen/eye_discover_special_topic_item_tv_issuer_margin_start"
             android:layout_marginTop="@dimen/eye_discover_special_topic_item_tv_issuer_margin_top"
             android:text='@{model.data.header.issuerName == null ? "" : model.data.header.issuerName}'
-            android:textColor="@android:color/black"
+            android:textColor="@color/eye_discover_tv_issue_text_color"
             android:textSize="@dimen/eye_discover_special_topic_item_tv_issuer_text_size"
             android:textStyle="bold"
             app:layout_constraintLeft_toRightOf="@id/iv_author"
@@ -78,7 +78,7 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:text="@{model.data.content.data.title}"
-            android:textColor="@android:color/black"
+            android:textColor="@color/eye_discover_special_topic_title_text_color"
             android:textSize="@dimen/eye_discover_special_topic_item_tv_title_text_size"
             android:textStyle="bold"
             app:layout_constraintHorizontal_weight="1"

@@ -64,7 +64,7 @@
             android:textSize="13sp"
             android:textStyle="bold"
             android:text="@{viewModel.title}"
-            android:textColor="@color/eye_dicover_video_item_title_text_color"
+            android:textColor="@color/eye_discover_video_item_title_text_color"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/iv_video_cover"
             app:layout_constraintTop_toTopOf="@+id/iv_video_cover"

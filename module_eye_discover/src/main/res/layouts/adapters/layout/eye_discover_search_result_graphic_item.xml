@@ -58,7 +58,7 @@
                 android:textSize="14sp"
                 android:textStyle="bold"
                 android:text="@{viewModel.title}"
-                android:textColor="@android:color/black"
+                android:textColor="@color/eye_discover_tv_search_result_topic_title_text_color"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 tools:text="这不是你想的那种羞羞的广告 [ 真的] !" />

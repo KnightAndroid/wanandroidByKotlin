@@ -2,4 +2,5 @@
 <resources>
     <color name="eye_daily_text_title">#D3D3D3</color>
     <color name="eye_daily_head_banner_text_title">#D3D3D3</color>
+    <color name="eye_daily_bg_color">#303030</color>
 </resources>

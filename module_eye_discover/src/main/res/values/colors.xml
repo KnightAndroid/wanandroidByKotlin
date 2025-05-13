@@ -21,7 +21,11 @@
       <color name="eye_discover_item_category_title_text_color">#000000</color>
       <color name="eye_discover_item_subject_title_text_color">#000000</color>
       <color name="eye_discover_brief_item_title_text_color">#000000</color>
-      <color name="eye_dicover_brief_item_follow_btn_text_color">#000000</color>
-      <color name="eye_dicover_video_item_title_text_color">#000000</color>
+      <color name="eye_discover_brief_item_follow_btn_text_color">#000000</color>
+      <color name="eye_discover_video_item_title_text_color">#000000</color>
       <color name="eye_discover_item_title_text_color">#000000</color>
+      <color name="eye_discover_tv_search_video_title_text_color">#000000</color>
+    <color name="eye_discover_tv_search_result_topic_title_text_color">#000000</color>
+    <color name="eye_discover_tv_issue_text_color">#000000</color>
+    <color name="eye_discover_special_topic_title_text_color">#000000</color>
   </resources>
