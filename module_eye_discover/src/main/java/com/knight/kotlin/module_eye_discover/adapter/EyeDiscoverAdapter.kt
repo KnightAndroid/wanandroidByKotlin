@@ -47,9 +47,9 @@ class EyeDiscoverAdapter(activity : FragmentActivity, data:List<BaseEyeDiscoverE
     class EyeDiscoverSubTitleVH(viewBinding : EyeDiscoverSubTitleItemBinding) : RecyclerView.ViewHolder(viewBinding.root)
     //类型 3 热门分类 viewHolder
     class EyeDiscoverCategoryVH(viewBinding: EyeDiscoverCategoryItemBinding) : RecyclerView.ViewHolder(viewBinding.root)
-    //类型 4
+    //类型 4 专题策划
     class EyeDiscoverSubjectVH(viewBinding:EyeDiscoverSubjectItemBinding) : RecyclerView.ViewHolder(viewBinding.root)
-    //类型 5
+    //类型 5 本周榜单
     class EyeDiscoverVideoSmallVH(viewBinding:EyeDiscoverVideoCardItemBinding) : RecyclerView.ViewHolder(viewBinding.root)
     //类型 6
     class EyeDiscoverBriefVH(viewBinding : EyeDiscoverBriefCardItemBinding) :   RecyclerView.ViewHolder(viewBinding.root)
@@ -186,6 +186,8 @@ class EyeDiscoverAdapter(activity : FragmentActivity, data:List<BaseEyeDiscoverE
                 override fun onBind(holder: EyeDiscoverBriefVH, position: Int, item: BaseEyeDiscoverEntity?) {
                     val binding = DataBindingUtil.getBinding<EyeDiscoverBriefCardItemBinding>(holder.itemView)
                     binding?.viewModel = (item as EyeDiscoverBriefCardEntity).data
+                    binding?.btnAction?.setBackgroundResource(R.drawable.eye_discover_brief_follow_bg)
+                    binding?.btnAction?.setBackgroundTintList(null)
                 }
 
                 override fun onCreate(context: Context, parent: ViewGroup, viewType: Int): EyeDiscoverBriefVH {

@@ -67,15 +67,20 @@ class HomeWeatherNewsFragment:BaseDialogFragment<HomeTodayWeatherNewsDialogBindi
                      mBinding.homeTodayNewsItem.tvNewsTop.text = data.news.get(0)
                      ImageLoader.loadImageWithAdaptiveSize(mBinding.homeTodayNewsItem.ivZaobaoHead,getScreenWidth() - 20.dp2px(), 0,data.head_image,{
                          width,height->
-                         val params = mBinding.flipView.layoutParams
-                         params.width = width
-                         params.height = height + 130.dp2px()
-                         mBinding.flipView.layoutParams = params
-                         mViewModel.getTodayImage("js","0","1").observe(this,{ data ->
 
 
-                             ImageLoader.loadStringPhoto(requireActivity(), "https://cn.bing.com" + data.images.get(0).urlbase + "_640x480.jpg",mBinding.homeTodayWeatherItem.ivTodayBg)
-                         })
+                         mBinding.flipView.post {
+                             val params = mBinding.flipView.layoutParams
+                             params.width = width
+                             params.height = height + 130.dp2px()
+                             mBinding.flipView.layoutParams = params
+                             mViewModel.getTodayImage("js","0","1").observe(this,{ data ->
+
+
+                                 ImageLoader.loadStringPhoto(requireActivity(), "https://cn.bing.com" + data.images.get(0).urlbase + "_640x480.jpg",mBinding.homeTodayWeatherItem.ivTodayBg)
+                             })
+                         }
+
 
 
                      })

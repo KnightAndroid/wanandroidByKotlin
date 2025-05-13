@@ -19,6 +19,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:src="@drawable/base_icon_up"
+        app:tint="#ffffff"
         android:layout_marginEnd="@dimen/project_float_btn_margin_end"
         android:layout_marginRight="@dimen/project_float_btn_margin_right"
         android:layout_marginBottom="@dimen/project_float_btn_margin_bottom"

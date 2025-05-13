@@ -34,7 +34,7 @@ class HierachyDetailActivity : BaseActivity<NavigateHierachyDetailActivityBindin
     }
 
     override fun NavigateHierachyDetailActivityBinding.initView() {
-        includeHierachyToolbar.baseTvTitle.setText(titleName)
+        title = titleName
         includeHierachyToolbar.baseIvBack.setOnClick { finish() }
         createFragment()
 

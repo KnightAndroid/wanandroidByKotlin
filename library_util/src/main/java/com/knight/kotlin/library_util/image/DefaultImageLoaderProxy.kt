@@ -264,6 +264,8 @@ class DefaultImageLoaderProxy :ImageLoaderProxy {
                     callback?.invoke(targetTempWidth , targetTempHeight)
                     // 设置图片
                     imageView.setImageBitmap(resource)
+
+
                 }
 
                 override fun onLoadCleared(placeholder: Drawable?) {

@@ -3,12 +3,9 @@ package com.knight.kotlin.module_eye_discover.activity
 import android.view.KeyEvent
 import android.view.KeyEvent.KEYCODE_ENTER
 import androidx.activity.OnBackPressedCallback
-import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.widget.doAfterTextChanged
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.replace
 import com.google.android.material.search.SearchView
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.ktx.hide
@@ -20,7 +17,6 @@ import com.knight.kotlin.module_eye_discover.fragment.EyeDiscoverScollListFragme
 import com.knight.kotlin.module_eye_discover.fragment.EyeDiscoverSearchRecommendFragment
 import com.knight.kotlin.module_eye_discover.fragment.EyeDiscoverSearchResultFragment
 import com.knight.kotlin.module_eye_discover.vm.EyeDiscoverScrollListVm
-import com.knight.kotlin.module_eye_discover.vm.EyeDiscoverSearchResultVm
 import com.wyjson.router.annotation.Route
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -59,7 +55,6 @@ class EyeDiscoverActivity : BaseActivity<EyeDiscoverActivityBinding, EyeDiscover
     override fun EyeDiscoverActivityBinding.initView() {
 
         eyeDiscoverSearchBar.setBackgroundResource(R.drawable.eye_discover_bg_search_shape)
-
         eyeDiscoverSearchBar.navigationIcon = ContextCompat.getDrawable(this@EyeDiscoverActivity, com.knight.kotlin.library_base.R.drawable.base_iv_left_arrow)
         eyeDiscoverSearchBar.setNavigationOnClickListener {
             finish()

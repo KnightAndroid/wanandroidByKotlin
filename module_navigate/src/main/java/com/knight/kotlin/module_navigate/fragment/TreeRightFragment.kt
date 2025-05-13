@@ -166,7 +166,12 @@ class TreeRightFragment : BaseFragment<NavigateRightTreeFragmentBinding,Navigate
         val firstItem = mManager?.findFirstVisibleItemPosition() ?: 0
         val lastItem = mManager?.findLastVisibleItemPosition() ?: 0
         if (n <= firstItem) {
-            mBinding.treeTightRv.scrollToPosition(n)
+            if (n < (firstItem -10)) {
+                mBinding.treeTightRv.scrollToPosition(n+ 5)
+            } else {
+                mBinding.treeTightRv.scrollToPosition(n)
+            }
+
         } else if (n <= lastItem) {
             val top: Int = mBinding.treeTightRv.getChildAt(n - firstItem).getTop()
             mBinding.treeTightRv.scrollBy(0, top)

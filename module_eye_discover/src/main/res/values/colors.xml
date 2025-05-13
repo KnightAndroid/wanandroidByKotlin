@@ -17,4 +17,11 @@
       <color name="eye_discover_special_topic_tv_share_text_color">#bfbfbf</color>
       <color name="eye_discover_special_tag_background_tint">#3389b1e9</color>
       <color name="eye_discover_recommend_search_video_title_text_color">#CC333333</color>
+      <color name="eye_discover_search_bar_text_hint_color">#333333</color>
+      <color name="eye_discover_item_category_title_text_color">#000000</color>
+      <color name="eye_discover_item_subject_title_text_color">#000000</color>
+      <color name="eye_discover_brief_item_title_text_color">#000000</color>
+      <color name="eye_dicover_brief_item_follow_btn_text_color">#000000</color>
+      <color name="eye_dicover_video_item_title_text_color">#000000</color>
+      <color name="eye_discover_item_title_text_color">#000000</color>
   </resources>

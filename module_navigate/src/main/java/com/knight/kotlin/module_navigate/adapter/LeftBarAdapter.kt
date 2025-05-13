@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Color
 import android.view.View
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.module_navigate.R
 import com.knight.kotlin.module_navigate.holder.RvHolder
@@ -60,6 +61,7 @@ class LeftBarAdapter : RvAdapter<String> {
                 }
 
             } else {
+                tvName.setTextColor(ContextCompat.getColor(mContext, R.color.navigate_tv_sort_color))
                 if (CacheUtils.getNormalDark()) {
                     mView.setBackgroundColor(Color.parseColor("#303030"))
                 } else {

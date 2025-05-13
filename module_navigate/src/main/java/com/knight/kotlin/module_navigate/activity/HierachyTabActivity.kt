@@ -48,7 +48,7 @@ class HierachyTabActivity : BaseActivity<NavigateHierachyTabActivityBinding,Empt
     }
 
     override fun NavigateHierachyTabActivityBinding.initView() {
-        includeTabarticleToolbar.baseTvTitle.text = titleName
+        title = titleName
         includeTabarticleToolbar.baseIvBack.setOnClick { finish() }
         hierachyTabFragments.clear()
         titleDatas.clear()

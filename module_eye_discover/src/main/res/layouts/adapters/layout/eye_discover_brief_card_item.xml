@@ -44,7 +44,7 @@
                 android:ellipsize="end"
                 android:lines="1"
                 android:text="@{viewModel.title}"
-                android:textColor="@android:color/black"
+                android:textColor="@color/eye_discover_brief_item_title_text_color"
                 android:textSize="15sp"
                 android:textStyle="bold"
                 tools:text="#封面控" />
@@ -63,15 +63,20 @@
                 tools:text="人靠脸面，书靠封面" />
         </LinearLayout>
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_action"
-            android:layout_width="50dp"
-            android:layout_height="20dp"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
             android:layout_marginEnd="10dp"
-            android:background="@drawable/eye_discover_brief_follow_bg"
             android:gravity="center"
-            android:textSize="11sp"
+            android:textSize="12sp"
             android:text="+关注"
+            android:textColor="@color/eye_dicover_brief_item_follow_btn_text_color"
+            app:backgroundTint="@android:color/white"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:theme="@style/Theme.MaterialComponents.NoActionBar"
             app:layout_constraintBottom_toBottomOf="@+id/iv_cover"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/iv_cover" />

@@ -1,24 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.knight.kotlin.module_navigate.activity.HierachyDetailActivity"
-    android:orientation="vertical"
-    android:background="@color/navigate_hierachy_detail_color">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="title"
+            type="java.lang.String" />
 
 
+    </data>
 
-    <include
-        android:id="@+id/include_hierachy_toolbar"
-        layout="@layout/base_include_toolbar"/>
 
-    <FrameLayout
-        android:id="@+id/hierachy_detail_fr"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        tools:context="com.knight.kotlin.module_navigate.activity.HierachyDetailActivity"
+        android:orientation="vertical"
+        android:background="@color/navigate_hierachy_detail_color">
 
 
 
-</LinearLayout>
+        <include
+            android:id="@+id/include_hierachy_toolbar"
+            layout="@layout/base_include_toolbar"
+            app:title="@{title}"/>
+
+        <FrameLayout
+            android:id="@+id/hierachy_detail_fr"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+
+
+    </LinearLayout>
+
+</layout>
+

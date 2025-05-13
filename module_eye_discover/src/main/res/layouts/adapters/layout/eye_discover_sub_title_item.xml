@@ -18,7 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:textColor="@android:color/black"
+            android:textColor="@color/eye_discover_item_title_text_color"
             android:textSize="18sp"
             android:text="@{viewModel.text}"
             android:textStyle="bold"

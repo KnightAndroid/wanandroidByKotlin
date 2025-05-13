@@ -131,7 +131,7 @@ class HierachyFragment : BaseFragment<NavigateHierachyFragmentBinding, HierachyV
      */
     private fun moveToCenter(position: Int) {
         //将点击的position转换为当前屏幕上可见的item的位置以便于计算距离顶部的高度，从而进行移动居中
-        val childAt: View =
+        val childAt: View? =
             mBinding.hierachyLeftSidebar.getChildAt(position - (mLinearLayoutManager?.findFirstVisibleItemPosition() ?:0))
         if (childAt != null) {
             val y: Int = childAt.top - mBinding.hierachyLeftSidebar.getHeight() / 2

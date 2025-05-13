@@ -27,9 +27,10 @@
         android:id="@+id/eye_discover_search_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/Theme.Material3.Light.NoActionBar"
+        android:theme="@style/Theme.Material3.DayNight.NoActionBar"
         app:layout_scrollFlags="enterAlways"
         android:hint="@string/eye_discover_search_hint"
+        android:textColorHint="@color/eye_discover_search_bar_text_hint_color"
         android:layout_marginHorizontal="8dp"
         android:layout_marginVertical="16dp"
         app:defaultMarginsEnabled="false"/>
