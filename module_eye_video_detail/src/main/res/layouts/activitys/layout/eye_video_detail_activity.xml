@@ -52,19 +52,33 @@
 
 
 
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/eye_video_detail_tabLayout"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:tabGravity="start"
-                app:tabMode="auto"
-                app:tabSelectedTextColor="@android:color/white"
-                android:background="@android:color/transparent"/>
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/eye_video_detail_tabLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:tabGravity="start"
+                    app:tabMode="auto"
+                    app:tabSelectedTextColor="@android:color/white"
+                    app:tabTextColor="@android:color/white"
+                    android:background="@android:color/transparent"/>
+                <com.knight.kotlin.library_widget.NestedScrollableHost
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
                 <androidx.viewpager2.widget.ViewPager2
                     android:id="@+id/eye_video_detail_viewPager"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
+                </com.knight.kotlin.library_widget.NestedScrollableHost>
+
+            </LinearLayout>
+
+
+
 
 
 

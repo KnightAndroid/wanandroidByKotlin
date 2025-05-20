@@ -51,6 +51,7 @@ class EyeVideoDetailFragment:BaseFragment<EyeVideoDetailFragmentBinding, EyeVide
         } else {
             videoDetailData = arguments?.getParcelable("videoDetailData")!!
         }
+
         getRelateVideoList()
     }
 
@@ -62,9 +63,9 @@ class EyeVideoDetailFragment:BaseFragment<EyeVideoDetailFragmentBinding, EyeVide
         rvRelateVideo.init(
             LinearLayoutManager(requireActivity()),
             mEyeVideoRelateAdapter,
-            true
+            false
         )
-        ((rvRelateVideo.layoutManager) as LinearLayoutManager).initialPrefetchItemCount = 3
+      //  ((rvRelateVideo.layoutManager) as LinearLayoutManager).initialPrefetchItemCount = 3
     }
 
 

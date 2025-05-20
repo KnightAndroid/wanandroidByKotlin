@@ -20,4 +20,5 @@ data class EyeCommonAuthorEntity (
     val nick: String = "",
     val type: String = "",
     val uid: Int = 0
+
 )

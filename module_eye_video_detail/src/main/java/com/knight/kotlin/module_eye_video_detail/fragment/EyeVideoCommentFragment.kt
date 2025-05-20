@@ -1,9 +1,13 @@
 package com.knight.kotlin.module_eye_video_detail.fragment
 
+import com.knight.kotlin.library_base.entity.EyeVideoDetailEntity
 import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.knight.kotlin.library_base.route.RouteFragment
 import com.knight.kotlin.library_base.vm.EmptyViewModel
+import com.knight.kotlin.library_util.LogUtils
+import com.knight.kotlin.module_eye_video_detail.databinding.EyeVideoCommentFragmentBinding
 import com.knight.kotlin.module_eye_video_detail.databinding.EyeVideoDetailFragmentBinding
+import com.knight.kotlin.module_eye_video_detail.vm.EyeVideoCommentVm
 import com.wyjson.router.annotation.Route
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -16,7 +20,10 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 @AndroidEntryPoint
 @Route(path = RouteFragment.EyeVideo.EyeVideoCommentFragment)
-class EyeVideoCommentFragment:BaseFragment<EyeVideoDetailFragmentBinding,EmptyViewModel>() {
+class EyeVideoCommentFragment:BaseFragment<EyeVideoCommentFragmentBinding,EyeVideoCommentVm>() {
+
+    private var videoId: Long = 0L
+
     override fun setThemeColor(isDarkMode: Boolean) {
 
     }
@@ -26,14 +33,18 @@ class EyeVideoCommentFragment:BaseFragment<EyeVideoDetailFragmentBinding,EmptyVi
     }
 
     override fun initRequestData() {
-
+        videoId = arguments?.getLong("videoId")?:0L
+        mViewModel.getVideoDetail(videoId,"pgc_video","hot").observerKt {
+            LogUtils.d("sdsd"+it.result?.item_list?.size+"")
+        }
     }
 
     override fun reLoadData() {
 
     }
 
-    override fun EyeVideoDetailFragmentBinding.initView() {
+    override fun EyeVideoCommentFragmentBinding.initView() {
 
     }
+
 }

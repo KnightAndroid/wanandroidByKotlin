@@ -71,12 +71,13 @@ class EyeVideoDetailActivity : BaseActivity<EyeVideoDetailActivityBinding,EmptyV
 
     override fun EyeVideoDetailActivityBinding.initView() {
         videoDetailData = fromJson(videoJson)
-
         mFragments.add(EyeVideoDetailFragment().also { fragment ->
             fragment.arguments = bundleOf("videoDetailData" to videoDetailData)
         })
 
-        mFragments.add(EyeVideoCommentFragment())
+        mFragments.add(EyeVideoCommentFragment().also { fragment ->
+            fragment.arguments = bundleOf("videoId" to videoDetailData.videoId)
+        })
 
         if (mFragments.size > 0) {
             ViewInitUtils.setViewPager2Init(this@EyeVideoDetailActivity,mBinding.eyeVideoDetailViewPager,mFragments,
@@ -144,6 +145,7 @@ class EyeVideoDetailActivity : BaseActivity<EyeVideoDetailActivityBinding,EmptyV
     }
 
     override fun onRefresh(refreshLayout: RefreshLayout) {
+        mBinding.eyeDetailRefreshLayout.finishRefresh()
 
     }
 
