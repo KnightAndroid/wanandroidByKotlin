@@ -11,6 +11,7 @@ import com.knight.kotlin.library_base.config.Appconfig
 import com.knight.kotlin.library_base.config.CacheKey
 import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_util.HandlerUtils
+import com.knight.kotlin.library_util.LogUtils
 
 
 /**
@@ -119,6 +120,7 @@ object LocationUtils {
             //以下只列举部分获取经纬度相关（常用）的结果信息
             //更多结果信息获取说明，请参照类参考中BDLocation类中的说明
             location?.run {
+                LogUtils.d("sdsd"+location.locType)
                 Appconfig.location = this
                 mOnceLocationListener?.let {
                     //这里因为百度会多次回调，因此屏蔽 只回调一次

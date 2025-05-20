@@ -33,9 +33,9 @@ android {
     //签名配置
     signingConfigs {
         debug{
-            storeFile file('../wanandroid.jks')//密钥文件路径
+            storeFile file('../debug.jks')//密钥文件路径
             storePassword "wanandroid"//密钥文件密码
-            keyAlias "wanandroid"//key别名
+            keyAlias "debug"//key别名
             keyPassword "wanandroid"//key密码
         }
 

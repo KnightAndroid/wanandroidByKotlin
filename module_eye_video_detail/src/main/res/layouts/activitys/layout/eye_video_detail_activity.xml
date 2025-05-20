@@ -52,10 +52,19 @@
 
 
 
-                       <com.yanzhenjie.recyclerview.SwipeRecyclerView
-                           android:id="@+id/rv_relate_video"
-                           android:layout_width="match_parent"
-                           android:layout_height="match_parent" />
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/eye_video_detail_tabLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:tabGravity="start"
+                app:tabMode="auto"
+                app:tabSelectedTextColor="@android:color/white"
+                android:background="@android:color/transparent"/>
+
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/eye_video_detail_viewPager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
 
 
 

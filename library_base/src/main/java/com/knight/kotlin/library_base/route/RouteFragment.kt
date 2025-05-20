@@ -119,6 +119,18 @@ object RouteFragment {
     }
 
 
+    /**
+     *
+     * 开眼 视频详情模块
+     */
+    object EyeVideo {
+        private const val EyeVideo = "/module_eye_video"
+        const val EyeVideoDetailFragment = "$EyeVideo/EyeVideoDetailFragment"
+        const val EyeVideoCommentFragment = "$EyeVideo/EyeVideoCommentFragment"
+
+    }
+
+
 
 
 
