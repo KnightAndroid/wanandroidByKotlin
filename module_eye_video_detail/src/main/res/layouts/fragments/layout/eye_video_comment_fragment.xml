@@ -4,7 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/cl_video_comment">
+    android:id="@+id/cl_root_video_comment"
+   >
 
 
     <TextView
@@ -13,9 +14,9 @@
         android:layout_height="wrap_content"
         android:textSize="@dimen/eye_video_new_comment_title_text_size"
         android:text="@string/eye_video_new_comment_title"
-        android:layout_marginLeft="10dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="10dp"
         android:textColor="@android:color/white"/>
 
 
@@ -26,19 +27,20 @@
         android:id="@+id/rv_comment_video"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_video_new_comment"
         app:layout_constraintBottom_toTopOf="@id/rl_video_comment"
         android:layout_marginTop="@dimen/eye_video_rv_comment_video_margin_top"
+        android:layout_below="@id/tv_video_new_comment"
         />
 
 
     <RelativeLayout
         android:id="@+id/rl_video_comment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent">
+        android:layout_height="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@android:color/black"
+        >
 
 
 
@@ -61,7 +63,6 @@
             android:layout_marginRight="@dimen/eye_video_et_video_comment_margin_right"
             android:gravity="center_vertical"
             android:hint="@string/eye_video_click_send_comment"
-            android:paddingHorizontal="12dp"
             android:textColorHint="@color/eye_video_tv_send_comment_hint_color"
             android:textSize="@dimen/eye_video_et_video_comment_text_size"
             android:layout_toLeftOf="@id/tv_eye_video_comment"
@@ -78,8 +79,5 @@
             android:layout_marginRight="@dimen/eye_video_tv_comment_margin_right"/>
     </RelativeLayout>
 
-
-<!--    android:focusable="false"-->
-<!--    android:focusableInTouchMode="false"-->
 </androidx.constraintlayout.widget.ConstraintLayout>
 

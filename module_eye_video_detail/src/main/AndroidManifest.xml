@@ -4,6 +4,7 @@
     <application>
         <activity
             android:name=".activity.EyeVideoDetailActivity"
+
             >
         </activity>
     </application>

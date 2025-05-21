@@ -5,6 +5,7 @@ import android.view.KeyEvent.KEYCODE_ENTER
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.knight.kotlin.library_base.route.RouteFragment
+import com.knight.kotlin.library_util.RecyclerResizeHelper
 import com.knight.kotlin.library_util.SoftInputScrollUtils
 import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.library_widget.ktx.init
@@ -24,7 +25,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 @Route(path = RouteFragment.EyeVideo.EyeVideoCommentFragment)
 class EyeVideoCommentFragment:BaseFragment<EyeVideoCommentFragmentBinding,EyeVideoCommentVm>() {
-    private val mSoftInputScrollUtils: SoftInputScrollUtils by lazy{ SoftInputScrollUtils(requireActivity()) }
+    private lateinit var recyclerResizeHelper: RecyclerResizeHelper
     private var videoId: Long = 0L
     private val mEyeVideoCommentAdapter : EyeVideoCommentAdapter by lazy { EyeVideoCommentAdapter(
         )
@@ -49,8 +50,17 @@ class EyeVideoCommentFragment:BaseFragment<EyeVideoCommentFragmentBinding,EyeVid
     }
 
     override fun EyeVideoCommentFragmentBinding.initView() {
-        mSoftInputScrollUtils.moveBy(clVideoComment)
-        mSoftInputScrollUtils.moveWith(rvCommentVideo,rlVideoComment)
+
+
+
+        recyclerResizeHelper = RecyclerResizeHelper(
+            activity = requireActivity(),
+            rootView = clRootVideoComment,
+            recyclerView = rvCommentVideo,
+            anchorView = rlVideoComment // 键盘上方的输入栏
+        )
+
+
         rvCommentVideo.init(
             LinearLayoutManager(requireActivity()),
             mEyeVideoCommentAdapter,
@@ -67,4 +77,9 @@ class EyeVideoCommentFragment:BaseFragment<EyeVideoCommentFragmentBinding,EyeVid
 
     }
 
+
+    override fun onDestroy() {
+        super.onDestroy()
+        recyclerResizeHelper.detach()
+    }
 }
