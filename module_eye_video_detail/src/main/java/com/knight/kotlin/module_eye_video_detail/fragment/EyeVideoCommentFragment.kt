@@ -1,12 +1,15 @@
 package com.knight.kotlin.module_eye_video_detail.fragment
 
-import com.knight.kotlin.library_base.entity.EyeVideoDetailEntity
+import android.view.KeyEvent
+import android.view.KeyEvent.KEYCODE_ENTER
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.knight.kotlin.library_base.route.RouteFragment
-import com.knight.kotlin.library_base.vm.EmptyViewModel
-import com.knight.kotlin.library_util.LogUtils
+import com.knight.kotlin.library_util.SoftInputScrollUtils
+import com.knight.kotlin.library_util.toast
+import com.knight.kotlin.library_widget.ktx.init
+import com.knight.kotlin.module_eye_video_detail.adapter.EyeVideoCommentAdapter
 import com.knight.kotlin.module_eye_video_detail.databinding.EyeVideoCommentFragmentBinding
-import com.knight.kotlin.module_eye_video_detail.databinding.EyeVideoDetailFragmentBinding
 import com.knight.kotlin.module_eye_video_detail.vm.EyeVideoCommentVm
 import com.wyjson.router.annotation.Route
 import dagger.hilt.android.AndroidEntryPoint
@@ -21,9 +24,11 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 @Route(path = RouteFragment.EyeVideo.EyeVideoCommentFragment)
 class EyeVideoCommentFragment:BaseFragment<EyeVideoCommentFragmentBinding,EyeVideoCommentVm>() {
-
+    private val mSoftInputScrollUtils: SoftInputScrollUtils by lazy{ SoftInputScrollUtils(requireActivity()) }
     private var videoId: Long = 0L
-
+    private val mEyeVideoCommentAdapter : EyeVideoCommentAdapter by lazy { EyeVideoCommentAdapter(
+        )
+    }
     override fun setThemeColor(isDarkMode: Boolean) {
 
     }
@@ -35,7 +40,7 @@ class EyeVideoCommentFragment:BaseFragment<EyeVideoCommentFragmentBinding,EyeVid
     override fun initRequestData() {
         videoId = arguments?.getLong("videoId")?:0L
         mViewModel.getVideoDetail(videoId,"pgc_video","hot").observerKt {
-            LogUtils.d("sdsd"+it.result?.item_list?.size+"")
+            mEyeVideoCommentAdapter.submitList(it.result?.item_list)
         }
     }
 
@@ -44,6 +49,21 @@ class EyeVideoCommentFragment:BaseFragment<EyeVideoCommentFragmentBinding,EyeVid
     }
 
     override fun EyeVideoCommentFragmentBinding.initView() {
+        mSoftInputScrollUtils.moveBy(clVideoComment)
+        mSoftInputScrollUtils.moveWith(rvCommentVideo,rlVideoComment)
+        rvCommentVideo.init(
+            LinearLayoutManager(requireActivity()),
+            mEyeVideoCommentAdapter,
+            false
+        )
+
+
+            etVideoComment.setOnEditorActionListener { _, _, event: KeyEvent? ->
+                if (event?.keyCode == KEYCODE_ENTER) {
+                    toast(getString(com.knight.kotlin.library_base.R.string.base_unavailable_tip))
+                }
+                false
+            }
 
     }
 

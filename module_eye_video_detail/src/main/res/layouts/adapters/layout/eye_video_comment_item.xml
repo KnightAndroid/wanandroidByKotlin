@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <data>
+        <variable
+            name="videoComment"
+            type="com.knight.kotlin.module_eye_video_detail.entity.EyeVideoCommentEntity" />
+
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp">
+
+
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/iv_comment_author"
+            android:layout_width="@dimen/eye_video_comment_iv_author_width"
+            android:layout_height="@dimen/eye_video_comment_iv_author_height"
+            android:layout_marginStart="@dimen/eye_video_comment_iv_author_margin_start"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearance="@style/base_circleStyle"
+            app:imageUrl="@{videoComment.user.avatar}" />
+
+
+        <TextView
+            android:id="@+id/tv_comment_nick"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toRightOf="@id/iv_comment_author"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="@{videoComment.user.nick}"
+            android:textColor="@android:color/white"
+            android:layout_marginLeft="10dp"
+            />
+
+
+
+        <TextView
+            android:id="@+id/tv_comment_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tv_comment_nick"
+            app:layout_constraintLeft_toRightOf="@id/iv_comment_author"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:textColor="@android:color/white"
+            android:text="@{videoComment.comment_content}"/>
+
+        <TextView
+            android:id="@+id/tv_video_comment_time_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/eye_video_tv_comment_time_location_text_color"
+            app:layout_constraintBottom_toBottomOf="@id/tv_comment_text"
+            app:layout_constraintLeft_toRightOf="@id/tv_comment_text"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:textSize="12sp"
+            android:text="@{videoComment.comment_time + ' ' + videoComment.location}"/>
+
+
+
+
+        <ImageView
+            android:id="@+id/iv_comment_like"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_marginEnd="14dp"
+            android:paddingStart="5dp"
+            android:src="@drawable/eye_video_comment_ic_like"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/tv_like_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            app:layout_constraintTop_toBottomOf="@id/iv_comment_like"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="20dp"
+            android:text="@{String.valueOf(videoComment.count_summary.favorite.count)}"/>
+
+
+        <com.yanzhenjie.recyclerview.SwipeRecyclerView
+            android:id="@+id/rv_reply_comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_comment_text"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="10dp"
+            android:visibility="gone"
+            />
+
+
+
+
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+</layout>
+
+
+
+

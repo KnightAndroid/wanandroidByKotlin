@@ -2,4 +2,6 @@
     <string name="eye_video_app_name">My Application</string>
     <string name="eye_video_share_image">share_image</string>
     <string name="eye_video_follow">关注</string>
+    <string name="eye_video_click_send_comment">点 击 发 表 你 的 评 论</string>
+    <string name="eye_video_new_comment_title">最新评论</string>
 </resources>

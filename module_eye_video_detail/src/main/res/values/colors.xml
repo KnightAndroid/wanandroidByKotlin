@@ -3,4 +3,6 @@
     <color name="eye_video_follow_text_color">#FF9E9E9E</color>
     <color name="eye_video_detail_relate_tv_time_background_tint">#8A000000</color>
     <color name="eye_video_detail_bg">#E61e272e</color>
+    <color name="eye_video_tv_comment_time_location_text_color">#999999</color>
+    <color name="eye_video_tv_send_comment_hint_color">#ccffffff</color>
 </resources>

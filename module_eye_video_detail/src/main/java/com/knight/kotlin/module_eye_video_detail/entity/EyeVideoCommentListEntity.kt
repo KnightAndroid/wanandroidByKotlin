@@ -1,7 +1,6 @@
 package com.knight.kotlin.module_eye_video_detail.entity
 
 import android.os.Parcelable
-import com.knight.kotlin.library_base.entity.EyeCommonAuthorEntity
 import kotlinx.parcelize.Parcelize
 
 /**
@@ -30,7 +29,7 @@ data class EyeVideoCommentEntity(
     val location: String,
     val parent_id: String,
     val reply_count: Int,
-    val reply_list: List<String>,
+    val reply_list: MutableList<EyeVideoCommentEntity>,
     val resource_id: String,
     val resource_type: String,
     val root_id: String,

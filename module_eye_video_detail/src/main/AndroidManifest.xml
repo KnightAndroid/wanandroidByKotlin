@@ -3,7 +3,8 @@
 
     <application>
         <activity
-            android:name=".activity.EyeVideoDetailActivity">
+            android:name=".activity.EyeVideoDetailActivity"
+            >
         </activity>
     </application>
 </manifest>

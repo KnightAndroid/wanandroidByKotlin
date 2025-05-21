@@ -47,4 +47,15 @@
     <dimen name="eye_video_detail_relate_cl_margin_bottom">15dp</dimen>
     <dimen name="eye_video_detail_relate_tv_title_margin_left">10dp</dimen>
     <dimen name="eye_video_detail_relate_tv_title_text_size">14sp</dimen>
+    <dimen name="eye_video_comment_iv_author_width">30dp</dimen>
+    <dimen name="eye_video_comment_iv_author_height">30dp</dimen>
+    <dimen name="eye_video_comment_iv_author_margin_start">15dp</dimen>
+    <dimen name="eye_video_new_comment_title_text_size">18sp</dimen>
+    <dimen name="eye_video_rv_comment_video_margin_top">10dp</dimen>
+    <dimen name="eye_video_et_video_comment_height">40dp</dimen>
+    <dimen name="eye_video_et_video_comment_text_size">12sp</dimen>
+    <dimen name="eye_video_et_video_comment_margin_left">10dp</dimen>
+    <dimen name="eye_video_et_video_comment_margin_right">10dp</dimen>
+    <dimen name="eye_video_iv_comment_margin_left">10dp</dimen>
+    <dimen name="eye_video_tv_comment_margin_right">10dp</dimen>
 </resources>
