@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.knight.kotlin.library_base.route.RouteFragment
 import com.knight.kotlin.library_util.RecyclerResizeHelper
-import com.knight.kotlin.library_util.SoftInputScrollUtils
 import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.library_widget.ktx.init
 import com.knight.kotlin.module_eye_video_detail.adapter.EyeVideoCommentAdapter
@@ -50,9 +49,6 @@ class EyeVideoCommentFragment:BaseFragment<EyeVideoCommentFragmentBinding,EyeVid
     }
 
     override fun EyeVideoCommentFragmentBinding.initView() {
-
-
-
         recyclerResizeHelper = RecyclerResizeHelper(
             activity = requireActivity(),
             rootView = clRootVideoComment,

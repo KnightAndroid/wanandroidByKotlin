@@ -40,3 +40,4 @@ include ':library_share'
 include ':module_realtime'
 include ':module_eye_square'
 
+include ':module_eye_recommend'

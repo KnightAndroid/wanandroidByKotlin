@@ -171,6 +171,7 @@ dependencies {
     implementation project(path:":module_eye_discover")
     implementation project(path:":module_realtime")
     implementation project(path:":module_eye_square")
+    implementation project(path:":module_eye_recommend")
     implementation Dependencies.JetPack.HILT_CORE
     kapt Dependencies.JetPack.HILT_APT
     kapt Dependencies.JetPack.HILT_ANDROIDX

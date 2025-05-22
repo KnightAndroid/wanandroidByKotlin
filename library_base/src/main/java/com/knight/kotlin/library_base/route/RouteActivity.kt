@@ -208,6 +208,14 @@ object RouteActivity {
 
     }
 
+    /**
+     *
+     * 推荐模块
+     */
+    object EyeRecommend {
+        private const val EyeRecommend = "/module_eye_recommend"
+        const val EyeRecommendActivity = "$EyeRecommend/EyeRecommendActivity"
+    }
 
 
     /**

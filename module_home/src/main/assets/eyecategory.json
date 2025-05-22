@@ -7,20 +7,21 @@
   },
   {
     "categoryId" : 1002,
+    "categoryName":"推荐",
+    "desc" : "大家都爱看",
+    "categoryColor": "#809966FF"
+  },
+  {
+    "categoryId" : 1003,
     "categoryName":"发现",
     "desc" : "世界的美好不止一点",
     "categoryColor": "#8066FFFF"
   },
   {
-    "categoryId" : 1003,
+    "categoryId" : 1004,
     "categoryName":"社区",
     "desc" : "浏览百方动态",
     "categoryColor": "#801E90FF"
-  },
-  {
-    "categoryId" : 1004,
-    "categoryName":"热门",
-    "desc" : "大家都爱看",
-    "categoryColor": "#809966FF"
   }
+
 ]

@@ -65,12 +65,14 @@ class HomeEyeClassifyFragment : BaseFragment<HomeEyeClassifyFragmentBinding,Empt
                 if (position === 0) {
                     startPageWithParams(RouteActivity.EyeDaily.DailyListActivity,"tabTitle" to mDataList[position].categoryName)
                 } else if (position === 1) {
-                    startPage(RouteActivity.EyeDiscover.EyeDiscoverActivity)
+                    //推荐
+                    startPage(RouteActivity.EyeRecommend.EyeRecommendActivity)
                 } else if (position === 2) {
-                    //广场
-                    startPageWithParams(RouteActivity.EyeSquare.EyeSquareActivity,"tabTitle" to mDataList[position].categoryName)
+                    //发现
+                    startPage(RouteActivity.EyeDiscover.EyeDiscoverActivity)
                 } else if (position === 3){
-                    //热门
+                    //社区/广场
+                    startPageWithParams(RouteActivity.EyeSquare.EyeSquareActivity,"tabTitle" to mDataList[position].categoryName)
                 }
 
 

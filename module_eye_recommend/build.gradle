@@ -1,0 +1,12 @@
+apply from: '../base_module.gradle'
+android {
+    resourcePrefix "eye_recommend_"
+    namespace = "com.knight.kotlin.module_eye_recommend"
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(path: ':library_video')
+    implementation project(path: ':library_share')
+    implementation com.knight.wanandroid.buildsrc.Dependencies.GitHub.BANNER
+}

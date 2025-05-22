@@ -64,7 +64,7 @@ class EyepetizerCategoryAdapter:
                     R.drawable.home_icon_eye_square,
                     iv_eyepetizer_category
                 )
-            } else if (item.categoryName.equals("热门")) {
+            } else if (item.categoryName.equals("推荐")) {
                 ImageLoader.loadLocalPhoto(
                     context,
                     R.drawable.home_icon_eye_hot,

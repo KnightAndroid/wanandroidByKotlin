@@ -217,5 +217,6 @@ class LoginActivity : BaseActivity<MineLoginActivityBinding, LoginViewModel>(){
     override fun onDestroy() {
         super.onDestroy()
         BiometricControl.setunListener()
+        mSoftInputScrollUtils.detach()
     }
 }

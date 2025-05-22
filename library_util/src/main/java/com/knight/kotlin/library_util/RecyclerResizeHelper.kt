@@ -19,7 +19,6 @@ class RecyclerResizeHelper(
     private var originalRecyclerHeight: Int = 0
     private var isKeyboardOpen = false
     private var lastTranslationY = 0f
-    private var rvLastTranslationY = 0f
 
     init {
         rootView.viewTreeObserver.addOnGlobalLayoutListener(this)
@@ -47,57 +46,25 @@ class RecyclerResizeHelper(
         if (isNowOpen != isKeyboardOpen) {
             isKeyboardOpen = isNowOpen
             if (isNowOpen) {
-                adjustLayout(visibleBottom,keyboardHeight)
+                adjustLayout(visibleBottom, keyboardHeight)
             } else {
                 restoreLayout()
             }
         }
     }
 
-//    private fun adjustLayout(visibleBottom: Int,keyboardHeight:Int) {
-//        val location = IntArray(2)
-//        recyclerView.getLocationOnScreen(location)
-//        val recyclerBottom = location[1] + recyclerView.height
-//
-//        // 计算遮挡高度：RecyclerView 底部 - 键盘顶部（可见区域底部）
-//        val overlap = recyclerBottom - visibleBottom
-//
-//        // 只有被遮挡时才上移
-//        val translationY = if (overlap > 0) -overlap.toFloat() else 0f
-//
-//        if (translationY != lastTranslationY) {
-//            rootView.translationY = translationY
-//            lastTranslationY = translationY
-//        }
-//    }
 
-    private fun adjustLayout(visibleBottom: Int,keyboardHeight:Int) {
+    private fun adjustLayout(visibleBottom: Int, keyboardHeight: Int) {
         val location = IntArray(2)
-        val location2 = IntArray(2)
         anchorView.getLocationOnScreen(location)
-
-               recyclerView.getLocationOnScreen(location2)
         val anchorBottom = location[1] + anchorView.height
-        val recyclerBottom = location2[1] + recyclerView.height
-
-        val recycleroverlap = recyclerBottom - visibleBottom
-
-
         val overlap = anchorBottom - visibleBottom
         val translationY = if (overlap > 0) -overlap.toFloat() else 0f
-        val rvTranslationY = if (recycleroverlap> 0) -recycleroverlap.toFloat() else 0f
         if (translationY != lastTranslationY) {
-          //  ThreadUtils.postMainDelayed({
-                anchorView.translationY = translationY
-                lastTranslationY = translationY
-          //  },500)
-
+            anchorView.translationY = translationY
+            lastTranslationY = translationY
         }
 
-//        if (rvTranslationY!= rvLastTranslationY) {
-//            rootView.translationY = rvTranslationY
-//            rvLastTranslationY = rvTranslationY
-//        }
     }
 
     private fun restoreLayout() {
@@ -106,10 +73,6 @@ class RecyclerResizeHelper(
             lastTranslationY = 0f
         }
 
-//        if (rvLastTranslationY != 0f) {
-//            rootView.translationY = 0f
-//            rvLastTranslationY = 0f
-//        }
     }
 
     private fun getViewLocationY(view: View): Int {
