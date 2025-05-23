@@ -42,9 +42,8 @@
             android:layout_marginLeft="10dp"
             />
 
-
-
-        <TextView
+<!--        android:text="@{videoComment.comment_content}"-->
+        <com.knight.kotlin.library_widget.AppendEndTextView
             android:id="@+id/tv_comment_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -52,20 +51,23 @@
             app:layout_constraintLeft_toRightOf="@id/iv_comment_author"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="5dp"
-            android:textColor="@android:color/white"
-            android:text="@{videoComment.comment_content}"/>
+            android:layout_marginRight="10dp"
+            android:maxEms="14"
 
-        <TextView
-            android:id="@+id/tv_video_comment_time_location"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/eye_video_tv_comment_time_location_text_color"
-            app:layout_constraintBottom_toBottomOf="@id/tv_comment_text"
-            app:layout_constraintLeft_toRightOf="@id/tv_comment_text"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp"
-            android:textSize="12sp"
-            android:text="@{videoComment.comment_time + ' ' + videoComment.location}"/>
+            android:textColor="@android:color/white"
+           />
+
+<!--        <TextView-->
+<!--            android:id="@+id/tv_video_comment_time_location"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:textColor="@color/eye_video_tv_comment_time_location_text_color"-->
+<!--            app:layout_constraintBottom_toBottomOf="@id/tv_comment_text"-->
+<!--            app:layout_constraintLeft_toRightOf="@id/tv_comment_text"-->
+<!--            android:layout_marginLeft="10dp"-->
+<!--            android:layout_marginTop="5dp"-->
+<!--            android:textSize="12sp"-->
+<!--            android:text="@{videoComment.comment_time + ' ' + videoComment.location}"/>-->
 
 
 

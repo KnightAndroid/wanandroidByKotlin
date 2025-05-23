@@ -3,9 +3,10 @@ package com.knight.kotlin.module_eye_video_detail.adapter
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter4.BaseQuickAdapter
+import com.knight.kotlin.module_eye_video_detail.R
 import com.knight.kotlin.module_eye_video_detail.databinding.EyeVideoCommentItemBinding
 import com.knight.kotlin.module_eye_video_detail.entity.EyeVideoCommentEntity
 
@@ -28,26 +29,12 @@ class EyeVideoReplyAdapter : BaseQuickAdapter<EyeVideoCommentEntity,EyeVideoRepl
     override fun onBindViewHolder(holder: VH, position: Int, item: EyeVideoCommentEntity?) {
         item?.let {
             holder.binding.videoComment = it
+            holder.binding.tvCommentText.setContentWithEndMessage(it.comment_content,
+                it.comment_time + " " +it.location, ContextCompat.getColor(context, R.color.eye_video_tv_comment_time_location_text_color))
         }
     }
 
     override fun onCreateViewHolder(context: Context, parent: ViewGroup, viewType: Int): VH {
         return VH(parent)
     }
-}
-
-
-
-
-
-object CommentDiffCallback : DiffUtil.ItemCallback<EyeVideoCommentEntity>() {
-    override fun areItemsTheSame(
-        oldItem: EyeVideoCommentEntity,
-        newItem: EyeVideoCommentEntity
-    ): Boolean = oldItem.comment_id == newItem.comment_id
-
-    override fun areContentsTheSame(
-        oldItem: EyeVideoCommentEntity,
-        newItem: EyeVideoCommentEntity
-    ): Boolean = oldItem == newItem // 对于 data class 是结构比较，OK
 }

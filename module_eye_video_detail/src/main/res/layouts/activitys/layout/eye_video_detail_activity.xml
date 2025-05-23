@@ -62,7 +62,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:tabGravity="start"
-                    app:tabMode="auto"
+                    app:tabMode="scrollable"
                     app:tabSelectedTextColor="@android:color/white"
                     app:tabTextColor="@android:color/white"
                     android:background="@android:color/transparent"/>

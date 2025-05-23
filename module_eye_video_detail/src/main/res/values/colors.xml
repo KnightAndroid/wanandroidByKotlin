@@ -5,4 +5,5 @@
     <color name="eye_video_detail_bg">#E61e272e</color>
     <color name="eye_video_tv_comment_time_location_text_color">#999999</color>
     <color name="eye_video_tv_send_comment_hint_color">#ccffffff</color>
+    <color name="eye_video_tv_send_comment_text_color">#ccffffff</color>
 </resources>

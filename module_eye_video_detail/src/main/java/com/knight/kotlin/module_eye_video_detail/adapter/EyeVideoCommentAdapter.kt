@@ -4,9 +4,11 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter4.BaseQuickAdapter
+import com.knight.kotlin.module_eye_video_detail.R
 import com.knight.kotlin.module_eye_video_detail.databinding.EyeVideoCommentItemBinding
 import com.knight.kotlin.module_eye_video_detail.entity.EyeVideoCommentEntity
 
@@ -41,6 +43,9 @@ class EyeVideoCommentAdapter:BaseQuickAdapter<EyeVideoCommentEntity,EyeVideoComm
     override fun onBindViewHolder(holder: VH, position: Int, item: EyeVideoCommentEntity?) {
         item?.run {
             holder.binding.videoComment = this
+                holder.binding.tvCommentText.setContentWithEndMessage(
+                    this.comment_content,
+                    this.comment_time + " " +this.location, ContextCompat.getColor(context, R.color.eye_video_tv_comment_time_location_text_color))
 
             if (reply_list.isNotEmpty()) {
                 holder.binding.rvReplyComment.visibility = View.VISIBLE

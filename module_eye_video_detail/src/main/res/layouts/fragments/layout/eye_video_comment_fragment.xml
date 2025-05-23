@@ -64,6 +64,7 @@
             android:gravity="center_vertical"
             android:hint="@string/eye_video_click_send_comment"
             android:textColorHint="@color/eye_video_tv_send_comment_hint_color"
+            android:textColor="@color/eye_video_tv_send_comment_text_color"
             android:textSize="@dimen/eye_video_et_video_comment_text_size"
             android:layout_toLeftOf="@id/tv_eye_video_comment"
             />

@@ -20,7 +20,8 @@ interface EyeSquareApi {
 
     /**
      *
-     * 根据关键字搜索
+     * 根据label进行请求
+     *
      */
     @Headers("Domain-Name:eye_sub")
     @POST("v1/card/page/get_page")

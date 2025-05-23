@@ -2,8 +2,8 @@ package com.knight.kotlin.module_eye_recommend.activity
 
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.route.RouteActivity
-import com.knight.kotlin.library_base.vm.EmptyViewModel
 import com.knight.kotlin.module_eye_recommend.databinding.EyeRecommendActivityBinding
+import com.knight.kotlin.module_eye_recommend.vm.EyeRecommendVm
 import com.wyjson.router.annotation.Route
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -16,7 +16,7 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 @AndroidEntryPoint
 @Route(path = RouteActivity.EyeRecommend.EyeRecommendActivity)
-class EyeRecommendActivity:BaseActivity<EyeRecommendActivityBinding,EmptyViewModel>() {
+class EyeRecommendActivity:BaseActivity<EyeRecommendActivityBinding, EyeRecommendVm>() {
     override fun setThemeColor(isDarkMode: Boolean) {
 
     }
@@ -26,7 +26,9 @@ class EyeRecommendActivity:BaseActivity<EyeRecommendActivityBinding,EmptyViewMod
     }
 
     override fun initRequestData() {
-
+         mViewModel.getRecommendData("card","recommend").observerKt {
+               //后续处理 要筛选掉广告，因为广告图片打不开
+         }
     }
 
     override fun reLoadData() {
