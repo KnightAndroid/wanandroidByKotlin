@@ -27,6 +27,7 @@ object AndroidManifestParser {
     private val TAG_USES_PERMISSION_SDK_23 = "uses-permission-sdk-23"
     private val TAG_USES_PERMISSION_SDK_M = "uses-permission-sdk-m"
 
+    private val TAG_QUERIES: String = "queries"
     private val TAG_APPLICATION = "application"
     private val TAG_ACTIVITY = "activity"
     private val TAG_ACTIVITY_ALIAS = "activity-alias"
@@ -71,6 +72,10 @@ object AndroidManifestParser {
                 val permissionInfo = parsePermissionFromXml(parser)
                 manifestInfo.permissionInfoList.add(permissionInfo)
             }
+
+            if (TextUtils.equals(TAG_QUERIES, tagName)) {
+                manifestInfo.queriesPackageList.add(parsePackageFromXml(parser));
+            }
             if (TextUtils.equals(TAG_APPLICATION, tagName)) {
                 manifestInfo.applicationInfo = parseApplicationFromXml(parser)
             }
@@ -88,6 +93,13 @@ object AndroidManifestParser {
         parser.close()
         return manifestInfo
     }
+
+
+    private fun parsePackageFromXml(parser: XmlResourceParser): String {
+        val packageName = parser.getAttributeValue(null, ATTR_PACKAGE)
+        return packageName ?: ""
+    }
+
 
     private fun parseUsesSdkFromXml(parser: XmlResourceParser): UsesSdkInfo? {
         val usesSdkInfo = UsesSdkInfo()
@@ -114,7 +126,8 @@ object AndroidManifestParser {
 
     private fun parseApplicationFromXml(parser: XmlResourceParser): AndroidManifestInfo.ApplicationInfo? {
         val applicationInfo = AndroidManifestInfo.ApplicationInfo()
-        applicationInfo.name = parser.getAttributeValue(ANDROID_NAMESPACE_URI, ATTR_NAME)
+        val applicationClassName = parser.getAttributeValue(ANDROID_NAMESPACE_URI, ATTR_NAME)
+        applicationInfo.name = applicationClassName ?: ""
         applicationInfo.requestLegacyExternalStorage = parser.getAttributeBooleanValue(
             ANDROID_NAMESPACE_URI, ATTR_REQUEST_LEGACY_EXTERNAL_STORAGE, false
         )
@@ -123,7 +136,8 @@ object AndroidManifestParser {
 
     private fun parseActivityFromXml(parser: XmlResourceParser): AndroidManifestInfo.ActivityInfo {
         val activityInfo = AndroidManifestInfo.ActivityInfo()
-        activityInfo.name = parser.getAttributeValue(ANDROID_NAMESPACE_URI, ATTR_NAME)
+        val activityClassName = parser.getAttributeValue(ANDROID_NAMESPACE_URI, ATTR_NAME)
+        activityInfo.name = activityClassName ?: ""
         activityInfo.supportsPictureInPicture = parser.getAttributeBooleanValue(
             ANDROID_NAMESPACE_URI, ATTR_SUPPORTS_PICTURE_IN_PICTURE, false
         )
@@ -132,7 +146,8 @@ object AndroidManifestParser {
 
     private fun parseServerFromXml(parser: XmlResourceParser): AndroidManifestInfo.ServiceInfo {
         val serviceInfo = AndroidManifestInfo.ServiceInfo()
-        serviceInfo.name = parser.getAttributeValue(ANDROID_NAMESPACE_URI, ATTR_NAME)
+        val serviceClassName = parser.getAttributeValue(ANDROID_NAMESPACE_URI, ATTR_NAME)
+        serviceInfo.name = serviceClassName ?: ""
         serviceInfo.permission = parser.getAttributeValue(ANDROID_NAMESPACE_URI, ATTR_PERMISSION)
         return serviceInfo
     }

@@ -88,6 +88,7 @@ import com.knight.kotlin.library_util.baidu.OnceLocationListener
 import com.knight.kotlin.library_util.image.ImageLoader
 import com.knight.kotlin.library_util.startPage
 import com.knight.kotlin.library_util.startPageWithRightAnimate
+import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.library_util.toast.ToastUtils
 import com.knight.kotlin.library_widget.SpacesItemDecoration
 import com.knight.kotlin.library_widget.ZzWeatherView
@@ -883,7 +884,7 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
                 }
             } ?: run{
                 val permission:List<String> = listOf(Permission.ACCESS_FINE_LOCATION,Permission.ACCESS_COARSE_LOCATION,Permission.ACCESS_BACKGROUND_LOCATION)
-                if (XXPermissions.isGranted(requireActivity(),permission)) {
+                if (XXPermissions.isGrantedPermissions(requireActivity(),permission)) {
                     requestOnceLocation()
                 } else {
                     XXPermissions.with(this)
@@ -897,14 +898,6 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
 
                             override fun onDenied(permissions: List<String>, doNotAskAgain: Boolean) {
                                 super.onDenied(permissions, doNotAskAgain)
-                                activity?.let {
-                                    PermissionUtils.showPermissionSettingDialog(it,permissions,permissions,object :
-                                        OnPermissionCallback {
-                                        override fun onGranted(permissions: List<String>, all: Boolean) {
-                                            requestOnceLocation()
-                                        }
-                                    })
-                                }
                             }
                         })
 
@@ -1346,14 +1339,6 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
 
                         override fun onDenied(permissions: List<String>, doNotAskAgain: Boolean) {
                             super.onDenied(permissions, doNotAskAgain)
-                            activity?.let {
-                                PermissionUtils.showPermissionSettingDialog(it,permissions,permissions,object :
-                                    OnPermissionCallback {
-                                    override fun onGranted(permissions: List<String>, all: Boolean) {
-
-                                    }
-                                })
-                            }
                         }
                     })
             }

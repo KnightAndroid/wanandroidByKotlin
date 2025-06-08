@@ -1,7 +1,7 @@
 package com.knight.kotlin.library_permiss.listener
 
 /**
- * Author:Knight
+ * Author:Knight 权限请求结果回调接口
  * Time:2022/1/20 15:03
  * Description:OnPermissionCallback
  */

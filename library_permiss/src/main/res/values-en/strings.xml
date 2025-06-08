@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="permission_description">Permission description</string>
-    <string name="permission_message">%s needs to be granted to use this feature</string>
+    <string name="permission_description_title">Permission description</string>
     <string name="permission_granted">Granted</string>
     <string name="permission_denied">Denied</string>
 
@@ -20,6 +19,7 @@
 
     <string name="permission_unknown">permission</string>
     <string name="permission_comma">, </string>
+    <string name="permission_colon">: </string>
 
     <string name="permission_calendar">calendar permission</string>
     <string name="permission_camera">camera permission</string>
@@ -54,5 +54,9 @@
     <string name="permission_ignore_battery_optimize">ignore battery optimize permission</string>
     <string name="permission_picture_in_picture">picture-in-picture permission</string>
     <string name="permission_vpn">\tVPN\tpermission</string>
+
+    <string name="permission_description_demo">Used for xx business</string>
     <string name="permission_notification_listener_toast">A new notification message was listened for with the title: %s and the content: %s</string>
+    <string name="permission_description">permission_description</string>
+    <string name="permission_message">permission_message</string>
 </resources>

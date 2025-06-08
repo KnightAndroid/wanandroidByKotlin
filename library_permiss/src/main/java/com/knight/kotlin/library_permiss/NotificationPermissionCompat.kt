@@ -4,16 +4,16 @@ import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
 import android.provider.Settings
-import com.knight.kotlin.library_permiss.AndroidVersion.isAndroid4_4
-import com.knight.kotlin.library_permiss.AndroidVersion.isAndroid5
-import com.knight.kotlin.library_permiss.AndroidVersion.isAndroid7
-import com.knight.kotlin.library_permiss.AndroidVersion.isAndroid8
+import com.knight.kotlin.library_permiss.AndroidVersionTools.isAndroid4_4
+import com.knight.kotlin.library_permiss.AndroidVersionTools.isAndroid5
+import com.knight.kotlin.library_permiss.AndroidVersionTools.isAndroid7
+import com.knight.kotlin.library_permiss.AndroidVersionTools.isAndroid8
 import com.knight.kotlin.library_permiss.utils.PermissionUtils.areActivityIntent
 import com.knight.kotlin.library_permiss.utils.PermissionUtils.checkOpNoThrow
 
 
 /**
- * Author:Knight
+ * Author:Knight startActivity 委托接口
  * Time:2023/8/29 16:51
  * Description:NotificationPermissionCompat
  */

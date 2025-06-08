@@ -1,12 +1,13 @@
 package com.knight.kotlin.library_permiss.listener
 
 /**
- * Author:Knight
- * Time:2023/8/29 16:53
- * Description:OnPermissionPageCallback
+ * @Description
+ * @Author knight
+ * @Time 2025/6/8 22:56
+ * 
  */
-interface OnPermissionPageCallback {
 
+interface OnPermissionPageCallback {
     /**
      * 权限已经授予
      */

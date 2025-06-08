@@ -110,7 +110,7 @@ class HomeNewsActivity:BaseActivity<HomeNewsActivityBinding,HomeNewsVm>(), OnRef
                             showFloatMenu = !showFloatMenu
                         }) {
                             dialog, which ->
-                        if (XXPermissions.isGranted(this@HomeNewsActivity,Permission.SYSTEM_ALERT_WINDOW)) {
+                        if (XXPermissions.isGrantedPermissions(this@HomeNewsActivity,Permission.SYSTEM_ALERT_WINDOW)) {
                             FloatMenuManager.initFloatMenu(this@HomeNewsActivity,initFloatViewActions(),true)
                             FloatMenuManager.show()
                         } else {
@@ -127,12 +127,6 @@ class HomeNewsActivity:BaseActivity<HomeNewsActivityBinding,HomeNewsVm>(), OnRef
 
                                     override fun onDenied(permissions: List<String>, doNotAskAgain: Boolean) {
                                         super.onDenied(permissions, doNotAskAgain)
-                                            PermissionUtils.showPermissionSettingDialog(this@HomeNewsActivity,permissions,permissions,object :
-                                                OnPermissionCallback {
-                                                override fun onGranted(permissions: List<String>, all: Boolean) {
-
-                                                }
-                                            })
 
                                     }
                                 })

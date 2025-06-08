@@ -1,7 +1,5 @@
 package com.knight.kotlin.library_permiss
 
-import android.content.pm.ActivityInfo
-import android.content.pm.ApplicationInfo
 import android.content.pm.PackageInfo
 
 
@@ -21,6 +19,9 @@ class AndroidManifestInfo {
     /** 权限节点信息  */
 
     val permissionInfoList = mutableListOf<PermissionInfo>()
+
+    /** 查询包名列表  */
+    val queriesPackageList = mutableListOf<String>()
 
     /** Application 节点信息  */
     var applicationInfo: ApplicationInfo? = null
@@ -49,7 +50,7 @@ class AndroidManifestInfo {
 
         companion object {
             /** [PackageInfo.REQUESTED_PERMISSION_NEVER_FOR_LOCATION]  */
-            private val REQUESTED_PERMISSION_NEVER_FOR_LOCATION = if(AndroidVersion.isAndroid12()) PackageInfo.REQUESTED_PERMISSION_NEVER_FOR_LOCATION else 0x00010000
+            private val REQUESTED_PERMISSION_NEVER_FOR_LOCATION = if(AndroidVersionTools.isAndroid12()) PackageInfo.REQUESTED_PERMISSION_NEVER_FOR_LOCATION else 0x00010000
 
 
         }

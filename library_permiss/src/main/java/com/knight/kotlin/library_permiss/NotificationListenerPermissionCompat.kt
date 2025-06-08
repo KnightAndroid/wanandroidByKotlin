@@ -5,9 +5,9 @@ import android.content.Context
 import android.content.Intent
 import android.provider.Settings
 import android.text.TextUtils
-import com.knight.kotlin.library_permiss.AndroidVersion.isAndroid11
-import com.knight.kotlin.library_permiss.AndroidVersion.isAndroid4_3
-import com.knight.kotlin.library_permiss.AndroidVersion.isAndroid5_1
+import com.knight.kotlin.library_permiss.AndroidVersionTools.isAndroid11
+import com.knight.kotlin.library_permiss.AndroidVersionTools.isAndroid4_3
+import com.knight.kotlin.library_permiss.AndroidVersionTools.isAndroid5_1
 import com.knight.kotlin.library_permiss.permissions.Permission
 import com.knight.kotlin.library_permiss.utils.PermissionUtils.areActivityIntent
 import com.knight.kotlin.library_permiss.utils.PermissionUtils.getAndroidManifestInfo

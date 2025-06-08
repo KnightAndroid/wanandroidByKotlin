@@ -4,8 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import androidx.fragment.app.Fragment
-import com.knight.kotlin.library_permiss.AndroidVersion.isAndroid13
-import com.knight.kotlin.library_permiss.utils.PermissionUtils.findActivity
+import com.knight.kotlin.library_permiss.AndroidVersionTools.isAndroid13
 
 
 /**
@@ -37,7 +36,7 @@ class PermissionActivityIntentHandler {
         }
 
         /**
-         * 获取意图中最底层的子意图
+         * 获取意图中最深层的子意图
          */
         fun findDeepIntent( superIntent: Intent?): Intent? {
             val subIntent = findSubIntentBySuperIntent(superIntent)
@@ -61,16 +60,17 @@ class PermissionActivityIntentHandler {
             return mainIntent
         }
 
-        fun startActivity( context: Context, intent: Intent): Boolean {
-            return startActivity(StartActivityDelegateContextImpl(context), intent)
+        fun startActivity(context: Context, intent: Intent): Boolean {
+            return startActivity(StartActivityDelegateByContext(context), intent)
         }
 
-        fun startActivity( activity: Activity, intent: Intent): Boolean {
-            return startActivity(StartActivityDelegateActivityImpl(activity), intent)
+        fun startActivity(activity: Activity, intent: Intent): Boolean {
+            return startActivity(StartActivityDelegateByActivity(activity), intent)
         }
 
-        fun startActivity(fragment: Fragment, intent: Intent): Boolean {
-            return startActivity(StartActivityDelegateFragmentImpl(fragment), intent)
+        @Suppress("deprecation")
+        fun startActivity( fragment: Fragment, intent: Intent): Boolean {
+            return startActivity(StartActivityDelegateByFragmentApp(fragment), intent)
         }
 
         fun startActivity(
@@ -93,19 +93,20 @@ class PermissionActivityIntentHandler {
             requestCode: Int
         ): Boolean {
             return startActivityForResult(
-                StartActivityDelegateActivityImpl(activity),
+                StartActivityDelegateByActivity(activity),
                 intent,
                 requestCode
             )
         }
 
+        @Suppress("deprecation")
         fun startActivityForResult(
              fragment: Fragment,
-             intent: Intent,
+            intent: Intent,
             requestCode: Int
         ): Boolean {
             return startActivityForResult(
-                StartActivityDelegateFragmentImpl(fragment),
+                StartActivityDelegateByFragmentApp(fragment),
                 intent,
                 requestCode
             )
@@ -128,54 +129,4 @@ class PermissionActivityIntentHandler {
         }
     }
 
-    private class StartActivityDelegateContextImpl(val mContext: Context) :
-        IStartActivityDelegate {
-        override fun startActivity( intent: Intent) {
-            mContext.startActivity(intent)
-        }
-
-        override fun startActivityForResult( intent: Intent, requestCode: Int) {
-            val activity = findActivity(mContext)
-            if (activity != null) {
-                activity.startActivityForResult(intent, requestCode)
-                return
-            }
-            startActivity(intent)
-        }
-    }
-
-    private class StartActivityDelegateActivityImpl(val mActivity: Activity) :
-        IStartActivityDelegate {
-        override fun startActivity(intent: Intent) {
-            mActivity.startActivity(intent)
-        }
-
-        override fun startActivityForResult(intent: Intent, requestCode: Int) {
-            mActivity.startActivityForResult(intent, requestCode)
-        }
-    }
-
-    private class StartActivityDelegateFragmentImpl (val mFragment: Fragment) :
-        IStartActivityDelegate {
-        override fun startActivity( intent: Intent) {
-            mFragment.startActivity(intent)
-        }
-
-        override fun startActivityForResult( intent: Intent, requestCode: Int) {
-            mFragment.startActivityForResult(intent, requestCode)
-        }
-    }
-
-    private class StartActivityDelegateSupportFragmentImpl ( val fragment: Fragment) :
-        IStartActivityDelegate {
-        private val mFragment: Fragment = fragment
-
-        override fun startActivity( intent: Intent) {
-            mFragment.startActivity(intent)
-        }
-
-        override fun startActivityForResult(intent: Intent, requestCode: Int) {
-            mFragment.startActivityForResult(intent, requestCode)
-        }
-    }
 }

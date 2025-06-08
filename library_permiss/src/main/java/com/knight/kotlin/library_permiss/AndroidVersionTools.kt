@@ -7,33 +7,34 @@ import android.os.Build
 /**
  * Author:Knight
  * Time:2023/8/29 16:42
- * Description:AndroidVersion
+ * Description:AndroidVersionTools
  */
-object AndroidVersion {
-    const val ANDROID_14 = Build.VERSION_CODES.UPSIDE_DOWN_CAKE
-    const val ANDROID_13 = Build.VERSION_CODES.TIRAMISU
-    const val ANDROID_12_L = Build.VERSION_CODES.S_V2
-    const val ANDROID_12 = Build.VERSION_CODES.S
-    const val ANDROID_11 = Build.VERSION_CODES.R
-    const val ANDROID_10 = Build.VERSION_CODES.Q
-    const val ANDROID_9 = Build.VERSION_CODES.P
-    const val ANDROID_8_1 = Build.VERSION_CODES.O_MR1
-    const val ANDROID_8 = Build.VERSION_CODES.O
-    const val ANDROID_7_1 = Build.VERSION_CODES.N_MR1
-    const val ANDROID_7 = Build.VERSION_CODES.N
-    const val ANDROID_6 = Build.VERSION_CODES.M
-    const val ANDROID_5_1 = Build.VERSION_CODES.LOLLIPOP_MR1
-    const val ANDROID_5 = Build.VERSION_CODES.LOLLIPOP
-    const val ANDROID_4_4 = Build.VERSION_CODES.KITKAT
-    const val ANDROID_4_3 = Build.VERSION_CODES.JELLY_BEAN_MR2
-    const val ANDROID_4_2 = Build.VERSION_CODES.JELLY_BEAN_MR1
-    const val ANDROID_4_1 = Build.VERSION_CODES.JELLY_BEAN
-    const val ANDROID_4_0 = Build.VERSION_CODES.ICE_CREAM_SANDWICH
+object AndroidVersionTools {
+    const val ANDROID_15: Int = Build.VERSION_CODES.VANILLA_ICE_CREAM
+    const val ANDROID_14: Int = Build.VERSION_CODES.UPSIDE_DOWN_CAKE
+    const val ANDROID_13: Int = Build.VERSION_CODES.TIRAMISU
+    const val ANDROID_12_L: Int = Build.VERSION_CODES.S_V2
+    const val ANDROID_12: Int = Build.VERSION_CODES.S
+    const val ANDROID_11: Int = Build.VERSION_CODES.R
+    const val ANDROID_10: Int = Build.VERSION_CODES.Q
+    const val ANDROID_9: Int = Build.VERSION_CODES.P
+    const val ANDROID_8_1: Int = Build.VERSION_CODES.O_MR1
+    const val ANDROID_8: Int = Build.VERSION_CODES.O
+    const val ANDROID_7_1: Int = Build.VERSION_CODES.N_MR1
+    const val ANDROID_7: Int = Build.VERSION_CODES.N
+    const val ANDROID_6: Int = Build.VERSION_CODES.M
+    const val ANDROID_5_1: Int = Build.VERSION_CODES.LOLLIPOP_MR1
+    const val ANDROID_5: Int = Build.VERSION_CODES.LOLLIPOP
+    const val ANDROID_4_4: Int = Build.VERSION_CODES.KITKAT
+    const val ANDROID_4_3: Int = Build.VERSION_CODES.JELLY_BEAN_MR2
+    const val ANDROID_4_2: Int = Build.VERSION_CODES.JELLY_BEAN_MR1
+    const val ANDROID_4_1: Int = Build.VERSION_CODES.JELLY_BEAN
+    const val ANDROID_4_0: Int = Build.VERSION_CODES.ICE_CREAM_SANDWICH
 
     /**
-     * 获取 Android 版本码
+     * 获取当前 AndroidSdk 版本码
      */
-    fun getAndroidVersionCode(): Int {
+    fun getCurrentAndroidVersionCode(): Int {
         return Build.VERSION.SDK_INT
     }
 
@@ -44,6 +45,26 @@ object AndroidVersion {
         return context.applicationInfo.targetSdkVersion
     }
 
+    /**
+     * 判断当前环境是否需要适配特定 Android 版本新特性
+     *
+     * @param androidSdkVersionCode                        需要判断的 android sdk 版本码
+     */
+    fun isAdaptationAndroidVersionNewFeatures(
+        context: Context?,
+        androidSdkVersionCode: Int
+    ): Boolean {
+        return getCurrentAndroidVersionCode() >= androidSdkVersionCode && getTargetSdkVersionCode(
+            context!!
+        ) >= androidSdkVersionCode
+    }
+
+    /**
+     * 获取最新适配 AndroidSdk 版本码
+     */
+    fun getLatestAdaptationAndroidVersionCode(): Int {
+        return ANDROID_15
+    }
 
     /**
      * 是否是Android14及以上得版本

@@ -8,30 +8,33 @@ package com.knight.kotlin.library_permiss.permissions
  * @descript:
  */
 enum class PermissionGroupType {
-    /** 存储权限  */
+    /** 存储权限 */
     STORAGE,
 
-    /** 日历权限组  */
+    /** 日历权限组 */
     CALENDAR,
 
-    /** 联系人权限组  */
+    /** 联系人权限组 */
     CONTACTS,
 
-    /** 短信权限组  */
+    /** 短信权限组 */
     SMS,
 
-    /** 位置权限组  */
+    /** 位置权限组 */
     LOCATION,
 
-    /** 传感器权限组  */
+    /** 传感器权限组 */
     SENSORS,
 
-    /** 通话记录权限组  */
+    /** 电话权限组 */
+    PHONE,
+
+    /** 通话记录权限组 */
     CALL_LOG,
 
-    /** 附近设备权限组  */
+    /** 附近设备权限组 */
     NEARBY_DEVICES,
 
-    /** 照片和视频权限组  */
+    /** 照片和视频权限组（注意：不包含音频权限） */
     IMAGE_AND_VIDEO_MEDIA
 }

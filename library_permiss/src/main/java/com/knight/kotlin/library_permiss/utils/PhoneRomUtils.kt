@@ -4,7 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Environment
 import android.text.TextUtils
-import com.knight.kotlin.library_permiss.AndroidVersion.isAndroid10
+import com.knight.kotlin.library_permiss.AndroidVersionTools.isAndroid10
 import com.knight.kotlin.library_permiss.utils.PermissionUtils.getSystemPropertyValue
 import java.io.BufferedReader
 import java.io.File
@@ -36,7 +36,7 @@ object PhoneRomUtils {
     private val ROM_NUBIA: Array<String> = arrayOf("nubia")
     private val ROM_SAMSUNG: Array<String> = arrayOf("samsung")
     private val ROM_HONOR: Array<String> = arrayOf("honor")
-
+    private val ROM_SMARTISAN: Array<String> = arrayOf("smartisan")
     private const val ROM_NAME_MIUI: String = "ro.miui.ui.version.name"
     private const val ROM_NAME_HYPER_OS: String = "ro.mi.os.version.name"
 
@@ -146,6 +146,13 @@ object PhoneRomUtils {
         return isRightRom(getBrand(), getManufacturer(), *ROM_HONOR)
     }
 
+
+    /**
+     * 判断当前是否为 SmartisanOS 系统（锤子手机的系统）
+     */
+    fun isSmartisanOS(): Boolean {
+        return isRightRom(getBrand(), getManufacturer(), *ROM_SMARTISAN)
+    }
     /**
      * 判断 miui 优化开关（默认开启，关闭步骤为：开发者选项-> 启动 MIUI 优化 -> 点击关闭）
      * 需要注意的是，关闭 miui 优化后，可以跳转到小米定制的权限请求页面，但是开启权限仍然是没有效果的

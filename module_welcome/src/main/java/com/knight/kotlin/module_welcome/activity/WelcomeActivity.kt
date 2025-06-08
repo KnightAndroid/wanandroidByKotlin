@@ -42,7 +42,7 @@ class WelcomeActivity : BaseActivity<WelcomeActivityBinding, WelcomeVm>() {
         })
         logoAnim.startAnimation()
         val permission:List<String> = listOf(Permission.ACCESS_FINE_LOCATION, Permission.ACCESS_COARSE_LOCATION, Permission.ACCESS_BACKGROUND_LOCATION)
-        if (XXPermissions.isGranted(this@WelcomeActivity,permission)) {
+        if (XXPermissions.isGrantedPermissions(this@WelcomeActivity,permission)) {
             LocationUtils.getLocation(object : OnceLocationListener {
                 @RequiresApi(Build.VERSION_CODES.O)
                 override fun onReceiveLocation(location: BDLocation?) {
