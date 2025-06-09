@@ -130,18 +130,22 @@
 ![wanandroid_normal_release.png](https://gitee.com/MengSuiXinSuoYuan/wanandroid_server/raw/master/wanandroid_picture/wanandroid_normal_release.png)
 
 
-为了安全，本库用了一些第三方sdk，密钥不公开。如需下载本项目，运行前请重新生成密钥文件，并更改app目录下**build.gradle**指定此目录
-
-百度定位每天5000次,微信分享每天100次
 
 
 
 ## 更新日志
+### 2.1.2(10)
+- wanandroid 第十版发布
+- 优化权限库
+- 修复一些问题
+- 解决调试模式定位功能不生效问题
+- 发布时间：2025/06/09
+
 ### 2.1.1(9)
 -  wanandroid 第九版发布
 -  修复一些问题
 -  发布时间：2025/05/13
-- 
+
 ### 2.1.0(8)
 -  wanandroid 第八版发布
 -  新增热搜功能
