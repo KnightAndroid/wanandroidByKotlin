@@ -1,7 +1,9 @@
 apply from:'supportApi.gradle'
+apply from:"./core/core.includes.gradle"
+apply from: "./nowinandroid/nowinandroid.includes.gradle"
 rootProject.name = "wanandroid"
 include ':app'
-include ':library_base'
+//include ':library_base'
 include ':library_network'
 include ':library_util'
 include ':library_common'

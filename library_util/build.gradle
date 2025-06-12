@@ -14,7 +14,8 @@ android {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation project(path: ':library_common')
-    implementation project(path: ':library_base')
+    //implementation project(path: ':library_base')
+    implementation project(path: ':core:library_base')
     implementation project(path: ':library_database')
     implementation Dependencies.JetPack.HILT_CORE
     implementation Dependencies.GitHub.GLIDE

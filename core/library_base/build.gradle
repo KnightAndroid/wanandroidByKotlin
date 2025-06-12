@@ -1,6 +1,7 @@
 //library_base 配置文件
 import com.knight.wanandroid.buildsrc.*
-apply from:'../base_library.gradle'
+//apply from:'../base_library.gradle'
+apply from: "${project.rootDir}/base_library.gradle"
 apply plugin: 'dagger.hilt.android.plugin'
 android {
 

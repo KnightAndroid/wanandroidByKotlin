@@ -8,7 +8,7 @@ android {
 }
 
 dependencies {
-    implementation project(path: ':library_base')
+    implementation project(path: ':core:library_base')
     implementation project(path: ':library_common')
     kapt Dependencies.GitHub.GO_ROUTER_COMPILER
     implementation Dependencies.JetPack.HILT_CORE

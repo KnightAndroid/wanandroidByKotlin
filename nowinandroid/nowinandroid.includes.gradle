@@ -1,0 +1,4 @@
+// app
+include(":nowinandroid:app")
+//feature
+include(":nowinandroid:feature:module_home")
