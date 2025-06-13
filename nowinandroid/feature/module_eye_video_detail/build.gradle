@@ -1,4 +1,4 @@
-apply from: '../base_module.gradle'
+apply from: '../../../base_module.gradle'
 android {
     resourcePrefix "eye_video_"
     namespace = "com.knight.kotlin.module_eye_video_detail"

@@ -1,12 +1,11 @@
-apply from: '../base_module.gradle'
+apply from: '../../../base_module.gradle'
 android {
-    resourcePrefix "eye_square_"
-    namespace = "com.knight.kotlin.module_eye_square"
+    resourcePrefix "eye_daily_"
+    namespace = "com.knight.kotlin.module_eye_daily"
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(path: ':library_video')
-    implementation project(path: ':library_share')
     implementation com.knight.wanandroid.buildsrc.Dependencies.GitHub.BANNER
 }

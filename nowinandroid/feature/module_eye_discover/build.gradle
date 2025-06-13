@@ -1,7 +1,7 @@
-apply from: '../base_module.gradle'
+apply from: '../../../base_module.gradle'
 android {
-    resourcePrefix "eye_recommend_"
-    namespace = "com.knight.kotlin.module_eye_recommend"
+    resourcePrefix "eye_discover_"
+    namespace = "com.knight.kotlin.module_eye_discover"
 }
 
 dependencies {

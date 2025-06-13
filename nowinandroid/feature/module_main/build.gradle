@@ -1,4 +1,4 @@
-apply from: '../base_module.gradle'
+apply from: '../../../base_module.gradle'
 android {
     resourcePrefix "main_"
     namespace = "com.knight.kotlin.module_main"
@@ -6,6 +6,4 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-   // implementation Dependencies.GitHub.BOTTOM_NAVIGATE
-   // implementation Dependencies.GitHub.BOTTOM_NAVIGATE_X
 }

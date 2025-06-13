@@ -2,3 +2,13 @@
 include(":nowinandroid:app")
 //feature
 include(":nowinandroid:feature:module_home")
+include(":nowinandroid:feature:module_course")
+include(":nowinandroid:feature:module_eye_daily")
+include(":nowinandroid:feature:module_eye_discover")
+include(":nowinandroid:feature:module_eye_recommend")
+include(":nowinandroid:feature:module_eye_square")
+include(":nowinandroid:feature:module_eye_video_detail")
+include(":nowinandroid:feature:module_main")
+include(":nowinandroid:feature:module_message")
+include(":nowinandroid:feature:module_welcome")
+include(":nowinandroid:feature:module_mine")
