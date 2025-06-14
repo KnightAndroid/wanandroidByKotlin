@@ -1,4 +1,4 @@
-apply from: '../base_module.gradle'
+apply from: '../../../base_module.gradle'
 android {
     resourcePrefix "utils_"
     namespace = "com.knight.kotlin.module_utils"

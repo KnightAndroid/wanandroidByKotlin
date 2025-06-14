@@ -11,18 +11,17 @@ include ':library_common'
 include ':library_widget'
 
 //include ':module_home'
-include ':module_square'
-include ':module_project'
-include ':module_navigate'
+
+
 
 include ':library_database'
-include ':module_web'
+
 include ':library_aop'
 include ':library_permiss'
 include ':library_scan'
-include ':module_wechat'
+
 include ':library_biometric'
-include ':module_utils'
+
 
 //这里注意一下 如果使用模块-api化后，使用includeWithApi 不用 include ':module_set'
 includeWithApi(':module_set')
@@ -30,7 +29,6 @@ includeWithApi(':module_set')
 
 //include ':library_crypt'
 include ':module_aar:aar'
-include ':module_video'
 //include ':module_eye_daily'
 
 include ':library_video'
@@ -38,6 +36,6 @@ include ':library_video'
 
 
 include ':library_share'
-include ':module_realtime'
+
 
 
