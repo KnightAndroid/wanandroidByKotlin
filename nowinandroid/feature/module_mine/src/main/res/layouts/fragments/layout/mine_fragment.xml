@@ -51,6 +51,7 @@
 
 
     <RelativeLayout
+        android:id="@+id/mine_rl_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">

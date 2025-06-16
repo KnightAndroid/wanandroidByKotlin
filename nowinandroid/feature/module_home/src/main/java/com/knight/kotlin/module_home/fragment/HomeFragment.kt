@@ -9,9 +9,6 @@ import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.knight.kotlin.library_base.route.RouteFragment
 import com.knight.kotlin.library_base.util.EventBusUtils
 import com.knight.kotlin.library_base.vm.EmptyViewModel
-import com.knight.kotlin.library_common.entity.AppUpdateBean
-import com.knight.kotlin.library_common.fragment.UpdateAppDialogFragment
-import com.knight.kotlin.library_util.SystemUtils
 import com.knight.kotlin.library_util.ViewInitUtils
 import com.knight.kotlin.module_home.databinding.HomeFragmentBinding
 import com.knight.kotlin.module_home.view.TwoLevelTransformer

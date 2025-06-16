@@ -88,7 +88,7 @@ class MineFragment: BaseFragment<MineFragmentBinding, MineViewModel>(),OnRefresh
              mineIvMessage.visibility = View.GONE
          }
 
-        setOnClickListener(mineTvUsername,mineLlRank,mineIvMessage,mBinding.mineIconFab)
+        setOnClickListener(mineTvUsername,mineLlRank,mineIvMessage,mBinding.mineIconFab,mineRlMain)
         mineRefreshLayout.setOnRefreshListener(this@MineFragment)
         mineRefreshLayout.autoRefresh()
         mineTwoLevelHeader.setEnablePullToCloseTwoLevel(true)

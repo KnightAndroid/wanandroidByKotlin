@@ -119,17 +119,17 @@ kapt {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    api project(path: ':library_util')
-    api project(path: ':library_network')
-    api project(path: ':library_widget')
-    api project(path: ':library_aop')
-    api project(path: ':library_common')
+    api project(":nowinandroid:core:library_util")
+    api project(":nowinandroid:core:library_network")
+    api project(":nowinandroid:core:library_widget")
+    api project(":nowinandroid:core:library_aop")
+    api project(":nowinandroid:core:library_common")
   //  api project(path: ':library_base')
     api project(path:':core:library_base')
-    api project(path: ':library_database')
-    api project(path: ':library_permiss')
+    api project(":nowinandroid:core:library_database")
+    api project(":nowinandroid:core:library_permiss")
   //  api project(path: ':library_crypt')
-    api project(path: ':module_aar:aar')
+    api project(":nowinandroid:core:module_aar:aar")
     testImplementation Dependencies.Android.JUNIT
     androidTestImplementation Dependencies.Androidx.TEST_EXT_JUNIT
     androidTestImplementation Dependencies.Androidx.TEST_ESPRESSO

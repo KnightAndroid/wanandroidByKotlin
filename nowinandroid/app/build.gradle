@@ -162,7 +162,7 @@ dependencies {
     implementation project(":nowinandroid:feature:module_project")
     implementation project(":nowinandroid:feature:module_square")
     implementation project(":nowinandroid:feature:module_web")
-    implementation project(path:":module_set")
+    implementation project(":nowinandroid:feature:module_set")
     implementation project(":nowinandroid:feature:module_utils")
     implementation project(":nowinandroid:feature:module_course")
     implementation project(":nowinandroid:feature:module_message")

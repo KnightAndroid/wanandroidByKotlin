@@ -1,0 +1,30 @@
+//*****library_util 配置文件********************
+apply from: "${project.rootDir}/base_library.gradle"
+import com.knight.wanandroid.buildsrc.*
+android {
+    buildFeatures {
+        viewBinding = true
+    }
+
+    namespace = "com.knight.kotlin.library_scan"
+
+}
+
+
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+//    implementation project(path: ':library_common')
+    //implementation project(path: ':library_base')
+    implementation project(path: ':core:library_base')
+    implementation Dependencies.JetPack.HILT_CORE
+    kapt Dependencies.JetPack.HILT_APT
+    kapt Dependencies.JetPack.HILT_ANDROIDX
+    kapt Dependencies.GitHub.AUTO_SERVICE_ANNOTATIONS
+
+    implementation Dependencies.JetPack.CAMERA_CORE
+    implementation Dependencies.JetPack.CAMERA2
+    implementation Dependencies.JetPack.CAMERA_LIFECYCLE
+    implementation Dependencies.JetPack.CAMERA_VIEW
+    implementation Dependencies.JetPack.ZXNG
+}

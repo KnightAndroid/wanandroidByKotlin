@@ -1,41 +1,9 @@
-apply from:'supportApi.gradle'
 apply from:"./core/core.includes.gradle"
 apply from: "./nowinandroid/nowinandroid.includes.gradle"
 rootProject.name = "wanandroid"
-include ':app'
-//include ':library_base'
-include ':library_network'
-include ':library_util'
-include ':library_common'
-
-include ':library_widget'
-
-//include ':module_home'
 
 
 
-include ':library_database'
-
-include ':library_aop'
-include ':library_permiss'
-include ':library_scan'
-
-include ':library_biometric'
-
-
-//这里注意一下 如果使用模块-api化后，使用includeWithApi 不用 include ':module_set'
-includeWithApi(':module_set')
-
-
-//include ':library_crypt'
-include ':module_aar:aar'
-//include ':module_eye_daily'
-
-include ':library_video'
-
-
-
-include ':library_share'
 
 
 

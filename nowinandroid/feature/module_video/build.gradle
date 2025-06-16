@@ -1,5 +1,5 @@
 import com.knight.wanandroid.buildsrc.Dependencies
-apply from: '../../../base_module.gradle'
+apply from: "${project.rootDir}/base_module.gradle"
 android {
     resourcePrefix "video_"
     namespace = "com.knight.kotlin.module_video"

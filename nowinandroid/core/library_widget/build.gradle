@@ -1,0 +1,36 @@
+//library_base 配置文件
+import com.knight.wanandroid.buildsrc.*
+apply from: "${project.rootDir}/base_library.gradle"
+apply plugin: 'dagger.hilt.android.plugin'
+android {
+    buildFeatures {
+        viewBinding = true
+        dataBinding true
+    }
+    namespace = "com.knight.kotlin.library_widget"
+}
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation Dependencies.JetPack.HILT_CORE
+    kapt Dependencies.JetPack.HILT_APT
+    kapt Dependencies.JetPack.HILT_ANDROIDX
+
+//    implementation(project(":library_util"))
+    implementation project(":nowinandroid:core:library_util")
+    //implementation project(path: ':library_base')
+    implementation project(path: ':core:library_base')
+    implementation project(":nowinandroid:core:library_common")
+    api Dependencies.GitHub.SWIPE_RECYCLERVIEW
+    api Dependencies.GitHub.BASE_ADAPTER_HELPER
+    api Dependencies.GitHub.SMART_KERNEL
+    api Dependencies.GitHub.SMART_HEADER
+    api Dependencies.GitHub.SMART_FOOTER
+    api Dependencies.GitHub.SMART_HEADER_TWO_LEVEL
+    api Dependencies.GitHub.MAGIC_INDICATOR
+    api Dependencies.Android.FLEXLAYOUT
+    implementation Dependencies.GitHub.SHIMMER_LAYOUT
+    //依赖dataBase 数据库
+    implementation project(":nowinandroid:core:library_database")
+
+}

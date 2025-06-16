@@ -7,7 +7,6 @@ import android.text.SpannableStringBuilder
 import android.text.method.LinkMovementMethod
 import android.view.Gravity
 import androidx.annotation.RequiresApi
-import com.baidu.location.LocationClient
 import com.knight.kotlin.library_base.BaseApp
 import com.knight.kotlin.library_base.fragment.BaseDialogFragment
 import com.knight.kotlin.library_base.ktx.setOnClick
@@ -15,10 +14,6 @@ import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.util.ActivityManagerUtils
 import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_base.vm.EmptyViewModel
-import com.knight.kotlin.library_permiss.XXPermissions
-import com.knight.kotlin.library_permiss.listener.OnPermissionCallback
-import com.knight.kotlin.library_permiss.permissions.Permission
-import com.knight.kotlin.library_permiss.utils.PermissionUtils
 import com.knight.kotlin.library_util.TextClickUtils
 import com.knight.kotlin.library_util.ViewInitUtils
 import com.knight.kotlin.library_util.startPage

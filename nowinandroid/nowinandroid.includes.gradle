@@ -1,3 +1,4 @@
+apply from:'supportApi.gradle'
 // app
 include(":nowinandroid:app")
 //feature
@@ -20,3 +21,19 @@ include(":nowinandroid:feature:module_video")
 include(":nowinandroid:feature:module_utils")
 include(":nowinandroid:feature:module_web")
 include(":nowinandroid:feature:module_wechat")
+//这里注意一下 如果使用模块-api化后，使用includeWithApi 不用 include ':module_set'
+includeWithApi(":nowinandroid:feature:module_set")
+//core
+include(":nowinandroid:core:library_common")
+include(":nowinandroid:core:library_aop")
+include(":nowinandroid:core:library_util")
+include(":nowinandroid:core:library_database")
+include(":nowinandroid:core:library_permiss")
+include(":nowinandroid:core:library_share")
+include(":nowinandroid:core:library_widget")
+include(":nowinandroid:core:library_biometric")
+include(":nowinandroid:core:library_network")
+include(":nowinandroid:core:library_scan")
+include(":nowinandroid:core:library_video")
+//依赖aar
+include(":nowinandroid:core:module_aar:aar")

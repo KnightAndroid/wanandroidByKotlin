@@ -17,7 +17,6 @@ import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_permiss.XXPermissions
 import com.knight.kotlin.library_permiss.listener.OnPermissionCallback
 import com.knight.kotlin.library_permiss.permissions.Permission
-import com.knight.kotlin.library_permiss.utils.PermissionUtils
 import com.knight.kotlin.library_util.DateUtils
 import com.knight.kotlin.library_util.DialogUtils
 import com.knight.kotlin.library_util.Mp3PlayerUtils

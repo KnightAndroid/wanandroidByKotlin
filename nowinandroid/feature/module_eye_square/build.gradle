@@ -1,4 +1,4 @@
-apply from: '../../../base_module.gradle'
+apply from: "${project.rootDir}/base_module.gradle"
 android {
     resourcePrefix "eye_square_"
     namespace = "com.knight.kotlin.module_eye_square"
@@ -6,7 +6,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation project(path: ':library_video')
-    implementation project(path: ':library_share')
+    implementation project(":nowinandroid:core:library_video")
+    implementation project(":nowinandroid:core:library_share")
     implementation com.knight.wanandroid.buildsrc.Dependencies.GitHub.BANNER
 }

@@ -1,4 +1,4 @@
-apply from: '../../../base_module.gradle'
+apply from: "${project.rootDir}/base_module.gradle"
 android {
     resourcePrefix "mine_"
     namespace = "com.knight.kotlin.module_mine"
@@ -6,6 +6,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation project(path: ':library_biometric')
-    implementation project(path: ':module_set-api')
+    implementation project(":nowinandroid:core:library_biometric")
+    implementation project(":nowinandroid:feature:module_set-api")
+
 }

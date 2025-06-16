@@ -1,9 +1,0 @@
-apply from: '../base_module.gradle'
-android {
-    resourcePrefix "set_"
-    namespace = "com.knight.kotlin.module_set"
-}
-
-dependencies {
-    implementation fileTree(dir: "libs", include: ["*.jar"])
-}

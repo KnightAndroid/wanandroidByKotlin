@@ -1,5 +1,5 @@
 import com.knight.wanandroid.buildsrc.Dependencies
-apply from: '../../../base_module.gradle'
+apply from: "${project.rootDir}/base_module.gradle"
 android {
     resourcePrefix "home_"
     namespace = "com.knight.kotlin.module_home"
@@ -8,8 +8,8 @@ android {
 }
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation project(path: ':library_scan')
-    implementation project(path: ':library_biometric')
+    implementation project(":nowinandroid:core:library_scan")
+    implementation project(":nowinandroid:core:library_biometric")
     implementation Dependencies.GitHub.BANNER
     implementation Dependencies.OtherUtils.SUNCALC
 

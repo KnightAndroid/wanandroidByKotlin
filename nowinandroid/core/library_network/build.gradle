@@ -1,0 +1,22 @@
+//library-network配置文件
+import com.knight.wanandroid.buildsrc.*
+apply from: "${project.rootDir}/base_library.gradle"
+
+android {
+    namespace = "com.knight.kotlin.library_network"
+}
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    //implementation project(path: ':library_base')
+    implementation project(path: ':core:library_base')
+    api Dependencies.GitHub.OKHTTP
+    api Dependencies.GitHub.OKHTTP_INTERCEPTOR_LOGGING
+    api Dependencies.GitHub.RETROFIT
+    api Dependencies.GitHub.RETROFIT_CONVERTER_GSON
+    implementation Dependencies.JetPack.HILT_CORE
+
+    kapt Dependencies.JetPack.HILT_APT
+    kapt Dependencies.JetPack.HILT_ANDROIDX
+
+}
