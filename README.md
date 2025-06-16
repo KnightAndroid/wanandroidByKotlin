@@ -113,9 +113,10 @@
 - [LeakCanary](https://github.com/square/leakcanary)
 
 ## 本项目开发环境
-- 基于Android Studio Ladybug
+- 基于Android Studio Meerkat Feature Drop | 2024.3.2 Patch 1
 - Android Gradle Plugin 8.9
 - Android Gradle插件8.0.0
+- Gradle JDK 17
 
 打包方式如下图：
 ![wanandroid_release_apk.png](https://gitee.com/MengSuiXinSuoYuan/wanandroid_server/raw/master/wanandroid_picture/wanandroid_release_apk.png)
