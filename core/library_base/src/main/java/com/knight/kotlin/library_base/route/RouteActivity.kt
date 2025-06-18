@@ -226,6 +226,16 @@ object RouteActivity {
         const val RealTimeMainActivity = "$RealTime/RealTimeMainActivity"
     }
 
+    /**
+     *
+     * 星座
+     */
+    object Constellate {
+        private const val Constellate = "/module_constellate"
+        const val ConstellateMainActivity = "$Constellate/ConstellateMainActivity"
+    }
+
+
 
 
 

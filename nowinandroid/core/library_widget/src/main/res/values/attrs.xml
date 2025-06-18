@@ -1246,4 +1246,13 @@
         <attr name="indeterminate" format="boolean" />
         <attr name="indeterminate_angle" format="float|reference"/>
     </declare-styleable>
+
+
+
+    <declare-styleable name="SimpleProgressBar">
+        <attr name="simpleprogresscolor" format="color"/>
+        <attr name="simplebackgroundcolor" format="color"/>
+        <attr name="simpleprogress" format="integer"/>
+        <attr name="simplestroke" format="float"/>
+    </declare-styleable>
 </resources>

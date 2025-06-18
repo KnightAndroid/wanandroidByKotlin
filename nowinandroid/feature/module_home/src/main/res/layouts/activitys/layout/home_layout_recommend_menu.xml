@@ -123,6 +123,16 @@
                     />
 
 
+                <ImageView
+                    android:id="@+id/home_tv_constellate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/home_icon_constellate"
+                    app:layout_constraintTop_toTopOf="@id/home_tv_location"
+                    app:layout_constraintStart_toEndOf="@id/home_tv_location"
+                    android:layout_marginLeft="@dimen/home_tv_constellate_margin_left"/>
+
+
                 <TextView
                     android:id="@+id/tv_weather_wind"
                     android:layout_width="wrap_content"

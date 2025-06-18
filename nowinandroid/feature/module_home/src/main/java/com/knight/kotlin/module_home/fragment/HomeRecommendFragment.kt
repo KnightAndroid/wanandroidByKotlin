@@ -313,14 +313,14 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
         bindHeadView()
         initOfficialListener()
         initArticleListener()
-        setOnClickListener(homeRecommentConent.homeIncludeToolbar!!.homeScanIcon,homeRecommentMenu.homeBtnLoginName,
+        setOnClickListener(homeRecommentConent.homeIncludeToolbar.homeScanIcon,homeRecommentMenu.homeBtnLoginName,
             homeRecommentConent.homeIncludeToolbar.homeIvMoreMenu,
             homeRecommentConent.homeIncludeToolbar.homeIvEveryday,
             homeRecommentConent.homeIncludeToolbar.homeIvAdd,
             homeRecommentConent.homeIncludeToolbar.homeRlSearch,homeRecommentConent.homeIconFab,
-            homeRecommentConent.homeIconCourse!!,homeRecommentConent.homeIconUtils!!,
-            homeRecommentConent.homeIconScrollUp!!,mBinding.homeRecommentMenu.tvZaobaoDayTip,
-            mBinding.homeRecommentMenu.homeTvLocation)
+            homeRecommentConent.homeIconCourse,homeRecommentConent.homeIconUtils,
+            homeRecommentConent.homeIconScrollUp,mBinding.homeRecommentMenu.tvZaobaoDayTip,
+            mBinding.homeRecommentMenu.homeTvLocation,mBinding.homeRecommentMenu.homeTvConstellate)
         getUser()?.let {
             homeRecommentMenu.homeBtnLoginName.text = it.username
         } ?: kotlin.run {
@@ -1340,14 +1340,14 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
                         }
                     })
             }
-            mBinding.homeRecommentConent.homeIncludeToolbar!!.homeIvEveryday->{
+            mBinding.homeRecommentConent.homeIncludeToolbar.homeIvEveryday->{
                 HomePushArticleFragment.newInstance(mEveryDayPushData.datas).showAllowingStateLoss(parentFragmentManager,"dialog_everydaypush")
             }
 
-            mBinding.homeRecommentConent.homeIncludeToolbar!!.homeIvAdd->{
+            mBinding.homeRecommentConent.homeIncludeToolbar.homeIvAdd->{
                 startPage(RouteActivity.Square.SquareShareArticleActivity)
             }
-            mBinding.homeRecommentConent.homeIncludeToolbar!!.homeIvMoreMenu -> {
+            mBinding.homeRecommentConent.homeIncludeToolbar.homeIvMoreMenu -> {
 
 
                 mBinding.homeSlidingMenu.openMenu()
@@ -1370,7 +1370,7 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
 
             }
 
-            mBinding.homeRecommentConent.homeIncludeToolbar!!.homeRlSearch ->{
+            mBinding.homeRecommentConent.homeIncludeToolbar.homeRlSearch ->{
                 startPage(RouteActivity.Home.HomeSearchActivity)
             }
 
@@ -1380,6 +1380,10 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
 
             mBinding.homeRecommentMenu.homeTvLocation -> {
                 HomeCityGroupFragment().showAllowingStateLoss(childFragmentManager, "group_city")
+            }
+
+            mBinding.homeRecommentMenu.homeTvConstellate -> {
+                startPage(RouteActivity.Constellate.ConstellateMainActivity)
             }
 
 //            mBinding.homeIvLabelmore -> {
