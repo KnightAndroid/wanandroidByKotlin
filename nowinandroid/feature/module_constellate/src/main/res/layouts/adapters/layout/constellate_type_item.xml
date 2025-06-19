@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+
+
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+
+        <RelativeLayout
+            android:id="@+id/constellate_head_rl"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/constellate_transparent_circle_bg"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.7"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintBottom_toTopOf="@id/constellate_name_tv">
+
+
+
+            <ImageView
+                android:id="@+id/constellate_type_head_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:scaleType="centerCrop"
+                android:layout_margin="10dp"/>
+
+
+        </RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/constellate_name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/constellate_head_rl"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textColor="@android:color/white"/>
+
+
+        <TextView
+            android:id="@+id/constellate_date_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/constellate_name_tv"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textColor="@color/constellate_head_date_color"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

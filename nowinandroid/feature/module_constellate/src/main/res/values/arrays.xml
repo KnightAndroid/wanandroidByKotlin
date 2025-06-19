@@ -1,0 +1,16 @@
+<resources>
+    <array name="constellate_type">
+        <item>@drawable/constellate_aries_icon</item>
+        <item>@drawable/constellate_taurus_icon</item>
+        <item>@drawable/constellate_gemini_icon</item>
+        <item>@drawable/constellate_cancer_icon</item>
+        <item>@drawable/constellate_leo_icon</item>
+        <item>@drawable/constellate_virgo_icon</item>
+        <item>@drawable/constellate_libra_icon</item>
+        <item>@drawable/constellate_scorpio_icon</item>
+        <item>@drawable/constellate_sagittarius_icon</item>
+        <item>@drawable/constellate_capricorn_icon</item>
+        <item>@drawable/constellate_aquarius_icon</item>
+        <item>@drawable/constellate_pisces_icon</item>
+    </array>
+</resources>
