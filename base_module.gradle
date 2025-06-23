@@ -128,6 +128,7 @@ dependencies {
     api project(path:':core:library_base')
     api project(":nowinandroid:core:library_database")
     api project(":nowinandroid:core:library_permiss")
+
   //  api project(path: ':library_crypt')
     api project(":nowinandroid:core:module_aar:aar")
     testImplementation Dependencies.Android.JUNIT

@@ -978,6 +978,10 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
 
         recommendHeadView.findViewById<TextView>(R.id.tv_real_time_more).setOnClick {
             startPage(RouteActivity.RealTime.RealTimeMainActivity)
+
+
+
+
         }
         //home_top_article_rv.init(LinearLayoutManager(requireActivity()), mTopArticleAdapter)
         home_top_article_rv.init(LinearLayoutManager(requireActivity()), mBaiduHotSearchAdapter)

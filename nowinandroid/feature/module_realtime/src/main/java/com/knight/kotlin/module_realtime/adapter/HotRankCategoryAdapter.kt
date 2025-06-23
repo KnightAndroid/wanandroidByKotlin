@@ -6,7 +6,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter4.BaseQuickAdapter
 import com.knight.kotlin.module_realtime.databinding.RealtimeMovieCategoryBinding
+
 import com.knight.kotlin.module_realtime.enum.LevelEnum
+
 
 
 /**

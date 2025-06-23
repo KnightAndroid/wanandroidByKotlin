@@ -14,8 +14,10 @@ import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_base.util.dp2px
 import com.knight.kotlin.library_base.vm.EmptyViewModel
 import com.knight.kotlin.module_realtime.databinding.RealtimeMainActivityBinding
+
 import com.knight.kotlin.module_realtime.dialog.RealTimeRankRuleFragment
 import com.knight.kotlin.module_realtime.fragment.RealTimeHomeFragment
+
 import com.wyjson.router.annotation.Route
 import dagger.hilt.android.AndroidEntryPoint
 import org.greenrobot.eventbus.Subscribe

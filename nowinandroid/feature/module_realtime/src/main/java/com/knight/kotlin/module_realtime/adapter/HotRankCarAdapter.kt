@@ -14,6 +14,7 @@ import com.knight.kotlin.module_realtime.databinding.RealtimeCarRankItemBinding
 import com.knight.kotlin.module_realtime.ktx.HotAdapterInterface
 
 
+
 /**
  * @author created by luguian
  * @organize

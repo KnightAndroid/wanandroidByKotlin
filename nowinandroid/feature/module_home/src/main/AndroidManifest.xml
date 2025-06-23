@@ -9,6 +9,7 @@
         <activity android:name=".activity.KnowLedgeLabelActivity"/>
         <activity android:name=".activity.AddKnowLedgeLabelActivity"/>
         <activity android:name=".activity.HomeNewsActivity"/>
+        <activity android:name=".proxy.ProxyActivity" android:exported="true" />
     </application>
 
 </manifest>
