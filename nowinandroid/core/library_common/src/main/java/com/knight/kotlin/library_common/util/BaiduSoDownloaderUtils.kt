@@ -74,6 +74,9 @@ object BaiduSoDownloaderUtils {
         val conn = url.openConnection() as HttpURLConnection
         conn.connectTimeout = 10000
         conn.readTimeout = 20000
+        conn.requestMethod = "GET"
+        conn.setRequestProperty("User-Agent", "Mozilla/5.0 (Android)")
+        conn.setRequestProperty("Referer", "https://gitee.com/")
         conn.connect()
 
         if (conn.responseCode != 200) {
