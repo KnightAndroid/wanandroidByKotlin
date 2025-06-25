@@ -144,6 +144,19 @@ android {
         viewBinding = true
         dataBinding true
     }
+    //打包排除加载so文件
+    packaging {
+        jniLibs {
+
+
+            exclude("lib/armeabi-v7a/liblocSDK8b.so")
+            exclude("lib/armeabi-v8a/liblocSDK8b.so")
+            exclude("lib/armeabi-v7a/libBaiduMapSDK_map_for_navi_v7_6_4.so")
+            exclude("lib/armeabi-v8a/libBaiduMapSDK_map_for_navi_v7_6_4.so")
+
+        }
+
+    }
 
 
 }

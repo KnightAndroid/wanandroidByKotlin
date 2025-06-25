@@ -75,6 +75,7 @@ open class BaseApp : Application() {
     override fun onCreate() {
         super.onCreate()
         if (ProcessUtil.isMainProcess(this)) {
+
             //全局监听Activity 生命周期
             registerActivityLifecycleCallbacks(ActivityManagerUtils.getInstance())
             mLoadModuleProxy.onCreate(this)
