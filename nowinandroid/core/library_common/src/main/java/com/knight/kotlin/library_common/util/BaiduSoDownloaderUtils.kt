@@ -34,8 +34,8 @@ object BaiduSoDownloaderUtils {
     private val soFiles = listOf(
         Triple(
             "libc++_shared.so",
-            "https://gitee.com/MengSuiXinSuoYuan/baidu-so/releases/download/Baidu_libc++_shared_v7a/libc_shared.zip",
-            "https://gitee.com/MengSuiXinSuoYuan/baidu-so/releases/download/Baidu_libc++_shared_v8a/libc_shared.zip"
+            "https://gitee.com/MengSuiXinSuoYuan/baidu-so/releases/download/Baidu_libc++_shared_v8a/libc%20%20_shared.zip",
+            "https://gitee.com/MengSuiXinSuoYuan/baidu-so/releases/download/Baidu_libc++_shared_v8a/libc%20%20_shared.zip"
         ),
         Triple(
             "libtiny_magic.so",
