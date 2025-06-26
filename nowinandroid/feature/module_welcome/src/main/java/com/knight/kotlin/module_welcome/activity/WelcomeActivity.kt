@@ -3,6 +3,7 @@ package com.knight.kotlin.module_welcome.activity
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.os.Build
+import android.view.View
 import androidx.annotation.RequiresApi
 import com.baidu.location.BDLocation
 import com.knight.kotlin.library_base.activity.BaseActivity
@@ -30,62 +31,69 @@ class WelcomeActivity : BaseActivity<WelcomeActivityBinding, WelcomeVm>() {
 
     @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
     override fun WelcomeActivityBinding.initView() {
-        BaiduSoDownloaderUtils.load(this@WelcomeActivity,object : BaiduSoDownloaderUtils.OnSoLoadCallback {
-            override fun onSuccess() {
 
-                ThreadUtils.postMain({
-                    logoAnim.addOffsetAnimListener(object : AnimatorListenerAdapter() {
-                        override fun onAnimationEnd(animation: Animator) {
-                            super.onAnimationEnd(animation)
-                            if (CacheUtils.getAgreeStatus()) {
-                                GoRouter.getInstance().build(RouteActivity.Main.MainActivity).go()
-                                finish()
-                            } else {
-                                WelcomePrivacyAgreeFragment().show(supportFragmentManager, "dialog_privacy")
-                            }
+        if (!BaiduSoDownloaderUtils.isSoDownloaded(this@WelcomeActivity)) {
+            pbLoadSo.visibility = View.VISIBLE
+            BaiduSoDownloaderUtils.load(this@WelcomeActivity, object : BaiduSoDownloaderUtils.OnSoLoadCallback {
+
+                override fun onProgress(totalProgress: Int, text: String) {
+                    ThreadUtils.postMain({
+                        pbLoadSo.setProgressWithText(totalProgress, text)
+                    })
+
+                }
+                override fun onSuccess() {
+                    ThreadUtils.postMain({
+                        if (CacheUtils.getAgreeStatus()) {
+                            GoRouter.getInstance().build(RouteActivity.Main.MainActivity).go()
+                            finish()
+                        } else {
+                            WelcomePrivacyAgreeFragment().show(supportFragmentManager, "dialog_privacy")
                         }
                     })
-                    logoAnim.startAnimation()
-                    val permission:List<String> = listOf(Permission.ACCESS_FINE_LOCATION, Permission.ACCESS_COARSE_LOCATION, Permission.ACCESS_BACKGROUND_LOCATION)
-                    if (XXPermissions.isGrantedPermissions(this@WelcomeActivity,permission)) {
-                        LocationUtils.getLocation(object : OnceLocationListener {
-                            @RequiresApi(Build.VERSION_CODES.O)
-                            override fun onReceiveLocation(location: BDLocation?) {
 
-                            }
-                        })
+                }
+
+                override fun onFailure(e: Throwable) {
+
+                }
+            })
+            startLogoAnim(false)
+        } else {
+            startLogoAnim(true)
+        }
+
+
+    }
+
+
+    @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
+    fun startLogoAnim(executeAfterAnimation: Boolean) {
+        mBinding.logoAnim.setTextColor(CacheUtils.getThemeColor())
+        mBinding.logoAnim.addOffsetAnimListener(object : AnimatorListenerAdapter() {
+            override fun onAnimationEnd(animation: Animator) {
+                super.onAnimationEnd(animation)
+                if (executeAfterAnimation) {
+                    if (CacheUtils.getAgreeStatus()) {
+                        GoRouter.getInstance().build(RouteActivity.Main.MainActivity).go()
+                        finish()
+                    } else {
+                        WelcomePrivacyAgreeFragment().show(supportFragmentManager, "dialog_privacy")
                     }
-                })
-
-            }
-
-            override fun onFailure(e: Throwable) {
+                }
 
             }
         })
-        logoAnim.setTextColor(CacheUtils.getThemeColor())
-//        logoAnim.addOffsetAnimListener(object : AnimatorListenerAdapter() {
-//            override fun onAnimationEnd(animation: Animator) {
-//                super.onAnimationEnd(animation)
-//                if (CacheUtils.getAgreeStatus()) {
-//                    GoRouter.getInstance().build(RouteActivity.Main.MainActivity).go()
-//                    finish()
-//                } else {
-//                    WelcomePrivacyAgreeFragment().show(supportFragmentManager, "dialog_privacy")
-//                }
-//            }
-//        })
-//        logoAnim.startAnimation()
-//        val permission:List<String> = listOf(Permission.ACCESS_FINE_LOCATION, Permission.ACCESS_COARSE_LOCATION, Permission.ACCESS_BACKGROUND_LOCATION)
-//        if (XXPermissions.isGrantedPermissions(this@WelcomeActivity,permission)) {
-//            LocationUtils.getLocation(object : OnceLocationListener {
-//                @RequiresApi(Build.VERSION_CODES.O)
-//                override fun onReceiveLocation(location: BDLocation?) {
-//
-//                }
-//            })
-//        }
+        mBinding.logoAnim.startAnimation()
+        val permission: List<String> = listOf(Permission.ACCESS_FINE_LOCATION, Permission.ACCESS_COARSE_LOCATION, Permission.ACCESS_BACKGROUND_LOCATION)
+        if (XXPermissions.isGrantedPermissions(this@WelcomeActivity, permission)) {
+            LocationUtils.getLocation(object : OnceLocationListener {
+                @RequiresApi(Build.VERSION_CODES.O)
+                override fun onReceiveLocation(location: BDLocation?) {
 
+                }
+            })
+        }
     }
 
 

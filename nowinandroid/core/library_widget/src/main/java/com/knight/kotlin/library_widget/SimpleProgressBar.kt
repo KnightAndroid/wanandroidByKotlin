@@ -7,6 +7,7 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
+import android.graphics.Typeface
 import android.util.AttributeSet
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
@@ -18,25 +19,34 @@ import android.view.animation.AccelerateDecelerateInterpolator
  * @Date 2025/6/18 11:17
  * @descript:简易进度条
  */
-class SimpleProgressBar(context: Context, attrs: AttributeSet) : View(context,attrs) {
-    private val backgroundPaint = Paint()
-    private val progressPaint = Paint()
+class SimpleProgressBar(context: Context, attrs: AttributeSet) : View(context, attrs) {
+
+    private val backgroundPaint = Paint(Paint.ANTI_ALIAS_FLAG)
+    private val progressPaint = Paint(Paint.ANTI_ALIAS_FLAG)
+    private val textPaint = Paint(Paint.ANTI_ALIAS_FLAG)
+
     private var progress: Int = 0
+    private var showText: Boolean = true  // 新增控制是否显示文字
+    private var text = "正在初始化..."
     private val pathBackground = Path()
     private val pathProgress = Path()
     private var mStroke = 0f
 
     private val ta: TypedArray
     private lateinit var progressAnimator: ValueAnimator
+    // 新增属性控制左端是否直角
+    private var leftCornerStraight: Boolean = false
 
     init {
-        // Initialize paints
         ta = context.theme.obtainStyledAttributes(
             attrs,
-            R.styleable.SimpleProgressBar,0,0
+            R.styleable.SimpleProgressBar, 0, 0
         )
+
         mStroke = ta.getFloat(R.styleable.SimpleProgressBar_simplestroke, DEFAULT_STROKE)
-        progress = ta.getInt(R.styleable.SimpleProgressBar_simpleprogress,0)
+        progress = ta.getInt(R.styleable.SimpleProgressBar_simpleprogress, 0)
+        showText = ta.getBoolean(R.styleable.SimpleProgressBar_simpleShowText, true)  // 读取属性
+        leftCornerStraight = ta.getBoolean(R.styleable.SimpleProgressBar_simpleLeftCornerStraight, false)
         backgroundPaint.color = ta.getColor(R.styleable.SimpleProgressBar_simplebackgroundcolor, Color.GRAY)
         backgroundPaint.style = Paint.Style.STROKE
         backgroundPaint.strokeWidth = mStroke
@@ -45,56 +55,125 @@ class SimpleProgressBar(context: Context, attrs: AttributeSet) : View(context,at
         progressPaint.color = ta.getColor(R.styleable.SimpleProgressBar_simpleprogresscolor, Color.GREEN)
         progressPaint.style = Paint.Style.STROKE
         progressPaint.strokeWidth = mStroke
-        progressPaint.strokeCap = Paint.Cap.ROUND
-        progressAnimator = ValueAnimator()
+       // progressPaint.strokeCap = Paint.Cap.ROUND
+
+        textPaint.color = Color.WHITE
+        textPaint.textSize = 36f
+        textPaint.textAlign = Paint.Align.CENTER
+        textPaint.typeface = Typeface.DEFAULT_BOLD
+
         ta.recycle()
+    }
+
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        val density = context.resources.displayMetrics.density
+        val defaultHeightPx = (40 * density).toInt()
+
+        val width = MeasureSpec.getSize(widthMeasureSpec)
+        val height = when (MeasureSpec.getMode(heightMeasureSpec)) {
+            MeasureSpec.EXACTLY -> MeasureSpec.getSize(heightMeasureSpec)
+            MeasureSpec.AT_MOST, MeasureSpec.UNSPECIFIED -> defaultHeightPx
+            else -> defaultHeightPx
+        }
+
+        setMeasuredDimension(width, height)
     }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        val width = width.toFloat() ?: 0f
-        val height = height.toFloat() ?: 0f
 
-        // Calculate progress width based on the current progress
+        val width = width.toFloat()
+        val height = height.toFloat()
+        val margin = mStroke / 2f
+
         val progressWidth = width * (progress / 100f)
-        val margin = mStroke / 2 // Adjust the margin as needed
+        val maxProgressEnd = width - margin
+        val safeProgressWidth = progressWidth.coerceIn(margin, maxProgressEnd)
 
-        // Set stroke cap to round for both paints
-        backgroundPaint.strokeCap = Paint.Cap.ROUND
-        progressPaint.strokeCap = Paint.Cap.ROUND
+        // ==== 1. 背景线绘制 ====
+        if (leftCornerStraight) {
+            // 1.1 左侧直角段
+            backgroundPaint.strokeCap = Paint.Cap.BUTT
+            pathBackground.reset()
+            pathBackground.moveTo(margin, height / 2f)
+            pathBackground.lineTo(width - margin - mStroke / 2f, height / 2f)
+            canvas.drawPath(pathBackground, backgroundPaint)
 
-        // Create the path for the background
-        pathBackground.reset()
-        pathBackground.moveTo(margin, height / 2)
-        pathBackground.lineTo(width -margin, height / 2)
-
-        // Create the path for the progress with margins
-        pathProgress.reset()
-        pathProgress.moveTo(margin, height / 2)
-        pathProgress.lineTo(progressWidth - margin, height / 2)
-
-        // Draw background
-        canvas.drawPath(pathBackground, backgroundPaint)
-
-        // Draw progress
-        canvas.drawPath(pathProgress, progressPaint)
-    }
-
-
-    fun setProgress(value: Int) {
-        progressAnimator.cancel() // Cancel any ongoing animator
-
-        progressAnimator = ValueAnimator.ofInt(progress, value)
-        progressAnimator.duration = 1000 // Animation duration in milliseconds
-        progressAnimator.interpolator = AccelerateDecelerateInterpolator()
-        progressAnimator.addUpdateListener { animator ->
-            val animatedValue = animator.animatedValue as Int
-            progress = animatedValue
-            invalidate() // Redraw the view
+            // 1.2 右侧圆角段
+            backgroundPaint.strokeCap = Paint.Cap.ROUND
+            pathBackground.reset()
+            pathBackground.moveTo(width - margin - mStroke / 2f, height / 2f)
+            pathBackground.lineTo(width - margin, height / 2f)
+            canvas.drawPath(pathBackground, backgroundPaint)
+        } else {
+            backgroundPaint.strokeCap = Paint.Cap.ROUND
+            pathBackground.reset()
+            pathBackground.moveTo(margin, height / 2f)
+            pathBackground.lineTo(width - margin, height / 2f)
+            canvas.drawPath(pathBackground, backgroundPaint)
         }
-        progressAnimator.start()
+
+        // ==== 2. 进度线绘制 ====
+        if (safeProgressWidth > margin) {
+            pathProgress.reset()
+            val originalStyle = progressPaint.style
+
+            if (leftCornerStraight) {
+                // 左端直角
+                progressPaint.strokeCap = Paint.Cap.BUTT
+                progressPaint.style = Paint.Style.STROKE
+                pathProgress.moveTo(margin, height / 2f)
+                pathProgress.lineTo(safeProgressWidth, height / 2f)
+                canvas.drawPath(pathProgress, progressPaint)
+
+                // 右端圆角，绘制一个圆点
+                progressPaint.style = Paint.Style.FILL
+                canvas.drawCircle(safeProgressWidth, height / 2f, mStroke / 2f, progressPaint)
+                progressPaint.style = originalStyle
+            } else {
+                // 左右都是圆角
+                progressPaint.strokeCap = Paint.Cap.ROUND
+                progressPaint.style = Paint.Style.STROKE
+                pathProgress.moveTo(margin, height / 2f)
+                pathProgress.lineTo(safeProgressWidth, height / 2f)
+                canvas.drawPath(pathProgress, progressPaint)
+            }
+        }
+
+        // ==== 3. 文字绘制 ====
+        if (showText) {
+            val fontMetrics = textPaint.fontMetrics
+            val baseline = height / 2f - (fontMetrics.ascent + fontMetrics.descent) / 2f
+            canvas.drawText(text, width / 2f, baseline, textPaint)
+        }
     }
+
+    fun setProgressWithText(value: Int, text: String) {
+        if (this::progressAnimator.isInitialized) {
+            progressAnimator.cancel()
+        }
+        progressAnimator = ValueAnimator.ofInt(progress, value.coerceIn(0, 100)).apply {
+            duration = 1000
+            interpolator = AccelerateDecelerateInterpolator()
+            addUpdateListener { animator ->
+                progress = animator.animatedValue as Int
+                this@SimpleProgressBar.text = text
+                invalidate()
+            }
+            start()
+        }
+    }
+    fun setShowText(show: Boolean) {
+        showText = show
+        invalidate()
+    }
+
+    fun setText(text:String) {
+        this.text = text
+        invalidate()
+    }
+
     companion object {
-        val DEFAULT_STROKE = 30f
+        const val DEFAULT_STROKE = 30f
     }
 }

@@ -1254,5 +1254,8 @@
         <attr name="simplebackgroundcolor" format="color"/>
         <attr name="simpleprogress" format="integer"/>
         <attr name="simplestroke" format="float"/>
+        <attr name="simpleShowText" format="boolean"/>  <!-- 新增 -->
+        <!-- 新增左边是否直角 -->
+        <attr name="simpleLeftCornerStraight" format="boolean"/>
     </declare-styleable>
 </resources>

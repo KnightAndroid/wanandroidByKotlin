@@ -6,7 +6,11 @@
     android:id="@+id/fl_logo"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.WelcomeActivity">
+    android:clipChildren="false"
+    tools:context=".activity.WelcomeActivity"
+    >
+
+
 
     <com.knight.kotlin.library_widget.AnimLogoView
         android:id="@+id/logo_anim"
@@ -22,5 +26,20 @@
         app:textSize="30sp"
         app:verticalOffset="0dp"/>
 
+
+    <com.knight.kotlin.library_widget.SimpleProgressBar
+        android:id="@+id/pb_load_so"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/welcome_privacy_load_so_pb_height"
+        app:simplestroke="60"
+        app:simpleprogress="0"
+        app:simplebackgroundcolor="#EAEAEA"
+        app:simpleprogresscolor="@color/base_color_theme"
+        android:layout_marginLeft="@dimen/welcome_privacy_load_so_pb_margin_left"
+        android:layout_marginRight="@dimen/welcome_privacy_load_so_pb_margin_right"
+        android:layout_marginBottom="@dimen/welcome_privacy_load_so_pb_margin_bottom"
+        android:layout_gravity="bottom"
+        app:simpleShowText="true"
+        android:visibility="gone"/>
 
 </FrameLayout>
