@@ -47,7 +47,7 @@ interface HomeWeatherNewsApiService {
      * 获取热早报微语
      */
     @Headers("Domain-Name:zaobao")
-    @GET("zaobao")
+    @GET("v2/60s")
     suspend fun getZaoBao(): BaseResponse<ZaoBaoBean>
 
 }

@@ -63,27 +63,47 @@ class HomeWeatherNewsFragment:BaseDialogFragment<HomeTodayWeatherNewsDialogBindi
 
             //获取日报新闻
             mViewModel.getZaoBao().observe(this,{data->
-                zaoBaoDate = data.date
-                     mBinding.homeTodayNewsItem.tvNewsTop.text = data.news.get(0)
-                     ImageLoader.loadImageWithAdaptiveSize(mBinding.homeTodayNewsItem.ivZaobaoHead,getScreenWidth() - 20.dp2px(), 0,data.head_image,{
-                         width,height->
+               data?.let {
+                   zaoBaoDate = data.date
+                   mBinding.homeTodayNewsItem.tvNewsTop.text = data.news.get(0)
+                   ImageLoader.loadImageWithAdaptiveSize(mBinding.homeTodayNewsItem.ivZaobaoHead,getScreenWidth() - 20.dp2px(), 0,data.cover,{
+                           width,height->
 
 
-                         mBinding.flipView.post {
-                             val params = mBinding.flipView.layoutParams
-                             params.width = width
-                             params.height = height + 130.dp2px()
-                             mBinding.flipView.layoutParams = params
-                             mViewModel.getTodayImage("js","0","1").observe(this,{ data ->
+                       mBinding.flipView.post {
+                           val params = mBinding.flipView.layoutParams
+                           params.width = width
+                           params.height = height + 180.dp2px()
+                           mBinding.flipView.layoutParams = params
+                           mViewModel.getTodayImage("js","0","1").observe(this,{ data ->
 
 
-                                 ImageLoader.loadStringPhoto(requireActivity(), "https://cn.bing.com" + data.images.get(0).urlbase + "_640x480.jpg",mBinding.homeTodayWeatherItem.ivTodayBg)
-                             })
-                         }
+                               ImageLoader.loadStringPhoto(requireActivity(), "https://cn.bing.com" + data.images.get(0).urlbase + "_640x480.jpg",mBinding.homeTodayWeatherItem.ivTodayBg)
+                           })
+                       }
 
 
 
-                     })
+                   })
+               }
+
+
+//                   ?:run {
+//
+//                       mBinding.flipView.post {
+//                           val params = mBinding.flipView.layoutParams
+//                           params.width = getScreenWidth() - 20.dp2px()
+//                           params.height = 220.dp2px() + 130.dp2px()
+//                           mBinding.flipView.layoutParams = params
+//                           mViewModel.getTodayImage("js","0","1").observe(this,{ data ->
+//
+//
+//                               ImageLoader.loadStringPhoto(requireActivity(), "https://cn.bing.com" + data.images.get(0).urlbase + "_640x480.jpg",mBinding.homeTodayWeatherItem.ivTodayBg)
+//                           })
+//                       }
+//
+//                   }
+
             })
 
 

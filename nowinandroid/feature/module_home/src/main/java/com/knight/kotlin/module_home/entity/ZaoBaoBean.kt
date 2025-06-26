@@ -15,7 +15,16 @@ data class ZaoBaoBean(
     val date:String,
     val news:List<String>,
     val weiyu:String,
+    val tip:String,
     val image:String,
-    val audio:String,
-    val head_image:String
+   // val audio:String,
+    val audio:ZaoBaoAudio,
+    val head_image:String,
+    val cover:String
+): Parcelable
+
+@Parcelize
+data class ZaoBaoAudio(
+    val music:String,
+    val news:String
 ): Parcelable

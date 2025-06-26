@@ -66,7 +66,7 @@ class HomeNewsActivity:BaseActivity<HomeNewsActivityBinding,HomeNewsVm>(), OnRef
 
     override fun initRequestData() {
         mViewModel.getNews().observerKt {
-            mp3Url = it.audio
+            mp3Url = it.audio.news
             mBinding.includeNews.baseFreshlayout.finishRefresh()
             requestSuccess()
             initHeaderView(it)
@@ -205,7 +205,7 @@ class HomeNewsActivity:BaseActivity<HomeNewsActivityBinding,HomeNewsVm>(), OnRef
             if (!::mNewsHeaderBinding.isInitialized) {
                 mNewsHeaderBinding =
                 HomeNewsHeadBinding.inflate(LayoutInflater.from(this@HomeNewsActivity))
-                ImageLoader.loadImageWithAdaptiveSize(mNewsHeaderBinding.homeNewsHeadIv, getScreenWidth(), 0,zaoBao.head_image,{
+                ImageLoader.loadImageWithAdaptiveSize(mNewsHeaderBinding.homeNewsHeadIv, getScreenWidth(), 0,zaoBao.cover,{
                         width,height->
                     mNewsAdapter.submitList(zaoBao.news)
                     mBinding.includeNews.baseBodyRv.addHeaderView(mNewsHeaderBinding.root)
@@ -218,7 +218,7 @@ class HomeNewsActivity:BaseActivity<HomeNewsActivityBinding,HomeNewsVm>(), OnRef
                 mNewsFootBinding =
                     HomeNewsFootBinding.inflate(LayoutInflater.from(this@HomeNewsActivity))
                 mBinding.includeNews.baseBodyRv.addFooterView(mNewsFootBinding.root)
-                mNewsFootBinding.weiyu = zaoBao.weiyu
+                mNewsFootBinding.weiyu = zaoBao.tip
             }
         } else {
             mNewsAdapter.submitList(zaoBao.news)

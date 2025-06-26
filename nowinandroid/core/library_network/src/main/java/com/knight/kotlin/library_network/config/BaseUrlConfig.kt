@@ -19,7 +19,7 @@ object BaseUrlConfig {
     //百度接口 访问链接
     const val BAIDU_URL = "https://top.baidu.com/api/"
     //每日微语
-    const val ZAO_BAO_URL = "https://xzdx.top/api/"
+    const val ZAO_BAO_URL = "https://60s-api-cf.viki.moe/"//https://xzdx.top/api/ https://docs.60s-api.viki.moe/
     //天气预报
     const val WEATHER_URL = "https://i.news.qq.com/"
     //降雨量
