@@ -29,9 +29,9 @@ object Dependencies {
        const val TEST_JUNIT_VERSION = "1.1.2"
        const val TEST_ESPRESSO_VERSION = "3.3.0"
        //Activity
-       const val ACTIVITY_KTX_VERSION = "1.5.1"
+       const val ACTIVITY_KTX_VERSION = "1.10.1"
        //Fragment
-       const val FRAGMENT_KTX_VERSION = "1.5.2"
+       const val FRAGMENT_KTX_VERSION = "1.8.8"
        //分包 MultiDex
        const val MULTIDEX_VERSION = "2.0.1"
 
