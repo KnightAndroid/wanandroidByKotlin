@@ -1,4 +1,4 @@
-package com.knight.kotlin.library_common.util
+package com.knight.kotlin.library_base.util
 
 import android.content.Context
 import android.os.Build

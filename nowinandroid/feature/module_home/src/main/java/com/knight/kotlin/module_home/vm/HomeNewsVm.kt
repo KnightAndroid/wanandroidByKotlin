@@ -3,6 +3,7 @@ package com.knight.kotlin.module_home.vm
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
 import com.knight.kotlin.library_base.vm.BaseViewModel
+import com.knight.kotlin.module_home.entity.ZaoBaoAudioBean
 import com.knight.kotlin.module_home.entity.ZaoBaoBean
 import com.knight.kotlin.module_home.repo.HomeNewsRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -25,4 +26,17 @@ class HomeNewsVm @Inject constructor(private val mRepo: HomeNewsRepo) : BaseView
     fun getNews(): LiveData<ZaoBaoBean> {
         return mRepo.getNews().asLiveData()
     }
+
+
+    /**
+     * 获取新闻
+     */
+    fun getAudio(): LiveData<ZaoBaoAudioBean> {
+        return mRepo.getAudio().asLiveData()
+    }
+
+
+
+
+
 }

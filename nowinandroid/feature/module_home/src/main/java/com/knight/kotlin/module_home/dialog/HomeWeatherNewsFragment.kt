@@ -62,7 +62,7 @@ class HomeWeatherNewsFragment:BaseDialogFragment<HomeTodayWeatherNewsDialogBindi
     override fun initRequestData() {
 
             //获取日报新闻
-            mViewModel.getZaoBao().observe(this,{data->
+            mViewModel.getZaoBao().observe(viewLifecycleOwner,{data->
                data?.let {
                    zaoBaoDate = data.date
                    mBinding.homeTodayNewsItem.tvNewsTop.text = data.news.get(0)
@@ -75,7 +75,7 @@ class HomeWeatherNewsFragment:BaseDialogFragment<HomeTodayWeatherNewsDialogBindi
                            params.width = width
                            params.height = height + 180.dp2px()
                            mBinding.flipView.layoutParams = params
-                           mViewModel.getTodayImage("js","0","1").observe(this,{ data ->
+                           mViewModel.getTodayImage("js","0","1").observe(viewLifecycleOwner,{ data ->
 
 
                                ImageLoader.loadStringPhoto(requireActivity(), "https://cn.bing.com" + data.images.get(0).urlbase + "_640x480.jpg",mBinding.homeTodayWeatherItem.ivTodayBg)
@@ -87,22 +87,6 @@ class HomeWeatherNewsFragment:BaseDialogFragment<HomeTodayWeatherNewsDialogBindi
                    })
                }
 
-
-//                   ?:run {
-//
-//                       mBinding.flipView.post {
-//                           val params = mBinding.flipView.layoutParams
-//                           params.width = getScreenWidth() - 20.dp2px()
-//                           params.height = 220.dp2px() + 130.dp2px()
-//                           mBinding.flipView.layoutParams = params
-//                           mViewModel.getTodayImage("js","0","1").observe(this,{ data ->
-//
-//
-//                               ImageLoader.loadStringPhoto(requireActivity(), "https://cn.bing.com" + data.images.get(0).urlbase + "_640x480.jpg",mBinding.homeTodayWeatherItem.ivTodayBg)
-//                           })
-//                       }
-//
-//                   }
 
             })
 
@@ -165,4 +149,7 @@ class HomeWeatherNewsFragment:BaseDialogFragment<HomeTodayWeatherNewsDialogBindi
 
 
     }
+
+
+
 }

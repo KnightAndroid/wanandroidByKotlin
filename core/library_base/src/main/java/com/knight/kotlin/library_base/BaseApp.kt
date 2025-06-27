@@ -3,6 +3,11 @@ package com.knight.kotlin.library_base
 import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
+import android.util.Log
+import androidx.work.Configuration
+import androidx.work.ExistingWorkPolicy
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
 import com.kingja.loadsir.core.LoadSir
 import com.knight.kotlin.library_base.app.LoadModuleProxy
 import com.knight.kotlin.library_base.loadsir.EmptyCallBack
@@ -10,10 +15,12 @@ import com.knight.kotlin.library_base.loadsir.ErrorCallBack
 import com.knight.kotlin.library_base.loadsir.LoadCallBack
 import com.knight.kotlin.library_base.network.NetworkManager
 import com.knight.kotlin.library_base.util.ActivityManagerUtils
+import com.knight.kotlin.library_base.util.BaiduSoDownloaderUtils
 import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_base.util.DarkModeUtils
 import com.knight.kotlin.library_base.util.HookUtils
 import com.knight.kotlin.library_base.util.ProcessUtil
+import com.knight.kotlin.library_base.workmanager.SoDownloadWorker
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
 import kotlin.system.measureTimeMillis
@@ -24,7 +31,7 @@ import kotlin.system.measureTimeMillis
  * Time:2021/12/15 16:23
  * Description:BaseApp
  */
-open class BaseApp : Application() {
+open class BaseApp : Application(),Configuration.Provider  {
 
     /**
      *
@@ -55,6 +62,9 @@ open class BaseApp : Application() {
         if (ProcessUtil.isMainProcess(base)) {
             context = base
             application = this
+
+
+
             //初始化MMKV
             CacheUtils.init(base)
             userAgree = CacheUtils.getAgreeStatus()
@@ -75,7 +85,9 @@ open class BaseApp : Application() {
     override fun onCreate() {
         super.onCreate()
         if (ProcessUtil.isMainProcess(this)) {
-
+            if (!BaiduSoDownloaderUtils.isSoDownloaded(this)) {
+                downloadBaiduSo()
+            }
             //全局监听Activity 生命周期
             registerActivityLifecycleCallbacks(ActivityManagerUtils.getInstance())
             mLoadModuleProxy.onCreate(this)
@@ -153,6 +165,25 @@ open class BaseApp : Application() {
     }
 
 
+    /**
+     *
+     * 下载百度地图
+     */
+    private fun downloadBaiduSo() {
+//   \
+//        WorkManager.initialize(this, config)
+        val work = OneTimeWorkRequestBuilder<SoDownloadWorker>()
+            .addTag("baidu_so_download_tag")
+            .build()
+
+        WorkManager.getInstance(this).enqueueUniqueWork(
+            "baidu_so_download_work",
+            ExistingWorkPolicy.KEEP,
+            work
+        )
+    }
+
+
 
     /**
      * 初始化危险sdk
@@ -179,5 +210,11 @@ open class BaseApp : Application() {
         mLoadModuleProxy.onTerminate(this)
         mCoroutineScope.cancel()
     }
+
+    override val workManagerConfiguration: Configuration
+        get() = Configuration.Builder()
+            .setMinimumLoggingLevel(Log.INFO)
+            .build()
+
 
 }

@@ -296,6 +296,16 @@ fun BaseFragment<*,*>.showLoading(msg:String = appStr(R.string.base_loading)) {
 }
 
 /**
+ *
+ * 更新请求内容
+ */
+@MainThread
+fun BaseFragment<*,*>.updateText(msg:String) {
+    loadingDialog.setText(msg)
+}
+
+
+/**
  * 隐藏显示卡
  */
 fun BaseFragment<*,*>.dismissLoading() {

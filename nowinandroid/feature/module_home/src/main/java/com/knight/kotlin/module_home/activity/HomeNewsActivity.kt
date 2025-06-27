@@ -66,10 +66,14 @@ class HomeNewsActivity:BaseActivity<HomeNewsActivityBinding,HomeNewsVm>(), OnRef
 
     override fun initRequestData() {
         mViewModel.getNews().observerKt {
-            mp3Url = it.audio.news
+
             mBinding.includeNews.baseFreshlayout.finishRefresh()
             requestSuccess()
             initHeaderView(it)
+        }
+
+        mViewModel.getAudio().observerKt {
+            mp3Url = it.audio
         }
     }
 

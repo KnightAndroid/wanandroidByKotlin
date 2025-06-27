@@ -99,6 +99,7 @@ class ClientConfig {
             .setDomain("baidu",BaseUrlConfig.BAIDU_URL)
             .setDomain("eye_sub",BaseUrlConfig.OPENEYE_SUB_URL)
             .setDomain("zaobao",BaseUrlConfig.ZAO_BAO_URL)
+            .setDomain("zaobaoother",BaseUrlConfig.ZAO_BAO_OTHER_URL)
             .setDomain("weather",BaseUrlConfig.WEATHER_URL)
             .setDomain("rainfall",BaseUrlConfig.RAIN_FALL_URL)
             .setDomain("bingying",BaseUrlConfig.BINGYING_URL)

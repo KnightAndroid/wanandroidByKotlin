@@ -30,7 +30,7 @@ class HomeNewsAdapter : BaseQuickAdapter<String, HomeNewsAdapter.VH>() {
     override fun onBindViewHolder(holder: VH, position: Int, item: String?) {
         val binding = DataBindingUtil.getBinding<HomeNewsItemBinding>(holder.itemView)
         item?.run {
-            binding?.title = this
+            binding?.title = (position + 1).toString() + "、"+this
         }
     }
 

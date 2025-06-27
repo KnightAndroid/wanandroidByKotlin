@@ -1,6 +1,7 @@
 package com.knight.kotlin.module_home.api
 
 import com.knight.kotlin.library_network.bean.BaseResponse
+import com.knight.kotlin.module_home.entity.ZaoBaoAudioBean
 import com.knight.kotlin.module_home.entity.ZaoBaoBean
 import retrofit2.http.GET
 import retrofit2.http.Headers
@@ -21,4 +22,13 @@ interface HomeNewsApiService {
     @Headers("Domain-Name:zaobao")
     @GET("v2/60s")
     suspend fun getNews(): BaseResponse<ZaoBaoBean>
+
+
+
+    /**
+     * 获取热早报微语
+     */
+    @Headers("Domain-Name:zaobaoother")
+    @GET("zaobao")
+    suspend fun getAudio(): BaseResponse<ZaoBaoAudioBean>
 }

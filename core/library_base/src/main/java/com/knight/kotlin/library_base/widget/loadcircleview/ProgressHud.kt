@@ -61,6 +61,26 @@ class ProgressHud constructor(context: Context) {
         return this
     }
 
+    /**
+     *
+     * 更换展示文字
+     */
+    fun setText(msg:String) : ProgressHud {
+        if (isShowing()) {
+            mProgressHudDialog?.let {
+                it.setShowMessage(msg)
+            }
+        } else {
+            mProgressHudDialog?.let {
+                it.show()
+                it.setShowMessage(msg)
+            }
+        }
+        return this
+    }
+
+
+
     private fun isShowing(): Boolean {
         return mProgressHudDialog != null && mProgressHudDialog?.isShowing ?: false
     }

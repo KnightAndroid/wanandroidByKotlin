@@ -30,6 +30,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import androidx.work.WorkInfo
+import androidx.work.WorkManager
 import com.baidu.location.BDLocation
 import com.flyjingfish.android_aop_core.annotations.SingleClick
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -47,6 +49,7 @@ import com.knight.kotlin.library_base.enum.PollutantIndex
 import com.knight.kotlin.library_base.event.MessageEvent
 import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.knight.kotlin.library_base.ktx.SettingsManager
+import com.knight.kotlin.library_base.ktx.dismissLoading
 import com.knight.kotlin.library_base.ktx.fromJson
 import com.knight.kotlin.library_base.ktx.getLocation
 import com.knight.kotlin.library_base.ktx.getUser
@@ -54,9 +57,11 @@ import com.knight.kotlin.library_base.ktx.init
 import com.knight.kotlin.library_base.ktx.setOnClick
 import com.knight.kotlin.library_base.ktx.toHtml
 import com.knight.kotlin.library_base.ktx.toJson
+import com.knight.kotlin.library_base.ktx.updateText
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.route.RouteFragment
 import com.knight.kotlin.library_base.util.ArouteUtils
+import com.knight.kotlin.library_base.util.BaiduSoDownloaderUtils
 import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_base.util.ColorUtils
 import com.knight.kotlin.library_base.util.EventBusUtils
@@ -295,13 +300,15 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
      */
     private var mAqiQuality:Int = 0
     private var mAqiQualityLevel:Int = 0
+
     override fun setThemeColor(isDarkMode: Boolean) {
         if (!isDarkMode) {
             isWithStatusTheme(CacheUtils.getStatusBarIsWithTheme())
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.M)
+
+    @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
     override fun HomeRecommendFragmentBinding.initView() {
         mBinding.root.rotation = 180f
         homeRecommentConent.homeIconFab.imageTintList = null
@@ -876,6 +883,7 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
 
             }
         } else {
+            observeSoDownloadStatus()
             getLocation()?.let {
                 if (it.latitude != 0.0 && it.longitude !=0.0 && (it.latitude != 4.9E-324 && it.longitude != 4.9E-324)) {
                     getDetailWeekWeather(it)
@@ -885,19 +893,23 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
                 if (XXPermissions.isGrantedPermissions(requireActivity(),permission)) {
                     requestOnceLocation()
                 } else {
-                    XXPermissions.with(this)
-                        ?.permission(permission)
-                        ?.request(object : OnPermissionCallback {
-                            override fun onGranted(permissions: List<String>, all: Boolean) {
-                                if (all) {
-                                    requestOnceLocation()
+                    //授予权限 这里肯定已经下载了so库
+                    if (BaiduSoDownloaderUtils.isSoDownloaded(requireActivity())) {
+                        XXPermissions.with(this)
+                            ?.permission(permission)
+                            ?.request(object : OnPermissionCallback {
+                                override fun onGranted(permissions: List<String>, all: Boolean) {
+                                    if (all) {
+                                        requestOnceLocation()
+                                    }
                                 }
-                            }
 
-                            override fun onDenied(permissions: List<String>, doNotAskAgain: Boolean) {
-                                super.onDenied(permissions, doNotAskAgain)
-                            }
-                        })
+                                override fun onDenied(permissions: List<String>, doNotAskAgain: Boolean) {
+                                    super.onDenied(permissions, doNotAskAgain)
+                                }
+                            })
+                    }
+
 
                 }
             }
@@ -1639,6 +1651,61 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
         }
 
     }
+
+    /**
+     *
+     * 监听下载百度so库状态
+     */
+    @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
+    private fun observeSoDownloadStatus() {
+        if (!BaiduSoDownloaderUtils.isSoDownloaded(requireActivity())) {
+            WorkManager.getInstance(requireActivity())
+                .getWorkInfosForUniqueWorkLiveData("baidu_so_download_work")
+                .observe(this) { workInfos ->
+                    val workInfo = workInfos.firstOrNull() ?: return@observe
+                    val progress = workInfo.progress.getInt("progress", 0)
+                    when (workInfo.state) {
+                        WorkInfo.State.SUCCEEDED -> {
+                            dismissLoading()
+                            //初始化百度地图sdk
+                            LocationUtils.init(requireActivity())
+                            val permission:List<String> = listOf(Permission.ACCESS_FINE_LOCATION,Permission.ACCESS_COARSE_LOCATION,Permission.ACCESS_BACKGROUND_LOCATION)
+                            XXPermissions.with(this)
+                                ?.permission(permission)
+                                ?.request(object : OnPermissionCallback {
+                                    override fun onGranted(permissions: List<String>, all: Boolean) {
+                                        if (all) {
+                                            requestOnceLocation()
+                                        }
+                                    }
+
+                                    override fun onDenied(permissions: List<String>, doNotAskAgain: Boolean) {
+                                        super.onDenied(permissions, doNotAskAgain)
+                                    }
+                                })
+                        }
+                        WorkInfo.State.FAILED -> {
+
+                        }
+                        WorkInfo.State.RUNNING -> {
+
+                            updateText("初始化加载地图引擎... $progress%")
+
+                        }
+                        else -> { /* 等待中 */ }
+                    }
+                }
+        }
+
+    }
+
+
+
+
+
+
+
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

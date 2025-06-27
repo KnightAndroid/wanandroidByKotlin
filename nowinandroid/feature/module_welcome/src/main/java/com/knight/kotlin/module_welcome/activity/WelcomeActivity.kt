@@ -3,7 +3,6 @@ package com.knight.kotlin.module_welcome.activity
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.os.Build
-import android.view.View
 import androidx.annotation.RequiresApi
 import com.baidu.location.BDLocation
 import com.knight.kotlin.library_base.activity.BaseActivity
@@ -11,10 +10,8 @@ import com.knight.kotlin.library_base.config.Appconfig
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_base.util.ColorUtils
-import com.knight.kotlin.library_common.util.BaiduSoDownloaderUtils
 import com.knight.kotlin.library_permiss.XXPermissions
 import com.knight.kotlin.library_permiss.permissions.Permission
-import com.knight.kotlin.library_util.ThreadUtils
 import com.knight.kotlin.library_util.baidu.LocationUtils
 import com.knight.kotlin.library_util.baidu.OnceLocationListener
 import com.knight.kotlin.module_welcome.databinding.WelcomeActivityBinding
@@ -32,36 +29,39 @@ class WelcomeActivity : BaseActivity<WelcomeActivityBinding, WelcomeVm>() {
     @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
     override fun WelcomeActivityBinding.initView() {
 
-        if (!BaiduSoDownloaderUtils.isSoDownloaded(this@WelcomeActivity)) {
-            pbLoadSo.visibility = View.VISIBLE
-            BaiduSoDownloaderUtils.load(this@WelcomeActivity, object : BaiduSoDownloaderUtils.OnSoLoadCallback {
+//        if (!BaiduSoDownloaderUtils.isSoDownloaded(this@WelcomeActivity)) {
+//            pbLoadSo.visibility = View.VISIBLE
+//            BaiduSoDownloaderUtils.load(this@WelcomeActivity, object : BaiduSoDownloaderUtils.OnSoLoadCallback {
+//
+//                override fun onProgress(totalProgress: Int, text: String) {
+//                    ThreadUtils.postMain({
+//                        pbLoadSo.setProgressWithText(totalProgress, text)
+//                    })
+//
+//                }
+//                override fun onSuccess() {
+//                    ThreadUtils.postMain({
+//                        if (CacheUtils.getAgreeStatus()) {
+//                            GoRouter.getInstance().build(RouteActivity.Main.MainActivity).go()
+//                            finish()
+//                        } else {
+//                            WelcomePrivacyAgreeFragment().show(supportFragmentManager, "dialog_privacy")
+//                        }
+//                    })
+//
+//                }
+//
+//                override fun onFailure(e: Throwable) {
+//
+//                }
+//            })
+//            startLogoAnim(false)
+//        } else {
+//            startLogoAnim(true)
+//        }
 
-                override fun onProgress(totalProgress: Int, text: String) {
-                    ThreadUtils.postMain({
-                        pbLoadSo.setProgressWithText(totalProgress, text)
-                    })
 
-                }
-                override fun onSuccess() {
-                    ThreadUtils.postMain({
-                        if (CacheUtils.getAgreeStatus()) {
-                            GoRouter.getInstance().build(RouteActivity.Main.MainActivity).go()
-                            finish()
-                        } else {
-                            WelcomePrivacyAgreeFragment().show(supportFragmentManager, "dialog_privacy")
-                        }
-                    })
-
-                }
-
-                override fun onFailure(e: Throwable) {
-
-                }
-            })
-            startLogoAnim(false)
-        } else {
-            startLogoAnim(true)
-        }
+        startLogoAnim(true)
 
 
     }

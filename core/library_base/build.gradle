@@ -62,4 +62,6 @@ dependencies {
     api Dependencies.OtherUtils.BAIDUNAVI
     api Dependencies.OtherUtils.BAIDUSEARCH
     api Dependencies.OtherUtils.BAIDUUTIL
+    //workManager
+    api Dependencies.JetPack.WORK_MANAGER
 }

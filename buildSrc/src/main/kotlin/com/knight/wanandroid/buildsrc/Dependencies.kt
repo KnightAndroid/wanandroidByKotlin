@@ -104,7 +104,8 @@ object Dependencies {
        const val BaiduNaviSdkVersion = "7.6.4" //导航版本
        const val Suncalc = "3.11" //日月日出日落月出月落 计算
        const val Media3Exoplayer  = "1.6.1" //播放音频
-       const val MediaCache = "1.6.1"
+       const val MediaCache = "1.6.1" //音视频缓存
+       const val WorkManagerVersion = "2.10.2" // workManager
     }
     /**
      * AndroidX相关依赖
@@ -197,6 +198,7 @@ object Dependencies {
         const val ROOM_RUNTIME = "androidx.room:room-runtime:${Version.ROOM_VERSION}"
         const val ROOM_COMPILER = "androidx.room:room-compiler:${Version.ROOM_VERSION}"
         const val ROOM_KTX = "androidx.room:room-ktx:${Version.ROOM_VERSION}"
+        const val WORK_MANAGER = "androidx.work:work-runtime-ktx:${Version.WorkManagerVersion}"
     }
 
     /**
