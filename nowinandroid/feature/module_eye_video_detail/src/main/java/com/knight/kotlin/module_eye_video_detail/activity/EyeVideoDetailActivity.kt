@@ -5,13 +5,13 @@ import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import com.core.library_base.activity.BaseActivity
+import com.core.library_base.config.Appconfig
+import com.core.library_base.entity.EyeVideoDetailEntity
+import com.core.library_base.ktx.fromJson
+import com.core.library_base.route.RouteActivity
+import com.core.library_base.vm.EmptyViewModel
 import com.google.android.material.tabs.TabLayoutMediator
-import com.knight.kotlin.library_base.activity.BaseActivity
-import com.knight.kotlin.library_base.config.Appconfig
-import com.knight.kotlin.library_base.entity.EyeVideoDetailEntity
-import com.knight.kotlin.library_base.ktx.fromJson
-import com.knight.kotlin.library_base.route.RouteActivity
-import com.knight.kotlin.library_base.vm.EmptyViewModel
 import com.knight.kotlin.library_util.ViewInitUtils
 import com.knight.kotlin.library_video.play.OkPlayer
 import com.knight.kotlin.library_widget.ktx.transformShareElementConfig
@@ -32,7 +32,7 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 @AndroidEntryPoint
 @Route(path = RouteActivity.EyeVideo.EyeVideoDetail)
-class EyeVideoDetailActivity : BaseActivity<EyeVideoDetailActivityBinding,EmptyViewModel>(),
+class EyeVideoDetailActivity : BaseActivity<EyeVideoDetailActivityBinding, EmptyViewModel>(),
     OnRefreshListener {
     private var mTransition: Transition? = null
 
@@ -42,7 +42,7 @@ class EyeVideoDetailActivity : BaseActivity<EyeVideoDetailActivityBinding,EmptyV
      *
      * 详细实体
      */
-    private lateinit var videoDetailData:EyeVideoDetailEntity
+    private lateinit var videoDetailData: EyeVideoDetailEntity
 
     @JvmField
     @Param(name = Appconfig.EYE_VIDEO_PARAM_KEY)

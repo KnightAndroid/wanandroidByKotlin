@@ -3,8 +3,9 @@ package com.knight.kotlin.module_course
 import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
+import com.core.library_base.app.ApplicationLifecycle
 import com.google.auto.service.AutoService
-import com.knight.kotlin.library_base.app.ApplicationLifecycle
+
 
 /**
  * Author:Knight

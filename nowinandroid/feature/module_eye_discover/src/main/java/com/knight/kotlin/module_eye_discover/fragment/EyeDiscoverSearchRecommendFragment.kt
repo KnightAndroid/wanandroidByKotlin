@@ -6,13 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.appcompat.view.ContextThemeWrapper
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.core.library_base.fragment.BaseFragment
+import com.core.library_base.ktx.init
+import com.core.library_base.ktx.setOnClick
+import com.core.library_base.route.RouteFragment
+import com.core.library_base.util.dp2px
 import com.google.android.material.chip.Chip
 import com.google.android.material.shape.ShapeAppearanceModel
-import com.knight.kotlin.library_base.fragment.BaseFragment
-import com.knight.kotlin.library_base.ktx.init
-import com.knight.kotlin.library_base.ktx.setOnClick
-import com.knight.kotlin.library_base.route.RouteFragment
-import com.knight.kotlin.library_base.util.dp2px
+
 import com.knight.kotlin.module_eye_discover.activity.EyeDiscoverActivity
 import com.knight.kotlin.module_eye_discover.adapter.EyeDiscoverSearchRecommendVideoAdapter
 import com.knight.kotlin.module_eye_discover.databinding.EyeDiscoverRecommendFragmentBinding
@@ -30,7 +31,7 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 @AndroidEntryPoint
 @Route(path = RouteFragment.Discover.DiscoverRecommendFragment)
-class EyeDiscoverSearchRecommendFragment : BaseFragment<EyeDiscoverRecommendFragmentBinding,EyeDiscoverSearchRecommendVm>() {
+class EyeDiscoverSearchRecommendFragment : BaseFragment<EyeDiscoverRecommendFragmentBinding, EyeDiscoverSearchRecommendVm>() {
 
 
     //发现适配器

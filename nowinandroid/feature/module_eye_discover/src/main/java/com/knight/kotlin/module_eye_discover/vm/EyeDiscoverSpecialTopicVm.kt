@@ -2,8 +2,8 @@ package com.knight.kotlin.module_eye_discover.vm
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
-import com.knight.kotlin.library_base.ktx.showLoadingDialog
-import com.knight.kotlin.library_base.vm.BaseViewModel
+import com.core.library_base.ktx.showLoadingDialog
+import com.core.library_base.vm.BaseViewModel
 import com.knight.kotlin.module_eye_discover.entity.EyeSpecialTopicDetailEntity
 import com.knight.kotlin.module_eye_discover.repo.EyeDiscoverSpecialTopicRepo
 import dagger.hilt.android.lifecycle.HiltViewModel

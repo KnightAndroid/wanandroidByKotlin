@@ -1,5 +1,7 @@
 package com.knight.kotlin.module_eye_recommend.activity
 
+import com.core.library_base.activity.BaseActivity
+import com.core.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.module_eye_recommend.databinding.EyeRecommendActivityBinding
@@ -16,7 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 @AndroidEntryPoint
 @Route(path = RouteActivity.EyeRecommend.EyeRecommendActivity)
-class EyeRecommendActivity:BaseActivity<EyeRecommendActivityBinding, EyeRecommendVm>() {
+class EyeRecommendActivity: BaseActivity<EyeRecommendActivityBinding, EyeRecommendVm>() {
     override fun setThemeColor(isDarkMode: Boolean) {
 
     }

@@ -7,11 +7,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter4.BaseQuickAdapter
+import com.core.library_base.entity.SearchHotKeyEntity
+import com.core.library_base.util.CacheUtils
+import com.core.library_base.util.dp2px
 import com.google.android.flexbox.AlignItems
 import com.google.android.flexbox.FlexboxLayoutManager
-import com.knight.kotlin.library_base.entity.SearchHotKeyEntity
-import com.knight.kotlin.library_base.util.CacheUtils
-import com.knight.kotlin.library_base.util.dp2px
 import com.knight.kotlin.module_square.databinding.SquareHotsearchBinding
 
 /**

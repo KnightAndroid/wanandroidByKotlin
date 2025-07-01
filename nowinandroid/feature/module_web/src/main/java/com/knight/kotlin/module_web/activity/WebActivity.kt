@@ -9,15 +9,15 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.widget.LinearLayout
+import com.core.library_base.activity.BaseActivity
+import com.core.library_base.route.RouteActivity
+import com.core.library_base.util.CacheUtils
+import com.core.library_base.vm.EmptyViewModel
 import com.flyjingfish.android_aop_core.annotations.SingleClick
 import com.just.agentweb.AgentWeb
 import com.just.agentweb.DefaultWebClient
 import com.just.agentweb.WebChromeClient
 import com.just.agentweb.WebViewClient
-import com.knight.kotlin.library_base.activity.BaseActivity
-import com.knight.kotlin.library_base.route.RouteActivity
-import com.knight.kotlin.library_base.util.CacheUtils
-import com.knight.kotlin.library_base.vm.EmptyViewModel
 import com.knight.kotlin.module_web.databinding.WebActivityBinding
 import com.knight.kotlin.module_web.dialog.WebBottomFragment
 import com.knight.kotlin.module_web.utils.ViewBindUtils
@@ -29,7 +29,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 @Route(path = RouteActivity.Web.WebPager)
-class WebActivity : BaseActivity<WebActivityBinding,EmptyViewModel>() {
+class WebActivity : BaseActivity<WebActivityBinding, EmptyViewModel>() {
 
 
     @JvmField

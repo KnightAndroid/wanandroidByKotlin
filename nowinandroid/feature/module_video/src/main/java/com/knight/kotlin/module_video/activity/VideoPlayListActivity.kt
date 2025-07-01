@@ -1,6 +1,11 @@
 package com.knight.kotlin.module_video.activity
 
 import android.graphics.Color
+import com.core.library_base.activity.BaseActivity
+import com.core.library_base.ktx.setOnClick
+import com.core.library_base.route.RouteActivity
+import com.core.library_base.util.StatusBarUtils
+import com.core.library_base.vm.EmptyViewModel
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.ktx.setOnClick
 import com.knight.kotlin.library_base.route.RouteActivity
@@ -20,7 +25,7 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 @AndroidEntryPoint
 @Route(path = RouteActivity.Video.VideoPlayListActivity)
-class VideoPlayListActivity : BaseActivity<VideoPlayListActivityBinding,EmptyViewModel>() {
+class VideoPlayListActivity : BaseActivity<VideoPlayListActivityBinding, EmptyViewModel>() {
 
     @JvmField
     @Param(name = "curPos")

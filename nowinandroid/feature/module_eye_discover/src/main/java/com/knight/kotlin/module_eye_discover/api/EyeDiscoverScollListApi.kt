@@ -1,7 +1,7 @@
 package com.knight.kotlin.module_eye_discover.api
 
+import com.core.library_base.config.Appconfig
 import com.google.gson.JsonObject
-import com.knight.kotlin.library_base.config.Appconfig
 import com.knight.kotlin.library_network.bean.EyeApiResponse
 import com.knight.kotlin.module_eye_discover.entity.EyeDiscoverNavEntity
 import retrofit2.http.Field

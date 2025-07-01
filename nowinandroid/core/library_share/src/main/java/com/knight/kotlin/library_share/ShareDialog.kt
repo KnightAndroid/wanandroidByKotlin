@@ -5,9 +5,10 @@ import android.os.Bundle
 import android.view.Gravity
 import android.view.View
 import androidx.lifecycle.lifecycleScope
-import com.knight.kotlin.library_base.fragment.BaseDialogFragment
-import com.knight.kotlin.library_base.ktx.setOnClick
-import com.knight.kotlin.library_base.vm.EmptyViewModel
+import com.core.library_base.fragment.BaseDialogFragment
+import com.core.library_base.ktx.setOnClick
+import com.core.library_base.vm.EmptyViewModel
+
 import com.knight.kotlin.library_share.databinding.ShareDialogBinding
 import com.knight.kotlin.library_util.FileUtils
 import com.knight.kotlin.library_util.ShareSdkUtils

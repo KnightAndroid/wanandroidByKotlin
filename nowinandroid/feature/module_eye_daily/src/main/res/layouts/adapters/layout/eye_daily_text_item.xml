@@ -11,7 +11,7 @@
             type="android.content.res.ColorStateList" />
         <variable
             name="model"
-            type="com.knight.kotlin.library_base.entity.EyeDailyItemData" />
+            type="com.core.library_base.entity.EyeDailyItemData" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"

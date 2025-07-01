@@ -6,11 +6,11 @@ import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.widget.doAfterTextChanged
+import com.core.library_base.route.RouteActivity
 import com.google.android.material.search.SearchView
-import com.knight.kotlin.library_base.activity.BaseActivity
-import com.knight.kotlin.library_base.ktx.hide
-import com.knight.kotlin.library_base.ktx.showFragment
-import com.knight.kotlin.library_base.route.RouteActivity
+import com.core.library_base.activity.BaseActivity
+import com.core.library_base.ktx.hide
+import com.core.library_base.ktx.showFragment
 import com.knight.kotlin.module_eye_discover.R
 import com.knight.kotlin.module_eye_discover.databinding.EyeDiscoverActivityBinding
 import com.knight.kotlin.module_eye_discover.fragment.EyeDiscoverScollListFragment

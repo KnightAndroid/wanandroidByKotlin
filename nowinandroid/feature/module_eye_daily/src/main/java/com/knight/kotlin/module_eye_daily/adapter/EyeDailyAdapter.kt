@@ -9,14 +9,14 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter4.BaseMultiItemAdapter
-import com.knight.kotlin.library_base.config.Appconfig
-import com.knight.kotlin.library_base.config.EyeTypeConstants
-import com.knight.kotlin.library_base.entity.EyeDailyItemEntity
-import com.knight.kotlin.library_base.entity.EyeVideoDetailEntity
-import com.knight.kotlin.library_base.ktx.setOnClick
-import com.knight.kotlin.library_base.ktx.toJson
-import com.knight.kotlin.library_base.route.RouteActivity
-import com.knight.kotlin.library_base.util.CacheUtils
+import com.core.library_base.config.Appconfig
+import com.core.library_base.config.EyeTypeConstants
+import com.core.library_base.entity.EyeDailyItemEntity
+import com.core.library_base.entity.EyeVideoDetailEntity
+import com.core.library_base.ktx.setOnClick
+import com.core.library_base.ktx.toJson
+import com.core.library_base.route.RouteActivity
+import com.core.library_base.util.CacheUtils
 import com.knight.kotlin.library_util.startPageWithAnimate
 import com.knight.kotlin.module_eye_daily.R
 import com.knight.kotlin.module_eye_daily.databinding.EyeDailyImageItemBinding
@@ -27,7 +27,7 @@ import com.knight.kotlin.module_eye_daily.databinding.EyeDailyTextItemBinding
  * Time:2024/5/8 10:06
  * Description:EyeDailyAdapter
  */
-class EyeDailyAdapter(data: List<EyeDailyItemEntity>,activity: Activity):
+class EyeDailyAdapter(data: List<EyeDailyItemEntity>, activity: Activity):
     BaseMultiItemAdapter<EyeDailyItemEntity>(data){
 
 

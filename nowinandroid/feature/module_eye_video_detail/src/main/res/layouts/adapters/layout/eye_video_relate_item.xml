@@ -9,7 +9,7 @@
 
         <variable
             name="model"
-            type="com.knight.kotlin.library_base.entity.EyeData" />
+            type="com.core.library_base.entity.EyeData" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

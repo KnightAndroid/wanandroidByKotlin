@@ -2,8 +2,7 @@ package com.knight.kotlin.module_eye_discover.vm
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
-import com.knight.kotlin.library_base.vm.BaseViewModel
-import com.knight.kotlin.module_eye_discover.entity.EyeSearchResultEntity
+import com.core.library_base.vm.BaseViewModel
 import com.knight.kotlin.module_eye_discover.entity.EyeSearchResultLoadEntity
 import com.knight.kotlin.module_eye_discover.repo.EyeDiscoverSearchResultItemRepo
 import dagger.hilt.android.lifecycle.HiltViewModel

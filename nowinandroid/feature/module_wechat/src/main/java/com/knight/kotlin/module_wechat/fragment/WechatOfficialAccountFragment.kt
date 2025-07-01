@@ -3,6 +3,8 @@ package com.knight.kotlin.module_wechat.fragment
 import android.os.Bundle
 import android.text.TextUtils
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.core.library_base.fragment.BaseFragment
+import com.core.library_base.route.RouteFragment
 import com.knight.kotlin.library_aop.loginintercept.LoginCheck
 import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.knight.kotlin.library_base.ktx.setOnClick
@@ -39,7 +41,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 @Route(path = RouteFragment.Wechat.WechatOfficialAccountFragment)
-class WechatOfficialAccountFragment:BaseFragment<WechatOfficialaccountFragmentBinding,WechatVm>(),OnRefreshListener,OnLoadMoreListener {
+class WechatOfficialAccountFragment: BaseFragment<WechatOfficialaccountFragmentBinding, WechatVm>(),OnRefreshListener,OnLoadMoreListener {
 
 
 

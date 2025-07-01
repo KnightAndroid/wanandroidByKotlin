@@ -44,7 +44,7 @@ import com.knight.kotlin.library_base.entity.BaiduContent
 import com.knight.kotlin.library_base.entity.LoginEntity
 import com.knight.kotlin.library_base.entity.UserInfoEntity
 import com.knight.kotlin.library_base.entity.WeatherIndexItem
-import com.knight.kotlin.library_base.enum.BackgroundAnimationMode
+import com.core.library_base.enum.BackgroundAnimationMode
 import com.knight.kotlin.library_base.enum.PollutantIndex
 import com.knight.kotlin.library_base.event.MessageEvent
 import com.knight.kotlin.library_base.fragment.BaseFragment
@@ -560,9 +560,9 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
 
     private fun isBackgroundAnimationEnabled() =
         when (SettingsManager.getInstance(requireContext()).backgroundAnimationMode) {
-            BackgroundAnimationMode.SYSTEM -> !requireContext().isMotionReduced
-            BackgroundAnimationMode.ENABLED -> true
-            BackgroundAnimationMode.DISABLED -> false
+            com.core.library_base.enum.BackgroundAnimationMode.SYSTEM -> !requireContext().isMotionReduced
+            com.core.library_base.enum.BackgroundAnimationMode.ENABLED -> true
+            com.core.library_base.enum.BackgroundAnimationMode.DISABLED -> false
         }
 
 

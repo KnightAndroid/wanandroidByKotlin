@@ -2,7 +2,7 @@ package com.knight.kotlin.module_eye_video_detail.vm
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
-import com.knight.kotlin.library_base.vm.BaseViewModel
+import com.core.library_base.vm.BaseViewModel
 import com.knight.kotlin.library_network.bean.EyeApiResponse
 import com.knight.kotlin.module_eye_video_detail.entity.EyeRelateListEntity
 import com.knight.kotlin.module_eye_video_detail.entity.EyeVideoResultComment

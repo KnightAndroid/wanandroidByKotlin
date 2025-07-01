@@ -3,8 +3,9 @@ package com.knight.kotlin.module_eye_daily.view
 import android.content.Context
 import android.graphics.Canvas
 import android.util.AttributeSet
-import com.knight.kotlin.library_base.ktx.screenWidth
-import com.knight.kotlin.library_base.util.dp2px
+import com.core.library_base.ktx.screenWidth
+import com.core.library_base.util.dp2px
+
 import com.youth.banner.indicator.BaseIndicator
 import kotlin.math.max
 

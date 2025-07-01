@@ -2,7 +2,7 @@ package com.knight.kotlin.module_square.vm
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
-import com.knight.kotlin.library_base.vm.BaseViewModel
+import com.core.library_base.vm.BaseViewModel
 import com.knight.kotlin.module_square.entity.SquareQuestionListBean
 import com.knight.kotlin.module_square.repo.SquareRepo
 import dagger.hilt.android.lifecycle.HiltViewModel

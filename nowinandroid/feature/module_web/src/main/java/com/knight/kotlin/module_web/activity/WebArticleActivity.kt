@@ -9,18 +9,18 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.widget.LinearLayout
+import com.core.library_base.activity.BaseActivity
+import com.core.library_base.entity.WebDataEntity
+import com.core.library_base.event.MessageEvent
+import com.core.library_base.ktx.getUser
+import com.core.library_base.route.RouteActivity
+import com.core.library_base.util.CacheUtils
+import com.core.library_base.util.EventBusUtils
 import com.just.agentweb.AgentWeb
 import com.just.agentweb.DefaultWebClient
 import com.just.agentweb.WebChromeClient
 import com.just.agentweb.WebViewClient
 import com.knight.kotlin.library_aop.loginintercept.LoginCheck
-import com.knight.kotlin.library_base.activity.BaseActivity
-import com.knight.kotlin.library_base.entity.WebDataEntity
-import com.knight.kotlin.library_base.event.MessageEvent
-import com.knight.kotlin.library_base.ktx.getUser
-import com.knight.kotlin.library_base.route.RouteActivity
-import com.knight.kotlin.library_base.util.CacheUtils
-import com.knight.kotlin.library_base.util.EventBusUtils
 import com.knight.kotlin.library_database.entity.HistoryReadRecordsEntity
 import com.knight.kotlin.library_util.DataBaseUtils
 import com.knight.kotlin.library_util.toast.ToastUtils
@@ -43,13 +43,13 @@ import java.util.Date
  */
 @AndroidEntryPoint
 @Route(path = RouteActivity.Web.WebArticlePager)
-class WebArticleActivity :BaseActivity<WebArticleActivityBinding,WebVm>(),LoveAnimatorRelativeLayout.onCollectListener{
+class WebArticleActivity : BaseActivity<WebArticleActivityBinding, WebVm>(),LoveAnimatorRelativeLayout.onCollectListener{
 
 
 
     @JvmField
     @Param(name="webDataEntity")
-    var webDataEntity:WebDataEntity?=null
+    var webDataEntity: WebDataEntity?=null
 
     private lateinit var mAgentWeb: AgentWeb
 

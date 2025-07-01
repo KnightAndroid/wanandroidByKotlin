@@ -3,17 +3,12 @@ package com.knight.kotlin.module_eye_discover.fragment
 import android.graphics.Color
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
+import com.core.library_base.entity.EyeApiRequest
+import com.core.library_base.entity.EyeMetroCard
+import com.core.library_base.fragment.BaseFragment
+import com.core.library_base.route.RouteFragment
+import com.core.library_base.util.CacheUtils
 import com.google.android.material.tabs.TabLayoutMediator
-import com.knight.kotlin.library_base.entity.EyeApiRequest
-import com.knight.kotlin.library_base.entity.EyeMetroCard
-import com.knight.kotlin.library_base.fragment.BaseFragment
-import com.knight.kotlin.library_base.ktx.fromJson
-import com.knight.kotlin.library_base.ktx.toHtml
-import com.knight.kotlin.library_base.ktx.toJson
-import com.knight.kotlin.library_base.route.RouteFragment
-import com.knight.kotlin.library_base.util.CacheUtils
-import com.knight.kotlin.library_base.util.ColorUtils
-import com.knight.kotlin.library_base.vm.EmptyViewModel
 import com.knight.kotlin.library_util.LogUtils
 import com.knight.kotlin.library_util.ViewInitUtils
 import com.knight.kotlin.library_util.bindWechatViewPager2
@@ -37,12 +32,13 @@ import kotlinx.serialization.json.JsonObject
  */
 @AndroidEntryPoint
 @Route(path = RouteFragment.Discover.DiscoverSearchResultFragment)
-class EyeDiscoverSearchResultFragment:BaseFragment<EyeDiscoverSearchResultFragmentBinding, EyeDiscoverSearchResultVm>() {
+class EyeDiscoverSearchResultFragment:
+    BaseFragment<EyeDiscoverSearchResultFragmentBinding, EyeDiscoverSearchResultVm>() {
 
    private lateinit var query:String
 
     private val mFragments = mutableListOf<EyeDiscoverSearchResultItemFragment>()
-   private  var api_request :EyeApiRequest? = null
+   private  var api_request : EyeApiRequest? = null
 
     override fun setThemeColor(isDarkMode: Boolean) {
 
@@ -59,7 +55,8 @@ class EyeDiscoverSearchResultFragment:BaseFragment<EyeDiscoverSearchResultFragme
             var  mNavDatas = it.item_list.map { it.nav } .toMutableList()
              for (index  in 0 until  it.item_list.size) {
                  try {
-                     CacheUtils.saveCacheValue(it.item_list[index].nav.type, Json.encodeToString(ListSerializer(EyeMetroCard.serializer(JsonObject.serializer())),it.item_list[index].card_list.get(0).card_data?.body?.metro_list!!))
+                     CacheUtils.saveCacheValue(it.item_list[index].nav.type, Json.encodeToString(ListSerializer(
+                         EyeMetroCard.serializer(JsonObject.serializer())),it.item_list[index].card_list.get(0).card_data?.body?.metro_list!!))
                      api_request = it.item_list[index].card_list.last().card_data?.body?.api_request
                  } catch (e: NullPointerException) {
                      e.printStackTrace()

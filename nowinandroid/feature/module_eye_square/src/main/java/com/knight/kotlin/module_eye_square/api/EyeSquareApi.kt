@@ -1,6 +1,7 @@
 package com.knight.kotlin.module_eye_square.api
 
-import com.knight.kotlin.library_base.entity.EyeCardListEntity
+
+import com.core.library_base.entity.EyeCardListEntity
 import com.knight.kotlin.library_network.bean.EyeApiResponse
 import retrofit2.http.Field
 import retrofit2.http.FieldMap

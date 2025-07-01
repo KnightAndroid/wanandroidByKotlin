@@ -1,10 +1,10 @@
 package com.knight.kotlin.module_utils.activity
 
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.knight.kotlin.library_base.activity.BaseActivity
-import com.knight.kotlin.library_base.ktx.init
-import com.knight.kotlin.library_base.ktx.setOnClick
-import com.knight.kotlin.library_base.route.RouteActivity
+import com.core.library_base.activity.BaseActivity
+import com.core.library_base.ktx.init
+import com.core.library_base.ktx.setOnClick
+import com.core.library_base.route.RouteActivity
 import com.knight.kotlin.library_util.startPageWithParams
 import com.knight.kotlin.library_widget.ktx.setSafeOnItemClickListener
 import com.knight.kotlin.module_utils.R
@@ -21,7 +21,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 @Route(path = RouteActivity.Utils.UtilsActivity)
-class UtilsActivity : BaseActivity<UtilsActivityBinding,UtilsVm>(),OnRefreshListener,OnLoadMoreListener {
+class UtilsActivity : BaseActivity<UtilsActivityBinding, UtilsVm>(),OnRefreshListener,OnLoadMoreListener {
 
 
     //工具类适配器

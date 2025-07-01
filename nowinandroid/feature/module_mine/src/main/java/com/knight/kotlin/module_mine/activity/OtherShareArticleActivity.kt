@@ -10,7 +10,7 @@ import com.knight.kotlin.library_base.ktx.init
 import com.knight.kotlin.library_base.ktx.loadServiceInit
 import com.knight.kotlin.library_base.ktx.setOnClick
 import com.knight.kotlin.library_base.loadsir.EmptyCallBack
-import com.knight.kotlin.library_base.loadsir.LoadCallBack
+import com.core.library_base.loadsir.LoadCallBack
 import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.util.ArouteUtils
 import com.knight.kotlin.library_base.util.ColorUtils
@@ -81,7 +81,7 @@ class OtherShareArticleActivity :BaseActivity<MineOthershareActivityBinding,Othe
                 setOtherShareArticle(it)
             }
         })
-        mViewLoadService.showCallback(LoadCallBack::class.java)
+        mViewLoadService.showCallback(com.core.library_base.loadsir.LoadCallBack::class.java)
         initListener()
     }
 

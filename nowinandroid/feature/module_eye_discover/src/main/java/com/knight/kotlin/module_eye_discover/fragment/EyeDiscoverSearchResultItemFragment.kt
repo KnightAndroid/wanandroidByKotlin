@@ -2,12 +2,12 @@ package com.knight.kotlin.module_eye_discover.fragment
 
 import android.os.Build
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.knight.kotlin.library_base.entity.EyeApiRequest
-import com.knight.kotlin.library_base.entity.EyeMetroCard
-import com.knight.kotlin.library_base.fragment.BaseFragment
-import com.knight.kotlin.library_base.ktx.init
-import com.knight.kotlin.library_base.route.RouteFragment
-import com.knight.kotlin.library_base.util.CacheUtils
+import com.core.library_base.entity.EyeApiRequest
+import com.core.library_base.entity.EyeMetroCard
+import com.core.library_base.fragment.BaseFragment
+import com.core.library_base.ktx.init
+import com.core.library_base.route.RouteFragment
+import com.core.library_base.util.CacheUtils
 import com.knight.kotlin.library_util.LogUtils
 import com.knight.kotlin.module_eye_discover.adapter.EyeDiscoverSearchResultAdapter
 import com.knight.kotlin.module_eye_discover.databinding.EyeDiscoverSearchItemFragmentBinding
@@ -29,7 +29,7 @@ import kotlinx.serialization.json.jsonPrimitive
  */
 @AndroidEntryPoint
 @Route(path = RouteFragment.Discover.DiscoverSearchResultItemFragment)
-class EyeDiscoverSearchResultItemFragment : BaseFragment<EyeDiscoverSearchItemFragmentBinding,EyeDiscoverSearchResultItemVm>(),
+class EyeDiscoverSearchResultItemFragment : BaseFragment<EyeDiscoverSearchItemFragmentBinding, EyeDiscoverSearchResultItemVm>(),
     OnLoadMoreListener {
 
 
@@ -65,7 +65,7 @@ class EyeDiscoverSearchResultItemFragment : BaseFragment<EyeDiscoverSearchItemFr
         searchResultRv.init(LinearLayoutManager(activity),mEyeDiscoverSearchResultAdapter,true)
         mBinding.searchResultRefreshLayout.setOnLoadMoreListener(this@EyeDiscoverSearchResultItemFragment)
         mBinding.searchResultRefreshLayout.setEnableRefresh(false)
-        val firstDataJson =CacheUtils.getCacheValue(type)!!
+        val firstDataJson = CacheUtils.getCacheValue(type)!!
         val datas = Json.decodeFromString<List<EyeMetroCard<JsonObject>>>(firstDataJson)
         map = api_request?.params?.mapValues { param ->
             param.value.jsonPrimitive.content

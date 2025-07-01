@@ -4,7 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.knight.kotlin.library_base.entity.EyeDailyItemEntity
+import com.core.library_base.entity.EyeDailyItemEntity
 import com.knight.kotlin.module_eye_daily.databinding.EyeDailyBannerItemBinding
 import com.youth.banner.adapter.BannerAdapter
 

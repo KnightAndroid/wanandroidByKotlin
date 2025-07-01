@@ -3,7 +3,7 @@ package com.knight.kotlin.module_web.utils
 
 import android.view.View
 import android.webkit.WebView
-import com.knight.kotlin.library_base.route.RouteActivity
+import com.core.library_base.route.RouteActivity
 import com.knight.kotlin.module_web.R
 import com.knight.kotlin.module_web.enum.WebViewHitResult
 import com.knight.kotlin.module_web.enum.WebViewHitResultEnum

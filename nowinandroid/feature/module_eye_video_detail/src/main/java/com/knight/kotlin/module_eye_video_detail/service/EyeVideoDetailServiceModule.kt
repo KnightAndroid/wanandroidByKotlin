@@ -1,6 +1,5 @@
 package com.knight.kotlin.module_eye_video_detail.service
 
-import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.module_eye_video_detail.api.EyeVideoCommentCommentApi
 import com.knight.kotlin.module_eye_video_detail.api.EyeVideoDetailApi
 import dagger.Module

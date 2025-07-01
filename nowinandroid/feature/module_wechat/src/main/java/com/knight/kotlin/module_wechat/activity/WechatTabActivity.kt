@@ -3,11 +3,11 @@ import android.graphics.drawable.GradientDrawable
 import android.os.Build
 import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.Fragment
-import com.knight.kotlin.library_base.activity.BaseActivity
-import com.knight.kotlin.library_base.ktx.setOnClick
-import com.knight.kotlin.library_base.route.RouteActivity
-import com.knight.kotlin.library_base.util.dp2px
-import com.knight.kotlin.library_base.vm.EmptyViewModel
+import com.core.library_base.activity.BaseActivity
+import com.core.library_base.ktx.setOnClick
+import com.core.library_base.route.RouteActivity
+import com.core.library_base.util.dp2px
+import com.core.library_base.vm.EmptyViewModel
 import com.knight.kotlin.library_common.entity.OfficialAccountEntity
 import com.knight.kotlin.library_util.SystemUtils
 import com.knight.kotlin.library_util.ViewInitUtils

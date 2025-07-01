@@ -1,8 +1,8 @@
 package com.knight.kotlin.module_eye_discover.entity
 
 import android.os.Parcelable
-import com.knight.kotlin.library_base.entity.EyeHeader
-import com.knight.kotlin.library_base.entity.EyeItemEntity
+import com.core.library_base.entity.EyeHeader
+import com.core.library_base.entity.EyeItemEntity
 import kotlinx.parcelize.Parcelize
 
 

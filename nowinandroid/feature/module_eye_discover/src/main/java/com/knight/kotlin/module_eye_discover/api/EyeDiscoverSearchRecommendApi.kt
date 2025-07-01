@@ -1,7 +1,7 @@
 package com.knight.kotlin.module_eye_discover.api
 
+import com.core.library_base.entity.EyeCardListEntity
 import com.knight.kotlin.library_network.bean.EyeApiResponse
-import com.knight.kotlin.library_base.entity.EyeCardListEntity
 import com.knight.kotlin.module_eye_discover.entity.EyeHotQueriesEntity
 import retrofit2.http.GET
 import retrofit2.http.Headers

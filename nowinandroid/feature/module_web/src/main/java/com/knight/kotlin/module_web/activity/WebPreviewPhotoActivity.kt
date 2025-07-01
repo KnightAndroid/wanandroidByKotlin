@@ -1,7 +1,7 @@
 package com.knight.kotlin.module_web.activity
-import com.knight.kotlin.library_base.activity.BaseActivity
-import com.knight.kotlin.library_base.route.RouteActivity
-import com.knight.kotlin.library_base.vm.EmptyViewModel
+import com.core.library_base.activity.BaseActivity
+import com.core.library_base.route.RouteActivity
+import com.core.library_base.vm.EmptyViewModel
 import com.knight.kotlin.module_web.R
 import com.knight.kotlin.module_web.databinding.WebPreviewphotoActivityBinding
 import com.wyjson.router.annotation.Param
@@ -16,7 +16,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 @Route(path = RouteActivity.Web.WebPreviewPhotoPager)
-class WebPreviewPhotoActivity:BaseActivity<WebPreviewphotoActivityBinding,EmptyViewModel>() {
+class WebPreviewPhotoActivity: BaseActivity<WebPreviewphotoActivityBinding, EmptyViewModel>() {
 
 
     /**

@@ -7,10 +7,10 @@ import android.widget.ImageView
 import android.widget.RelativeLayout.LayoutParams
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
+import com.core.library_base.fragment.BaseFragment
+import com.core.library_base.vm.EmptyViewModel
 import com.google.android.exoplayer2.ExoPlaybackException
 import com.google.android.exoplayer2.Player
-import com.knight.kotlin.library_base.fragment.BaseFragment
-import com.knight.kotlin.library_base.vm.EmptyViewModel
 import com.knight.kotlin.module_video.DataConstant
 import com.knight.kotlin.module_video.R
 import com.knight.kotlin.module_video.adapter.VideoPlayAdapter
@@ -31,7 +31,7 @@ import com.knight.kotlin.module_video.view.LikeView
  * Time:2024/3/5 14:41
  * Description:VideoPlayFragment
  */
-class VideoPlayFragment(curPlayPos : Int) : BaseFragment<VideoPlayFragmentBinding,EmptyViewModel>(){
+class VideoPlayFragment(curPlayPos : Int) : BaseFragment<VideoPlayFragmentBinding, EmptyViewModel>(){
 
     private var adapter:VideoPlayAdapter?=null
     /** 当前播放视频位置  */

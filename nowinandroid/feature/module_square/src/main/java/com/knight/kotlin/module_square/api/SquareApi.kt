@@ -1,6 +1,6 @@
 package com.knight.kotlin.module_square.api
 
-import com.knight.kotlin.library_base.entity.SearchHotKeyEntity
+import com.core.library_base.entity.SearchHotKeyEntity
 import com.knight.kotlin.library_network.bean.BaseResponse
 import com.knight.kotlin.module_square.entity.SquareQuestionListBean
 import retrofit2.http.GET

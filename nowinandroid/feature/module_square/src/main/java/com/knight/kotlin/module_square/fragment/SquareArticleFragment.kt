@@ -1,12 +1,12 @@
 package com.knight.kotlin.module_square.fragment
 
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.core.library_base.annotation.EventBusRegister
+import com.core.library_base.event.MessageEvent
+import com.core.library_base.fragment.BaseFragment
+import com.core.library_base.route.RouteFragment
+import com.core.library_base.util.ArouteUtils
 import com.knight.kotlin.library_aop.loginintercept.LoginCheck
-import com.knight.kotlin.library_base.annotation.EventBusRegister
-import com.knight.kotlin.library_base.event.MessageEvent
-import com.knight.kotlin.library_base.fragment.BaseFragment
-import com.knight.kotlin.library_base.route.RouteFragment
-import com.knight.kotlin.library_base.util.ArouteUtils
 import com.knight.kotlin.library_widget.ktx.init
 import com.knight.kotlin.library_widget.ktx.setSafeOnItemChildClickListener
 import com.knight.kotlin.library_widget.ktx.setSafeOnItemClickListener
@@ -33,7 +33,7 @@ import org.greenrobot.eventbus.ThreadMode
 @EventBusRegister
 @AndroidEntryPoint
 @Route(path = RouteFragment.Square.SquareArticleFragment)
-class SquareArticleFragment:BaseFragment<SquareArticleFragmentBinding, SquareArticleVm>(),OnLoadMoreListener,OnRefreshListener {
+class SquareArticleFragment: BaseFragment<SquareArticleFragmentBinding, SquareArticleVm>(),OnLoadMoreListener,OnRefreshListener {
 
     //推荐文章适配器
     private val mSquareArticleAdapter: SquareArticleAdapter by lazy { SquareArticleAdapter(arrayListOf()) }

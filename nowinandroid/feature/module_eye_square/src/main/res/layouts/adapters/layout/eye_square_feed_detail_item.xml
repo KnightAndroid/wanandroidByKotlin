@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.knight.kotlin.library_base.entity.eye_type.EyeFeedItemDetail" />
+            type="com.core.library_base.entity.eye_type.EyeFeedItemDetail" />
     </data>
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"

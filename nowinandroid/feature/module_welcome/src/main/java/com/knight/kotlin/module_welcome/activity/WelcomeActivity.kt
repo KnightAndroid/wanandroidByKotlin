@@ -5,11 +5,11 @@ import android.animation.AnimatorListenerAdapter
 import android.os.Build
 import androidx.annotation.RequiresApi
 import com.baidu.location.BDLocation
-import com.knight.kotlin.library_base.activity.BaseActivity
-import com.knight.kotlin.library_base.config.Appconfig
-import com.knight.kotlin.library_base.route.RouteActivity
-import com.knight.kotlin.library_base.util.CacheUtils
-import com.knight.kotlin.library_base.util.ColorUtils
+import com.core.library_base.activity.BaseActivity
+import com.core.library_base.config.Appconfig
+import com.core.library_base.route.RouteActivity
+import com.core.library_base.util.CacheUtils
+import com.core.library_base.util.ColorUtils
 import com.knight.kotlin.library_permiss.XXPermissions
 import com.knight.kotlin.library_permiss.permissions.Permission
 import com.knight.kotlin.library_util.baidu.LocationUtils

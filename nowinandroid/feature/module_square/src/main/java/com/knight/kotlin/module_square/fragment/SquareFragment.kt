@@ -7,20 +7,21 @@ import android.view.View
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.core.library_base.annotation.EventBusRegister
+import com.core.library_base.event.MessageEvent
+import com.core.library_base.fragment.BaseFragment
+import com.core.library_base.ktx.loadServiceInit
 import com.flyjingfish.android_aop_core.annotations.SingleClick
 import com.google.gson.reflect.TypeToken
 import com.kingja.loadsir.core.LoadService
 import com.knight.kotlin.library_aop.loginintercept.LoginCheck
-import com.knight.kotlin.library_base.annotation.EventBusRegister
-import com.knight.kotlin.library_base.event.MessageEvent
-import com.knight.kotlin.library_base.fragment.BaseFragment
-import com.knight.kotlin.library_base.ktx.loadServiceInit
-import com.knight.kotlin.library_base.loadsir.LoadCallBack
-import com.knight.kotlin.library_base.route.RouteActivity
-import com.knight.kotlin.library_base.route.RouteFragment
-import com.knight.kotlin.library_base.util.ArouteUtils
-import com.knight.kotlin.library_base.util.CacheUtils
-import com.knight.kotlin.library_base.util.GsonUtils
+
+import com.core.library_base.loadsir.LoadCallBack
+import com.core.library_base.route.RouteActivity
+import com.core.library_base.route.RouteFragment
+import com.core.library_base.util.ArouteUtils
+import com.core.library_base.util.CacheUtils
+import com.core.library_base.util.GsonUtils
 import com.knight.kotlin.library_util.JsonUtils.getJson
 import com.knight.kotlin.library_util.ViewInitUtils
 import com.knight.kotlin.library_util.bindViewPager2
@@ -138,7 +139,7 @@ class SquareFragment : BaseFragment<SquareFragmentBinding, SquareVm>() {
             .setClosedOnStart(true)
             .setGuillotineListener(object : RightLottieListener {
                 override fun onRightLottieOpened() {
-                    mViewLoadService.showCallback(LoadCallBack::class.java)
+                    mViewLoadService.showCallback(com.core.library_base.loadsir.LoadCallBack::class.java)
                     mViewModel.getQuestion(questionPage).observerKt {
                         setSquareQuestionList(it)
                     }

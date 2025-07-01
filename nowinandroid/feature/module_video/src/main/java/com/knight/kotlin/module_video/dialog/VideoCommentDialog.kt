@@ -8,10 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.core.library_base.ktx.init
+import com.core.library_base.ktx.screenHeight
+import com.core.library_base.ktx.screenWidth
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.knight.kotlin.library_base.ktx.init
-import com.knight.kotlin.library_base.ktx.screenHeight
-import com.knight.kotlin.library_base.ktx.screenWidth
 import com.knight.kotlin.library_widget.BaseBottomSheetDialog
 import com.knight.kotlin.module_video.adapter.VideoCommentAdapter
 import com.knight.kotlin.module_video.databinding.VideoDialogCommentBinding

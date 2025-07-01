@@ -5,7 +5,7 @@ apply from: "${project.rootDir}/base_library.gradle"
 apply plugin: 'dagger.hilt.android.plugin'
 android {
 
-   namespace = "com.knight.kotlin.library_base"
+   namespace = "com.core.library_base"
 
     buildFeatures {
         viewBinding = true

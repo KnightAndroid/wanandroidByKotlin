@@ -1,8 +1,9 @@
 package com.knight.kotlin.module_constellate.activity
 
-import com.knight.kotlin.library_base.activity.BaseActivity
-import com.knight.kotlin.library_base.route.RouteActivity
-import com.knight.kotlin.library_base.vm.EmptyViewModel
+
+import com.core.library_base.activity.BaseActivity
+import com.core.library_base.route.RouteActivity
+import com.core.library_base.vm.EmptyViewModel
 import com.knight.kotlin.module_constellate.R
 import com.knight.kotlin.module_constellate.databinding.ConstellateFateActivityBinding
 import com.wyjson.router.annotation.Route
@@ -17,7 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 @AndroidEntryPoint
 @Route(path = RouteActivity.Constellate.ConstellateFateActivity)
-class ConstellateFateActivity : BaseActivity<ConstellateFateActivityBinding,EmptyViewModel>(){
+class ConstellateFateActivity : BaseActivity<ConstellateFateActivityBinding, EmptyViewModel>(){
     override fun setThemeColor(isDarkMode: Boolean) {
 
     }

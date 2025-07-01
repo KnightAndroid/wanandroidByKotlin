@@ -9,8 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter4.BaseQuickAdapter
-import com.knight.kotlin.library_base.ktx.toHtml
-import com.knight.kotlin.library_base.util.CacheUtils
+import com.core.library_base.ktx.toHtml
+import com.core.library_base.util.CacheUtils
 import com.knight.kotlin.module_square.databinding.SquareArticleItemBinding
 import com.knight.kotlin.module_square.entity.SquareArticleEntity
 

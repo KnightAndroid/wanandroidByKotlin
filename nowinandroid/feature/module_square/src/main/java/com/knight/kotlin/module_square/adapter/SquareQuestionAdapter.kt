@@ -9,10 +9,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter4.BaseQuickAdapter
-import com.knight.kotlin.library_base.config.Appconfig
+import com.core.library_base.config.Appconfig
+import com.core.library_base.ktx.toHtml
+import com.core.library_base.util.CacheUtils
 import com.knight.kotlin.library_base.databinding.BaseTextItemBinding
-import com.knight.kotlin.library_base.ktx.toHtml
-import com.knight.kotlin.library_base.util.CacheUtils
+
 import com.knight.kotlin.library_util.StringUtils
 import com.knight.kotlin.module_square.entity.SquareQuestionBean
 
@@ -37,7 +38,8 @@ class SquareQuestionAdapter: BaseQuickAdapter<SquareQuestionBean, SquareQuestion
         item?.run {
             //作者
             if (!TextUtils.isEmpty(author)) {
-                holder.binding.baseItemArticleAuthor.setText(StringUtils.getStyle(context,author,Appconfig.search_keyword))
+                holder.binding.baseItemArticleAuthor.setText(StringUtils.getStyle(context,author,
+                    Appconfig.search_keyword))
             }  else {
                 holder.binding.baseItemArticleAuthor.setText(StringUtils.getStyle(context,shareUser,Appconfig.search_keyword))
             }

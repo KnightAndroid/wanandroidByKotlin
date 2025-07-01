@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.knight.kotlin.library_base.entity.eye_type.EyeWaterFallCoverVideoImage" />
+            type="com.core.library_base.entity.eye_type.EyeWaterFallCoverVideoImage" />
     </data>
 
 

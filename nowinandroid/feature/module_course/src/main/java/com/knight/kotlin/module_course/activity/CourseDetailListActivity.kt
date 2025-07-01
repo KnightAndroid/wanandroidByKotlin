@@ -1,10 +1,9 @@
 package com.knight.kotlin.module_course.activity
 
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.knight.kotlin.library_base.activity.BaseActivity
-import com.knight.kotlin.library_base.ktx.init
-import com.knight.kotlin.library_base.ktx.setOnClick
-import com.knight.kotlin.library_base.route.RouteActivity
+import com.core.library_base.activity.BaseActivity
+import com.core.library_base.route.RouteActivity
+
 import com.knight.kotlin.library_util.startPageWithParams
 import com.knight.kotlin.library_widget.ktx.setSafeOnItemClickListener
 
@@ -27,7 +26,7 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 @AndroidEntryPoint
 @Route(path = RouteActivity.Course.CourseDetailListActivity)
-class CourseDetailListActivity:BaseActivity<CourseDetailListActivityBinding,CourseDetailListVm>(),OnRefreshListener,OnLoadMoreListener {
+class CourseDetailListActivity: BaseActivity<CourseDetailListActivityBinding, CourseDetailListVm>(),OnRefreshListener,OnLoadMoreListener {
 
     @JvmField
     @Param(name = "cid")

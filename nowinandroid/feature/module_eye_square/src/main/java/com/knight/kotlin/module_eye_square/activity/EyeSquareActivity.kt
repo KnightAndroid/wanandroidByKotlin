@@ -1,6 +1,9 @@
 package com.knight.kotlin.module_eye_square.activity
 
 import androidx.recyclerview.widget.GridLayoutManager
+import com.core.library_base.activity.BaseActivity
+import com.core.library_base.entity.EyeApiRequest
+import com.core.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.entity.EyeApiRequest
 import com.knight.kotlin.library_base.ktx.setOnClick
@@ -25,7 +28,7 @@ import kotlinx.serialization.json.jsonPrimitive
  */
 @AndroidEntryPoint
 @Route(path = RouteActivity.EyeSquare.EyeSquareActivity)
-class EyeSquareActivity : BaseActivity<EyeSquareActivityBinding,EyeSquareVm>(), OnLoadMoreListener {
+class EyeSquareActivity : BaseActivity<EyeSquareActivityBinding, EyeSquareVm>(), OnLoadMoreListener {
 
     @JvmField
     @Param(name = "tabTitle")

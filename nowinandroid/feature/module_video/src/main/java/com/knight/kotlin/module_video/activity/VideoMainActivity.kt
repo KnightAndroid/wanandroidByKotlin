@@ -1,6 +1,14 @@
 package com.knight.kotlin.module_video.activity
 import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
+import com.core.library_base.activity.BaseActivity
+import com.core.library_base.config.EyeTypeConstants
+import com.core.library_base.entity.EyeDailyItemEntity
+import com.core.library_base.ktx.setOnClick
+import com.core.library_base.route.RouteActivity
+import com.core.library_base.util.CacheUtils
+import com.core.library_base.util.ColorUtils
+import com.core.library_base.util.dp2px
 import com.flyjingfish.android_aop_core.annotations.SingleClick
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.config.EyeTypeConstants
@@ -28,7 +36,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 @Route(path = RouteActivity.Video.VideoMainActivity)
-class VideoMainActivity : BaseActivity<VideoMainActivityBinding,VideoVm>(), OnRefreshListener,
+class VideoMainActivity : BaseActivity<VideoMainActivityBinding, VideoVm>(), OnRefreshListener,
     OnLoadMoreListener {
 
     //视频列表适配器

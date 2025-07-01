@@ -1,7 +1,6 @@
 package com.knight.kotlin.module_constellate
 
-import com.knight.kotlin.library_base.BaseApp
-import dagger.hilt.android.HiltAndroidApp
+import com.core.library_base.BaseApp
 
 
 /**

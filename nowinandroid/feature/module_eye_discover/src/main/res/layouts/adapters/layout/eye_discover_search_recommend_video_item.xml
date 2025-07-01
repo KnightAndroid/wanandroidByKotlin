@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.knight.kotlin.library_base.entity.EyeCommonVideoEntity" />
+            type="com.core.library_base.entity.EyeCommonVideoEntity" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

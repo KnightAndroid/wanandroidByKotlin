@@ -1,8 +1,8 @@
 package com.knight.kotlin.module_eye_discover.ext
 
 import androidx.databinding.BindingAdapter
-import com.knight.kotlin.library_base.ktx.setOnClick
-import com.knight.kotlin.library_base.route.RouteActivity
+import com.core.library_base.ktx.setOnClick
+import com.core.library_base.route.RouteActivity
 import com.knight.kotlin.library_util.image.ImageLoader
 import com.knight.kotlin.library_util.splitUrl
 import com.knight.kotlin.library_util.startPageWithParams
