@@ -1,8 +1,8 @@
 package com.knight.kotlin.module_project.fragment
 
 import com.knight.kotlin.library_base.fragment.BaseFragment
-import com.knight.kotlin.library_base.ktx.toHtml
-import com.knight.kotlin.library_base.route.RouteFragment
+import com.core.library_base.ktx.toHtml
+import com.core.library_base.route.RouteFragment
 import com.knight.kotlin.library_util.ViewInitUtils
 import com.knight.kotlin.library_util.bindWechatViewPager2
 import com.knight.kotlin.module_project.databinding.ProjectActivityBinding
@@ -19,7 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 @AndroidEntryPoint
 @Route(path = RouteFragment.Project.ProjectFragment)
-class ProjectFragment:BaseFragment<ProjectActivityBinding, ProjectVm>() {
+class ProjectFragment: BaseFragment<ProjectActivityBinding, ProjectVm>() {
 
     private val mFragments = mutableListOf<ProjecArticleFragment>()
     private val mTitileDatas = mutableListOf<String>()

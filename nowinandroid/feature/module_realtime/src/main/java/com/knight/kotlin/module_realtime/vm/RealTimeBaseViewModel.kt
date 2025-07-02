@@ -2,8 +2,8 @@ package com.knight.kotlin.module_realtime.vm
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
+import com.core.library_base.vm.BaseViewModel
 import com.knight.kotlin.library_base.entity.BaiduCardDataBean
-import com.knight.kotlin.library_base.vm.BaseViewModel
 import com.knight.kotlin.module_realtime.repo.RealTimeBaseRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject

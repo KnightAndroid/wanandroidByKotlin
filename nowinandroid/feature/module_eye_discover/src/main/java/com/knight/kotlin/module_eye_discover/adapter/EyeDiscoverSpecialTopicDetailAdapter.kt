@@ -14,7 +14,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter4.BaseQuickAdapter
-import com.core.library_base.entity.EyeTag
+import com.knight.kotlin.library_base.entity.EyeTag
 import com.core.library_base.ktx.setOnClick
 import com.core.library_base.util.dp2px
 

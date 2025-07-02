@@ -9,7 +9,7 @@ import android.os.Build
 import android.text.TextUtils
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import com.knight.kotlin.library_base.util.CacheUtils
+import com.knight.kotlin.library_base.utils.CacheUtils
 import com.knight.kotlin.library_permiss.PermissionConverter.getNamesByPermissions
 import com.knight.kotlin.library_permiss.listener.OnPermissionCallback
 import com.knight.kotlin.library_permiss.listener.OnPermissionInterceptor

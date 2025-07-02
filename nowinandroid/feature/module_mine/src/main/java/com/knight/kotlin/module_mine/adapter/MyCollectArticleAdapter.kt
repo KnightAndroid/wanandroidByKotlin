@@ -9,12 +9,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter4.BaseMultiItemAdapter
+import com.core.library_base.databinding.BaseArticleItemBinding
+import com.core.library_base.databinding.BaseTextItemBinding
+import com.core.library_base.ktx.toHtml
+import com.knight.kotlin.library_base.utils.CacheUtils
 import com.knight.kotlin.library_base.config.Appconfig
 import com.knight.kotlin.library_base.config.EyeTypeConstants
-import com.knight.kotlin.library_base.databinding.BaseArticleItemBinding
-import com.knight.kotlin.library_base.databinding.BaseTextItemBinding
-import com.knight.kotlin.library_base.ktx.toHtml
-import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_util.image.ImageLoader
 import com.knight.kotlin.module_mine.R
 import com.knight.kotlin.module_mine.entity.MyCollectArticleEntity
@@ -61,7 +61,7 @@ class MyCollectArticleAdapter(data:List<MyCollectArticleEntity>) :
                         binding.baseTvArticleSuperchaptername.setTextColor(CacheUtils.getThemeColor())
                         val gradientDrawable = GradientDrawable()
                         gradientDrawable.shape = GradientDrawable.RECTANGLE
-                        gradientDrawable.setStroke(2,CacheUtils.getThemeColor())
+                        gradientDrawable.setStroke(2, CacheUtils.getThemeColor())
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                             binding.baseTvArticleSuperchaptername.background = gradientDrawable
                         } else {

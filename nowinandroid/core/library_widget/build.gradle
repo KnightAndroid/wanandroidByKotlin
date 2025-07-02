@@ -19,7 +19,7 @@ dependencies {
 //    implementation(project(":library_util"))
     implementation project(":nowinandroid:core:library_util")
     //implementation project(path: ':library_base')
-    implementation project(path: ':core:library_base')
+    implementation project(path: ':nowinandroid:core:library_base')
     implementation project(":nowinandroid:core:library_common")
     api Dependencies.GitHub.SWIPE_RECYCLERVIEW
     api Dependencies.GitHub.BASE_ADAPTER_HELPER

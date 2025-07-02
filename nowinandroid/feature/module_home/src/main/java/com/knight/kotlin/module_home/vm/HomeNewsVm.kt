@@ -2,7 +2,7 @@ package com.knight.kotlin.module_home.vm
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
-import com.knight.kotlin.library_base.vm.BaseViewModel
+import com.core.library_base.vm.BaseViewModel
 import com.knight.kotlin.module_home.entity.ZaoBaoAudioBean
 import com.knight.kotlin.module_home.entity.ZaoBaoBean
 import com.knight.kotlin.module_home.repo.HomeNewsRepo

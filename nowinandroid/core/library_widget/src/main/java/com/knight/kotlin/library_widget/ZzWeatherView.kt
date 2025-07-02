@@ -515,7 +515,7 @@ class ZzWeatherView @JvmOverloads constructor(context: Context, attrs: Attribute
      *
      * 根据等级转换空气质量level
      */
-    fun getAirLevelByAqiLevel(aqiLevel:Int) :AirLevel{
+    fun getAirLevelByAqiLevel(aqiLevel:Int) : AirLevel {
         return when(aqiLevel) {
             1 -> AirLevel.EXCELLENT
             2 -> AirLevel.GOOD

@@ -1,8 +1,9 @@
 package com.knight.kotlin.module_eye_video_detail.util
 
-import com.core.library_base.ktx.getScreenHeight
-import com.core.library_base.ktx.getScreenWidth
+
 import com.core.library_base.util.dp2px
+import com.knight.kotlin.library_base.ktx.getScreenHeight
+import com.knight.kotlin.library_base.ktx.getScreenWidth
 
 /**
  * Author:Knight

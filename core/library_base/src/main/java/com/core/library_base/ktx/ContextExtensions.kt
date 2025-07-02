@@ -59,12 +59,7 @@ val Context.locationManager: LocationManager
 val Context.powerManager: PowerManager
     get() = getSystemService()!!
 
-val Context.sensorManager: SensorManager?
-    get() = if (SettingsManager.getInstance(this).isGravitySensorEnabled) {
-        getSystemService()
-    } else {
-        null
-    }
+
 
 val Context.windowManager: WindowManager?
     get() = getSystemService()

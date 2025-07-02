@@ -4,12 +4,12 @@ import android.app.TimePickerDialog
 import android.view.View
 import android.widget.CompoundButton
 import android.widget.TimePicker
-import com.flyjingfish.android_aop_core.annotations.SingleClick
 import com.knight.kotlin.library_base.activity.BaseActivity
-import com.knight.kotlin.library_base.ktx.setOnClick
-import com.knight.kotlin.library_base.route.RouteActivity
-import com.knight.kotlin.library_base.util.CacheUtils
-import com.knight.kotlin.library_base.vm.EmptyViewModel
+import com.core.library_base.ktx.setOnClick
+import com.core.library_base.route.RouteActivity
+import com.knight.kotlin.library_base.utils.CacheUtils
+import com.core.library_base.vm.EmptyViewModel
+import com.flyjingfish.android_aop_core.annotations.SingleClick
 import com.knight.kotlin.module_set.R
 import com.knight.kotlin.module_set.databinding.SetAutonighttimeActivityBinding
 import com.wyjson.router.annotation.Route
@@ -25,7 +25,7 @@ import java.util.Calendar
 
 @AndroidEntryPoint
 @Route(path = RouteActivity.Set.SetAutoNightActivity)
-class AutoNightTimeActivity : BaseActivity<SetAutonighttimeActivityBinding,EmptyViewModel>() {
+class AutoNightTimeActivity : BaseActivity<SetAutonighttimeActivityBinding, EmptyViewModel>() {
 
 
     private val mCarlendar:Calendar = Calendar.getInstance()

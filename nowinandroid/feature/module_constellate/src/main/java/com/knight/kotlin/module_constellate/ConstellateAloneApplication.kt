@@ -1,6 +1,6 @@
 package com.knight.kotlin.module_constellate
 
-import com.core.library_base.BaseApp
+import com.knight.kotlin.library_base.BaseApp
 
 
 /**

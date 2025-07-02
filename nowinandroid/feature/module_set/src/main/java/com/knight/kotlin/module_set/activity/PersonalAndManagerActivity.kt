@@ -1,11 +1,11 @@
 package com.knight.kotlin.module_set.activity
 
 import android.view.View
+import com.core.library_base.route.RouteActivity
+import com.core.library_base.vm.EmptyViewModel
 import com.flyjingfish.android_aop_core.annotations.SingleClick
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.ktx.getUser
-import com.knight.kotlin.library_base.route.RouteActivity
-import com.knight.kotlin.library_base.vm.EmptyViewModel
 import com.knight.kotlin.library_util.startPage
 import com.knight.kotlin.module_set.R
 import com.knight.kotlin.module_set.databinding.SetPersonalManagerActivityBinding
@@ -19,7 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 @AndroidEntryPoint
 @Route(path = RouteActivity.Set.PersonalDeviceMessage)
-class PersonalAndManagerActivity : BaseActivity<SetPersonalManagerActivityBinding,EmptyViewModel>() {
+class PersonalAndManagerActivity : BaseActivity<SetPersonalManagerActivityBinding, EmptyViewModel>() {
 
     override fun setThemeColor(isDarkMode: Boolean) {
 

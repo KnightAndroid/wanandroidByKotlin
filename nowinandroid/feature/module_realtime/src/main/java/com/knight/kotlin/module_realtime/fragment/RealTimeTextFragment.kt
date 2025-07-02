@@ -2,7 +2,7 @@ package com.knight.kotlin.module_realtime.fragment
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.knight.kotlin.library_base.fragment.BaseFragment
-import com.knight.kotlin.library_base.route.RouteFragment
+import com.core.library_base.route.RouteFragment
 import com.knight.kotlin.library_widget.ktx.init
 import com.knight.kotlin.module_realtime.adapter.HotRankMainAdapter
 import com.knight.kotlin.module_realtime.databinding.RealtimeTextFragmentBinding
@@ -21,7 +21,7 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 @AndroidEntryPoint
 @Route(path = RouteFragment.RealTime.RealTimeTextFragment)
-class RealTimeTextFragment:BaseFragment<RealtimeTextFragmentBinding,RealTimeTextVm>() {
+class RealTimeTextFragment: BaseFragment<RealtimeTextFragmentBinding, RealTimeTextVm>() {
 
 
     private lateinit var typeName:String

@@ -1,14 +1,12 @@
 package com.knight.kotlin.module_eye_discover.fragment
 
-import android.os.Build
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.core.library_base.entity.EyeApiRequest
-import com.core.library_base.entity.EyeMetroCard
-import com.core.library_base.fragment.BaseFragment
 import com.core.library_base.ktx.init
 import com.core.library_base.route.RouteFragment
-import com.core.library_base.util.CacheUtils
-import com.knight.kotlin.library_util.LogUtils
+import com.knight.kotlin.library_base.utils.CacheUtils
+import com.knight.kotlin.library_base.entity.EyeApiRequest
+import com.knight.kotlin.library_base.entity.EyeMetroCard
+import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.knight.kotlin.module_eye_discover.adapter.EyeDiscoverSearchResultAdapter
 import com.knight.kotlin.module_eye_discover.databinding.EyeDiscoverSearchItemFragmentBinding
 import com.knight.kotlin.module_eye_discover.vm.EyeDiscoverSearchResultItemVm
@@ -16,7 +14,6 @@ import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener
 import com.wyjson.router.annotation.Route
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonPrimitive

@@ -3,15 +3,16 @@ package com.knight.kotlin.module_constellate.activity
 import android.content.res.TypedArray
 import android.graphics.Color
 import androidx.recyclerview.widget.GridLayoutManager
-import com.core.library_base.activity.BaseActivity
-import com.core.library_base.ktx.getScreenHeight
-import com.core.library_base.ktx.getScreenWidth
+import com.knight.kotlin.library_base.activity.BaseActivity
+
 import com.core.library_base.ktx.setOnClick
 import com.core.library_base.route.RouteActivity
 import com.core.library_base.util.GsonUtils
 import com.core.library_base.util.dp2px
 import com.core.library_base.vm.EmptyViewModel
 import com.google.gson.reflect.TypeToken
+import com.knight.kotlin.library_base.ktx.getScreenHeight
+import com.knight.kotlin.library_base.ktx.getScreenWidth
 
 import com.knight.kotlin.library_util.JsonUtils
 import com.knight.kotlin.library_widget.CustomGridItemDecoration
@@ -57,7 +58,7 @@ class ConstellateMainActivity : BaseActivity<ConstellateMainActivityBinding, Emp
 
     override fun ConstellateMainActivityBinding.initView() {
         mBinding.title = getString(R.string.constellate_fate_toolbar_title)
-        constellateMainToolbar.baseIvBack.setBackgroundResource(com.knight.kotlin.library_base.R.drawable.base_right_whitearrow)
+        constellateMainToolbar.baseIvBack.setBackgroundResource(com.core.library_base.R.drawable.base_right_whitearrow)
         constellateMainToolbar.baseTvTitle.setTextColor(Color.WHITE)
         constellateMainToolbar.baseIvBack.setOnClick {
             finish()

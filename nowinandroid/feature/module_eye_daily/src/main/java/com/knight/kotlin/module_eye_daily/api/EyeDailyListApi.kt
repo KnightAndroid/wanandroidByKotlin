@@ -1,6 +1,6 @@
 package com.knight.kotlin.module_eye_daily.api
 
-import com.core.library_base.entity.EyeDailyListEntity
+import com.knight.kotlin.library_base.entity.EyeDailyListEntity
 
 import retrofit2.http.GET
 import retrofit2.http.Headers

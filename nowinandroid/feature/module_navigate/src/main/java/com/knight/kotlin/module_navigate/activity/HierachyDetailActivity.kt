@@ -1,9 +1,9 @@
 package com.knight.kotlin.module_navigate.activity
 
 import com.knight.kotlin.library_base.activity.BaseActivity
-import com.knight.kotlin.library_base.ktx.setOnClick
-import com.knight.kotlin.library_base.route.RouteActivity
-import com.knight.kotlin.library_base.vm.EmptyViewModel
+import com.core.library_base.ktx.setOnClick
+import com.core.library_base.route.RouteActivity
+import com.core.library_base.vm.EmptyViewModel
 import com.knight.kotlin.module_navigate.R
 import com.knight.kotlin.module_navigate.databinding.NavigateHierachyDetailActivityBinding
 import com.knight.kotlin.module_navigate.fragment.HierachyTabArticleFragment
@@ -18,7 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 @AndroidEntryPoint
 @Route(path = RouteActivity.Navigate.HierachyDetailActivity)
-class HierachyDetailActivity : BaseActivity<NavigateHierachyDetailActivityBinding,EmptyViewModel>(){
+class HierachyDetailActivity : BaseActivity<NavigateHierachyDetailActivityBinding, EmptyViewModel>(){
     @JvmField
     @Param(name = "cid")
     var cid = 0

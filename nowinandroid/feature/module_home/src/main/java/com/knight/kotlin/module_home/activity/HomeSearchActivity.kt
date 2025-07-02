@@ -6,6 +6,8 @@ import android.text.TextUtils
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.core.library_base.route.RouteActivity
+import com.core.library_base.util.dp2px
 import com.flyjingfish.android_aop_core.annotations.SingleClick
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
@@ -13,8 +15,6 @@ import com.google.android.flexbox.JustifyContent
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.config.Appconfig
 import com.knight.kotlin.library_base.entity.SearchHotKeyEntity
-import com.knight.kotlin.library_base.route.RouteActivity
-import com.knight.kotlin.library_base.util.dp2px
 import com.knight.kotlin.library_database.entity.SearchHistroyKeywordEntity
 import com.knight.kotlin.library_database.repository.HistroyKeywordsRepository
 import com.knight.kotlin.library_util.DataBaseUtils
@@ -26,7 +26,6 @@ import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.library_widget.ktx.init
 import com.knight.kotlin.library_widget.ktx.setSafeOnItemChildClickListener
 import com.knight.kotlin.library_widget.ktx.setSafeOnItemClickListener
-
 import com.knight.kotlin.module_home.R
 import com.knight.kotlin.module_home.adapter.HomeHotKeyAdapter
 import com.knight.kotlin.module_home.adapter.SearchRecordAdapter
@@ -42,7 +41,7 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 @AndroidEntryPoint
 @Route(path = RouteActivity.Home.HomeSearchActivity)
-class HomeSearchActivity : BaseActivity<HomeSearchActivityBinding,HomeSearchVm>(){
+class HomeSearchActivity : BaseActivity<HomeSearchActivityBinding, HomeSearchVm>(){
 
     //热词适配器
     private val mHomeHotKeyAdapter: HomeHotKeyAdapter by lazy { HomeHotKeyAdapter() }

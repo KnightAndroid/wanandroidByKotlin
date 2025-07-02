@@ -9,12 +9,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter4.BaseMultiItemAdapter
+import com.core.library_base.databinding.BaseArticleItemBinding
+import com.core.library_base.databinding.BaseTextItemBinding
+import com.core.library_base.ktx.toHtml
+import com.knight.kotlin.library_base.utils.CacheUtils
 import com.knight.kotlin.library_base.config.Appconfig
 import com.knight.kotlin.library_base.config.EyeTypeConstants
-import com.knight.kotlin.library_base.databinding.BaseArticleItemBinding
-import com.knight.kotlin.library_base.databinding.BaseTextItemBinding
-import com.knight.kotlin.library_base.ktx.toHtml
-import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_util.StringUtils
 import com.knight.kotlin.library_util.image.ImageLoader
 import com.knight.kotlin.module_navigate.entity.HierachyTabArticleEntity
@@ -51,9 +51,9 @@ class HierachyArticleAdapter(data:List<HierachyTabArticleEntity>):
                 item?.run {
                     //作者
                     if (!TextUtils.isEmpty(author)) {
-                        binding.baseItemArticleAuthor.setText(StringUtils.getStyle(context,author,Appconfig.search_keyword))
+                        binding.baseItemArticleAuthor.setText(StringUtils.getStyle(context,author, Appconfig.search_keyword))
                     } else {
-                        binding.baseItemArticleAuthor.setText(StringUtils.getStyle(context,shareUser,Appconfig.search_keyword))
+                        binding.baseItemArticleAuthor.setText(StringUtils.getStyle(context,shareUser, Appconfig.search_keyword))
                     }
 
                     //一级分类
@@ -92,12 +92,12 @@ class HierachyArticleAdapter(data:List<HierachyTabArticleEntity>):
                         binding.baseItemArticledate.setText(niceShareDate)
                     }
                     //标题
-                    binding.baseTvArticletitle.setText(StringUtils.getStyle(context, title.toHtml().toString(),Appconfig.search_keyword))
+                    binding.baseTvArticletitle.setText(StringUtils.getStyle(context, title.toHtml().toString(), Appconfig.search_keyword))
                     //是否收藏
                     if (collect) {
-                        binding.baseIconCollect.setBackgroundResource( com.knight.kotlin.library_base.R.drawable.base_icon_collect)
+                        binding.baseIconCollect.setBackgroundResource( com.core.library_base.R.drawable.base_icon_collect)
                     } else {
-                        binding.baseIconCollect.setBackgroundResource(com.knight.kotlin.library_base.R.drawable.base_icon_nocollect)
+                        binding.baseIconCollect.setBackgroundResource(com.core.library_base.R.drawable.base_icon_nocollect)
                     }
 
                 }
@@ -118,9 +118,9 @@ class HierachyArticleAdapter(data:List<HierachyTabArticleEntity>):
 
                     //作者
                     if (!TextUtils.isEmpty(author)) {
-                        binding.baseItemTvAuthor.setText(StringUtils.getStyle(context,author,Appconfig.search_keyword))
+                        binding.baseItemTvAuthor.setText(StringUtils.getStyle(context,author, Appconfig.search_keyword))
                     } else {
-                        binding.baseItemTvAuthor.setText(StringUtils.getStyle(context,shareUser,Appconfig.search_keyword))
+                        binding.baseItemTvAuthor.setText(StringUtils.getStyle(context,shareUser, Appconfig.search_keyword))
                     }
                     //时间赋值
                     if (!TextUtils.isEmpty(niceDate)) {
@@ -129,12 +129,13 @@ class HierachyArticleAdapter(data:List<HierachyTabArticleEntity>):
                         binding.baseItemTvTime.setText(niceShareDate)
                     }
                     //标题
-                    binding.baseTvTitle.setText(StringUtils.getStyle(context,title.toHtml().toString(),Appconfig.search_keyword))
+                    binding.baseTvTitle.setText(StringUtils.getStyle(context,title.toHtml().toString(), Appconfig.search_keyword))
 
                     //描述
                     if (!TextUtils.isEmpty(desc)) {
                         binding.baseTvProjectDesc.visibility = View.VISIBLE
-                        binding.baseTvProjectDesc.setText(StringUtils.getStyle(context,desc.toHtml().toString(),Appconfig.search_keyword))
+                        binding.baseTvProjectDesc.setText(StringUtils.getStyle(context,desc.toHtml().toString(),
+                            Appconfig.search_keyword))
                     } else {
                         binding.baseTvProjectDesc.visibility = View.GONE
                     }
@@ -149,9 +150,9 @@ class HierachyArticleAdapter(data:List<HierachyTabArticleEntity>):
 
                     //是否收藏
                     if (collect) {
-                        binding.baseArticleCollect.setBackgroundResource(com.knight.kotlin.library_base.R.drawable.base_icon_collect)
+                        binding.baseArticleCollect.setBackgroundResource(com.core.library_base.R.drawable.base_icon_collect)
                     } else {
-                        binding.baseArticleCollect.setBackgroundResource(com.knight.kotlin.library_base.R.drawable.base_icon_nocollect)
+                        binding.baseArticleCollect.setBackgroundResource(com.core.library_base.R.drawable.base_icon_nocollect)
                     }
                 }
 

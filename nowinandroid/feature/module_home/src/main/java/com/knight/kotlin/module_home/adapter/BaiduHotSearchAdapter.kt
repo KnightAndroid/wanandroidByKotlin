@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter4.BaseQuickAdapter
+import com.knight.kotlin.library_base.entity.BaiduContent
 import com.knight.kotlin.module_home.R
 import com.knight.kotlin.module_home.databinding.HomeBaiduRealtimeItemBinding
-import com.knight.kotlin.library_base.entity.BaiduContent
 
 
 /**

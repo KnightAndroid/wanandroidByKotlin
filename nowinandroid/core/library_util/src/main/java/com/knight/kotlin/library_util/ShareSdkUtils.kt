@@ -1,7 +1,6 @@
 package com.knight.kotlin.library_util
 
 import android.graphics.Bitmap
-import com.baidu.navisdk.vi.EnvDrawText
 import com.knight.kotlin.library_base.BaseApp
 import com.knight.kotlin.library_base.config.Appconfig
 import com.knight.kotlin.library_util.bitmap.BitmapUtils

@@ -7,8 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter4.BaseQuickAdapter
+import com.knight.kotlin.library_base.utils.CacheUtils
 import com.knight.kotlin.library_base.ktx.getUser
-import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_util.image.ImageLoader
 import com.knight.kotlin.module_mine.R
 import com.knight.kotlin.module_mine.databinding.MineCoinrankItemBinding

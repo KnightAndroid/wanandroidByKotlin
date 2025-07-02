@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.knight.kotlin.library_base.widget.loadcircleview.BackgroundLayout
+<com.core.library_base.widget.loadcircleview.BackgroundLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/background"
     android:layout_width="wrap_content"
@@ -25,4 +25,4 @@
 
 
 
-</com.knight.kotlin.library_base.widget.loadcircleview.BackgroundLayout>
+</com.core.library_base.widget.loadcircleview.BackgroundLayout>

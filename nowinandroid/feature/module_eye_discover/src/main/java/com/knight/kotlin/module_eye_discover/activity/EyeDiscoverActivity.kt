@@ -6,11 +6,11 @@ import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.widget.doAfterTextChanged
-import com.core.library_base.route.RouteActivity
-import com.google.android.material.search.SearchView
-import com.core.library_base.activity.BaseActivity
+import com.knight.kotlin.library_base.activity.BaseActivity
 import com.core.library_base.ktx.hide
 import com.core.library_base.ktx.showFragment
+import com.core.library_base.route.RouteActivity
+import com.google.android.material.search.SearchView
 import com.knight.kotlin.module_eye_discover.R
 import com.knight.kotlin.module_eye_discover.databinding.EyeDiscoverActivityBinding
 import com.knight.kotlin.module_eye_discover.fragment.EyeDiscoverScollListFragment
@@ -55,7 +55,7 @@ class EyeDiscoverActivity : BaseActivity<EyeDiscoverActivityBinding, EyeDiscover
     override fun EyeDiscoverActivityBinding.initView() {
 
         eyeDiscoverSearchBar.setBackgroundResource(R.drawable.eye_discover_bg_search_shape)
-        eyeDiscoverSearchBar.navigationIcon = ContextCompat.getDrawable(this@EyeDiscoverActivity, com.knight.kotlin.library_base.R.drawable.base_iv_left_arrow)
+        eyeDiscoverSearchBar.navigationIcon = ContextCompat.getDrawable(this@EyeDiscoverActivity, com.core.library_base.R.drawable.base_iv_left_arrow)
         eyeDiscoverSearchBar.setNavigationOnClickListener {
             finish()
         }

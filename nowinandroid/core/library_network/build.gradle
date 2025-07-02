@@ -9,7 +9,7 @@ android {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     //implementation project(path: ':library_base')
-    implementation project(path: ':core:library_base')
+    implementation project(path: ':nowinandroid:core:library_base')
     api Dependencies.GitHub.OKHTTP
     api Dependencies.GitHub.OKHTTP_INTERCEPTOR_LOGGING
     api Dependencies.GitHub.RETROFIT

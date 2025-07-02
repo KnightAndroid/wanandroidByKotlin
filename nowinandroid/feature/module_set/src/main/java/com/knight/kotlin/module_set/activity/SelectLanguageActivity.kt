@@ -2,15 +2,15 @@ package com.knight.kotlin.module_set.activity
 
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.common.reflect.TypeToken
 import com.knight.kotlin.library_base.activity.BaseActivity
-import com.knight.kotlin.library_base.ktx.init
-import com.knight.kotlin.library_base.ktx.setOnClick
-import com.knight.kotlin.library_base.route.RouteActivity
-import com.knight.kotlin.library_base.util.CacheUtils
-import com.knight.kotlin.library_base.util.GsonUtils
-import com.knight.kotlin.library_base.util.LanguageFontSizeUtils
-import com.knight.kotlin.library_base.vm.EmptyViewModel
+import com.core.library_base.ktx.init
+import com.core.library_base.ktx.setOnClick
+import com.core.library_base.route.RouteActivity
+import com.knight.kotlin.library_base.utils.CacheUtils
+import com.core.library_base.util.GsonUtils
+import com.knight.kotlin.library_base.utils.LanguageFontSizeUtils
+import com.core.library_base.vm.EmptyViewModel
+import com.google.common.reflect.TypeToken
 import com.knight.kotlin.library_util.JsonUtils
 import com.knight.kotlin.library_util.SystemUtils
 import com.knight.kotlin.library_widget.ktx.setSafeOnItemClickListener

@@ -15,7 +15,7 @@ import android.view.View
 import android.view.WindowInsets
 import android.widget.EditText
 import android.widget.TextView
-import com.knight.kotlin.library_base.util.ColorUtils
+import com.core.library_base.util.ColorUtils
 import com.knight.kotlin.library_widget.ColorPickerView
 import com.knight.kotlin.module_set.R
 import com.knight.kotlin.module_set.annoation.ColorStyle

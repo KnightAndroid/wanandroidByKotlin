@@ -3,14 +3,14 @@ package com.knight.kotlin.library_aop
 import android.app.Application
 import android.content.Context
 import android.widget.Toast
+import com.core.library_base.app.ApplicationLifecycle
+import com.core.library_base.util.ProcessUtil
 import com.google.auto.service.AutoService
 import com.knight.kotlin.library_aop.loginintercept.ILoginFilter
 import com.knight.kotlin.library_aop.loginintercept.LoginManager
 import com.knight.kotlin.library_base.BaseApp
-import com.knight.kotlin.library_base.app.ApplicationLifecycle
 import com.knight.kotlin.library_base.entity.UserInfoEntity
 import com.knight.kotlin.library_base.ktx.getUser
-import com.knight.kotlin.library_base.util.ProcessUtil
 
 
 /**

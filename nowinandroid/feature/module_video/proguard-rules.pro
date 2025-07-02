@@ -19,7 +19,7 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
--dontwarn com.knight.kotlin.library_base.R$drawable
--dontwarn com.knight.kotlin.library_base.R$string
+-dontwarn com.core.library_base.R$drawable
+-dontwarn com.core.library_base.R$string
 -dontwarn com.knight.kotlin.library_widget.R$drawable
 -dontwarn com.knight.kotlin.library_widget.R$layout

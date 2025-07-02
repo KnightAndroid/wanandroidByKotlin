@@ -2,8 +2,8 @@ package com.knight.kotlin.module_mine.dialog
 
 import android.view.Gravity
 import com.knight.kotlin.library_base.fragment.BaseDialogFragment
-import com.knight.kotlin.library_base.ktx.toHtml
-import com.knight.kotlin.library_base.vm.EmptyViewModel
+import com.core.library_base.ktx.toHtml
+import com.core.library_base.vm.EmptyViewModel
 import com.knight.kotlin.module_mine.R
 import com.knight.kotlin.module_mine.databinding.MinePointRuleDialogBinding
 
@@ -12,7 +12,7 @@ import com.knight.kotlin.module_mine.databinding.MinePointRuleDialogBinding
  * Time:2022/5/11 13:51
  * Description:CoinsRuleDialog
  */
-class CoinsRuleDialog : BaseDialogFragment<MinePointRuleDialogBinding,EmptyViewModel>() {
+class CoinsRuleDialog : BaseDialogFragment<MinePointRuleDialogBinding, EmptyViewModel>() {
 
 
 

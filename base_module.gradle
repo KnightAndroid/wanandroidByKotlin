@@ -125,7 +125,7 @@ dependencies {
     api project(":nowinandroid:core:library_aop")
     api project(":nowinandroid:core:library_common")
   //  api project(path: ':library_base')
-    api project(path:':core:library_base')
+    api project(":nowinandroid:core:library_base")
     api project(":nowinandroid:core:library_database")
     api project(":nowinandroid:core:library_permiss")
 

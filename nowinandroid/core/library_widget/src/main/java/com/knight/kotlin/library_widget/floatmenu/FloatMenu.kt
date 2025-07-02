@@ -17,7 +17,7 @@ import android.widget.LinearLayout
 import android.widget.PopupWindow
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import com.knight.kotlin.library_base.util.dp2px
+import com.core.library_base.util.dp2px
 import com.knight.kotlin.library_widget.R
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserException

@@ -5,8 +5,8 @@ import androidx.annotation.OptIn
 import androidx.fragment.app.FragmentTransaction
 import androidx.media3.common.util.UnstableApi
 import com.knight.kotlin.library_base.activity.BaseActivity
-import com.knight.kotlin.library_base.route.RouteActivity
-import com.knight.kotlin.library_base.vm.EmptyViewModel
+import com.core.library_base.route.RouteActivity
+import com.core.library_base.vm.EmptyViewModel
 import com.knight.kotlin.library_util.Mp3PlayerUtils
 import com.knight.kotlin.module_home.R
 import com.knight.kotlin.module_home.databinding.HomeActivityBinding
@@ -16,7 +16,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 @Route(path = RouteActivity.Home.HomeAloneMainActivity)
-class HomeActivity : BaseActivity<HomeActivityBinding,EmptyViewModel>() {
+class HomeActivity : BaseActivity<HomeActivityBinding, EmptyViewModel>() {
 
 
 

@@ -1,8 +1,8 @@
 package com.knight.kotlin.library_network.client
 
+import com.knight.kotlin.library_base.BaseApp
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.knight.kotlin.library_base.BaseApp
 import com.knight.kotlin.library_network.BuildConfig
 import com.knight.kotlin.library_network.config.BaseUrlConfig
 import com.knight.kotlin.library_network.cookie.InMemoryCookieStore

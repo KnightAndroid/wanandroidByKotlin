@@ -9,11 +9,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter4.BaseQuickAdapter
-import com.core.library_base.config.Appconfig
+import com.core.library_base.databinding.BaseTextItemBinding
 import com.core.library_base.ktx.toHtml
-import com.core.library_base.util.CacheUtils
-import com.knight.kotlin.library_base.databinding.BaseTextItemBinding
-
+import com.knight.kotlin.library_base.utils.CacheUtils
+import com.knight.kotlin.library_base.config.Appconfig
 import com.knight.kotlin.library_util.StringUtils
 import com.knight.kotlin.module_square.entity.SquareQuestionBean
 
@@ -41,7 +40,7 @@ class SquareQuestionAdapter: BaseQuickAdapter<SquareQuestionBean, SquareQuestion
                 holder.binding.baseItemArticleAuthor.setText(StringUtils.getStyle(context,author,
                     Appconfig.search_keyword))
             }  else {
-                holder.binding.baseItemArticleAuthor.setText(StringUtils.getStyle(context,shareUser,Appconfig.search_keyword))
+                holder.binding.baseItemArticleAuthor.setText(StringUtils.getStyle(context,shareUser, Appconfig.search_keyword))
             }
 
             //一级分类
@@ -68,12 +67,12 @@ class SquareQuestionAdapter: BaseQuickAdapter<SquareQuestionBean, SquareQuestion
                 holder.binding.baseItemArticledate.setText(niceShareDate)
             }
             //标题
-            holder.binding.baseTvArticletitle.setText(StringUtils.getStyle(context,title.toHtml().toString(),Appconfig.search_keyword))
+            holder.binding.baseTvArticletitle.setText(StringUtils.getStyle(context,title.toHtml().toString(), com.knight.kotlin.library_base.config.Appconfig.search_keyword))
             //是否收藏
             if (collect) {
-                holder.binding.baseIconCollect.setBackgroundResource(com.knight.kotlin.library_base.R.drawable.base_icon_collect)
+                holder.binding.baseIconCollect.setBackgroundResource(com.core.library_base.R.drawable.base_icon_collect)
             } else {
-                holder.binding.baseIconCollect.setBackgroundResource(com.knight.kotlin.library_base.R.drawable.base_icon_nocollect)
+                holder.binding.baseIconCollect.setBackgroundResource(com.core.library_base.R.drawable.base_icon_nocollect)
             }
 
         }

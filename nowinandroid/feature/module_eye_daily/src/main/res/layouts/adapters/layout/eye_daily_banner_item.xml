@@ -7,7 +7,7 @@
 
    <variable
        name="model"
-       type="com.core.library_base.entity.EyeItemEntity" />
+       type="com.knight.kotlin.library_base.entity.EyeItemEntity" />
 
     </data>
 

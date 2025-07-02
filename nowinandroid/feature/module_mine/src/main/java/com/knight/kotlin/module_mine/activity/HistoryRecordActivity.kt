@@ -4,17 +4,16 @@ import android.graphics.Point
 import android.view.MotionEvent
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.core.library_base.ktx.init
+import com.core.library_base.ktx.setOnClick
+import com.core.library_base.route.RouteActivity
+import com.knight.kotlin.library_base.utils.ArouteUtils
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.ktx.getUser
-import com.knight.kotlin.library_base.ktx.init
-import com.knight.kotlin.library_base.ktx.setOnClick
-import com.knight.kotlin.library_base.route.RouteActivity
-import com.knight.kotlin.library_base.util.ArouteUtils
 import com.knight.kotlin.library_database.entity.HistoryReadRecordsEntity
 import com.knight.kotlin.library_util.DialogUtils
 import com.knight.kotlin.library_widget.floatmenu.FloatMenu
 import com.knight.kotlin.library_widget.ktx.setSafeOnItemClickListener
-
 import com.knight.kotlin.module_mine.R
 import com.knight.kotlin.module_mine.adapter.HistoryRecordAdapter
 import com.knight.kotlin.module_mine.databinding.MineHistoryrecordActivityBinding
@@ -32,7 +31,7 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 @AndroidEntryPoint
 @Route(path = RouteActivity.Mine.HistoryRecordActivity)
-class HistoryRecordActivity :BaseActivity<MineHistoryrecordActivityBinding,HistoryRecordViewModel>(),OnLoadMoreListener,OnRefreshListener{
+class HistoryRecordActivity : BaseActivity<MineHistoryrecordActivityBinding, HistoryRecordViewModel>(),OnLoadMoreListener,OnRefreshListener{
 
 
     private var endStation = 10

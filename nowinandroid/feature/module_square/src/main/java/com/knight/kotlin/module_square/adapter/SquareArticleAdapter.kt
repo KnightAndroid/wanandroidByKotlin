@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter4.BaseQuickAdapter
 import com.core.library_base.ktx.toHtml
-import com.core.library_base.util.CacheUtils
+import com.knight.kotlin.library_base.utils.CacheUtils
 import com.knight.kotlin.module_square.databinding.SquareArticleItemBinding
 import com.knight.kotlin.module_square.entity.SquareArticleEntity
 
@@ -94,9 +94,9 @@ class SquareArticleAdapter(data:List<SquareArticleEntity>): BaseQuickAdapter<Squ
 
             //是否有收藏
             if (collect == true) {
-                holder.binding.squareIconCollect.setBackgroundResource(com.knight.kotlin.library_base.R.drawable.base_icon_collect)
+                holder.binding.squareIconCollect.setBackgroundResource(com.core.library_base.R.drawable.base_icon_collect)
             } else {
-                holder.binding.squareIconCollect.setBackgroundResource(com.knight.kotlin.library_base.R.drawable.base_icon_nocollect)
+                holder.binding.squareIconCollect.setBackgroundResource(com.core.library_base.R.drawable.base_icon_nocollect)
             }
         }
     }

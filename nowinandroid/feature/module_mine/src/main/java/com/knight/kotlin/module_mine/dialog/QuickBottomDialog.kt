@@ -3,9 +3,9 @@ package com.knight.kotlin.module_mine.dialog
 import android.view.Gravity
 import android.view.View
 import com.knight.kotlin.library_base.fragment.BaseDialogFragment
-import com.knight.kotlin.library_base.ktx.setOnClick
-import com.knight.kotlin.library_base.util.CacheUtils
-import com.knight.kotlin.library_base.vm.EmptyViewModel
+import com.core.library_base.ktx.setOnClick
+import com.knight.kotlin.library_base.utils.CacheUtils
+import com.core.library_base.vm.EmptyViewModel
 import com.knight.kotlin.module_mine.databinding.MineQuickloginBottomDialogBinding
 
 /**
@@ -22,7 +22,7 @@ import com.knight.kotlin.module_mine.databinding.MineQuickloginBottomDialogBindi
  * @Version:        1.0
  */
 
-class QuickBottomDialog : BaseDialogFragment<MineQuickloginBottomDialogBinding,EmptyViewModel>() {
+class QuickBottomDialog : BaseDialogFragment<MineQuickloginBottomDialogBinding, EmptyViewModel>() {
 
     interface FingureLoginListener {
         fun fingureQuick()

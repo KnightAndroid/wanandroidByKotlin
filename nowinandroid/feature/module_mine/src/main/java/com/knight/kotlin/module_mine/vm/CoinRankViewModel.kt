@@ -2,7 +2,7 @@ package com.knight.kotlin.module_mine.vm
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
-import com.knight.kotlin.library_base.vm.BaseViewModel
+import com.core.library_base.vm.BaseViewModel
 import com.knight.kotlin.module_mine.entity.CoinRankListEntity
 import com.knight.kotlin.module_mine.repo.CoinRankRepo
 import dagger.hilt.android.lifecycle.HiltViewModel

@@ -3,7 +3,7 @@ package com.knight.kotlin.module_realtime.fragment
 import android.graphics.Color
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.knight.kotlin.library_base.fragment.BaseFragment
-import com.knight.kotlin.library_base.route.RouteFragment
+import com.core.library_base.route.RouteFragment
 import com.knight.kotlin.library_widget.ktx.init
 import com.knight.kotlin.module_realtime.adapter.HotRankCarAdapter
 import com.knight.kotlin.module_realtime.adapter.HotRankCategoryAdapter
@@ -23,7 +23,7 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 @AndroidEntryPoint
 @Route(path = RouteFragment.RealTime.RealTimeCarFragment)
-class RealTimeCarFragment : BaseFragment<RealtimeCarFragmentBinding,RealTimeCarVm>(),HotRankCategoryAdapter.OnChipClickListener {
+class RealTimeCarFragment : BaseFragment<RealtimeCarFragmentBinding, RealTimeCarVm>(),HotRankCategoryAdapter.OnChipClickListener {
 
 
     private var category:String = "全部"

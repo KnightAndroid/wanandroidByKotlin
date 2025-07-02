@@ -2,9 +2,9 @@ package com.knight.kotlin.module_navigate.activity
 
 import androidx.fragment.app.Fragment
 import com.knight.kotlin.library_base.activity.BaseActivity
-import com.knight.kotlin.library_base.ktx.setOnClick
-import com.knight.kotlin.library_base.route.RouteActivity
-import com.knight.kotlin.library_base.vm.EmptyViewModel
+import com.core.library_base.ktx.setOnClick
+import com.core.library_base.route.RouteActivity
+import com.core.library_base.vm.EmptyViewModel
 import com.knight.kotlin.library_util.ViewInitUtils
 import com.knight.kotlin.library_util.bindWechatViewPager2
 import com.knight.kotlin.module_navigate.databinding.NavigateHierachyTabActivityBinding
@@ -20,7 +20,7 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 @AndroidEntryPoint
 @Route(path = RouteActivity.Navigate.HierachyTabActivity)
-class HierachyTabActivity : BaseActivity<NavigateHierachyTabActivityBinding,EmptyViewModel>() {
+class HierachyTabActivity : BaseActivity<NavigateHierachyTabActivityBinding, EmptyViewModel>() {
 
 
     @JvmField

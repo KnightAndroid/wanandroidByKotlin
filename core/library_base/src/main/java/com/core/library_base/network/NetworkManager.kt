@@ -10,9 +10,9 @@ import android.net.NetworkRequest
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
-import com.knight.kotlin.library_base.network.enums.NetworkState
-import com.knight.kotlin.library_base.util.AnnotationUtils
-import com.knight.kotlin.library_base.util.NetworkStateUtils
+import com.core.library_base.network.enums.NetworkState
+import com.core.library_base.util.AnnotationUtils
+import com.core.library_base.util.NetworkStateUtils
 
 /**
  * Author:Knight

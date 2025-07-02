@@ -1,7 +1,7 @@
 package com.knight.kotlin.module_square.activity
 
 import android.text.TextUtils
-import com.core.library_base.activity.BaseActivity
+import com.knight.kotlin.library_base.activity.BaseActivity
 import com.core.library_base.event.MessageEvent
 import com.core.library_base.ktx.appStr
 import com.core.library_base.ktx.setOnClick

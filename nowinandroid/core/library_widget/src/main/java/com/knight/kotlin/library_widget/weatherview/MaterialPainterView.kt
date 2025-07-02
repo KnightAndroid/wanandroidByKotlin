@@ -12,8 +12,8 @@ import android.view.View
 import androidx.annotation.FloatRange
 import androidx.annotation.Size
 import androidx.core.content.res.ResourcesCompat
-import com.knight.kotlin.library_base.ktx.getTabletListAdaptiveWidth
-import com.knight.kotlin.library_base.ktx.isLandscape
+import com.core.library_base.ktx.getTabletListAdaptiveWidth
+import com.core.library_base.ktx.isLandscape
 import com.knight.kotlin.library_base.ktx.sensorManager
 import kotlin.math.abs
 import kotlin.math.acos

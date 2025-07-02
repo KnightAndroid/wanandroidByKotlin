@@ -43,11 +43,11 @@ abstract class ResourceProvider {
     // minimal icon.
     @RequiresApi(api = Build.VERSION_CODES.M)
     abstract fun getMinimalIcon(code: WeatherCode?, dayTime: Boolean): Icon
-    abstract fun getMinimalLightIcon(code: WeatherCode?, dayTime: Boolean): Drawable
+    abstract fun getMinimalLightIcon(code:WeatherCode?, dayTime: Boolean): Drawable
     abstract fun getMinimalLightIconUri(code: WeatherCode?, dayTime: Boolean): Uri
     abstract fun getMinimalGreyIcon(code: WeatherCode?, dayTime: Boolean): Drawable
     abstract fun getMinimalGreyIconUri(code: WeatherCode?, dayTime: Boolean): Uri
-    abstract fun getMinimalDarkIcon(code: WeatherCode?, dayTime: Boolean): Drawable
+    abstract fun getMinimalDarkIcon(code:WeatherCode?, dayTime: Boolean): Drawable
     abstract fun getMinimalDarkIconUri(code: WeatherCode?, dayTime: Boolean): Uri
     abstract fun getMinimalXmlIcon(code: WeatherCode?, dayTime: Boolean): Drawable
 

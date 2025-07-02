@@ -33,42 +33,42 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import com.baidu.location.BDLocation
+import com.core.library_base.annotation.EventBusRegister
+import com.core.library_base.event.MessageEvent
+import com.core.library_base.ktx.fromJson
+import com.core.library_base.ktx.init
+import com.core.library_base.ktx.setOnClick
+import com.core.library_base.ktx.toHtml
+import com.core.library_base.ktx.toJson
+import com.core.library_base.route.RouteActivity
+import com.core.library_base.route.RouteFragment
+import com.knight.kotlin.library_base.utils.ArouteUtils
+import com.core.library_base.util.BaiduSoDownloaderUtils
+import com.knight.kotlin.library_base.utils.CacheUtils
+import com.core.library_base.util.ColorUtils
+import com.core.library_base.util.EventBusUtils
+import com.core.library_base.util.GsonUtils
+import com.knight.kotlin.library_base.utils.LanguageFontSizeUtils
+import com.core.library_base.util.dp2px
+import com.core.library_base.util.isMotionReduced
 import com.flyjingfish.android_aop_core.annotations.SingleClick
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.gson.reflect.TypeToken
 import com.knight.kotlin.library_aop.loginintercept.LoginCheck
-import com.knight.kotlin.library_base.annotation.EventBusRegister
 import com.knight.kotlin.library_base.config.Appconfig
 import com.knight.kotlin.library_base.config.CacheKey
 import com.knight.kotlin.library_base.entity.BaiduContent
 import com.knight.kotlin.library_base.entity.LoginEntity
 import com.knight.kotlin.library_base.entity.UserInfoEntity
 import com.knight.kotlin.library_base.entity.WeatherIndexItem
-import com.core.library_base.enum.BackgroundAnimationMode
+import com.knight.kotlin.library_base.enum.BackgroundAnimationMode
 import com.knight.kotlin.library_base.enum.PollutantIndex
-import com.knight.kotlin.library_base.event.MessageEvent
 import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.knight.kotlin.library_base.ktx.SettingsManager
 import com.knight.kotlin.library_base.ktx.dismissLoading
-import com.knight.kotlin.library_base.ktx.fromJson
 import com.knight.kotlin.library_base.ktx.getLocation
 import com.knight.kotlin.library_base.ktx.getUser
-import com.knight.kotlin.library_base.ktx.init
-import com.knight.kotlin.library_base.ktx.setOnClick
-import com.knight.kotlin.library_base.ktx.toHtml
-import com.knight.kotlin.library_base.ktx.toJson
 import com.knight.kotlin.library_base.ktx.updateText
-import com.knight.kotlin.library_base.route.RouteActivity
-import com.knight.kotlin.library_base.route.RouteFragment
-import com.knight.kotlin.library_base.util.ArouteUtils
-import com.knight.kotlin.library_base.util.BaiduSoDownloaderUtils
-import com.knight.kotlin.library_base.util.CacheUtils
-import com.knight.kotlin.library_base.util.ColorUtils
-import com.knight.kotlin.library_base.util.EventBusUtils
-import com.knight.kotlin.library_base.util.GsonUtils
-import com.knight.kotlin.library_base.util.LanguageFontSizeUtils
-import com.knight.kotlin.library_base.util.dp2px
-import com.knight.kotlin.library_base.util.isMotionReduced
 import com.knight.kotlin.library_common.entity.AppUpdateBean
 import com.knight.kotlin.library_common.entity.OfficialAccountEntity
 import com.knight.kotlin.library_common.fragment.UpdateAppDialogFragment
@@ -399,9 +399,9 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
 
 
         homeRecommentMenu.sunMoonControlView.setColors(
-            ContextCompat.getColor(requireActivity(), com.knight.kotlin.library_base.R.color.base_color_theme),
-            androidx.core.graphics.ColorUtils.setAlphaComponent(ContextCompat.getColor(requireActivity(), com.knight.kotlin.library_base.R.color.base_color_theme), (0.5 * 255).toInt()),
-            androidx.core.graphics.ColorUtils.setAlphaComponent(ContextCompat.getColor(requireActivity(), com.knight.kotlin.library_base.R.color.base_color_theme), (0.2 * 255).toInt()),
+            ContextCompat.getColor(requireActivity(), com.core.library_base.R.color.base_color_theme),
+            androidx.core.graphics.ColorUtils.setAlphaComponent(ContextCompat.getColor(requireActivity(), com.core.library_base.R.color.base_color_theme), (0.5 * 255).toInt()),
+            androidx.core.graphics.ColorUtils.setAlphaComponent(ContextCompat.getColor(requireActivity(), com.core.library_base.R.color.base_color_theme), (0.2 * 255).toInt()),
             Color.WHITE,
             false
         )
@@ -560,9 +560,9 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
 
     private fun isBackgroundAnimationEnabled() =
         when (SettingsManager.getInstance(requireContext()).backgroundAnimationMode) {
-            com.core.library_base.enum.BackgroundAnimationMode.SYSTEM -> !requireContext().isMotionReduced
-            com.core.library_base.enum.BackgroundAnimationMode.ENABLED -> true
-            com.core.library_base.enum.BackgroundAnimationMode.DISABLED -> false
+            BackgroundAnimationMode.SYSTEM -> !requireContext().isMotionReduced
+            BackgroundAnimationMode.ENABLED -> true
+            BackgroundAnimationMode.DISABLED -> false
         }
 
 
@@ -833,12 +833,12 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
             }
 
             val mPollutantList :MutableList<PollutantBean> = mutableListOf()
-            mPollutantList.add(PollutantBean(PollutantIndex.PM25,it.air.pm10.toFloat(),getString(com.knight.kotlin.library_base.R.string.base_unit_mugpcum)))
-            mPollutantList.add(PollutantBean(PollutantIndex.PM10,it.air.pm10.toFloat(),getString(com.knight.kotlin.library_base.R.string.base_unit_mugpcum)))
-            mPollutantList.add(PollutantBean(PollutantIndex.O3,it.air.o3.toFloat(),getString(com.knight.kotlin.library_base.R.string.base_unit_mugpcum)))
-            mPollutantList.add(PollutantBean(PollutantIndex.NO2,it.air.no2.toFloat(),getString(com.knight.kotlin.library_base.R.string.base_unit_mugpcum)))
-            mPollutantList.add(PollutantBean(PollutantIndex.SO2,it.air.so2.toFloat(),getString(com.knight.kotlin.library_base.R.string.base_unit_mugpcum)))
-            mPollutantList.add(PollutantBean(PollutantIndex.CO,it.air.co.toFloat(),getString(com.knight.kotlin.library_base.R.string.base_unit_mgpcum)))
+            mPollutantList.add(PollutantBean(PollutantIndex.PM25,it.air.pm10.toFloat(),getString(com.core.library_base.R.string.base_unit_mugpcum)))
+            mPollutantList.add(PollutantBean(PollutantIndex.PM10,it.air.pm10.toFloat(),getString(com.core.library_base.R.string.base_unit_mugpcum)))
+            mPollutantList.add(PollutantBean(PollutantIndex.O3,it.air.o3.toFloat(),getString(com.core.library_base.R.string.base_unit_mugpcum)))
+            mPollutantList.add(PollutantBean(PollutantIndex.NO2,it.air.no2.toFloat(),getString(com.core.library_base.R.string.base_unit_mugpcum)))
+            mPollutantList.add(PollutantBean(PollutantIndex.SO2,it.air.so2.toFloat(),getString(com.core.library_base.R.string.base_unit_mugpcum)))
+            mPollutantList.add(PollutantBean(PollutantIndex.CO,it.air.co.toFloat(),getString(com.core.library_base.R.string.base_unit_mgpcum)))
             mWeatherPullutantAdapter.submitList(mPollutantList)
         }
     }

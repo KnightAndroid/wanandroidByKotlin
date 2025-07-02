@@ -4,7 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.core.library_base.entity.EyeDailyItemEntity
+import com.knight.kotlin.library_base.entity.EyeDailyItemEntity
 import com.knight.kotlin.module_eye_daily.databinding.EyeDailyBannerItemBinding
 import com.youth.banner.adapter.BannerAdapter
 
@@ -14,7 +14,7 @@ import com.youth.banner.adapter.BannerAdapter
  * Time:2024/5/10 10:00
  * Description:EyeBannerAdapter
  */
-abstract class EyeBannerAdapter(context: Context, data:List<EyeDailyItemEntity>) : BannerAdapter<EyeDailyItemEntity,EyeBannerAdapter.BannerViewHolder>(data) {
+abstract class EyeBannerAdapter(context: Context, data:List<EyeDailyItemEntity>) : BannerAdapter<com.knight.kotlin.library_base.entity.EyeDailyItemEntity,EyeBannerAdapter.BannerViewHolder>(data) {
     private val mInflater = LayoutInflater.from(context)
     class BannerViewHolder(val binding: EyeDailyBannerItemBinding) :
         RecyclerView.ViewHolder(binding.root) {

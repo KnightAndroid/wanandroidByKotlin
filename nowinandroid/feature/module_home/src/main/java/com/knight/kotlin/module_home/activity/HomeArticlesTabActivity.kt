@@ -6,16 +6,15 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
-import com.flyjingfish.android_aop_core.annotations.SingleClick
 import com.knight.kotlin.library_base.activity.BaseActivity
-import com.knight.kotlin.library_base.route.RouteActivity
-import com.knight.kotlin.library_base.util.dp2px
-import com.knight.kotlin.library_base.vm.EmptyViewModel
+import com.core.library_base.route.RouteActivity
+import com.core.library_base.util.dp2px
+import com.core.library_base.vm.EmptyViewModel
+import com.flyjingfish.android_aop_core.annotations.SingleClick
 import com.knight.kotlin.library_util.BlurBuilderUtils
 import com.knight.kotlin.library_util.ViewInitUtils
 import com.knight.kotlin.library_widget.ktx.init
 import com.knight.kotlin.library_widget.ktx.setSafeOnItemClickListener
-
 import com.knight.kotlin.module_home.adapter.TopArticleAroundAdapter
 import com.knight.kotlin.module_home.databinding.HomeArticlesTabActivityBinding
 import com.knight.kotlin.module_home.entity.TopArticleBean
@@ -113,7 +112,7 @@ class HomeArticlesTabActivity : BaseActivity<HomeArticlesTabActivityBinding, Emp
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             finish()
-            overridePendingTransition(com.knight.kotlin.library_base.R.anim.base_scalealpha_out, com.knight.kotlin.library_base.R.anim.base_scalealpha_slient)
+            overridePendingTransition(com.core.library_base.R.anim.base_scalealpha_out, com.core.library_base.R.anim.base_scalealpha_slient)
         }
         return true
     }
@@ -123,7 +122,7 @@ class HomeArticlesTabActivity : BaseActivity<HomeArticlesTabActivityBinding, Emp
         when (v) {
             mBinding.homeIvCircleClose ->{
                 finish()
-                overridePendingTransition(com.knight.kotlin.library_base.R.anim.base_scalealpha_out, com.knight.kotlin.library_base.R.anim.base_scalealpha_slient)
+                overridePendingTransition(com.core.library_base.R.anim.base_scalealpha_out, com.core.library_base.R.anim.base_scalealpha_slient)
             }
         }
     }

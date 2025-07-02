@@ -2,18 +2,17 @@ package com.knight.kotlin.module_mine.activity
 
 import android.graphics.drawable.GradientDrawable
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.knight.kotlin.library_base.activity.BaseActivity
+import com.core.library_base.event.MessageEvent
+import com.core.library_base.ktx.init
+import com.core.library_base.ktx.loadServiceInit
+import com.core.library_base.ktx.setOnClick
+import com.core.library_base.loadsir.EmptyCallBack
+import com.core.library_base.route.RouteActivity
+import com.knight.kotlin.library_base.utils.ArouteUtils
+import com.core.library_base.util.ColorUtils
 import com.kingja.loadsir.core.LoadService
 import com.knight.kotlin.library_aop.loginintercept.LoginCheck
-import com.knight.kotlin.library_base.activity.BaseActivity
-import com.knight.kotlin.library_base.event.MessageEvent
-import com.knight.kotlin.library_base.ktx.init
-import com.knight.kotlin.library_base.ktx.loadServiceInit
-import com.knight.kotlin.library_base.ktx.setOnClick
-import com.knight.kotlin.library_base.loadsir.EmptyCallBack
-import com.core.library_base.loadsir.LoadCallBack
-import com.knight.kotlin.library_base.route.RouteActivity
-import com.knight.kotlin.library_base.util.ArouteUtils
-import com.knight.kotlin.library_base.util.ColorUtils
 import com.knight.kotlin.library_widget.ktx.setSafeOnItemChildClickListener
 import com.knight.kotlin.library_widget.ktx.setSafeOnItemClickListener
 import com.knight.kotlin.library_widget.slidinglayout.SlidingUpPanelLayout
@@ -38,7 +37,7 @@ import org.greenrobot.eventbus.ThreadMode
  */
 @AndroidEntryPoint
 @Route(path = RouteActivity.Mine.OtherShareArticleActivity)
-class OtherShareArticleActivity :BaseActivity<MineOthershareActivityBinding,OtherShareArticleViewModel>(),OnRefreshListener,OnLoadMoreListener {
+class OtherShareArticleActivity : BaseActivity<MineOthershareActivityBinding, OtherShareArticleViewModel>(),OnRefreshListener,OnLoadMoreListener {
 
 
 
@@ -142,9 +141,9 @@ class OtherShareArticleActivity :BaseActivity<MineOthershareActivityBinding,Othe
                 )
             }
 
-            setSafeOnItemChildClickListener(com.knight.kotlin.library_base.R.id.base_icon_collect) { adapter, view, position ->
+            setSafeOnItemChildClickListener(com.core.library_base.R.id.base_icon_collect) { adapter, view, position ->
                 when (view.id) {
-                    com.knight.kotlin.library_base.R.id.base_icon_collect -> {
+                    com.core.library_base.R.id.base_icon_collect -> {
                         selectItem = position
                         collectOrunCollect(
                             items[position].collect,

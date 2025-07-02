@@ -85,7 +85,7 @@ class ScanCodeConfig(builder: Builder) {
             val intent = Intent(mActivity, mClass)
             intent.putExtra(MODEL_KEY, model)
             mFragment?.startActivityForResult(intent, QUESTCODE)
-            mActivity?.overridePendingTransition(com.knight.kotlin.library_base.R.anim.base_bottom_in, com.knight.kotlin.library_base.R.anim.base_bottom_slient)
+            mActivity?.overridePendingTransition(com.core.library_base.R.anim.base_bottom_in, com.core.library_base.R.anim.base_bottom_slient)
         } else {
             val intent = Intent(mActivity, mClass)
             intent.putExtra(MODEL_KEY, model)

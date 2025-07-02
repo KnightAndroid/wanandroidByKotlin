@@ -6,8 +6,8 @@ import android.graphics.Color
 import android.util.AttributeSet
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
-import com.knight.kotlin.library_base.util.CacheUtils
-import com.knight.kotlin.library_base.util.ColorUtils
+import com.knight.kotlin.library_base.utils.CacheUtils
+import com.core.library_base.util.ColorUtils
 
 /**
  * Author:Knight

@@ -9,12 +9,12 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter4.BaseMultiItemAdapter
-import com.core.library_base.config.EyeCardUIType
-import com.core.library_base.entity.EyeCardEntity
-import com.core.library_base.entity.eye_type.EyeBannerImageList
-import com.core.library_base.entity.eye_type.EyeBannerSquare
-import com.core.library_base.entity.eye_type.EyeFeedItemDetail
-import com.core.library_base.entity.eye_type.EyeWaterFallCoverVideoImage
+import com.knight.kotlin.library_base.config.EyeCardUIType
+import com.knight.kotlin.library_base.entity.EyeCardEntity
+import com.knight.kotlin.library_base.entity.eye_type.EyeBannerImageList
+import com.knight.kotlin.library_base.entity.eye_type.EyeBannerSquare
+import com.knight.kotlin.library_base.entity.eye_type.EyeFeedItemDetail
+import com.knight.kotlin.library_base.entity.eye_type.EyeWaterFallCoverVideoImage
 import com.knight.kotlin.library_widget.ktx.init
 import com.knight.kotlin.module_eye_square.databinding.EyeSquareBannerItemBinding
 import com.knight.kotlin.module_eye_square.databinding.EyeSquareRvItemBinding
@@ -148,7 +148,7 @@ class EyeSquareAdapter(activity : FragmentActivity,data :List<EyeCardEntity>): B
             } else if (list[position].type == "set_metro_list"){
                 EyeCardUIType.FEEDITEM
             } else {
-                EyeCardUIType.PIC
+               EyeCardUIType.PIC
             }
         }
     }
@@ -160,7 +160,7 @@ class EyeSquareAdapter(activity : FragmentActivity,data :List<EyeCardEntity>): B
     ): Int {
         if (position >= itemCount) return spanCount
         return when (getItemViewType(position)) {
-            EyeCardUIType.BANNER,EyeCardUIType.WATERFALL_COVER_SMALL,EyeCardUIType.FEEDITEM -> spanCount
+            EyeCardUIType.BANNER, EyeCardUIType.WATERFALL_COVER_SMALL,EyeCardUIType.FEEDITEM -> spanCount
             else -> 1
         }
     }

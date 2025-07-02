@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.core.library_base.loadsir.ErrorCallBack
 import com.kingja.loadsir.core.LoadService
 import com.kingja.loadsir.core.LoadSir
-import com.knight.kotlin.library_base.R
+import com.core.library_base.R
 
 
 /**

@@ -8,7 +8,7 @@ import com.google.gson.JsonElement
 import com.google.gson.JsonPrimitive
 import com.google.gson.reflect.TypeToken
 import com.knight.kotlin.library_base.config.Appconfig
-import com.knight.kotlin.library_base.util.GsonUtils
+import com.core.library_base.util.GsonUtils
 import com.knight.kotlin.library_network.bean.AuthToken
 import com.knight.kotlin.library_network.bean.EyeApiResponse
 import com.knight.kotlin.library_network.bean.GetToken
@@ -131,7 +131,7 @@ class SignInterceptor(
         grantType: String,
         ts: String
     ): String {
-        return "$grantType|${Appconfig.APP_ID}|android|${Appconfig.VERSION_NAME}|${headerStorage.deviceId}|$ts"
+        return "$grantType|${com.knight.kotlin.library_base.config.Appconfig.APP_ID}|android|${com.knight.kotlin.library_base.config.Appconfig.VERSION_NAME}|${headerStorage.deviceId}|$ts"
     }
 
     companion object {

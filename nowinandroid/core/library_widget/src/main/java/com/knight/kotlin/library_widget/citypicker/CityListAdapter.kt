@@ -12,8 +12,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter4.BaseQuickAdapter
 import com.google.android.material.chip.Chip
 import com.google.android.material.shape.ShapeAppearanceModel
-import com.knight.kotlin.library_base.ktx.setOnClick
-import com.knight.kotlin.library_base.util.dp2px
+import com.core.library_base.ktx.setOnClick
+import com.core.library_base.util.dp2px
 import com.knight.kotlin.library_database.entity.CityBean
 import com.knight.kotlin.library_widget.GroupCityListBean
 import com.knight.kotlin.library_widget.databinding.CityDefaultItemBinding

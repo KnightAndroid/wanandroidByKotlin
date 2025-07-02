@@ -1,12 +1,12 @@
 package com.knight.kotlin.module_home.fragment
 
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.gson.reflect.TypeToken
 import com.knight.kotlin.library_base.fragment.BaseFragment
-import com.knight.kotlin.library_base.route.RouteActivity
-import com.knight.kotlin.library_base.route.RouteFragment
-import com.knight.kotlin.library_base.util.GsonUtils
-import com.knight.kotlin.library_base.vm.EmptyViewModel
+import com.core.library_base.route.RouteActivity
+import com.core.library_base.route.RouteFragment
+import com.core.library_base.util.GsonUtils
+import com.core.library_base.vm.EmptyViewModel
+import com.google.gson.reflect.TypeToken
 import com.knight.kotlin.library_util.JsonUtils
 import com.knight.kotlin.library_util.startPage
 import com.knight.kotlin.library_util.startPageWithParams
@@ -25,7 +25,7 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 @AndroidEntryPoint
 @Route(path = RouteFragment.Home.HomeEyeClassifyFragment)
-class HomeEyeClassifyFragment : BaseFragment<HomeEyeClassifyFragmentBinding,EmptyViewModel>() {
+class HomeEyeClassifyFragment : BaseFragment<HomeEyeClassifyFragmentBinding, EmptyViewModel>() {
 
     private val mEyepetizerCategoryAdapter: EyepetizerCategoryAdapter by lazy { EyepetizerCategoryAdapter() }
 

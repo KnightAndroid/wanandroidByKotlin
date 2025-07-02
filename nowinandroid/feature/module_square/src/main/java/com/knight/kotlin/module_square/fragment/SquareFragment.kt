@@ -9,19 +9,17 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.core.library_base.annotation.EventBusRegister
 import com.core.library_base.event.MessageEvent
-import com.core.library_base.fragment.BaseFragment
+import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.core.library_base.ktx.loadServiceInit
+import com.core.library_base.route.RouteActivity
+import com.core.library_base.route.RouteFragment
+import com.knight.kotlin.library_base.utils.ArouteUtils
+import com.knight.kotlin.library_base.utils.CacheUtils
+import com.core.library_base.util.GsonUtils
 import com.flyjingfish.android_aop_core.annotations.SingleClick
 import com.google.gson.reflect.TypeToken
 import com.kingja.loadsir.core.LoadService
 import com.knight.kotlin.library_aop.loginintercept.LoginCheck
-
-import com.core.library_base.loadsir.LoadCallBack
-import com.core.library_base.route.RouteActivity
-import com.core.library_base.route.RouteFragment
-import com.core.library_base.util.ArouteUtils
-import com.core.library_base.util.CacheUtils
-import com.core.library_base.util.GsonUtils
 import com.knight.kotlin.library_util.JsonUtils.getJson
 import com.knight.kotlin.library_util.ViewInitUtils
 import com.knight.kotlin.library_util.bindViewPager2
@@ -183,7 +181,7 @@ class SquareFragment : BaseFragment<SquareFragmentBinding, SquareVm>() {
             }
 
 
-            setSafeOnItemChildClickListener(com.knight.kotlin.library_base.R.id.base_icon_collect) { adapter, view, position ->
+            setSafeOnItemChildClickListener(com.core.library_base.R.id.base_icon_collect) { adapter, view, position ->
                 selectItem = position
                 collectOrunCollect(items[position].collect,items[position].id)
 

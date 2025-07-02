@@ -4,11 +4,11 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
-import com.knight.kotlin.library_base.event.MessageEvent
+import com.core.library_base.event.MessageEvent
 import com.knight.kotlin.library_base.fragment.BaseFragment
-import com.knight.kotlin.library_base.route.RouteFragment
-import com.knight.kotlin.library_base.util.EventBusUtils
-import com.knight.kotlin.library_base.vm.EmptyViewModel
+import com.core.library_base.route.RouteFragment
+import com.core.library_base.util.EventBusUtils
+import com.core.library_base.vm.EmptyViewModel
 import com.knight.kotlin.library_util.ViewInitUtils
 import com.knight.kotlin.module_home.databinding.HomeFragmentBinding
 import com.knight.kotlin.module_home.view.TwoLevelTransformer

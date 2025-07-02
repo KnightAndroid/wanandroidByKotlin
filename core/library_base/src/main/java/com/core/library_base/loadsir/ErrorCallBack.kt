@@ -1,7 +1,7 @@
 package com.core.library_base.loadsir
 
+import com.core.library_base.R
 import com.kingja.loadsir.callback.Callback
-import com.knight.kotlin.library_base.R
 
 
 /**

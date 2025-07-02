@@ -1,7 +1,7 @@
 package com.knight.kotlin.module_constellate.activity
 
 
-import com.core.library_base.activity.BaseActivity
+import com.knight.kotlin.library_base.activity.BaseActivity
 import com.core.library_base.route.RouteActivity
 import com.core.library_base.vm.EmptyViewModel
 import com.knight.kotlin.module_constellate.R

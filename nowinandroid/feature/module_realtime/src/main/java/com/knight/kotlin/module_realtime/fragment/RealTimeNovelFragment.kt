@@ -7,9 +7,9 @@ import android.view.View
 import android.widget.TextView
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import com.google.android.material.tabs.TabLayoutMediator
 import com.knight.kotlin.library_base.fragment.BaseFragment
-import com.knight.kotlin.library_base.route.RouteFragment
+import com.core.library_base.route.RouteFragment
+import com.google.android.material.tabs.TabLayoutMediator
 import com.knight.kotlin.library_util.ViewInitUtils
 import com.knight.kotlin.module_realtime.R
 import com.knight.kotlin.module_realtime.databinding.RealtimeNovelFragmentBinding
@@ -26,7 +26,7 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 @AndroidEntryPoint
 @Route(path = RouteFragment.RealTime.RealTimeNovelFragment)
-class RealTimeNovelFragment : BaseFragment<RealtimeNovelFragmentBinding,RealTimeNovelVm>() {
+class RealTimeNovelFragment : BaseFragment<RealtimeNovelFragmentBinding, RealTimeNovelVm>() {
     private val mFragments = mutableListOf<Fragment>()
 
 

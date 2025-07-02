@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter4.BaseQuickAdapter
-import com.core.library_base.entity.EyeItemEntity
+import com.knight.kotlin.library_base.entity.EyeItemEntity
 import com.knight.kotlin.module_eye_discover.databinding.EyeDiscoverCategoryDetailItemBinding
 
 

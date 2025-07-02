@@ -25,7 +25,7 @@ class WXEntryActivity : AppCompatActivity(), IWXAPIEventHandler {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        api = WXAPIFactory.createWXAPI(this, Appconfig.WX_APP_ID, false)
+        api = WXAPIFactory.createWXAPI(this, com.knight.kotlin.library_base.config.Appconfig.WX_APP_ID, false)
         api.handleIntent(getIntent(), this)
 
     }

@@ -5,9 +5,9 @@ import android.view.View
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.knight.kotlin.library_base.activity.BaseActivity
-import com.knight.kotlin.library_base.ktx.init
-import com.knight.kotlin.library_base.ktx.setOnClick
-import com.knight.kotlin.library_base.route.RouteActivity
+import com.core.library_base.ktx.init
+import com.core.library_base.ktx.setOnClick
+import com.core.library_base.route.RouteActivity
 import com.knight.kotlin.library_widget.CountNumberView
 import com.knight.kotlin.module_mine.R
 import com.knight.kotlin.module_mine.adapter.MyCointsAdapter
@@ -29,7 +29,7 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 @AndroidEntryPoint
 @Route(path = RouteActivity.Mine.MyPointsActivity)
-class MyCoinsActivity : BaseActivity<MineCoinsActivityBinding,MyDetailCoinsViewModel>(),OnRefreshListener,OnLoadMoreListener{
+class MyCoinsActivity : BaseActivity<MineCoinsActivityBinding, MyDetailCoinsViewModel>(),OnRefreshListener,OnLoadMoreListener{
 
     @JvmField
     @Param(name = "userCoin")

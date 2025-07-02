@@ -5,7 +5,7 @@ import android.graphics.Color
 import android.view.View
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import com.knight.kotlin.library_base.util.CacheUtils
+import com.knight.kotlin.library_base.utils.CacheUtils
 import com.knight.kotlin.module_navigate.R
 import com.knight.kotlin.module_navigate.holder.RvHolder
 import com.knight.kotlin.module_navigate.listener.RvListener

@@ -9,7 +9,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.OnChildAttachStateChangeListener
-import com.core.library_base.activity.BaseActivity
+import com.knight.kotlin.library_base.activity.BaseActivity
 import com.core.library_base.ktx.init
 import com.core.library_base.ktx.setOnClick
 import com.core.library_base.route.RouteActivity
@@ -102,7 +102,7 @@ class EyeSpecialTopicDetailActivity : BaseActivity<EyeDiscoverSpecialTopicActivi
         mBinding.rvSpecialTopicVideo.addItemDecoration(
             RecyclerItemDecoration(
             0,
-            0, 0, 0,  ContextCompat.getColor(this, com.knight.kotlin.library_base.R.color.base_line_color),5.dp2px(),0
+            0, 0, 0,  ContextCompat.getColor(this, com.core.library_base.R.color.base_line_color),5.dp2px(),0
         )
         )
         mBinding.rvSpecialTopicVideo.addOnChildAttachStateChangeListener(object :

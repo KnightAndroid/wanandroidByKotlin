@@ -36,7 +36,7 @@ class HotRankMainAdapter(val hotListEnum: HotListEnum) : BaseQuickAdapter<BaiduC
        item?.run {
            if (hotListEnum == HotListEnum.REALTIME) {
                if (position == 0) {
-                   holder.binding.tvRealTimeRank.setBackgroundResource(com.knight.kotlin.library_base.R.drawable.base_baidu_real_time_top)
+                   holder.binding.tvRealTimeRank.setBackgroundResource(com.core.library_base.R.drawable.base_baidu_real_time_top)
                    holder.binding.tvRealTimeRank.setText("")
                } else {
                    holder.binding.tvRealTimeRank.background = null

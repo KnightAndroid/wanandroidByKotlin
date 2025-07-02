@@ -3,7 +3,7 @@ package com.core.library_base.widget.loadcircleview
 import android.content.Context
 import android.graphics.Canvas
 import android.util.AttributeSet
-import com.knight.kotlin.library_base.R
+import com.core.library_base.R
 
 /**
  * Author:Knight

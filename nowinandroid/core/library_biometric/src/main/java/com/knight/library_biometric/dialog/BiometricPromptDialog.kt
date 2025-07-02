@@ -7,8 +7,8 @@ import android.view.Gravity
 import android.view.View
 import androidx.annotation.RequiresApi
 import com.knight.kotlin.library_base.fragment.BaseDialogFragment
-import com.knight.kotlin.library_base.ktx.setOnClick
-import com.knight.kotlin.library_base.vm.EmptyViewModel
+import com.core.library_base.ktx.setOnClick
+import com.core.library_base.vm.EmptyViewModel
 import com.knight.library_biometric.R
 import com.knight.library_biometric.databinding.BiometricLoginDialogBinding
 
@@ -26,7 +26,7 @@ import com.knight.library_biometric.databinding.BiometricLoginDialogBinding
  * @Version:        1.0
  */
 
-class BiometricPromptDialog: BaseDialogFragment<BiometricLoginDialogBinding,EmptyViewModel>(){
+class BiometricPromptDialog: BaseDialogFragment<BiometricLoginDialogBinding, EmptyViewModel>(){
     private var mDialogActionCallback: OnBiometricPromptDialogActionCallback? = null
     override fun getGravity() = Gravity.CENTER
     override fun cancelOnTouchOutSide() = true
@@ -86,7 +86,7 @@ class BiometricPromptDialog: BaseDialogFragment<BiometricLoginDialogBinding,Empt
                 mBinding.fingureTvCancel.setVisibility(View.VISIBLE)
             }
             STATE_SUCCEED -> {
-                mBinding.fingureTvStatus.setTextColor(activity?.getColor(com.knight.kotlin.library_base.R.color.base_color_theme) ?: Color.parseColor("#55aff4"))
+                mBinding.fingureTvStatus.setTextColor(activity?.getColor(com.core.library_base.R.color.base_color_theme) ?: Color.parseColor("#55aff4"))
                 mBinding.fingureTvStatus.setText(getString(R.string.biometric_touchverify_succeeded))
                 mBinding.fingureTvCancel.setVisibility(View.VISIBLE)
                 mBinding.fingureTvStatus.postDelayed(Runnable { dismiss() }, 500)

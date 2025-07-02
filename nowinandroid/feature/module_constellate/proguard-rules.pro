@@ -16,7 +16,7 @@
 # debugging stack traces.
 #-keepattributes SourceFile,LineNumberTable
 
--dontwarn com.knight.kotlin.library_base.R$drawable
+-dontwarn com.core.library_base.R$drawable
 -dontwarn com.knight.kotlin.library_widget.R$layout
 
 # If you keep the line number information, uncomment this to

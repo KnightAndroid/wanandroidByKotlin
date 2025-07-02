@@ -2,19 +2,19 @@ package com.knight.kotlin.module_mine.activity
 
 import android.content.Intent
 import android.util.Base64
+import com.core.library_base.event.MessageEvent
+import com.core.library_base.ktx.appStr
+import com.core.library_base.ktx.setOnClick
+import com.core.library_base.route.RouteActivity
+import com.knight.kotlin.library_base.utils.CacheUtils
+import com.core.library_base.util.EventBusUtils
+import com.core.library_base.util.GsonUtils
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.config.Appconfig
 import com.knight.kotlin.library_base.config.CacheKey
 import com.knight.kotlin.library_base.entity.LoginEntity
 import com.knight.kotlin.library_base.entity.UserInfoEntity
-import com.knight.kotlin.library_base.event.MessageEvent
-import com.knight.kotlin.library_base.ktx.appStr
-import com.knight.kotlin.library_base.ktx.setOnClick
 import com.knight.kotlin.library_base.ktx.showLoading
-import com.knight.kotlin.library_base.route.RouteActivity
-import com.knight.kotlin.library_base.util.CacheUtils
-import com.knight.kotlin.library_base.util.EventBusUtils
-import com.knight.kotlin.library_base.util.GsonUtils
 import com.knight.kotlin.library_util.DateUtils
 import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.library_widget.GestureLockView
@@ -46,7 +46,7 @@ import javax.crypto.IllegalBlockSizeException
 
 @AndroidEntryPoint
 @Route(path = RouteActivity.Mine.QuickLoginActivity)
-class QuickLoginActivity :  BaseActivity<MineQuickloginActivityBinding,QuickLoginViewModel>(),QuickBottomDialog.FingureLoginListener{
+class QuickLoginActivity :  BaseActivity<MineQuickloginActivityBinding, QuickLoginViewModel>(),QuickBottomDialog.FingureLoginListener{
 
 
 
@@ -164,7 +164,7 @@ class QuickLoginActivity :  BaseActivity<MineQuickloginActivityBinding,QuickLogi
     }
 
 
-    private fun setUserInfo(userInfo:UserInfoEntity) {
+    private fun setUserInfo(userInfo: UserInfoEntity) {
         Appconfig.user = userInfo
         //保存用户信息
         CacheUtils.saveDataInfo(CacheKey.USER,userInfo)

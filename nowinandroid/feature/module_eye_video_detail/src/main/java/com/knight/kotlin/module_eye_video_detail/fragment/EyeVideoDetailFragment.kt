@@ -3,9 +3,9 @@ package com.knight.kotlin.module_eye_video_detail.fragment
 import android.os.Build
 import android.view.LayoutInflater
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.core.library_base.entity.EyeVideoDetailEntity
-import com.core.library_base.fragment.BaseFragment
 import com.core.library_base.route.RouteFragment
+import com.knight.kotlin.library_base.entity.EyeVideoDetailEntity
+import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.knight.kotlin.library_widget.ktx.init
 import com.knight.kotlin.module_eye_video_detail.adapter.EyeVideoRelateAdapter
 import com.knight.kotlin.module_eye_video_detail.databinding.EyeVideoDetailFragmentBinding
@@ -47,7 +47,7 @@ class EyeVideoDetailFragment: BaseFragment<EyeVideoDetailFragmentBinding, EyeVid
 
     override fun initRequestData() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            videoDetailData = arguments?.getParcelable("videoDetailData",EyeVideoDetailEntity::class.java)!!
+            videoDetailData = arguments?.getParcelable("videoDetailData", EyeVideoDetailEntity::class.java)!!
         } else {
             videoDetailData = arguments?.getParcelable("videoDetailData")!!
         }

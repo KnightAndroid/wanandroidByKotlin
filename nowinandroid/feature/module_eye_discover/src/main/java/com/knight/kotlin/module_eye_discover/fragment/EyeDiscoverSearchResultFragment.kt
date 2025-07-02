@@ -1,27 +1,20 @@
 package com.knight.kotlin.module_eye_discover.fragment
 
 import android.graphics.Color
-import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
-import com.core.library_base.entity.EyeApiRequest
-import com.core.library_base.entity.EyeMetroCard
-import com.core.library_base.fragment.BaseFragment
 import com.core.library_base.route.RouteFragment
-import com.core.library_base.util.CacheUtils
+import com.knight.kotlin.library_base.utils.CacheUtils
 import com.google.android.material.tabs.TabLayoutMediator
-import com.knight.kotlin.library_util.LogUtils
+import com.knight.kotlin.library_base.entity.EyeApiRequest
+import com.knight.kotlin.library_base.entity.EyeMetroCard
+import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.knight.kotlin.library_util.ViewInitUtils
-import com.knight.kotlin.library_util.bindWechatViewPager2
-import com.knight.kotlin.module_eye_discover.api.EyeDiscoverSearchResultApi
 import com.knight.kotlin.module_eye_discover.databinding.EyeDiscoverSearchResultFragmentBinding
-import com.knight.kotlin.module_eye_discover.entity.EyeSearchResultItem
 import com.knight.kotlin.module_eye_discover.vm.EyeDiscoverSearchResultVm
 import com.wyjson.router.annotation.Route
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.serialization.builtins.ListSerializer
-
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.Json.Default.encodeToString
 import kotlinx.serialization.json.JsonObject
 
 /**
@@ -62,7 +55,7 @@ class EyeDiscoverSearchResultFragment:
                      e.printStackTrace()
                 }
                  mFragments.add(EyeDiscoverSearchResultItemFragment().also {
-                     it.arguments = bundleOf("type" to mNavDatas[index].type,"api_Request" to Json.encodeToString(EyeApiRequest.serializer(), api_request?.let { it } ?: run{EyeApiRequest()}))
+                     it.arguments = bundleOf("type" to mNavDatas[index].type,"api_Request" to Json.encodeToString(EyeApiRequest.serializer(), api_request?.let { it } ?: run{ EyeApiRequest() }))
                  })
              }
              if (mFragments.size > 0) {
@@ -75,7 +68,8 @@ class EyeDiscoverSearchResultFragment:
                      tab.text = mNavDatas[pos].title }.attach()
 
                  mBinding.searchResultItemIndicator.setSelectedTabIndicatorColor(CacheUtils.getThemeColor())
-                 mBinding.searchResultItemIndicator.setTabTextColors(if (CacheUtils.getNormalDark() ) Color.parseColor("#D3D3D3") else Color.parseColor("#CC000000"),CacheUtils.getThemeColor())
+                 mBinding.searchResultItemIndicator.setTabTextColors(if (CacheUtils.getNormalDark() ) Color.parseColor("#D3D3D3") else Color.parseColor("#CC000000"),
+                     CacheUtils.getThemeColor())
              }
 
          }

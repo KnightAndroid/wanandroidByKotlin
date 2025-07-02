@@ -1,12 +1,11 @@
 package com.knight.kotlin.module_realtime.dialog
 
+
 import android.text.Html
 import android.view.Gravity
 import com.knight.kotlin.library_base.fragment.BaseDialogFragment
-import com.knight.kotlin.library_base.vm.EmptyViewModel
+import com.core.library_base.vm.EmptyViewModel
 import com.knight.kotlin.module_realtime.databinding.RealtimeRankRuleDialogBinding
-
-
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -17,7 +16,7 @@ import dagger.hilt.android.AndroidEntryPoint
  * @descript:
  */
 @AndroidEntryPoint
-class RealTimeRankRuleFragment:BaseDialogFragment<RealtimeRankRuleDialogBinding,EmptyViewModel>() {
+class RealTimeRankRuleFragment: BaseDialogFragment<RealtimeRankRuleDialogBinding, EmptyViewModel>() {
     override fun getGravity() = Gravity.BOTTOM
     override fun cancelOnTouchOutSide(): Boolean {
         return true

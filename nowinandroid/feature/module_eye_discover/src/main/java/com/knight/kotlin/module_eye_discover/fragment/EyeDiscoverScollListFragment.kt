@@ -3,7 +3,7 @@ package com.knight.kotlin.module_eye_discover.fragment
 import android.view.LayoutInflater
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.core.library_base.fragment.BaseFragment
+import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.core.library_base.ktx.init
 import com.core.library_base.route.RouteFragment
 import com.knight.kotlin.module_eye_discover.adapter.EyeDiscoverAdapter

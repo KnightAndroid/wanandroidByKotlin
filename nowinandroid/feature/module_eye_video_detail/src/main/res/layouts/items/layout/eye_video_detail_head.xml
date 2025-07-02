@@ -8,7 +8,7 @@
 
         <variable
             name="videoEntity"
-            type="com.core.library_base.entity.EyeVideoDetailEntity" />
+            type="com.knight.kotlin.library_base.entity.EyeVideoDetailEntity" />
 
         <import type="com.knight.kotlin.library_util.DateUtils" />
 

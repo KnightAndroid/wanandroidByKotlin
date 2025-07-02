@@ -3,18 +3,18 @@ package com.knight.kotlin.module_set.activity
 import android.graphics.drawable.GradientDrawable
 import android.view.View
 import android.widget.CompoundButton
+import com.core.library_base.event.MessageEvent
+import com.core.library_base.ktx.appStr
+import com.core.library_base.ktx.dimissLoadingDialog
+import com.core.library_base.ktx.showLoadingDialog
+import com.core.library_base.route.RouteActivity
+import com.knight.kotlin.library_base.utils.CacheUtils
+import com.core.library_base.util.ColorUtils
+import com.core.library_base.util.EventBusUtils
 import com.flyjingfish.android_aop_core.annotations.SingleClick
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.config.Appconfig
-import com.knight.kotlin.library_base.event.MessageEvent
-import com.knight.kotlin.library_base.ktx.appStr
-import com.knight.kotlin.library_base.ktx.dimissLoadingDialog
 import com.knight.kotlin.library_base.ktx.getUser
-import com.knight.kotlin.library_base.ktx.showLoadingDialog
-import com.knight.kotlin.library_base.route.RouteActivity
-import com.knight.kotlin.library_base.util.CacheUtils
-import com.knight.kotlin.library_base.util.ColorUtils
-import com.knight.kotlin.library_base.util.EventBusUtils
 import com.knight.kotlin.library_network.client.ClientConfig
 import com.knight.kotlin.library_util.CacheFileUtils
 import com.knight.kotlin.library_util.DialogUtils
@@ -168,7 +168,7 @@ class SetActivity : BaseActivity<SetActivityBinding, SetVm>(){
             }
 
             mBinding.setRlTheme -> {
-                ColorPickerDialog.Builder(this,CacheUtils.getThemeColor(),
+                ColorPickerDialog.Builder(this, CacheUtils.getThemeColor(),
                     ColorStyle.THEMECOLOR,getString(R.string.set_recover_themecolor))
                     .setOnColorPickedListener(object :ColorPickerDialog.OnColorPickedListener{
                         override fun onColorPicked(color: Int) {

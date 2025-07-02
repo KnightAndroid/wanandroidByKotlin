@@ -48,8 +48,8 @@ dependencies {
 
     debugApi Dependencies.GitHub.LEAK_CANARY
 
-    implementation Dependencies.GitHub.MMKV
-    implementation Dependencies.GitHub.GSON
+    api Dependencies.GitHub.MMKV
+    api Dependencies.GitHub.GSON
     api Dependencies.GitHub.LOAD_SIR
     api Dependencies.OtherUtils.BUGLY
     //必须项

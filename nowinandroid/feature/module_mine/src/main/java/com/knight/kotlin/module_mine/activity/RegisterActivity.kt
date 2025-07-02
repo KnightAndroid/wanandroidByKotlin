@@ -4,16 +4,16 @@ import android.graphics.drawable.GradientDrawable
 import android.os.Build
 import android.text.TextUtils
 import android.util.Base64
+import com.core.library_base.ktx.appStr
+import com.core.library_base.ktx.setOnClick
+import com.core.library_base.route.RouteActivity
+import com.knight.kotlin.library_base.utils.CacheUtils
+import com.core.library_base.util.GsonUtils
+import com.core.library_base.util.dp2px
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.entity.LoginEntity
 import com.knight.kotlin.library_base.entity.UserInfoEntity
-import com.knight.kotlin.library_base.ktx.appStr
-import com.knight.kotlin.library_base.ktx.setOnClick
 import com.knight.kotlin.library_base.ktx.showLoading
-import com.knight.kotlin.library_base.route.RouteActivity
-import com.knight.kotlin.library_base.util.CacheUtils
-import com.knight.kotlin.library_base.util.GsonUtils
-import com.knight.kotlin.library_base.util.dp2px
 import com.knight.kotlin.library_util.SoftInputScrollUtils
 import com.knight.kotlin.library_util.SystemUtils
 import com.knight.kotlin.library_util.toast
@@ -35,7 +35,7 @@ import javax.crypto.IllegalBlockSizeException
  */
 @AndroidEntryPoint
 @Route(path = RouteActivity.Mine.RegisterActivity)
-class RegisterActivity : BaseActivity<MineRegisterActivityBinding,RegisterViewModel>(){
+class RegisterActivity : BaseActivity<MineRegisterActivityBinding, RegisterViewModel>(){
 
     private val mSoftInputScrollUtils: SoftInputScrollUtils by lazy{ SoftInputScrollUtils(this@RegisterActivity) }
     override fun setThemeColor(isDarkMode: Boolean) {
@@ -126,8 +126,13 @@ class RegisterActivity : BaseActivity<MineRegisterActivityBinding,RegisterViewMo
     }
 
 
-    private fun setUserInfo(userInfo:UserInfoEntity) {
-        val loginMessage = GsonUtils.toJson(LoginEntity(mBinding.mineRegisterUsername.text.toString().trim(),mBinding.mineRegisterPassword.text.toString().trim()))
+    private fun setUserInfo(userInfo: UserInfoEntity) {
+        val loginMessage = GsonUtils.toJson(
+            LoginEntity(
+                mBinding.mineRegisterUsername.text.toString().trim(),
+                mBinding.mineRegisterPassword.text.toString().trim()
+            )
+        )
         CacheUtils.setLoginMessage(loginMessage)
         openBlomtric(loginMessage)
 

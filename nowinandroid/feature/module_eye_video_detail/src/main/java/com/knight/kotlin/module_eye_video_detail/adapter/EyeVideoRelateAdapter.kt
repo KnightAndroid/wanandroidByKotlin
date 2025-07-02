@@ -7,14 +7,14 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter4.BaseMultiItemAdapter
-import com.core.library_base.config.Appconfig
-import com.core.library_base.config.EyeTypeConstants
-import com.core.library_base.entity.EyeItemEntity
-import com.core.library_base.entity.EyeVideoDetailEntity
+import com.core.library_base.R
 import com.core.library_base.ktx.setOnClick
 import com.core.library_base.ktx.toJson
 import com.core.library_base.route.RouteActivity
-import com.knight.kotlin.library_base.R
+import com.knight.kotlin.library_base.config.Appconfig
+import com.knight.kotlin.library_base.config.EyeTypeConstants
+import com.knight.kotlin.library_base.entity.EyeItemEntity
+import com.knight.kotlin.library_base.entity.EyeVideoDetailEntity
 import com.knight.kotlin.library_util.startPageWithAnimate
 import com.knight.kotlin.module_eye_video_detail.databinding.EyeVideoRelateItemBinding
 import com.knight.kotlin.module_eye_video_detail.databinding.EyeVideoRelateTitleItemBinding
@@ -24,7 +24,7 @@ import com.knight.kotlin.module_eye_video_detail.databinding.EyeVideoRelateTitle
  * Time:2024/7/24 17:06
  * Description:EyeVideoRelateAdapter
  */
-class EyeVideoRelateAdapter(data: List<EyeItemEntity>, activity: Activity) : BaseMultiItemAdapter<EyeItemEntity>(data) {
+class EyeVideoRelateAdapter(data: List<EyeItemEntity>, activity: Activity) : BaseMultiItemAdapter<com.knight.kotlin.library_base.entity.EyeItemEntity>(data) {
 
 
     // 标题 的 viewholder
@@ -37,7 +37,7 @@ class EyeVideoRelateAdapter(data: List<EyeItemEntity>, activity: Activity) : Bas
 
     // 在 init 初始化的时候，添加多类型
     init {
-        addItemType(EyeTypeConstants.TEXT_TYPE, object : OnMultiItemAdapterListener<EyeItemEntity, EyeVideoRelateTitleVH> { // 类型 1
+        addItemType(EyeTypeConstants.TEXT_TYPE, object : OnMultiItemAdapterListener<com.knight.kotlin.library_base.entity.EyeItemEntity, EyeVideoRelateTitleVH> { // 类型 1
             override fun onCreate(context: Context, parent: ViewGroup, viewType: Int): EyeVideoRelateTitleVH {
                 // 创建 viewholder
                 val viewBinding = EyeVideoRelateTitleItemBinding.inflate(LayoutInflater.from(context), parent, false)
@@ -61,18 +61,19 @@ class EyeVideoRelateAdapter(data: List<EyeItemEntity>, activity: Activity) : Bas
                 val binding = DataBindingUtil.getBinding<EyeVideoRelateItemBinding>(holder.itemView)
                 binding?.model = item?.data
                 binding?.clRelateItem?.setOnClick{
-                    val videoDetailData = EyeVideoDetailEntity(item?.data!!.id,
+                    val videoDetailData = EyeVideoDetailEntity(
+                        item?.data!!.id,
                         item?.data!!.title,
                         item?.data!!.playUrl,
                         item?.data!!.category,
-                        item?.data!!.author?.latestReleaseTime?:System.currentTimeMillis(),
+                        item?.data!!.author?.latestReleaseTime ?: System.currentTimeMillis(),
                         item?.data!!.description,
-                        item?.data!!.consumption.collectionCount ,
-                        item?.data!!.consumption.replyCount ,
+                        item?.data!!.consumption.collectionCount,
+                        item?.data!!.consumption.replyCount,
                         item?.data!!.consumption.shareCount,
                         item?.data!!.author?.icon ?: "",
-                        item?.data!!.author?.name?: "",
-                        item?.data!!.author?.description?: "",
+                        item?.data!!.author?.name ?: "",
+                        item?.data!!.author?.description ?: "",
                         item?.data!!.cover?.blurred ?: ""
                     )
 
@@ -96,7 +97,7 @@ class EyeVideoRelateAdapter(data: List<EyeItemEntity>, activity: Activity) : Bas
         }).onItemViewType { position, list -> // 根据数据，返回对应的 ItemViewType
             if (position == list.size) {
                 if (list[position - 1].type == EyeTypeConstants.TEXT_HEAD_TYPE) {
-                    EyeTypeConstants.TEXT_TYPE
+                 EyeTypeConstants.TEXT_TYPE
                 } else EyeTypeConstants.IMAGE_TYPE
             } else {
                 if (list[position].type == EyeTypeConstants.TEXT_HEAD_TYPE) {

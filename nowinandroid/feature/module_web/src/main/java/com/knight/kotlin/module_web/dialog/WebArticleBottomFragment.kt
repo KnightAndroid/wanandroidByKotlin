@@ -5,7 +5,7 @@ import android.net.Uri
 import android.view.Gravity
 import android.view.View
 import com.core.library_base.event.MessageEvent
-import com.core.library_base.fragment.BaseDialogFragment
+import com.knight.kotlin.library_base.fragment.BaseDialogFragment
 import com.core.library_base.util.EventBusUtils
 import com.flyjingfish.android_aop_core.annotations.SingleClick
 import com.knight.kotlin.library_aop.loginintercept.LoginCheck
@@ -113,7 +113,7 @@ class WebArticleBottomFragment constructor(
                         Intent.EXTRA_TEXT,
                         getString(
                             R.string.web_share_article_url,
-                            getString(com.knight.kotlin.library_base.R.string.base_app_name),
+                            getString(com.core.library_base.R.string.base_app_name),
                             articleTitle,
                             articleUrl
                         )

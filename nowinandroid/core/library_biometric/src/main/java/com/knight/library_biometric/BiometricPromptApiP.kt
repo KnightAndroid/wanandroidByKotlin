@@ -6,7 +6,7 @@ import android.os.CancellationSignal
 import android.util.Base64
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.FragmentActivity
-import com.knight.kotlin.library_base.util.CacheUtils
+import com.knight.kotlin.library_base.utils.CacheUtils
 
 /**
  *

@@ -2,8 +2,8 @@ package com.knight.kotlin.module_home.vm
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
+import com.core.library_base.vm.BaseViewModel
 import com.knight.kotlin.library_base.entity.SearchHotKeyEntity
-import com.knight.kotlin.library_base.vm.BaseViewModel
 import com.knight.kotlin.library_database.entity.SearchHistroyKeywordEntity
 import com.knight.kotlin.library_database.repository.HistroyKeywordsRepository
 import com.knight.kotlin.library_util.toast

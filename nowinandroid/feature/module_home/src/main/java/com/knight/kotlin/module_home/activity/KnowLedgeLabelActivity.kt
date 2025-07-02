@@ -2,27 +2,26 @@ package com.knight.kotlin.module_home.activity
 
 import android.text.TextUtils
 import android.view.View
+import com.knight.kotlin.library_base.activity.BaseActivity
+import com.core.library_base.event.MessageEvent
+import com.core.library_base.ktx.ActivityMessenger
+import com.core.library_base.ktx.setOnClick
+import com.core.library_base.route.RouteActivity
+import com.knight.kotlin.library_base.utils.CacheUtils
+import com.core.library_base.util.EventBusUtils
+import com.core.library_base.vm.EmptyViewModel
 import com.flyjingfish.android_aop_core.annotations.SingleClick
 import com.google.android.flexbox.AlignItems
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
 import com.google.common.reflect.TypeToken
-import com.knight.kotlin.library_base.activity.BaseActivity
-import com.knight.kotlin.library_base.event.MessageEvent
-import com.knight.kotlin.library_base.ktx.ActivityMessenger
-import com.knight.kotlin.library_base.ktx.setOnClick
-import com.knight.kotlin.library_base.route.RouteActivity
-import com.knight.kotlin.library_base.util.CacheUtils
-import com.knight.kotlin.library_base.util.EventBusUtils
-import com.knight.kotlin.library_base.vm.EmptyViewModel
 import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.library_util.toast.ToastUtils
 import com.knight.kotlin.library_widget.flowlayout.OnTagClickListener
 import com.knight.kotlin.library_widget.flowlayout.TagInfo
 import com.knight.kotlin.library_widget.ktx.setSafeOnItemChildClickListener
 import com.knight.kotlin.library_widget.ktx.setSafeOnItemClickListener
-
 import com.knight.kotlin.module_home.R
 import com.knight.kotlin.module_home.adapter.KnowLedgeAdapter
 import com.knight.kotlin.module_home.databinding.HomeLabelActivityBinding

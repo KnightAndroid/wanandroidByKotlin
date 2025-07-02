@@ -4,9 +4,9 @@ import android.os.Bundle
 import android.view.Gravity
 import android.view.View
 import androidx.fragment.app.Fragment
-import com.flyjingfish.android_aop_core.annotations.SingleClick
 import com.knight.kotlin.library_base.fragment.BaseDialogFragment
-import com.knight.kotlin.library_base.vm.EmptyViewModel
+import com.core.library_base.vm.EmptyViewModel
+import com.flyjingfish.android_aop_core.annotations.SingleClick
 import com.knight.kotlin.library_database.entity.EveryDayPushEntity
 import com.knight.kotlin.library_util.ViewInitUtils
 import com.knight.kotlin.module_home.databinding.HomePusharticleDialogBinding
@@ -18,7 +18,7 @@ import com.knight.kotlin.module_home.view.UtilShowAnim
  * Time:2022/2/10 11:42
  * Description:HomePushArticleFragment
  */
-class HomePushArticleFragment : BaseDialogFragment<HomePusharticleDialogBinding,EmptyViewModel>() {
+class HomePushArticleFragment : BaseDialogFragment<HomePusharticleDialogBinding, EmptyViewModel>() {
 
     private var mEveryDayPushEntities: List<EveryDayPushEntity>? = null
     private val mPushCardFragments = mutableListOf<Fragment>()

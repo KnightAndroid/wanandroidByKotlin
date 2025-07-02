@@ -8,7 +8,7 @@ import android.os.Looper
 import android.os.Message
 import android.view.Gravity
 import com.knight.kotlin.library_base.fragment.BaseDialogFragment
-import com.knight.kotlin.library_base.vm.EmptyViewModel
+import com.core.library_base.vm.EmptyViewModel
 import com.knight.kotlin.library_common.databinding.DownloadDialogBinding
 import com.knight.kotlin.library_common.util.AppUtils
 import com.knight.kotlin.library_common.util.DownLoadManagerUtils.downloadApk
@@ -22,7 +22,7 @@ import java.io.File
  * Time:2022/1/12 9:56
  * Description:DownLoadDialogFragment
  */
-class DownLoadDialogFragment : BaseDialogFragment<DownloadDialogBinding,EmptyViewModel>() {
+class DownLoadDialogFragment : BaseDialogFragment<DownloadDialogBinding, EmptyViewModel>() {
 
     private var downLoadLink:String? = null
     private var apkFile: File? = null

@@ -5,13 +5,13 @@ import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import com.core.library_base.activity.BaseActivity
-import com.core.library_base.config.Appconfig
-import com.core.library_base.entity.EyeVideoDetailEntity
 import com.core.library_base.ktx.fromJson
 import com.core.library_base.route.RouteActivity
 import com.core.library_base.vm.EmptyViewModel
 import com.google.android.material.tabs.TabLayoutMediator
+import com.knight.kotlin.library_base.activity.BaseActivity
+import com.knight.kotlin.library_base.config.Appconfig
+import com.knight.kotlin.library_base.entity.EyeVideoDetailEntity
 import com.knight.kotlin.library_util.ViewInitUtils
 import com.knight.kotlin.library_video.play.OkPlayer
 import com.knight.kotlin.library_widget.ktx.transformShareElementConfig

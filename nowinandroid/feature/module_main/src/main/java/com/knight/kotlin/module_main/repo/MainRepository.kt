@@ -10,7 +10,7 @@ import javax.inject.Inject
  * Description:MainRepository
  * 首页数据仓库
  */
-class MainRepository @Inject constructor():BaseRepository()   {
+class MainRepository @Inject constructor(): BaseRepository()   {
     @Inject
     lateinit var mMainApiService:MainApiService
 }

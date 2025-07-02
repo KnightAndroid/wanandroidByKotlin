@@ -3,17 +3,17 @@ package com.knight.kotlin.module_realtime.fragment
 import android.graphics.Color
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import com.core.library_base.annotation.EventBusRegister
+import com.core.library_base.event.MessageEvent
+import com.core.library_base.route.RouteFragment
+import com.core.library_base.util.EventBusUtils
+import com.core.library_base.util.dp2px
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import com.knight.kotlin.library_base.annotation.EventBusRegister
 import com.knight.kotlin.library_base.config.EventBusKeys
 import com.knight.kotlin.library_base.entity.BaiduTabBoard
-import com.knight.kotlin.library_base.event.MessageEvent
 import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.knight.kotlin.library_base.ktx.statusHeight
-import com.knight.kotlin.library_base.route.RouteFragment
-import com.knight.kotlin.library_base.util.EventBusUtils
-import com.knight.kotlin.library_base.util.dp2px
 import com.knight.kotlin.library_util.ThreadUtils
 import com.knight.kotlin.library_util.ViewInitUtils
 import com.knight.kotlin.module_realtime.databinding.RealtimeHomeFragmentBinding
@@ -148,7 +148,9 @@ class RealTimeHomeFragment : BaseFragment<RealtimeHomeFragmentBinding, RealTimeH
         mBinding.appbar.addOnOffsetChangedListener { appbarLayout, i ->
 
 
-            EventBusUtils.postEvent(MessageEvent(MessageEvent.MessageType.AppBarOffsetChanged).put(EventBusKeys.REALTIMESCROLLORIENTATION,if (i>= appbarLayout.totalScrollRange){
+            EventBusUtils.postEvent(
+                MessageEvent(MessageEvent.MessageType.AppBarOffsetChanged).put(
+                    EventBusKeys.REALTIMESCROLLORIENTATION,if (i>= appbarLayout.totalScrollRange){
                 0
             }else 1).put(EventBusKeys.OFFSET,i))
 

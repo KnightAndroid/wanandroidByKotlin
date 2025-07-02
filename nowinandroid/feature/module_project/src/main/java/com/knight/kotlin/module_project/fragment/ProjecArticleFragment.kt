@@ -2,15 +2,15 @@ package com.knight.kotlin.module_project.fragment
 
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.knight.kotlin.library_aop.loginintercept.LoginCheck
-import com.knight.kotlin.library_base.annotation.EventBusRegister
-import com.knight.kotlin.library_base.event.MessageEvent
+import com.core.library_base.annotation.EventBusRegister
+import com.core.library_base.event.MessageEvent
 import com.knight.kotlin.library_base.fragment.BaseFragment
-import com.knight.kotlin.library_base.ktx.setOnClick
-import com.knight.kotlin.library_base.route.RouteFragment
-import com.knight.kotlin.library_base.util.ArouteUtils
-import com.knight.kotlin.library_base.util.CacheUtils
-import com.knight.kotlin.library_base.util.ColorUtils
+import com.core.library_base.ktx.setOnClick
+import com.core.library_base.route.RouteFragment
+import com.knight.kotlin.library_base.utils.ArouteUtils
+import com.knight.kotlin.library_base.utils.CacheUtils
+import com.core.library_base.util.ColorUtils
+import com.knight.kotlin.library_aop.loginintercept.LoginCheck
 import com.knight.kotlin.library_widget.ktx.init
 import com.knight.kotlin.library_widget.ktx.setSafeOnItemChildClickListener
 import com.knight.kotlin.library_widget.ktx.setSafeOnItemClickListener
@@ -34,7 +34,7 @@ import org.greenrobot.eventbus.ThreadMode
 @EventBusRegister
 @AndroidEntryPoint
 @Route(path = RouteFragment.Project.ProjectArticleFragment)
-class ProjecArticleFragment:BaseFragment<ProjectArticleFragmentBinding, ProjectArticleVm>(),OnRefreshListener,OnLoadMoreListener {
+class ProjecArticleFragment: BaseFragment<ProjectArticleFragmentBinding, ProjectArticleVm>(),OnRefreshListener,OnLoadMoreListener {
 
 
     //文章适配器列表
@@ -180,7 +180,7 @@ class ProjecArticleFragment:BaseFragment<ProjectArticleFragmentBinding, ProjectA
     private fun initListener() {
         mProjectArticleAdapter.run {
 
-            setSafeOnItemChildClickListener(com.knight.kotlin.library_base.R.id.base_article_collect) { adapter, view, position ->
+            setSafeOnItemChildClickListener(com.core.library_base.R.id.base_article_collect) { adapter, view, position ->
                 selectItem = position
                 collectOrunCollect(items[position].collect,items[position].id)
             }

@@ -11,9 +11,9 @@ import androidx.annotation.RequiresApi
 import androidx.media3.common.util.UnstableApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.knight.kotlin.library_base.activity.BaseActivity
+import com.core.library_base.ktx.setOnClick
+import com.core.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.ktx.getScreenWidth
-import com.knight.kotlin.library_base.ktx.setOnClick
-import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_permiss.XXPermissions
 import com.knight.kotlin.library_permiss.listener.OnPermissionCallback
 import com.knight.kotlin.library_permiss.permissions.Permission
@@ -47,7 +47,7 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 @AndroidEntryPoint
 @Route(path = RouteActivity.Home.HomeNewsActivty)
-class HomeNewsActivity:BaseActivity<HomeNewsActivityBinding,HomeNewsVm>(), OnRefreshListener {
+class HomeNewsActivity: BaseActivity<HomeNewsActivityBinding, HomeNewsVm>(), OnRefreshListener {
 
 
     private lateinit var mNewsHeaderBinding: HomeNewsHeadBinding

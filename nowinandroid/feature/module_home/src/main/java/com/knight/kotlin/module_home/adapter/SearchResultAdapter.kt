@@ -10,11 +10,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter4.BaseMultiItemAdapter
+import com.core.library_base.databinding.BaseArticleItemBinding
+import com.core.library_base.databinding.BaseTextItemBinding
+import com.knight.kotlin.library_base.utils.CacheUtils
 import com.knight.kotlin.library_base.config.Appconfig
 import com.knight.kotlin.library_base.config.EyeTypeConstants
-import com.knight.kotlin.library_base.databinding.BaseArticleItemBinding
-import com.knight.kotlin.library_base.databinding.BaseTextItemBinding
-import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.library_util.StringUtils
 import com.knight.kotlin.library_util.image.ImageLoader
 import com.knight.kotlin.module_home.constants.HomeConstants
@@ -117,11 +117,11 @@ class SearchResultAdapter(data:MutableList<HomeArticleEntity>):BaseMultiItemAdap
                     //是否收藏
                     if (collect) {
                         binding.baseIconCollect.setBackgroundResource(
-                            com.knight.kotlin.library_base.R.drawable.base_icon_collect
+                            com.core.library_base.R.drawable.base_icon_collect
                         )
                     } else {
                         binding.baseIconCollect.setBackgroundResource(
-                            com.knight.kotlin.library_base.R.drawable.base_icon_nocollect
+                            com.core.library_base.R.drawable.base_icon_nocollect
                         )
                     }
 
@@ -180,7 +180,7 @@ class SearchResultAdapter(data:MutableList<HomeArticleEntity>):BaseMultiItemAdap
                             StringUtils.getStyle(context, Html.fromHtml(title, Html.FROM_HTML_MODE_LEGACY).toString(), Appconfig.search_keyword))
                     } else {
                         binding.baseTvTitle.setText(
-                            StringUtils.getStyle(context, Html.fromHtml(title).toString(), Appconfig.search_keyword))
+                            StringUtils.getStyle(context, Html.fromHtml(title).toString(),Appconfig.search_keyword))
                     }
 
 
@@ -190,7 +190,7 @@ class SearchResultAdapter(data:MutableList<HomeArticleEntity>):BaseMultiItemAdap
                         //标题
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                             binding.baseTvProjectDesc.setText(
-                                StringUtils.getStyle(context, Html.fromHtml(desc, Html.FROM_HTML_MODE_LEGACY).toString(), Appconfig.search_keyword))
+                                StringUtils.getStyle(context, Html.fromHtml(desc, Html.FROM_HTML_MODE_LEGACY).toString(),Appconfig.search_keyword))
                         } else {
                             binding.baseTvProjectDesc.setText(
                                 StringUtils.getStyle(context, Html.fromHtml(desc).toString(), Appconfig.search_keyword))
@@ -209,9 +209,9 @@ class SearchResultAdapter(data:MutableList<HomeArticleEntity>):BaseMultiItemAdap
 
                     //是否收藏
                     if (collect) {
-                        binding.baseArticleCollect.setBackgroundResource(com.knight.kotlin.library_base.R.drawable.base_icon_collect)
+                        binding.baseArticleCollect.setBackgroundResource(com.core.library_base.R.drawable.base_icon_collect)
                     } else {
-                        binding.baseArticleCollect.setBackgroundResource(com.knight.kotlin.library_base.R.drawable.base_icon_nocollect)
+                        binding.baseArticleCollect.setBackgroundResource(com.core.library_base.R.drawable.base_icon_nocollect)
                     }
                 }
             }

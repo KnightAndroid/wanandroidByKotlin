@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.appcompat.view.ContextThemeWrapper
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.core.library_base.fragment.BaseFragment
+import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.core.library_base.ktx.init
 import com.core.library_base.ktx.setOnClick
 import com.core.library_base.route.RouteFragment

@@ -3,9 +3,9 @@ package com.knight.kotlin.module_realtime.fragment
 import android.view.LayoutInflater
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.flyjingfish.android_aop_core.annotations.SingleClick
 import com.knight.kotlin.library_base.fragment.BaseFragment
-import com.knight.kotlin.library_base.route.RouteFragment
+import com.core.library_base.route.RouteFragment
+import com.flyjingfish.android_aop_core.annotations.SingleClick
 import com.knight.kotlin.library_widget.ktx.init
 import com.knight.kotlin.module_realtime.R
 import com.knight.kotlin.module_realtime.adapter.HotRankMainAdapter

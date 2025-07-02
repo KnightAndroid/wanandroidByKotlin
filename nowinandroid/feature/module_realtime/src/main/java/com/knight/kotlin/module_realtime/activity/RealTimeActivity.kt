@@ -3,21 +3,19 @@ package com.knight.kotlin.module_realtime.activity
 import android.animation.ArgbEvaluator
 import android.graphics.Color
 import androidx.fragment.app.Fragment
+import com.core.library_base.annotation.EventBusRegister
+import com.core.library_base.event.MessageEvent
+import com.core.library_base.ktx.setOnClick
+import com.core.library_base.route.RouteActivity
+import com.core.library_base.util.dp2px
+import com.core.library_base.vm.EmptyViewModel
 import com.knight.kotlin.library_base.activity.BaseActivity
-import com.knight.kotlin.library_base.annotation.EventBusRegister
 import com.knight.kotlin.library_base.config.EventBusKeys
-import com.knight.kotlin.library_base.event.MessageEvent
-import com.knight.kotlin.library_base.ktx.setOnClick
 import com.knight.kotlin.library_base.ktx.statusHeight
-import com.knight.kotlin.library_base.route.RouteActivity
-import com.knight.kotlin.library_base.util.CacheUtils
-import com.knight.kotlin.library_base.util.dp2px
-import com.knight.kotlin.library_base.vm.EmptyViewModel
+import com.knight.kotlin.library_base.utils.CacheUtils
 import com.knight.kotlin.module_realtime.databinding.RealtimeMainActivityBinding
-
 import com.knight.kotlin.module_realtime.dialog.RealTimeRankRuleFragment
 import com.knight.kotlin.module_realtime.fragment.RealTimeHomeFragment
-
 import com.wyjson.router.annotation.Route
 import dagger.hilt.android.AndroidEntryPoint
 import org.greenrobot.eventbus.Subscribe
@@ -27,7 +25,7 @@ import kotlin.math.abs
 @EventBusRegister
 @AndroidEntryPoint
 @Route(path = RouteActivity.RealTime.RealTimeMainActivity)
-class RealTimeActivity : BaseActivity<RealtimeMainActivityBinding,EmptyViewModel>() {
+class RealTimeActivity : BaseActivity<RealtimeMainActivityBinding, EmptyViewModel>() {
     override fun setThemeColor(isDarkMode: Boolean) {
 
     }

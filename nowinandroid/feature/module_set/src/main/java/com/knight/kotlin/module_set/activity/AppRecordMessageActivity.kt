@@ -2,9 +2,9 @@ package com.knight.kotlin.module_set.activity
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.knight.kotlin.library_base.activity.BaseActivity
-import com.knight.kotlin.library_base.ktx.init
-import com.knight.kotlin.library_base.ktx.setOnClick
-import com.knight.kotlin.library_base.route.RouteActivity
+import com.core.library_base.ktx.init
+import com.core.library_base.ktx.setOnClick
+import com.core.library_base.route.RouteActivity
 import com.knight.kotlin.module_set.R
 import com.knight.kotlin.module_set.adapter.VersionRecordAdapter
 import com.knight.kotlin.module_set.databinding.SetVersionRecordActivityBinding
@@ -22,7 +22,7 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 @AndroidEntryPoint
 @Route(path = RouteActivity.Set.AppRecordMessageActivity)
-class AppRecordMessageActivity : BaseActivity<SetVersionRecordActivityBinding,AppUpdateRecordVm>(),
+class AppRecordMessageActivity : BaseActivity<SetVersionRecordActivityBinding, AppUpdateRecordVm>(),
     OnRefreshListener {
 
 

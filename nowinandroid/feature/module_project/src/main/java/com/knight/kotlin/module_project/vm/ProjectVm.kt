@@ -2,7 +2,7 @@ package com.knight.kotlin.module_project.vm
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
-import com.knight.kotlin.library_base.vm.BaseViewModel
+import com.core.library_base.vm.BaseViewModel
 import com.knight.kotlin.module_project.entity.ProjectTypeBean
 import com.knight.kotlin.module_project.repo.ProjectRepo
 import dagger.hilt.android.lifecycle.HiltViewModel

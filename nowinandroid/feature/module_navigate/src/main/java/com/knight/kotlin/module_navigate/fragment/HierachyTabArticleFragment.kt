@@ -2,10 +2,10 @@ package com.knight.kotlin.module_navigate.fragment
 
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.knight.kotlin.library_aop.loginintercept.LoginCheck
 import com.knight.kotlin.library_base.fragment.BaseFragment
-import com.knight.kotlin.library_base.route.RouteFragment
-import com.knight.kotlin.library_base.util.ArouteUtils
+import com.core.library_base.route.RouteFragment
+import com.knight.kotlin.library_base.utils.ArouteUtils
+import com.knight.kotlin.library_aop.loginintercept.LoginCheck
 import com.knight.kotlin.library_widget.ktx.init
 import com.knight.kotlin.library_widget.ktx.setSafeOnItemChildClickListener
 import com.knight.kotlin.library_widget.ktx.setSafeOnItemClickListener
@@ -27,7 +27,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 @Route(path = RouteFragment.Navigate.HierachyTabArticleFragment)
-class HierachyTabArticleFragment:BaseFragment<NavigateHierachyArticleFragmentBinding, HierachyArticleVm>(),OnLoadMoreListener,OnRefreshListener {
+class HierachyTabArticleFragment: BaseFragment<NavigateHierachyArticleFragmentBinding, HierachyArticleVm>(),OnLoadMoreListener,OnRefreshListener {
 
 
 
@@ -79,7 +79,7 @@ class HierachyTabArticleFragment:BaseFragment<NavigateHierachyArticleFragmentBin
                 )
             }
 
-            setSafeOnItemChildClickListener(com.knight.kotlin.library_base.R.id.base_icon_collect) { adapter, view, position ->
+            setSafeOnItemChildClickListener(com.core.library_base.R.id.base_icon_collect) { adapter, view, position ->
 
                         selectItem = position
                         collectOrunCollect(
@@ -89,7 +89,7 @@ class HierachyTabArticleFragment:BaseFragment<NavigateHierachyArticleFragmentBin
 
 
             }
-            setSafeOnItemChildClickListener(com.knight.kotlin.library_base.R.id.base_article_collect) { adapter, view, position ->
+            setSafeOnItemChildClickListener(com.core.library_base.R.id.base_article_collect) { adapter, view, position ->
 
                         selectItem = position
                         collectOrunCollect(

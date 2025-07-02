@@ -8,8 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter4.BaseQuickAdapter
-import com.knight.kotlin.library_base.util.CacheUtils
-import com.knight.kotlin.module_message.R
+import com.knight.kotlin.library_base.utils.CacheUtils
 import com.knight.kotlin.module_message.databinding.MessageReadedItemBinding
 import com.knight.kotlin.module_message.entity.MessageEntity
 
@@ -42,7 +41,7 @@ class MessageAdapter :
                 holder.binding.messageItemAuthor.setText(tag)
                 val gradientDrawable = GradientDrawable()
                 gradientDrawable.shape = GradientDrawable.RECTANGLE
-                gradientDrawable.setStroke(1,CacheUtils.getThemeColor())
+                gradientDrawable.setStroke(1, CacheUtils.getThemeColor())
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                     holder.binding.messageItemTag.background = gradientDrawable
                 } else {

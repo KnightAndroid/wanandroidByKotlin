@@ -7,7 +7,7 @@ import android.widget.ImageView
 import android.widget.RelativeLayout.LayoutParams
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
-import com.core.library_base.fragment.BaseFragment
+import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.core.library_base.vm.EmptyViewModel
 import com.google.android.exoplayer2.ExoPlaybackException
 import com.google.android.exoplayer2.Player

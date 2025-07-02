@@ -1,7 +1,7 @@
 package com.knight.kotlin.library_network.interceptor
 
 import com.knight.kotlin.library_base.BaseApp
-import com.knight.kotlin.library_base.util.NetworkStateUtils
+import com.core.library_base.util.NetworkStateUtils
 import okhttp3.CacheControl
 import okhttp3.Interceptor
 import okhttp3.Response

@@ -11,8 +11,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.knight.kotlin.library_base.utils.CacheUtils
 import com.google.android.flexbox.FlexboxLayoutManager
-import com.knight.kotlin.library_base.util.CacheUtils
 import com.knight.kotlin.module_navigate.R
 import com.knight.kotlin.module_navigate.entity.HierachyRightBeanEntity
 import com.knight.kotlin.module_navigate.listener.CheckListener

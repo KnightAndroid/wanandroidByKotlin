@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter4.BaseQuickAdapter
-import com.core.library_base.util.CacheUtils
+import com.knight.kotlin.library_base.utils.CacheUtils
 import com.knight.kotlin.module_utils.databinding.UtilsItemBinding
 import com.knight.kotlin.module_utils.entity.UtilsEntity
 

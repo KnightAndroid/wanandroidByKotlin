@@ -4,21 +4,21 @@ import android.graphics.drawable.GradientDrawable
 import android.os.Build
 import android.text.TextUtils
 import android.util.Base64
+import com.core.library_base.event.MessageEvent
+import com.core.library_base.ktx.appStr
+import com.core.library_base.ktx.dimissLoadingDialog
+import com.core.library_base.ktx.setOnClick
+import com.core.library_base.ktx.showLoadingDialog
+import com.core.library_base.route.RouteActivity
+import com.knight.kotlin.library_base.utils.CacheUtils
+import com.core.library_base.util.EventBusUtils
+import com.core.library_base.util.GsonUtils
+import com.core.library_base.util.dp2px
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.config.Appconfig
 import com.knight.kotlin.library_base.config.CacheKey
 import com.knight.kotlin.library_base.entity.LoginEntity
 import com.knight.kotlin.library_base.entity.UserInfoEntity
-import com.knight.kotlin.library_base.event.MessageEvent
-import com.knight.kotlin.library_base.ktx.appStr
-import com.knight.kotlin.library_base.ktx.dimissLoadingDialog
-import com.knight.kotlin.library_base.ktx.setOnClick
-import com.knight.kotlin.library_base.ktx.showLoadingDialog
-import com.knight.kotlin.library_base.route.RouteActivity
-import com.knight.kotlin.library_base.util.CacheUtils
-import com.knight.kotlin.library_base.util.EventBusUtils
-import com.knight.kotlin.library_base.util.GsonUtils
-import com.knight.kotlin.library_base.util.dp2px
 import com.knight.kotlin.library_util.SoftInputScrollUtils
 import com.knight.kotlin.library_util.SystemUtils
 import com.knight.kotlin.library_util.startPage
@@ -134,12 +134,17 @@ class LoginActivity : BaseActivity<MineLoginActivityBinding, LoginViewModel>(){
      *
      * @param userInfo 用户信息
      */
-    private fun setUserInfo(userInfo:UserInfoEntity){
+    private fun setUserInfo(userInfo: UserInfoEntity){
         //登录成功发送事件
         Appconfig.user = userInfo
         //保存用户信息
         CacheUtils.saveDataInfo(CacheKey.USER, userInfo)
-        val loginMessage = GsonUtils.toJson(LoginEntity(mBinding.mineLoginUsername.text.toString().trim(),mBinding.mineLoginPassword.text.toString().trim()))
+        val loginMessage = GsonUtils.toJson(
+            LoginEntity(
+                mBinding.mineLoginUsername.text.toString().trim(),
+                mBinding.mineLoginPassword.text.toString().trim()
+            )
+        )
         if (!CacheUtils.getFingerLogin()) {
             //没开通就开通快捷登录
             openFingerLogin(loginMessage)

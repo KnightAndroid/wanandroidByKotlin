@@ -7,8 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter4.BaseQuickAdapter
-import com.knight.kotlin.library_base.databinding.BaseArticleItemBinding
-import com.knight.kotlin.library_base.ktx.toHtml
+import com.core.library_base.databinding.BaseArticleItemBinding
+import com.core.library_base.ktx.toHtml
 import com.knight.kotlin.library_util.image.ImageLoader
 import com.knight.kotlin.module_project.entity.ProjectArticleBean
 
@@ -60,7 +60,7 @@ class ProjectArticleAdapter: BaseQuickAdapter<ProjectArticleBean, ProjectArticle
                 holder.binding.baseTvSuperchapter.setText(superChapterName)
             }
             //是否收藏
-            holder.binding.baseArticleCollect.setBackgroundResource(if(collect) com.knight.kotlin.library_base.R.drawable.base_icon_collect else com.knight.kotlin.library_base.R.drawable.base_icon_nocollect)
+            holder.binding.baseArticleCollect.setBackgroundResource(if(collect) com.core.library_base.R.drawable.base_icon_collect else com.core.library_base.R.drawable.base_icon_nocollect)
 
         }
     }

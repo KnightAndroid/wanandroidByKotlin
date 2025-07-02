@@ -3,9 +3,9 @@ package com.knight.kotlin.module_square.fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.core.library_base.annotation.EventBusRegister
 import com.core.library_base.event.MessageEvent
-import com.core.library_base.fragment.BaseFragment
+import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.core.library_base.route.RouteFragment
-import com.core.library_base.util.ArouteUtils
+import com.knight.kotlin.library_base.utils.ArouteUtils
 import com.knight.kotlin.library_aop.loginintercept.LoginCheck
 import com.knight.kotlin.library_widget.ktx.init
 import com.knight.kotlin.library_widget.ktx.setSafeOnItemChildClickListener

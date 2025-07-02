@@ -2,7 +2,7 @@ package com.knight.kotlin.module_eye_discover.repo
 
 import com.core.library_base.ktx.dimissLoadingDialog
 import com.core.library_base.ktx.fromJson
-import com.core.library_base.repository.BaseRepository
+import com.knight.kotlin.library_base.repository.BaseRepository
 import com.knight.kotlin.library_network.bean.EyeApiResponse
 import com.knight.kotlin.library_network.enum.ResponseExceptionEnum
 import com.knight.kotlin.library_network.exception.ResponseException

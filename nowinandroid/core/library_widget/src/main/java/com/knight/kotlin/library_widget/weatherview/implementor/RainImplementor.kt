@@ -298,7 +298,7 @@ class RainImplementor(
                 TYPE_SLEET -> return if (daylight) -0x974501 else -0xe5a46e
                 TYPE_THUNDERSTORM -> return if (daylight) -0x4d6943 else -0xdce8c7
             }
-            return ContextCompat.getColor(context, com.knight.kotlin.library_base.R.color.base_color_theme)
+            return ContextCompat.getColor(context, com.core.library_base.R.color.base_color_theme)
         }
     }
 }

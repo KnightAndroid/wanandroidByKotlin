@@ -2,8 +2,8 @@ package com.knight.kotlin.module_eye_recommend.vm
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
-import com.core.library_base.entity.EyeCardListEntity
 import com.core.library_base.vm.BaseViewModel
+import com.knight.kotlin.library_base.entity.EyeCardListEntity
 import com.knight.kotlin.module_eye_recommend.repo.EyeRecommendRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject

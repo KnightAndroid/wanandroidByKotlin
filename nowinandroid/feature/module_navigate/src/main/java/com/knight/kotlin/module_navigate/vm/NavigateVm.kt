@@ -2,7 +2,7 @@ package com.knight.kotlin.module_navigate.vm
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
-import com.knight.kotlin.library_base.vm.BaseViewModel
+import com.core.library_base.vm.BaseViewModel
 import com.knight.kotlin.module_navigate.entity.NavigateListEntity
 import com.knight.kotlin.module_navigate.repo.NavigateRepository
 import dagger.hilt.android.lifecycle.HiltViewModel

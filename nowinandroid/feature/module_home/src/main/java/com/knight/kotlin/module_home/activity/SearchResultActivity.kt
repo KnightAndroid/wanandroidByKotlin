@@ -4,12 +4,12 @@ import android.text.TextUtils
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView.OnEditorActionListener
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.core.library_base.ktx.setOnClick
+import com.core.library_base.route.RouteActivity
+import com.knight.kotlin.library_base.utils.ArouteUtils
 import com.knight.kotlin.library_aop.loginintercept.LoginCheck
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.config.Appconfig
-import com.knight.kotlin.library_base.ktx.setOnClick
-import com.knight.kotlin.library_base.route.RouteActivity
-import com.knight.kotlin.library_base.util.ArouteUtils
 import com.knight.kotlin.library_util.DataBaseUtils
 import com.knight.kotlin.library_util.SystemUtils
 import com.knight.kotlin.library_util.toast.ToastUtils
@@ -163,7 +163,7 @@ class SearchResultActivity : BaseActivity<HomeSearchresultActivityBinding, HomeS
                 )
             }
 
-            setSafeOnItemChildClickListener(com.knight.kotlin.library_base.R.id.base_icon_collect) { adapter, view, position ->
+            setSafeOnItemChildClickListener(com.core.library_base.R.id.base_icon_collect) { adapter, view, position ->
                 selectItem = position
                 collectOrunCollect(
                     items[position].collect,
@@ -173,7 +173,7 @@ class SearchResultActivity : BaseActivity<HomeSearchresultActivityBinding, HomeS
 
             }
 
-            setSafeOnItemChildClickListener(com.knight.kotlin.library_base.R.id.base_article_collect) { adapter, view, position ->
+            setSafeOnItemChildClickListener(com.core.library_base.R.id.base_article_collect) { adapter, view, position ->
                 selectItem = position
                 collectOrunCollect(
                     items[position].collect,

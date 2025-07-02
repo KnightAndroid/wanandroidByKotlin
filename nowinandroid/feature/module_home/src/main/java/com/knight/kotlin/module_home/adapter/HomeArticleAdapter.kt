@@ -9,8 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter4.BaseQuickAdapter
-import com.knight.kotlin.library_base.ktx.toHtml
-import com.knight.kotlin.library_base.util.CacheUtils
+import com.core.library_base.ktx.toHtml
+import com.knight.kotlin.library_base.utils.CacheUtils
 import com.knight.kotlin.module_home.databinding.HomeArticleItemBinding
 import com.knight.kotlin.module_home.entity.HomeArticleEntity
 
@@ -97,9 +97,9 @@ class HomeArticleAdapter: BaseQuickAdapter<HomeArticleEntity, HomeArticleAdapter
 
             //是否有收藏
             if (collect == true) {
-                holder.binding.homeIconCollect.setBackgroundResource(com.knight.kotlin.library_base.R.drawable.base_icon_collect)
+                holder.binding.homeIconCollect.setBackgroundResource(com.core.library_base.R.drawable.base_icon_collect)
             } else {
-                holder.binding.homeIconCollect.setBackgroundResource(com.knight.kotlin.library_base.R.drawable.base_icon_nocollect)
+                holder.binding.homeIconCollect.setBackgroundResource(com.core.library_base.R.drawable.base_icon_nocollect)
             }
         }
     }

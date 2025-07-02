@@ -5,7 +5,7 @@ import android.content.res.ColorStateList
 import android.view.View
 import android.widget.ProgressBar
 import com.kingja.loadsir.callback.Callback
-import com.knight.kotlin.library_base.R
+import com.core.library_base.R
 
 
 /**

@@ -1,7 +1,7 @@
 package com.knight.kotlin.module_eye_discover.repo
 
 import com.core.library_base.ktx.dimissLoadingDialog
-import com.core.library_base.repository.BaseRepository
+import com.knight.kotlin.library_base.repository.BaseRepository
 import com.knight.kotlin.library_network.model.responseCodeExceptionHandler
 import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_eye_discover.api.EyeDiscoverCategoryDetailApi

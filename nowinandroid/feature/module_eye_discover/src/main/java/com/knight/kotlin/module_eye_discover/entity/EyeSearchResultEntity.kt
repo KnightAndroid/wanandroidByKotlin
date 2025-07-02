@@ -2,7 +2,7 @@ package com.knight.kotlin.module_eye_discover.entity
 
 import com.knight.kotlin.library_base.entity.EyeCardEntity
 import com.knight.kotlin.library_base.entity.EyeMetroCard
-import com.knight.kotlin.library_base.ktx.NumberOrStringSerializer
+import com.core.library_base.ktx.NumberOrStringSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonObject
 

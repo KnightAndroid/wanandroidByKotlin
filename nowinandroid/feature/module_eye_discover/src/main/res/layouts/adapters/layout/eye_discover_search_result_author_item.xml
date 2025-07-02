@@ -8,7 +8,7 @@
 
         <variable
             name="viewModel"
-            type="com.core.library_base.entity.EyeCommonAuthorEntity" />
+            type="com.knight.kotlin.library_base.entity.EyeCommonAuthorEntity" />
 
 
     </data>

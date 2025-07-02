@@ -2,14 +2,14 @@ package com.knight.kotlin.module_navigate.fragment
 
 import android.os.Bundle
 import androidx.recyclerview.widget.RecyclerView
+import com.knight.kotlin.library_base.fragment.BaseFragment
+import com.core.library_base.route.RouteActivity
+import com.core.library_base.route.RouteFragment
+import com.knight.kotlin.library_base.utils.ArouteUtils
 import com.google.android.flexbox.AlignItems
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
-import com.knight.kotlin.library_base.fragment.BaseFragment
-import com.knight.kotlin.library_base.route.RouteActivity
-import com.knight.kotlin.library_base.route.RouteFragment
-import com.knight.kotlin.library_base.util.ArouteUtils
 import com.knight.kotlin.library_util.startPageWithParams
 import com.knight.kotlin.module_navigate.R
 import com.knight.kotlin.module_navigate.adapter.HierachyClassifyDetailAdapter
@@ -34,7 +34,7 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 @AndroidEntryPoint
 @Route(path = RouteFragment.Navigate.NavigateRightTreeFragment)
-class TreeRightFragment : BaseFragment<NavigateRightTreeFragmentBinding,NavigateRightTreeVm>(),CheckListener {
+class TreeRightFragment : BaseFragment<NavigateRightTreeFragmentBinding, NavigateRightTreeVm>(),CheckListener {
     private lateinit var mHierachyClassifyDetailAdapter:HierachyClassifyDetailAdapter
 
     private val mDatas: ArrayList<HierachyRightBeanEntity> = ArrayList<HierachyRightBeanEntity>()

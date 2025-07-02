@@ -5,8 +5,8 @@ import android.graphics.drawable.GradientDrawable
 import android.util.AttributeSet
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
+import com.core.library_base.R
 import com.core.library_base.util.dp2px
-import com.knight.kotlin.library_base.R
 
 
 /**

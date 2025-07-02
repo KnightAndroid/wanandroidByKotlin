@@ -1,15 +1,11 @@
 package com.knight.kotlin.module_eye_square.ext
 
-import android.widget.ImageView
 import androidx.databinding.BindingAdapter
-import com.core.library_base.entity.eye_type.EyeBannerImageList
+import com.knight.kotlin.library_base.entity.eye_type.EyeBannerImageList
 import com.knight.kotlin.library_util.image.ImageLoader
-import com.knight.kotlin.library_util.splitUrl
-import com.knight.kotlin.library_util.startPageWithParams
 import com.youth.banner.Banner
 import com.youth.banner.adapter.BannerImageAdapter
 import com.youth.banner.holder.BannerImageHolder
-import java.net.URLDecoder
 
 /**
  * @Description

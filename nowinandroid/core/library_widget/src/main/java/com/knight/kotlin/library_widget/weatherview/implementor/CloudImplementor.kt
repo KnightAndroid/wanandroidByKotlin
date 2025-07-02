@@ -586,7 +586,7 @@ class CloudImplementor(
                 TYPE_FOG -> return if (daylight) -0x5c513e else -0xb0a298
                 TYPE_HAZE -> return if (daylight) -0x1e3767 else -0x93a3b7
             }
-            return ContextCompat.getColor(context, com.knight.kotlin.library_base.R.color.base_color_theme)
+            return ContextCompat.getColor(context, com.core.library_base.R.color.base_color_theme)
         }
     }
 }

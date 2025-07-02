@@ -3,7 +3,7 @@ package com.knight.kotlin.module_message.fragment
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.knight.kotlin.library_base.fragment.BaseFragment
-import com.knight.kotlin.library_base.route.RouteFragment
+import com.core.library_base.route.RouteFragment
 import com.knight.kotlin.library_widget.ktx.init
 import com.knight.kotlin.module_message.adapter.MessageAdapter
 import com.knight.kotlin.module_message.databinding.MessageFragmentBinding
@@ -23,7 +23,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 @Route(path = RouteFragment.Message.MessageFragment)
-class MessageFragment : BaseFragment<MessageFragmentBinding,MessageVm>(), OnRefreshListener,
+class MessageFragment : BaseFragment<MessageFragmentBinding, MessageVm>(), OnRefreshListener,
     OnLoadMoreListener {
 
     //页码

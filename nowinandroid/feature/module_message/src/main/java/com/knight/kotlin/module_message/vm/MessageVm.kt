@@ -2,7 +2,7 @@ package com.knight.kotlin.module_message.vm
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
-import com.knight.kotlin.library_base.vm.BaseViewModel
+import com.core.library_base.vm.BaseViewModel
 import com.knight.kotlin.module_message.entity.MessageListEntity
 import com.knight.kotlin.module_message.repo.MessageRepo
 import dagger.hilt.android.lifecycle.HiltViewModel

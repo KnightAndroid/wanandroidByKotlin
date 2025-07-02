@@ -1,10 +1,10 @@
 package com.knight.kotlin.module_set.activity
 
+import com.core.library_base.ktx.screenWidth
+import com.core.library_base.route.RouteActivity
+import com.core.library_base.vm.EmptyViewModel
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.ktx.screenHeightWithStatus
-import com.knight.kotlin.library_base.ktx.screenWidth
-import com.knight.kotlin.library_base.route.RouteActivity
-import com.knight.kotlin.library_base.vm.EmptyViewModel
 import com.knight.kotlin.library_util.DeviceUtils
 import com.knight.kotlin.library_util.NetWorkUtils
 import com.knight.kotlin.library_util.PhoneUtils
@@ -20,7 +20,7 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 @AndroidEntryPoint
 @Route(path = RouteActivity.Set.DeviceMessage)
-class DeviceMessageActivity : BaseActivity<SetDeviceMessageActivityBinding,EmptyViewModel>() {
+class DeviceMessageActivity : BaseActivity<SetDeviceMessageActivityBinding, EmptyViewModel>() {
 
     override fun setThemeColor(isDarkMode: Boolean) {
 

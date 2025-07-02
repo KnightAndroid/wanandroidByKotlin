@@ -9,8 +9,8 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import android.widget.TextView
-import com.knight.kotlin.library_base.util.CacheUtils
-import com.knight.kotlin.library_base.util.dp2px
+import com.knight.kotlin.library_base.utils.CacheUtils
+import com.core.library_base.util.dp2px
 import com.knight.kotlin.library_widget.R
 import java.util.Arrays
 import kotlin.math.abs

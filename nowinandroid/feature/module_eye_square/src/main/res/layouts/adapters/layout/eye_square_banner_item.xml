@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.core.library_base.entity.eye_type.EyeBannerSquare" />
+            type="com.knight.kotlin.library_base.entity.eye_type.EyeBannerSquare" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -17,7 +17,7 @@ dependencies {
 //    implementation project(path: ':library_common')
 
     implementation project(":nowinandroid:core:library_common")
-    implementation project(path: ':core:library_base')
+    implementation project(path: ':nowinandroid:core:library_base')
     implementation project(":nowinandroid:core:library_database")
     implementation Dependencies.JetPack.HILT_CORE
     implementation Dependencies.GitHub.GLIDE

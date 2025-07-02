@@ -7,9 +7,9 @@ import android.os.Build
 import com.knight.kotlin.library_base.config.Appconfig
 import com.knight.kotlin.library_base.config.Appconfig.SESSION_ID
 import com.knight.kotlin.library_base.config.Appconfig.X_API_KEY
-import com.knight.kotlin.library_base.ktx.networkName
-import com.knight.kotlin.library_base.ktx.screenHeight
-import com.knight.kotlin.library_base.ktx.screenWidth
+import com.core.library_base.ktx.networkName
+import com.core.library_base.ktx.screenHeight
+import com.core.library_base.ktx.screenWidth
 import com.knight.kotlin.library_network.bean.AuthToken
 import java.util.Locale
 import java.util.UUID
@@ -71,15 +71,15 @@ class HeaderStorage (mContext: Context) {
             return listOf(
                 "ky_udid=$udId",
                 "ky_auth=",
-                "APPID=${Appconfig.APP_ID}",
+                "APPID=${com.knight.kotlin.library_base.config.Appconfig.APP_ID}",
                 "PHPSESSID=$SESSION_ID"
             ).joinToString(";")
         }
 
     val ua: String
         get() {
-            return "EYEPETIZER/${Appconfig.VERSION_CODE} (${Build.MODEL};android;${Build.VERSION.RELEASE};" +
-                    "${Locale.getDefault()};android;${Appconfig.VERSION_NAME};cn-bj;pp;${deviceId};${context.networkName};" +
+            return "EYEPETIZER/${com.knight.kotlin.library_base.config.Appconfig.VERSION_CODE} (${Build.MODEL};android;${Build.VERSION.RELEASE};" +
+                    "${Locale.getDefault()};android;${com.knight.kotlin.library_base.config.Appconfig.VERSION_NAME};cn-bj;pp;${deviceId};${context.networkName};" +
                     "${context.screenWidth}*${context.screenHeight}) native/1.0"
         }
 
@@ -88,7 +88,7 @@ class HeaderStorage (mContext: Context) {
             return mutableMapOf(
                 "X-THEFAIR-CID" to deviceId,
                 "X-THEFAIR-AUTH" to auth,
-                "X-THEFAIR-APPID" to Appconfig.APP_ID,
+                "X-THEFAIR-APPID" to com.knight.kotlin.library_base.config.Appconfig.APP_ID,
                 "x-api-key" to X_API_KEY,
                 "X-THEFAIR-UA" to ua,
                 "User-Agent" to ua,

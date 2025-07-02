@@ -20,4 +20,4 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
--dontwarn com.knight.kotlin.library_base.R$drawable
+-dontwarn com.core.library_base.R$drawable

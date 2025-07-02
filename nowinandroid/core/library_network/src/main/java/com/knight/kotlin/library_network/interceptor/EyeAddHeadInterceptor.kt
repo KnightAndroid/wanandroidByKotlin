@@ -25,8 +25,8 @@ class EyeAddHeadInterceptor(context: Context,
             "udid" to headerStorage.udId,
             "deviceModel" to Build.MODEL,
             "system_version_code" to VERSION.SDK_INT.toString(),
-            "vc" to Appconfig.VERSION_CODE.toString(),
-            "vn" to Appconfig.VERSION_NAME
+            "vc" to com.knight.kotlin.library_base.config.Appconfig.VERSION_CODE.toString(),
+            "vn" to com.knight.kotlin.library_base.config.Appconfig.VERSION_NAME
         )
     }
 

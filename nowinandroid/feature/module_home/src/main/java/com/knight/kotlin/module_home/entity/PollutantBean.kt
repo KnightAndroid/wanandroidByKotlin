@@ -13,7 +13,7 @@ import kotlinx.parcelize.Parcelize
  */
 @Parcelize
 data class PollutantBean (
-    val pollutantIndex:PollutantIndex,
+    val pollutantIndex: PollutantIndex,
     val concentration:Float,
     val unit:String
 ): Parcelable

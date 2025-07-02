@@ -1,10 +1,11 @@
 package com.knight.kotlin.module_set.activity
 
 import android.view.View
-import com.flyjingfish.android_aop_core.annotations.SingleClick
 import com.knight.kotlin.library_base.activity.BaseActivity
-import com.knight.kotlin.library_base.ktx.setOnClick
-import com.knight.kotlin.library_base.route.RouteActivity
+import com.core.library_base.ktx.setOnClick
+import com.core.library_base.route.RouteActivity
+import com.flyjingfish.android_aop_core.annotations.SingleClick
+
 import com.knight.kotlin.library_common.fragment.UpdateAppDialogFragment
 import com.knight.kotlin.library_util.SystemUtils
 import com.knight.kotlin.library_util.startPage
@@ -23,7 +24,7 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 @AndroidEntryPoint
 @Route(path = RouteActivity.Set.AboutActivity)
-class AboutActivity:BaseActivity<SetAboutActivityBinding,AboutVm>() {
+class AboutActivity: BaseActivity<SetAboutActivityBinding, AboutVm>() {
 
 
     override fun setThemeColor(isDarkMode: Boolean) {

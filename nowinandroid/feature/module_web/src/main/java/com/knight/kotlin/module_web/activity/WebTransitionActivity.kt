@@ -12,11 +12,9 @@ import android.webkit.WebView
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
-import com.core.library_base.activity.BaseActivity
-import com.core.library_base.config.Appconfig
 import com.core.library_base.ktx.toHtml
 import com.core.library_base.route.RouteActivity
-import com.core.library_base.util.CacheUtils
+import com.knight.kotlin.library_base.utils.CacheUtils
 import com.core.library_base.util.dp2px
 import com.core.library_base.vm.EmptyViewModel
 import com.google.android.material.appbar.AppBarLayout
@@ -24,6 +22,8 @@ import com.just.agentweb.AgentWeb
 import com.just.agentweb.DefaultWebClient
 import com.just.agentweb.WebChromeClient
 import com.just.agentweb.WebViewClient
+import com.knight.kotlin.library_base.activity.BaseActivity
+import com.knight.kotlin.library_base.config.Appconfig
 import com.knight.kotlin.module_web.databinding.WebTransitionActivityBinding
 import com.knight.kotlin.module_web.utils.ViewBindUtils
 import com.knight.kotlin.module_web.widget.WebLayout
@@ -73,7 +73,7 @@ class WebTransitionActivity: BaseActivity<WebTransitionActivityBinding, EmptyVie
         webTransitionToolbar.baseCompatToolbar.setBackgroundColor(
             ContextCompat.getColor(
                 this@WebTransitionActivity,
-                com.knight.kotlin.library_base.R.color.base_color_transparent
+                com.core.library_base.R.color.base_color_transparent
             ))
         webTransitionToolbar.baseIvBack.setOnClickListener {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -92,11 +92,11 @@ class WebTransitionActivity: BaseActivity<WebTransitionActivityBinding, EmptyVie
                 if (255 - (255 * -verticalOffset / alphaMaxOffset).toInt() > 127) {
                     webTransitionToolbar.baseTvTitle.setTextColor(ContextCompat.getColor(this@WebTransitionActivity,
                         com.just.agentweb.R.color.white))
-                    webTransitionToolbar.baseIvBack.setBackgroundResource(com.knight.kotlin.library_base.R.drawable.base_right_whitearrow)
+                    webTransitionToolbar.baseIvBack.setBackgroundResource(com.core.library_base.R.drawable.base_right_whitearrow)
                 } else {
                     webTransitionToolbar.baseTvTitle.setTextColor(ContextCompat.getColor(this@WebTransitionActivity,
                         com.just.agentweb.R.color.black))
-                    webTransitionToolbar.baseIvBack.setBackgroundResource(com.knight.kotlin.library_base.R.drawable.base_iv_left_arrow)
+                    webTransitionToolbar.baseIvBack.setBackgroundResource(com.core.library_base.R.drawable.base_iv_left_arrow)
                 }
             }
         })
@@ -126,7 +126,7 @@ class WebTransitionActivity: BaseActivity<WebTransitionActivityBinding, EmptyVie
         gradientDrawable.setColor(cardBgColor)
         mBinding.webImage.setBackground(gradientDrawable)
         ViewCompat.setTransitionName(mBinding.webImage, Appconfig.IMAGE_TRANSITION_NAME)
-        ViewCompat.setTransitionName(mBinding.webArticleAuthor, Appconfig.TEXT_AUTHOR_NAME)
+        ViewCompat.setTransitionName(mBinding.webArticleAuthor,Appconfig.TEXT_AUTHOR_NAME)
         ViewCompat.setTransitionName(mBinding.webChapterName, Appconfig.TEXT_CHAPTERNAME_NAME)
 
         mBinding.webArticleAuthor.setText(author)

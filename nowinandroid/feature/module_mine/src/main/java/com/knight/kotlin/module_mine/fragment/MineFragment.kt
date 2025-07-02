@@ -5,26 +5,26 @@ import android.graphics.drawable.GradientDrawable
 import android.util.Base64
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.core.library_base.annotation.EventBusRegister
+import com.core.library_base.event.MessageEvent
+import com.core.library_base.route.RouteActivity
+import com.core.library_base.route.RouteFragment
+import com.knight.kotlin.library_base.utils.CacheUtils
+import com.core.library_base.util.ColorUtils
+import com.core.library_base.util.EventBusUtils
+import com.core.library_base.util.GsonUtils
+import com.core.library_base.util.dp2px
 import com.flyjingfish.android_aop_core.annotations.SingleClick
 import com.google.common.reflect.TypeToken
 import com.knight.kotlin.library_aop.loginintercept.LoginCheck
-import com.knight.kotlin.library_base.annotation.EventBusRegister
 import com.knight.kotlin.library_base.config.Appconfig
 import com.knight.kotlin.library_base.config.CacheKey
 import com.knight.kotlin.library_base.entity.LoginEntity
 import com.knight.kotlin.library_base.entity.UserInfoEntity
-import com.knight.kotlin.library_base.event.MessageEvent
 import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.knight.kotlin.library_base.ktx.dismissLoading
 import com.knight.kotlin.library_base.ktx.getUser
 import com.knight.kotlin.library_base.ktx.showLoading
-import com.knight.kotlin.library_base.route.RouteActivity
-import com.knight.kotlin.library_base.route.RouteFragment
-import com.knight.kotlin.library_base.util.CacheUtils
-import com.knight.kotlin.library_base.util.ColorUtils
-import com.knight.kotlin.library_base.util.EventBusUtils
-import com.knight.kotlin.library_base.util.GsonUtils
-import com.knight.kotlin.library_base.util.dp2px
 import com.knight.kotlin.library_util.JsonUtils
 import com.knight.kotlin.library_util.SystemUtils
 import com.knight.kotlin.library_util.image.ImageLoader
@@ -35,7 +35,6 @@ import com.knight.kotlin.library_util.toast.ToastUtils
 import com.knight.kotlin.library_widget.ktx.init
 import com.knight.kotlin.library_widget.ktx.setSafeOnItemChildClickListener
 import com.knight.kotlin.library_widget.ktx.setSafeOnItemClickListener
-
 import com.knight.kotlin.module_mine.R
 import com.knight.kotlin.module_mine.activity.LoginActivity
 import com.knight.kotlin.module_mine.activity.QuickLoginActivity
@@ -207,7 +206,7 @@ class MineFragment: BaseFragment<MineFragmentBinding, MineViewModel>(),OnRefresh
     /**
      * 登录完信息
      */
-    private fun setUserInfo(userInfo:UserInfoEntity) {
+    private fun setUserInfo(userInfo: UserInfoEntity) {
 
         mViewModel.getUserInfoCoin(failureCallBack = {
             requestUserInfoCoinError()
@@ -300,7 +299,7 @@ class MineFragment: BaseFragment<MineFragmentBinding, MineViewModel>(),OnRefresh
                     requireActivity(),
                     mOpenSourceAdapter.items[position].abroadlink
                 )
-                ToastUtils.show(com.knight.kotlin.library_base.R.string.base_success_copylink)
+                ToastUtils.show(com.core.library_base.R.string.base_success_copylink)
             }
 
             //Item点击事件
@@ -361,7 +360,7 @@ class MineFragment: BaseFragment<MineFragmentBinding, MineViewModel>(),OnRefresh
 
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onMessageEvent(event:MessageEvent) {
+    fun onMessageEvent(event: MessageEvent) {
         when (event.type) {
             MessageEvent.MessageType.LoginSuccess ->{
                 //登录成功 请求金币信息

@@ -2,9 +2,9 @@ package com.knight.kotlin.module_set.activity
 
 import android.util.Base64
 import com.knight.kotlin.library_base.activity.BaseActivity
-import com.knight.kotlin.library_base.route.RouteActivity
-import com.knight.kotlin.library_base.util.CacheUtils
-import com.knight.kotlin.library_base.vm.EmptyViewModel
+import com.core.library_base.route.RouteActivity
+import com.knight.kotlin.library_base.utils.CacheUtils
+import com.core.library_base.vm.EmptyViewModel
 import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.library_widget.GestureLockView
 import com.knight.kotlin.module_set.R
@@ -27,7 +27,7 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 @AndroidEntryPoint
 @Route(path = RouteActivity.Set.SetGestureLockActivity)
-class GestureLockActivity : BaseActivity<SetGesturelockActivityBinding,EmptyViewModel>() {
+class GestureLockActivity : BaseActivity<SetGesturelockActivityBinding, EmptyViewModel>() {
 
 
     private var oneGesturePassword:String = ""

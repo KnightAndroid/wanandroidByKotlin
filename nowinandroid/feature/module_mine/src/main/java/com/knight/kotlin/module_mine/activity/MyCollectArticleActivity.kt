@@ -2,10 +2,10 @@ package com.knight.kotlin.module_mine.activity
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.knight.kotlin.library_base.activity.BaseActivity
-import com.knight.kotlin.library_base.ktx.init
-import com.knight.kotlin.library_base.ktx.setOnClick
-import com.knight.kotlin.library_base.route.RouteActivity
-import com.knight.kotlin.library_base.util.ArouteUtils
+import com.core.library_base.ktx.init
+import com.core.library_base.ktx.setOnClick
+import com.core.library_base.route.RouteActivity
+import com.knight.kotlin.library_base.utils.ArouteUtils
 import com.knight.kotlin.library_util.DialogUtils
 import com.knight.kotlin.library_widget.ktx.setSafeOnItemChildClickListener
 import com.knight.kotlin.library_widget.ktx.setSafeOnItemClickListener
@@ -126,7 +126,7 @@ class MyCollectArticleActivity : BaseActivity<MineCollectarticlesActivityBinding
                 )
             }
 
-            setSafeOnItemChildClickListener(com.knight.kotlin.library_base.R.id.base_icon_collect) { adapter, view, position ->
+            setSafeOnItemChildClickListener(com.core.library_base.R.id.base_icon_collect) { adapter, view, position ->
 
 
                         selectItem = position
@@ -144,7 +144,7 @@ class MyCollectArticleActivity : BaseActivity<MineCollectarticlesActivityBinding
 
             }
 
-            setSafeOnItemChildClickListener(com.knight.kotlin.library_base.R.id.base_article_collect) { adapter, view, position ->
+            setSafeOnItemChildClickListener(com.core.library_base.R.id.base_article_collect) { adapter, view, position ->
 
                         selectItem = position
                         DialogUtils.getConfirmDialog(this@MyCollectArticleActivity,getString(R.string.mine_confirm_cancelarticle),

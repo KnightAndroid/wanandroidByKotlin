@@ -5,7 +5,7 @@ import android.net.Uri
 import android.view.Gravity
 import android.view.View
 import android.webkit.WebView
-import com.core.library_base.fragment.BaseDialogFragment
+import com.knight.kotlin.library_base.fragment.BaseDialogFragment
 import com.core.library_base.vm.EmptyViewModel
 import com.flyjingfish.android_aop_core.annotations.SingleClick
 import com.knight.kotlin.library_util.SystemUtils

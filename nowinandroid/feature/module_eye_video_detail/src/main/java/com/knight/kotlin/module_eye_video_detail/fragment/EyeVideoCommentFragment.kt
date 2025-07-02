@@ -3,7 +3,7 @@ package com.knight.kotlin.module_eye_video_detail.fragment
 import android.view.KeyEvent
 import android.view.KeyEvent.KEYCODE_ENTER
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.core.library_base.fragment.BaseFragment
+import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.core.library_base.route.RouteFragment
 
 import com.knight.kotlin.library_util.RecyclerResizeHelper
@@ -67,7 +67,7 @@ class EyeVideoCommentFragment: BaseFragment<EyeVideoCommentFragmentBinding, EyeV
 
             etVideoComment.setOnEditorActionListener { _, _, event: KeyEvent? ->
                 if (event?.keyCode == KEYCODE_ENTER) {
-                    toast(getString(com.knight.kotlin.library_base.R.string.base_unavailable_tip))
+                    toast(getString(com.core.library_base.R.string.base_unavailable_tip))
                 }
                 false
             }

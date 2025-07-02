@@ -4,15 +4,10 @@ import android.content.Context
 import android.os.Build
 import android.text.Html
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter4.BaseQuickAdapter
-import com.knight.kotlin.library_base.util.CacheUtils
-
-import com.knight.kotlin.module_mine.R
-import com.knight.kotlin.module_mine.databinding.MineItemBinding
+import com.knight.kotlin.library_base.utils.CacheUtils
 import com.knight.kotlin.module_mine.databinding.MineOpensourceItemBinding
 import com.knight.kotlin.module_mine.entity.OpenSourceBean
 

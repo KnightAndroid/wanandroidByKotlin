@@ -1,13 +1,10 @@
 package com.knight.kotlin.module_eye_square.activity
 
 import androidx.recyclerview.widget.GridLayoutManager
-import com.core.library_base.activity.BaseActivity
-import com.core.library_base.entity.EyeApiRequest
+import com.core.library_base.ktx.setOnClick
 import com.core.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.entity.EyeApiRequest
-import com.knight.kotlin.library_base.ktx.setOnClick
-import com.knight.kotlin.library_base.route.RouteActivity
 import com.knight.kotlin.library_widget.ktx.init
 import com.knight.kotlin.module_eye_square.adapter.EyeSquareAdapter
 import com.knight.kotlin.module_eye_square.databinding.EyeSquareActivityBinding

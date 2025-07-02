@@ -4,11 +4,12 @@ import android.content.res.Resources
 import android.view.View
 import com.knight.kotlin.library_base.BaseApp
 import com.knight.kotlin.library_base.activity.BaseActivity
-import com.knight.kotlin.library_base.ktx.setOnClick
-import com.knight.kotlin.library_base.route.RouteActivity
-import com.knight.kotlin.library_base.util.CacheUtils
-import com.knight.kotlin.library_base.util.px2sp
-import com.knight.kotlin.library_base.vm.EmptyViewModel
+import com.core.library_base.ktx.setOnClick
+import com.core.library_base.route.RouteActivity
+import com.knight.kotlin.library_base.utils.CacheUtils
+import com.core.library_base.util.px2sp
+import com.core.library_base.vm.EmptyViewModel
+
 import com.knight.kotlin.library_util.SystemUtils
 import com.knight.kotlin.library_widget.ChangeSizeView
 import com.knight.kotlin.module_set.R
@@ -24,7 +25,7 @@ import me.jessyan.autosize.AutoSize
  */
 @AndroidEntryPoint
 @Route(path = RouteActivity.Set.SetChangeTextSizeActivity)
-class ChangeTextSizeActivity : BaseActivity<SetChangetextsizeActivityBinding,EmptyViewModel>() {
+class ChangeTextSizeActivity : BaseActivity<SetChangetextsizeActivityBinding, EmptyViewModel>() {
 
 
     /**
@@ -78,7 +79,7 @@ class ChangeTextSizeActivity : BaseActivity<SetChangetextsizeActivityBinding,Emp
     }
 
     private fun changeSize(position:Int) {
-        val dimension = resources.getDimensionPixelSize(com.knight.kotlin.library_base.R.dimen.base_dimen_16)
+        val dimension = resources.getDimensionPixelSize(com.core.library_base.R.dimen.base_dimen_16)
         //根据position 获取字体倍数
         fontSizeScale = (0.875 + 0.125 * position).toFloat()
         //放大后获取缩小的sp单位
@@ -93,8 +94,8 @@ class ChangeTextSizeActivity : BaseActivity<SetChangetextsizeActivityBinding,Emp
      * 改变标题字体大下
      */
     private fun changeTitleSize() {
-        val titleBaseDimension = resources.getDimensionPixelSize(com.knight.kotlin.library_base.R.dimen.base_dimen_18)
-        val titleRightDimension = resources.getDimensionPixelSize(com.knight.kotlin.library_base.R.dimen.base_dimen_15)
+        val titleBaseDimension = resources.getDimensionPixelSize(com.core.library_base.R.dimen.base_dimen_18)
+        val titleRightDimension = resources.getDimensionPixelSize(com.core.library_base.R.dimen.base_dimen_15)
         val titleCenterTextSize = (fontSizeScale * titleBaseDimension.px2sp()).toInt()
         val titleRightTextSize = (fontSizeScale * titleRightDimension.px2sp()).toInt()
         mBinding.includeChangetextToolbar.baseTvTitle.setTextSize(titleCenterTextSize.toFloat())

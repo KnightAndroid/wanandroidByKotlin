@@ -1,6 +1,6 @@
 package com.knight.kotlin.module_video.api
 
-import com.core.library_base.entity.EyeDailyListEntity
+import com.knight.kotlin.library_base.entity.EyeDailyListEntity
 import com.knight.kotlin.module_video.entity.VideoCommentList
 import retrofit2.http.GET
 import retrofit2.http.Headers

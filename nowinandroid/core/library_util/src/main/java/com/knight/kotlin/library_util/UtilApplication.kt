@@ -3,11 +3,11 @@ package com.knight.kotlin.library_util
 import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
-import com.google.auto.service.AutoService
 import com.knight.kotlin.library_base.BaseApp
-import com.knight.kotlin.library_base.app.ApplicationLifecycle
-import com.knight.kotlin.library_base.util.BaiduSoDownloaderUtils
-import com.knight.kotlin.library_base.util.ProcessUtil
+import com.core.library_base.app.ApplicationLifecycle
+import com.core.library_base.util.BaiduSoDownloaderUtils
+import com.core.library_base.util.ProcessUtil
+import com.google.auto.service.AutoService
 import com.knight.kotlin.library_util.baidu.LocationUtils
 import com.knight.kotlin.library_util.toast.ToastUtils.init
 import com.tencent.bugly.crashreport.CrashReport

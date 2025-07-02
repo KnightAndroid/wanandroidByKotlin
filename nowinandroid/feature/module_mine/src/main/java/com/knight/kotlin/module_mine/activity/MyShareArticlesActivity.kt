@@ -2,10 +2,10 @@ package com.knight.kotlin.module_mine.activity
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.knight.kotlin.library_base.activity.BaseActivity
-import com.knight.kotlin.library_base.ktx.init
-import com.knight.kotlin.library_base.ktx.setOnClick
-import com.knight.kotlin.library_base.route.RouteActivity
-import com.knight.kotlin.library_base.util.ArouteUtils
+import com.core.library_base.ktx.init
+import com.core.library_base.ktx.setOnClick
+import com.core.library_base.route.RouteActivity
+import com.knight.kotlin.library_base.utils.ArouteUtils
 import com.knight.kotlin.library_util.DialogUtils
 import com.knight.kotlin.library_widget.ktx.setSafeOnItemChildClickListener
 import com.knight.kotlin.library_widget.ktx.setSafeOnItemClickListener
@@ -27,7 +27,7 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 @AndroidEntryPoint
 @Route(path = RouteActivity.Mine.MyShareArticlesActivity)
-class MyShareArticlesActivity : BaseActivity<MineMySharearticlesActivityBinding,MyShareArticlesViewModel>(),OnRefreshListener,OnLoadMoreListener {
+class MyShareArticlesActivity : BaseActivity<MineMySharearticlesActivityBinding, MyShareArticlesViewModel>(),OnRefreshListener,OnLoadMoreListener {
 
 
 

@@ -8,7 +8,7 @@
         <import type="com.knight.kotlin.library_util.DateUtils" />
         <variable
             name="viewModel"
-            type="com.core.library_base.entity.EyeCommonVideoEntity" />
+            type="com.knight.kotlin.library_base.entity.EyeCommonVideoEntity" />
 
 
     </data>

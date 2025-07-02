@@ -19,9 +19,9 @@ import androidx.camera.core.UseCase
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowInsetsCompat
-import com.google.common.util.concurrent.ListenableFuture
 import com.knight.kotlin.library_base.activity.BaseActivity
-import com.knight.kotlin.library_base.vm.EmptyViewModel
+import com.core.library_base.vm.EmptyViewModel
+import com.google.common.util.concurrent.ListenableFuture
 import com.knight.kotlin.library_scan.R
 import com.knight.kotlin.library_scan.databinding.ScancodeActivityBinding
 import com.knight.kotlin.library_scan.decode.ScanCodeAnalyzer
@@ -42,7 +42,7 @@ import java.util.concurrent.TimeUnit
  * Time:2022/2/14 15:31
  * Description:ScanCodeActivity
  */
-class ScanCodeActivity:BaseActivity<ScancodeActivityBinding,EmptyViewModel>() {
+class ScanCodeActivity: BaseActivity<ScancodeActivityBinding, EmptyViewModel>() {
 
     private val lensFacing = CameraSelector.LENS_FACING_BACK
     private var mImageCapture: ImageCapture? = null
@@ -153,8 +153,8 @@ class ScanCodeActivity:BaseActivity<ScancodeActivityBinding,EmptyViewModel>() {
                             setResult(RESULT_OK, intent)
                             finish()
                             overridePendingTransition(
-                                com.knight.kotlin.library_base.R.anim.base_bottom_slient,
-                                com.knight.kotlin.library_base.R.anim.base_bottom_out
+                                com.core.library_base.R.anim.base_bottom_slient,
+                                com.core.library_base.R.anim.base_bottom_out
                             )
                         }
                     })
@@ -238,7 +238,7 @@ class ScanCodeActivity:BaseActivity<ScancodeActivityBinding,EmptyViewModel>() {
         when(v) {
             mBinding.scanIvClose -> {
                 finish()
-                overridePendingTransition(com.knight.kotlin.library_base.R.anim.base_bottom_slient, com.knight.kotlin.library_base.R.anim.base_bottom_out)
+                overridePendingTransition(com.core.library_base.R.anim.base_bottom_slient, com.core.library_base.R.anim.base_bottom_out)
             }
             mBinding.scanIvFlash -> {
                 flashClick()

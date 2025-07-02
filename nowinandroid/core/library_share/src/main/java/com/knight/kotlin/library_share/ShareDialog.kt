@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.view.Gravity
 import android.view.View
 import androidx.lifecycle.lifecycleScope
-import com.core.library_base.fragment.BaseDialogFragment
+import com.knight.kotlin.library_base.fragment.BaseDialogFragment
 import com.core.library_base.ktx.setOnClick
 import com.core.library_base.vm.EmptyViewModel
 

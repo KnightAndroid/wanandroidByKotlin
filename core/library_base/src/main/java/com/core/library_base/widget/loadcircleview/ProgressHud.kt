@@ -12,9 +12,9 @@ import android.view.WindowManager
 import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import com.core.library_base.R
 import com.core.library_base.ktx.appStr
 import com.core.library_base.util.dp2px
-import com.knight.kotlin.library_base.R
 
 /**
  * Author:Knight

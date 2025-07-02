@@ -4,14 +4,14 @@ import android.animation.ObjectAnimator
 import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import com.knight.kotlin.library_base.activity.BaseActivity
-import com.knight.kotlin.library_base.annotation.EventBusRegister
-import com.knight.kotlin.library_base.event.MessageEvent
-import com.knight.kotlin.library_base.route.RouteActivity
-import com.knight.kotlin.library_base.route.RouteFragment
-import com.knight.kotlin.library_base.util.ActivityManagerUtils
-import com.knight.kotlin.library_base.util.CacheUtils
-import com.knight.kotlin.library_base.util.ColorUtils
-import com.knight.kotlin.library_base.util.StatusBarUtils
+import com.core.library_base.annotation.EventBusRegister
+import com.core.library_base.event.MessageEvent
+import com.core.library_base.route.RouteActivity
+import com.core.library_base.route.RouteFragment
+import com.core.library_base.util.ActivityManagerUtils
+import com.knight.kotlin.library_base.utils.CacheUtils
+import com.core.library_base.util.ColorUtils
+import com.knight.kotlin.library_base.utils.StatusBarUtils
 import com.knight.kotlin.library_util.ViewInitUtils
 import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_main.R
@@ -26,7 +26,7 @@ import org.greenrobot.eventbus.ThreadMode
 @EventBusRegister
 @AndroidEntryPoint
 @Route(path = RouteActivity.Main.MainActivity)
-class MainActivity : BaseActivity<MainActivityBinding,MainViewModel>() {
+class MainActivity : BaseActivity<MainActivityBinding, MainViewModel>() {
     private var mExitAppTime: Long = 0
     val fragments:MutableList<Fragment> = mutableListOf()
     private var outAnimator: ObjectAnimator? = null

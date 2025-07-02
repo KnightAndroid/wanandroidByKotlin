@@ -6,13 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter4.BaseQuickAdapter
+import com.core.library_base.util.dp2px
 import com.knight.kotlin.library_base.entity.BaiduContent
-import com.knight.kotlin.library_base.util.dp2px
 import com.knight.kotlin.library_util.image.ImageLoader
 import com.knight.kotlin.module_realtime.R
 import com.knight.kotlin.module_realtime.databinding.RealtimeCarRankItemBinding
 import com.knight.kotlin.module_realtime.ktx.HotAdapterInterface
-
 
 
 /**

@@ -1,6 +1,6 @@
 package com.knight.kotlin.module_set.repo
 
-import com.knight.kotlin.library_base.ktx.dimissLoadingDialog
+import com.core.library_base.ktx.dimissLoadingDialog
 import com.knight.kotlin.library_base.repository.BaseRepository
 import com.knight.kotlin.library_network.model.responseCodeExceptionHandler
 import com.knight.kotlin.library_util.toast

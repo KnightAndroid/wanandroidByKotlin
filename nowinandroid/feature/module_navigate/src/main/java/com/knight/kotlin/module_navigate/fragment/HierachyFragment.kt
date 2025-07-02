@@ -4,7 +4,7 @@ import android.view.View
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.knight.kotlin.library_base.fragment.BaseFragment
-import com.knight.kotlin.library_base.route.RouteFragment
+import com.core.library_base.route.RouteFragment
 import com.knight.kotlin.module_navigate.R
 import com.knight.kotlin.module_navigate.adapter.LeftBarAdapter
 import com.knight.kotlin.module_navigate.databinding.NavigateHierachyFragmentBinding

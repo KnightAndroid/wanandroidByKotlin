@@ -2,8 +2,9 @@ package com.knight.kotlin.module_realtime.ktx
 
 import android.view.View
 import com.chad.library.adapter4.BaseQuickAdapter
+
+import com.knight.kotlin.library_base.utils.ArouteUtils
 import com.knight.kotlin.library_base.entity.BaiduContent
-import com.knight.kotlin.library_base.util.ArouteUtils
 import com.yanzhenjie.recyclerview.SwipeRecyclerView
 
 

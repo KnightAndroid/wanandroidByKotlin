@@ -3,15 +3,14 @@ package com.knight.kotlin.module_wechat.fragment
 import android.os.Bundle
 import android.text.TextUtils
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.core.library_base.fragment.BaseFragment
-import com.core.library_base.route.RouteFragment
-import com.knight.kotlin.library_aop.loginintercept.LoginCheck
 import com.knight.kotlin.library_base.fragment.BaseFragment
-import com.knight.kotlin.library_base.ktx.setOnClick
-import com.knight.kotlin.library_base.route.RouteFragment
-import com.knight.kotlin.library_base.util.ArouteUtils
-import com.knight.kotlin.library_base.util.CacheUtils
-import com.knight.kotlin.library_base.util.ColorUtils
+import com.core.library_base.ktx.setOnClick
+import com.core.library_base.route.RouteFragment
+import com.knight.kotlin.library_base.utils.ArouteUtils
+import com.knight.kotlin.library_base.utils.CacheUtils
+import com.core.library_base.util.ColorUtils
+import com.knight.kotlin.library_aop.loginintercept.LoginCheck
+
 import com.knight.kotlin.library_widget.ktx.init
 import com.knight.kotlin.library_widget.ktx.setSafeOnItemChildClickListener
 import com.knight.kotlin.library_widget.ktx.setSafeOnItemClickListener
@@ -78,7 +77,7 @@ class WechatOfficialAccountFragment: BaseFragment<WechatOfficialaccountFragmentB
         includeWechatArticles.baseFreshlayout.setOnRefreshListener(this@WechatOfficialAccountFragment)
         includeWechatArticles.baseFreshlayout.setOnLoadMoreListener(this@WechatOfficialAccountFragment)
         mBinding.includeWechatArticles.baseBodyRv.init(LinearLayoutManager(activity),mWechatArticleAdapter,false)
-        wechatFloatBtn.backgroundTintList = ColorUtils.createColorStateList(CacheUtils.getThemeColor(),CacheUtils.getThemeColor())
+        wechatFloatBtn.backgroundTintList = ColorUtils.createColorStateList(CacheUtils.getThemeColor(), CacheUtils.getThemeColor())
         wechatFloatBtn.setOnClick { includeWechatArticles.baseBodyRv.smoothScrollToPosition(0) }
         initListener()
     }
@@ -112,7 +111,7 @@ class WechatOfficialAccountFragment: BaseFragment<WechatOfficialaccountFragmentB
                 )
             }
 
-            setSafeOnItemChildClickListener(com.knight.kotlin.library_base.R.id.base_icon_collect) { adapter, view, position ->
+            setSafeOnItemChildClickListener(com.core.library_base.R.id.base_icon_collect) { adapter, view, position ->
                 selectItemPosition = position
                 collectOrunCollect(items[position].collect,items[position].id)
             }

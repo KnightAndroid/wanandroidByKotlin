@@ -1,7 +1,8 @@
 package com.knight.kotlin.module_course.activity
 
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.core.library_base.activity.BaseActivity
+import com.knight.kotlin.library_base.activity.BaseActivity
+import com.core.library_base.ktx.init
 import com.core.library_base.ktx.setOnClick
 import com.core.library_base.route.RouteActivity
 

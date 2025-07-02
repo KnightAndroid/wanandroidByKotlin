@@ -10,8 +10,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.core.library_base.util.dp2px
 import com.knight.kotlin.library_base.enum.AirLevel
-import com.knight.kotlin.library_base.util.dp2px
 
 
 /**
@@ -115,7 +115,7 @@ class WeatherItemView @JvmOverloads constructor(context: Context, attrs: Attribu
                     tvAirLevel!!.text = "优"
                 }
 
-                AirLevel.GOOD -> {
+               AirLevel.GOOD -> {
                     tvAirLevel!!.setBackgroundResource(R.drawable.widget_good_level_shape)
                     tvAirLevel!!.text = "良好"
                 }
