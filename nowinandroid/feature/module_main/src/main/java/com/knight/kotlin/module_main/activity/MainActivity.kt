@@ -38,8 +38,8 @@ class MainActivity : BaseActivity<MainActivityBinding, MainViewModel>() {
             isUserInputEnabled = false
         )
         btnNav.run {
-            itemTextColor =  ColorUtils.createColorStateList(CacheUtils.getThemeColor(),ColorUtils.convertToColorInt("a6a6a6"))
-            itemIconTintList =ColorUtils.createColorStateList(CacheUtils.getThemeColor(),ColorUtils.convertToColorInt("a6a6a6"))
+            itemTextColor =  ColorUtils.createColorStateList(CacheUtils.getThemeColor(), ColorUtils.convertToColorInt("a6a6a6"))
+            itemIconTintList = ColorUtils.createColorStateList(CacheUtils.getThemeColor(), ColorUtils.convertToColorInt("a6a6a6"))
            // setIconTintList(ColorUtils.createColorStateList(CacheUtils.getThemeColor(),ColorUtils.convertToColorInt("a6a6a6")))
             setOnItemSelectedListener {
                 when(it.itemId) {

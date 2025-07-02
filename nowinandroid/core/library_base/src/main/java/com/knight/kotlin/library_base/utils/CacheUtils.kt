@@ -2,9 +2,10 @@ package com.knight.kotlin.library_base.utils
 
 import android.content.Context
 import android.text.TextUtils
-import com.knight.kotlin.library_base.BaseApp
 import com.core.library_base.util.ColorUtils
 import com.google.gson.Gson
+import com.knight.kotlin.library_base.BaseApp
+import com.knight.kotlin.library_base.config.CacheKey
 import com.tencent.mmkv.MMKV
 import java.lang.reflect.Type
 
@@ -56,7 +57,7 @@ object CacheUtils {
      * @param isAgree
      */
     fun saveIsAgreeMent(isAgree: Boolean) {
-        mmkv?.encode(com.knight.kotlin.library_base.config.CacheKey.AGREEMENT, isAgree)
+        mmkv?.encode(CacheKey.AGREEMENT, isAgree)
     }
 
     /**
@@ -65,14 +66,14 @@ object CacheUtils {
      * @return
      */
     fun getAgreeStatus(): Boolean {
-        return mmkv?.decodeBool(com.knight.kotlin.library_base.config.CacheKey.AGREEMENT, false)!!
+        return mmkv?.decodeBool(CacheKey.AGREEMENT, false)!!
     }
 
     /**
      * 清空用户信息
      */
     fun loginOut() {
-        mmkv?.remove(com.knight.kotlin.library_base.config.CacheKey.USER)
+        mmkv?.remove(CacheKey.USER)
     }
 
     /**
@@ -82,7 +83,7 @@ object CacheUtils {
      * @return
      */
     fun setFollowSystem(isFollowSystem: Boolean) {
-        mmkv?.encode(com.knight.kotlin.library_base.config.CacheKey.ISFOLLOWSYSTEM, isFollowSystem)
+        mmkv?.encode(CacheKey.ISFOLLOWSYSTEM, isFollowSystem)
     }
 
     /**
@@ -91,14 +92,14 @@ object CacheUtils {
      * @return
      */
     fun getFollowSystem(): Boolean {
-        return mmkv?.decodeBool(com.knight.kotlin.library_base.config.CacheKey.ISFOLLOWSYSTEM, false) ?: false
+        return mmkv?.decodeBool(CacheKey.ISFOLLOWSYSTEM, false) ?: false
     }
 
     /**
      * 设置普通模式还是深色模式
      */
     fun setNormalDark(normalDark: Boolean) {
-        mmkv?.encode(com.knight.kotlin.library_base.config.CacheKey.NORMALDARK, normalDark)
+        mmkv?.encode(CacheKey.NORMALDARK, normalDark)
     }
 
     /**
@@ -108,7 +109,7 @@ object CacheUtils {
      * @return true 深色模式 false  不是深色模式
      */
     fun getNormalDark(): Boolean {
-        return mmkv?.decodeBool(com.knight.kotlin.library_base.config.CacheKey.NORMALDARK, false) ?: false
+        return mmkv?.decodeBool(CacheKey.NORMALDARK, false) ?: false
     }
 
     /**
@@ -117,7 +118,7 @@ object CacheUtils {
      * @param withTheme
      */
     fun statusBarIsWithTheme(withTheme: Boolean) {
-        mmkv?.encode(com.knight.kotlin.library_base.config.CacheKey.STATUSWITHTHEME, withTheme)
+        mmkv?.encode(CacheKey.STATUSWITHTHEME, withTheme)
     }
 
     /**
@@ -126,7 +127,7 @@ object CacheUtils {
      * @return
      */
     fun getStatusBarIsWithTheme(): Boolean {
-        return mmkv?.decodeBool(com.knight.kotlin.library_base.config.CacheKey.STATUSWITHTHEME, false) ?: false
+        return mmkv?.decodeBool(CacheKey.STATUSWITHTHEME, false) ?: false
     }
 
     /**
@@ -135,7 +136,7 @@ object CacheUtils {
      * @param themecolor
      */
     fun setThemeColor(themecolor: Int) {
-        mmkv?.encode(com.knight.kotlin.library_base.config.CacheKey.THEMECOLOR, themecolor)
+        mmkv?.encode(CacheKey.THEMECOLOR, themecolor)
     }
 
     /**
@@ -145,16 +146,17 @@ object CacheUtils {
      */
     @JvmStatic
     fun getThemeColor(): Int {
-        return mmkv?.decodeInt(com.knight.kotlin.library_base.config.CacheKey.THEMECOLOR,
+        return mmkv?.decodeInt(
+            CacheKey.THEMECOLOR,
             ColorUtils.convertToColorInt("55aff4")
-        ) ?: ColorUtils.convertToColorInt("55aff4")
+        ) ?:ColorUtils.convertToColorInt("55aff4")
     }
 
     /**
      * 设置是否护眼
      */
     fun setIsEyeCare(isEyeCare: Boolean) {
-        mmkv?.encode(com.knight.kotlin.library_base.config.CacheKey.EYECARE, isEyeCare)
+        mmkv?.encode(CacheKey.EYECARE, isEyeCare)
     }
 
     /**
@@ -163,14 +165,14 @@ object CacheUtils {
      * @return
      */
     fun getIsEyeCare(): Boolean {
-        return mmkv?.decodeBool(com.knight.kotlin.library_base.config.CacheKey.EYECARE, false)!!
+        return mmkv?.decodeBool(CacheKey.EYECARE, false)!!
     }
 
     /**
      * 返回是什么语言模式 跟随系统 中文 英文
      */
     fun getLanguageMode(): String {
-        return mmkv?.decodeString(com.knight.kotlin.library_base.config.CacheKey.LANGUAGE, "简体中文")!!
+        return mmkv?.decodeString(CacheKey.LANGUAGE, "简体中文")!!
     }
 
     /**
@@ -179,7 +181,7 @@ object CacheUtils {
      * @param languageType
      */
     fun setLanguageType(languageType: String?) {
-        mmkv?.encode(com.knight.kotlin.library_base.config.CacheKey.LANGUAGE, languageType)
+        mmkv?.encode(CacheKey.LANGUAGE, languageType)
     }
 
     /**
@@ -188,7 +190,7 @@ object CacheUtils {
      * @param fontSizeScale
      */
     fun setSystemFontSize(fontSizeScale: Float) {
-        mmkv?.encode(com.knight.kotlin.library_base.config.CacheKey.FONTSIZESCALE, fontSizeScale)
+        mmkv?.encode(CacheKey.FONTSIZESCALE, fontSizeScale)
     }
 
     /**
@@ -197,7 +199,7 @@ object CacheUtils {
      * @return
      */
     fun getSystemFontSize(): Float {
-        return mmkv?.decodeFloat(com.knight.kotlin.library_base.config.CacheKey.FONTSIZESCALE, 1.0f)!!
+        return mmkv?.decodeFloat(CacheKey.FONTSIZESCALE, 1.0f)!!
     }
 
     /**
@@ -226,7 +228,7 @@ object CacheUtils {
      * 返回生物识别iv向量
      */
     fun getCliperIv(): String {
-        return mmkv?.decodeString(com.knight.kotlin.library_base.config.CacheKey.CLIPER_IV, "") ?: ""
+        return mmkv?.decodeString(CacheKey.CLIPER_IV, "") ?: ""
     }
 
     /**
@@ -236,7 +238,7 @@ object CacheUtils {
      */
     fun setCliperIv(cliperIv: String?) {
         mmkv?.encode(
-            com.knight.kotlin.library_base.config.CacheKey.CLIPER_IV,
+            CacheKey.CLIPER_IV,
             cliperIv
         )
     }
@@ -245,7 +247,7 @@ object CacheUtils {
      * 返回Base64后的登录账号信息
      */
     fun getEncryptLoginMessage(): String? {
-        return mmkv?.decodeString(com.knight.kotlin.library_base.config.CacheKey.ENCRYPT_LOGIN_MESSAGE, "")
+        return mmkv?.decodeString(CacheKey.ENCRYPT_LOGIN_MESSAGE, "")
     }
 
     /**
@@ -254,7 +256,7 @@ object CacheUtils {
      * @param encryptloginMessage
      */
     fun setEncryptLoginMessage(encryptloginMessage: String?) {
-        mmkv?.encode(com.knight.kotlin.library_base.config.CacheKey.ENCRYPT_LOGIN_MESSAGE, encryptloginMessage)
+        mmkv?.encode(CacheKey.ENCRYPT_LOGIN_MESSAGE, encryptloginMessage)
     }
 
     /**
@@ -263,7 +265,7 @@ object CacheUtils {
      * @return
      */
     fun setLoginMessage(loginMessage: String?) {
-        mmkv?.encode(com.knight.kotlin.library_base.config.CacheKey.LOGIN_MESSAGE, loginMessage)
+        mmkv?.encode(CacheKey.LOGIN_MESSAGE, loginMessage)
     }
 
     /**
@@ -271,14 +273,14 @@ object CacheUtils {
      * @return
      */
     fun getLoginMessage(): String {
-        return mmkv?.decodeString(com.knight.kotlin.library_base.config.CacheKey.LOGIN_MESSAGE, "") ?: ""
+        return mmkv?.decodeString(CacheKey.LOGIN_MESSAGE, "") ?: ""
     }
 
     /**
      * 设置是否指纹登录
      */
     fun setFingerLogin(isQuickLogin: Boolean) {
-        mmkv?.encode(com.knight.kotlin.library_base.config.CacheKey.FINGERLOGIN, isQuickLogin)
+        mmkv?.encode(CacheKey.FINGERLOGIN, isQuickLogin)
     }
 
 
@@ -287,7 +289,7 @@ object CacheUtils {
      * @return
      */
     fun getFingerLogin(): Boolean {
-        return mmkv?.decodeBool(com.knight.kotlin.library_base.config.CacheKey.FINGERLOGIN, false)!!
+        return mmkv?.decodeBool(CacheKey.FINGERLOGIN, false)!!
     }
 
     /**
@@ -295,7 +297,7 @@ object CacheUtils {
      *
      */
     fun setGesturePassword(gesturePassword: String?) {
-        mmkv?.encode(com.knight.kotlin.library_base.config.CacheKey.GESTUREPASSEORD, gesturePassword)
+        mmkv?.encode(CacheKey.GESTUREPASSEORD, gesturePassword)
     }
 
     /**
@@ -304,7 +306,7 @@ object CacheUtils {
      * @return
      */
     fun getGesturePassword(): String? {
-        return mmkv?.decodeString(com.knight.kotlin.library_base.config.CacheKey.GESTUREPASSEORD)
+        return mmkv?.decodeString(CacheKey.GESTUREPASSEORD)
     }
 
     /**
@@ -313,7 +315,7 @@ object CacheUtils {
      * @return
      */
     fun getGestureLogin(): Boolean {
-        return mmkv?.decodeBool(com.knight.kotlin.library_base.config.CacheKey.GESTURELOGIN, false) ?: false
+        return mmkv?.decodeBool(CacheKey.GESTURELOGIN, false) ?: false
     }
 
     /**
@@ -322,7 +324,7 @@ object CacheUtils {
      * @param gestureLogin
      */
     fun setGestureLogin(gestureLogin: Boolean) {
-        mmkv?.encode(com.knight.kotlin.library_base.config.CacheKey.GESTURELOGIN, gestureLogin)
+        mmkv?.encode(CacheKey.GESTURELOGIN, gestureLogin)
     }
 
     /**
@@ -331,10 +333,10 @@ object CacheUtils {
      * @return
      */
     fun getStartNightModeHour(): String {
-        return if (TextUtils.isEmpty(mmkv?.decodeString(com.knight.kotlin.library_base.config.CacheKey.STARTNIGHTHOUR))) {
+        return if (TextUtils.isEmpty(mmkv?.decodeString(CacheKey.STARTNIGHTHOUR))) {
             "22"
         } else {
-            mmkv?.decodeString(com.knight.kotlin.library_base.config.CacheKey.STARTNIGHTHOUR) ?: "22"
+            mmkv?.decodeString(CacheKey.STARTNIGHTHOUR) ?: "22"
         }
     }
 
@@ -344,7 +346,7 @@ object CacheUtils {
      * @return
      */
     fun setStartNightModeHour(hour: String?) {
-        mmkv?.encode(com.knight.kotlin.library_base.config.CacheKey.STARTNIGHTHOUR, hour)
+        mmkv?.encode(CacheKey.STARTNIGHTHOUR, hour)
     }
 
     /**
@@ -353,10 +355,10 @@ object CacheUtils {
      * @return
      */
     fun getStartNightModeMinuter(): String {
-        return if (TextUtils.isEmpty(mmkv?.decodeString(com.knight.kotlin.library_base.config.CacheKey.STARTNIGHTMINUTER))) {
+        return if (TextUtils.isEmpty(mmkv?.decodeString(CacheKey.STARTNIGHTMINUTER))) {
             "00"
         } else {
-            mmkv?.decodeString(com.knight.kotlin.library_base.config.CacheKey.STARTNIGHTMINUTER) ?: "00"
+            mmkv?.decodeString(CacheKey.STARTNIGHTMINUTER) ?: "00"
         }
     }
 
@@ -366,7 +368,7 @@ object CacheUtils {
      * @return
      */
     fun setStartNightModeMinuter(minuter: String?) {
-        mmkv?.encode(com.knight.kotlin.library_base.config.CacheKey.STARTNIGHTMINUTER, minuter)
+        mmkv?.encode(CacheKey.STARTNIGHTMINUTER, minuter)
     }
 
     /**
@@ -375,10 +377,10 @@ object CacheUtils {
      * @return
      */
     fun getStartDayModeHour(): String {
-        return if (TextUtils.isEmpty(mmkv?.decodeString(com.knight.kotlin.library_base.config.CacheKey.STARTDAYHOUR))) {
+        return if (TextUtils.isEmpty(mmkv?.decodeString(CacheKey.STARTDAYHOUR))) {
             "06"
         } else {
-            mmkv?.decodeString(com.knight.kotlin.library_base.config.CacheKey.STARTDAYHOUR) ?: "06"
+            mmkv?.decodeString(CacheKey.STARTDAYHOUR) ?: "06"
         }
     }
 
@@ -388,7 +390,7 @@ object CacheUtils {
      * @return
      */
     fun setStartDayModeHour(hour: String?) {
-        mmkv?.encode(com.knight.kotlin.library_base.config.CacheKey.STARTDAYHOUR, hour)
+        mmkv?.encode(CacheKey.STARTDAYHOUR, hour)
     }
 
     /**
@@ -397,10 +399,10 @@ object CacheUtils {
      * @return
      */
     fun getStartDayModeMinuter(): String {
-        return if (TextUtils.isEmpty(mmkv?.decodeString(com.knight.kotlin.library_base.config.CacheKey.STARTDAYMINUTER))) {
+        return if (TextUtils.isEmpty(mmkv?.decodeString(CacheKey.STARTDAYMINUTER))) {
             "00"
         } else {
-            mmkv?.decodeString(com.knight.kotlin.library_base.config.CacheKey.STARTDAYMINUTER) ?: "00"
+            mmkv?.decodeString(CacheKey.STARTDAYMINUTER) ?: "00"
         }
     }
 
@@ -410,7 +412,7 @@ object CacheUtils {
      * @return
      */
     fun setStartDayModeMinuter(minuter: String?) {
-        mmkv?.encode(com.knight.kotlin.library_base.config.CacheKey.STARTDAYMINUTER, minuter)
+        mmkv?.encode(CacheKey.STARTDAYMINUTER, minuter)
     }
 
     /**
@@ -419,7 +421,7 @@ object CacheUtils {
      * @param nightMode
      */
     fun setOpenAutoNightMode(nightMode: Boolean) {
-        mmkv?.encode(com.knight.kotlin.library_base.config.CacheKey.AUTONIGHTMODE, nightMode)
+        mmkv?.encode(CacheKey.AUTONIGHTMODE, nightMode)
     }
 
     /**
@@ -428,7 +430,7 @@ object CacheUtils {
      * @return
      */
     fun getAutoNightMode(): Boolean {
-        return mmkv?.decodeBool(com.knight.kotlin.library_base.config.CacheKey.AUTONIGHTMODE, false) ?:false
+        return mmkv?.decodeBool(CacheKey.AUTONIGHTMODE, false) ?:false
     }
 
     /**
@@ -437,7 +439,7 @@ object CacheUtils {
      *
      */
     fun setNightModeStatus(nightMode: Boolean) {
-        mmkv?.encode(com.knight.kotlin.library_base.config.CacheKey.INNIGHTMODE, nightMode)
+        mmkv?.encode(CacheKey.INNIGHTMODE, nightMode)
     }
 
     /**
@@ -446,7 +448,7 @@ object CacheUtils {
      * @return
      */
     fun getNightModeStatus(): Boolean {
-        return mmkv?.decodeBool(com.knight.kotlin.library_base.config.CacheKey.INNIGHTMODE) ?: false
+        return mmkv?.decodeBool(CacheKey.INNIGHTMODE) ?: false
     }
 
 
@@ -455,7 +457,7 @@ object CacheUtils {
      *
      */
     fun saveUserRank(rank:String) {
-        mmkv?.encode(com.knight.kotlin.library_base.config.CacheKey.RANK,rank)
+        mmkv?.encode(CacheKey.RANK,rank)
     }
 
 
@@ -464,7 +466,7 @@ object CacheUtils {
      *
      */
     fun getUserRank() : String {
-        return mmkv?.decodeString(com.knight.kotlin.library_base.config.CacheKey.RANK,"0") ?: "0"
+        return mmkv?.decodeString(CacheKey.RANK,"0") ?: "0"
     }
 
 
@@ -472,7 +474,7 @@ object CacheUtils {
      * 设置重力传感器是否开启
      */
     fun setGravitySensorSwitch(isGravitySensorEnabled: Boolean) {
-        mmkv?.encode(com.knight.kotlin.library_base.config.CacheKey.GRAVITY_SENSOR_SWITCH, isGravitySensorEnabled)
+        mmkv?.encode(CacheKey.GRAVITY_SENSOR_SWITCH, isGravitySensorEnabled)
     }
 
 
@@ -481,7 +483,7 @@ object CacheUtils {
      * @return
      */
     fun getGravitySensorSwitch(): Boolean {
-        return mmkv?.decodeBool(com.knight.kotlin.library_base.config.CacheKey.GRAVITY_SENSOR_SWITCH, false)!!
+        return mmkv?.decodeBool(CacheKey.GRAVITY_SENSOR_SWITCH, false)!!
     }
 
 
@@ -490,7 +492,7 @@ object CacheUtils {
      * 设置颜色模型
      */
     fun setDarkMode(darkMode:String) {
-        mmkv?.encode(com.knight.kotlin.library_base.config.CacheKey.DARK_MODEL, darkMode)
+        mmkv?.encode(CacheKey.DARK_MODEL, darkMode)
     }
 
     /**
@@ -498,7 +500,7 @@ object CacheUtils {
      * 返回颜色模型
      */
     fun getDarkMode() :String {
-        return mmkv?.decodeString(com.knight.kotlin.library_base.config.CacheKey.DARK_MODEL,"system") ?: "system"
+        return mmkv?.decodeString(CacheKey.DARK_MODEL,"system") ?: "system"
     }
 
     /**
@@ -506,7 +508,7 @@ object CacheUtils {
      * 设置背景动画效果模式
      */
     fun setBackgroundAnimationMode(mode:String) {
-        mmkv?.encode(com.knight.kotlin.library_base.config.CacheKey.BG_ANIMAT_MODE,mode)
+        mmkv?.encode(CacheKey.BG_ANIMAT_MODE,mode)
     }
 
     /**
@@ -514,7 +516,7 @@ object CacheUtils {
      * 返回背景动画效果模式
      */
     fun getBackgroundAnimationMode():String {
-        return mmkv?.decodeString(com.knight.kotlin.library_base.config.CacheKey.BG_ANIMAT_MODE,"system") ?: "system"
+        return mmkv?.decodeString(CacheKey.BG_ANIMAT_MODE,"system") ?: "system"
     }
 
 
@@ -523,7 +525,7 @@ object CacheUtils {
      * icon提供
      */
     fun setIconProvider(value:String) {
-        mmkv?.encode(com.knight.kotlin.library_base.config.CacheKey.ICON_PROVIDER,value)
+        mmkv?.encode(CacheKey.ICON_PROVIDER,value)
     }
 
     /**
@@ -531,7 +533,7 @@ object CacheUtils {
      * 返回icon 提供
      */
     fun getIconProvider():String {
-        return mmkv?.decodeString(com.knight.kotlin.library_base.config.CacheKey.ICON_PROVIDER, BaseApp.context.packageName) ?: ""
+        return mmkv?.decodeString(CacheKey.ICON_PROVIDER, BaseApp.context.packageName) ?: ""
     }
 
 
@@ -540,7 +542,7 @@ object CacheUtils {
      * 获取ip
      */
     fun setIp(value:String) {
-        mmkv?.encode(com.knight.kotlin.library_base.config.CacheKey.IP,value)
+        mmkv?.encode(CacheKey.IP,value)
     }
 
     /**
@@ -548,7 +550,7 @@ object CacheUtils {
      * 获取ip
      */
     fun getIp():String {
-        return mmkv?.decodeString(com.knight.kotlin.library_base.config.CacheKey.IP,"") ?: ""
+        return mmkv?.decodeString(CacheKey.IP,"") ?: ""
     }
 
     /**
@@ -556,7 +558,7 @@ object CacheUtils {
      * 清空ip
      */
     fun clearIp() {
-        mmkv?.encode(com.knight.kotlin.library_base.config.CacheKey.IP,"")
+        mmkv?.encode(CacheKey.IP,"")
     }
 
 
@@ -565,7 +567,7 @@ object CacheUtils {
      * 获取天气弹窗是否弹出
      */
     fun getWeatherDialogShow():String {
-        return mmkv?.decodeString(com.knight.kotlin.library_base.config.CacheKey.IS_WEATHER_HIDDEN,"") ?:""
+        return mmkv?.decodeString(CacheKey.IS_WEATHER_HIDDEN,"") ?:""
     }
 
     /**
@@ -573,7 +575,7 @@ object CacheUtils {
      * 设置是否弹出
      */
     fun setWeatherDialogHidden(date:String){
-        mmkv?.encode(com.knight.kotlin.library_base.config.CacheKey.IS_WEATHER_HIDDEN,date)
+        mmkv?.encode(CacheKey.IS_WEATHER_HIDDEN,date)
     }
 
 

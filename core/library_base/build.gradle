@@ -57,11 +57,7 @@ dependencies {
     api Dependencies.GitHub.ANDROID_EXTRA_AOP
     api Dependencies.GitHub.ANDROID_AOP_ANNOTATION
     api Dependencies.Kotlin.kotlinx_serialization_json
-    //百度地图
-    api Dependencies.OtherUtils.BAIDULOCATION
-    api Dependencies.OtherUtils.BAIDUNAVI
-    api Dependencies.OtherUtils.BAIDUSEARCH
-    api Dependencies.OtherUtils.BAIDUUTIL
+
     //workManager
     api Dependencies.JetPack.WORK_MANAGER
 }

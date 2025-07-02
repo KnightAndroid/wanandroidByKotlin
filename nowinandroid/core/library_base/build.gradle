@@ -17,4 +17,10 @@ dependencies {
     kapt Dependencies.JetPack.HILT_APT
     kapt Dependencies.JetPack.HILT_ANDROIDX
 
+
+    //百度地图
+    api Dependencies.OtherUtils.BAIDULOCATION
+    api Dependencies.OtherUtils.BAIDUNAVI
+    api Dependencies.OtherUtils.BAIDUSEARCH
+    api Dependencies.OtherUtils.BAIDUUTIL
 }
