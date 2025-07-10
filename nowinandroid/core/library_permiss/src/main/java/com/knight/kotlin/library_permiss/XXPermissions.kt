@@ -12,6 +12,9 @@ import com.knight.kotlin.library_permiss.AndroidVersionTools.isAndroid13
 
 import com.knight.kotlin.library_permiss.PermissionHelper.findAndroidVersionByPermission
 import com.knight.kotlin.library_permiss.PermissionIntentManager.getApplicationDetailsIntent
+import com.knight.kotlin.library_permiss.fragment.factory.PermissionFragmentFactory
+import com.knight.kotlin.library_permiss.fragment.factory.PermissionFragmentFactoryByApp
+import com.knight.kotlin.library_permiss.fragment.factory.PermissionFragmentFactoryBySupport
 import com.knight.kotlin.library_permiss.listener.OnPermissionCallback
 import com.knight.kotlin.library_permiss.listener.OnPermissionDescription
 import com.knight.kotlin.library_permiss.listener.OnPermissionFlowCallback

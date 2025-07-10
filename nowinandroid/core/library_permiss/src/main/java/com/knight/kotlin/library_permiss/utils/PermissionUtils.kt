@@ -15,8 +15,8 @@ import android.net.Uri
 import android.os.Environment
 import android.text.TextUtils
 import androidx.fragment.app.Fragment
-import com.knight.kotlin.library_permiss.AndroidManifestInfo
-import com.knight.kotlin.library_permiss.AndroidManifestParser.parseAndroidManifest
+import com.knight.kotlin.library_permiss.manifest.AndroidManifestInfo
+import com.knight.kotlin.library_permiss.manifest.AndroidManifestParser.parseAndroidManifest
 import com.knight.kotlin.library_permiss.AndroidVersionTools
 import com.knight.kotlin.library_permiss.AndroidVersionTools.getCurrentAndroidVersionCode
 import com.knight.kotlin.library_permiss.AndroidVersionTools.isAdaptationAndroidVersionNewFeatures

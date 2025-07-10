@@ -12,6 +12,7 @@ import com.knight.kotlin.library_permiss.AndroidVersionTools.isAndroid11
 import com.knight.kotlin.library_permiss.AndroidVersionTools.isAndroid7
 import com.knight.kotlin.library_permiss.PermissionHelper.findAndroidVersionByPermission
 import com.knight.kotlin.library_permiss.PermissionHelper.isVirtualPermission
+import com.knight.kotlin.library_permiss.manifest.AndroidManifestInfo
 import com.knight.kotlin.library_permiss.permissions.Permission
 import com.knight.kotlin.library_permiss.utils.PermissionUtils
 
@@ -834,8 +835,8 @@ object PermissionChecker {
     }
 
     fun checkManifestPermission(
-         permissionInfoList: List<AndroidManifestInfo.PermissionInfo>,
-         checkPermission: String
+        permissionInfoList: List<AndroidManifestInfo.PermissionInfo>,
+        checkPermission: String
     ) {
         checkManifestPermission(permissionInfoList, checkPermission, Int.MAX_VALUE)
     }
@@ -848,8 +849,8 @@ object PermissionChecker {
      * @param lowestMaxSdkVersion       最低要求的 maxSdkVersion
      */
     fun checkManifestPermission(
-         permissionInfoList: List<AndroidManifestInfo.PermissionInfo>,
-         checkPermission: String, lowestMaxSdkVersion: Int
+        permissionInfoList: List<AndroidManifestInfo.PermissionInfo>,
+        checkPermission: String, lowestMaxSdkVersion: Int
     ) {
         val permissionInfo: AndroidManifestInfo.PermissionInfo? =
             findPermissionInfoByList(permissionInfoList, checkPermission)
@@ -874,8 +875,8 @@ object PermissionChecker {
      */
     
     fun findPermissionInfoByList(
-         permissionInfoList: List<AndroidManifestInfo.PermissionInfo>,
-         permissionName: String?
+        permissionInfoList: List<AndroidManifestInfo.PermissionInfo>,
+        permissionName: String?
     ): AndroidManifestInfo.PermissionInfo? {
         var permissionInfo: AndroidManifestInfo.PermissionInfo? = null
         for (info in permissionInfoList) {

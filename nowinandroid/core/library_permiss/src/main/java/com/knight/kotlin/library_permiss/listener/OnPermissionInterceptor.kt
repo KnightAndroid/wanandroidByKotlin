@@ -3,8 +3,8 @@ package com.knight.kotlin.library_permiss.listener
 import android.app.Activity
 import android.os.Build
 import androidx.annotation.RequiresApi
-import com.knight.kotlin.library_permiss.PermissionFragmentFactory
-import com.knight.kotlin.library_permiss.RequestPermissionLogicPresenter
+import com.knight.kotlin.library_permiss.fragment.factory.PermissionFragmentFactory
+import com.knight.kotlin.library_permiss.core.RequestPermissionLogicPresenter
 
 
 /**
