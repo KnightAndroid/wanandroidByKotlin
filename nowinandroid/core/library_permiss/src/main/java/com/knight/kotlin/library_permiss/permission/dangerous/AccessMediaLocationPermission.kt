@@ -1,14 +1,19 @@
 package com.knight.kotlin.library_permiss.permission.dangerous
 
+import android.app.Activity
 import android.content.Context
 import android.os.Parcel
 import android.os.Parcelable
+import com.knight.kotlin.library_permiss.permission.PermissionLists
+import com.knight.kotlin.library_permiss.permission.PermissionNames
 import com.knight.kotlin.library_permiss.permission.base.IPermission
 import com.knight.kotlin.library_permiss.permission.common.DangerousPermission
+import com.knight.kotlin.library_permiss.tools.PermissionUtils
+import com.knight.kotlin.library_permiss.tools.PermissionVersion
 
 
 /**
- * @Description
+ * @Description 访问媒体的位置信息权限类
  * @Author knight
  * @Time 2025/7/10 21:04
  *
@@ -37,7 +42,7 @@ class AccessMediaLocationPermission : DangerousPermission {
     }
 
     override fun isGrantedPermissionByLowVersion(
-         context: Context?,
+         context: Context,
         skipRequest: Boolean
     ): Boolean {
         return PermissionLists.getReadExternalStoragePermission()
@@ -49,7 +54,7 @@ class AccessMediaLocationPermission : DangerousPermission {
                 super.isDoNotAskAgainPermissionByStandardVersion(activity)
     }
 
-    override fun isDoNotAskAgainPermissionByLowVersion( activity: Activity?): Boolean {
+    override fun isDoNotAskAgainPermissionByLowVersion(activity: Activity): Boolean {
         return PermissionLists.getReadExternalStoragePermission()
             .isDoNotAskAgainPermission(activity)
     }
@@ -81,9 +86,9 @@ class AccessMediaLocationPermission : DangerousPermission {
             .isGrantedPermission(context, skipRequest)
     }
 
-    protected override fun checkSelfByRequestPermissions(
-         activity: Activity?,
-         requestPermissions: List<IPermission?>
+    override fun checkSelfByRequestPermissions(
+         activity: Activity,
+         requestPermissions: List<IPermission>
     ) {
         super.checkSelfByRequestPermissions(activity, requestPermissions)
 

@@ -1,16 +1,22 @@
 package com.knight.kotlin.library_permiss.permission.dangerous
 
+import android.app.Activity
 import android.content.Context
 import android.os.Parcel
 import android.os.Parcelable
 import com.knight.kotlin.library_permiss.manifest.AndroidManifestInfo
 import com.knight.kotlin.library_permiss.manifest.node.PermissionManifestInfo
+import com.knight.kotlin.library_permiss.permission.PermissionGroups
+import com.knight.kotlin.library_permiss.permission.PermissionLists
+import com.knight.kotlin.library_permiss.permission.PermissionNames
 import com.knight.kotlin.library_permiss.permission.base.IPermission
 import com.knight.kotlin.library_permiss.permission.common.DangerousPermission
+import com.knight.kotlin.library_permiss.tools.PermissionUtils
+import com.knight.kotlin.library_permiss.tools.PermissionVersion
 
 
 /**
- * @Description
+ * @Description 读取视频媒体权限类
  * @Author knight
  * @Time 2025/7/10 21:42
  *
@@ -21,7 +27,7 @@ class ReadMediaVideoPermission : DangerousPermission {
 
     private constructor(`in`: Parcel) : super(`in`)
 
-    @NonNull
+    
     override fun getPermissionName(): String {
         return PERMISSION_NAME
     }
@@ -34,14 +40,14 @@ class ReadMediaVideoPermission : DangerousPermission {
         return PermissionVersion.ANDROID_13
     }
 
-    @NonNull
-    override fun getOldPermissions(context: Context?): List<IPermission> {
+    
+    override fun getOldPermissions(context: Context): List<IPermission> {
         // Android 13 以下访问媒体文件需要用到读取外部存储的权限
         return PermissionUtils.asArrayList(PermissionLists.getReadExternalStoragePermission())
     }
 
     override fun isGrantedPermissionByStandardVersion(
-        @NonNull context: Context?,
+         context: Context,
         skipRequest: Boolean
     ): Boolean {
         if (PermissionVersion.isAndroid14() && !skipRequest) {
@@ -56,24 +62,24 @@ class ReadMediaVideoPermission : DangerousPermission {
     }
 
     override fun isGrantedPermissionByLowVersion(
-        @NonNull context: Context?,
+         context: Context,
         skipRequest: Boolean
     ): Boolean {
         return PermissionLists.getReadExternalStoragePermission()
             .isGrantedPermission(context, skipRequest)
     }
 
-    override fun isDoNotAskAgainPermissionByLowVersion(@NonNull activity: Activity?): Boolean {
+    override fun isDoNotAskAgainPermissionByLowVersion( activity: Activity): Boolean {
         return PermissionLists.getReadExternalStoragePermission()
             .isDoNotAskAgainPermission(activity)
     }
 
-    protected override fun checkSelfByManifestFile(
-        @NonNull activity: Activity?,
-        @NonNull requestPermissions: List<IPermission?>?,
-        @NonNull androidManifestInfo: AndroidManifestInfo?,
-        @NonNull permissionManifestInfoList: List<PermissionManifestInfo?>?,
-        @Nullable currentPermissionManifestInfo: PermissionManifestInfo
+    override fun checkSelfByManifestFile(
+         activity: Activity,
+         requestPermissions: List<IPermission>,
+         androidManifestInfo: AndroidManifestInfo,
+         permissionManifestInfoList: List<PermissionManifestInfo>,
+         currentPermissionManifestInfo: PermissionManifestInfo
     ) {
         super.checkSelfByManifestFile(
             activity, requestPermissions, androidManifestInfo, permissionManifestInfoList,
@@ -90,8 +96,8 @@ class ReadMediaVideoPermission : DangerousPermission {
     }
 
     override fun checkSelfByRequestPermissions(
-        @NonNull activity: Activity?,
-        @NonNull requestPermissions: List<IPermission?>?
+         activity: Activity,
+         requestPermissions: List<IPermission>
     ) {
         super.checkSelfByRequestPermissions(activity, requestPermissions)
         // 检测是否有添加读取外部存储权限，有的话直接抛出异常，请不要自己手动添加这个权限，框架会在 Android 13 以下的版本上自动添加并申请这个权限

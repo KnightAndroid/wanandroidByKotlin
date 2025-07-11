@@ -1,17 +1,22 @@
 package com.knight.kotlin.library_permiss.permission.dangerous
 
+import android.app.Activity
 import android.content.Context
 import android.os.Environment
 import android.os.Parcel
 import android.os.Parcelable
 import com.knight.kotlin.library_permiss.manifest.AndroidManifestInfo
 import com.knight.kotlin.library_permiss.manifest.node.PermissionManifestInfo
+import com.knight.kotlin.library_permiss.permission.PermissionGroups
+import com.knight.kotlin.library_permiss.permission.PermissionNames
 import com.knight.kotlin.library_permiss.permission.base.IPermission
 import com.knight.kotlin.library_permiss.permission.common.DangerousPermission
+import com.knight.kotlin.library_permiss.tools.PermissionUtils
+import com.knight.kotlin.library_permiss.tools.PermissionVersion
 
 
 /**
- * @Description
+ * @Description 写入外部存储权限类
  * @Author knight
  * @Time 2025/7/10 21:45
  *
@@ -22,7 +27,7 @@ class WriteExternalStoragePermission : DangerousPermission {
 
     private constructor(`in`: Parcel) : super(`in`)
 
-    @NonNull
+    
     override fun getPermissionName(): String {
         return PERMISSION_NAME
     }
@@ -36,7 +41,7 @@ class WriteExternalStoragePermission : DangerousPermission {
     }
 
     override fun isGrantedPermissionByStandardVersion(
-        @NonNull context: Context?,
+         context: Context,
         skipRequest: Boolean
     ): Boolean {
         if (PermissionVersion.isAndroid11() && PermissionVersion.getTargetVersion(context) >= PermissionVersion.ANDROID_11) {
@@ -58,7 +63,7 @@ class WriteExternalStoragePermission : DangerousPermission {
         return super.isGrantedPermissionByStandardVersion(context, skipRequest)
     }
 
-    override fun isDoNotAskAgainPermissionByStandardVersion(@NonNull activity: Activity): Boolean {
+    override fun isDoNotAskAgainPermissionByStandardVersion( activity: Activity): Boolean {
         if (PermissionVersion.isAndroid11() && PermissionVersion.getTargetVersion(activity) >= PermissionVersion.ANDROID_11) {
             return false
         }
@@ -77,11 +82,11 @@ class WriteExternalStoragePermission : DangerousPermission {
     }
 
     protected override fun checkSelfByManifestFile(
-        @NonNull activity: Activity?,
-        @NonNull requestPermissions: List<IPermission?>?,
-        @NonNull androidManifestInfo: AndroidManifestInfo,
-        @NonNull permissionManifestInfoList: List<PermissionManifestInfo?>?,
-        @Nullable currentPermissionManifestInfo: PermissionManifestInfo
+         activity: Activity,
+         requestPermissions: List<IPermission>,
+         androidManifestInfo: AndroidManifestInfo,
+         permissionManifestInfoList: List<PermissionManifestInfo>,
+         currentPermissionManifestInfo: PermissionManifestInfo
     ) {
         super.checkSelfByManifestFile(
             activity, requestPermissions, androidManifestInfo, permissionManifestInfoList,

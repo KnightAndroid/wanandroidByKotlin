@@ -1,12 +1,13 @@
 package com.knight.kotlin.library_permiss.fragment.factory
 
+
 import android.app.Activity
 import android.os.Bundle
 import androidx.annotation.IntRange
+import com.knight.kotlin.library_permiss.core.OnPermissionFlowCallback
 import com.knight.kotlin.library_permiss.core.RequestPermissionDelegateImpl
-
-import com.knight.kotlin.library_permiss.listener.OnPermissionFlowCallback
-import com.knight.kotlin.library_permiss.permissions.PermissionType
+import com.knight.kotlin.library_permiss.permission.PermissionType
+import com.knight.kotlin.library_permiss.permission.base.IPermission
 
 
 /**
@@ -69,7 +70,7 @@ abstract class PermissionFragmentFactory<A : Activity, F> internal constructor(
      * 创建 Fragment 对象
      */
     abstract fun createAndCommitFragment(
-        permissions: List<String?>,
+        permissions: List<IPermission>,
         permissionType: PermissionType,
         callback: OnPermissionFlowCallback
     )
@@ -80,22 +81,17 @@ abstract class PermissionFragmentFactory<A : Activity, F> internal constructor(
  * 生成权限请求的参数
  */
 
-fun generatePermissionArguments(
-    permissions: List<String?>,
-    @IntRange(from = 1, to = 65535) requestCode: Int
-): Bundle {
+/**
+ * 生成权限请求的参数
+ */
+
+fun generatePermissionArguments(permissions: List<IPermission?>, @IntRange(from = 1, to = 65535) requestCode: Int): Bundle {
     val bundle = Bundle()
     bundle.putInt(RequestPermissionDelegateImpl.REQUEST_CODE, requestCode)
     if (permissions is ArrayList<*>) {
-        bundle.putStringArrayList(
-            RequestPermissionDelegateImpl.REQUEST_PERMISSIONS,
-            permissions as ArrayList<String?>
-        )
+        bundle.putParcelableArrayList(RequestPermissionDelegateImpl.REQUEST_PERMISSIONS, permissions as ArrayList<IPermission?>)
     } else {
-        bundle.putStringArrayList(
-            RequestPermissionDelegateImpl.REQUEST_PERMISSIONS,
-            ArrayList<String?>(permissions)
-        )
+        bundle.putParcelableArrayList(RequestPermissionDelegateImpl.REQUEST_PERMISSIONS, ArrayList(permissions))
     }
     return bundle
 }

@@ -1,5 +1,6 @@
 package com.knight.kotlin.module_home.fragment
 
+import XXPermissions
 import android.animation.Animator
 import android.animation.AnimatorSet
 import android.animation.ArgbEvaluator
@@ -42,13 +43,10 @@ import com.core.library_base.ktx.toHtml
 import com.core.library_base.ktx.toJson
 import com.core.library_base.route.RouteActivity
 import com.core.library_base.route.RouteFragment
-import com.knight.kotlin.library_base.utils.ArouteUtils
 import com.core.library_base.util.BaiduSoDownloaderUtils
-import com.knight.kotlin.library_base.utils.CacheUtils
 import com.core.library_base.util.ColorUtils
 import com.core.library_base.util.EventBusUtils
 import com.core.library_base.util.GsonUtils
-import com.knight.kotlin.library_base.utils.LanguageFontSizeUtils
 import com.core.library_base.util.dp2px
 import com.core.library_base.util.isMotionReduced
 import com.flyjingfish.android_aop_core.annotations.SingleClick
@@ -69,14 +67,17 @@ import com.knight.kotlin.library_base.ktx.dismissLoading
 import com.knight.kotlin.library_base.ktx.getLocation
 import com.knight.kotlin.library_base.ktx.getUser
 import com.knight.kotlin.library_base.ktx.updateText
+import com.knight.kotlin.library_base.utils.ArouteUtils
+import com.knight.kotlin.library_base.utils.CacheUtils
+import com.knight.kotlin.library_base.utils.LanguageFontSizeUtils
 import com.knight.kotlin.library_common.entity.AppUpdateBean
 import com.knight.kotlin.library_common.entity.OfficialAccountEntity
 import com.knight.kotlin.library_common.fragment.UpdateAppDialogFragment
 import com.knight.kotlin.library_database.entity.CityBean
 import com.knight.kotlin.library_database.entity.PushDateEntity
-import com.knight.kotlin.library_permiss.XXPermissions
-import com.knight.kotlin.library_permiss.listener.OnPermissionCallback
-import com.knight.kotlin.library_permiss.permissions.Permission
+import com.knight.kotlin.library_permiss.OnPermissionCallback
+import com.knight.kotlin.library_permiss.permission.PermissionLists
+import com.knight.kotlin.library_permiss.permission.base.IPermission
 import com.knight.kotlin.library_scan.activity.ScanCodeActivity
 import com.knight.kotlin.library_scan.annoation.ScanStyle
 import com.knight.kotlin.library_scan.decode.ScanCodeConfig
@@ -889,23 +890,41 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
                     getDetailWeekWeather(it)
                 }
             } ?: run{
-                val permission:List<String> = listOf(Permission.ACCESS_FINE_LOCATION,Permission.ACCESS_COARSE_LOCATION,Permission.ACCESS_BACKGROUND_LOCATION)
+                val permission: List<IPermission> = listOf(
+                    PermissionLists.getAccessFineLocationPermission(),
+                    PermissionLists.getAccessCoarseLocationPermission(),
+                    PermissionLists.getAccessBackgroundLocationPermission())
+               // val permission:List<String> = listOf(Permission.ACCESS_FINE_LOCATION,Permission.ACCESS_COARSE_LOCATION,Permission.ACCESS_BACKGROUND_LOCATION)
                 if (XXPermissions.isGrantedPermissions(requireActivity(),permission)) {
                     requestOnceLocation()
                 } else {
                     //授予权限 这里肯定已经下载了so库
                     if (BaiduSoDownloaderUtils.isSoDownloaded(requireActivity())) {
                         XXPermissions.with(this)
-                            ?.permission(permission)
-                            ?.request(object : OnPermissionCallback {
-                                override fun onGranted(permissions: List<String>, all: Boolean) {
-                                    if (all) {
-                                        requestOnceLocation()
+                            .permission(PermissionLists.getAccessFineLocationPermission())
+                            .permission(PermissionLists.getAccessCoarseLocationPermission())
+                            .permission(PermissionLists.getAccessBackgroundLocationPermission())
+                            .request(object : OnPermissionCallback {
+
+                                override fun onGranted(permissions: List<IPermission>, allGranted: Boolean) {
+                                    if (!allGranted) {
+                                        // 如果是被永久拒绝就跳转到应用权限系统设置页面
+                                        XXPermissions.startPermissionActivity(requireActivity(), permissions)
+                                        return
                                     }
+                                    requestOnceLocation()
                                 }
 
-                                override fun onDenied(permissions: List<String>, doNotAskAgain: Boolean) {
-                                    super.onDenied(permissions, doNotAskAgain)
+                                override fun onDenied(permissions: List<IPermission>, doNotAskAgain: Boolean) {
+//                                    if (doNotAskAgain) {
+//
+//                                        // 如果是被永久拒绝就跳转到应用权限系统设置页面
+//                                        XXPermissions.startPermissionActivity(requireActivity(), permissions)
+//                                    } else {
+//                                        toast("获取录音和日历权限失败")
+//                                    }
+                                    // 如果是被永久拒绝就跳转到应用权限系统设置页面
+                                    XXPermissions.startPermissionActivity(requireActivity(), permissions)
                                 }
                             })
                     }
@@ -1338,10 +1357,15 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
             }
             mBinding.homeRecommentConent.homeIncludeToolbar!!.homeScanIcon->{
                 XXPermissions.with(this@HomeRecommendFragment)
-                    ?.permission(Permission.CAMERA)
-                    ?.request(object : OnPermissionCallback {
-                        override fun onGranted(permissions: List<String>, all: Boolean) {
-                            if (all) {
+                    .permission(PermissionLists.getCameraPermission())
+                    .request(object : OnPermissionCallback {
+
+                        override fun onDenied(permissions: List<IPermission>, doNotAskAgain: Boolean) {
+                            super.onDenied(permissions, doNotAskAgain)
+                        }
+
+                        override fun onGranted(permissions: List<IPermission>, allGranted: Boolean) {
+                            if (allGranted) {
                                 ScanCodeConfig.Builder()
                                     .setFragment(this@HomeRecommendFragment)
                                     .setActivity(activity)
@@ -1349,10 +1373,6 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
                                     .setStyle(ScanStyle.FULL_SCREEN)
                                     .build().start(ScanCodeActivity::class.java)
                             }
-                        }
-
-                        override fun onDenied(permissions: List<String>, doNotAskAgain: Boolean) {
-                            super.onDenied(permissions, doNotAskAgain)
                         }
                     })
             }
@@ -1669,18 +1689,21 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
                             dismissLoading()
                             //初始化百度地图sdk
                             LocationUtils.init(requireActivity())
-                            val permission:List<String> = listOf(Permission.ACCESS_FINE_LOCATION,Permission.ACCESS_COARSE_LOCATION,Permission.ACCESS_BACKGROUND_LOCATION)
                             XXPermissions.with(this)
-                                ?.permission(permission)
-                                ?.request(object : OnPermissionCallback {
-                                    override fun onGranted(permissions: List<String>, all: Boolean) {
-                                        if (all) {
-                                            requestOnceLocation()
-                                        }
+                                .permission(PermissionLists.getAccessFineLocationPermission())
+                                .permission(PermissionLists.getAccessCoarseLocationPermission())
+                                .permission(PermissionLists.getAccessBackgroundLocationPermission())
+                                .request(object : OnPermissionCallback {
+
+
+                                    override fun onDenied(permissions: List<IPermission>, doNotAskAgain: Boolean) {
+                                        super.onDenied(permissions, doNotAskAgain)
                                     }
 
-                                    override fun onDenied(permissions: List<String>, doNotAskAgain: Boolean) {
-                                        super.onDenied(permissions, doNotAskAgain)
+                                    override fun onGranted(permissions: List<IPermission>, allGranted: Boolean) {
+                                        if (allGranted) {
+                                            requestOnceLocation()
+                                        }
                                     }
                                 })
                         }

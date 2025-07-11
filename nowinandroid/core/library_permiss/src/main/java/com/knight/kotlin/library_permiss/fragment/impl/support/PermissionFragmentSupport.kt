@@ -4,8 +4,9 @@ import android.content.Intent
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
+import com.knight.kotlin.library_permiss.core.OnPermissionFlowCallback
 import com.knight.kotlin.library_permiss.fragment.IFragmentMethod
-import com.knight.kotlin.library_permiss.listener.OnPermissionFlowCallback
+
 
 
 /**

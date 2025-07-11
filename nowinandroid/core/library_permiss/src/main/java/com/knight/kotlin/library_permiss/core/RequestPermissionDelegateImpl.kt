@@ -1,14 +1,16 @@
 package com.knight.kotlin.library_permiss.core
 
 import android.app.Activity
-import com.knight.kotlin.library_permiss.PermissionActivityIntentHandler.IStartActivityDelegate
-import com.knight.kotlin.library_permiss.PermissionTaskHandler.cancelTask
-import com.knight.kotlin.library_permiss.PermissionTaskHandler.sendTask
+import androidx.annotation.IntRange
 import com.knight.kotlin.library_permiss.fragment.IFragmentCallback
 import com.knight.kotlin.library_permiss.fragment.IFragmentMethod
-import com.knight.kotlin.library_permiss.permissions.PermissionApi
-import com.knight.kotlin.library_permiss.utils.PermissionUtils
-import androidx.annotation.IntRange
+import com.knight.kotlin.library_permiss.manager.ActivityOrientationManager
+import com.knight.kotlin.library_permiss.permission.base.IPermission
+import com.knight.kotlin.library_permiss.start.IStartActivityDelegate
+import com.knight.kotlin.library_permiss.tools.PermissionApi
+import com.knight.kotlin.library_permiss.tools.PermissionTaskHandler
+import com.knight.kotlin.library_permiss.tools.PermissionUtils
+import com.knight.kotlin.library_permiss.tools.PermissionVersion
 
 /**
  * @Description
@@ -52,8 +54,8 @@ abstract class RequestPermissionDelegateImpl internal constructor(fragmentMethod
     }
 
 
-    fun getActivity(): Activity? {
-        return mFragmentMethod.getActivity()
+    fun getActivity(): Activity {
+        return mFragmentMethod.getActivity()!!
     }
 
     fun commitDetach() {
@@ -69,7 +71,7 @@ abstract class RequestPermissionDelegateImpl internal constructor(fragmentMethod
     }
 
     fun requestPermissions(
-       permissions: Array<String?>,
+       permissions: Array<String>,
         @IntRange(from = 1, to = 65535) requestCode: Int
     ) {
         try {
@@ -220,7 +222,7 @@ abstract class RequestPermissionDelegateImpl internal constructor(fragmentMethod
         // 延迟处理权限请求的结果
         sendTask(
             { this.handlerPermissionCallback() },
-            PermissionApi.getMaxWaitTimeByPermissions(activity, getPermissionRequestList())
+            PermissionApi.getMaxWaitTimeByPermissions(activity, getPermissionRequestList()).toLong()
         )
     }
 

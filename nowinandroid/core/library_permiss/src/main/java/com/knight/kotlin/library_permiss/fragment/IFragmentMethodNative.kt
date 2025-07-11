@@ -2,8 +2,8 @@ package com.knight.kotlin.library_permiss.fragment
 
 import android.app.Activity
 import android.os.Bundle
-import com.knight.kotlin.library_permiss.PermissionActivityIntentHandler.IStartActivityDelegate
 import androidx.annotation.IntRange
+import com.knight.kotlin.library_permiss.start.IStartActivityDelegate
 
 
 /**

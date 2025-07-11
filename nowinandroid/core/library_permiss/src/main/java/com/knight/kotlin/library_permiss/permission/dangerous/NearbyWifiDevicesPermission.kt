@@ -1,16 +1,22 @@
 package com.knight.kotlin.library_permiss.permission.dangerous
 
+import android.app.Activity
 import android.content.Context
 import android.os.Parcel
 import android.os.Parcelable
 import com.knight.kotlin.library_permiss.manifest.AndroidManifestInfo
 import com.knight.kotlin.library_permiss.manifest.node.PermissionManifestInfo
+import com.knight.kotlin.library_permiss.permission.PermissionGroups
+import com.knight.kotlin.library_permiss.permission.PermissionLists
+import com.knight.kotlin.library_permiss.permission.PermissionNames
 import com.knight.kotlin.library_permiss.permission.base.IPermission
 import com.knight.kotlin.library_permiss.permission.common.DangerousPermission
+import com.knight.kotlin.library_permiss.tools.PermissionUtils
+import com.knight.kotlin.library_permiss.tools.PermissionVersion
 
 
 /**
- * @Description
+ * @Description  WIFI 权限类
  * @Author knight
  * @Time 2025/7/10 21:37
  *
@@ -21,7 +27,7 @@ class NearbyWifiDevicesPermission : DangerousPermission {
 
     private constructor(`in`: Parcel) : super(`in`)
 
-    @NonNull
+    
     override fun getPermissionName(): String {
         return PERMISSION_NAME
     }
@@ -35,30 +41,30 @@ class NearbyWifiDevicesPermission : DangerousPermission {
         return PermissionVersion.ANDROID_13
     }
 
-    @NonNull
-    override fun getOldPermissions(context: Context?): List<IPermission> {
+    
+    override fun getOldPermissions(context: Context): List<IPermission> {
         // Android 13 以下使用 WIFI 功能需要用到精确定位的权限
         return PermissionUtils.asArrayList(PermissionLists.getAccessFineLocationPermission())
     }
 
     override fun isGrantedPermissionByLowVersion(
-        @NonNull context: Context?,
+         context: Context,
         skipRequest: Boolean
     ): Boolean {
         return PermissionLists.getAccessFineLocationPermission()
             .isGrantedPermission(context, skipRequest)
     }
 
-    override fun isDoNotAskAgainPermissionByLowVersion(@NonNull activity: Activity?): Boolean {
+    override fun isDoNotAskAgainPermissionByLowVersion( activity: Activity): Boolean {
         return PermissionLists.getAccessFineLocationPermission().isDoNotAskAgainPermission(activity)
     }
 
-    protected override fun checkSelfByManifestFile(
-        @NonNull activity: Activity?,
-        @NonNull requestPermissions: List<IPermission?>?,
-        @NonNull androidManifestInfo: AndroidManifestInfo?,
-        @NonNull permissionManifestInfoList: List<PermissionManifestInfo?>?,
-        @Nullable currentPermissionManifestInfo: PermissionManifestInfo
+     override fun checkSelfByManifestFile(
+         activity: Activity,
+         requestPermissions: List<IPermission>,
+         androidManifestInfo: AndroidManifestInfo,
+         permissionManifestInfoList: List<PermissionManifestInfo>,
+         currentPermissionManifestInfo: PermissionManifestInfo
     ) {
         super.checkSelfByManifestFile(
             activity, requestPermissions, androidManifestInfo, permissionManifestInfoList,

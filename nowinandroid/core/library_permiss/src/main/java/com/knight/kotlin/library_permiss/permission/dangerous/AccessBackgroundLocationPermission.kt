@@ -1,16 +1,22 @@
 package com.knight.kotlin.library_permiss.permission.dangerous
 
+import android.app.Activity
 import android.content.Context
 import android.os.Parcel
 import android.os.Parcelable
 import com.knight.kotlin.library_permiss.manifest.AndroidManifestInfo
 import com.knight.kotlin.library_permiss.manifest.node.PermissionManifestInfo
+import com.knight.kotlin.library_permiss.permission.PermissionGroups
+import com.knight.kotlin.library_permiss.permission.PermissionLists
+import com.knight.kotlin.library_permiss.permission.PermissionNames
 import com.knight.kotlin.library_permiss.permission.base.IPermission
 import com.knight.kotlin.library_permiss.permission.common.DangerousPermission
+import com.knight.kotlin.library_permiss.tools.PermissionUtils
+import com.knight.kotlin.library_permiss.tools.PermissionVersion
 
 
 /**
- * @Description
+ * @Description 后台定位权限类
  * @Author knight
  * @Time 2025/7/10 21:00
  *
@@ -35,7 +41,7 @@ class AccessBackgroundLocationPermission : DangerousPermission {
     }
 
     
-    override fun getForegroundPermissions( context: Context?): List<IPermission> {
+    override fun getForegroundPermissions( context: Context): List<IPermission> {
         // 判断当前是否运行在 Android 12 及以上
         return if (PermissionVersion.isAndroid12()) {
             // 如果是的话，那么这个前台定位权限既可以是精确定位权限也可以是模糊定位权限
@@ -50,7 +56,7 @@ class AccessBackgroundLocationPermission : DangerousPermission {
     }
 
     override fun isGrantedPermissionByStandardVersion(
-         context: Context?,
+         context: Context,
         skipRequest: Boolean
     ): Boolean {
         if (PermissionVersion.isAndroid12()) {
@@ -74,14 +80,14 @@ class AccessBackgroundLocationPermission : DangerousPermission {
     }
 
     override fun isGrantedPermissionByLowVersion(
-         context: Context?,
+         context: Context,
         skipRequest: Boolean
     ): Boolean {
         return PermissionLists.getAccessFineLocationPermission()
             .isGrantedPermission(context, skipRequest)
     }
 
-    override fun isDoNotAskAgainPermissionByStandardVersion( activity: Activity): Boolean {
+    override fun isDoNotAskAgainPermissionByStandardVersion(activity: Activity): Boolean {
         // 如果前台定位权限没有授予，那么后台定位权限不再询问的状态要跟随前台定位权限
         if (PermissionVersion.isAndroid12()) {
             // 在 Android 12 及之后的版本，前台定位权限既可以用精确定位权限也可以用模糊定位权限
@@ -103,11 +109,11 @@ class AccessBackgroundLocationPermission : DangerousPermission {
         return super.isDoNotAskAgainPermissionByStandardVersion(activity)
     }
 
-    override fun isDoNotAskAgainPermissionByLowVersion( activity: Activity?): Boolean {
+    override fun isDoNotAskAgainPermissionByLowVersion( activity: Activity): Boolean {
         return PermissionLists.getAccessFineLocationPermission().isDoNotAskAgainPermission(activity)
     }
 
-    override fun getRequestIntervalTime( context: Context?): Int {
+    override fun getRequestIntervalTime( context: Context): Int {
         // 经过测试，在 Android 11 设备上面，先申请前台权限，然后立马申请后台权限大概率会出现失败
         // 这里为了避免这种情况出现，所以加了一点延迟，这样就没有什么问题了
         // 为什么延迟时间是 150 毫秒？ 经过实践得出 100 还是有概率会出现失败，但是换成 150 试了很多次就都没有问题了
@@ -115,12 +121,12 @@ class AccessBackgroundLocationPermission : DangerousPermission {
         return if (isSupportRequestPermission(context)) 150 else 0
     }
 
-    protected override fun checkSelfByManifestFile(
-         activity: Activity?,
-         requestPermissions: List<IPermission?>?,
-         androidManifestInfo: AndroidManifestInfo?,
-         permissionManifestInfoList: List<PermissionManifestInfo?>?,
-        @Nullable currentPermissionManifestInfo: PermissionManifestInfo
+    override fun checkSelfByManifestFile(
+         activity: Activity,
+         requestPermissions: List<IPermission>,
+         androidManifestInfo: AndroidManifestInfo,
+         permissionManifestInfoList: List<PermissionManifestInfo>,
+       currentPermissionManifestInfo: PermissionManifestInfo
     ) {
         super.checkSelfByManifestFile(
             activity,
@@ -151,9 +157,9 @@ class AccessBackgroundLocationPermission : DangerousPermission {
         }
     }
 
-    protected override fun checkSelfByRequestPermissions(
-         activity: Activity?,
-         requestPermissions: List<IPermission?>
+    override fun checkSelfByRequestPermissions(
+         activity: Activity,
+         requestPermissions: List<IPermission>
     ) {
         super.checkSelfByRequestPermissions(activity, requestPermissions)
         // 如果您的应用以 Android 12 为目标平台并且您请求 ACCESS_FINE_LOCATION 权限
@@ -219,15 +225,6 @@ class AccessBackgroundLocationPermission : DangerousPermission {
         override fun newArray(size: Int): Array<AccessBackgroundLocationPermission?> {
             return arrayOfNulls(size)
         }
-    }
-    ✅
-
-    override fun writeToParcel(parcel: Parcel, flags: Int) {
-        super.writeToParcel(parcel, flags)
-    }
-
-    override fun describeContents(): Int {
-        return 0
     }
 
 

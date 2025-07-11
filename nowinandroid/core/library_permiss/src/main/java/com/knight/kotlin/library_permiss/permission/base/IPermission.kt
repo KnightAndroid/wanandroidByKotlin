@@ -5,6 +5,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.Parcelable
 import com.knight.kotlin.library_permiss.manifest.AndroidManifestInfo
+import com.knight.kotlin.library_permiss.permission.PermissionType
+import com.knight.kotlin.library_permiss.tools.PermissionVersion
 
 
 /**
@@ -19,13 +21,13 @@ interface IPermission : Parcelable {
      * 获取权限的名称
      */
     
-    fun getPermissionName(): String?
+    fun getPermissionName(): String
 
     /**
      * 获取权限的类型
      */
     
-    fun getPermissionType(): PermissionType?
+    fun getPermissionType(): PermissionType
 
     /**
      * 获取权限的组别
@@ -52,7 +54,7 @@ interface IPermission : Parcelable {
      * 获取当前权限对应的旧权限
      */
     
-    fun getOldPermissions(context: Context?): List<IPermission>? {
+    fun getOldPermissions(context: Context): List<IPermission>? {
         // 表示没有旧权限
         return null
     }
@@ -61,7 +63,7 @@ interface IPermission : Parcelable {
      * 获取当前权限对应的前台权限
      */
     
-    fun getForegroundPermissions( context: Context?): List<IPermission>? {
+    fun getForegroundPermissions( context: Context): List<IPermission>? {
         // 表示没有前台权限
         return null
     }
@@ -69,7 +71,7 @@ interface IPermission : Parcelable {
     /**
      * 当前权限是否为后台权限
      */
-    fun isBackgroundPermission( context: Context?): Boolean {
+    fun isBackgroundPermission(context: Context): Boolean {
         val foregroundPermission = getForegroundPermissions(context) ?: return false
         return !foregroundPermission.isEmpty()
     }
@@ -77,7 +79,7 @@ interface IPermission : Parcelable {
     /**
      * 当前是否支持请求该权限
      */
-    fun isSupportRequestPermission( context: Context?): Boolean {
+    fun isSupportRequestPermission(context: Context): Boolean {
         // 如果当前权限是否在低版本（不受支持的版本）上面运行，则证明不支持请求该权限
         // 例如 MANAGE_EXTERNAL_STORAGE 权限是 Android 11 才出现的权限，在 Android 10 上面肯定是不支持申请
         return getFromAndroidVersion() <= PermissionVersion.getCurrentVersion()
@@ -86,7 +88,7 @@ interface IPermission : Parcelable {
     /**
      * 判断当前权限是否授予
      */
-    fun isGrantedPermission( context: Context?): Boolean {
+    fun isGrantedPermission( context: Context): Boolean {
         return isGrantedPermission(context, true)
     }
 
@@ -95,12 +97,12 @@ interface IPermission : Parcelable {
      *
      * @param skipRequest       是否跳过申请直接判断的？
      */
-    fun isGrantedPermission( context: Context?, skipRequest: Boolean): Boolean
+    fun isGrantedPermission( context: Context, skipRequest: Boolean): Boolean
 
     /**
      * 判断当前权限是否被用户勾选了《不再询问的选项》
      */
-    fun isDoNotAskAgainPermission( activity: Activity?): Boolean
+    fun isDoNotAskAgainPermission( activity: Activity): Boolean
 
     /**
      * 获取当前权限所有可用的设置页意图
@@ -112,19 +114,19 @@ interface IPermission : Parcelable {
      * 总结：不存在的意图铁定会跳转失败，存在的意图不一定 100% 会跳转成功。
      */
     
-    fun getPermissionSettingIntents( context: Context?): List<Intent?>?
+    fun getPermissionSettingIntents( context: Context): MutableList<Intent>
 
     /**
      * 获取权限请求的间隔时间
      */
-    fun getRequestIntervalTime( context: Context?): Int {
+    fun getRequestIntervalTime( context: Context): Int {
         return 0
     }
 
     /**
      * 获取处理权限结果的等待时间
      */
-    fun getResultWaitTime( context: Context?): Int {
+    fun getResultWaitTime( context: Context): Int {
         return 0
     }
 
@@ -132,9 +134,9 @@ interface IPermission : Parcelable {
      * 检查权限请求是否合规
      */
     fun checkCompliance(
-         activity: Activity?,
-         requestPermissions: List<IPermission?>?,
-         androidManifestInfo: AndroidManifestInfo?
+         activity: Activity,
+         requestPermissions: List<IPermission>,
+         androidManifestInfo: AndroidManifestInfo
     ) {
     }
 }

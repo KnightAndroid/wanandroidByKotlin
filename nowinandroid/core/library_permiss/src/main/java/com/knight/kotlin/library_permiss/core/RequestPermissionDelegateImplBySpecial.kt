@@ -2,10 +2,12 @@ package com.knight.kotlin.library_permiss.core
 
 import android.app.Activity
 import android.content.Intent
-import com.knight.kotlin.library_permiss.mnger.PermissionRequestCodeManager.releaseRequestCode
-import com.knight.kotlin.library_permiss.fragment.IFragmentMethod
-import com.knight.kotlin.library_permiss.permissions.PermissionApi.getBestPermissionSettingIntent
 import androidx.annotation.IntRange
+import com.knight.kotlin.library_permiss.fragment.IFragmentMethod
+import com.knight.kotlin.library_permiss.manager.PermissionRequestCodeManager.releaseRequestCode
+import com.knight.kotlin.library_permiss.permission.base.IPermission
+import com.knight.kotlin.library_permiss.start.StartActivityAgent
+import com.knight.kotlin.library_permiss.tools.PermissionApi.getBestPermissionSettingIntent
 
 /**
  * @Description
@@ -19,20 +21,22 @@ class RequestPermissionDelegateImplBySpecial( fragmentMethod: IFragmentMethod<*,
     private var mIgnoreActivityResultCount = 0
 
     override fun startPermissionRequest(
-         activity: Activity, l permissions: List<IPermission?>,
+        activity: Activity, permissions: List<IPermission>?,
         @IntRange(from = 1, to = 65535) requestCode: Int
     ) {
-        StartActivityAgent.startActivityForResult(
-            activity, getStartActivityDelegate(),
-            getBestPermissionSettingIntent(activity, permissions),
-            requestCode
-        ) { mIgnoreActivityResultCount++ }
+        getBestPermissionSettingIntent(activity, permissions)?.let {
+            StartActivityAgent.startActivityForResult(
+                activity, getStartActivityDelegate(),
+                it.toMutableList(),
+                requestCode
+            ) { mIgnoreActivityResultCount++ }
+        }
     }
 
     override fun onFragmentActivityResult(
         requestCode: Int,
         resultCode: Int,
-        @Nullable data: Intent?
+        data: Intent?
     ) {
         // 如果回调中的请求码和请求时设置的请求码不一致，则证明回调有问题，则不往下执行代码
         if (requestCode != getPermissionRequestCode()) {

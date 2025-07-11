@@ -1,15 +1,20 @@
 package com.knight.kotlin.library_permiss.permission.dangerous
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Parcel
 import android.os.Parcelable
+import com.knight.kotlin.library_permiss.permission.PermissionLists
+import com.knight.kotlin.library_permiss.permission.PermissionNames
 import com.knight.kotlin.library_permiss.permission.base.IPermission
 import com.knight.kotlin.library_permiss.permission.common.DangerousPermission
+import com.knight.kotlin.library_permiss.tools.PermissionUtils
+import com.knight.kotlin.library_permiss.tools.PermissionVersion
 
 
 /**
- * @Description
+ * @Description 发送通知权限类
  * @Author knight
  * @Time 2025/7/10 21:38
  *
@@ -20,7 +25,7 @@ class PostNotificationsPermission : DangerousPermission {
 
     private constructor(`in`: Parcel) : super(`in`)
 
-    @NonNull
+    
     override fun getPermissionName(): String {
         return PERMISSION_NAME
     }
@@ -29,27 +34,27 @@ class PostNotificationsPermission : DangerousPermission {
         return PermissionVersion.ANDROID_13
     }
 
-    @NonNull
-    override fun getOldPermissions(context: Context?): List<IPermission> {
+    
+    override fun getOldPermissions(context: Context): List<IPermission> {
         // Android 13 以下开启通知栏服务，需要用到旧的通知栏权限（框架自己虚拟出来的）
         return PermissionUtils.asArrayList(PermissionLists.getNotificationServicePermission())
     }
 
     override fun isGrantedPermissionByLowVersion(
-        @NonNull context: Context?,
+         context: Context,
         skipRequest: Boolean
     ): Boolean {
         return PermissionLists.getNotificationServicePermission()
             .isGrantedPermission(context, skipRequest)
     }
 
-    override fun isDoNotAskAgainPermissionByLowVersion(@NonNull activity: Activity?): Boolean {
+    override fun isDoNotAskAgainPermissionByLowVersion( activity: Activity): Boolean {
         return PermissionLists.getNotificationServicePermission()
             .isDoNotAskAgainPermission(activity)
     }
 
-    @NonNull
-    override fun getPermissionSettingIntents(@NonNull context: Context?): List<Intent> {
+    
+    override fun getPermissionSettingIntents( context: Context): MutableList<Intent> {
         // Github issue 地址：https://github.com/getActivity/XXPermissions/issues/208
         // POST_NOTIFICATIONS 要跳转到权限设置页和 NOTIFICATION_SERVICE 权限是一样的
         return PermissionLists.getNotificationServicePermission()

@@ -1,16 +1,20 @@
 package com.knight.kotlin.library_permiss
 
 
+
 import android.app.Activity
 import android.app.AlertDialog
 import android.app.Dialog
+import android.content.Context
 import android.content.DialogInterface
 import android.content.res.Configuration
 import android.graphics.Color
+import android.graphics.Point
 import android.graphics.drawable.ColorDrawable
 import android.os.Handler
 import android.os.Looper
 import android.os.SystemClock
+import android.util.DisplayMetrics
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -20,11 +24,15 @@ import android.widget.PopupWindow
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.knight.kotlin.library_permiss.PermissionConverter.getDescriptionsByPermissions
-import com.knight.kotlin.library_permiss.listener.OnPermissionDescription
+import com.knight.kotlin.library_permiss.WindowLifecycleManager.bindDialogLifecycle
+import com.knight.kotlin.library_permiss.WindowLifecycleManager.bindPopupWindowLifecycle
+import com.knight.kotlin.library_permiss.permission.base.IPermission
+import kotlin.math.pow
+import kotlin.math.sqrt
 
 
 /**
- * @Description
+ * @Description 权限请求描述实现
  * @Author knight
  * @Time 2025/6/8 22:38
  *
@@ -47,21 +55,20 @@ class PermissionDescription : OnPermissionDescription {
     private var mPermissionDialog: Dialog? = null
 
     override fun askWhetherRequestPermission(
-        activity: Activity, requestPermissions: List<String?>,
-        continueRequestRunnable: Runnable, breakRequestRunnable: Runnable?
+         activity: Activity,  requestPermissions: List<IPermission>,
+         continueRequestRunnable: Runnable,  breakRequestRunnable: Runnable
     ) {
-        if (XXPermissions.containsSpecialPermission(requestPermissions)) {
-            // 如果请求的权限中包含特殊权限，那么就用 Dialog 来展示权限说明弹窗
-            mDescriptionWindowType = DESCRIPTION_WINDOW_TYPE_DIALOG
+        // 以下情况使用 Dialog 来展示权限说明弹窗，否则使用 PopupWindow 来展示权限说明弹窗
+        // 1. 如果请求的权限中包含特殊权限
+        // 2. 如果请求的权限中包含后台权限
+        // 3. 如果当前 Activity 的屏幕是竖屏的话，并且设备的屏幕尺寸还小于 10 寸
+        mDescriptionWindowType = if (XXPermissions.containsSpecialPermission(requestPermissions) ||
+            XXPermissions.containsBackgroundPermission(activity, requestPermissions) ||
+            (isActivityLandscape(activity) && getPhysicalScreenSize(activity) < 10)
+        ) {
+            DESCRIPTION_WINDOW_TYPE_DIALOG
         } else {
-            val activityOrientation: Int = activity.getResources().getConfiguration().orientation
-            // 如果当前 Activity 的屏幕是竖屏的话，就用 PopupWindow 展示权限说明弹窗，否则用 Dialog 来展示权限说明弹窗
-            mDescriptionWindowType =
-                if (activityOrientation == Configuration.ORIENTATION_PORTRAIT) DESCRIPTION_WINDOW_TYPE_POPUP else DESCRIPTION_WINDOW_TYPE_DIALOG
-            // 如果本次申请的权限中带有后台权限（例如后台定位权限、后台传感器权限等），则改用 Dialog 来展示权限说明弹窗
-            if (XXPermissions.containsBackgroundPermission(requestPermissions)) {
-                mDescriptionWindowType = DESCRIPTION_WINDOW_TYPE_DIALOG
-            }
+            DESCRIPTION_WINDOW_TYPE_POPUP
         }
 
         if (mDescriptionWindowType == DESCRIPTION_WINDOW_TYPE_POPUP) {
@@ -69,36 +76,24 @@ class PermissionDescription : OnPermissionDescription {
             return
         }
 
-        showDialog(activity,
-            activity.getString(R.string.permission_description_title),
+        showDialog(
+            activity, activity.getString(R.string.permission_description_title),
             generatePermissionDescription(activity, requestPermissions),
-            activity.getString(R.string.permission_granted),
-            { dialog: DialogInterface, which: Int ->
+            activity.getString(R.string.permission_granted), { dialog: DialogInterface, which: Int ->
                 dialog.dismiss()
                 continueRequestRunnable.run()
-            },
-            activity.getString(R.string.permission_denied),
-            { dialog: DialogInterface, which: Int ->
+            }, activity.getString(R.string.permission_denied), { dialog: DialogInterface, which: Int ->
                 dialog.dismiss()
-                breakRequestRunnable?.run()
+                breakRequestRunnable.run()
             })
     }
 
-    override fun onRequestPermissionStart(
-         activity: Activity,
-         requestPermissions: List<String?>
-    ) {
+    override fun onRequestPermissionStart( activity: Activity,  requestPermissions: List<IPermission>) {
         if (mDescriptionWindowType != DESCRIPTION_WINDOW_TYPE_POPUP) {
             return
         }
 
-        val showPopupRunnable =
-            Runnable {
-                showPopupWindow(
-                    activity,
-                    generatePermissionDescription(activity, requestPermissions)
-                )
-            }
+        val showPopupRunnable = Runnable { showPopupWindow(activity, generatePermissionDescription(activity, requestPermissions)) }
         // 这里解释一下为什么要延迟一段时间再显示 PopupWindow，这是因为系统没有开放任何 API 给外层直接获取权限是否永久拒绝
         // 目前只有申请过了权限才能通过 shouldShowRequestPermissionRationale 判断是不是永久拒绝，如果此前没有申请过权限，则无法判断
         // 针对这个问题能想到最佳的解决方案是：先申请权限，如果极短的时间内，权限申请没有结束，则证明权限之前没有被用户勾选了《不再询问》
@@ -109,10 +104,7 @@ class PermissionDescription : OnPermissionDescription {
         HANDLER.postAtTime(showPopupRunnable, mHandlerToken, SystemClock.uptimeMillis() + 350)
     }
 
-    override fun onRequestPermissionEnd(
-         activity: Activity,
-         requestPermissions: List<String?>
-    ) {
+    override fun onRequestPermissionEnd( activity: Activity,  requestPermissions: List<IPermission>) {
         // 移除跟这个 Token 有关但是没有还没有执行的消息
         HANDLER.removeCallbacksAndMessages(mHandlerToken)
         // 销毁当前正在显示的弹窗
@@ -123,10 +115,7 @@ class PermissionDescription : OnPermissionDescription {
     /**
      * 生成权限描述文案
      */
-    private fun generatePermissionDescription(
-         activity: Activity,
-         requestPermissions: List<String?>
-    ): String {
+    private fun generatePermissionDescription( activity: Activity,  requestPermissions: List<IPermission>): String {
         return getDescriptionsByPermissions(activity, requestPermissions)
     }
 
@@ -142,18 +131,14 @@ class PermissionDescription : OnPermissionDescription {
      * @param cancelListener            对话框取消按钮点击事件
      */
     private fun showDialog(
-         activity: Activity,
-         dialogTitle: String,
-         dialogMessage: String,
-         confirmButtonText: String,
-         confirmListener: DialogInterface.OnClickListener,
-         cancelButtonText: String,
-         cancelListener: DialogInterface.OnClickListener
+         activity: Activity,  dialogTitle: String,  dialogMessage: String,
+         confirmButtonText: String,  confirmListener: DialogInterface.OnClickListener,
+         cancelButtonText: String,  cancelListener: DialogInterface.OnClickListener
     ) {
         if (mPermissionDialog != null) {
             dismissDialog()
         }
-        if (activity.isFinishing() || activity.isDestroyed()) {
+        if (activity.isFinishing || activity.isDestroyed) {
             return
         }
         // 另外这里需要判断 Activity 的类型来申请权限，这是因为只有 AppCompatActivity 才能调用 Support 包的 AlertDialog 来显示，否则会出现报错
@@ -180,7 +165,7 @@ class PermissionDescription : OnPermissionDescription {
         mPermissionDialog!!.show()
         // 将 Activity 和 Dialog 生命周期绑定在一起，避免可能会出现的内存泄漏
         // 当然如果上面创建的 Dialog 已经有做了生命周期管理，则不需要执行下面这行代码
-        WindowLifecycleManager.bindDialogLifecycle(activity, mPermissionDialog!!)
+        bindDialogLifecycle(activity, mPermissionDialog!!)
     }
 
     /**
@@ -207,10 +192,10 @@ class PermissionDescription : OnPermissionDescription {
         if (mPermissionPopupWindow != null) {
             dismissPopupWindow()
         }
-        if (activity.isFinishing() || activity.isDestroyed()) {
+        if (activity.isFinishing || activity.isDestroyed) {
             return
         }
-        val decorView = activity.getWindow().getDecorView() as ViewGroup
+        val decorView = activity.window.decorView as ViewGroup
         val contentView: View = LayoutInflater.from(activity)
             .inflate(R.layout.permission_description_popup, decorView, false)
         mPermissionPopupWindow = PopupWindow(activity)
@@ -221,14 +206,12 @@ class PermissionDescription : OnPermissionDescription {
         mPermissionPopupWindow!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         mPermissionPopupWindow!!.isTouchable = true
         mPermissionPopupWindow!!.isOutsideTouchable = true
-        val messageView =
-            mPermissionPopupWindow!!.contentView.findViewById<TextView>(R.id.tv_permission_description_message)
+        val messageView = mPermissionPopupWindow!!.contentView.findViewById<TextView>(R.id.tv_permission_description_message)
         messageView.text = content
-        // 注意：这里的 PopupWindow 只是示例，没有监听 Activity onDestroy 来处理 PopupWindow 生命周期
         mPermissionPopupWindow!!.showAtLocation(decorView, Gravity.TOP, 0, 0)
         // 将 Activity 和 PopupWindow 生命周期绑定在一起，避免可能会出现的内存泄漏
         // 当然如果上面创建的 PopupWindow 已经有做了生命周期管理，则不需要执行下面这行代码
-        WindowLifecycleManager.bindPopupWindowLifecycle(activity, mPermissionPopupWindow!!)
+        bindPopupWindowLifecycle(activity, mPermissionPopupWindow!!)
     }
 
     /**
@@ -254,5 +237,34 @@ class PermissionDescription : OnPermissionDescription {
 
         /** 权限请求描述弹窗显示类型：PopupWindow  */
         private const val DESCRIPTION_WINDOW_TYPE_POPUP = 1
+
+        /**
+         * 判断当前 Activity 是否是竖屏显示
+         */
+        fun isActivityLandscape( activity: Activity): Boolean {
+            return activity.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+        }
+
+        /**
+         * 获取当前设备的物理屏幕尺寸
+         */
+        @Suppress("deprecation")
+        fun getPhysicalScreenSize( context: Context): Double {
+            val windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+            val defaultDisplay = windowManager.defaultDisplay ?: return 0.0
+
+            val metrics = DisplayMetrics()
+            defaultDisplay.getMetrics(metrics)
+
+            val screenWidthInInches: Float
+            val screenHeightInInches: Float
+            val point: Point = Point()
+            defaultDisplay.getRealSize(point)
+            screenWidthInInches = point.x / metrics.xdpi
+            screenHeightInInches = point.y / metrics.ydpi
+
+            // 勾股定理：直角三角形的两条直角边的平方和等于斜边的平方
+            return sqrt(screenWidthInInches.toDouble().pow(2.0) + screenHeightInInches.toDouble().pow(2.0))
+        }
     }
 }

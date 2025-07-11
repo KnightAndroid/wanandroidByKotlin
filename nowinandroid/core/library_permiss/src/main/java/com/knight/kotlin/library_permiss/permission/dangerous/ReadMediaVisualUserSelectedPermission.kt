@@ -1,13 +1,18 @@
 package com.knight.kotlin.library_permiss.permission.dangerous
 
+import android.app.Activity
 import android.os.Parcel
 import android.os.Parcelable
+import com.knight.kotlin.library_permiss.permission.PermissionGroups
+import com.knight.kotlin.library_permiss.permission.PermissionNames
 import com.knight.kotlin.library_permiss.permission.base.IPermission
 import com.knight.kotlin.library_permiss.permission.common.DangerousPermission
+import com.knight.kotlin.library_permiss.tools.PermissionUtils
+import com.knight.kotlin.library_permiss.tools.PermissionVersion
 
 
 /**
- * @Description
+ * @Description 访问部分照片和视频的权限类
  * @Author knight
  * @Time 2025/7/10 21:43
  *
@@ -18,7 +23,7 @@ class ReadMediaVisualUserSelectedPermission : DangerousPermission {
 
     private constructor(`in`: Parcel) : super(`in`)
 
-    @NonNull
+    
     override fun getPermissionName(): String {
         return PERMISSION_NAME
     }
@@ -39,8 +44,8 @@ class ReadMediaVisualUserSelectedPermission : DangerousPermission {
     }
 
     override fun checkSelfByRequestPermissions(
-        @NonNull activity: Activity?,
-        @NonNull requestPermissions: List<IPermission?>?
+        activity: Activity,
+        requestPermissions: List<IPermission>
     ) {
         super.checkSelfByRequestPermissions(activity, requestPermissions)
 

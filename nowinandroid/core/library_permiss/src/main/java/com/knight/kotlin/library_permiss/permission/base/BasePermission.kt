@@ -1,5 +1,6 @@
 package com.knight.kotlin.library_permiss.permission.base
 
+import android.app.Activity
 import android.app.AppOpsManager
 import android.content.Context
 import android.content.Intent
@@ -9,6 +10,11 @@ import android.os.Parcel
 import androidx.annotation.RequiresApi
 import com.knight.kotlin.library_permiss.manifest.AndroidManifestInfo
 import com.knight.kotlin.library_permiss.manifest.node.PermissionManifestInfo
+import com.knight.kotlin.library_permiss.tools.PermissionSettingPage
+import com.knight.kotlin.library_permiss.tools.PermissionSettingPage.getApplicationSettingsIntent
+import com.knight.kotlin.library_permiss.tools.PermissionSettingPage.getManageApplicationSettingsIntent
+import com.knight.kotlin.library_permiss.tools.PermissionUtils
+import com.knight.kotlin.library_permiss.tools.PermissionVersion
 import java.lang.reflect.InvocationTargetException
 
 
@@ -22,7 +28,7 @@ import java.lang.reflect.InvocationTargetException
 abstract class BasePermission : IPermission {
     protected constructor()
 
-    protected constructor(`in`: Parcel?)
+    protected constructor(`in`: Parcel)
 
     override fun describeContents(): Int {
         return 0
@@ -51,24 +57,31 @@ abstract class BasePermission : IPermission {
     }
 
     
-    protected fun getPackageNameUri( context: Context?): Uri {
+    protected fun getPackageNameUri( context: Context): Uri {
         return PermissionUtils.getPackageNameUri(context)
     }
 
     
-    protected fun getApplicationDetailsSettingIntent( context: Context?): Intent {
+    protected fun getApplicationDetailsSettingIntent( context: Context): Intent {
         return PermissionSettingPage.getApplicationDetailsSettingsIntent(context, this)
     }
 
-    
+    protected fun getManageApplicationSettingIntent(): Intent {
+        return getManageApplicationSettingsIntent()
+    }
+
+    protected fun getApplicationSettingIntent(): Intent {
+        return getApplicationSettingsIntent()
+    }
+
     protected fun getAndroidSettingIntent(): Intent {
         return PermissionSettingPage.getAndroidSettingsIntent()
     }
 
     override fun checkCompliance(
-         activity: Activity?,
-         requestPermissions: List<IPermission?>?,
-         androidManifestInfo: AndroidManifestInfo?
+        activity: Activity,
+        requestPermissions: List<IPermission>,
+        androidManifestInfo: AndroidManifestInfo
     ) {
         // 检查 targetSdkVersion 是否符合要求
         checkSelfByTargetSdkVersion(activity)
@@ -89,7 +102,7 @@ abstract class BasePermission : IPermission {
     /**
      * 检查 targetSdkVersion 是否符合要求，如果不合规则会抛出异常
      */
-    protected fun checkSelfByTargetSdkVersion( context: Context?) {
+    protected fun checkSelfByTargetSdkVersion(context: Context) {
         val minTargetSdkVersion = getMinTargetSdkVersion()
         // 必须设置正确的 targetSdkVersion 才能正常检测权限
         if (PermissionVersion.getTargetVersion(context) >= minTargetSdkVersion) {
@@ -112,11 +125,11 @@ abstract class BasePermission : IPermission {
     /**
      * 检查 AndroidManifest.xml 是否符合要求，如果不合规则会抛出异常
      */
-    protected fun checkSelfByManifestFile(
-         activity: Activity?,
-         requestPermissions: List<IPermission?>?,
-         androidManifestInfo: AndroidManifestInfo?,
-         permissionManifestInfoList: List<PermissionManifestInfo>?,
+    protected open fun checkSelfByManifestFile(
+         activity: Activity,
+         requestPermissions: List<IPermission>,
+         androidManifestInfo: AndroidManifestInfo,
+         permissionManifestInfoList: List<PermissionManifestInfo>,
          currentPermissionManifestInfo: PermissionManifestInfo
     ) {
         if (!isRegisterPermissionByManifestFile()) {
@@ -129,24 +142,18 @@ abstract class BasePermission : IPermission {
     /**
      * 检查请求的权限列表是否符合要求，如果不合规则会抛出异常
      */
-    protected fun checkSelfByRequestPermissions(
-         activity: Activity?,
-         requestPermissions: List<IPermission?>?
+    protected open fun checkSelfByRequestPermissions(
+         activity: Activity,
+         requestPermissions: List<IPermission>
     ) {
         // default implementation ignored
         // 默认无任何实现，交由子类自己去实现
     }
 
     companion object {
-        @get:NonNull
-        protected val manageApplicationSettingIntent: Intent
-            get() = PermissionSettingPage.getManageApplicationSettingsIntent()
 
-        @get:NonNull
-        protected val applicationSettingIntent: Intent
-            get() = PermissionSettingPage.getApplicationSettingsIntent()
 
-        protected fun checkPermissionRegistrationStatus(
+        fun checkPermissionRegistrationStatus(
              permissionManifestInfoList: List<PermissionManifestInfo>?,
              checkPermission: String?,
             lowestMaxSdkVersion: Int = Int.MAX_VALUE
@@ -189,7 +196,7 @@ abstract class BasePermission : IPermission {
         /**
          * 获得当前项目的 minSdkVersion
          */
-        protected fun getMinSdkVersion(
+        fun getMinSdkVersion(
              context: Context,
              androidManifestInfo: AndroidManifestInfo?
         ): Int {
@@ -235,7 +242,7 @@ abstract class BasePermission : IPermission {
         @RequiresApi(PermissionVersion.ANDROID_6)
         fun shouldShowRequestPermissionRationale(
              activity: Activity,
-             permission: String?
+             permission: String
         ): Boolean {
             // 解决 Android 12 调用 shouldShowRequestPermissionRationale 出现内存泄漏的问题
             // Android 12L 和 Android 13 版本经过测试不会出现这个问题，证明 Google 在新版本上已经修复了这个问题
@@ -364,12 +371,11 @@ abstract class BasePermission : IPermission {
             }
             try {
                 val appOpsClass = Class.forName(AppOpsManager::class.java.name)
-                var opValue: Int
-                try {
-                    val opField: Field = appOpsClass.getDeclaredField(opName)
-                    opValue = opField.get(Int::class.java)
+                val opValue: Int = try {
+                    val opField = appOpsClass.getDeclaredField(opName)
+                    opField.get(Int::class.java) as Int
                 } catch (e: NoSuchFieldException) {
-                    opValue = opDefaultValue
+                    opDefaultValue
                 }
                 val checkOpNoThrowMethod = appOpsClass.getMethod(
                     "checkOpNoThrow", Integer.TYPE, Integer.TYPE,

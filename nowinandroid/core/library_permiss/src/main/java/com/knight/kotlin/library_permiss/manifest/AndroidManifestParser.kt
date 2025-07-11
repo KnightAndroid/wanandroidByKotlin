@@ -10,6 +10,8 @@ import com.knight.kotlin.library_permiss.manifest.node.BroadcastReceiverManifest
 import com.knight.kotlin.library_permiss.manifest.node.PermissionManifestInfo
 import com.knight.kotlin.library_permiss.manifest.node.ServiceManifestInfo
 import com.knight.kotlin.library_permiss.manifest.node.UsesSdkManifestInfo
+import com.knight.kotlin.library_permiss.tools.PermissionUtils
+import com.knight.kotlin.library_permiss.tools.PermissionVersion
 import org.xmlpull.v1.XmlPullParserException
 import java.io.IOException
 import java.lang.reflect.InvocationTargetException
@@ -40,7 +42,7 @@ object AndroidManifestParser {
     private val TAG_ACTIVITY = "activity"
     private val TAG_ACTIVITY_ALIAS = "activity-alias"
     private val TAG_SERVICE = "service"
-
+    private val TAG_RECEIVER: String = "receiver"
     private val ATTR_PACKAGE = "package"
     private val ATTR_NAME = "name"
     private val ATTR_MAX_SDK_VERSION = "maxSdkVersion"
@@ -53,7 +55,7 @@ object AndroidManifestParser {
     /**
      * 获取当前应用的清单文件信息
      */
-    @Nullable
+    
     fun getAndroidManifestInfo(context: Context): AndroidManifestInfo? {
         val apkPathCookie = findApkPathCookie(context, context.applicationInfo.sourceDir)
         // 如果 cookie 为 0，证明获取失败
@@ -92,10 +94,13 @@ object AndroidManifestParser {
 
         try {
             if (PermissionVersion.getTargetVersion(context) >= PermissionVersion.ANDROID_9 && PermissionVersion.getCurrentVersion() >= PermissionVersion.ANDROID_9 && PermissionVersion.getCurrentVersion() < PermissionVersion.ANDROID_11) {
-                // 反射套娃操作：实测这种方式只在 Android 9.0 和 Android 10.0 有效果，在 Android 11 上面就失效了
 
-                val metaGetDeclaredMethod = Class::class.java.getDeclaredMethod(
-                    "getDeclaredMethod", String::class.java, Array<Class>::class.java
+                // 反射套娃操作：实测这种方式只在 Android 9.0 和 Android 10.0 有效果，在 Android 11 上面就失效了
+                val classArrayClass = java.lang.reflect.Array.newInstance(Class::class.java, 0).javaClass
+                val metaGetDeclaredMethod: Method = Class::class.java.getDeclaredMethod(
+                    "getDeclaredMethod",
+                    String::class.java,
+                    classArrayClass
                 )
                 metaGetDeclaredMethod.isAccessible = true
                 // 注意 AssetManager.findCookieForPath 是 Android 9.0（API 28）的时候才添加的方法
@@ -144,18 +149,18 @@ object AndroidManifestParser {
      */
     
     @Throws(IOException::class, XmlPullParserException::class)
-    fun parseAndroidManifest( context: Context, apkCookie: Int): AndroidManifestInfo {
+    fun parseAndroidManifest(context: Context, apkCookie: Int): AndroidManifestInfo {
         val manifestInfo = AndroidManifestInfo()
 
-        context.assets.openXmlResourceParser
-        (apkCookie, ANDROID_MANIFEST_FILE_NAME).use { parser ->
+        context.assets.openXmlResourceParser(apkCookie, ANDROID_MANIFEST_FILE_NAME).use { parser ->
+
             do {
                 // 当前节点必须为标签头部
-                if (parser.getEventType() != XmlResourceParser.START_TAG) {
+                if (parser.eventType != XmlResourceParser.START_TAG) {
                     continue
                 }
 
-                val tagName: String = parser.getName()
+                val tagName = parser.name
 
                 if (PermissionUtils.equalsString(TAG_MANIFEST, tagName)) {
                     manifestInfo.packageName = parsePackageFromXml(parser)
@@ -191,17 +196,14 @@ object AndroidManifestParser {
                 }
 
                 if (PermissionUtils.equalsString(TAG_RECEIVER, tagName)) {
-                    manifestInfo.broadcastReceiverManifestInfoList.add(
-                        parseBroadcastReceiverFromXml(
-                            parser
-                        )
-                    )
+                    manifestInfo.broadcastReceiverManifestInfoList.add(parseBroadcastReceiverFromXml(parser))
                 }
+
             } while (parser.next() != XmlResourceParser.END_DOCUMENT)
         }
+
         return manifestInfo
     }
-
     
     private fun parsePackageFromXml( parser: XmlResourceParser): String {
         val packageName = parser.getAttributeValue(null, ATTR_PACKAGE)

@@ -1,11 +1,12 @@
 package com.knight.kotlin.library_permiss.core
 
 import android.app.Activity
-import com.knight.kotlin.library_permiss.AndroidVersionTools.isAndroid6
-import com.knight.kotlin.library_permiss.mnger.PermissionRequestCodeManager.releaseRequestCode
-import com.knight.kotlin.library_permiss.fragment.IFragmentMethod
-import com.knight.kotlin.library_permiss.utils.PermissionUtils
 import androidx.annotation.IntRange
+import com.knight.kotlin.library_permiss.fragment.IFragmentMethod
+import com.knight.kotlin.library_permiss.manager.PermissionRequestCodeManager.releaseRequestCode
+import com.knight.kotlin.library_permiss.permission.base.IPermission
+import com.knight.kotlin.library_permiss.tools.PermissionUtils
+import com.knight.kotlin.library_permiss.tools.PermissionVersion
 
 /**
  * @Description
@@ -16,7 +17,7 @@ import androidx.annotation.IntRange
 class RequestPermissionDelegateImplByDangerous(fragmentMethod: IFragmentMethod<*, *>) :
     RequestPermissionDelegateImpl(fragmentMethod) {
     override fun startPermissionRequest(
-        activity: Activity, permissions: List<IPermission?>?,
+        activity: Activity, permissions: List<IPermission>?,
         @IntRange(from = 1, to = 65535) requestCode: Int
     ) {
         if (!PermissionVersion.isAndroid6()) {
@@ -35,8 +36,8 @@ class RequestPermissionDelegateImplByDangerous(fragmentMethod: IFragmentMethod<*
 
     override fun onFragmentRequestPermissionsResult(
         requestCode: Int,
-        permissions: Array<String?>?,
-        grantResults: IntArray?
+        permissions: Array<String>,
+        grantResults: IntArray
     ) {
         // 如果回调中的请求码和请求时设置的请求码不一致，则证明回调有问题，则不往下执行代码
         if (requestCode != getPermissionRequestCode()) {

@@ -1,15 +1,20 @@
 package com.knight.kotlin.library_permiss.permission.dangerous
 
+import android.Manifest
+import android.app.Activity
 import android.os.Parcel
 import android.os.Parcelable
 import com.knight.kotlin.library_permiss.manifest.AndroidManifestInfo
 import com.knight.kotlin.library_permiss.manifest.node.PermissionManifestInfo
+import com.knight.kotlin.library_permiss.permission.PermissionGroups
+import com.knight.kotlin.library_permiss.permission.PermissionNames
 import com.knight.kotlin.library_permiss.permission.base.IPermission
 import com.knight.kotlin.library_permiss.permission.common.DangerousPermission
+import com.knight.kotlin.library_permiss.tools.PermissionVersion
 
 
 /**
- * @Description
+ * @Description 蓝牙连接权限类
  * @Author knight
  * @Time 2025/7/10 21:12
  *
@@ -19,7 +24,7 @@ class BluetoothConnectPermission : DangerousPermission {
 
     private constructor(`in`: Parcel) : super(`in`)
 
-    @NonNull
+
     override fun getPermissionName(): String {
         return PERMISSION_NAME
     }
@@ -40,12 +45,12 @@ class BluetoothConnectPermission : DangerousPermission {
         return PermissionVersion.ANDROID_6
     }
 
-    protected override fun checkSelfByManifestFile(
-        @NonNull activity: Activity?,
-        @NonNull requestPermissions: List<IPermission?>?,
-        @NonNull androidManifestInfo: AndroidManifestInfo?,
-        @NonNull permissionManifestInfoList: List<PermissionManifestInfo?>?,
-        @Nullable currentPermissionManifestInfo: PermissionManifestInfo
+    override fun checkSelfByManifestFile(
+        activity: Activity,
+        requestPermissions: List<IPermission>,
+        androidManifestInfo: AndroidManifestInfo,
+        permissionManifestInfoList: List<PermissionManifestInfo>,
+        currentPermissionManifestInfo: PermissionManifestInfo
     ) {
         super.checkSelfByManifestFile(
             activity, requestPermissions, androidManifestInfo, permissionManifestInfoList,
@@ -61,23 +66,20 @@ class BluetoothConnectPermission : DangerousPermission {
         }
     }
 
+    companion object CREATOR : Parcelable.Creator<BluetoothConnectPermission> {
 
+        /** 当前权限名称，注意：该常量字段仅供框架内部使用，不提供给外部引用，如果需要获取权限名称的字符串，请直接通过 [PermissionNames] 类获取  */
 
+        val PERMISSION_NAME: String = PermissionNames.BLUETOOTH_CONNECT
 
-        companion object CREATOR: Parcelable.Creator<BluetoothConnectPermission> {
+        override fun createFromParcel(source: Parcel): BluetoothConnectPermission? {
+            return BluetoothConnectPermission(source)
+        }
 
-            /** 当前权限名称，注意：该常量字段仅供框架内部使用，不提供给外部引用，如果需要获取权限名称的字符串，请直接通过 [PermissionNames] 类获取  */
-
-            val PERMISSION_NAME: String = PermissionNames.BLUETOOTH_CONNECT
-
-                override fun createFromParcel(source: Parcel): BluetoothConnectPermission? {
-                    return BluetoothConnectPermission(source)
-                }
-
-                override fun newArray(size: Int): Array<BluetoothConnectPermission?> {
-                    return arrayOfNulls(size)
-                }
-            }
+        override fun newArray(size: Int): Array<BluetoothConnectPermission?> {
+            return arrayOfNulls(size)
+        }
+    }
 
 
 }

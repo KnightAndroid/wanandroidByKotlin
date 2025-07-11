@@ -1,6 +1,7 @@
 package com.knight.kotlin.module_home.activity
 
 
+import XXPermissions
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
@@ -10,13 +11,13 @@ import androidx.annotation.OptIn
 import androidx.annotation.RequiresApi
 import androidx.media3.common.util.UnstableApi
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.knight.kotlin.library_base.activity.BaseActivity
 import com.core.library_base.ktx.setOnClick
 import com.core.library_base.route.RouteActivity
+import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.ktx.getScreenWidth
-import com.knight.kotlin.library_permiss.XXPermissions
-import com.knight.kotlin.library_permiss.listener.OnPermissionCallback
-import com.knight.kotlin.library_permiss.permissions.Permission
+import com.knight.kotlin.library_permiss.OnPermissionCallback
+import com.knight.kotlin.library_permiss.permission.PermissionLists
+import com.knight.kotlin.library_permiss.permission.base.IPermission
 import com.knight.kotlin.library_util.DateUtils
 import com.knight.kotlin.library_util.DialogUtils
 import com.knight.kotlin.library_util.Mp3PlayerUtils
@@ -113,24 +114,28 @@ class HomeNewsActivity: BaseActivity<HomeNewsActivityBinding, HomeNewsVm>(), OnR
                             showFloatMenu = !showFloatMenu
                         }) {
                             dialog, which ->
-                        if (XXPermissions.isGrantedPermissions(this@HomeNewsActivity,Permission.SYSTEM_ALERT_WINDOW)) {
+
+                        val permission: List<IPermission> = listOf(PermissionLists.getSystemAlertWindowPermission())
+                        if (XXPermissions.isGrantedPermissions(this@HomeNewsActivity,permission)) {
                             FloatMenuManager.initFloatMenu(this@HomeNewsActivity,initFloatViewActions(),true)
                             FloatMenuManager.show()
                         } else {
                             XXPermissions.with(this@HomeNewsActivity)
-                                ?.permission(Permission.SYSTEM_ALERT_WINDOW)
-                                ?.request(object : OnPermissionCallback {
-                                    override fun onGranted(permissions: List<String>, all: Boolean) {
-                                        if (all) {
+                                .permission(PermissionLists.getSystemAlertWindowPermission())
+                                .request(object : OnPermissionCallback {
+
+
+                                    override fun onDenied(permissions: List<IPermission>, doNotAskAgain: Boolean) {
+                                        super.onDenied(permissions, doNotAskAgain)
+
+                                    }
+
+                                    override fun onGranted(permissions: List<IPermission>, allGranted: Boolean) {
+                                        if (allGranted) {
                                             FloatMenuManager.initFloatMenu(this@HomeNewsActivity,initFloatViewActions(),true)
                                             FloatMenuManager.show()
                                             showFloatMenu = !showFloatMenu
                                         }
-                                    }
-
-                                    override fun onDenied(permissions: List<String>, doNotAskAgain: Boolean) {
-                                        super.onDenied(permissions, doNotAskAgain)
-
                                     }
                                 })
 

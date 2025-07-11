@@ -1,25 +1,30 @@
 package com.knight.kotlin.library_permiss.permission.dangerous
 
 import android.Manifest.permission
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.pm.PermissionInfo
 import android.os.Parcel
 import android.os.Parcelable
+import android.provider.Settings
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import com.knight.kotlin.library_permiss.manifest.AndroidManifestInfo
 import com.knight.kotlin.library_permiss.manifest.node.PermissionManifestInfo
+import com.knight.kotlin.library_permiss.permission.PermissionNames
 import com.knight.kotlin.library_permiss.permission.base.IPermission
 import com.knight.kotlin.library_permiss.permission.common.DangerousPermission
-import com.knight.kotlin.library_permiss.utils.PhoneRomUtils
-import com.knight.kotlin.library_permiss.utils.PhoneRomUtils.isHyperOs
-import com.knight.kotlin.library_permiss.utils.PhoneRomUtils.isMiui
+import com.knight.kotlin.library_permiss.tools.PermissionSettingPage
+import com.knight.kotlin.library_permiss.tools.PermissionVersion
+import com.knight.kotlin.library_permiss.tools.PhoneRomUtils
+import com.knight.kotlin.library_permiss.tools.PhoneRomUtils.isHyperOs
+import com.knight.kotlin.library_permiss.tools.PhoneRomUtils.isMiui
 
 
 /**
- * @Description
+ * @Description 读取应用列表权限类
  * @Author knight
  * @Time 2025/7/10 21:35
  *
@@ -30,7 +35,7 @@ class GetInstalledAppsPermission : DangerousPermission {
 
     private constructor(`in`: Parcel) : super(`in`)
 
-    @NonNull
+    
     override fun getPermissionName(): String {
         return PERMISSION_NAME
     }
@@ -39,7 +44,7 @@ class GetInstalledAppsPermission : DangerousPermission {
         return PermissionVersion.ANDROID_4_2
     }
 
-    override fun isSupportRequestPermission(@NonNull context: Context): Boolean {
+    override fun isSupportRequestPermission(context: Context): Boolean {
         // 获取父类方法的返回值，看看它是不是支持申请的，这个是前提条件
         val superMethodSupportRequestPermission = super.isSupportRequestPermission(context)
         if (superMethodSupportRequestPermission) {
@@ -56,7 +61,7 @@ class GetInstalledAppsPermission : DangerousPermission {
         return superMethodSupportRequestPermission
     }
 
-    override fun isGrantedPermission(@NonNull context: Context, skipRequest: Boolean): Boolean {
+    override fun isGrantedPermission( context: Context, skipRequest: Boolean): Boolean {
         if (PermissionVersion.isAndroid6() && isSupportRequestPermissionBySystem(context)) {
             return checkSelfPermission(context, getPermissionName())
         }
@@ -81,7 +86,7 @@ class GetInstalledAppsPermission : DangerousPermission {
         return true
     }
 
-    override fun isDoNotAskAgainPermission(@NonNull activity: Activity): Boolean {
+    override fun isDoNotAskAgainPermission( activity: Activity): Boolean {
         if (PermissionVersion.isAndroid6() && isSupportRequestPermissionBySystem(activity)) {
             // 如果支持申请，那么再去判断权限是否永久拒绝
             return !checkSelfPermission(activity, getPermissionName()) &&
@@ -103,8 +108,8 @@ class GetInstalledAppsPermission : DangerousPermission {
         return false
     }
 
-    @NonNull
-    override fun getPermissionSettingIntents(@NonNull context: Context?): List<Intent> {
+    
+    override fun getPermissionSettingIntents(context: Context): MutableList<Intent> {
         val intentList: MutableList<Intent> = ArrayList()
         var intent: Intent
 
@@ -128,12 +133,12 @@ class GetInstalledAppsPermission : DangerousPermission {
         return intentList
     }
 
-    protected override fun checkSelfByManifestFile(
-        @NonNull activity: Activity?,
-        @NonNull requestPermissions: List<IPermission?>?,
-        @NonNull androidManifestInfo: AndroidManifestInfo,
-        @NonNull permissionManifestInfoList: List<PermissionManifestInfo?>?,
-        @Nullable currentPermissionManifestInfo: PermissionManifestInfo
+    override fun checkSelfByManifestFile(
+         activity: Activity,
+         requestPermissions: List<IPermission>,
+         androidManifestInfo: AndroidManifestInfo,
+         permissionManifestInfoList: List<PermissionManifestInfo>,
+         currentPermissionManifestInfo: PermissionManifestInfo
     ) {
         super.checkSelfByManifestFile(
             activity, requestPermissions, androidManifestInfo, permissionManifestInfoList,
@@ -196,7 +201,7 @@ class GetInstalledAppsPermission : DangerousPermission {
                 context.contentResolver,
                 "oem_installed_apps_runtime_permission_enable"
             ) === 1
-        } catch (e: SettingNotFoundException) {
+        } catch (e: Settings.SettingNotFoundException) {
             // 没有这个系统属性时会抛出：android.provider.Settings$SettingNotFoundException: oem_installed_apps_runtime_permission_enable
             e.printStackTrace()
         }

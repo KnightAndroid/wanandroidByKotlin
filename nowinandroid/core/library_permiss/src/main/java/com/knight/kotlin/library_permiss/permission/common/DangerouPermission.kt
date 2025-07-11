@@ -5,11 +5,14 @@ import android.content.Context
 import android.content.Intent
 import android.os.Parcel
 import androidx.core.app.ActivityCompat
+import com.knight.kotlin.library_permiss.permission.PermissionType
 import com.knight.kotlin.library_permiss.permission.base.BasePermission
-import com.knight.kotlin.library_permiss.utils.PhoneRomUtils
-import com.knight.kotlin.library_permiss.utils.PhoneRomUtils.getRomVersionName
-import com.knight.kotlin.library_permiss.utils.PhoneRomUtils.isHyperOs
-import com.knight.kotlin.library_permiss.utils.PhoneRomUtils.isMiui
+import com.knight.kotlin.library_permiss.tools.PermissionSettingPage
+import com.knight.kotlin.library_permiss.tools.PermissionVersion
+import com.knight.kotlin.library_permiss.tools.PhoneRomUtils
+import com.knight.kotlin.library_permiss.tools.PhoneRomUtils.getRomVersionName
+import com.knight.kotlin.library_permiss.tools.PhoneRomUtils.isHyperOs
+import com.knight.kotlin.library_permiss.tools.PhoneRomUtils.isMiui
 
 
 /**
@@ -22,14 +25,14 @@ import com.knight.kotlin.library_permiss.utils.PhoneRomUtils.isMiui
 abstract class DangerousPermission : BasePermission {
     protected constructor() : super()
 
-    protected constructor(`in`: Parcel?) : super(`in`)
+    protected constructor(`in`: Parcel) : super(`in`)
 
     
     override fun getPermissionType(): PermissionType {
         return PermissionType.DANGEROUS
     }
 
-    override fun isGrantedPermission( context: Context?, skipRequest: Boolean): Boolean {
+    override fun isGrantedPermission( context: Context, skipRequest: Boolean): Boolean {
         // 判断权限是不是在旧系统上面运行（权限出现的版本 > 当前系统的版本）
         if (getFromAndroidVersion() > PermissionVersion.getCurrentVersion()) {
             return isGrantedPermissionByLowVersion(context, skipRequest)
@@ -40,8 +43,8 @@ abstract class DangerousPermission : BasePermission {
     /**
      * 在标准版本的系统上面判断权限是否授予
      */
-    protected fun isGrantedPermissionByStandardVersion(
-         context: Context?,
+    protected open fun isGrantedPermissionByStandardVersion(
+         context: Context,
         skipRequest: Boolean
     ): Boolean {
         if (!PermissionVersion.isAndroid6()) {
@@ -53,14 +56,14 @@ abstract class DangerousPermission : BasePermission {
     /**
      * 在低版本的系统上面判断权限是否授予
      */
-    protected fun isGrantedPermissionByLowVersion(
-         context: Context?,
+    protected open fun isGrantedPermissionByLowVersion(
+         context: Context,
         skipRequest: Boolean
     ): Boolean {
         return true
     }
 
-    override fun isDoNotAskAgainPermission( activity: Activity?): Boolean {
+    override fun isDoNotAskAgainPermission(activity: Activity): Boolean {
         // 判断权限是不是在旧系统上面运行（权限出现的版本 > 当前系统的版本）
         if (getFromAndroidVersion() > PermissionVersion.getCurrentVersion()) {
             return isDoNotAskAgainPermissionByLowVersion(activity)
@@ -71,7 +74,7 @@ abstract class DangerousPermission : BasePermission {
     /**
      * 在标准版本的系统上面判断权限是否被用户勾选了《不再询问的选项》
      */
-    protected fun isDoNotAskAgainPermissionByStandardVersion( activity: Activity): Boolean {
+    protected open fun isDoNotAskAgainPermissionByStandardVersion(activity: Activity): Boolean {
         if (!PermissionVersion.isAndroid6()) {
             return false
         }
@@ -85,12 +88,12 @@ abstract class DangerousPermission : BasePermission {
     /**
      * 在低版本的系统上面判断权限是否被用户勾选了《不再询问的选项》
      */
-    protected fun isDoNotAskAgainPermissionByLowVersion( activity: Activity): Boolean {
+    protected open fun isDoNotAskAgainPermissionByLowVersion(activity: Activity): Boolean {
         return false
     }
 
     
-    override fun getPermissionSettingIntents( context: Context?): List<Intent> {
+    override fun getPermissionSettingIntents(context: Context): MutableList<Intent> {
         val intentList: MutableList<Intent> = ArrayList(5)
         var intent: Intent
 

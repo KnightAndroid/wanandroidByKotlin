@@ -1,15 +1,20 @@
 package com.knight.kotlin.library_permiss.permission.dangerous
 
+import android.Manifest
+import android.app.Activity
 import android.os.Parcel
 import android.os.Parcelable
 import com.knight.kotlin.library_permiss.manifest.AndroidManifestInfo
 import com.knight.kotlin.library_permiss.manifest.node.PermissionManifestInfo
+import com.knight.kotlin.library_permiss.permission.PermissionGroups
+import com.knight.kotlin.library_permiss.permission.PermissionNames
 import com.knight.kotlin.library_permiss.permission.base.IPermission
 import com.knight.kotlin.library_permiss.permission.common.DangerousPermission
+import com.knight.kotlin.library_permiss.tools.PermissionVersion
 
 
 /**
- * @Description
+ * @Description  蓝牙广播权限类
  * @Author knight
  * @Time 2025/7/10 21:05
  *
@@ -41,11 +46,11 @@ class BluetoothAdvertisePermission : DangerousPermission {
     }
 
     protected override fun checkSelfByManifestFile(
-         activity: Activity?,
-         requestPermissions: List<IPermission?>?,
-         androidManifestInfo: AndroidManifestInfo?,
-         permissionManifestInfoList: List<PermissionManifestInfo?>?,
-         currentPermissionManifestInfo: PermissionManifestInfo
+        activity: Activity,
+        requestPermissions: List<IPermission>,
+        androidManifestInfo: AndroidManifestInfo,
+        permissionManifestInfoList: List<PermissionManifestInfo>,
+        currentPermissionManifestInfo: PermissionManifestInfo
     ) {
         super.checkSelfByManifestFile(
             activity, requestPermissions, androidManifestInfo, permissionManifestInfoList,

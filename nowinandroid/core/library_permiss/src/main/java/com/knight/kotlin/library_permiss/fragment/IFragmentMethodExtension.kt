@@ -1,7 +1,8 @@
 package com.knight.kotlin.library_permiss.fragment
 
+import com.knight.kotlin.library_permiss.core.OnPermissionFlowCallback
 import com.knight.kotlin.library_permiss.core.RequestPermissionDelegateImpl
-import com.knight.kotlin.library_permiss.listener.OnPermissionFlowCallback
+
 
 /**
  * @Description Fragment 扩展接口方法

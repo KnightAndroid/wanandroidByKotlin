@@ -12,65 +12,54 @@ import android.os.Parcelable
  *
  */
 
-class StandardDangerousPermission(
-     permissionName: String?,
-     permissionGroup: String?,
-    fromAndroidVersion: Int
-) :
-    DangerousPermission() {
-    /** 权限名称  */
-    
-    private val mPermissionName = permissionName
+class StandardDangerousPermission : DangerousPermission, Parcelable {
 
-    /** 权限组别  */
-    
-    private val mPermissionGroup = permissionGroup
+    /** 权限名称 */
 
-    /** 权限出现的 Android 版本  */
-    private val mFromAndroidVersion = fromAndroidVersion
+    private val mPermissionName: String
 
-    private constructor(`in`: Parcel) : this(`in`.readString(), `in`.readString(), `in`.readInt())
+    /** 权限组别 */
+    private val mPermissionGroup: String?
 
-    constructor( permissionName: String?, fromAndroidVersion: Int) : this(
-        permissionName,
-        null,
-        fromAndroidVersion
-    )
+    /** 权限出现的 Android 版本 */
+    private val mFromAndroidVersion: Int
 
-    override fun writeToParcel( dest: Parcel, flags: Int) {
+    constructor(permissionName: String, fromAndroidVersion: Int) : this(permissionName, null, fromAndroidVersion)
+
+    constructor(permissionName: String, permissionGroup: String?, fromAndroidVersion: Int) {
+        mPermissionName = permissionName
+        mPermissionGroup = permissionGroup
+        mFromAndroidVersion = fromAndroidVersion
+    }
+
+    private constructor(parcel: Parcel) : super(parcel) {
+        mPermissionName = parcel.readString()!!
+        mPermissionGroup = parcel.readString()
+        mFromAndroidVersion = parcel.readInt()
+    }
+
+    override fun writeToParcel(dest: Parcel, flags: Int) {
         super.writeToParcel(dest, flags)
         dest.writeString(mPermissionName)
         dest.writeString(mPermissionGroup)
         dest.writeInt(mFromAndroidVersion)
     }
 
-    
-    override fun getPermissionName(): String? {
-        return mPermissionName
-    }
+    override fun describeContents(): Int = 0
 
-    
-    override fun getPermissionGroup(): String? {
-        return mPermissionGroup
-    }
+    override fun getPermissionName(): String = mPermissionName
 
-    override fun getFromAndroidVersion(): Int {
-        return mFromAndroidVersion
-    }
+    override fun getPermissionGroup(): String? = mPermissionGroup
 
-    override fun describeContents(): Int {
-        return 0
-    }
+    override fun getFromAndroidVersion(): Int = mFromAndroidVersion
 
     companion object CREATOR : Parcelable.Creator<StandardDangerousPermission> {
-        override fun createFromParcel(parcel: Parcel): StandardDangerousPermission {
-            return StandardDangerousPermission(parcel)
+        override fun createFromParcel(source: Parcel): StandardDangerousPermission {
+            return StandardDangerousPermission(source)
         }
 
         override fun newArray(size: Int): Array<StandardDangerousPermission?> {
             return arrayOfNulls(size)
         }
     }
-
-
 }

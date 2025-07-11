@@ -20,7 +20,7 @@
             android:layout_marginLeft="15dp"
             android:layout_marginTop="12dp"
             android:layout_marginRight="15dp"
-            android:text="@string/permission_description"
+            android:text="@string/permission_description_title"
             android:textColor="#333333"
             android:textSize="14sp"
             android:textStyle="bold" />

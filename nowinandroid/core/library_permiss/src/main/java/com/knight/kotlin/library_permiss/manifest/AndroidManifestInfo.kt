@@ -23,24 +23,24 @@ class AndroidManifestInfo {
 
     /** 权限节点信息  */
     
-    val permissionManifestInfoList: List<PermissionManifestInfo> = ArrayList()
+    val permissionManifestInfoList: MutableList<PermissionManifestInfo> = mutableListOf()
 
     /** 查询包名列表  */
     
-    val queriesPackageList: List<String> = ArrayList()
+    val queriesPackageList: MutableList<String> = mutableListOf()
 
     /** Application 节点信息  */
     var applicationManifestInfo: ApplicationManifestInfo? = null
 
     /** Activity 节点信息  */
     
-    val activityManifestInfoList: List<ActivityManifestInfo> = ArrayList()
+    val activityManifestInfoList: MutableList<ActivityManifestInfo> = mutableListOf()
 
     /** Service 节点信息  */
     
-    val serviceManifestInfoList: List<ServiceManifestInfo> = ArrayList()
+    val serviceManifestInfoList: MutableList<ServiceManifestInfo> = mutableListOf()
 
     /** BroadcastReceiver 节点信息  */
     
-    val broadcastReceiverManifestInfoList: List<BroadcastReceiverManifestInfo> = ArrayList()
+    val broadcastReceiverManifestInfoList:MutableList<BroadcastReceiverManifestInfo> = mutableListOf()
 }
