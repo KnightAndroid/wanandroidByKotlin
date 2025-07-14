@@ -126,7 +126,12 @@ class HomeNewsActivity: BaseActivity<HomeNewsActivityBinding, HomeNewsVm>(), OnR
 
 
                                     override fun onDenied(permissions: List<IPermission>, doNotAskAgain: Boolean) {
-                                        super.onDenied(permissions, doNotAskAgain)
+                                        if (doNotAskAgain) {
+                                            // 如果是被永久拒绝就跳转到应用权限系统设置页面
+                                            XXPermissions.startPermissionActivity(this@HomeNewsActivity, permissions)
+                                        } else {
+                                            toast(getString(R.string.home_miss_float_window))
+                                        }
 
                                     }
 

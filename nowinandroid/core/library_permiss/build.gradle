@@ -3,6 +3,9 @@ import com.knight.wanandroid.buildsrc.*
 //apply from:'../base_library.gradle'
 apply from: "${project.rootDir}/base_library.gradle"
 android {
+    buildFeatures {
+        viewBinding = true
+    }
     namespace = "com.knight.kotlin.library_permiss"
 }
 dependencies {

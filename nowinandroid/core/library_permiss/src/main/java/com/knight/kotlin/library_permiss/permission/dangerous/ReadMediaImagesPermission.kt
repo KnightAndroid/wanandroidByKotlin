@@ -116,12 +116,19 @@ class ReadMediaImagesPermission : DangerousPermission {
 
 
 
-        companion object CREATOR: Parcelable.Creator<ReadMediaImagesPermission> {
+
+    companion object {
+        val PERMISSION_NAME: String = PermissionNames.READ_MEDIA_IMAGES
+        @JvmField
+        val CREATOR : Parcelable.Creator<ReadMediaImagesPermission> =
 
 
-                /** 当前权限名称，注意：该常量字段仅供框架内部使用，不提供给外部引用，如果需要获取权限名称的字符串，请直接通过 [PermissionNames] 类获取  */
-                val PERMISSION_NAME: String = PermissionNames.READ_MEDIA_IMAGES
-                override fun createFromParcel(source: Parcel): ReadMediaImagesPermission? {
+            object : Parcelable.Creator<ReadMediaImagesPermission> {
+                /** 当前权限名称，注意：该常量字段仅供框架内部使用，不提供给外部引用，
+                 * 如果需要获取权限名称的字符串，请直接通过 [PermissionNames] 类获取
+                 */
+
+                override fun createFromParcel(source: Parcel):ReadMediaImagesPermission {
                     return ReadMediaImagesPermission(source)
                 }
 
@@ -129,5 +136,5 @@ class ReadMediaImagesPermission : DangerousPermission {
                     return arrayOfNulls(size)
                 }
             }
-
+    }
 }

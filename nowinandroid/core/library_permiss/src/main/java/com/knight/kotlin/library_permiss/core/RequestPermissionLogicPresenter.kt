@@ -268,9 +268,6 @@ class RequestPermissionLogicPresenter(
         /**
          * 获取未授权的危险权限
          */
-        /**
-         * 获取未授权的危险权限
-         */
         private fun getUnauthorizedPermissions(
             activity: Activity,
             requestPermissions: List<IPermission>

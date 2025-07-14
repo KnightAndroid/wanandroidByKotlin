@@ -76,6 +76,7 @@ import com.knight.kotlin.library_common.fragment.UpdateAppDialogFragment
 import com.knight.kotlin.library_database.entity.CityBean
 import com.knight.kotlin.library_database.entity.PushDateEntity
 import com.knight.kotlin.library_permiss.OnPermissionCallback
+import com.knight.kotlin.library_permiss.PermissionDescription
 import com.knight.kotlin.library_permiss.permission.PermissionLists
 import com.knight.kotlin.library_permiss.permission.base.IPermission
 import com.knight.kotlin.library_scan.activity.ScanCodeActivity
@@ -93,6 +94,7 @@ import com.knight.kotlin.library_util.baidu.OnceLocationListener
 import com.knight.kotlin.library_util.image.ImageLoader
 import com.knight.kotlin.library_util.startPage
 import com.knight.kotlin.library_util.startPageWithRightAnimate
+import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.library_util.toast.ToastUtils
 import com.knight.kotlin.library_widget.SpacesItemDecoration
 import com.knight.kotlin.library_widget.ZzWeatherView
@@ -616,16 +618,6 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
                 setUnreadMessage(it)
             }
         }
-
-
-
-
-
-
-        //获取置顶文章
-//        mViewModel.getTopArticle().observerKt {
-//            setTopArticle(it)
-//        }
         //获取百度热搜
         mViewModel.getTopBaiduRealTime().observerKt {
             setTopBaiduRealTime(it.cards[0].content)
@@ -894,7 +886,6 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
                     PermissionLists.getAccessFineLocationPermission(),
                     PermissionLists.getAccessCoarseLocationPermission(),
                     PermissionLists.getAccessBackgroundLocationPermission())
-               // val permission:List<String> = listOf(Permission.ACCESS_FINE_LOCATION,Permission.ACCESS_COARSE_LOCATION,Permission.ACCESS_BACKGROUND_LOCATION)
                 if (XXPermissions.isGrantedPermissions(requireActivity(),permission)) {
                     requestOnceLocation()
                 } else {
@@ -904,6 +895,7 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
                             .permission(PermissionLists.getAccessFineLocationPermission())
                             .permission(PermissionLists.getAccessCoarseLocationPermission())
                             .permission(PermissionLists.getAccessBackgroundLocationPermission())
+                            .description(PermissionDescription())
                             .request(object : OnPermissionCallback {
 
                                 override fun onGranted(permissions: List<IPermission>, allGranted: Boolean) {
@@ -916,15 +908,7 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
                                 }
 
                                 override fun onDenied(permissions: List<IPermission>, doNotAskAgain: Boolean) {
-//                                    if (doNotAskAgain) {
-//
-//                                        // 如果是被永久拒绝就跳转到应用权限系统设置页面
-//                                        XXPermissions.startPermissionActivity(requireActivity(), permissions)
-//                                    } else {
-//                                        toast("获取录音和日历权限失败")
-//                                    }
-                                    // 如果是被永久拒绝就跳转到应用权限系统设置页面
-                                    XXPermissions.startPermissionActivity(requireActivity(), permissions)
+                                    toast(getString(R.string.home_miss_location_permission))
                                 }
                             })
                     }
@@ -942,55 +926,6 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
         }
     }
 
-    /**
-     * 初始化置顶适配器
-     * 点击事件
-     */
-//    private fun initTopAdapter() {
-//        mTopArticleAdapter.run {
-//            setOnItemClickListener { adapter, view, position ->
-//                ArouteUtils.startWebArticle(
-//                    items[position].link,
-//                    items[position].title,
-//                    items[position].id,
-//                    items[position].collect,
-//                    items[position].envelopePic,
-//                    items[position].desc,
-//                    items[position].chapterName,
-//                    items[position].author,
-//                    items[position].shareUser
-//                )
-//
-//            }
-//
-//            setOnItemLongClickListener { adapter, view, position ->
-//                BlurBuilderUtils.snapShotWithoutStatusBar(requireActivity())
-//                startActivity(
-//                    Intent(activity, HomeArticlesTabActivity::class.java)
-//                        .putParcelableArrayListExtra("toparticles", ArrayList(items))
-//                )
-//                activity?.overridePendingTransition(
-//                    com.knight.kotlin.library_base.R.anim.base_scalealpha_in,
-//                    com.knight.kotlin.library_base.R.anim.base_scalealpha_slient
-//                )
-//                false
-//            }
-//        }
-//    }
-
-
-    /**
-     * 初始化头像
-     */
-//    private fun initHourWeatherHeaderView () {
-//        if (mBinding.homeRecommentMenu.rvHourWeather.headerCount == 0) {
-//            if (!::mHourWeatherHeaderBinding.isInitialized) {
-//                mHourWeatherHeaderBinding =
-//                    HomeHourWeatherHeadBinding.inflate(LayoutInflater.from(activity))
-//                mBinding.homeRecommentMenu.rvHourWeather.addHeaderView(mHourWeatherHeaderBinding.root)
-//            }
-//        }
-//    }
 
     /**
      *
@@ -1106,36 +1041,12 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
 
     }
 
-
-//    /**
-//     * 获取置顶文章数据
-//     */
-//    private fun setTopArticle(data: MutableList<TopArticleBean>) {
-//        mTopArticleAdapter.submitList(data)
-//        if (data.size > 3) {
-//            mTopArticleAdapter.setShowOnlyThree(true)
-//        } else {
-//            mTopArticleAdapter.setShowOnlyThree(false)
-//        }
-//
-//        if (mBinding.homeRecommendArticleBody.headerCount == 0) {
-//            mBinding.homeRecommendArticleBody.addHeaderView(recommendHeadView)
-//        }
-//    }
-
-
     /**
      * 获取置顶文章数据
      */
     private fun setTopBaiduRealTime(data: MutableList<BaiduContent>) {
         expandRealTimeList = data.subList(0,5)
         mBaiduHotSearchAdapter.submitList(data.take(3))
-//        if (data.size > 3) {
-//            mBaiduHotSearchAdapter.setShowOnlyThree(true)
-//        } else {
-//            mBaiduHotSearchAdapter.setShowOnlyThree(false)
-//        }
-
         if (mBinding.homeRecommentConent.homeRecommendArticleBody.headerCount == 0) {
             mBinding.homeRecommentConent.homeRecommendArticleBody.addHeaderView(recommendHeadView)
         }
@@ -1361,7 +1272,8 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
                     .request(object : OnPermissionCallback {
 
                         override fun onDenied(permissions: List<IPermission>, doNotAskAgain: Boolean) {
-                            super.onDenied(permissions, doNotAskAgain)
+                               super.onDenied(permissions, doNotAskAgain)
+                               toast(getString(R.string.home_miss_camera_permission))
                         }
 
                         override fun onGranted(permissions: List<IPermission>, allGranted: Boolean) {
@@ -1421,10 +1333,6 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
             mBinding.homeRecommentMenu.homeTvConstellate -> {
                 startPage(RouteActivity.Constellate.ConstellateMainActivity)
             }
-
-//            mBinding.homeIvLabelmore -> {
-//                startPageWithStringArrayListParams(RouteActivity.Home.HomeKnowLedgeLabelActivity,"data" to ArrayList(knowledgeLabelList))
-//            }
         }
     }
 
@@ -1458,22 +1366,6 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
 
             //更改标签
             MessageEvent.MessageType.ChangeLabel -> {
-//                knowledgeLabelList.clear()
-//                knowledgeLabelList.addAll(event.getStringList())
-//                mFragments.clear()
-//                for (i in knowledgeLabelList.indices) {
-//                    if (i == 0) {
-//                        mFragments.add(HomeRecommendFragment())
-//                    } else {
-//                        mFragments.add(HomeArticleFragment())
-//                    }
-//                }
-//                mBinding.magicIndicator.navigator.notifyDataSetChanged()
-//                mBinding.viewPager.adapter?.notifyDataSetChanged()
-//                ViewInitUtils.setViewPager2Init(requireActivity(),mBinding.viewPager,mFragments,
-//                    isOffscreenPageLimit = true,
-//                    isUserInputEnabled = false
-//                )
             }
 
             //改变状态栏颜色
@@ -1693,11 +1585,13 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
                                 .permission(PermissionLists.getAccessFineLocationPermission())
                                 .permission(PermissionLists.getAccessCoarseLocationPermission())
                                 .permission(PermissionLists.getAccessBackgroundLocationPermission())
+                                .description(PermissionDescription())
                                 .request(object : OnPermissionCallback {
 
 
                                     override fun onDenied(permissions: List<IPermission>, doNotAskAgain: Boolean) {
                                         super.onDenied(permissions, doNotAskAgain)
+                                        toast(getString(R.string.home_miss_location_permission))
                                     }
 
                                     override fun onGranted(permissions: List<IPermission>, allGranted: Boolean) {
@@ -1712,7 +1606,7 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
                         }
                         WorkInfo.State.RUNNING -> {
 
-                            updateText("初始化加载地图引擎... $progress%")
+                            updateText(getString(R.string.home_init_location, progress))
 
                         }
                         else -> { /* 等待中 */ }

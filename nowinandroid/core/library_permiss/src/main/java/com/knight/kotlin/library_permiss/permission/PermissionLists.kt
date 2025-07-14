@@ -75,7 +75,7 @@ object PermissionLists {
      * @param permissionName            权限名称
      */
     
-    private fun getCachePermission( permissionName: String): IPermission {
+    private fun getCachePermission( permissionName: String): IPermission? {
         return PERMISSION_CACHE_MAP.get(permissionName)
     }
 
@@ -264,7 +264,7 @@ object PermissionLists {
     
     fun getBindNotificationListenerServicePermission( notificationListenerServiceClass: Class<out NotificationListenerService?>): IPermission {
         // 该对象不会纳入到缓存的集合中，这是它携带了具体的参数，只有无参的才能丢到缓存的集合中
-        return BindNotificationListenerServicePermission(notificationListenerServiceClass)
+        return BindNotificationListenerServicePermission(notificationListenerServiceClass.name)
     }
 
     /**

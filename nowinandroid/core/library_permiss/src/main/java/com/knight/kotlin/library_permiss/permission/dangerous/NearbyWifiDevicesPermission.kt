@@ -117,19 +117,24 @@ class NearbyWifiDevicesPermission : DangerousPermission {
     }
 
 
-    companion object CREATOR : Parcelable.Creator<NearbyWifiDevicesPermission> {
-
-        /** 当前权限名称，注意：该常量字段仅供框架内部使用，不提供给外部引用，如果需要获取权限名称的字符串，请直接通过 [PermissionNames] 类获取  */
+    companion object {
         val PERMISSION_NAME: String = PermissionNames.NEARBY_WIFI_DEVICES
-
-        override fun createFromParcel(source: Parcel): NearbyWifiDevicesPermission? {
-            return NearbyWifiDevicesPermission(source)
-        }
-
-        override fun newArray(size: Int): Array<NearbyWifiDevicesPermission?> {
-            return arrayOfNulls(size)
-        }
+        @JvmField
+        val CREATOR : Parcelable.Creator<NearbyWifiDevicesPermission> =
 
 
+            object : Parcelable.Creator<NearbyWifiDevicesPermission> {
+                /** 当前权限名称，注意：该常量字段仅供框架内部使用，不提供给外部引用，
+                 * 如果需要获取权限名称的字符串，请直接通过 [PermissionNames] 类获取
+                 */
+
+                override fun createFromParcel(source: Parcel): NearbyWifiDevicesPermission{
+                    return NearbyWifiDevicesPermission(source)
+                }
+
+                override fun newArray(size: Int): Array<NearbyWifiDevicesPermission?> {
+                    return arrayOfNulls(size)
+                }
+            }
     }
 }

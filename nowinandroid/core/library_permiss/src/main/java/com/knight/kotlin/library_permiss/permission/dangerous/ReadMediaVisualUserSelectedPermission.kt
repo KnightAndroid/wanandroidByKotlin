@@ -67,18 +67,26 @@ class ReadMediaVisualUserSelectedPermission : DangerousPermission {
 
 
 
-        companion object CREATOR: Parcelable.Creator<ReadMediaVisualUserSelectedPermission> {
 
-                /** 当前权限名称，注意：该常量字段仅供框架内部使用，不提供给外部引用，如果需要获取权限名称的字符串，请直接通过 [PermissionNames] 类获取  */
-                val PERMISSION_NAME: String = PermissionNames.READ_MEDIA_VISUAL_USER_SELECTED
 
-                override fun createFromParcel(source: Parcel): ReadMediaVisualUserSelectedPermission? {
+    companion object {
+        val PERMISSION_NAME: String = PermissionNames.READ_MEDIA_VISUAL_USER_SELECTED
+        @JvmField
+        val CREATOR : Parcelable.Creator<ReadMediaVisualUserSelectedPermission> =
+
+
+            object : Parcelable.Creator<ReadMediaVisualUserSelectedPermission> {
+                /** 当前权限名称，注意：该常量字段仅供框架内部使用，不提供给外部引用，
+                 * 如果需要获取权限名称的字符串，请直接通过 [PermissionNames] 类获取
+                 */
+
+                override fun createFromParcel(source: Parcel): ReadMediaVisualUserSelectedPermission {
                     return ReadMediaVisualUserSelectedPermission(source)
                 }
 
                 override fun newArray(size: Int): Array<ReadMediaVisualUserSelectedPermission?> {
                     return arrayOfNulls(size)
                 }
-
+            }
     }
 }

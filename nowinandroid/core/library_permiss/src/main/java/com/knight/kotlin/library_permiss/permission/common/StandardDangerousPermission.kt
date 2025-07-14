@@ -53,13 +53,17 @@ class StandardDangerousPermission : DangerousPermission, Parcelable {
 
     override fun getFromAndroidVersion(): Int = mFromAndroidVersion
 
-    companion object CREATOR : Parcelable.Creator<StandardDangerousPermission> {
-        override fun createFromParcel(source: Parcel): StandardDangerousPermission {
-            return StandardDangerousPermission(source)
-        }
+    companion object {
+        @JvmField
+        val CREATOR: Parcelable.Creator<StandardDangerousPermission> =
+            object : Parcelable.Creator<StandardDangerousPermission> {
+                override fun createFromParcel(source: Parcel): StandardDangerousPermission {
+                    return StandardDangerousPermission(source)
+                }
 
-        override fun newArray(size: Int): Array<StandardDangerousPermission?> {
-            return arrayOfNulls(size)
-        }
+                override fun newArray(size: Int): Array<StandardDangerousPermission?> {
+                    return arrayOfNulls(size)
+                }
+            }
     }
 }

@@ -125,21 +125,28 @@ class ReadExternalStoragePermission : DangerousPermission {
     }
 
 
-    companion object CREATOR : Parcelable.Creator<ReadExternalStoragePermission> {
 
-        /** 当前权限名称，注意：该常量字段仅供框架内部使用，不提供给外部引用，如果需要获取权限名称的字符串，请直接通过 [PermissionNames] 类获取  */
+    companion object {
         val PERMISSION_NAME: String = PermissionNames.READ_EXTERNAL_STORAGE
 
         /** 分区存储的 Meta Data Key（仅供内部调用）  */
         const val META_DATA_KEY_SCOPED_STORAGE: String = "ScopedStorage"
+        @JvmField
+        val CREATOR : Parcelable.Creator<ReadExternalStoragePermission> =
 
-        override fun createFromParcel(source: Parcel): ReadExternalStoragePermission? {
-            return ReadExternalStoragePermission(source)
-        }
 
-        override fun newArray(size: Int): Array<ReadExternalStoragePermission?> {
-            return arrayOfNulls(size)
-        }
+            object : Parcelable.Creator<ReadExternalStoragePermission> {
+                /** 当前权限名称，注意：该常量字段仅供框架内部使用，不提供给外部引用，
+                 * 如果需要获取权限名称的字符串，请直接通过 [PermissionNames] 类获取
+                 */
 
+                override fun createFromParcel(source: Parcel): ReadExternalStoragePermission {
+                    return ReadExternalStoragePermission(source)
+                }
+
+                override fun newArray(size: Int): Array<ReadExternalStoragePermission?> {
+                    return arrayOfNulls(size)
+                }
+            }
     }
 }

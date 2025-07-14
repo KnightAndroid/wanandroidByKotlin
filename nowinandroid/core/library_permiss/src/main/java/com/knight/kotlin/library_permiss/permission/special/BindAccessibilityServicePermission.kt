@@ -6,7 +6,7 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.os.Parcel
-import android.os.Parcelable.Creator
+import android.os.Parcelable
 import android.provider.Settings
 import android.text.TextUtils
 import com.knight.kotlin.library_permiss.manifest.AndroidManifestInfo
@@ -130,17 +130,25 @@ class BindAccessibilityServicePermission( accessibilityServiceClassName: String)
     }
 
 
-    companion object CREATOR : Creator<BindAccessibilityServicePermission> {
-        /** 当前权限名称，注意：该常量字段仅供框架内部使用，不提供给外部引用，如果需要获取权限名称的字符串，请直接通过 [PermissionNames] 类获取  */
+    companion object {
         val PERMISSION_NAME: String = PermissionNames.BIND_ACCESSIBILITY_SERVICE
-        override fun createFromParcel(source: Parcel): BindAccessibilityServicePermission? {
-            return BindAccessibilityServicePermission(source)
-        }
+        @JvmField
+        val CREATOR : Parcelable.Creator<BindAccessibilityServicePermission> =
 
-        override fun newArray(size: Int): Array<BindAccessibilityServicePermission?> {
-            return arrayOfNulls(size)
-        }
+
+            object : Parcelable.Creator<BindAccessibilityServicePermission> {
+                /** 当前权限名称，注意：该常量字段仅供框架内部使用，不提供给外部引用，
+                 * 如果需要获取权限名称的字符串，请直接通过 [PermissionNames] 类获取
+                 */
+
+                override fun createFromParcel(source: Parcel): BindAccessibilityServicePermission {
+                    return BindAccessibilityServicePermission(source)
+                }
+
+                override fun newArray(size: Int): Array<BindAccessibilityServicePermission?> {
+                    return arrayOfNulls(size)
+                }
+            }
     }
-
 
 }

@@ -184,7 +184,4 @@ class BindNotificationListenerServicePermission : SpecialPermission {
         throw IllegalArgumentException("The \"$notificationListenerServiceClassName\" component is not registered in the AndroidManifest.xml file")
     }
 
-    fun getNotificationListenerServiceClassName(): String {
-        return notificationListenerServiceClassName
-    }
 }

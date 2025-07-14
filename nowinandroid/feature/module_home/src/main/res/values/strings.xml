@@ -40,4 +40,8 @@
     <string name="home_open_floatmenu_message">- 应用内悬浮窗（仅在应用内显示）\n- 应用外悬浮窗（可在其他应用上显示）</string>
     <string name="home_in_app_floating_window">本页面悬浮窗</string>
     <string name="home_out_of_app_floating_window">应用全局悬浮窗</string>
+    <string name="home_miss_location_permission">获取定位权限失败</string>
+    <string name="home_init_location">正在初始化地图引擎... %d%%</string>
+    <string name="home_miss_float_window">获取悬浮窗权限失败</string>
+    <string name="home_miss_camera_permission">获取相机权限失败</string>
 </resources>

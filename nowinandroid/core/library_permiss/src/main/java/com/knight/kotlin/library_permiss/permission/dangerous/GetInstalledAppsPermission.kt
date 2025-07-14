@@ -212,15 +212,20 @@ class GetInstalledAppsPermission : DangerousPermission {
 
 
 
-    companion object CREATOR: Parcelable.Creator<GetInstalledAppsPermission> {
+    companion object {
+        val PERMISSION_NAME: String = PermissionNames.GET_INSTALLED_APPS
+        private const val MIUI_OP_GET_INSTALLED_APPS_FIELD_NAME = "OP_GET_INSTALLED_APPS"
+        private const val MIUI_OP_GET_INSTALLED_APPS_DEFAULT_VALUE = 10022
+        @JvmField
+        val CREATOR : Parcelable.Creator<GetInstalledAppsPermission> =
 
 
-                /** 当前权限名称，注意：该常量字段仅供框架内部使用，不提供给外部引用，如果需要获取权限名称的字符串，请直接通过 [PermissionNames] 类获取  */
-                val PERMISSION_NAME: String = PermissionNames.GET_INSTALLED_APPS
+            object : Parcelable.Creator<GetInstalledAppsPermission> {
+                /** 当前权限名称，注意：该常量字段仅供框架内部使用，不提供给外部引用，
+                 * 如果需要获取权限名称的字符串，请直接通过 [PermissionNames] 类获取
+                 */
 
-                private const val MIUI_OP_GET_INSTALLED_APPS_FIELD_NAME = "OP_GET_INSTALLED_APPS"
-                private const val MIUI_OP_GET_INSTALLED_APPS_DEFAULT_VALUE = 10022
-                override fun createFromParcel(source: Parcel): GetInstalledAppsPermission? {
+                override fun createFromParcel(source: Parcel): GetInstalledAppsPermission {
                     return GetInstalledAppsPermission(source)
                 }
 
@@ -228,6 +233,8 @@ class GetInstalledAppsPermission : DangerousPermission {
                     return arrayOfNulls(size)
                 }
             }
+    }
+
 
         @get:RequiresApi(PermissionVersion.ANDROID_4_4)
         private val isSupportRequestPermissionByMiui: Boolean

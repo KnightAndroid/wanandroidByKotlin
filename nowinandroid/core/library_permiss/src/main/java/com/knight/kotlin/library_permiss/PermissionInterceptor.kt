@@ -4,13 +4,13 @@ package com.knight.kotlin.library_permiss
 import XXPermissions
 import android.app.Activity
 import android.app.AlertDialog
-import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
 import android.os.Build.VERSION
 import android.os.Build.VERSION_CODES
 import android.text.TextUtils
 import androidx.appcompat.app.AppCompatActivity
+import com.knight.kotlin.library_base.utils.CacheUtils
 import com.knight.kotlin.library_permiss.PermissionConverter.getNickNamesByPermissions
 import com.knight.kotlin.library_permiss.WindowLifecycleManager.bindDialogLifecycle
 import com.knight.kotlin.library_permiss.permission.PermissionGroups
@@ -80,7 +80,7 @@ class PermissionInterceptor : OnPermissionInterceptor {
         // java.lang.IllegalStateException: You need to use a Theme.AppCompat theme (or descendant) with this activity
         // 为什么不直接用 App 包 AlertDialog 来显示，而是两套规则？因为 App 包 AlertDialog 是系统自带的类，不同 Android 版本展现的样式可能不太一样
         // 如果这个 Android 版本比较低，那么这个对话框的样式就会变得很丑，准确来讲也不能说丑，而是当时系统的 UI 设计就是那样，它只是跟随系统的样式而已
-        val dialog: Dialog = if (activity is AppCompatActivity) {
+        val dialog: AlertDialog = if (activity is AppCompatActivity) {
             AlertDialog.Builder(activity)
                 .setTitle(dialogTitle)
                 .setMessage(permissionHint) // 这里需要设置成可取消的，这样用户不想授权了，随时可以点击返回键或者对话框蒙层来取消显示 Dialog
@@ -96,6 +96,7 @@ class PermissionInterceptor : OnPermissionInterceptor {
                 .create()
         }
         dialog.show()
+        dialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(CacheUtils.getThemeColor())
         // 将 Activity 和 Dialog 生命周期绑定在一起，避免可能会出现的内存泄漏
         // 当然如果上面创建的 Dialog 已经有做了生命周期管理，则不需要执行下面这行代码
         bindDialogLifecycle(activity, dialog)

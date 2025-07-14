@@ -35,7 +35,7 @@
             android:layout_marginBottom="12dp"
             android:textColor="#666666"
             android:textSize="13sp"
-            tools:text="@string/permission_message" />
+            tools:text="@string/permission_description_title" />
 
     </LinearLayout>
 

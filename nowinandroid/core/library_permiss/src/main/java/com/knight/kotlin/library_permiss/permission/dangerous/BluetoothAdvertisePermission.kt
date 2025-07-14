@@ -68,19 +68,26 @@ class BluetoothAdvertisePermission : DangerousPermission {
 
 
 
+    companion object {
+        val PERMISSION_NAME: String = PermissionNames.BLUETOOTH_ADVERTISE
+        @JvmField
+        val CREATOR : Parcelable.Creator<BluetoothAdvertisePermission> =
 
-        companion object CREATOR : Parcelable.Creator<BluetoothAdvertisePermission> {
-            /** 当前权限名称，注意：该常量字段仅供框架内部使用，不提供给外部引用，如果需要获取权限名称的字符串，请直接通过 [PermissionNames] 类获取  */
-            val PERMISSION_NAME: String = PermissionNames.BLUETOOTH_ADVERTISE
 
-            override fun createFromParcel(parcel: Parcel): BluetoothAdvertisePermission {
-                return BluetoothAdvertisePermission(parcel)
+            object : Parcelable.Creator<BluetoothAdvertisePermission> {
+                /** 当前权限名称，注意：该常量字段仅供框架内部使用，不提供给外部引用，
+                 * 如果需要获取权限名称的字符串，请直接通过 [PermissionNames] 类获取
+                 */
+
+                override fun createFromParcel(source: Parcel): BluetoothAdvertisePermission {
+                    return BluetoothAdvertisePermission(source)
+                }
+
+                override fun newArray(size: Int): Array<BluetoothAdvertisePermission?> {
+                    return arrayOfNulls(size)
+                }
             }
-
-            override fun newArray(size: Int): Array<BluetoothAdvertisePermission?> {
-                return arrayOfNulls(size)
-            }
-        }
+    }
 
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {

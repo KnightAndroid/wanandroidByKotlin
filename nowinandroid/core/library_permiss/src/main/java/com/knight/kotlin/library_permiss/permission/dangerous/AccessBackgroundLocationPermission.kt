@@ -211,20 +211,42 @@ class AccessBackgroundLocationPermission : DangerousPermission {
         }
     }
 
-    companion object CREATOR : Parcelable.Creator<AccessBackgroundLocationPermission> {
+//    companion object CREATOR : Parcelable.Creator<AccessBackgroundLocationPermission> {
+//
+//        /** 当前权限名称，注意：该常量字段仅供框架内部使用，不提供给外部引用，
+//         * 如果需要获取权限名称的字符串，请直接通过 [PermissionNames] 类获取
+//         */
+//        val PERMISSION_NAME: String = PermissionNames.ACCESS_BACKGROUND_LOCATION
+//
+//        override fun createFromParcel(parcel: Parcel): AccessBackgroundLocationPermission {
+//            return AccessBackgroundLocationPermission(parcel)
+//        }
+//
+//        override fun newArray(size: Int): Array<AccessBackgroundLocationPermission?> {
+//            return arrayOfNulls(size)
+//        }
+//    }
 
-        /** 当前权限名称，注意：该常量字段仅供框架内部使用，不提供给外部引用，
-         * 如果需要获取权限名称的字符串，请直接通过 [PermissionNames] 类获取
-         */
+
+    companion object {
         val PERMISSION_NAME: String = PermissionNames.ACCESS_BACKGROUND_LOCATION
+        @JvmField
+        val CREATOR : Parcelable.Creator<AccessBackgroundLocationPermission> =
 
-        override fun createFromParcel(parcel: Parcel): AccessBackgroundLocationPermission {
-            return AccessBackgroundLocationPermission(parcel)
-        }
 
-        override fun newArray(size: Int): Array<AccessBackgroundLocationPermission?> {
-            return arrayOfNulls(size)
-        }
+            object : Parcelable.Creator<AccessBackgroundLocationPermission> {
+                /** 当前权限名称，注意：该常量字段仅供框架内部使用，不提供给外部引用，
+                 * 如果需要获取权限名称的字符串，请直接通过 [PermissionNames] 类获取
+                 */
+
+                override fun createFromParcel(source: Parcel): AccessBackgroundLocationPermission {
+                    return AccessBackgroundLocationPermission(source)
+                }
+
+                override fun newArray(size: Int): Array<AccessBackgroundLocationPermission?> {
+                    return arrayOfNulls(size)
+                }
+            }
     }
 
 

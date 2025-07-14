@@ -221,19 +221,27 @@ class AccessMediaLocationPermission : DangerousPermission {
         )
     }
 
-        companion   object CREATOR : Parcelable.Creator<AccessMediaLocationPermission> {
 
-            /** 当前权限名称，注意：该常量字段仅供框架内部使用，不提供给外部引用，如果需要获取权限名称的字符串，请直接通过 [PermissionNames] 类获取  */
-            val PERMISSION_NAME: String = PermissionNames.ACCESS_MEDIA_LOCATION
-            override fun createFromParcel(parcel: Parcel): AccessMediaLocationPermission {
-                return AccessMediaLocationPermission(parcel)
+    companion object {
+        val PERMISSION_NAME: String = PermissionNames.ACCESS_MEDIA_LOCATION
+        @JvmField
+        val CREATOR : Parcelable.Creator<AccessMediaLocationPermission> =
+
+
+            object : Parcelable.Creator<AccessMediaLocationPermission> {
+                /** 当前权限名称，注意：该常量字段仅供框架内部使用，不提供给外部引用，
+                 * 如果需要获取权限名称的字符串，请直接通过 [PermissionNames] 类获取
+                 */
+
+                override fun createFromParcel(source: Parcel): AccessMediaLocationPermission {
+                    return AccessMediaLocationPermission(source)
+                }
+
+                override fun newArray(size: Int): Array<AccessMediaLocationPermission?> {
+                    return arrayOfNulls(size)
+                }
             }
-
-            override fun newArray(size: Int): Array<AccessMediaLocationPermission?> {
-                return arrayOfNulls(size)
-            }
-        }
-
+    }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         super.writeToParcel(parcel, flags)

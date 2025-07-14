@@ -42,4 +42,8 @@
     - Out-of-app floating window (can be displayed in other apps)</string>
     <string name="home_in_app_floating_window">In-this page floating window</string>
     <string name="home_out_of_app_floating_window">this-app floating window</string>
+    <string name="home_miss_location_permission">Location permission request failed</string>
+    <string name="home_init_location">Initializing location... %d%%</string>
+    <string name="home_miss_float_window">Floating Window permission request failed</string>
+    <string name="home_miss_camera_permission">camera permission request failed</string>
 </resources>

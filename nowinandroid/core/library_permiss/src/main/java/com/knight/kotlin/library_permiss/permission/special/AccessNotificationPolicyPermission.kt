@@ -4,7 +4,7 @@ import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
 import android.os.Parcel
-import android.os.Parcelable.Creator
+import android.os.Parcelable
 import android.provider.Settings
 import com.knight.kotlin.library_permiss.permission.PermissionNames
 import com.knight.kotlin.library_permiss.permission.common.SpecialPermission
@@ -93,18 +93,26 @@ class AccessNotificationPolicyPermission : SpecialPermission {
     }
 
 
-        companion object CREATOR: Creator<AccessNotificationPolicyPermission> {
 
-            /** 当前权限名称，注意：该常量字段仅供框架内部使用，不提供给外部引用，如果需要获取权限名称的字符串，请直接通过 [PermissionNames] 类获取  */
-            val PERMISSION_NAME: String = PermissionNames.ACCESS_NOTIFICATION_POLICY
+    companion object {
+        val PERMISSION_NAME: String = PermissionNames.ACCESS_NOTIFICATION_POLICY
+        @JvmField
+        val CREATOR : Parcelable.Creator<AccessNotificationPolicyPermission> =
 
-            override fun createFromParcel(source: Parcel): AccessNotificationPolicyPermission? {
-                return AccessNotificationPolicyPermission(source)
+
+            object : Parcelable.Creator<AccessNotificationPolicyPermission> {
+                /** 当前权限名称，注意：该常量字段仅供框架内部使用，不提供给外部引用，
+                 * 如果需要获取权限名称的字符串，请直接通过 [PermissionNames] 类获取
+                 */
+
+                override fun createFromParcel(source: Parcel): AccessNotificationPolicyPermission {
+                    return AccessNotificationPolicyPermission(source)
+                }
+
+                override fun newArray(size: Int): Array<AccessNotificationPolicyPermission?> {
+                    return arrayOfNulls(size)
+                }
             }
-
-            override fun newArray(size: Int): Array<AccessNotificationPolicyPermission?> {
-                return arrayOfNulls(size)
-            }
-        }
+    }
 
 }
