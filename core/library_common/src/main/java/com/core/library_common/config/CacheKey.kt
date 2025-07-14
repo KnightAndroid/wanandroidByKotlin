@@ -1,4 +1,4 @@
-package com.knight.kotlin.library_base.config
+package com.core.library_common.config
 
 /**
  * Author:Knight

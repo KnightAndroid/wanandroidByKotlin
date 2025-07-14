@@ -3,7 +3,7 @@ package com.knight.kotlin.module_eye_discover.fragment
 import android.graphics.Color
 import androidx.core.os.bundleOf
 import com.core.library_base.route.RouteFragment
-import com.knight.kotlin.library_base.utils.CacheUtils
+import com.core.library_common.util.CacheUtils
 import com.google.android.material.tabs.TabLayoutMediator
 import com.knight.kotlin.library_base.entity.EyeApiRequest
 import com.knight.kotlin.library_base.entity.EyeMetroCard

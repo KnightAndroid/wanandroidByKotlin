@@ -3,4 +3,3 @@ apply from: "./nowinandroid/nowinandroid.includes.gradle"
 rootProject.name = "wanandroid"
 
 
-

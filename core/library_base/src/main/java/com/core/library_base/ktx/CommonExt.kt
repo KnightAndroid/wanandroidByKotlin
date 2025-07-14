@@ -6,13 +6,12 @@ import android.content.res.Configuration
 import android.text.Html
 import android.text.Spanned
 import android.view.View
-import android.view.WindowManager
 import androidx.annotation.MainThread
 import androidx.annotation.Px
 import com.core.library_base.R
 import com.core.library_base.util.ActivityManagerUtils
-import com.core.library_base.util.dp2px
 import com.core.library_base.widget.loadcircleview.ProgressHud
+import com.core.library_common.util.dp2px
 import java.lang.reflect.ParameterizedType
 import kotlin.math.min
 import kotlin.reflect.KClass
@@ -77,17 +76,6 @@ fun (()->Unit).catch(vararg exceptions: KClass<out Throwable>, catchBlock:(Throw
     }
 }
 
-/**
- * 获取屏幕宽度
- */
-val Context.screenWidth
-    get() = resources.displayMetrics.widthPixels
-
-/**
- * 获取屏幕高度
- */
-val Context.screenHeight
-    get() = resources.displayMetrics.heightPixels
 
 
 

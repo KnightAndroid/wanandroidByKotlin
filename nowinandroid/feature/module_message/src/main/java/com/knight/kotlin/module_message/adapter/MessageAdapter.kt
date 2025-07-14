@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter4.BaseQuickAdapter
-import com.knight.kotlin.library_base.utils.CacheUtils
+import com.core.library_common.util.CacheUtils
 import com.knight.kotlin.module_message.databinding.MessageReadedItemBinding
 import com.knight.kotlin.module_message.entity.MessageEntity
 

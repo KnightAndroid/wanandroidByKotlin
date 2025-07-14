@@ -8,7 +8,7 @@ import com.knight.kotlin.library_base.activity.BaseActivity
 import com.core.library_base.ktx.setOnClick
 import com.core.library_base.route.RouteActivity
 import com.core.library_base.util.GsonUtils
-import com.core.library_base.util.dp2px
+import com.core.library_common.dp2px
 import com.core.library_base.vm.EmptyViewModel
 import com.google.gson.reflect.TypeToken
 import com.knight.kotlin.library_base.ktx.getScreenHeight

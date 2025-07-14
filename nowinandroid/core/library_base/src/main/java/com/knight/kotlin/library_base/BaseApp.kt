@@ -19,7 +19,7 @@ import com.core.library_base.util.HookUtils
 import com.core.library_base.util.ProcessUtil
 import com.core.library_base.workmanager.SoDownloadWorker
 import com.kingja.loadsir.core.LoadSir
-import com.knight.kotlin.library_base.utils.CacheUtils
+import com.core.library_common.util.CacheUtils
 import com.knight.kotlin.library_base.utils.DarkModeUtils
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
@@ -170,7 +170,7 @@ open class BaseApp : Application(),Configuration.Provider  {
      * 下载百度地图
      */
     private fun downloadBaiduSo() {
-//   \
+//
 //        WorkManager.initialize(this, config)
         val work = OneTimeWorkRequestBuilder<SoDownloadWorker>()
             .addTag("baidu_so_download_tag")

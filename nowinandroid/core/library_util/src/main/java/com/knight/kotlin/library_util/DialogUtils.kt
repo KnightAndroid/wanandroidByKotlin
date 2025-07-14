@@ -3,7 +3,8 @@ package com.knight.kotlin.library_util
 import android.content.Context
 import android.content.DialogInterface
 import androidx.appcompat.app.AlertDialog
-import com.knight.kotlin.library_base.utils.CacheUtils
+import com.core.library_common.util.CacheUtils
+
 
 /**
  * Author:Knight

@@ -8,8 +8,8 @@ import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.core.library_base.ktx.setOnClick
 import com.core.library_base.route.RouteFragment
 import com.knight.kotlin.library_base.utils.ArouteUtils
-import com.knight.kotlin.library_base.utils.CacheUtils
-import com.core.library_base.util.ColorUtils
+import com.core.library_common.util.CacheUtils
+import com.core.library_common.util.ColorUtils
 import com.knight.kotlin.library_aop.loginintercept.LoginCheck
 import com.knight.kotlin.library_widget.ktx.init
 import com.knight.kotlin.library_widget.ktx.setSafeOnItemChildClickListener

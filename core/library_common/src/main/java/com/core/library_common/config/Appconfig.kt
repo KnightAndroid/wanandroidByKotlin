@@ -1,8 +1,7 @@
-package com.knight.kotlin.library_base.config
+package com.core.library_common.config
 
 import com.baidu.location.BDLocation
-import com.knight.kotlin.library_base.entity.UserInfoEntity
-
+import com.core.library_common.entity.UserInfoEntity
 import java.util.UUID
 
 /**

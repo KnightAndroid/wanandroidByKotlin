@@ -19,7 +19,7 @@ import androidx.annotation.ColorInt
 import androidx.annotation.Size
 import androidx.core.graphics.ColorUtils
 
-import com.core.library_base.util.dp2px
+import com.core.library_common.dp2px
 import kotlin.math.abs
 import kotlin.math.cos
 import kotlin.math.max
@@ -156,9 +156,9 @@ class SunMoonView @JvmOverloads constructor(
         } else {
             ColorUtils.setAlphaComponent(moonLineColor, (255 * SHADOW_ALPHA_FACTOR_DARK).toInt())
         }
-        mX1ShaderColors[0] = com.core.library_base.util.ColorUtils.blendColor(lineShadowShader, rootColor)
+        mX1ShaderColors[0] = com.core.library_common.util.ColorUtils.blendColor(lineShadowShader, rootColor)
         mX1ShaderColors[1] = rootColor
-        mX2ShaderColors[0] = com.core.library_base.util.ColorUtils.blendColor(lineShadowShader, mX1ShaderColors[0])
+        mX2ShaderColors[0] = com.core.library_common.util.ColorUtils.blendColor(lineShadowShader, mX1ShaderColors[0])
         mX2ShaderColors[1] = rootColor
         mRootColor = rootColor
         if (mX1ShaderWrapper.isDifferent(measuredWidth, measuredHeight, lightTheme, mX1ShaderColors)) {

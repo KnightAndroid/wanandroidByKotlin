@@ -1,4 +1,4 @@
-package com.core.library_base.util
+package com.core.library_common.util
 
 import android.R
 import android.content.res.ColorStateList

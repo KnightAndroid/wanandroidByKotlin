@@ -7,7 +7,7 @@ import android.os.CancellationSignal
 import android.util.Base64
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.FragmentActivity
-import com.knight.kotlin.library_base.utils.CacheUtils
+import com.core.library_common.util.CacheUtils
 import com.knight.library_biometric.dialog.BiometricPromptDialog
 
 /**

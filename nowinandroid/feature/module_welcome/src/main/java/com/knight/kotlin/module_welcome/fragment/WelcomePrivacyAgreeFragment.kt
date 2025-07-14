@@ -12,7 +12,7 @@ import com.knight.kotlin.library_base.fragment.BaseDialogFragment
 import com.core.library_base.ktx.setOnClick
 import com.core.library_base.route.RouteActivity
 import com.core.library_base.util.ActivityManagerUtils
-import com.knight.kotlin.library_base.utils.CacheUtils
+import com.core.library_common.util.CacheUtils
 import com.core.library_base.vm.EmptyViewModel
 import com.knight.kotlin.library_util.TextClickUtils
 import com.knight.kotlin.library_util.ViewInitUtils

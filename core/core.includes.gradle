@@ -1,1 +1,2 @@
 include(":core:library_base")
+include(":core:library_common")

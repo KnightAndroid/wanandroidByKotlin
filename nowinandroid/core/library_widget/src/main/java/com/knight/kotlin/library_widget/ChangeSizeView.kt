@@ -9,7 +9,7 @@ import android.graphics.Point
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import com.core.library_base.util.dp2px
+import com.core.library_common.dp2px
 
 /**
  * Author:Knight

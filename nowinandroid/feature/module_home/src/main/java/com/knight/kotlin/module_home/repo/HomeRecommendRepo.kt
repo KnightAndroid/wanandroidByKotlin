@@ -1,7 +1,7 @@
 package com.knight.kotlin.module_home.repo
 
 import com.knight.kotlin.library_base.entity.BaiduCardDataBean
-import com.knight.kotlin.library_base.entity.UserInfoEntity
+import com.core.library_common.entity.UserInfoEntity
 import com.knight.kotlin.library_base.entity.WeatherDetailBean
 import com.knight.kotlin.library_base.repository.BaseRepository
 import com.knight.kotlin.library_common.entity.AppUpdateBean

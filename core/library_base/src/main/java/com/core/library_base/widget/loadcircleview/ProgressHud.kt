@@ -14,7 +14,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.core.library_base.R
 import com.core.library_base.ktx.appStr
-import com.core.library_base.util.dp2px
+import com.core.library_common.dp2px
 
 /**
  * Author:Knight

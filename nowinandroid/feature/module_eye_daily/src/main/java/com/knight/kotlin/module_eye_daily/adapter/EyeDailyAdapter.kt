@@ -12,8 +12,8 @@ import com.chad.library.adapter4.BaseMultiItemAdapter
 import com.core.library_base.ktx.setOnClick
 import com.core.library_base.ktx.toJson
 import com.core.library_base.route.RouteActivity
-import com.knight.kotlin.library_base.utils.CacheUtils
-import com.knight.kotlin.library_base.config.Appconfig
+import com.core.library_common.util.CacheUtils
+import com.core.library_common.config.Appconfig
 import com.knight.kotlin.library_base.config.EyeTypeConstants
 import com.knight.kotlin.library_base.entity.EyeDailyItemEntity
 import com.knight.kotlin.library_base.entity.EyeVideoDetailEntity

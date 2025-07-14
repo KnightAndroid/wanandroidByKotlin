@@ -10,7 +10,7 @@ import com.core.library_base.ktx.setOnClick
 import com.core.library_base.loadsir.EmptyCallBack
 import com.core.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.utils.ArouteUtils
-import com.core.library_base.util.ColorUtils
+import com.core.library_common.util.ColorUtils
 import com.kingja.loadsir.core.LoadService
 import com.knight.kotlin.library_aop.loginintercept.LoginCheck
 import com.knight.kotlin.library_widget.ktx.setSafeOnItemChildClickListener

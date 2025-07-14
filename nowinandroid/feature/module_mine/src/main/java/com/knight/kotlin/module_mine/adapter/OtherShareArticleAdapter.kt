@@ -11,8 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter4.BaseQuickAdapter
 import com.core.library_base.databinding.BaseTextItemBinding
 import com.core.library_base.ktx.toHtml
-import com.knight.kotlin.library_base.utils.CacheUtils
-import com.knight.kotlin.library_base.config.Appconfig
+import com.core.library_common.util.CacheUtils
+import com.core.library_common.config.Appconfig
 import com.knight.kotlin.library_util.StringUtils
 import com.knight.kotlin.module_mine.entity.MyArticleEntity
 
@@ -76,7 +76,7 @@ class OtherShareArticleAdapter:
                 holder.binding.baseItemArticledate.setText(niceShareDate)
             }
             //标题
-            holder.binding.baseTvArticletitle.setText(StringUtils.getStyle(context,title.toHtml().toString(), com.knight.kotlin.library_base.config.Appconfig.search_keyword))
+            holder.binding.baseTvArticletitle.setText(StringUtils.getStyle(context,title.toHtml().toString(), Appconfig.search_keyword))
             //是否收藏
             if (collect) {
                 holder.binding.baseIconCollect.setBackgroundResource(com.core.library_base.R.drawable.base_icon_collect)

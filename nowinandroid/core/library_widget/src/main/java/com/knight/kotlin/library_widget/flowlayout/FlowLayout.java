@@ -21,8 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.knight.kotlin.library_base.utils.CacheUtils;
-import com.core.library_base.util.SIzeUnikKtxKt;
+import com.core.library_common.util.CacheUtils;
 import com.knight.kotlin.library_widget.R;
 
 import java.util.ArrayList;
@@ -205,7 +204,7 @@ public class FlowLayout extends ViewGroup {
     public void addDeleteImageView(int i) {
         ImageView imageView;
         imageView = new ImageView(getContext());
-        imageView.setLayoutParams(new LayoutParams(SIzeUnikKtxKt.dp2px(16),SIzeUnikKtxKt.dp2px(16)));
+        imageView.setLayoutParams(new LayoutParams(SIzeUnikKtxKt.dp2px(16), SIzeUnikKtxKt.dp2px(16)));
         imageView.setBackgroundResource(R.drawable.widget_label_delete);
         final int finalI = i;
         imageView.setOnClickListener(new OnClickListener() {

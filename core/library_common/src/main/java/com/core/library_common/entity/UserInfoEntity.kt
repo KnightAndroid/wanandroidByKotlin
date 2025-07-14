@@ -1,4 +1,4 @@
-package com.knight.kotlin.library_base.entity
+package com.core.library_common.entity
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

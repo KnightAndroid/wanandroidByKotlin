@@ -7,8 +7,8 @@ import android.graphics.Canvas
 import android.graphics.Rect
 import android.util.Log
 import android.view.View
-import com.core.library_base.ktx.screenHeight
-import com.core.library_base.ktx.screenWidth
+import com.core.library_common.ktx.screenHeight
+import com.core.library_common.ktx.screenWidth
 
 /**
  * Author:Knight

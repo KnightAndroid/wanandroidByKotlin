@@ -3,7 +3,7 @@ package com.knight.kotlin.module_set.activity
 import android.util.Base64
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.core.library_base.route.RouteActivity
-import com.knight.kotlin.library_base.utils.CacheUtils
+import com.core.library_common.util.CacheUtils
 import com.core.library_base.vm.EmptyViewModel
 import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.library_widget.GestureLockView

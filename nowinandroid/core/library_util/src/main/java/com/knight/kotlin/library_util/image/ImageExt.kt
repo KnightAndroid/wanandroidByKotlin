@@ -9,8 +9,8 @@ import android.content.res.ColorStateList
 import android.graphics.drawable.Drawable
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
-import com.knight.kotlin.library_base.utils.CacheUtils
-import com.core.library_base.util.ColorUtils
+import com.core.library_common.util.CacheUtils
+import com.core.library_common.util.ColorUtils
 import com.knight.kotlin.library_util.splitString
 
 
@@ -63,7 +63,8 @@ fun ImageView.loadUrl(url:String?){
    value = ["imageLocal","tintList"],
    requireAll = false
 )
-fun ImageView.loadLocalPathWithTint(drawable: Int, colorStateList: ColorStateList = ColorStateList.valueOf(CacheUtils.getThemeColor())){
+fun ImageView.loadLocalPathWithTint(drawable: Int, colorStateList: ColorStateList = ColorStateList.valueOf(
+   CacheUtils.getThemeColor())){
    setImageResource(drawable)
    imageTintList = colorStateList
 }

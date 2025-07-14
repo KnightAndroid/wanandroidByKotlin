@@ -1,7 +1,8 @@
 package com.knight.kotlin.library_network.interceptor
 
 import android.util.Log
-import com.knight.kotlin.library_base.utils.CacheUtils
+import com.core.library_common.config.Appconfig
+import com.core.library_common.util.CacheUtils
 import com.knight.kotlin.library_network.util.PublicIpUtils
 import okhttp3.Interceptor
 import okhttp3.Request
@@ -18,27 +19,27 @@ class IpInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         // 获取原始请求
         val originalRequest: Request = chain.request()
-        if (com.knight.kotlin.library_base.config.Appconfig.IP.isNullOrEmpty()) {
-            com.knight.kotlin.library_base.config.Appconfig.IP = CacheUtils.getIp()
+        if (Appconfig.IP.isNullOrEmpty()) {
+            Appconfig.IP = CacheUtils.getIp()
         }
 
-        if (com.knight.kotlin.library_base.config.Appconfig.IP.isNullOrEmpty()) {
+        if (Appconfig.IP.isNullOrEmpty()) {
             PublicIpUtils.getPublicIP { ip, error ->
                 if (error != null) {
                     Log.d("ip","获取公网 IP 失败：${error.message}")
                 } else {
                     ip?.let {
-                        com.knight.kotlin.library_base.config.Appconfig.IP = ip
+                        Appconfig.IP = ip
                         CacheUtils.setIp(ip)
                     }
                 }
             }
         }
 
-        if (com.knight.kotlin.library_base.config.Appconfig.IP.isNotEmpty()) {
+        if (Appconfig.IP.isNotEmpty()) {
             // 构造一个带有 IP 的请求
             val requestWithIp: Request = originalRequest.newBuilder()
-                .addHeader("ip", com.knight.kotlin.library_base.config.Appconfig.IP) // 添加自定义头部
+                .addHeader("ip", Appconfig.IP) // 添加自定义头部
                 .build()
 
             return chain.proceed(requestWithIp)

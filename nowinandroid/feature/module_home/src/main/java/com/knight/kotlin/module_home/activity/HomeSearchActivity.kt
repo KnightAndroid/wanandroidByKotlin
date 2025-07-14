@@ -7,13 +7,13 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.core.library_base.route.RouteActivity
-import com.core.library_base.util.dp2px
+import com.core.library_common.dp2px
 import com.flyjingfish.android_aop_core.annotations.SingleClick
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
 import com.knight.kotlin.library_base.activity.BaseActivity
-import com.knight.kotlin.library_base.config.Appconfig
+import com.core.library_common.config.Appconfig
 import com.knight.kotlin.library_base.entity.SearchHotKeyEntity
 import com.knight.kotlin.library_database.entity.SearchHistroyKeywordEntity
 import com.knight.kotlin.library_database.repository.HistroyKeywordsRepository

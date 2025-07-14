@@ -6,11 +6,9 @@ import com.baidu.location.BDLocation
 import com.baidu.location.LocationClient
 import com.baidu.location.LocationClientOption
 import com.baidu.mapapi.SDKInitializer
-import com.knight.kotlin.library_base.BaseApp
-
-import com.knight.kotlin.library_base.utils.CacheUtils
-import com.knight.kotlin.library_base.config.Appconfig
-import com.knight.kotlin.library_base.config.CacheKey
+import com.core.library_common.config.Appconfig
+import com.core.library_common.config.CacheKey
+import com.core.library_common.util.CacheUtils
 import com.knight.kotlin.library_util.HandlerUtils
 
 
@@ -38,7 +36,7 @@ object LocationUtils {
         SDKInitializer.setAgreePrivacy(context.applicationContext, true)
         LocationClient.setAgreePrivacy(true)
         SDKInitializer.initialize(context.applicationContext)
-        mLocationClient = LocationClient(BaseApp.context)
+        mLocationClient = LocationClient(context)
         mLocationClient?.registerLocationListener(myListener)
 
         val option = LocationClientOption()

@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.view.ViewGroup.MarginLayoutParams
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter4.BaseQuickAdapter
-import com.core.library_base.util.dp2px
+import com.core.library_common.dp2px
 import com.knight.kotlin.library_base.entity.eye_type.EyeWaterFallCoverVideoImage
 import com.knight.kotlin.library_base.ktx.getScreenWidth
 import com.knight.kotlin.module_eye_square.databinding.EyeSquareWaterfallCoverSmallBinding

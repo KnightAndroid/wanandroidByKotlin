@@ -10,7 +10,7 @@ import android.os.Build.VERSION
 import android.os.Build.VERSION_CODES
 import android.text.TextUtils
 import androidx.appcompat.app.AppCompatActivity
-import com.knight.kotlin.library_base.utils.CacheUtils
+import com.core.library_common.util.CacheUtils
 import com.knight.kotlin.library_permiss.PermissionConverter.getNickNamesByPermissions
 import com.knight.kotlin.library_permiss.WindowLifecycleManager.bindDialogLifecycle
 import com.knight.kotlin.library_permiss.permission.PermissionGroups

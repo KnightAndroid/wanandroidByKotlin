@@ -26,7 +26,7 @@ import com.kingja.loadsir.core.LoadService
 import com.kingja.loadsir.core.LoadSir
 import com.knight.kotlin.library_base.ktx.createViewModel
 import com.knight.kotlin.library_base.ktx.subscribeData
-import com.knight.kotlin.library_base.utils.CacheUtils
+import com.core.library_common.util.CacheUtils
 import com.wyjson.router.GoRouter
 
 /**

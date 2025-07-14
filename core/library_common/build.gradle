@@ -1,0 +1,40 @@
+//library_base 配置文件
+import com.knight.wanandroid.buildsrc.*
+apply from: "${project.rootDir}/base_library.gradle"
+apply plugin: 'dagger.hilt.android.plugin'
+android {
+
+    namespace = "com.core.library_common"
+
+    buildFeatures {
+        viewBinding = true
+    }
+    resourcePrefix "common_"
+
+}
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    api Dependencies.Androidx.CORE_KTS
+    api Dependencies.Androidx.APP_COMPAT
+    implementation Dependencies.JetPack.HILT_CORE
+    kapt Dependencies.JetPack.HILT_APT
+    kapt Dependencies.JetPack.HILT_ANDROIDX
+
+    api Dependencies.GitHub.GO_ROUTER
+    kapt Dependencies.GitHub.GO_ROUTER_COMPILER
+
+    //百度地图
+    api Dependencies.OtherUtils.BAIDULOCATION
+    api Dependencies.OtherUtils.BAIDUNAVI
+    api Dependencies.OtherUtils.BAIDUSEARCH
+    api Dependencies.OtherUtils.BAIDUUTIL
+
+
+    api Dependencies.GitHub.MMKV
+    api Dependencies.GitHub.GSON
+
+
+    api Dependencies.GitHub.AUTO_SERVICE
+    kapt Dependencies.GitHub.AUTO_SERVICE_ANNOTATIONS
+}

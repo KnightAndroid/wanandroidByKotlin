@@ -21,7 +21,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.request.transition.Transition
-import com.core.library_base.util.dp2px
+import com.core.library_common.util.dp2px
 
 /**
  * Author:Knight

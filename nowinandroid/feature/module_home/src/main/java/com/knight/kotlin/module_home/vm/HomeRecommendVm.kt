@@ -5,7 +5,7 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.core.library_base.vm.BaseViewModel
 import com.knight.kotlin.library_base.entity.BaiduCardDataBean
-import com.knight.kotlin.library_base.entity.UserInfoEntity
+import com.core.library_common.entity.UserInfoEntity
 import com.knight.kotlin.library_base.entity.WeatherDetailBean
 import com.knight.kotlin.library_common.entity.AppUpdateBean
 import com.knight.kotlin.library_common.entity.OfficialAccountEntity

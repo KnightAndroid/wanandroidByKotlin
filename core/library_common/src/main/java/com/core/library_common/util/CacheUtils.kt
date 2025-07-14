@@ -1,11 +1,10 @@
-package com.knight.kotlin.library_base.utils
+package com.core.library_common.util
 
 import android.content.Context
 import android.text.TextUtils
-import com.core.library_base.util.ColorUtils
 import com.google.gson.Gson
 import com.knight.kotlin.library_base.BaseApp
-import com.knight.kotlin.library_base.config.CacheKey
+import com.core.library_common.config.CacheKey
 import com.tencent.mmkv.MMKV
 import java.lang.reflect.Type
 

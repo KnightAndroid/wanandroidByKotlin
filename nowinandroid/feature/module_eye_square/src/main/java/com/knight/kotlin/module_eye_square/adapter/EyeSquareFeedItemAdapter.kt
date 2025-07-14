@@ -14,7 +14,7 @@ import com.core.library_base.ktx.toJson
 import com.core.library_base.route.RouteActivity
 import com.google.android.material.chip.Chip
 import com.google.android.material.shape.CornerFamily
-import com.knight.kotlin.library_base.config.Appconfig
+import com.core.library_common.config.Appconfig
 import com.knight.kotlin.library_base.entity.EyeVideoDetailEntity
 import com.knight.kotlin.library_base.entity.eye_type.EyeFeedItemDetail
 import com.knight.kotlin.library_util.DateUtils

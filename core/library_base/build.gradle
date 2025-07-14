@@ -37,19 +37,18 @@ dependencies {
     kapt Dependencies.JetPack.HILT_APT
     kapt Dependencies.JetPack.HILT_ANDROIDX
     kapt Dependencies.JetPack.LIFECYCLE_COMPILER_APT
-    api Dependencies.GitHub.GO_ROUTER
+  //  api Dependencies.GitHub.GO_ROUTER
     api Dependencies.GitHub.EVENTBUS
     kapt Dependencies.GitHub.EVENTBUS_APT
-    kapt Dependencies.GitHub.GO_ROUTER_COMPILER
+   // kapt Dependencies.GitHub.GO_ROUTER_COMPILER
     api Dependencies.GitHub.AUTO_SIZE
-
-    api Dependencies.GitHub.AUTO_SERVICE
-    kapt Dependencies.GitHub.AUTO_SERVICE_ANNOTATIONS
+//
+//    api Dependencies.GitHub.AUTO_SERVICE
+//    kapt Dependencies.GitHub.AUTO_SERVICE_ANNOTATIONS
 
     debugApi Dependencies.GitHub.LEAK_CANARY
 
-    api Dependencies.GitHub.MMKV
-    api Dependencies.GitHub.GSON
+
     api Dependencies.GitHub.LOAD_SIR
     api Dependencies.OtherUtils.BUGLY
     //必须项
@@ -60,4 +59,6 @@ dependencies {
 
     //workManager
     api Dependencies.JetPack.WORK_MANAGER
+    //依赖通用库
+    api project(path: ':core:library_common')
 }

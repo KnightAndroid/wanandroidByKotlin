@@ -23,7 +23,7 @@ import android.view.WindowManager
 import android.widget.PopupWindow
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.knight.kotlin.library_base.utils.CacheUtils
+import com.core.library_common.util.CacheUtils
 import com.knight.kotlin.library_permiss.PermissionConverter.getDescriptionsByPermissions
 import com.knight.kotlin.library_permiss.WindowLifecycleManager.bindDialogLifecycle
 import com.knight.kotlin.library_permiss.WindowLifecycleManager.bindPopupWindowLifecycle

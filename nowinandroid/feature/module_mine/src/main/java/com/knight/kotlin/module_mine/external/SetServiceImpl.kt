@@ -1,6 +1,6 @@
 package com.knight.kotlin.module_mine.external
 
-import com.knight.kotlin.library_base.utils.CacheUtils
+import com.core.library_common.util.CacheUtils
 import com.google.auto.service.AutoService
 import com.knight.kotlin.module_set.external.MineExternalContact
 

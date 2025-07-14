@@ -9,7 +9,7 @@ import com.google.auto.service.AutoService
 import com.knight.kotlin.library_aop.loginintercept.ILoginFilter
 import com.knight.kotlin.library_aop.loginintercept.LoginManager
 import com.knight.kotlin.library_base.BaseApp
-import com.knight.kotlin.library_base.entity.UserInfoEntity
+import com.core.library_common.entity.UserInfoEntity
 import com.knight.kotlin.library_base.ktx.getUser
 
 

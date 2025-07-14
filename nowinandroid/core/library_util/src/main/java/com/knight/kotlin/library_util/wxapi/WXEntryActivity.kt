@@ -4,7 +4,7 @@ package com.knight.kotlin.library_util.wxapi
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.knight.kotlin.library_base.config.Appconfig
+import com.core.library_common.config.Appconfig
 import com.knight.kotlin.library_util.R
 import com.knight.kotlin.library_util.toast
 import com.tencent.mm.opensdk.modelbase.BaseReq
@@ -25,7 +25,7 @@ class WXEntryActivity : AppCompatActivity(), IWXAPIEventHandler {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        api = WXAPIFactory.createWXAPI(this, com.knight.kotlin.library_base.config.Appconfig.WX_APP_ID, false)
+        api = WXAPIFactory.createWXAPI(this, Appconfig.WX_APP_ID, false)
         api.handleIntent(getIntent(), this)
 
     }

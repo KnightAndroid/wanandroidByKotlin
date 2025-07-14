@@ -24,18 +24,19 @@ import com.core.library_base.network.NetworkManager
 import com.core.library_base.network.enums.NetworkState
 import com.core.library_base.network.interfaces.NetworkMonitor
 import com.core.library_base.util.BindingReflex
-import com.core.library_base.util.ColorUtils
+import com.core.library_common.util.ColorUtils
 import com.core.library_base.util.EventBusUtils
 import com.core.library_base.util.ViewRecreateHelper
 import com.core.library_base.view.BaseView
 import com.core.library_base.vm.BaseViewModel
 import com.core.library_base.widget.loadcircleview.ProgressHud
+import com.core.library_common.config.Appconfig
 import com.kingja.loadsir.core.LoadService
 import com.kingja.loadsir.core.LoadSir
 import com.knight.kotlin.library_base.ktx.createViewModel
 import com.knight.kotlin.library_base.ktx.subscribeData
-import com.knight.kotlin.library_base.utils.CacheUtils
-import com.knight.kotlin.library_base.utils.LanguageFontSizeUtils
+import com.core.library_common.util.CacheUtils
+import com.core.library_common.util.LanguageFontSizeUtils
 import com.knight.kotlin.library_base.utils.StatusBarUtils
 import com.wyjson.router.GoRouter
 
@@ -240,7 +241,7 @@ abstract class BaseActivity<VB : ViewBinding,VM : BaseViewModel> : AppCompatActi
         when (networkState) {
             NetworkState.NONE -> {
                 CacheUtils.clearIp()
-                com.knight.kotlin.library_base.config.Appconfig.IP = ""
+                Appconfig.IP = ""
                 if (tipView?.parent == null) {
                     mWindowManager?.addView(tipView, mLayoutParams)
                 }

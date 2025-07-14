@@ -2,8 +2,8 @@ package com.knight.kotlin.library_util
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import com.knight.kotlin.library_base.utils.CacheUtils
-import com.knight.kotlin.library_base.utils.LanguageFontSizeUtils
+import com.core.library_common.util.CacheUtils
+import com.core.library_common.util.LanguageFontSizeUtils
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.time.LocalDate
@@ -313,6 +313,7 @@ object DateUtils {
      *
      * 获取月-日
      */
+    @RequiresApi(Build.VERSION_CODES.O)
     fun getMonthDay(dateString: String?): String {
         val date = LocalDate.parse(dateString)
         val formatter = DateTimeFormatter.ofPattern("MM/dd")

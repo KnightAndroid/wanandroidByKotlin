@@ -6,9 +6,9 @@ import com.knight.kotlin.library_base.activity.BaseActivity
 import com.core.library_base.ktx.init
 import com.core.library_base.ktx.setOnClick
 import com.core.library_base.route.RouteActivity
-import com.knight.kotlin.library_base.utils.CacheUtils
+import com.core.library_common.util.CacheUtils
 import com.core.library_base.util.GsonUtils
-import com.knight.kotlin.library_base.utils.LanguageFontSizeUtils
+import com.core.library_common.util.LanguageFontSizeUtils
 import com.core.library_base.vm.EmptyViewModel
 import com.google.common.reflect.TypeToken
 import com.knight.kotlin.library_util.JsonUtils

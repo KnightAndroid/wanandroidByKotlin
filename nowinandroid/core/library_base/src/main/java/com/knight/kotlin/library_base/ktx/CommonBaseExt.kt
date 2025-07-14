@@ -14,12 +14,12 @@ import com.core.library_base.ktx.observeEventData
 import com.core.library_base.vm.BaseViewModel
 import com.knight.kotlin.library_base.BaseApp
 import com.knight.kotlin.library_base.activity.BaseActivity
-import com.knight.kotlin.library_base.config.Appconfig
-import com.knight.kotlin.library_base.config.CacheKey
-import com.knight.kotlin.library_base.entity.UserInfoEntity
+import com.core.library_common.config.Appconfig
+import com.core.library_common.config.CacheKey
+import com.core.library_common.entity.UserInfoEntity
 import com.knight.kotlin.library_base.fragment.BaseDialogFragment
 import com.knight.kotlin.library_base.fragment.BaseFragment
-import com.knight.kotlin.library_base.utils.CacheUtils
+import com.core.library_common.util.CacheUtils
 import com.knight.kotlin.library_base.utils.StatusBarUtils
 
 
@@ -29,56 +29,6 @@ import com.knight.kotlin.library_base.utils.StatusBarUtils
  * @Date 2025/7/2 14:28
  * @descript:
  */
-/**
- * 返回用户信息
- */
-fun getUser(): UserInfoEntity? {
-    Appconfig.user?.let {
-        return it
-    } ?: run {
-       Appconfig.user = CacheUtils.getDataInfo(com.knight.kotlin.library_base.config.CacheKey.USER, com.knight.kotlin.library_base.entity.UserInfoEntity::class.java)
-        return Appconfig.user
-    }
-
-}
-
-
-/**
- * 返回维度
- */
-fun getLatitude():Double {
-    Appconfig.location?.let {
-        return it.latitude
-    } ?:run {
-        return 4.9E-324
-    }
-
-
-}
-
-/**
- *
- * 返回经纬度信息
- */
-fun getLocation(): BDLocation? {
-    Appconfig.location ?.let {
-        return it
-    } ?:run {
-        Appconfig.location= CacheUtils.getDataInfo(CacheKey.CURRENTLOCATION, BDLocation::class.java)
-        return Appconfig.location
-    }
-}
-
-/**
- * 返回经度
- */
-fun getLongitude():Double {
-    Appconfig.location?.let {
-        return it.longitude
-    } ?:run {
-        return 4.9E-324
-    }
-}
 
 
 internal fun BaseActivity<*, *>.subscribeData() {
@@ -92,7 +42,7 @@ internal fun BaseActivity<*, *>.subscribeData() {
 
 }
 
-internal fun com.knight.kotlin.library_base.fragment.BaseFragment<*, *>.subscribeData() {
+internal fun BaseFragment<*, *>.subscribeData() {
     mViewModel.showLoading.observe(this) {
 
         showLoading(it)

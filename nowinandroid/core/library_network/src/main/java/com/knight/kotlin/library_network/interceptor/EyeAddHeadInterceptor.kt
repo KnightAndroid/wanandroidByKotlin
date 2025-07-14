@@ -3,7 +3,7 @@ package com.knight.kotlin.library_network.interceptor
 import android.content.Context
 import android.os.Build
 import android.os.Build.VERSION
-import com.knight.kotlin.library_base.config.Appconfig
+import com.core.library_common.config.Appconfig
 import com.knight.kotlin.library_network.header.HeaderStorage
 import okhttp3.FormBody
 import okhttp3.Interceptor
@@ -25,8 +25,8 @@ class EyeAddHeadInterceptor(context: Context,
             "udid" to headerStorage.udId,
             "deviceModel" to Build.MODEL,
             "system_version_code" to VERSION.SDK_INT.toString(),
-            "vc" to com.knight.kotlin.library_base.config.Appconfig.VERSION_CODE.toString(),
-            "vn" to com.knight.kotlin.library_base.config.Appconfig.VERSION_NAME
+            "vc" to Appconfig.VERSION_CODE.toString(),
+            "vn" to Appconfig.VERSION_NAME
         )
     }
 

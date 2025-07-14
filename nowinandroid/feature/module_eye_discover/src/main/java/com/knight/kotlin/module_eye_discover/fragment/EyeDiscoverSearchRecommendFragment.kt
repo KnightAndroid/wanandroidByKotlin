@@ -10,7 +10,7 @@ import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.core.library_base.ktx.init
 import com.core.library_base.ktx.setOnClick
 import com.core.library_base.route.RouteFragment
-import com.core.library_base.util.dp2px
+import com.core.library_common.dp2px
 import com.google.android.material.chip.Chip
 import com.google.android.material.shape.ShapeAppearanceModel
 

@@ -10,6 +10,7 @@ import android.view.WindowInsetsController
 import android.view.WindowManager
 import androidx.core.view.WindowInsetsCompat
 import androidx.window.layout.WindowMetricsCalculator
+import com.core.library_common.util.CacheUtils
 
 
 /**
@@ -46,12 +47,12 @@ object StatusBarUtils {
             activity.window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
             activity.window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
             activity.window.statusBarColor = Color.TRANSPARENT
-            if (com.knight.kotlin.library_base.utils.CacheUtils.getNormalDark()) {
+            if (CacheUtils.getNormalDark()) {
                 //白色字体
                 activity.window.decorView.systemUiVisibility =
                     View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
             } else {
-                if (com.knight.kotlin.library_base.utils.CacheUtils.getNightModeStatus()) {
+                if (CacheUtils.getNightModeStatus()) {
                     activity.window.decorView.systemUiVisibility =
                         View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                 } else {

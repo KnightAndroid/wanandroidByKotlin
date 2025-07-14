@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter4.BaseQuickAdapter
-import com.knight.kotlin.library_base.utils.LanguageFontSizeUtils
+import com.core.library_common.util.LanguageFontSizeUtils
 import com.knight.kotlin.library_base.ktx.getUser
 import com.knight.kotlin.module_mine.databinding.MineItemBinding
 import com.knight.kotlin.module_mine.entity.MineItemEntity

@@ -6,8 +6,8 @@ import android.os.Bundle
 import android.view.Gravity
 import android.view.View
 import com.knight.kotlin.library_base.fragment.BaseDialogFragment
-import com.knight.kotlin.library_base.utils.CacheUtils
-import com.core.library_base.util.dp2px
+import com.core.library_common.util.CacheUtils
+import com.core.library_common.dp2px
 import com.core.library_base.vm.EmptyViewModel
 import com.knight.kotlin.library_common.databinding.UpdateAppDialogBinding
 import com.knight.kotlin.library_common.entity.AppUpdateBean

@@ -6,8 +6,8 @@ import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
 import androidx.viewpager2.widget.ViewPager2
 import com.knight.kotlin.library_base.BaseApp
-import com.knight.kotlin.library_base.utils.CacheUtils
-import com.core.library_base.util.dp2px
+import com.core.library_common.util.CacheUtils
+import com.core.library_common.dp2px
 import com.knight.kotlin.library_widget.ScaleTransitionPagerTitleView
 import net.lucode.hackware.magicindicator.MagicIndicator
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator

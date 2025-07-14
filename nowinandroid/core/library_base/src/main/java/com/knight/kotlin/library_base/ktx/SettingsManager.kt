@@ -1,7 +1,7 @@
 package com.knight.kotlin.library_base.ktx
 
 import android.content.Context
-import com.knight.kotlin.library_base.utils.CacheUtils
+import com.core.library_common.util.CacheUtils
 import com.knight.kotlin.library_base.enum.BackgroundAnimationMode
 import com.knight.kotlin.library_base.enum.DarkMode
 

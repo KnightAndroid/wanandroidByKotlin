@@ -30,12 +30,7 @@
     <init>(java.lang.Throwable);
 }
 
-#-keep public class com.alibaba.android.arouter.routes.**{*;}
-#-keep public class com.alibaba.android.arouter.facade.**{*;}
-#-keep class * implements com.alibaba.android.arouter.facade.template.ISyringe{*;}
--keepclassmembers class * {
-    @com.wyjson.router.annotation.Param <fields>;
-}
+
 
 # 避免 ViewBinding 类被混淆导致反射初始化失败
 -keep public interface androidx.viewbinding.ViewBinding

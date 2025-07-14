@@ -11,7 +11,7 @@ import android.webkit.WebView
 import android.widget.LinearLayout
 import com.core.library_base.event.MessageEvent
 import com.core.library_base.route.RouteActivity
-import com.knight.kotlin.library_base.utils.CacheUtils
+import com.core.library_common.util.CacheUtils
 import com.core.library_base.util.EventBusUtils
 import com.just.agentweb.AgentWeb
 import com.just.agentweb.DefaultWebClient

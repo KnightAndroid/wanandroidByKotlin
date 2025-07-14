@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter4.BaseQuickAdapter
 import com.core.library_base.databinding.BaseTextItemBinding
 import com.core.library_base.ktx.toHtml
-import com.knight.kotlin.library_base.utils.CacheUtils
+import com.core.library_common.util.CacheUtils
 import com.knight.kotlin.library_database.entity.HistoryReadRecordsEntity
 import com.knight.kotlin.library_util.DateUtils
 

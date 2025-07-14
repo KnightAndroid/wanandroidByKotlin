@@ -1,6 +1,6 @@
 package com.knight.kotlin.module_mine.repo
 
-import com.knight.kotlin.library_base.entity.UserInfoEntity
+import com.core.library_common.entity.UserInfoEntity
 import com.knight.kotlin.library_base.repository.BaseRepository
 import com.knight.kotlin.library_network.model.responseCodeExceptionHandler
 import com.knight.kotlin.module_mine.api.LoginApiService

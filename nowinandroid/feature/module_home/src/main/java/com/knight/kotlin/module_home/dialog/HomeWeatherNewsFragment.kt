@@ -4,13 +4,13 @@ import android.os.Build
 import android.os.Bundle
 import android.view.Gravity
 import com.core.library_base.ktx.setOnClick
-import com.core.library_base.util.dp2px
+import com.core.library_common.dp2px
 import com.knight.kotlin.library_base.entity.TodayWeatherDataBean
 import com.knight.kotlin.library_base.fragment.BaseDialogFragment
 import com.knight.kotlin.library_base.ktx.getLatitude
 import com.knight.kotlin.library_base.ktx.getLongitude
 import com.knight.kotlin.library_base.ktx.getScreenWidth
-import com.knight.kotlin.library_base.utils.CacheUtils
+import com.core.library_common.util.CacheUtils
 import com.knight.kotlin.library_util.DateUtils
 import com.knight.kotlin.library_util.TimeUtils
 import com.knight.kotlin.library_util.image.ImageLoader
