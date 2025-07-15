@@ -10,7 +10,7 @@ import com.core.library_base.ktx.toJson
 import com.core.library_base.route.RouteActivity
 import com.google.android.material.appbar.AppBarLayout
 import com.knight.kotlin.library_base.activity.BaseActivity
-import com.core.library_common.config.Appconfig
+import com.knight.kotlin.library_common.config.Appconfig
 import com.knight.kotlin.library_base.entity.EyeVideoDetailEntity
 import com.knight.kotlin.library_util.startPageWithAnimate
 import com.knight.kotlin.library_widget.ktx.setSafeOnItemClickListener

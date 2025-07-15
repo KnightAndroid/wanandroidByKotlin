@@ -10,8 +10,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import com.core.library_common.dp2px
-import com.knight.kotlin.library_base.enum.AirLevel
+import com.core.library_common.util.dp2px
+import com.knight.kotlin.library_common.enum.AirLevel
 
 
 /**

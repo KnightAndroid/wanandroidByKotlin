@@ -7,9 +7,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.core.library_base.ktx.init
 import com.core.library_base.ktx.setOnClick
 import com.core.library_base.route.RouteActivity
-import com.knight.kotlin.library_base.utils.ArouteUtils
 import com.knight.kotlin.library_base.activity.BaseActivity
-import com.knight.kotlin.library_base.ktx.getUser
+import com.knight.kotlin.library_base.utils.ArouteUtils
+import com.knight.kotlin.library_common.ktx.getUser
 import com.knight.kotlin.library_database.entity.HistoryReadRecordsEntity
 import com.knight.kotlin.library_util.DialogUtils
 import com.knight.kotlin.library_widget.floatmenu.FloatMenu

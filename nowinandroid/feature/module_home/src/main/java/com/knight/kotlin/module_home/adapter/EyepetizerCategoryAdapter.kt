@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter4.BaseQuickAdapter
-import com.core.library_common.dp2px
+import com.core.library_common.util.dp2px
 import com.knight.kotlin.library_util.image.ImageLoader
 import com.knight.kotlin.module_home.R
 import com.knight.kotlin.module_home.databinding.HomeEyepetizerCategoryBinding

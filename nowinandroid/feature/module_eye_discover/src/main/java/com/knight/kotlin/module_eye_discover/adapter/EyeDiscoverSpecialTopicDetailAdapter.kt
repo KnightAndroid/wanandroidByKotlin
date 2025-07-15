@@ -14,10 +14,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter4.BaseQuickAdapter
-import com.knight.kotlin.library_base.entity.EyeTag
 import com.core.library_base.ktx.setOnClick
-import com.core.library_common.dp2px
-
+import com.core.library_common.util.dp2px
+import com.knight.kotlin.library_base.entity.EyeTag
 import com.knight.kotlin.library_share.ShareDialog
 import com.knight.kotlin.library_util.image.ImageLoader
 import com.knight.kotlin.module_eye_discover.R

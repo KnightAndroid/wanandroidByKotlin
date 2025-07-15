@@ -1,7 +1,7 @@
 package com.knight.kotlin.module_set.repo
 
 import com.knight.kotlin.library_base.repository.BaseRepository
-import com.knight.kotlin.library_common.entity.AppUpdateBean
+import com.knight.kotlin.library_base.entity.AppUpdateBean
 import com.knight.kotlin.library_network.model.responseCodeExceptionHandler
 import com.knight.kotlin.module_set.api.AboutApiService
 import javax.inject.Inject

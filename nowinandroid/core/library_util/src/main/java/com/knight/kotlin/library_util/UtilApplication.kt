@@ -3,11 +3,11 @@ package com.knight.kotlin.library_util
 import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
-import com.knight.kotlin.library_base.BaseApp
-import com.core.library_base.app.ApplicationLifecycle
-import com.core.library_base.util.BaiduSoDownloaderUtils
-import com.core.library_base.util.ProcessUtil
+import com.core.library_common.app.ApplicationLifecycle
+import com.core.library_common.ktx.getApplicationContext
+import com.core.library_common.util.ProcessUtil
 import com.google.auto.service.AutoService
+import com.knight.kotlin.library_common.util.BaiduSoDownloaderUtils
 import com.knight.kotlin.library_util.baidu.LocationUtils
 import com.knight.kotlin.library_util.toast.ToastUtils.init
 import com.tencent.bugly.crashreport.CrashReport
@@ -21,7 +21,7 @@ import com.wyjson.router.GoRouter
  * 工具类Application
  */
 @AutoService(ApplicationLifecycle::class)
-class UtilApplication:ApplicationLifecycle {
+class UtilApplication: ApplicationLifecycle {
 
 
     companion object {
@@ -45,7 +45,7 @@ class UtilApplication:ApplicationLifecycle {
 
         val list = mutableListOf<() -> String>()
         //在主进程初始化
-        if (ProcessUtil.isMainProcess(BaseApp.context)) {
+        if (ProcessUtil.isMainProcess(getApplicationContext())) {
             list.add{initARouter()}
             list.add{initToast()}
         }
@@ -58,16 +58,16 @@ class UtilApplication:ApplicationLifecycle {
      * 初始化Bugly
      */
     override fun initDangerousTask() {
-        val strategy = CrashReport.UserStrategy(BaseApp.context)
-        strategy.deviceID = PhoneUtils.getDeviceUUID(BaseApp.context)
+        val strategy = CrashReport.UserStrategy(getApplicationContext())
+        strategy.deviceID = PhoneUtils.getDeviceUUID(getApplicationContext())
         strategy.deviceModel = PhoneUtils.getPhoneModel()
-        strategy.appVersion = SystemUtils.getAppVersionName(BaseApp.context)
-        strategy.appPackageName = BaseApp.context.packageName
-        CrashReport.initCrashReport(BaseApp.context,"99ea018e83",false,strategy)
+        strategy.appVersion = SystemUtils.getAppVersionName(getApplicationContext())
+        strategy.appPackageName = getApplicationContext().packageName
+        CrashReport.initCrashReport(getApplicationContext(),"99ea018e83",false,strategy)
         //同意ShareSdk分享
         //MobSDK.submitPolicyGrantResult(true)
-        if (BaiduSoDownloaderUtils.isSoDownloaded(BaseApp.context)) {
-            LocationUtils.init(BaseApp.context)
+        if (BaiduSoDownloaderUtils.isSoDownloaded(getApplicationContext())) {
+            LocationUtils.init(getApplicationContext())
         }
 
 
@@ -92,7 +92,7 @@ class UtilApplication:ApplicationLifecycle {
 //            ARouter.openLog() //打印日志
 //            ARouter.openDebug() //开启调试模式(如果在InstantRun模式下运行，必须开启调试模式！线上版本需要关闭,否则有安全风险)
         }
-        GoRouter.autoLoadRouteModule(BaseApp.application)
+        GoRouter.autoLoadRouteModule(getApplicationContext())
         return "GoRouter --->> init complete"
     }
 
@@ -103,7 +103,7 @@ class UtilApplication:ApplicationLifecycle {
     private fun initToast():String {
         //初始化Toast
         //setInterceptor(ToastInterceptor())
-        init(BaseApp.application)
+        init(getApplicationContext())
         return  "Toast -->> init Toast"
     }
 

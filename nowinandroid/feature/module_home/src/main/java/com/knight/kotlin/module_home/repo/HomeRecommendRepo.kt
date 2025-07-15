@@ -1,11 +1,11 @@
 package com.knight.kotlin.module_home.repo
 
 import com.knight.kotlin.library_base.entity.BaiduCardDataBean
-import com.core.library_common.entity.UserInfoEntity
+import com.knight.kotlin.library_common.entity.UserInfoEntity
 import com.knight.kotlin.library_base.entity.WeatherDetailBean
 import com.knight.kotlin.library_base.repository.BaseRepository
-import com.knight.kotlin.library_common.entity.AppUpdateBean
-import com.knight.kotlin.library_common.entity.OfficialAccountEntity
+import com.knight.kotlin.library_base.entity.AppUpdateBean
+import com.knight.kotlin.library_base.entity.OfficialAccountEntity
 import com.knight.kotlin.library_network.model.responseCodeExceptionHandler
 import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_home.api.HomeRecommendApiService

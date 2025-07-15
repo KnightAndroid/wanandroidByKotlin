@@ -10,10 +10,10 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter4.BaseQuickAdapter
+import com.core.library_base.ktx.setOnClick
+import com.core.library_common.util.dp2px
 import com.google.android.material.chip.Chip
 import com.google.android.material.shape.ShapeAppearanceModel
-import com.core.library_base.ktx.setOnClick
-import com.core.library_common.dp2px
 import com.knight.kotlin.library_database.entity.CityBean
 import com.knight.kotlin.library_widget.GroupCityListBean
 import com.knight.kotlin.library_widget.databinding.CityDefaultItemBinding

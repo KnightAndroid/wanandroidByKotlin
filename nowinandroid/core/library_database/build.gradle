@@ -22,7 +22,7 @@ dependencies {
     kapt Dependencies.GitHub.GO_ROUTER_COMPILER
     //依赖Base
     //implementation project(path: ':library_base')
-    api project(path: ':nowinandroid:core:library_base')
+    implementation project(path: ':nowinandroid:core:library_base')
 
 
 }

@@ -2,7 +2,7 @@ package com.knight.kotlin.module_constellate
 
 import android.app.Application
 import android.content.Context
-import com.core.library_base.app.ApplicationLifecycle
+import com.core.library_common.app.ApplicationLifecycle
 import com.google.auto.service.AutoService
 
 
@@ -13,7 +13,7 @@ import com.google.auto.service.AutoService
  * @descript:星座application
  */
 @AutoService(ApplicationLifecycle::class)
-class ConstellateApplication:ApplicationLifecycle {
+class ConstellateApplication: ApplicationLifecycle {
     override fun onAttachBaseContext(context: Context) {}
 
     override fun onCreate(application: Application) {}

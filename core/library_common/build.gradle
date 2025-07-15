@@ -24,17 +24,21 @@ dependencies {
     api Dependencies.GitHub.GO_ROUTER
     kapt Dependencies.GitHub.GO_ROUTER_COMPILER
 
-    //百度地图
-    api Dependencies.OtherUtils.BAIDULOCATION
-    api Dependencies.OtherUtils.BAIDUNAVI
-    api Dependencies.OtherUtils.BAIDUSEARCH
-    api Dependencies.OtherUtils.BAIDUUTIL
+//    //百度地图
+//    api Dependencies.OtherUtils.BAIDULOCATION
+//    api Dependencies.OtherUtils.BAIDUNAVI
+//    api Dependencies.OtherUtils.BAIDUSEARCH
+//    api Dependencies.OtherUtils.BAIDUUTIL
 
 
-    api Dependencies.GitHub.MMKV
+
     api Dependencies.GitHub.GSON
-
 
     api Dependencies.GitHub.AUTO_SERVICE
     kapt Dependencies.GitHub.AUTO_SERVICE_ANNOTATIONS
+
+    //必须项
+    api Dependencies.GitHub.ANDROID_AOP
+    api Dependencies.GitHub.ANDROID_EXTRA_AOP
+    api Dependencies.GitHub.ANDROID_AOP_ANNOTATION
 }

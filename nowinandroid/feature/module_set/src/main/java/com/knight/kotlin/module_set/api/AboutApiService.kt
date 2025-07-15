@@ -1,6 +1,6 @@
 package com.knight.kotlin.module_set.api
 
-import com.knight.kotlin.library_common.entity.AppUpdateBean
+import com.knight.kotlin.library_base.entity.AppUpdateBean
 import com.knight.kotlin.library_network.bean.BaseResponse
 import retrofit2.http.GET
 import retrofit2.http.Headers

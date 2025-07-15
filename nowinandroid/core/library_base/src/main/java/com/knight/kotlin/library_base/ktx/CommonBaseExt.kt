@@ -7,19 +7,14 @@ import androidx.annotation.MainThread
 import androidx.core.content.getSystemService
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
-import com.baidu.location.BDLocation
 import com.core.library_base.ktx.appStr
 import com.core.library_base.ktx.getVmClazz
 import com.core.library_base.ktx.observeEventData
 import com.core.library_base.vm.BaseViewModel
 import com.knight.kotlin.library_base.BaseApp
 import com.knight.kotlin.library_base.activity.BaseActivity
-import com.core.library_common.config.Appconfig
-import com.core.library_common.config.CacheKey
-import com.core.library_common.entity.UserInfoEntity
 import com.knight.kotlin.library_base.fragment.BaseDialogFragment
 import com.knight.kotlin.library_base.fragment.BaseFragment
-import com.core.library_common.util.CacheUtils
 import com.knight.kotlin.library_base.utils.StatusBarUtils
 
 

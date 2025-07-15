@@ -21,7 +21,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.core.library_common.util.CacheUtils;
+import com.knight.kotlin.library_common.util.CacheUtils;
+import com.core.library_common.util.SIzeUnikKtxKt;
 import com.knight.kotlin.library_widget.R;
 
 import java.util.ArrayList;

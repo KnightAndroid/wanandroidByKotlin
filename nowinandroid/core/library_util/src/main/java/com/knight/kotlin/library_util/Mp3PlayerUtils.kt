@@ -13,7 +13,7 @@ import androidx.media3.datasource.cache.LeastRecentlyUsedCacheEvictor
 import androidx.media3.datasource.cache.SimpleCache
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.source.DefaultMediaSourceFactory
-import com.knight.kotlin.library_base.BaseApp
+import com.core.library_common.ktx.getApplicationContext
 import java.io.File
 
 
@@ -42,7 +42,7 @@ class Mp3PlayerUtils {
     }
 
 
-    private val appContext = BaseApp.context
+    private val appContext = getApplicationContext()
 
     private val cacheDir = File(appContext.cacheDir, "media_cache")
     private val cache = SimpleCache(

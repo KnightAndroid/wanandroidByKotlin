@@ -11,7 +11,6 @@ import android.webkit.WebView
 import android.widget.LinearLayout
 import com.core.library_base.event.MessageEvent
 import com.core.library_base.route.RouteActivity
-import com.core.library_common.util.CacheUtils
 import com.core.library_base.util.EventBusUtils
 import com.just.agentweb.AgentWeb
 import com.just.agentweb.DefaultWebClient
@@ -20,9 +19,10 @@ import com.just.agentweb.WebViewClient
 import com.knight.kotlin.library_aop.loginintercept.LoginCheck
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.entity.WebDataEntity
-import com.knight.kotlin.library_base.ktx.getUser
+import com.knight.kotlin.library_common.ktx.getUser
+import com.knight.kotlin.library_common.util.CacheUtils
 import com.knight.kotlin.library_database.entity.HistoryReadRecordsEntity
-import com.knight.kotlin.library_util.DataBaseUtils
+import com.knight.kotlin.library_database.util.DataBaseUtils
 import com.knight.kotlin.library_util.toast.ToastUtils
 import com.knight.kotlin.library_widget.LoveAnimatorRelativeLayout
 import com.knight.kotlin.module_web.R

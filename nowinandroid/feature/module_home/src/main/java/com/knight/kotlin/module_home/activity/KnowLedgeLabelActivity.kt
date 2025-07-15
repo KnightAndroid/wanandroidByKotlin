@@ -7,7 +7,7 @@ import com.core.library_base.event.MessageEvent
 import com.core.library_base.ktx.ActivityMessenger
 import com.core.library_base.ktx.setOnClick
 import com.core.library_base.route.RouteActivity
-import com.core.library_common.util.CacheUtils
+import com.knight.kotlin.library_common.util.CacheUtils
 import com.core.library_base.util.EventBusUtils
 import com.core.library_base.vm.EmptyViewModel
 import com.flyjingfish.android_aop_core.annotations.SingleClick

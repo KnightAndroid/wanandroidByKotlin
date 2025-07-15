@@ -8,8 +8,8 @@ import android.text.TextPaint
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.core.library_common.util.CacheUtils
-import com.core.library_common.dp2px
+import com.knight.kotlin.library_common.util.CacheUtils
+import com.core.library_common.util.dp2px
 import com.knight.kotlin.library_widget.GroupCityListBean
 
 

@@ -1,7 +1,7 @@
 package com.knight.kotlin.module_home.entity
 
 import android.os.Parcelable
-import com.knight.kotlin.library_base.enum.PollutantIndex
+import com.knight.kotlin.library_common.enum.PollutantIndex
 import kotlinx.parcelize.Parcelize
 
 

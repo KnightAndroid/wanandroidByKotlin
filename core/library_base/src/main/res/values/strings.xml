@@ -7,18 +7,9 @@
     <string name="base_unavailable_text">网络连接不可用,请检查网络设置</string>
     <string name="base_request_failure">请求失败,请稍后尝试</string>
     <string name="base_daily_share_image">share_image</string>
-    <string name="base_light_mode">白天模式</string>
-    <string name="base_dark_mode">深色模式</string>
-    <string name="base_follow_system_mode">跟随系统</string>
-    <string name="base_settings_follow_system">跟随系统</string>
-    <string name="base_settings_main_background_animation_enabled">启用</string>
-    <string name="base_settings_main_background_animation_disabled">禁用</string>
-    <string name="base_air_quality_level_1">优</string>
-    <string name="base_air_quality_level_2">良</string>
-    <string name="base_air_quality_level_3">轻度污染</string>
-    <string name="base_air_quality_level_4">中度污染</string>
-    <string name="base_air_quality_level_5">重度污染</string>
-    <string name="base_air_quality_level_6">严重污染</string>
+
+
+
     <string name="base_unit_mugpcum">微克/米³</string>
     <string name="base_unit_mgpcum">毫克/米³</string>
     <string name="base_unavailable_tip">功能暂未开放</string>

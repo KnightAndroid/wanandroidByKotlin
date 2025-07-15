@@ -1,8 +1,8 @@
 package com.knight.kotlin.library_util
 
 import android.graphics.Bitmap
-import com.core.library_common.config.Appconfig
-import com.knight.kotlin.library_base.BaseApp
+import com.knight.kotlin.library_common.config.Appconfig
+import com.core.library_common.ktx.getApplicationContext
 import com.knight.kotlin.library_util.bitmap.BitmapUtils
 import com.tencent.mm.opensdk.modelmsg.SendMessageToWX
 import com.tencent.mm.opensdk.modelmsg.WXImageObject
@@ -43,7 +43,7 @@ object ShareSdkUtils {
      */
     fun shareTextContent(title:String,desc:String,scene:Int) {
         //初始化一个 WXTextObject 对象，填写分享的文本内容
-        val api = WXAPIFactory.createWXAPI(BaseApp.context, Appconfig.WX_APP_ID,false)
+        val api = WXAPIFactory.createWXAPI(getApplicationContext(), Appconfig.WX_APP_ID,false)
         val textObj = WXTextObject()
         textObj.text = title
 
@@ -79,7 +79,7 @@ object ShareSdkUtils {
     }
 
     fun shareImg(bmp : Bitmap,scene:Int) {
-        val api = WXAPIFactory.createWXAPI(BaseApp.context, Appconfig.WX_APP_ID,false)
+        val api = WXAPIFactory.createWXAPI(getApplicationContext(), Appconfig.WX_APP_ID,false)
         //初始化 WXImageObject 和 WXMediaMessage 对象
         val imgObj = WXImageObject(bmp)
         val msg = WXMediaMessage()

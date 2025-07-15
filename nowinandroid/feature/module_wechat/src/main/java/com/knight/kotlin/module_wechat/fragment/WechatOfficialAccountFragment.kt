@@ -7,7 +7,7 @@ import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.core.library_base.ktx.setOnClick
 import com.core.library_base.route.RouteFragment
 import com.knight.kotlin.library_base.utils.ArouteUtils
-import com.core.library_common.util.CacheUtils
+import com.knight.kotlin.library_common.util.CacheUtils
 import com.core.library_common.util.ColorUtils
 import com.knight.kotlin.library_aop.loginintercept.LoginCheck
 

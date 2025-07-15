@@ -1,6 +1,6 @@
 package com.knight.kotlin.module_eye_discover.api
 
-import com.core.library_common.config.Appconfig
+import com.knight.kotlin.library_common.config.Appconfig
 import com.knight.kotlin.module_eye_discover.entity.EyeCategoryDetailEntity
 import retrofit2.http.GET
 import retrofit2.http.Headers

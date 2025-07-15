@@ -3,17 +3,15 @@ package com.knight.kotlin.module_constellate.activity
 import android.content.res.TypedArray
 import android.graphics.Color
 import androidx.recyclerview.widget.GridLayoutManager
-import com.knight.kotlin.library_base.activity.BaseActivity
-
 import com.core.library_base.ktx.setOnClick
 import com.core.library_base.route.RouteActivity
 import com.core.library_base.util.GsonUtils
-import com.core.library_common.dp2px
 import com.core.library_base.vm.EmptyViewModel
+import com.core.library_common.util.dp2px
 import com.google.gson.reflect.TypeToken
+import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.ktx.getScreenHeight
 import com.knight.kotlin.library_base.ktx.getScreenWidth
-
 import com.knight.kotlin.library_util.JsonUtils
 import com.knight.kotlin.library_widget.CustomGridItemDecoration
 import com.knight.kotlin.library_widget.ktx.init

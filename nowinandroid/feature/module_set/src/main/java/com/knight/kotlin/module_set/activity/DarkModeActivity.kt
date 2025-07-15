@@ -8,7 +8,7 @@ import com.knight.kotlin.library_base.activity.BaseActivity
 import com.core.library_base.ktx.init
 import com.core.library_base.ktx.setOnClick
 import com.core.library_base.route.RouteActivity
-import com.core.library_common.util.CacheUtils
+import com.knight.kotlin.library_common.util.CacheUtils
 import com.core.library_base.util.GsonUtils
 import com.core.library_base.vm.EmptyViewModel
 import com.flyjingfish.android_aop_core.annotations.SingleClick

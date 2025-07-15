@@ -9,7 +9,7 @@ import com.core.library_base.event.MessageEvent
 import com.core.library_base.route.RouteActivity
 import com.core.library_base.route.RouteFragment
 import com.core.library_base.util.ActivityManagerUtils
-import com.core.library_common.util.CacheUtils
+import com.knight.kotlin.library_common.util.CacheUtils
 import com.core.library_common.util.ColorUtils
 import com.knight.kotlin.library_base.utils.StatusBarUtils
 import com.knight.kotlin.library_util.ViewInitUtils

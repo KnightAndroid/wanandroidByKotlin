@@ -11,11 +11,18 @@ android {
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
-   // implementation project(path: ':library_base')
-    implementation project(path: ':nowinandroid:core:library_base')
-
+    api project(path:':core:library_common')
     implementation Dependencies.JetPack.HILT_CORE
     kapt Dependencies.JetPack.HILT_APT
     kapt Dependencies.JetPack.HILT_ANDROIDX
+
+    //百度地图
+    api Dependencies.OtherUtils.BAIDULOCATION
+    api Dependencies.OtherUtils.BAIDUNAVI
+    api Dependencies.OtherUtils.BAIDUSEARCH
+    api Dependencies.OtherUtils.BAIDUUTIL
+    api  Dependencies.JetPack.WORK_MANAGER
+    api Dependencies.GitHub.MMKV
+
 
 }

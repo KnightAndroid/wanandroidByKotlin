@@ -1,6 +1,6 @@
 package com.knight.kotlin.module_mine.api
 
-import com.core.library_common.entity.UserInfoEntity
+import com.knight.kotlin.library_common.entity.UserInfoEntity
 import com.knight.kotlin.library_network.bean.BaseResponse
 import com.knight.kotlin.module_mine.entity.UserInfoMessageEntity
 import retrofit2.http.Field

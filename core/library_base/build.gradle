@@ -50,15 +50,15 @@ dependencies {
 
 
     api Dependencies.GitHub.LOAD_SIR
-    api Dependencies.OtherUtils.BUGLY
-    //必须项
-    api Dependencies.GitHub.ANDROID_AOP
-    api Dependencies.GitHub.ANDROID_EXTRA_AOP
-    api Dependencies.GitHub.ANDROID_AOP_ANNOTATION
+//    api Dependencies.OtherUtils.BUGLY
+//    //必须项
+//    api Dependencies.GitHub.ANDROID_AOP
+//    api Dependencies.GitHub.ANDROID_EXTRA_AOP
+//    api Dependencies.GitHub.ANDROID_AOP_ANNOTATION
     api Dependencies.Kotlin.kotlinx_serialization_json
 
     //workManager
-    api Dependencies.JetPack.WORK_MANAGER
+ //   api Dependencies.JetPack.WORK_MANAGER
     //依赖通用库
     api project(path: ':core:library_common')
 }

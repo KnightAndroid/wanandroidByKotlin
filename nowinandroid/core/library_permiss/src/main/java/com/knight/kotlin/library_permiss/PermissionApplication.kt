@@ -4,8 +4,8 @@ import XXPermissions
 import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
-import com.core.library_base.app.ApplicationLifecycle
-import com.core.library_base.util.ProcessUtil
+import com.core.library_common.app.ApplicationLifecycle
+import com.core.library_common.util.ProcessUtil
 import com.google.auto.service.AutoService
 import com.knight.kotlin.library_base.BaseApp
 
@@ -16,7 +16,7 @@ import com.knight.kotlin.library_base.BaseApp
  * 
  */
 @AutoService(ApplicationLifecycle::class)
-class PermissionApplication :ApplicationLifecycle{
+class PermissionApplication : ApplicationLifecycle {
 
     companion object {
         @SuppressLint("StaticFieldLeak")

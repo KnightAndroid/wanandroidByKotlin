@@ -11,8 +11,8 @@ import android.content.Context
 import android.graphics.Color
 import android.view.Window
 import androidx.core.graphics.ColorUtils
-import com.core.library_common.dp2px
 import com.core.library_base.util.setSystemBarStyle
+import com.core.library_common.util.dp2px
 import com.knight.kotlin.library_widget.R
 
 

@@ -2,27 +2,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools"
     tools:ignore="MissingTranslation">
 
-    <string-array name="base_dark_modes">
-        <item>@string/base_follow_system_mode</item>
-        <item>@string/base_light_mode</item>
-        <item>@string/base_dark_mode</item>
-    </string-array>
 
-    <string-array name="base_dark_mode_values">
-        <item>system</item>
-        <item>light</item>
-        <item>dark</item>
-    </string-array>
 
-    <!-- Background animation. -->
-    <string-array name="base_background_animation">
-        <item>@string/base_settings_follow_system</item>
-        <item>@string/base_settings_main_background_animation_enabled</item>
-        <item>@string/base_settings_main_background_animation_disabled</item>
-    </string-array>
-    <string-array name="base_background_animation_values">
-        <item>system</item>
-        <item>enabled</item>
-        <item>disabled</item>
-    </string-array>
+
 </resources>

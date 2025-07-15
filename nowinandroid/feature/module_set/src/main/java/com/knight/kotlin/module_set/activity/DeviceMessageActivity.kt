@@ -1,8 +1,8 @@
 package com.knight.kotlin.module_set.activity
 
-import com.core.library_base.ktx.screenWidth
 import com.core.library_base.route.RouteActivity
 import com.core.library_base.vm.EmptyViewModel
+import com.core.library_common.ktx.screenWidth
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.ktx.screenHeightWithStatus
 import com.knight.kotlin.library_util.DeviceUtils

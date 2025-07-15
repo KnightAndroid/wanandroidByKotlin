@@ -8,7 +8,7 @@ import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.View
 import androidx.annotation.ColorInt
-import com.core.library_common.dp2px
+import com.core.library_common.util.dp2px
 
 
 /**

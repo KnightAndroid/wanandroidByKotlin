@@ -3,7 +3,7 @@ package com.knight.kotlin.module_welcome
 import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
-import com.core.library_base.app.ApplicationLifecycle
+import com.core.library_common.app.ApplicationLifecycle
 import com.google.auto.service.AutoService
 
 
@@ -14,7 +14,7 @@ import com.google.auto.service.AutoService
  * Description:WelcomeApp
  */
 @AutoService(ApplicationLifecycle::class)
-class WelcomeApplication:ApplicationLifecycle {
+class WelcomeApplication: ApplicationLifecycle {
 
     companion object {
         @SuppressLint("StaticFieldLeak")

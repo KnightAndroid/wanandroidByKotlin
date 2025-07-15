@@ -1,4 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <application>
+        <provider
+            android:authorities="${applicationId}.contentprovider"
+            android:name="com.core.library_common.provider.AppContentProvider"
+            android:exported="false"
+            android:multiprocess="true"/>
+
+
+    </application>
 </manifest>

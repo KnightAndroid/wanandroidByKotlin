@@ -8,7 +8,7 @@ import android.net.Uri
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.annotation.Size
-import com.knight.kotlin.library_base.enum.WeatherCode
+import com.knight.kotlin.library_common.enum.WeatherCode
 
 
 /**

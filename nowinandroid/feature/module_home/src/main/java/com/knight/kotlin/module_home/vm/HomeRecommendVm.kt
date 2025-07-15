@@ -5,10 +5,10 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.core.library_base.vm.BaseViewModel
 import com.knight.kotlin.library_base.entity.BaiduCardDataBean
-import com.core.library_common.entity.UserInfoEntity
+import com.knight.kotlin.library_common.entity.UserInfoEntity
 import com.knight.kotlin.library_base.entity.WeatherDetailBean
-import com.knight.kotlin.library_common.entity.AppUpdateBean
-import com.knight.kotlin.library_common.entity.OfficialAccountEntity
+import com.knight.kotlin.library_base.entity.AppUpdateBean
+import com.knight.kotlin.library_base.entity.OfficialAccountEntity
 import com.knight.kotlin.library_database.db.AppDataBase
 import com.knight.kotlin.library_database.entity.PushDateEntity
 import com.knight.kotlin.library_database.repository.PushArticlesDataRepository

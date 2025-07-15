@@ -12,7 +12,7 @@ android {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     api project(path: ':core:library_base')
-
+    api project(":nowinandroid:core:library_common")
     implementation Dependencies.JetPack.HILT_CORE
     kapt Dependencies.JetPack.HILT_APT
     kapt Dependencies.JetPack.HILT_ANDROIDX

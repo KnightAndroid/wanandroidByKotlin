@@ -9,13 +9,13 @@ import androidx.core.app.ActivityOptionsCompat
 import androidx.core.util.Pair
 import com.core.library_base.route.RouteActivity
 import com.core.library_base.route.RouteFragment
-import com.core.library_common.util.CacheUtils
-import com.core.library_common.util.ColorUtils
-import com.core.library_common.dp2px
 import com.core.library_base.vm.EmptyViewModel
+import com.core.library_common.util.ColorUtils
+import com.core.library_common.util.dp2px
 import com.flyjingfish.android_aop_core.annotations.SingleClick
-import com.core.library_common.config.Appconfig
 import com.knight.kotlin.library_base.fragment.BaseFragment
+import com.knight.kotlin.library_common.config.Appconfig
+import com.knight.kotlin.library_common.util.CacheUtils
 import com.knight.kotlin.library_widget.pagetransformer.DragLayout
 import com.knight.kotlin.module_home.databinding.HomeToptabsFragmentBinding
 import com.knight.kotlin.module_home.entity.TopArticleBean

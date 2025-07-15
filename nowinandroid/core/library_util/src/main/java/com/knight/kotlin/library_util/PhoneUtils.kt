@@ -5,7 +5,7 @@ import android.content.Context
 import android.os.Build
 import android.provider.Settings
 import android.telephony.TelephonyManager
-import com.knight.kotlin.library_base.BaseApp
+import com.core.library_common.ktx.getApplicationContext
 import java.lang.reflect.InvocationTargetException
 import java.util.UUID
 
@@ -265,6 +265,6 @@ object PhoneUtils {
      * 获取Telephony管理器
      */
     private fun getTelephontManager(): TelephonyManager {
-        return BaseApp.application.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
+        return getApplicationContext().getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
     }
 }

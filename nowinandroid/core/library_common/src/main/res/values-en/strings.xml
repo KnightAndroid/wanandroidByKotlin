@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="common_found_new_version">Found New Version</string>
-    <string name="common_update_now">Update</string>
-    <string name="common_download_wait">Downloading updates...</string>
+    <string name="base_settings_follow_system">Follow System</string>
+    <string name="base_settings_main_background_animation_enabled">Enable</string>
+    <string name="base_settings_main_background_animation_disabled">Disabled</string>
+    <string name="base_light_mode">Light</string>
+    <string name="base_dark_mode">Dark</string>
+    <string name="base_follow_system_mode">Follow System</string>
+    <string name="base_air_quality_level_1">Excellent</string>
+    <string name="base_air_quality_level_2">Fair</string>
+    <string name="base_air_quality_level_3">Poor</string>
+    <string name="base_air_quality_level_4">Unhealthy</string>
+    <string name="base_air_quality_level_5">Very unhealthy</string>
+    <string name="base_air_quality_level_6">Dangerous</string>
 </resources>

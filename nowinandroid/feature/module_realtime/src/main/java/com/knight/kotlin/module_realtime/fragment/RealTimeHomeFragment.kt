@@ -7,7 +7,7 @@ import com.core.library_base.annotation.EventBusRegister
 import com.core.library_base.event.MessageEvent
 import com.core.library_base.route.RouteFragment
 import com.core.library_base.util.EventBusUtils
-import com.core.library_common.dp2px
+import com.core.library_common.util.dp2px
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.knight.kotlin.library_base.config.EventBusKeys

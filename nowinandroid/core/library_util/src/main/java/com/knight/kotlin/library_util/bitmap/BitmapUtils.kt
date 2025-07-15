@@ -7,7 +7,7 @@ import android.graphics.Canvas
 import android.media.MediaScannerConnection
 import android.os.Build
 import android.view.View
-import com.knight.kotlin.library_base.BaseApp
+import com.core.library_common.ktx.getApplicationContext
 import com.knight.kotlin.library_util.FileUtils
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
@@ -142,7 +142,7 @@ object BitmapUtils {
      */
     fun scanAlbum(file: File) {
         MediaScannerConnection.scanFile(
-            BaseApp.context, arrayOf(file.absolutePath), null
+            getApplicationContext(), arrayOf(file.absolutePath), null
         ) { path, uri -> }
     }
 

@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter4.BaseQuickAdapter
 import com.core.library_common.util.ColorUtils
-import com.knight.kotlin.library_common.entity.OfficialAccountEntity
+import com.knight.kotlin.library_base.entity.OfficialAccountEntity
 import com.knight.kotlin.module_home.databinding.HomeOfficialAccountsItemBinding
 
 /**

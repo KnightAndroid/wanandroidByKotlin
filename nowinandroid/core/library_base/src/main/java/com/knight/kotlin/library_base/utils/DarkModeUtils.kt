@@ -1,7 +1,6 @@
 package com.knight.kotlin.library_base.utils
 
 import androidx.appcompat.app.AppCompatDelegate
-import com.core.library_common.util.CacheUtils
 import java.util.Calendar
 
 /**
@@ -16,11 +15,11 @@ object DarkModeUtils {
      * 判断是什么模式
      */
     fun darkNormal() {
-        if (CacheUtils.getAutoNightMode()) {
-            val nightStartHour: Int = Integer.valueOf(CacheUtils.getStartNightModeHour())
-            val nightStartMinute: Int = Integer.valueOf(CacheUtils.getStartNightModeMinuter())
-            val dayStartHour: Int = Integer.valueOf(CacheUtils.getStartDayModeHour())
-            val dayStartMinuter: Int = Integer.valueOf(CacheUtils.getStartDayModeMinuter())
+        if (com.knight.kotlin.library_common.util.CacheUtils.getAutoNightMode()) {
+            val nightStartHour: Int = Integer.valueOf(com.knight.kotlin.library_common.util.CacheUtils.getStartNightModeHour())
+            val nightStartMinute: Int = Integer.valueOf(com.knight.kotlin.library_common.util.CacheUtils.getStartNightModeMinuter())
+            val dayStartHour: Int = Integer.valueOf(com.knight.kotlin.library_common.util.CacheUtils.getStartDayModeHour())
+            val dayStartMinuter: Int = Integer.valueOf(com.knight.kotlin.library_common.util.CacheUtils.getStartDayModeMinuter())
             val calendar = Calendar.getInstance()
             val currentHour = calendar[Calendar.HOUR_OF_DAY]
             val currentMinute = calendar[Calendar.MINUTE]
@@ -29,17 +28,17 @@ object DarkModeUtils {
             val currentValue = currentHour * 60 + currentMinute
             if (currentValue >= nightValue || currentValue <= dayValue) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                CacheUtils.setNightModeStatus(true)
+                com.knight.kotlin.library_common.util.CacheUtils.setNightModeStatus(true)
             } else {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                CacheUtils.setNightModeStatus(false)
+                com.knight.kotlin.library_common.util.CacheUtils.setNightModeStatus(false)
             }
         } else {
-            CacheUtils.setNightModeStatus(false)
-            if (CacheUtils.getFollowSystem()) {
+            com.knight.kotlin.library_common.util.CacheUtils.setNightModeStatus(false)
+            if (com.knight.kotlin.library_common.util.CacheUtils.getFollowSystem()) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
             } else {
-                if (CacheUtils.getNormalDark()) {
+                if (com.knight.kotlin.library_common.util.CacheUtils.getNormalDark()) {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
                 } else {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)

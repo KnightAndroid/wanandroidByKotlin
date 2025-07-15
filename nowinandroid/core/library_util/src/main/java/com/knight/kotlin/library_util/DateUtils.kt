@@ -2,8 +2,8 @@ package com.knight.kotlin.library_util
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import com.core.library_common.util.CacheUtils
-import com.core.library_common.util.LanguageFontSizeUtils
+import com.knight.kotlin.library_common.util.LanguageFontSizeUtils
+import com.knight.kotlin.library_common.util.CacheUtils
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.time.LocalDate

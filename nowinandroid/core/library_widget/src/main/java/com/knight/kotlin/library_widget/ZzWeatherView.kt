@@ -13,7 +13,7 @@ import android.view.WindowManager
 import android.widget.HorizontalScrollView
 import android.widget.LinearLayout
 import com.knight.kotlin.library_base.entity.WeatherEveryDay
-import com.knight.kotlin.library_base.enum.AirLevel
+import com.knight.kotlin.library_common.enum.AirLevel
 import com.knight.kotlin.library_util.DateUtils
 import com.knight.kotlin.library_widget.utils.WeatherPicUtil
 import kotlin.math.max

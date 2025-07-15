@@ -2,6 +2,7 @@ package com.core.library_base.app
 
 import android.app.Application
 import android.content.Context
+import com.core.library_common.app.ApplicationLifecycle
 import java.util.ServiceLoader
 
 /**
@@ -9,7 +10,7 @@ import java.util.ServiceLoader
  * Time:2021/12/15 17:53
  * Description:加载组件代理类 组件初始化工作由该代理类代理实现
  */
-class LoadModuleProxy : ApplicationLifecycle{
+class LoadModuleProxy : ApplicationLifecycle {
 
     /**
      *

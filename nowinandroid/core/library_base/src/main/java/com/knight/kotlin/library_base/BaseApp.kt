@@ -14,13 +14,11 @@ import com.core.library_base.loadsir.ErrorCallBack
 import com.core.library_base.loadsir.LoadCallBack
 import com.core.library_base.network.NetworkManager
 import com.core.library_base.util.ActivityManagerUtils
-import com.core.library_base.util.BaiduSoDownloaderUtils
 import com.core.library_base.util.HookUtils
-import com.core.library_base.util.ProcessUtil
-import com.core.library_base.workmanager.SoDownloadWorker
+import com.core.library_common.util.ProcessUtil
 import com.kingja.loadsir.core.LoadSir
-import com.core.library_common.util.CacheUtils
 import com.knight.kotlin.library_base.utils.DarkModeUtils
+import com.knight.kotlin.library_common.util.BaiduSoDownloaderUtils
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
 import kotlin.system.measureTimeMillis
@@ -66,8 +64,8 @@ open class BaseApp : Application(),Configuration.Provider  {
 
 
             //初始化MMKV
-            CacheUtils.init(base)
-            userAgree = CacheUtils.getAgreeStatus()
+            com.knight.kotlin.library_common.util.CacheUtils.init(base)
+            userAgree = com.knight.kotlin.library_common.util.CacheUtils.getAgreeStatus()
             if (!userAgree) {
                 try {
                     HookUtils.attachContext()
@@ -172,7 +170,7 @@ open class BaseApp : Application(),Configuration.Provider  {
     private fun downloadBaiduSo() {
 //
 //        WorkManager.initialize(this, config)
-        val work = OneTimeWorkRequestBuilder<SoDownloadWorker>()
+        val work = OneTimeWorkRequestBuilder<com.knight.kotlin.library_common.workmanager.SoDownloadWorker>()
             .addTag("baidu_so_download_tag")
             .build()
 

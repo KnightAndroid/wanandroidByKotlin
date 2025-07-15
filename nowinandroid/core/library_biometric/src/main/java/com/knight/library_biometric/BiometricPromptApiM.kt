@@ -7,7 +7,7 @@ import android.os.CancellationSignal
 import android.util.Base64
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.FragmentActivity
-import com.core.library_common.util.CacheUtils
+import com.knight.kotlin.library_common.util.CacheUtils
 import com.knight.library_biometric.dialog.BiometricPromptDialog
 
 /**
@@ -83,7 +83,7 @@ class BiometricPromptApiM constructor(activity:FragmentActivity) : IBiometricPro
                 /**
                  * 可通过服务器保存iv,然后在使用之前从服务器获取
                  */
-                val ivStr: String = CacheUtils.getCliperIv()
+                val ivStr: String = com.knight.kotlin.library_common.util.CacheUtils.getCliperIv()
                 val iv = Base64.decode(ivStr, Base64.URL_SAFE)
                 mCryptoObject = FingerprintManager.CryptoObject(mKeyGenTool.getDecryptCipher(iv)!!)
                 getFingerprintManager(mActivity).authenticate(

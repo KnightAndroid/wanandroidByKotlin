@@ -26,7 +26,7 @@ import com.kingja.loadsir.core.LoadService
 import com.kingja.loadsir.core.LoadSir
 import com.knight.kotlin.library_base.ktx.createViewModel
 import com.knight.kotlin.library_base.ktx.subscribeData
-import com.core.library_common.util.CacheUtils
+import com.knight.kotlin.library_common.util.CacheUtils
 import com.wyjson.router.GoRouter
 
 /**
@@ -62,7 +62,7 @@ abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel> : Fragment(), 
     /**
      * 颜色值
      */
-    protected val themeColor:Int =  CacheUtils.getThemeColor()
+    protected val themeColor:Int =  com.knight.kotlin.library_common.util.CacheUtils.getThemeColor()
 
     /**
      * 是否暗黑模式
@@ -113,7 +113,7 @@ abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel> : Fragment(), 
         mViewModel = createViewModel()
         //注册EventBus
         if (javaClass.isAnnotationPresent(EventBusRegister::class.java)) EventBusUtils.register(this)
-        isDarkMode = CacheUtils.getNormalDark()
+        isDarkMode = com.knight.kotlin.library_common.util.CacheUtils.getNormalDark()
         setThemeColor(isDarkMode)
         mBinding.initView()
         onVisible()
@@ -187,7 +187,7 @@ abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel> : Fragment(), 
      *
      * 默认加载
      */
-    protected fun requestLoading(view: View,tint: Int = CacheUtils.getThemeColor()) {
+    protected fun requestLoading(view: View,tint: Int = com.knight.kotlin.library_common.util.CacheUtils.getThemeColor()) {
         if (!::mLoadService.isInitialized) {
             mLoadService = LoadSir.getDefault().register(view) {
                 mLoadService.showCallback(com.core.library_base.loadsir.LoadCallBack::class.java)

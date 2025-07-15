@@ -6,7 +6,7 @@ import com.core.library_base.ktx.setOnClick
 import com.core.library_base.route.RouteActivity
 import com.flyjingfish.android_aop_core.annotations.SingleClick
 
-import com.knight.kotlin.library_common.fragment.UpdateAppDialogFragment
+import com.knight.kotlin.library_base.fragment.UpdateAppDialogFragment
 import com.knight.kotlin.library_util.SystemUtils
 import com.knight.kotlin.library_util.startPage
 import com.knight.kotlin.library_util.startPageWithParams

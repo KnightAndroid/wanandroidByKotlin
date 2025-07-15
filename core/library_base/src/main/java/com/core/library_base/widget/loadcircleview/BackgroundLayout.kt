@@ -6,7 +6,7 @@ import android.util.AttributeSet
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import com.core.library_base.R
-import com.core.library_common.dp2px
+import com.core.library_common.util.dp2px
 
 
 /**

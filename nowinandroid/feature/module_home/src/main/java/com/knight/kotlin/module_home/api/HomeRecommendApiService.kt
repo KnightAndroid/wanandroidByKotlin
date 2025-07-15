@@ -1,10 +1,10 @@
 package com.knight.kotlin.module_home.api
 
 import com.knight.kotlin.library_base.entity.BaiduTopRealTimeBean
-import com.core.library_common.entity.UserInfoEntity
+import com.knight.kotlin.library_common.entity.UserInfoEntity
 import com.knight.kotlin.library_base.entity.WeatherDetailBean
-import com.knight.kotlin.library_common.entity.AppUpdateBean
-import com.knight.kotlin.library_common.entity.OfficialAccountEntity
+import com.knight.kotlin.library_base.entity.AppUpdateBean
+import com.knight.kotlin.library_base.entity.OfficialAccountEntity
 import com.knight.kotlin.library_network.bean.BaseResponse
 import com.knight.kotlin.module_home.entity.BannerBean
 import com.knight.kotlin.module_home.entity.EveryDayPushArticlesBean

@@ -12,8 +12,8 @@ import com.chad.library.adapter4.BaseMultiItemAdapter
 import com.core.library_base.databinding.BaseArticleItemBinding
 import com.core.library_base.databinding.BaseTextItemBinding
 import com.core.library_base.ktx.toHtml
-import com.core.library_common.util.CacheUtils
-import com.core.library_common.config.Appconfig
+import com.knight.kotlin.library_common.util.CacheUtils
+import com.knight.kotlin.library_common.config.Appconfig
 import com.knight.kotlin.library_base.config.EyeTypeConstants
 import com.knight.kotlin.library_util.StringUtils
 import com.knight.kotlin.library_util.image.ImageLoader

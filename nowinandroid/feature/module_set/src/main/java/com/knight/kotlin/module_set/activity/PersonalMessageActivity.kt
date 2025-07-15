@@ -4,7 +4,7 @@ import com.core.library_base.route.RouteActivity
 import com.core.library_base.util.ServiceApiFactory
 import com.core.library_base.vm.EmptyViewModel
 import com.knight.kotlin.library_base.activity.BaseActivity
-import com.knight.kotlin.library_base.ktx.getUser
+import com.knight.kotlin.library_common.ktx.getUser
 import com.knight.kotlin.module_set.R
 import com.knight.kotlin.module_set.databinding.SetPersonalMessageActivityBinding
 import com.knight.kotlin.module_set.external.MineExternalContact

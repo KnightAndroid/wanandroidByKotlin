@@ -26,4 +26,9 @@
   public *;
 }
 
+# 错误日志收集
+-dontwarn com.tencent.bugly.**
+-keep public class com.tencent.bugly.**{*;}
+
+
 

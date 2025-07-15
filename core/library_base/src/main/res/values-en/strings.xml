@@ -7,18 +7,9 @@
     <string name="base_unavailable_text">Confirm that the network connection is not available, please check the network settings</string>
     <string name="base_request_failure">Request failed, please try again later</string>
     <string name="base_daily_share_image">share_image</string>
-    <string name="base_light_mode">Light</string>
-    <string name="base_dark_mode">Dark</string>
-    <string name="base_follow_system_mode">Follow System</string>
-    <string name="base_settings_follow_system">Follow System</string>
-    <string name="base_settings_main_background_animation_enabled">Enable</string>
-    <string name="base_settings_main_background_animation_disabled">Disabled</string>
-    <string name="base_air_quality_level_1">Excellent</string>
-    <string name="base_air_quality_level_2">Fair</string>
-    <string name="base_air_quality_level_3">Poor</string>
-    <string name="base_air_quality_level_4">Unhealthy</string>
-    <string name="base_air_quality_level_5">Very unhealthy</string>
-    <string name="base_air_quality_level_6">Dangerous</string>
+
+
+
     <string name="base_unit_mugpcum">μg/m³</string>
     <string name="base_unit_mgpcum">mg/m³</string>
     <string name="base_unavailable_tip">Feature is currently unavailable</string>

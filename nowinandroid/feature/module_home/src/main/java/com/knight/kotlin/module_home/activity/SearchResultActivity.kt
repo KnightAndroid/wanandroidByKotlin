@@ -9,8 +9,8 @@ import com.core.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.utils.ArouteUtils
 import com.knight.kotlin.library_aop.loginintercept.LoginCheck
 import com.knight.kotlin.library_base.activity.BaseActivity
-import com.core.library_common.config.Appconfig
-import com.knight.kotlin.library_util.DataBaseUtils
+import com.knight.kotlin.library_common.config.Appconfig
+import com.knight.kotlin.library_database.util.DataBaseUtils
 import com.knight.kotlin.library_util.SystemUtils
 import com.knight.kotlin.library_util.toast.ToastUtils
 import com.knight.kotlin.library_widget.ktx.init

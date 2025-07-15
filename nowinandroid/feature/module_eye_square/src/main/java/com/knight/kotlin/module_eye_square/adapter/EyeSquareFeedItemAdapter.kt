@@ -8,13 +8,13 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter4.BaseQuickAdapter
-import com.core.library_base.ktx.screenWidth
 import com.core.library_base.ktx.setOnClick
 import com.core.library_base.ktx.toJson
 import com.core.library_base.route.RouteActivity
+import com.core.library_common.ktx.screenWidth
 import com.google.android.material.chip.Chip
 import com.google.android.material.shape.CornerFamily
-import com.core.library_common.config.Appconfig
+import com.knight.kotlin.library_common.config.Appconfig
 import com.knight.kotlin.library_base.entity.EyeVideoDetailEntity
 import com.knight.kotlin.library_base.entity.eye_type.EyeFeedItemDetail
 import com.knight.kotlin.library_util.DateUtils

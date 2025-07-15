@@ -6,11 +6,10 @@ import com.baidu.location.BDLocation
 import com.baidu.location.LocationClient
 import com.baidu.location.LocationClientOption
 import com.baidu.mapapi.SDKInitializer
-import com.core.library_common.config.Appconfig
-import com.core.library_common.config.CacheKey
-import com.core.library_common.util.CacheUtils
+import com.knight.kotlin.library_common.config.Appconfig
+import com.knight.kotlin.library_common.config.CacheKey
+import com.knight.kotlin.library_common.util.CacheUtils
 import com.knight.kotlin.library_util.HandlerUtils
-
 
 
 /**

@@ -4,7 +4,7 @@ package com.knight.kotlin.library_util.wxapi
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.core.library_common.config.Appconfig
+import com.knight.kotlin.library_common.config.Appconfig
 import com.knight.kotlin.library_util.R
 import com.knight.kotlin.library_util.toast
 import com.tencent.mm.opensdk.modelbase.BaseReq

@@ -10,7 +10,6 @@ import android.view.WindowInsetsController
 import android.view.WindowManager
 import androidx.core.view.WindowInsetsCompat
 import androidx.window.layout.WindowMetricsCalculator
-import com.core.library_common.util.CacheUtils
 
 
 /**
@@ -31,10 +30,10 @@ object StatusBarUtils {
             val ic = activity.window.insetsController
             if (ic != null) {
                 //让状态栏变亮 0,WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS 让状态栏字体变白
-                if (CacheUtils.getNormalDark()) {
+                if (com.knight.kotlin.library_common.util.CacheUtils.getNormalDark()) {
                     ic.setSystemBarsAppearance(0, WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS)
                 } else {
-                    if (CacheUtils.getNightModeStatus()) {
+                    if (com.knight.kotlin.library_common.util.CacheUtils.getNightModeStatus()) {
                         ic.setSystemBarsAppearance(0,WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS)
                     } else {
                         ic.setSystemBarsAppearance(WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS)
@@ -47,12 +46,12 @@ object StatusBarUtils {
             activity.window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
             activity.window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
             activity.window.statusBarColor = Color.TRANSPARENT
-            if (CacheUtils.getNormalDark()) {
+            if (com.knight.kotlin.library_common.util.CacheUtils.getNormalDark()) {
                 //白色字体
                 activity.window.decorView.systemUiVisibility =
                     View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
             } else {
-                if (CacheUtils.getNightModeStatus()) {
+                if (com.knight.kotlin.library_common.util.CacheUtils.getNightModeStatus()) {
                     activity.window.decorView.systemUiVisibility =
                         View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                 } else {

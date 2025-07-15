@@ -9,7 +9,7 @@ android {
 }
 
 dependencies {
-    implementation project(path: ':nowinandroid:core:library_base')
+//    implementation project(path: ':nowinandroid:core:library_base')
 //    implementation project(path: ':library_common')
 
     implementation project(":nowinandroid:core:library_common")

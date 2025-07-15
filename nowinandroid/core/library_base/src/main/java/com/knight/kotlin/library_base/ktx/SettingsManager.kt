@@ -1,9 +1,9 @@
 package com.knight.kotlin.library_base.ktx
 
 import android.content.Context
-import com.core.library_common.util.CacheUtils
-import com.knight.kotlin.library_base.enum.BackgroundAnimationMode
-import com.knight.kotlin.library_base.enum.DarkMode
+import com.knight.kotlin.library_common.util.CacheUtils
+import com.knight.kotlin.library_common.enum.BackgroundAnimationMode
+import com.knight.kotlin.library_common.enum.DarkMode
 
 
 /**
@@ -68,31 +68,31 @@ class SettingsManager private constructor(
 
     var isGravitySensorEnabled: Boolean
         set(value) {
-            CacheUtils.setGravitySensorSwitch(value)
+            com.knight.kotlin.library_common.util.CacheUtils.setGravitySensorSwitch(value)
         }
-        get() = CacheUtils.getGravitySensorSwitch()
+        get() = com.knight.kotlin.library_common.util.CacheUtils.getGravitySensorSwitch()
 
 
-    var darkMode: DarkMode
+    var darkMode: com.knight.kotlin.library_common.enum.DarkMode
         set(value) {
-            CacheUtils.setDarkMode(value.id)
+            com.knight.kotlin.library_common.util.CacheUtils.setDarkMode(value.id)
         }
-        get() = DarkMode.getInstance(
-            CacheUtils.getDarkMode()
+        get() = com.knight.kotlin.library_common.enum.DarkMode.getInstance(
+            com.knight.kotlin.library_common.util.CacheUtils.getDarkMode()
         )
 
-    var backgroundAnimationMode: BackgroundAnimationMode
+    var backgroundAnimationMode: com.knight.kotlin.library_common.enum.BackgroundAnimationMode
         set(value) {
-            CacheUtils.setBackgroundAnimationMode(value.id)
+            com.knight.kotlin.library_common.util.CacheUtils.setBackgroundAnimationMode(value.id)
         }
-        get() = BackgroundAnimationMode.getInstance(
-            CacheUtils.getBackgroundAnimationMode()
+        get() = com.knight.kotlin.library_common.enum.BackgroundAnimationMode.getInstance(
+            com.knight.kotlin.library_common.util.CacheUtils.getBackgroundAnimationMode()
 
         )
 
     var iconProvider: String
         set(value) {
-            CacheUtils.setIconProvider(value)
+            com.knight.kotlin.library_common.util.CacheUtils.setIconProvider(value)
         }
-        get() = CacheUtils.getIconProvider()
+        get() = com.knight.kotlin.library_common.util.CacheUtils.getIconProvider()
 }

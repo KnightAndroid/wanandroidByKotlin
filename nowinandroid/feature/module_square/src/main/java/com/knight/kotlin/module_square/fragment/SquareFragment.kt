@@ -14,7 +14,7 @@ import com.core.library_base.ktx.loadServiceInit
 import com.core.library_base.route.RouteActivity
 import com.core.library_base.route.RouteFragment
 import com.knight.kotlin.library_base.utils.ArouteUtils
-import com.core.library_common.util.CacheUtils
+import com.knight.kotlin.library_common.util.CacheUtils
 import com.core.library_base.util.GsonUtils
 import com.flyjingfish.android_aop_core.annotations.SingleClick
 import com.google.gson.reflect.TypeToken

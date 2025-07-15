@@ -10,7 +10,7 @@ import android.os.Build.VERSION
 import android.os.Build.VERSION_CODES
 import android.text.TextUtils
 import androidx.appcompat.app.AppCompatActivity
-import com.core.library_common.util.CacheUtils
+import com.knight.kotlin.library_common.util.CacheUtils
 import com.knight.kotlin.library_permiss.PermissionConverter.getNickNamesByPermissions
 import com.knight.kotlin.library_permiss.WindowLifecycleManager.bindDialogLifecycle
 import com.knight.kotlin.library_permiss.permission.PermissionGroups
@@ -96,7 +96,7 @@ class PermissionInterceptor : OnPermissionInterceptor {
                 .create()
         }
         dialog.show()
-        dialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(CacheUtils.getThemeColor())
+        dialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(com.knight.kotlin.library_common.util.CacheUtils.getThemeColor())
         // 将 Activity 和 Dialog 生命周期绑定在一起，避免可能会出现的内存泄漏
         // 当然如果上面创建的 Dialog 已经有做了生命周期管理，则不需要执行下面这行代码
         bindDialogLifecycle(activity, dialog)

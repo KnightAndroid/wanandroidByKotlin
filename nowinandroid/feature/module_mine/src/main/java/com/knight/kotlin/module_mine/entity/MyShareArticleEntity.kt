@@ -1,7 +1,7 @@
 package com.knight.kotlin.module_mine.entity
 
 import android.os.Parcelable
-import com.core.library_common.entity.UserInfoEntity
+import com.knight.kotlin.library_common.entity.UserInfoEntity
 import kotlinx.parcelize.Parcelize
 
 /**

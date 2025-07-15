@@ -17,7 +17,7 @@ dependencies {
     kapt Dependencies.JetPack.HILT_ANDROIDX
     implementation project(":nowinandroid:core:library_util")
     implementation project(path: ':nowinandroid:core:library_base')
-    implementation project(":nowinandroid:core:library_common")
+    //implementation project(":nowinandroid:core:library_common")
     api Dependencies.GitHub.SWIPE_RECYCLERVIEW
     api Dependencies.GitHub.BASE_ADAPTER_HELPER
     api Dependencies.GitHub.SMART_KERNEL

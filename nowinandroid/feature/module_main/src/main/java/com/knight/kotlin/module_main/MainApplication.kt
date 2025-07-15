@@ -2,7 +2,7 @@ package com.knight.kotlin.module_main
 
 import android.app.Application
 import android.content.Context
-import com.core.library_base.app.ApplicationLifecycle
+import com.core.library_common.app.ApplicationLifecycle
 import com.google.auto.service.AutoService
 
 /**
@@ -11,7 +11,7 @@ import com.google.auto.service.AutoService
  * Description:MainApplication
  */
 @AutoService(ApplicationLifecycle::class)
-class MainApplication : ApplicationLifecycle{
+class MainApplication : ApplicationLifecycle {
     /**
      * 同[Application.attachBaseContext]
      * @param context Context

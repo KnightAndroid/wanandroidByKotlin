@@ -6,14 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.appcompat.view.ContextThemeWrapper
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.core.library_base.ktx.init
 import com.core.library_base.ktx.setOnClick
 import com.core.library_base.route.RouteFragment
-import com.core.library_common.dp2px
+import com.core.library_common.util.dp2px
 import com.google.android.material.chip.Chip
 import com.google.android.material.shape.ShapeAppearanceModel
-
+import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.knight.kotlin.module_eye_discover.activity.EyeDiscoverActivity
 import com.knight.kotlin.module_eye_discover.adapter.EyeDiscoverSearchRecommendVideoAdapter
 import com.knight.kotlin.module_eye_discover.databinding.EyeDiscoverRecommendFragmentBinding

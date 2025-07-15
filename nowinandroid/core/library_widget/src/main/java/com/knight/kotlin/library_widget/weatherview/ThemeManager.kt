@@ -8,6 +8,7 @@ import android.util.TypedValue
 import androidx.annotation.AttrRes
 import androidx.appcompat.app.AppCompatDelegate
 import com.knight.kotlin.library_base.ktx.SettingsManager
+import com.knight.kotlin.library_common.enum.DarkMode
 
 
 /**
@@ -18,7 +19,7 @@ import com.knight.kotlin.library_base.ktx.SettingsManager
  */
 class ThemeManager private constructor(
     val weatherThemeDelegate: WeatherThemeDelegate,
-    var darkMode: com.knight.kotlin.library_base.enum.DarkMode,
+    var darkMode: DarkMode,
 ) {
 
     companion object {
@@ -41,10 +42,10 @@ class ThemeManager private constructor(
         }
 
         private fun generateGlobalUIMode(
-            darkMode: com.knight.kotlin.library_base.enum.DarkMode,
+            darkMode: DarkMode,
         ): Int = when (darkMode) {
-            com.knight.kotlin.library_base.enum.DarkMode.LIGHT -> AppCompatDelegate.MODE_NIGHT_NO
-            com.knight.kotlin.library_base.enum.DarkMode.DARK -> AppCompatDelegate.MODE_NIGHT_YES
+            DarkMode.LIGHT -> AppCompatDelegate.MODE_NIGHT_NO
+            DarkMode.DARK -> AppCompatDelegate.MODE_NIGHT_YES
             else -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
         }
     }

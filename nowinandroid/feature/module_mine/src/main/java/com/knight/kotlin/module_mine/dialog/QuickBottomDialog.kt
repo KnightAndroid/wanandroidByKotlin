@@ -4,7 +4,7 @@ import android.view.Gravity
 import android.view.View
 import com.knight.kotlin.library_base.fragment.BaseDialogFragment
 import com.core.library_base.ktx.setOnClick
-import com.core.library_common.util.CacheUtils
+import com.knight.kotlin.library_common.util.CacheUtils
 import com.core.library_base.vm.EmptyViewModel
 import com.knight.kotlin.module_mine.databinding.MineQuickloginBottomDialogBinding
 

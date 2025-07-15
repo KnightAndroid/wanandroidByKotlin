@@ -106,6 +106,8 @@ object Dependencies {
        const val Media3Exoplayer  = "1.6.1" //播放音频
        const val MediaCache = "1.6.1" //音视频缓存
        const val WorkManagerVersion = "2.10.2" // workManager
+       const val RecycleViewVersion = "1.4.0" //1.4.0版本
+       const val ViewPager2Version = "1.1.0" //viewpager2版本
     }
     /**
      * AndroidX相关依赖
@@ -132,6 +134,10 @@ object Dependencies {
         const val MULTIDEX = "androidx.multidex:multidex:${Version.MULTIDEX_VERSION}"
         //windows
         const val WINDOWX = "androidx.window:window:${Version.windowx}"
+        //RecycleView
+        const val RECYCLEVIEW = "androidx.recyclerview:recyclerview:${Version.RecycleViewVersion}"
+        //ViewPager2
+        const val ViewPager2 = "androidx.viewpager2:viewpager2:${Version.ViewPager2Version}"
 
     }
 

@@ -3,14 +3,14 @@ package com.knight.kotlin.library_aop
 import android.app.Application
 import android.content.Context
 import android.widget.Toast
-import com.core.library_base.app.ApplicationLifecycle
-import com.core.library_base.util.ProcessUtil
+import com.core.library_common.app.ApplicationLifecycle
+import com.core.library_common.ktx.getApplicationContext
+import com.core.library_common.util.ProcessUtil
 import com.google.auto.service.AutoService
 import com.knight.kotlin.library_aop.loginintercept.ILoginFilter
 import com.knight.kotlin.library_aop.loginintercept.LoginManager
-import com.knight.kotlin.library_base.BaseApp
-import com.core.library_common.entity.UserInfoEntity
-import com.knight.kotlin.library_base.ktx.getUser
+import com.knight.kotlin.library_common.entity.UserInfoEntity
+import com.knight.kotlin.library_common.ktx.getUser
 
 
 /**
@@ -35,8 +35,8 @@ class AopApplication: ApplicationLifecycle {
     override fun initSafeTask(): MutableList<() -> String> {
         val list = mutableListOf<() -> String>()
         //在主进程初始化
-        if (ProcessUtil.isMainProcess(BaseApp.context)) {
-            initLoginFilter(BaseApp.application)
+        if (ProcessUtil.isMainProcess(getApplicationContext())) {
+            initLoginFilter(getApplicationContext())
         }
         return list
     }

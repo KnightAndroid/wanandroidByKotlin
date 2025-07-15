@@ -2,7 +2,7 @@ package com.knight.kotlin.module_project
 
 import android.app.Application
 import android.content.Context
-import com.core.library_base.app.ApplicationLifecycle
+import com.core.library_common.app.ApplicationLifecycle
 import com.google.auto.service.AutoService
 
 /**

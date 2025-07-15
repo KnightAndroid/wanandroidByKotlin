@@ -9,8 +9,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter4.BaseMultiItemAdapter
 import com.core.library_base.route.RouteActivity
-import com.core.library_common.dp2px
-
+import com.core.library_common.util.dp2px
 import com.knight.kotlin.library_util.startPageWithAnimate
 import com.knight.kotlin.library_util.startPageWithParams
 import com.knight.kotlin.library_widget.SpacesItemDecoration

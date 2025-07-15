@@ -3,9 +3,9 @@ package com.knight.kotlin.module_video
 import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
-import com.core.library_base.app.ApplicationLifecycle
+import com.core.library_common.app.ApplicationLifecycle
+import com.core.library_common.ktx.getApplicationContext
 import com.google.auto.service.AutoService
-import com.knight.kotlin.library_common.provider.ApplicationProvider
 import com.knight.kotlin.module_video.utils.precache.PreloadManager
 
 
@@ -15,7 +15,7 @@ import com.knight.kotlin.module_video.utils.precache.PreloadManager
  * Description:VideoApplication
  */
 @AutoService(ApplicationLifecycle::class)
-class VideoApplication : ApplicationLifecycle{
+class VideoApplication : ApplicationLifecycle {
 
 
     companion object {
@@ -46,7 +46,7 @@ class VideoApplication : ApplicationLifecycle{
     }
 
     fun initVideoCache() :String {
-        ApplicationProvider.getInstance().getApplication()?.let {
+        getApplicationContext()?.let {
             PreloadManager(it)
         }
         return  "VideoCache -->> init VideoCache"

@@ -18,8 +18,7 @@ import android.view.View
 import androidx.annotation.ColorInt
 import androidx.annotation.Size
 import androidx.core.graphics.ColorUtils
-
-import com.core.library_common.dp2px
+import com.core.library_common.util.dp2px
 import kotlin.math.abs
 import kotlin.math.cos
 import kotlin.math.max

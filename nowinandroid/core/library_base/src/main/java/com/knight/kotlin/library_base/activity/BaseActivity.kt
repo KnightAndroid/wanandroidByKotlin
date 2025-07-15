@@ -30,13 +30,12 @@ import com.core.library_base.util.ViewRecreateHelper
 import com.core.library_base.view.BaseView
 import com.core.library_base.vm.BaseViewModel
 import com.core.library_base.widget.loadcircleview.ProgressHud
-import com.core.library_common.config.Appconfig
 import com.kingja.loadsir.core.LoadService
 import com.kingja.loadsir.core.LoadSir
 import com.knight.kotlin.library_base.ktx.createViewModel
 import com.knight.kotlin.library_base.ktx.subscribeData
-import com.core.library_common.util.CacheUtils
-import com.core.library_common.util.LanguageFontSizeUtils
+import com.knight.kotlin.library_common.util.CacheUtils
+import com.knight.kotlin.library_common.util.LanguageFontSizeUtils
 import com.knight.kotlin.library_base.utils.StatusBarUtils
 import com.wyjson.router.GoRouter
 
@@ -143,9 +142,9 @@ abstract class BaseActivity<VB : ViewBinding,VM : BaseViewModel> : AppCompatActi
 
         //注册EventBus
         if (javaClass.isAnnotationPresent(EventBusRegister::class.java)) EventBusUtils.register(this)
-        themeColor = CacheUtils.getThemeColor()
-        isDarkMode = CacheUtils.getNormalDark()
-        isEyeCare = CacheUtils.getIsEyeCare()
+        themeColor = com.knight.kotlin.library_common.util.CacheUtils.getThemeColor()
+        isDarkMode = com.knight.kotlin.library_common.util.CacheUtils.getNormalDark()
+        isEyeCare = com.knight.kotlin.library_common.util.CacheUtils.getIsEyeCare()
         mBinding.initView()
         setThemeColor(isDarkMode)
         NetworkManager.getInstance().register(this)
@@ -240,8 +239,8 @@ abstract class BaseActivity<VB : ViewBinding,VM : BaseViewModel> : AppCompatActi
     fun onNetWorkStateChange(networkState: NetworkState) {
         when (networkState) {
             NetworkState.NONE -> {
-                CacheUtils.clearIp()
-                Appconfig.IP = ""
+                com.knight.kotlin.library_common.util.CacheUtils.clearIp()
+                com.knight.kotlin.library_common.config.Appconfig.IP = ""
                 if (tipView?.parent == null) {
                     mWindowManager?.addView(tipView, mLayoutParams)
                 }

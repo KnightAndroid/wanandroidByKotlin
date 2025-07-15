@@ -16,11 +16,11 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation project(":nowinandroid:core:library_common")
    // implementation project(path: ':nowinandroid:core:library_base')
-    implementation project(":nowinandroid:core:library_database")
-    implementation project(path: ':core:library_common')
+   // implementation project(":nowinandroid:core:library_database")
+  //  implementation project(path: ':core:library_common')
     implementation Dependencies.JetPack.HILT_CORE
     implementation Dependencies.GitHub.GLIDE
-
+    implementation Dependencies.Androidx.RECYCLEVIEW
     kapt Dependencies.JetPack.HILT_APT
     kapt Dependencies.JetPack.HILT_ANDROIDX
 
@@ -30,5 +30,7 @@ dependencies {
     implementation Dependencies.OtherUtils.ExoplayerDataSource
     api Dependencies.OtherUtils.ExoPlayerCommon
     implementation Dependencies.OtherUtils.WechatSdk
+    implementation Dependencies.OtherUtils.BUGLY
+    implementation Dependencies.Androidx.ViewPager2
 
 }

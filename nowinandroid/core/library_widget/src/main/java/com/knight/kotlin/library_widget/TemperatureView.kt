@@ -6,8 +6,8 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.View
-import com.core.library_common.util.CacheUtils
-import com.core.library_common.dp2px
+import com.knight.kotlin.library_common.util.CacheUtils
+import com.core.library_common.util.dp2px
 
 
 /**
