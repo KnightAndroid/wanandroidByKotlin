@@ -96,7 +96,6 @@
         android:shadowRadius="2"
         android:textColor="@android:color/white"/>
 
-
     <TextView
         android:id="@+id/tv_tip_info"
         android:layout_width="0dp"
