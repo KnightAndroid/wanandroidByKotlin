@@ -17,7 +17,7 @@
 ![项目架构图.png](https://gitee.com/MengSuiXinSuoYuan/wanandroid_server/raw/master/wanandroid_picture/wanandroid%E6%9E%B6%E6%9E%84%E5%9B%BE.png)
 
 ## 项目模块依赖图
-![项目模块依赖图](https://gitee.com/MengSuiXinSuoYuan/wanandroid_server/raw/master/wanandroid_picture/wanandroid%E6%A8%A1%E5%9D%97%E4%BE%9D%E8%B5%96%E5%9B%BE.png)
+![项目模块依赖图.png](https://gitee.com/MengSuiXinSuoYuan/wanandroid_server/raw/master/wanandroid_picture/wanandroid%E6%A8%A1%E5%9D%97%E4%BE%9D%E8%B5%96%E5%9B%BE.png)
 
 **项目目录简单说明：**
 
