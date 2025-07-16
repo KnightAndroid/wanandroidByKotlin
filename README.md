@@ -16,6 +16,21 @@
 ## 项目架构
 ![项目架构图.png](https://gitee.com/MengSuiXinSuoYuan/wanandroid_server/raw/master/wanandroid_picture/wanandroid%E6%9E%B6%E6%9E%84%E5%9B%BE.png)
 
+## 项目模块依赖图
+![项目模块依赖图](https://gitee.com/MengSuiXinSuoYuan/wanandroid_server/raw/master/wanandroid_picture/wanandroid%E6%A8%A1%E5%9D%97%E4%BE%9D%E8%B5%96%E5%9B%BE.png)
+
+**项目目录简单说明：**
+
+* **最外层**`core`**目录**：为**所有App(暂时只有wanandroid这个App)**都可以使用的代码及资源，**内部模块**被**所有App**内的`core`**模块**依赖。
+* **最外层**`nowinandroid`**目录**：为 **wanandroidApp自己独有（特有）** 的相关代码及资源。
+  * `core`**模块**：依赖**最外层**`core`**目录**内的模块，**反之不行**。
+  * `app`**模块**：是wanandroidApp项目的app模块
+  * `feature_xxx`**模块**：是wanandroidApp某个功能模块，直接依赖`nowinandroid`下的`core`模块
+
+
+
+
+
 ## 主要功能
 
 - 首页、广场、导航、项目、公众号、我的、课程、推荐视频、开眼浏览图片视频等模块
@@ -154,6 +169,8 @@
 ## Thanks
 - 感谢鸿洋大大开放的[API](https://github.com/hongyangAndroid/wanandroid)
 - [https://github.com/breezy-weather/breezy-weather](https://github.com/breezy-weather/breezy-weather)
+- [https://github.com/zrq1060/architecture-android](https://github.com/zrq1060/architecture-android)
+- [nowinandroid](https://github.com/android/nowinandroid)
 - 感谢开眼的API
 
 ## 非商业用途声明
