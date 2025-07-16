@@ -123,13 +123,9 @@ dependencies {
     api project(":nowinandroid:core:library_network")
     api project(":nowinandroid:core:library_widget")
     api project(":nowinandroid:core:library_aop")
-   // api project(":nowinandroid:core:library_common")
-  //  api project(path: ':library_base')
     api project(":nowinandroid:core:library_base")
     api project(":nowinandroid:core:library_database")
     api project(":nowinandroid:core:library_permiss")
-
-  //  api project(path: ':library_crypt')
     api project(":nowinandroid:core:module_aar:aar")
     testImplementation Dependencies.Android.JUNIT
     androidTestImplementation Dependencies.Androidx.TEST_EXT_JUNIT

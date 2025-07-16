@@ -16,8 +16,7 @@ dependencies {
     kapt Dependencies.JetPack.HILT_APT
     kapt Dependencies.JetPack.HILT_ANDROIDX
     implementation project(":nowinandroid:core:library_util")
-    implementation project(path: ':nowinandroid:core:library_base')
-    //implementation project(":nowinandroid:core:library_common")
+    implementation project(":nowinandroid:core:library_base")
     api Dependencies.GitHub.SWIPE_RECYCLERVIEW
     api Dependencies.GitHub.BASE_ADAPTER_HELPER
     api Dependencies.GitHub.SMART_KERNEL
@@ -27,7 +26,7 @@ dependencies {
     api Dependencies.GitHub.MAGIC_INDICATOR
     api Dependencies.Android.FLEXLAYOUT
     implementation Dependencies.GitHub.SHIMMER_LAYOUT
-    //依赖dataBase 数据库
+    //依赖dataBase 数据库 因本库需要用到数据库里面的实体CityBean
     implementation project(":nowinandroid:core:library_database")
 
 }
