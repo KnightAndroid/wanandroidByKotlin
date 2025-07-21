@@ -77,8 +77,8 @@ class HomeWeatherNewsFragment: BaseDialogFragment<HomeTodayWeatherNewsDialogBind
                            mBinding.flipView.layoutParams = params
                            mViewModel.getTodayImage("js","0","1").observe(viewLifecycleOwner,{ data ->
 
-
-                               ImageLoader.loadStringPhoto(requireActivity(), "https://cn.bing.com" + data.images.get(0).urlbase + "_640x480.jpg",mBinding.homeTodayWeatherItem.ivTodayBg)
+                               //1920×1080，1366×768，1280×768，1024×768，800×600，800×480，768×1280，720×1280，640×480，480×800，400×240，320×240，240×320
+                               ImageLoader.loadStringPhoto(requireActivity(), "https://cn.bing.com" + data.images.get(0).urlbase + "_1366x768.jpg",mBinding.homeTodayWeatherItem.ivTodayBg)
                            })
                        }
 

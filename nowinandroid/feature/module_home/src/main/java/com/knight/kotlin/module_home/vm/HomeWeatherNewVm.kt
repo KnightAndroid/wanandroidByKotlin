@@ -23,14 +23,6 @@ class HomeWeatherNewVm @Inject constructor(private val mRepo: HomeWeatherNewRepo
 
     /**
      *
-     * 查询每日一图
-     */
-    fun getTodayImage(format:String, idx:String, n:String): LiveData<WeatherNewBean> {
-        return mRepo.getTodayImage(format,idx,n).asLiveData()
-    }
-
-    /**
-     *
      * 查询未来两个小时降雨量
       */
     fun getTwoHourRainFall(latitude: Double,
@@ -40,6 +32,14 @@ class HomeWeatherNewVm @Inject constructor(private val mRepo: HomeWeatherNewRepo
                                       timezone:String) : LiveData<RainHourFallBean>{
         return mRepo.getTwoHourRainFall(latitude,longitude,hourly,forecast_hours,timezone).asLiveData()
 
+    }
+
+    /**
+     *
+     * 查询每日一图
+     */
+    fun getTodayImage(format:String, idx:String, n:String): LiveData<WeatherNewBean> {
+        return mRepo.getTodayImage(format,idx,n).asLiveData()
     }
 
 
