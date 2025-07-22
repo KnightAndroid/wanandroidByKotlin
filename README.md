@@ -145,7 +145,7 @@
 
 ![wanandroid_normal_release.png](https://gitee.com/MengSuiXinSuoYuan/wanandroid_server/raw/master/wanandroid_picture/wanandroid_normal_release.png)
 
-若不能编译，打开AS**Settings** -- **Build,Execution,Deployment** -- **Build Tools** -- **Gradle** -- **Gradle JDK** 设置JDK 17
+若不能编译，打开AS -- **Settings** -- **Build,Execution,Deployment** -- **Build Tools** -- **Gradle** -- **Gradle JDK** 设置JDK 17
 
 
 ## 更新日志
