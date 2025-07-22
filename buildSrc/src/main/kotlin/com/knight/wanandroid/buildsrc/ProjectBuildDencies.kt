@@ -11,8 +11,8 @@ object ProjectBuildDencies {
     const val APPLICATION_ID = "com.knight.kotlin.wanandroid"
     const val MIN_SDK_VERSION = 22
     const val TARGET_SDK_VERSION = 35
-    const val VERSION_CODE = 12
-    const val VERSION_NAME = "2.2.1"
+    const val VERSION_CODE = 13
+    const val VERSION_NAME = "2.2.2"
     const val APP_MODE = false
 
 
