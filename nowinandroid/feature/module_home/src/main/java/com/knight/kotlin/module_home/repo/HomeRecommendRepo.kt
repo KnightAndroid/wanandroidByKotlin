@@ -1,5 +1,6 @@
 package com.knight.kotlin.module_home.repo
 
+import com.core.library_base.ktx.dimissLoadingDialog
 import com.knight.kotlin.library_base.entity.BaiduCardDataBean
 import com.knight.kotlin.library_common.entity.UserInfoEntity
 import com.knight.kotlin.library_base.entity.WeatherDetailBean
@@ -187,10 +188,12 @@ class HomeRecommendRepo @Inject constructor(): BaseRepository() {
               province,
               city,
               country).run{
+              dimissLoadingDialog()
               responseCodeExceptionHandler(0,msg)
               emit(data)
           }
     }){
+        dimissLoadingDialog()
         it?.let { it1 -> toast(it1) }
     }
 
@@ -208,9 +211,11 @@ class HomeRecommendRepo @Inject constructor(): BaseRepository() {
         daily :String
     )  = request<RainDayFallBean> ({
         mHomeRecommendApiService.getTwoWeekDayRainFall(latitude, longitude, start_date, end_date, current_weather, daily).run {
+
             emit(this)
         }
     }){
+        dimissLoadingDialog()
         it?.let { it1 -> toast(it1) }
     }
 

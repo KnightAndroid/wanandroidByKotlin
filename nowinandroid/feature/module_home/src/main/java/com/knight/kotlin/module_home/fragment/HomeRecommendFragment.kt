@@ -39,6 +39,7 @@ import com.core.library_base.event.MessageEvent
 import com.core.library_base.ktx.fromJson
 import com.core.library_base.ktx.init
 import com.core.library_base.ktx.setOnClick
+import com.core.library_base.ktx.showLoadingDialog
 import com.core.library_base.ktx.toHtml
 import com.core.library_base.ktx.toJson
 import com.core.library_base.route.RouteActivity
@@ -702,6 +703,7 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
         mBinding.homeRecommentMenu.sunMoonControlView.setDrawStatus(SunMoonView.SunMoonDrawStatus.NOTDRAW)
         mBinding.homeRecommentMenu.homeTvLocation.text = city.city
         val latLng = Coordtransform.BD09toWGS84(lng, lat)
+        showLoadingDialog()
         getWeather(latLng[1],latLng[0],city.province, city.city, city.city,false)
     }
 
@@ -842,6 +844,7 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
      */
     @RequiresApi(Build.VERSION_CODES.O)
     private fun getDetailWeekWeather(location: BDLocation) {
+        showLoadingDialog()
         mBinding.homeRecommentMenu.homeTvLocation.text = location.city
         val latLng = Coordtransform.BD09toWGS84(location.longitude, location.latitude)
         getWeather(latLng[1],latLng[0],location.province, location.city, location.district,true)
