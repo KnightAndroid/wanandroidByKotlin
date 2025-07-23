@@ -47,8 +47,8 @@ class HomeWeatherNewVm @Inject constructor(private val mRepo: HomeWeatherNewRepo
      * 获取早报信息
      *
      */
-    fun getZaoBao():LiveData<ZaoBaoBean> {
-        return mRepo.getZaoBao().asLiveData()  //#1DD4EC #4B97F8
+    fun getZaoBao(type:String):LiveData<ZaoBaoBean> {
+        return mRepo.getZaoBao(type).asLiveData()  //#1DD4EC #4B97F8
     }
 
 

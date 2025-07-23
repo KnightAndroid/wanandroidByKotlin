@@ -1,6 +1,5 @@
 package com.knight.kotlin.module_home.api
 
-import com.knight.kotlin.library_network.bean.BaseResponse
 import com.knight.kotlin.module_home.entity.RainHourFallBean
 import com.knight.kotlin.module_home.entity.WeatherNewBean
 import com.knight.kotlin.module_home.entity.ZaoBaoBean
@@ -47,7 +46,7 @@ interface HomeWeatherNewsApiService {
      * 获取热早报微语
      */
     @Headers("Domain-Name:zaobao")
-    @GET("v2/60s")
-    suspend fun getZaoBao(): BaseResponse<ZaoBaoBean>
+    @GET("api/sixs")
+    suspend fun getZaoBao(@Query("type") type: String): ZaoBaoBean
 
 }

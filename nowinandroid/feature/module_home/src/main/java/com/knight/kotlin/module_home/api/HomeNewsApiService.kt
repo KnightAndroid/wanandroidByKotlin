@@ -5,6 +5,7 @@ import com.knight.kotlin.module_home.entity.ZaoBaoAudioBean
 import com.knight.kotlin.module_home.entity.ZaoBaoBean
 import retrofit2.http.GET
 import retrofit2.http.Headers
+import retrofit2.http.Query
 
 
 /**
@@ -20,8 +21,8 @@ interface HomeNewsApiService {
      * 获取热早报微语
      */
     @Headers("Domain-Name:zaobao")
-    @GET("v2/60s")
-    suspend fun getNews(): BaseResponse<ZaoBaoBean>
+    @GET("api/sixs")
+    suspend fun getNews(@Query("type") type: String): ZaoBaoBean
 
 
 

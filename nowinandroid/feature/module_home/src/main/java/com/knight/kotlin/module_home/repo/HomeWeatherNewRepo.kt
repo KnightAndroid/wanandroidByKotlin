@@ -65,10 +65,10 @@ class HomeWeatherNewRepo @Inject constructor(): BaseRepository(){
      *
      * 获取早报新闻
      */
-    fun getZaoBao() = request<ZaoBaoBean>({
-        mHomeWeatherNewsApiService.getZaoBao().run {
-            responseCodeExceptionHandler(code,msg)
-            emit(data)
+    fun getZaoBao(type:String) = request<ZaoBaoBean>({
+        mHomeWeatherNewsApiService.getZaoBao(type).run {
+            responseCodeExceptionHandler(if(this.code == "200")  0 else -1,msg)
+            emit(this)
         }
     }) {
         it?.let { it1 -> toast(it1) }

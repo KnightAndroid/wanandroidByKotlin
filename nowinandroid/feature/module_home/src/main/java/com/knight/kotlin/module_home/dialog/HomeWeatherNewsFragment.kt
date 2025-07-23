@@ -62,23 +62,23 @@ class HomeWeatherNewsFragment: BaseDialogFragment<HomeTodayWeatherNewsDialogBind
     override fun initRequestData() {
 
             //获取日报新闻
-            mViewModel.getZaoBao().observe(viewLifecycleOwner,{data->
+            mViewModel.getZaoBao("json").observe(viewLifecycleOwner,{data->
                data?.let {
                    zaoBaoDate = data.date
                    mBinding.homeTodayNewsItem.tvNewsTop.text = data.news.get(0)
-                   ImageLoader.loadImageWithAdaptiveSize(mBinding.homeTodayNewsItem.ivZaobaoHead,getScreenWidth() - 20.dp2px(), 0,data.cover,{
+                   ImageLoader.loadImageWithAdaptiveSize(mBinding.homeTodayNewsItem.ivZaobaoHead,getScreenWidth() - 20.dp2px(), 0,data.head_image,{
                            width,height->
 
 
                        mBinding.flipView.post {
                            val params = mBinding.flipView.layoutParams
                            params.width = width
-                           params.height = height + 180.dp2px()
+                           params.height = height + 130.dp2px()
                            mBinding.flipView.layoutParams = params
                            mViewModel.getTodayImage("js","0","1").observe(viewLifecycleOwner,{ data ->
 
                                //1920×1080，1366×768，1280×768，1024×768，800×600，800×480，768×1280，720×1280，640×480，480×800，400×240，320×240，240×320
-                               ImageLoader.loadStringPhoto(requireActivity(), "https://cn.bing.com" + data.images.get(0).urlbase + "_1366x768.jpg",mBinding.homeTodayWeatherItem.ivTodayBg)
+                               ImageLoader.loadStringPhoto(requireActivity(), "https://cn.bing.com" + data.images.get(0).urlbase + "_640x480.jpg",mBinding.homeTodayWeatherItem.ivTodayBg)
                            })
                        }
 

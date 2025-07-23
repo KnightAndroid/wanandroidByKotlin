@@ -12,15 +12,15 @@ import kotlinx.parcelize.Parcelize
  */
 @Parcelize
 data class ZaoBaoBean(
+    val code :String,
+    val msg:String,
     val date:String,
     val news:List<String>,
     val weiyu:String,
     val tip:String,
     val image:String,
-   // val audio:String,
     val audio:ZaoBaoAudio,
     val head_image:String,
-    val cover:String
 ): Parcelable
 
 @Parcelize

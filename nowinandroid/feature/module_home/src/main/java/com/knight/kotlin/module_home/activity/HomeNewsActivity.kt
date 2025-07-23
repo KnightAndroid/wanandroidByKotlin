@@ -66,7 +66,7 @@ class HomeNewsActivity: BaseActivity<HomeNewsActivityBinding, HomeNewsVm>(), OnR
     }
 
     override fun initRequestData() {
-        mViewModel.getNews().observerKt {
+        mViewModel.getNews("json").observerKt {
 
             mBinding.includeNews.baseFreshlayout.finishRefresh()
             requestSuccess()
@@ -219,7 +219,7 @@ class HomeNewsActivity: BaseActivity<HomeNewsActivityBinding, HomeNewsVm>(), OnR
             if (!::mNewsHeaderBinding.isInitialized) {
                 mNewsHeaderBinding =
                 HomeNewsHeadBinding.inflate(LayoutInflater.from(this@HomeNewsActivity))
-                ImageLoader.loadImageWithAdaptiveSize(mNewsHeaderBinding.homeNewsHeadIv, getScreenWidth(), 0,zaoBao.cover,{
+                ImageLoader.loadImageWithAdaptiveSize(mNewsHeaderBinding.homeNewsHeadIv, getScreenWidth(), 0,zaoBao.head_image,{
                         width,height->
                     mNewsAdapter.submitList(zaoBao.news)
                     mBinding.includeNews.baseBodyRv.addHeaderView(mNewsHeaderBinding.root)
@@ -232,7 +232,7 @@ class HomeNewsActivity: BaseActivity<HomeNewsActivityBinding, HomeNewsVm>(), OnR
                 mNewsFootBinding =
                     HomeNewsFootBinding.inflate(LayoutInflater.from(this@HomeNewsActivity))
                 mBinding.includeNews.baseBodyRv.addFooterView(mNewsFootBinding.root)
-                mNewsFootBinding.weiyu = zaoBao.tip
+                mNewsFootBinding.weiyu = zaoBao.weiyu
             }
         } else {
             mNewsAdapter.submitList(zaoBao.news)

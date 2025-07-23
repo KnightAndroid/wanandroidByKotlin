@@ -23,8 +23,8 @@ class HomeNewsVm @Inject constructor(private val mRepo: HomeNewsRepo) : BaseView
     /**
      * 获取新闻
      */
-    fun getNews(): LiveData<ZaoBaoBean> {
-        return mRepo.getNews().asLiveData()
+    fun getNews(type:String): LiveData<ZaoBaoBean> {
+        return mRepo.getNews(type).asLiveData()
     }
 
 

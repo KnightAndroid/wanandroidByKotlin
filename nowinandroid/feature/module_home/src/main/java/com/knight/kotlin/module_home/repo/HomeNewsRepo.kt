@@ -30,10 +30,10 @@ class HomeNewsRepo @Inject constructor(): BaseRepository() {
      *
      * 获取早报新闻
      */
-    fun getNews() = request<ZaoBaoBean>({
-        mHomeNewsApiService.getNews().run {
-            responseCodeExceptionHandler(code,msg)
-            emit(data)
+    fun getNews(type:String) = request<ZaoBaoBean>({
+        mHomeNewsApiService.getNews(type).run {
+            responseCodeExceptionHandler(if ( code == "200") 0 else -1,msg)
+            emit(this)
         }
     }) {
         it?.let { it1 -> toast(it1) }
