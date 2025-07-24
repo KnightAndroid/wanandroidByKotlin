@@ -3,10 +3,11 @@ package com.knight.kotlin.library_base.fragment
 import android.graphics.drawable.GradientDrawable
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.Gravity
 import android.view.View
 import com.core.library_base.vm.EmptyViewModel
-import com.knight.kotlin.library_common.util.CacheUtils
 import com.core.library_common.util.dp2px
 import com.knight.kotlin.library_base.databinding.UpdateAppDialogBinding
 import com.knight.kotlin.library_base.entity.AppUpdateBean
@@ -62,8 +63,11 @@ class UpdateAppDialogFragment: BaseDialogFragment<UpdateAppDialogBinding, EmptyV
 
         mBinding.tvConfimUpdate.setOnClickListener {
             dismiss()
-            com.knight.kotlin.library_base.fragment.DownLoadDialogFragment.newInstance(mAppUpdateBean?.downLoadLink).showAllowingStateLoss(
-                parentFragmentManager,"dialog_download")
+            Handler(Looper.getMainLooper()).post {
+                DownLoadDialogFragment.newInstance(mAppUpdateBean?.downLoadLink)
+                    .showAllowingStateLoss(parentFragmentManager, "dialog_download")
+            }
+
         }
 
         mBinding.ivAppupdateClose.setOnClickListener {

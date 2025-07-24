@@ -3,8 +3,8 @@ package com.knight.kotlin.module_navigate.fragment
 import android.view.View
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.core.library_base.route.RouteFragment
+import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.knight.kotlin.module_navigate.R
 import com.knight.kotlin.module_navigate.adapter.LeftBarAdapter
 import com.knight.kotlin.module_navigate.databinding.NavigateFragmentBinding
@@ -131,10 +131,10 @@ class NavigateFragment : BaseFragment<NavigateFragmentBinding, NavigateVm>(),Che
      */
     private fun moveToCenter(position: Int) {
         //将点击的position转换为当前屏幕上可见的item的位置以便于计算距离顶部的高度，从而进行移动居中
-        val childAt: View =
+        val childAt: View? =
             mBinding.navigateLeftSidebar.getChildAt(position - (mLinearLayoutManager?.findFirstVisibleItemPosition() ?:0))
-        if (childAt != null) {
-            val y: Int = childAt.top - mBinding.navigateLeftSidebar.getHeight() / 2
+        childAt?.let {
+            val y: Int = it.top - mBinding.navigateLeftSidebar.getHeight() / 2
             mBinding.navigateLeftSidebar.smoothScrollBy(0, y)
         }
     }
