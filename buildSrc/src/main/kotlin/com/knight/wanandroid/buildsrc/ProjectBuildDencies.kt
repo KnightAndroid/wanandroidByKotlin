@@ -13,7 +13,7 @@ object ProjectBuildDencies {
     const val TARGET_SDK_VERSION = 35
     const val VERSION_CODE = 13
     const val VERSION_NAME = "2.2.2"
-    const val APP_MODE = false
+    const val APP_MODE = true
 
 
     /**

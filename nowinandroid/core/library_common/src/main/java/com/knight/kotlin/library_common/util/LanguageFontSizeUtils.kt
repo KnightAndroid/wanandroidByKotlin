@@ -30,7 +30,7 @@ object LanguageFontSizeUtils {
     fun setAppLanguage(context: Context) {
         val resources = context.resources
         val configuration = resources.configuration
-        val locale = getSetLanguageLocale()
+        val locale = getLanguageLocale()
         configuration.setLocale(locale)
         context.createConfigurationContext(configuration)
 
@@ -40,7 +40,7 @@ object LanguageFontSizeUtils {
     @RequiresApi(api = Build.VERSION_CODES.N)
     fun updateResources(context: Context, fontSize: Float): Context? {
         val resources = context.resources
-        val locale = getSetLanguageLocale()
+        val locale = getLanguageLocale()
         val configuration = resources.configuration
         configuration.fontScale = fontSize
         configuration.setLocale(locale)
@@ -54,7 +54,7 @@ object LanguageFontSizeUtils {
      *
      * @return
      */
-    fun getSetLanguageLocale(): Locale {
+    fun getLanguageLocale(): Locale {
         return when (CacheUtils.getLanguageMode()) {
             "Auto" -> getSystemLocale()
             "简体中文" -> Locale.SIMPLIFIED_CHINESE
@@ -92,7 +92,7 @@ object LanguageFontSizeUtils {
      * @return
      */
     fun isChinese(): Boolean {
-        val locale = getSetLanguageLocale()
+        val locale = getLanguageLocale()
         return locale.language == Locale.SIMPLIFIED_CHINESE.language
     }
 

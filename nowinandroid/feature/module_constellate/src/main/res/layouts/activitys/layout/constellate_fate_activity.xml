@@ -4,7 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
 
-
+        <variable
+            name="title"
+            type="java.lang.String" />
 
     </data>
 
@@ -16,6 +18,12 @@
 
 
 
+
+
+
+
+
+
         <ImageView
             android:id="@+id/constellate_top_bg"
             android:layout_width="0dp"
@@ -24,6 +32,15 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:background="@drawable/constellate_main_top_bg"/>
+        <include
+            android:id="@+id/constellate_fate_toolbar"
+            layout="@layout/base_include_toolbar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:title="@{title}"/>
+
+
 
 
         <com.knight.kotlin.library_widget.DoubleCloudView
@@ -34,6 +51,53 @@
             android:layout_marginTop="40dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="@id/constellate_top_bg"/>
+
+
+
+
+        <FrameLayout
+            android:id="@+id/fr_constellate_head_border"
+            android:layout_width="122dp"
+            android:layout_height="122dp"
+            android:layout_marginTop="80dp"
+            android:layout_gravity="center"
+            android:background="@drawable/constellate_transparent_circle_bg"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/constellate_head_bg"/>
+
+            <ImageView
+                android:id="@+id/constellate_head_iv"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:scaleType="centerCrop"
+                android:layout_gravity="center"
+
+                />
+
+
+        </FrameLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/fr_constellate_head_border"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="测试"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/banv_ne_leave_highway_other_charge_color" />
+
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

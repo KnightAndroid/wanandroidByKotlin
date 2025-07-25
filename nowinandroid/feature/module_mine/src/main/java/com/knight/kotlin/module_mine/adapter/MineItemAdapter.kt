@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter4.BaseQuickAdapter
-import com.knight.kotlin.library_common.util.LanguageFontSizeUtils
 import com.knight.kotlin.library_common.ktx.getUser
+import com.knight.kotlin.library_common.util.LanguageFontSizeUtils
 import com.knight.kotlin.module_mine.databinding.MineItemBinding
 import com.knight.kotlin.module_mine.entity.MineItemEntity
 import java.util.Locale
@@ -35,7 +35,7 @@ class MineItemAdapter : BaseQuickAdapter<MineItemEntity, MineItemAdapter.VH>(
      * @return
      */
     private fun getLanguageMode(mineItem: MineItemEntity):String {
-        val locale = LanguageFontSizeUtils.getSetLanguageLocale()
+        val locale = LanguageFontSizeUtils.getLanguageLocale()
         return if ( locale.language == Locale.SIMPLIFIED_CHINESE.language) {
             mineItem.name_zh
         } else {

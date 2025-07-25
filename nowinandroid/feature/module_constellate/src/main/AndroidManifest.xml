@@ -5,6 +5,7 @@
     <application>
         <activity
             android:name=".activity.ConstellateMainActivity" />
+        <activity android:name=".activity.ConstellateFateActivity"/>
     </application>
 
 </manifest>

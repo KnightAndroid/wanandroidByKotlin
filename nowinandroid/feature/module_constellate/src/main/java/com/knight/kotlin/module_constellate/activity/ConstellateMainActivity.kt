@@ -15,10 +15,12 @@ import com.knight.kotlin.library_base.ktx.getScreenWidth
 import com.knight.kotlin.library_util.JsonUtils
 import com.knight.kotlin.library_widget.CustomGridItemDecoration
 import com.knight.kotlin.library_widget.ktx.init
+import com.knight.kotlin.library_widget.ktx.setSafeOnItemClickListener
 import com.knight.kotlin.module_constellate.R
 import com.knight.kotlin.module_constellate.adapter.ConstellateTypeAdapter
 import com.knight.kotlin.module_constellate.databinding.ConstellateMainActivityBinding
 import com.knight.kotlin.module_constellate.entity.ConstellateTypeEntity
+import com.wyjson.router.GoRouter
 import com.wyjson.router.annotation.Route
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -65,12 +67,24 @@ class ConstellateMainActivity : BaseActivity<ConstellateMainActivityBinding, Emp
         constellateMainToolbar.root.post {
            setupConstellateGrid()
         }
+        initAdapterListener()
+
+    }
 
 
+    /**
+     *
+     * 初始化适配器监听
+     */
+    private fun initAdapterListener() {
+        mConstellateTypeAdapter.run {
+            //Item点击事件
+            setSafeOnItemClickListener {adapter,view,position ->
 
-
-
-
+                GoRouter.getInstance().build(RouteActivity.Constellate.ConstellateFateActivity)
+                    .withParcelable("constellate",adapter.getItem(position)).go()
+            }
+        }
     }
 
     /**

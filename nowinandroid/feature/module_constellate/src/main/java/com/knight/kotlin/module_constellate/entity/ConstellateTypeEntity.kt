@@ -13,6 +13,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class ConstellateTypeEntity(
     val name:String,
+    val enName:String,
     val date:String,
     val position:Int
 ): Parcelable

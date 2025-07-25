@@ -43,7 +43,9 @@ class DoubleCloudView @JvmOverloads constructor(
         backgroundLayer.startScroll()
         foregroundLayer.startScroll()
     }
-
+    fun setAvoidCircle(cx: Float, cy: Float, radius: Float) {
+        foregroundLayer.setAvoidCircle(cx, cy, radius)
+    }
     fun stop() {
         backgroundLayer.stopScroll()
         foregroundLayer.stopScroll()
