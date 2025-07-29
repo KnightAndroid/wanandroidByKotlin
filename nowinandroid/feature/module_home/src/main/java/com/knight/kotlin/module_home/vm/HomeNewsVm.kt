@@ -28,12 +28,6 @@ class HomeNewsVm @Inject constructor(private val mRepo: HomeNewsRepo) : BaseView
     }
 
 
-    /**
-     * 获取新闻
-     */
-    fun getAudio(): LiveData<ZaoBaoAudioBean> {
-        return mRepo.getAudio().asLiveData()
-    }
 
 
 

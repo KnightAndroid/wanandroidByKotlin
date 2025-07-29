@@ -14,7 +14,10 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
 
 
 
@@ -41,60 +44,95 @@
             app:title="@{title}"/>
 
 
+       <androidx.core.widget.NestedScrollView
+           android:layout_width="match_parent"
+           android:layout_height="0dp"
+           android:fillViewport="true"
+           app:layout_constraintStart_toStartOf="parent"
+           android:layout_marginTop="40dp"
+           app:layout_constraintEnd_toEndOf="parent"
+           app:layout_constraintTop_toTopOf="parent"
+           app:layout_constraintBottom_toBottomOf="parent">
+
+           <RelativeLayout
+               android:layout_width="match_parent"
+               android:layout_height="match_parent">
 
 
-        <com.knight.kotlin.library_widget.DoubleCloudView
-            android:id="@+id/constellate_cloud_view"
-            android:layout_width="wrap_content"
-            android:layout_height="140dp"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="40dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="@id/constellate_top_bg"/>
+               <com.knight.kotlin.library_widget.DoubleCloudView
+                   android:id="@+id/constellate_cloud_view"
+                   android:layout_width="wrap_content"
+                   android:layout_height="140dp"
+                   android:layout_marginTop="80dp"
+                   />
+
+
+               <FrameLayout
+                   android:id="@+id/fr_constellate_head_border"
+                   android:layout_width="122dp"
+                   android:layout_height="122dp"
+                   android:layout_marginTop="40dp"
+                   android:layout_gravity="center"
+                   android:background="@drawable/constellate_transparent_circle_bg"
+                   android:layout_centerHorizontal="true">
+
+                   <ImageView
+                       android:layout_width="match_parent"
+                       android:layout_height="match_parent"
+                       android:background="@drawable/constellate_head_bg"/>
+
+                   <ImageView
+                       android:id="@+id/constellate_head_iv"
+                       android:layout_width="100dp"
+                       android:layout_height="100dp"
+                       android:scaleType="centerCrop"
+                       android:layout_gravity="center"
+
+                       />
+
+
+               </FrameLayout>
+
+               <RelativeLayout
+                   android:layout_width="100dp"
+                   android:layout_height="30dp"
+                   android:layout_below="@id/fr_constellate_head_border"
+                   android:background="@drawable/constellate_select_bg"
+                   android:layout_centerHorizontal="true"
+                 >
+
+
+                   <TextView
+                       android:id="@+id/tv_constellate_name"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_centerHorizontal="true"
+                       android:layout_centerVertical="true"
+                       android:text="测试"
+                       android:drawablePadding="5dp"
+                       android:drawableRight="@drawable/constellate_select_arrow_icon"
+                       android:textColor="@color/banv_ne_leave_highway_other_charge_color" />
+
+               </RelativeLayout>
 
 
 
 
-        <FrameLayout
-            android:id="@+id/fr_constellate_head_border"
-            android:layout_width="122dp"
-            android:layout_height="122dp"
-            android:layout_marginTop="80dp"
-            android:layout_gravity="center"
-            android:background="@drawable/constellate_transparent_circle_bg"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+<!--               <View-->
+<!--                   android:layout_below="@id/sdsds"-->
+<!--                   android:layout_width="match_parent"-->
+<!--                   android:layout_height="800dp"-->
+<!--                   android:background="@color/banv_poi_search_text"/>-->
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/constellate_head_bg"/>
-
-            <ImageView
-                android:id="@+id/constellate_head_iv"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:scaleType="centerCrop"
-                android:layout_gravity="center"
-
-                />
+           </RelativeLayout>
 
 
-        </FrameLayout>
+       </androidx.core.widget.NestedScrollView>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/fr_constellate_head_border"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:text="测试"
-            android:layout_marginTop="10dp"
-            android:textColor="@color/banv_ne_leave_highway_other_charge_color" />
+
+
+
+
 
 
 

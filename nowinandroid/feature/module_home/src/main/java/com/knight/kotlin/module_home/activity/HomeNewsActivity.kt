@@ -67,14 +67,10 @@ class HomeNewsActivity: BaseActivity<HomeNewsActivityBinding, HomeNewsVm>(), OnR
 
     override fun initRequestData() {
         mViewModel.getNews("json").observerKt {
-
+            mp3Url = it.audio
             mBinding.includeNews.baseFreshlayout.finishRefresh()
             requestSuccess()
             initHeaderView(it)
-        }
-
-        mViewModel.getAudio().observerKt {
-            mp3Url = it.audio
         }
     }
 

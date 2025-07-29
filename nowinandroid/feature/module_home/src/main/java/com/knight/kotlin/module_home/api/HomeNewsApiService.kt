@@ -25,11 +25,4 @@ interface HomeNewsApiService {
     suspend fun getNews(@Query("type") type: String): ZaoBaoBean
 
 
-
-    /**
-     * 获取热早报微语
-     */
-    @Headers("Domain-Name:zaobaoother")
-    @GET("zaobao")
-    suspend fun getAudio(): BaseResponse<ZaoBaoAudioBean>
 }

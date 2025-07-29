@@ -41,19 +41,6 @@ class HomeNewsRepo @Inject constructor(): BaseRepository() {
 
 
 
-    /**
-     *
-     * 获取早报音频
-     */
-    fun getAudio() = request<ZaoBaoAudioBean>({
-        mHomeNewsApiService.getAudio().run {
-            responseCodeExceptionHandler(code,msg)
-            if (data != null) {
-                emit(data)
-            }
-        }
-    }) {
-        it?.let { it1 -> toast(it1) }
-    }
+
 
 }
