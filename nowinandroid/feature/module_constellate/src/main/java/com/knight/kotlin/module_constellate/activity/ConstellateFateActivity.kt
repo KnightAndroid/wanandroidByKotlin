@@ -12,10 +12,12 @@ import com.core.library_base.vm.EmptyViewModel
 import com.core.library_common.util.dp2px
 import com.google.android.material.tabs.TabLayoutMediator
 import com.knight.kotlin.library_base.activity.BaseActivity
+import com.knight.kotlin.library_common.util.CacheUtils
 import com.knight.kotlin.library_common.util.LanguageFontSizeUtils
 import com.knight.kotlin.library_util.ViewInitUtils
 import com.knight.kotlin.module_constellate.R
 import com.knight.kotlin.module_constellate.databinding.ConstellateFortuneActivityBinding
+import com.knight.kotlin.module_constellate.dialog.ConstellateSelectDialog
 import com.knight.kotlin.module_constellate.entity.ConstellateTypeEntity
 import com.knight.kotlin.module_constellate.fragment.ConstellateFortuneDateFragment
 import com.wyjson.router.annotation.Param
@@ -109,6 +111,18 @@ class ConstellateFateActivity : BaseActivity<ConstellateFortuneActivityBinding, 
             val tab = tabStrip.getChildAt(i)
             tab.setPadding(4.dp2px(), 0, 4.dp2px(), 0)  // 左右间距为 12dp，你可以改成其他数值
         }
+
+        if (LanguageFontSizeUtils.isChinese()) {
+            tvConstellateName.text = constellate?.name
+        } else {
+            tvConstellateName.text = constellate?.enName
+        }
+
+        tvConstellateName.setOnClick{
+            ConstellateSelectDialog().show(supportFragmentManager,"constellateSelect")
+
+        }
+
 
     }
 
