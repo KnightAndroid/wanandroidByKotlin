@@ -233,7 +233,7 @@ object RouteActivity {
     object Constellate {
         private const val Constellate = "/module_constellate"
         const val ConstellateMainActivity = "$Constellate/ConstellateMainActivity"
-        const val ConstellateFateActivity = "$Constellate/ConstellateFateActivity"
+        const val ConstellateFortuneActivity = "$Constellate/ConstellateFortuneActivity"
     }
 
 

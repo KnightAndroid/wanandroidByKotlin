@@ -2,4 +2,7 @@
   <resources>
 
    <color name="constellate_head_date_color">#CDCEFB</color>
+   <color name="constellate_tv_name_text_color">#7477F9</color>
+   <color name="constellate_tab_select_text_color">#F4716E</color>
+   <color name="constellate_tv_week_number_text_color">#CCCCCC</color>
   </resources>

@@ -17,7 +17,7 @@ import com.knight.kotlin.module_constellate.entity.ConstellateTypeEntity
  * @Date 2025/6/19 10:19
  * @descript:星座类型适配器
  */
-class ConstellateTypeAdapter():BaseQuickAdapter<ConstellateTypeEntity,ConstellateTypeAdapter.VH>() {
+class ConstellateTypeAdapter:BaseQuickAdapter<ConstellateTypeEntity,ConstellateTypeAdapter.VH>() {
 
     private lateinit var typedArrayIcons: TypedArray
 

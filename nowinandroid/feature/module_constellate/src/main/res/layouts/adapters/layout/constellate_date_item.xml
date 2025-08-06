@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.knight.kotlin.module_constellate.entity.ConstellateDateEntity" />
+
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_root_constellate_date"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content">
+
+
+        <TextView
+            android:id="@+id/tv_week_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{String.valueOf(viewModel.dayNumber)}"
+            android:textColor="@color/constellate_tv_week_number_text_color"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+
+        <TextView
+            android:id="@+id/tv_date_number"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:background="@drawable/constellate_date_bg"
+            android:text="@{viewModel.display}"
+            android:textColor="@color/constellate_tv_week_number_text_color"
+            app:layout_constraintTop_toBottomOf="@id/tv_week_number"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

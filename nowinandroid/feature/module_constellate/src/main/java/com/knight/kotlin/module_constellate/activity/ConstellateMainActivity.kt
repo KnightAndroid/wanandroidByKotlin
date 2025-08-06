@@ -81,7 +81,7 @@ class ConstellateMainActivity : BaseActivity<ConstellateMainActivityBinding, Emp
             //Item点击事件
             setSafeOnItemClickListener {adapter,view,position ->
 
-                GoRouter.getInstance().build(RouteActivity.Constellate.ConstellateFateActivity)
+                GoRouter.getInstance().build(RouteActivity.Constellate.ConstellateFortuneActivity)
                     .withParcelable("constellate",adapter.getItem(position)).go()
             }
         }

@@ -30,4 +30,6 @@ object BaseUrlConfig {
     const val BINGYING_URL = "https://cn.bing.com/"
     //获取ip
     const val IP_URL = "https://jsonip.com/"
+    //星座Api
+    const val VV_HAN_URL = "https://api.vvhan.com/"
 }

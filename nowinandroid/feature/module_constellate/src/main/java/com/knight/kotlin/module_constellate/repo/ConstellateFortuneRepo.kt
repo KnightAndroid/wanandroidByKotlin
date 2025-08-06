@@ -1,0 +1,40 @@
+package com.knight.kotlin.module_constellate.repo
+
+import com.knight.kotlin.library_base.repository.BaseRepository
+import com.knight.kotlin.library_network.model.responseCodeExceptionHandler
+import com.knight.kotlin.library_util.toast
+import com.knight.kotlin.module_constellate.api.ConstellateFortuneApi
+import com.knight.kotlin.module_constellate.entity.ConstellateFortuneEntity
+import javax.inject.Inject
+
+
+/**
+ * @author created by luguian
+ * @organize
+ * @Date 2025/8/6 11:04
+ * @descript:星座运势Repo
+ */
+class ConstellateFortuneRepo @Inject constructor() : BaseRepository(){
+
+    @Inject
+    lateinit var mConstellateFortuneApi:ConstellateFortuneApi
+
+
+    /**
+     *
+     * 根据星座类型和时间获取运势信息
+      */
+    fun getConstellateFortune(type:String,time:String,failureCallback:((String?) ->Unit) ?= null) = request<ConstellateFortuneEntity> ({
+        mConstellateFortuneApi.getConstellateFortune(type,time).run {
+            responseCodeExceptionHandler(code,msg)
+            emit(data)
+        }
+    }){
+        it?.let {
+                it1 -> toast(it1)
+        }
+    }
+
+
+
+}

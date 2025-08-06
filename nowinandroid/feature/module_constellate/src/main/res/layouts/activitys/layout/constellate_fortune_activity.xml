@@ -63,7 +63,7 @@
                    android:id="@+id/constellate_cloud_view"
                    android:layout_width="wrap_content"
                    android:layout_height="140dp"
-                   android:layout_marginTop="80dp"
+                   android:layout_marginTop="100dp"
                    />
 
 
@@ -94,11 +94,13 @@
                </FrameLayout>
 
                <RelativeLayout
+                   android:id="@+id/rl_change_constellate"
                    android:layout_width="100dp"
                    android:layout_height="30dp"
                    android:layout_below="@id/fr_constellate_head_border"
                    android:background="@drawable/constellate_select_bg"
                    android:layout_centerHorizontal="true"
+                   android:layout_marginTop="10dp"
                  >
 
 
@@ -111,18 +113,79 @@
                        android:text="测试"
                        android:drawablePadding="5dp"
                        android:drawableRight="@drawable/constellate_select_arrow_icon"
-                       android:textColor="@color/banv_ne_leave_highway_other_charge_color" />
+                       android:textColor="@color/constellate_tv_name_text_color" />
 
                </RelativeLayout>
 
 
 
 
-<!--               <View-->
-<!--                   android:layout_below="@id/sdsds"-->
-<!--                   android:layout_width="match_parent"-->
-<!--                   android:layout_height="800dp"-->
-<!--                   android:background="@color/banv_poi_search_text"/>-->
+               <TextView
+                   android:id="@+id/tv_shortcomment"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="“捡了芝麻丢西瓜”"
+                   android:layout_below="@id/rl_change_constellate"
+                   android:layout_centerHorizontal="true"
+                   android:textColor="#555555"
+                   android:textStyle="bold"
+                   android:textSize="24sp"
+                   android:layout_marginTop="20dp"/>
+
+
+               <LinearLayout
+                   android:id="@+id/ll_constellate_time"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:orientation="horizontal"
+                   android:layout_below="@id/tv_shortcomment"
+                   android:layout_marginTop="10dp">
+
+
+                   <TextView
+                       android:id="@+id/tv_time"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:textColor="#555555"
+                       android:textStyle="bold"
+                       android:text="2025"
+                       android:textSize="24sp"
+                       android:layout_marginStart="10dp"/>
+
+                   <!-- 空的 View 占满中间区域，实现右对齐 -->
+                   <View
+                       android:layout_width="0dp"
+                       android:layout_height="0dp"
+                       android:layout_weight="1" />
+
+
+                   <com.google.android.material.tabs.TabLayout
+                       android:id="@+id/constellate_tabLayout"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       app:tabMode="fixed"
+                       app:tabGravity="fill"
+                       app:tabIndicatorFullWidth="false"
+                       app:tabSelectedTextColor="@color/constellate_tab_select_text_color"
+                       app:tabIndicatorColor="@color/constellate_tab_select_text_color"/>
+               </LinearLayout>
+
+
+
+
+               <com.knight.kotlin.library_widget.NestedScrollableHost
+                   android:layout_width="match_parent"
+                   android:layout_height="match_parent"
+                   android:layout_below="@id/ll_constellate_time">
+                   <androidx.viewpager2.widget.ViewPager2
+                       android:id="@+id/constellate_viewPager"
+                       android:layout_width="match_parent"
+                       android:layout_height="match_parent" />
+               </com.knight.kotlin.library_widget.NestedScrollableHost>
+
+
+
+
 
            </RelativeLayout>
 
