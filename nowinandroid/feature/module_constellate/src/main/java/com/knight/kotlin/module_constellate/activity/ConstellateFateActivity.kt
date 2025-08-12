@@ -61,6 +61,9 @@ class ConstellateFateActivity : BaseActivity<ConstellateFortuneActivityBinding, 
     }
 
     override fun ConstellateFortuneActivityBinding.initView() {
+        constellateFateToolbar.baseIvBack.setOnClick {
+            finish()
+        }
         constellate?.run {
             val displayName = if (LanguageFontSizeUtils.isChinese()) name else enName
             mBinding.title = displayName + getString(R.string.constellate_detail_toolbar_title)
@@ -68,9 +71,7 @@ class ConstellateFateActivity : BaseActivity<ConstellateFortuneActivityBinding, 
 
         constellateFateToolbar.baseIvBack.setBackgroundResource(com.core.library_base.R.drawable.base_right_whitearrow)
         constellateFateToolbar.baseTvTitle.setTextColor(Color.WHITE)
-        constellateFateToolbar.baseIvBack.setOnClick {
-            finish()
-        }
+
 
         constellate?.run {
             typeArrayIcons = resources.obtainTypedArray(R.array.constellate_type)

@@ -13,7 +13,19 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:background="@drawable/constellate_dialog_bg">
+        android:background="@drawable/base_top_round"
+       >
+
+
+        <com.yanzhenjie.recyclerview.SwipeRecyclerView
+            android:id="@+id/rv_constellate_bottom_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+
+
+            />
+
 
 
     </LinearLayout>

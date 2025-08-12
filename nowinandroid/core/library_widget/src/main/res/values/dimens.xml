@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="widget_compat_toolbar_width">28dp</dimen>
-    <dimen name="widget_compat_toolbar_height">28dp</dimen>
+    <dimen name="widget_compat_toolbar_width">30dp</dimen>
+    <dimen name="widget_compat_toolbar_height">30dp</dimen>
     <dimen name="widget_compat_toolbar_left">10dp</dimen>
     <dimen name="widget_compat_toolbar_text_size">18sp</dimen>
     <dimen name="widget_compat_toolbar_iv_right">12dp</dimen>

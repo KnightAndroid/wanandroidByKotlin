@@ -35,13 +35,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:background="@drawable/constellate_main_top_bg"/>
-        <include
-            android:id="@+id/constellate_fate_toolbar"
-            layout="@layout/base_include_toolbar"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:title="@{title}"/>
+
 
 
        <androidx.core.widget.NestedScrollView
@@ -195,7 +189,13 @@
 
 
 
-
+        <include
+            android:id="@+id/constellate_fate_toolbar"
+            layout="@layout/base_include_toolbar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:title="@{title}"/>
 
 
 
