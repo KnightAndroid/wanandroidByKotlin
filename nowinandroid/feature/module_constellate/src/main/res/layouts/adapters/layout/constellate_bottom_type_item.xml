@@ -37,6 +37,15 @@
                     android:layout_margin="10dp"/>
 
 
+
+                <ImageView
+                    android:id="@+id/iv_select_constellate_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true"
+                    android:background="@drawable/constellate_select_name_icon"/>
+
             </RelativeLayout>
 
 
@@ -54,8 +63,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="3.21"
-                    android:textColor="@android:color/black"
-                    android:textSize="10sp"
+                    android:textColor="@color/constellate_bottom_tv_date_text_color"
+                    android:textSize="12sp"
                     android:layout_toLeftOf="@id/constellate_bottom_name_tv"
                     android:gravity="bottom"/>
 
@@ -65,9 +74,9 @@
                     android:layout_height="match_parent"
                     android:layout_centerHorizontal="true"
                     android:text="白羊座"
-                    android:textSize="12sp"
+                    android:textSize="14sp"
                     android:gravity="bottom"
-                    android:textColor="@android:color/black"
+                    android:textColor="@color/constellate_bottom_tv_title_text_color"
                     />
 
 
@@ -76,9 +85,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="4.19"
-                    android:textColor="@android:color/black"
+                    android:textColor="@color/constellate_bottom_tv_date_text_color"
                     android:layout_toRightOf="@id/constellate_bottom_name_tv"
-                    android:textSize="10sp"
+                    android:textSize="12sp"
                     android:gravity="bottom"/>
 
 

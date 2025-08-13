@@ -120,7 +120,7 @@ class ConstellateFateActivity : BaseActivity<ConstellateFortuneActivityBinding, 
         }
 
         tvConstellateName.setOnClick{
-            ConstellateSelectDialog().show(supportFragmentManager,"constellateSelect")
+            ConstellateSelectDialog.newInstance(constellate?.name ?: "").show(supportFragmentManager,"constellateSelect")
 
         }
 

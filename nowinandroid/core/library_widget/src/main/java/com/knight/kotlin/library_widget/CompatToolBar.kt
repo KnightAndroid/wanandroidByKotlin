@@ -27,7 +27,7 @@ class CompatToolBar : Toolbar {
         }
         this.setPadding(
             getPaddingLeft(),
-            dp2px(10f) + compatPaddingTop,
+            compatPaddingTop,
             getPaddingRight(),
             getPaddingBottom() + compatPaddingTop / 2
         );

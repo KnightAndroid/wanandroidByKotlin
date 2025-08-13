@@ -5,10 +5,12 @@ import android.content.res.TypedArray
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
+import com.baidu.navisdk.ui.widget.bucket.BNBucketItem
 import com.chad.library.adapter4.BaseQuickAdapter
 import com.core.library_common.util.dp2px
 import com.knight.kotlin.module_constellate.R
@@ -28,6 +30,8 @@ class ConstellateBottomTypeAdapter : BaseQuickAdapter<ConstellateTypeEntity, Con
     private lateinit var typedArrayIcons: TypedArray
 
     private var itemSize = 0
+
+    private var selectConstellateName = ""
     class VH(
         parent: ViewGroup,
         val binding: ConstellateBottomTypeItemBinding = ConstellateBottomTypeItemBinding.inflate(
@@ -37,6 +41,14 @@ class ConstellateBottomTypeAdapter : BaseQuickAdapter<ConstellateTypeEntity, Con
 
     fun setItemSize(itemSize:Int) {
         this.itemSize = itemSize
+    }
+
+    /**
+     *
+     * 设置当前选中的星座
+     */
+    fun setSelectConstellateName(selectConstellateName:String) {
+        this.selectConstellateName = selectConstellateName
     }
 
     fun setTypedArray(typedArrayIcons: TypedArray) {
@@ -60,7 +72,14 @@ class ConstellateBottomTypeAdapter : BaseQuickAdapter<ConstellateTypeEntity, Con
             params.endToEnd = ConstraintLayout.LayoutParams.PARENT_ID
 
             holder.binding.constellateBottomHeadRl.layoutParams = params
-            holder.binding.constellateBottomHeadRl.setBackgroundResource(R.drawable.constellate_bottom_default)
+            if (selectConstellateName == name) {
+                holder.binding.ivSelectConstellateName.visibility = View.VISIBLE
+                holder.binding.constellateBottomHeadRl.setBackgroundResource(R.drawable.constellate_bottom_select)
+            } else {
+                holder.binding.ivSelectConstellateName.visibility = View.GONE
+                holder.binding.constellateBottomHeadRl.setBackgroundResource(R.drawable.constellate_bottom_default)
+            }
+
         }
     }
 

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <!-- 背景颜色 -->
+    <solid android:color="#ffecef" />
+
+    <!-- 半圆角（比如顶部是圆形、底部是直的）-->
+    <corners
+        android:radius="10dp" />
+</shape>

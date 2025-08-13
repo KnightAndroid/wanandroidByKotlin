@@ -1258,4 +1258,32 @@
         <!-- 新增左边是否直角 -->
         <attr name="simpleLeftCornerStraight" format="boolean"/>
     </declare-styleable>
+
+    <declare-styleable name="StarBar">
+        <!--Star bitmap interval width-->
+        <attr name="star_interval_width" format="dimension" />
+        <!--Star bitmap width-->
+        <attr name="star_width" format="dimension" />
+        <!--Star bitmap height-->
+        <attr name="star_height" format="dimension" />
+        <!--Number of star-->
+        <attr name="star_max" format="integer" />
+        <!--Star rating-->
+        <attr name="star_rating" format="float" />
+        <!--Star unselected bitmap-->
+        <attr name="star_unselected" format="reference" />
+        <!--Star selected bitmap-->
+        <attr name="star_selected" format="reference" />
+        <!--StarBar select method-->
+        <attr name="star_select_method" format="enum">
+            <enum name="star_unable" value="0" />
+            <enum name="star_click" value="1" />
+            <enum name="star_sliding" value="2" />
+        </attr>
+        <!--Star orientation-->
+        <attr name="star_orientation" format="enum">
+            <enum name="star_vertical" value="1" />
+            <enum name="star_horizontal" value="0" />
+        </attr>
+    </declare-styleable>
 </resources>

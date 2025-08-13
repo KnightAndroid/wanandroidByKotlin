@@ -1,6 +1,7 @@
 package com.knight.kotlin.module_constellate.dialog
 
 import android.content.res.TypedArray
+import android.os.Bundle
 import android.view.Gravity
 import androidx.recyclerview.widget.GridLayoutManager
 import com.core.library_base.util.GsonUtils
@@ -10,6 +11,7 @@ import com.google.gson.reflect.TypeToken
 import com.knight.kotlin.library_base.fragment.BaseDialogFragment
 import com.knight.kotlin.library_base.ktx.getScreenHeight
 import com.knight.kotlin.library_base.ktx.getScreenWidth
+import com.knight.kotlin.library_database.entity.EveryDayPushEntity
 import com.knight.kotlin.library_util.JsonUtils
 import com.knight.kotlin.library_widget.CustomGridItemDecoration
 import com.knight.kotlin.library_widget.ktx.init
@@ -33,8 +35,20 @@ class ConstellateSelectDialog :BaseDialogFragment<ConstellateSelectDialogBinding
 
     private lateinit var typeArrayIcons: TypedArray
 
+    private lateinit var selectConstellateName:String
+
+    companion object {
+        fun newInstance(selectConstellateName:String) : ConstellateSelectDialog {
+            val mConstellateSelectDialog = ConstellateSelectDialog()
+            val args = Bundle()
+            args.putString("selectConstellateName",selectConstellateName)
+            mConstellateSelectDialog.arguments = args
+            return mConstellateSelectDialog
+        }
+    }
 
     override fun ConstellateSelectDialogBinding.initView() {
+        selectConstellateName = arguments?.getString("selectConstellateName") ?: ""
         rvConstellateBottomType.init(GridLayoutManager(requireActivity(), 3), mConstellateBottomTypeAdapter, true)
         rvConstellateBottomType.post {
             setupConstellateBottomGrid()
@@ -81,6 +95,8 @@ class ConstellateSelectDialog :BaseDialogFragment<ConstellateSelectDialogBinding
         typeArrayIcons = resources.obtainTypedArray(R.array.constellate_type)
         mConstellateBottomTypeAdapter.setTypedArray(typeArrayIcons)
         mConstellateBottomTypeAdapter.setItemSize(itemSize)
+        mConstellateBottomTypeAdapter.setSelectConstellateName(selectConstellateName)
         mConstellateBottomTypeAdapter.submitList(mDataList)
+
     }
 }

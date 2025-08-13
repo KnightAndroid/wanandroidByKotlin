@@ -27,14 +27,7 @@
 
 
 
-        <ImageView
-            android:id="@+id/constellate_top_bg"
-            android:layout_width="0dp"
-            android:layout_height="280dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:background="@drawable/constellate_main_top_bg"/>
+
 
 
 
@@ -43,7 +36,6 @@
            android:layout_height="0dp"
            android:fillViewport="true"
            app:layout_constraintStart_toStartOf="parent"
-           android:layout_marginTop="40dp"
            app:layout_constraintEnd_toEndOf="parent"
            app:layout_constraintTop_toTopOf="parent"
            app:layout_constraintBottom_toBottomOf="parent">
@@ -53,10 +45,18 @@
                android:layout_height="match_parent">
 
 
+
+               <ImageView
+                   android:id="@+id/constellate_top_bg"
+                   android:layout_width="match_parent"
+                   android:layout_height="280dp"
+                   android:background="@drawable/constellate_main_top_bg"/>
+
+
                <com.knight.kotlin.library_widget.DoubleCloudView
                    android:id="@+id/constellate_cloud_view"
                    android:layout_width="wrap_content"
-                   android:layout_height="140dp"
+                   android:layout_height="180dp"
                    android:layout_marginTop="100dp"
                    />
 
@@ -65,7 +65,7 @@
                    android:id="@+id/fr_constellate_head_border"
                    android:layout_width="122dp"
                    android:layout_height="122dp"
-                   android:layout_marginTop="40dp"
+                   android:layout_marginTop="60dp"
                    android:layout_gravity="center"
                    android:background="@drawable/constellate_transparent_circle_bg"
                    android:layout_centerHorizontal="true">
@@ -132,7 +132,7 @@
                    android:layout_height="wrap_content"
                    android:orientation="horizontal"
                    android:layout_below="@id/tv_shortcomment"
-                   android:layout_marginTop="10dp">
+                   android:layout_marginTop="30dp">
 
 
                    <TextView
@@ -164,12 +164,18 @@
                </LinearLayout>
 
 
-
+               <View
+                   android:id="@+id/view_line"
+                   android:layout_width="match_parent"
+                   android:layout_height="1dp"
+                   android:background="@color/base_line_color"
+                   android:layout_below="@id/ll_constellate_time"/>
 
                <com.knight.kotlin.library_widget.NestedScrollableHost
                    android:layout_width="match_parent"
                    android:layout_height="match_parent"
-                   android:layout_below="@id/ll_constellate_time">
+                   android:layout_below="@id/view_line"
+                   android:layout_marginTop="10dp">
                    <androidx.viewpager2.widget.ViewPager2
                        android:id="@+id/constellate_viewPager"
                        android:layout_width="match_parent"
