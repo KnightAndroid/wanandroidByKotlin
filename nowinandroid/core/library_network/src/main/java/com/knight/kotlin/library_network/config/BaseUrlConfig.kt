@@ -1,5 +1,7 @@
 package com.knight.kotlin.library_network.config
 
+import com.core.library_base.route.RouteActivity
+
 /**
  * Author:Knight
  * Time:2021/12/15 13:49
@@ -30,6 +32,8 @@ object BaseUrlConfig {
     const val BINGYING_URL = "https://cn.bing.com/"
     //获取ip
     const val IP_URL = "https://jsonip.com/"
-    //星座Api
+    //星座Api(不太稳定)
     const val VV_HAN_URL = "https://api.vvhan.com/"
+    //星座api
+    const val CONSTELLATE = "https://api.suxun.site/"
 }

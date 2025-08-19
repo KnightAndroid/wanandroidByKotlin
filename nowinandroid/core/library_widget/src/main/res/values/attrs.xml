@@ -1286,4 +1286,14 @@
             <enum name="star_horizontal" value="0" />
         </attr>
     </declare-styleable>
+
+
+        <declare-styleable name="VerticalProgressBar">
+            <attr name="vertical_progress" format="integer" />
+            <attr name="vertical_max" format="integer" />
+            <attr name="vertical_progressColor" format="color" />
+            <attr name="vertical_backgroundColorCustom" format="color" />
+            <attr name="vertical_cornerRadius" format="dimension" />
+        </declare-styleable>
+
 </resources>

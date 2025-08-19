@@ -14,18 +14,149 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-
-
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="820dp"
-        android:background="@drawable/constellate_comprehensive_ortune_bg"
-        app:layout_constraintTop_toBottomOf="@id/rv_constellate_date"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_height="160dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rv_constellate_date">
 
 
-    </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/constellate_lucky_color"
+            android:gravity="center_vertical"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="5dp"
+            >
+
+
+            <RelativeLayout
+                android:id="@+id/rl_fortune_color"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/base_circle">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="酒红"
+                    android:textColor="#a274d7"
+                    android:textSize="26sp" />
+
+
+            </RelativeLayout>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rl_fortune_color"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:text="幸运颜色"
+                android:textColor="#a274d7" />
+
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/constellate_lucky_number"
+            android:gravity="center_vertical"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp">
+
+
+            <RelativeLayout
+                android:id="@+id/rl_fortune_number"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/base_circle">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="6"
+                    android:textColor="#a274d7"
+                    android:textSize="26sp" />
+
+
+            </RelativeLayout>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rl_fortune_number"
+                android:layout_centerHorizontal="true"
+                android:text="幸运数字"
+                android:layout_marginTop="10dp"
+                android:textColor="#52aed7" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/constellate_lucky_star"
+            android:gravity="center_vertical"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="10dp">
+
+            <RelativeLayout
+                android:id="@+id/rl_fortune_constellate"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/base_circle">
+
+
+                <ImageView
+                    android:id="@+id/iv_lucky_constellate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+
+            </RelativeLayout>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rl_fortune_constellate"
+                android:layout_centerHorizontal="true"
+                android:text="速配星座"
+                android:layout_marginTop="10dp"
+                android:textColor="#f4b276" />
+
+
+        </RelativeLayout>
+
+
+        <!--        -->
+        <!--        <com.knight.kotlin.library_widget.VerticalProgressBar-->
+        <!--            android:layout_width="20dp"-->
+        <!--            android:layout_height="200dp"-->
+        <!--            app:vertical_progress="30"-->
+        <!--            app:vertical_max="100"-->
+        <!--            app:vertical_progressColor="#ffbb8e"-->
+        <!--            app:vertical_backgroundColorCustom="#f3f3f3"-->
+        <!--            app:vertical_cornerRadius="45dp"/>-->
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

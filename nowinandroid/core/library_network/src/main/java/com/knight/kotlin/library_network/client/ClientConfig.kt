@@ -105,6 +105,7 @@ class ClientConfig {
             .setDomain("bingying",BaseUrlConfig.BINGYING_URL)
             .setDomain("ip",BaseUrlConfig.IP_URL)
             .setDomain("vvhan",BaseUrlConfig.VV_HAN_URL)
+            .setDomain("constellate",BaseUrlConfig.CONSTELLATE)
             .build()
     }
 
