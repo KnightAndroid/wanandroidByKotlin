@@ -15,6 +15,7 @@
 
 
     <LinearLayout
+        android:id="@+id/ll_lucky_message"
         android:layout_width="match_parent"
         android:layout_height="160dp"
         android:layout_marginTop="20dp"
@@ -149,6 +150,11 @@
         </RelativeLayout>
 
 
+
+
+
+
+
         <!--        -->
         <!--        <com.knight.kotlin.library_widget.VerticalProgressBar-->
         <!--            android:layout_width="20dp"-->
@@ -158,5 +164,102 @@
         <!--            app:vertical_progressColor="#ffbb8e"-->
         <!--            app:vertical_backgroundColorCustom="#f3f3f3"-->
         <!--            app:vertical_cornerRadius="45dp"/>-->
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        app:layout_constraintTop_toBottomOf="@id/ll_lucky_message"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp">
+
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/constellate_suitable_bg"
+            android:gravity="center_vertical"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="10dp">
+
+
+            <TextView
+                android:id="@+id/tv_constellate_suitable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:text="宜"
+                android:layout_centerHorizontal="true"
+                android:textStyle="bold"
+                android:textColor="#47ac60"/>
+
+
+            <View
+                android:id="@+id/view_suitable"
+                android:layout_width="40dp"
+                android:layout_height="4dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/constellate_suitable_view_bg"
+                android:layout_below="@id/tv_constellate_suitable"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/view_suitable"
+                android:layout_centerHorizontal="true"
+                android:text="速配星座"
+                android:layout_marginTop="10dp"
+                android:textColor="#333333" />
+
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/constellate_taboo_bg"
+            android:gravity="center_vertical"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="10dp">
+
+
+            <TextView
+                android:id="@+id/tv_constellate_taboo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:text="忌"
+                android:layout_centerHorizontal="true"
+                android:textStyle="bold"
+                android:textColor="#e36b6b"/>
+
+
+            <View
+                android:id="@+id/view_taboo"
+                android:layout_width="40dp"
+                android:layout_height="4dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/constellate_taboo_view_bg"
+                android:layout_below="@id/tv_constellate_taboo"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/view_taboo"
+                android:layout_centerHorizontal="true"
+                android:text="速配星座"
+                android:layout_marginTop="10dp"
+                android:textColor="#333333" />
+
+
+        </RelativeLayout>
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
