@@ -72,7 +72,6 @@ class ConstellateFortuneDateFragment : BaseFragment<ConstellateFortuneDateFragme
             ConstellateDateEntity(dayNumber, display)
         }
 
-        // 测试输出
         dayInfoList.forEach {
             println("星期数字：${it.dayNumber}, 显示：${it.display}")
         }

@@ -18,7 +18,7 @@ interface ConstellateFortuneApi {
 
 
 
-    //https://api.vvhan.com/api/horoscope?type=scorpio&time=today 由于本接口及其不稳定改用 http://api.suxun.site/api/constellation?type=scorpio&time=nextday
+    //https://api.vvhan.com/api/horoscope?type=scorpio&time=today 由于本接口极其不稳定改用 http://api.suxun.site/api/constellation?type=scorpio&time=nextday
     @Headers("Domain-Name:constellate")
     @GET("api/constellation")
     suspend fun getConstellateFortune(@Query("type") type: String, @Query("time") time:String) : BaseResponse<ConstellateFortuneEntity>
