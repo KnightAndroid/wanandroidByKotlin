@@ -5,6 +5,7 @@ import com.knight.kotlin.library_network.model.responseCodeExceptionHandler
 import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_constellate.api.ConstellateFortuneApi
 import com.knight.kotlin.module_constellate.entity.ConstellateFortuneEntity
+import com.knight.kotlin.module_constellate.entity.ConstellateResponseEntity
 import javax.inject.Inject
 
 
@@ -24,7 +25,7 @@ class ConstellateFortuneRepo @Inject constructor() : BaseRepository(){
      *
      * 根据星座类型和时间获取运势信息
       */
-    fun getConstellateFortune(type:String,time:String,failureCallback:((String?) ->Unit) ?= null) = request<ConstellateFortuneEntity> ({
+    fun getConstellateFortune(type:String,time:String,failureCallback:((String?) ->Unit) ?= null) = request<ConstellateResponseEntity> ({
         mConstellateFortuneApi.getConstellateFortune(type,time).run {
             responseCodeExceptionHandler(code,msg)
             emit(data)

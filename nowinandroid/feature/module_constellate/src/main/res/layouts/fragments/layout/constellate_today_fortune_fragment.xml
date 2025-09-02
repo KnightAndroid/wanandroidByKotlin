@@ -45,6 +45,7 @@
 
 
                 <TextView
+                    android:id="@+id/tv_lucky_color"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
@@ -88,6 +89,7 @@
 
 
                 <TextView
+                    android:id="@+id/tv_lucky_number"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
@@ -131,7 +133,8 @@
                 <ImageView
                     android:id="@+id/iv_lucky_constellate"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"/>
 
 
             </RelativeLayout>
@@ -187,7 +190,7 @@
 
 
             <TextView
-                android:id="@+id/tv_constellate_suitable"
+                android:id="@+id/tv_constellate_suitable_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
@@ -204,14 +207,14 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/constellate_suitable_view_bg"
-                android:layout_below="@id/tv_constellate_suitable"/>
+                android:layout_below="@id/tv_constellate_suitable_title"/>
 
             <TextView
+                android:id="@+id/tv_constellate_suitable"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/view_suitable"
                 android:layout_centerHorizontal="true"
-                android:text="速配星座"
                 android:layout_marginTop="10dp"
                 android:textColor="#333333" />
 
@@ -230,7 +233,7 @@
 
 
             <TextView
-                android:id="@+id/tv_constellate_taboo"
+                android:id="@+id/tv_constellate_taboo_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
@@ -247,14 +250,14 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/constellate_taboo_view_bg"
-                android:layout_below="@id/tv_constellate_taboo"/>
+                android:layout_below="@id/tv_constellate_taboo_title"/>
 
             <TextView
+                android:id="@+id/tv_constellate_taboo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/view_taboo"
                 android:layout_centerHorizontal="true"
-                android:text="速配星座"
                 android:layout_marginTop="10dp"
                 android:textColor="#333333" />
 

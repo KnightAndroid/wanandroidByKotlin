@@ -12,14 +12,17 @@ import com.core.library_base.vm.EmptyViewModel
 import com.core.library_common.util.dp2px
 import com.google.android.material.tabs.TabLayoutMediator
 import com.knight.kotlin.library_base.activity.BaseActivity
-import com.knight.kotlin.library_common.util.CacheUtils
 import com.knight.kotlin.library_common.util.LanguageFontSizeUtils
 import com.knight.kotlin.library_util.ViewInitUtils
 import com.knight.kotlin.module_constellate.R
 import com.knight.kotlin.module_constellate.databinding.ConstellateFortuneActivityBinding
 import com.knight.kotlin.module_constellate.dialog.ConstellateSelectDialog
 import com.knight.kotlin.module_constellate.entity.ConstellateTypeEntity
-import com.knight.kotlin.module_constellate.fragment.ConstellateFortuneDateFragment
+import com.knight.kotlin.module_constellate.fragment.ConstellateMonthFortuneFragment
+import com.knight.kotlin.module_constellate.fragment.ConstellateTodayFortuneFragment
+import com.knight.kotlin.module_constellate.fragment.ConstellateWeekFortuneFragment
+import com.knight.kotlin.module_constellate.fragment.ConstellateYearFortuneFragment
+import com.knight.kotlin.module_constellate.vm.ConstellateFortuneVm
 import com.wyjson.router.annotation.Param
 import com.wyjson.router.annotation.Route
 import dagger.hilt.android.AndroidEntryPoint
@@ -33,14 +36,14 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 @AndroidEntryPoint
 @Route(path = RouteActivity.Constellate.ConstellateFortuneActivity)
-class ConstellateFateActivity : BaseActivity<ConstellateFortuneActivityBinding, EmptyViewModel>(){
+class ConstellateFateActivity : BaseActivity<ConstellateFortuneActivityBinding, ConstellateFortuneVm>(){
 
     @JvmField
     @Param(name="constellate")
     var constellate: ConstellateTypeEntity? = null
     private lateinit var typeArrayIcons: TypedArray
 
-    val titleFortunes = mutableListOf("日运", "周运", "月运", "年运","爱情")
+    val titleFortunes = mutableListOf("日运", "周运", "月运", "年运")
     private val mFragments = mutableListOf<Fragment>()
 
 
@@ -53,7 +56,25 @@ class ConstellateFateActivity : BaseActivity<ConstellateFortuneActivityBinding, 
     }
 
     override fun initRequestData() {
+        mViewModel.getConstellateFortune(constellate?.enName?:"","today").observerKt {
+            mFragments.add(ConstellateTodayFortuneFragment.newInstance(it.tomorrow))
+            mFragments.add(ConstellateWeekFortuneFragment())
+            mFragments.add(ConstellateMonthFortuneFragment())
+            mFragments.add(ConstellateYearFortuneFragment())
 
+            ViewInitUtils.setViewPager2Init(this@ConstellateFateActivity,mBinding.constellateViewPager,mFragments,
+                isOffscreenPageLimit = true,
+                isUserInputEnabled = false
+            )
+            TabLayoutMediator(mBinding.constellateTabLayout, mBinding.constellateViewPager) { tab, pos ->
+                tab.text = titleFortunes[pos]
+            }.attach()
+            val tabStrip = mBinding.constellateTabLayout.getChildAt(0) as ViewGroup
+            for (i in 0 until tabStrip.childCount) {
+                val tab = tabStrip.getChildAt(i)
+                tab.setPadding(4.dp2px(), 0, 4.dp2px(), 0)  // 左右间距为 12dp，你可以改成其他数值
+            }
+        }
     }
 
     override fun reLoadData() {
@@ -95,23 +116,7 @@ class ConstellateFateActivity : BaseActivity<ConstellateFortuneActivityBinding, 
         constellateCloudView.setCloudImages(R.drawable.constellate_cloud_behind, R.drawable.constellate_cloud_front,0.5f,1.0f)
         constellateCloudView.start()
 
-        mFragments.add(ConstellateFortuneDateFragment())
-        mFragments.add(ConstellateFortuneDateFragment())
-        mFragments.add(ConstellateFortuneDateFragment())
-        mFragments.add(ConstellateFortuneDateFragment())
 
-        ViewInitUtils.setViewPager2Init(this@ConstellateFateActivity,constellateViewPager,mFragments,
-            isOffscreenPageLimit = true,
-            isUserInputEnabled = false
-        )
-        TabLayoutMediator(constellateTabLayout, constellateViewPager) { tab, pos ->
-            tab.text = titleFortunes[pos]
-        }.attach()
-        val tabStrip = constellateTabLayout.getChildAt(0) as ViewGroup
-        for (i in 0 until tabStrip.childCount) {
-            val tab = tabStrip.getChildAt(i)
-            tab.setPadding(4.dp2px(), 0, 4.dp2px(), 0)  // 左右间距为 12dp，你可以改成其他数值
-        }
 
         if (LanguageFontSizeUtils.isChinese()) {
             tvConstellateName.text = constellate?.name
