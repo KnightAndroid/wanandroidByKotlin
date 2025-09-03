@@ -8,10 +8,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.core.library_base.ktx.setOnClick
 import com.core.library_base.route.RouteActivity
-import com.core.library_base.vm.EmptyViewModel
 import com.core.library_common.util.dp2px
 import com.google.android.material.tabs.TabLayoutMediator
 import com.knight.kotlin.library_base.activity.BaseActivity
+import com.knight.kotlin.library_base.ktx.statusHeight
 import com.knight.kotlin.library_common.util.LanguageFontSizeUtils
 import com.knight.kotlin.library_util.ViewInitUtils
 import com.knight.kotlin.module_constellate.R
@@ -45,8 +45,7 @@ class ConstellateFateActivity : BaseActivity<ConstellateFortuneActivityBinding, 
 
     val titleFortunes = mutableListOf("日运", "周运", "月运", "年运")
     private val mFragments = mutableListOf<Fragment>()
-
-
+    private var scrollThreshold = 0
     override fun setThemeColor(isDarkMode: Boolean) {
 
     }
@@ -82,6 +81,7 @@ class ConstellateFateActivity : BaseActivity<ConstellateFortuneActivityBinding, 
     }
 
     override fun ConstellateFortuneActivityBinding.initView() {
+        scrollThreshold = statusHeight.dp2px()
         constellateFateToolbar.baseIvBack.setOnClick {
             finish()
         }
@@ -92,6 +92,7 @@ class ConstellateFateActivity : BaseActivity<ConstellateFortuneActivityBinding, 
 
         constellateFateToolbar.baseIvBack.setBackgroundResource(com.core.library_base.R.drawable.base_right_whitearrow)
         constellateFateToolbar.baseTvTitle.setTextColor(Color.WHITE)
+        //constellateFateToolbar.baseCompatToolbar.setBackgroundColor(Color.parseColor("#6B87FA"))
 
 
         constellate?.run {
@@ -129,7 +130,26 @@ class ConstellateFateActivity : BaseActivity<ConstellateFortuneActivityBinding, 
 
         }
 
+        nestFortune.setOnScrollChangeListener { _, _, scrollY, _, _ ->
+            updateToolbarColor(scrollY)
 
+        }
+
+
+    }
+
+
+    fun updateToolbarColor(scrollY: Int) {
+        // 判断是否在顶部附近 (0 - 40dp 范围内)
+        if (scrollY <= scrollThreshold) {
+            // 在顶部附近，将文字颜色设置为白色
+            mBinding.constellateFateToolbar.baseIvBack.setBackgroundResource(com.core.library_base.R.drawable.base_right_whitearrow)
+            mBinding.constellateFateToolbar.baseTvTitle.setTextColor(Color.WHITE)
+        } else {
+            // 向下滑动超过阈值，将文字颜色设置为黑色
+            mBinding.constellateFateToolbar.baseIvBack.setBackgroundResource(com.core.library_base.R.drawable.base_iv_left_arrow)
+            mBinding.constellateFateToolbar.baseTvTitle.setTextColor(Color.BLACK)
+        }
     }
 
     override fun onDestroy() {

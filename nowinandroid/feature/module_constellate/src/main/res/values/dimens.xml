@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="constellate_ll_fortune_today_height">60dp</dimen>
+    <dimen name="constellate_view_fortune_today_width">10dp</dimen>
+    <dimen name="constellate_view_fortune_today_margin_left">10dp</dimen>
+    <dimen name="constellate_today_fortune_title_text_size">20sp</dimen>
+</resources>

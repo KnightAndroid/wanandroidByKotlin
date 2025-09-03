@@ -6,5 +6,7 @@
    <color name="constellate_tab_select_text_color">#F4716E</color>
    <color name="constellate_tv_week_number_text_color">#CCCCCC</color>
    <color name="constellate_bottom_tv_title_text_color">#333333</color>
-    <color name="constellate_bottom_tv_date_text_color">#666666</color>
+   <color name="constellate_bottom_tv_date_text_color">#666666</color>
+   <color name="constellate_today_title_text_color">#333333</color>
+   <color name="constellate_fortune_type_text_color">#666666</color>
   </resources>

@@ -158,20 +158,12 @@
 
 
 
-        <!--        -->
-        <!--        <com.knight.kotlin.library_widget.VerticalProgressBar-->
-        <!--            android:layout_width="20dp"-->
-        <!--            android:layout_height="200dp"-->
-        <!--            app:vertical_progress="30"-->
-        <!--            app:vertical_max="100"-->
-        <!--            app:vertical_progressColor="#ffbb8e"-->
-        <!--            app:vertical_backgroundColorCustom="#f3f3f3"-->
-        <!--            app:vertical_cornerRadius="45dp"/>-->
     </LinearLayout>
 
 
 
     <LinearLayout
+        android:id="@+id/ll_suitable_taboo"
         app:layout_constraintTop_toBottomOf="@id/ll_lucky_message"
         android:layout_width="match_parent"
         android:layout_height="120dp"
@@ -265,4 +257,43 @@
         </RelativeLayout>
 
     </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll_today_fortune_title"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/constellate_ll_fortune_today_height"
+        app:layout_constraintTop_toBottomOf="@id/ll_suitable_taboo"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="10dp"
+        android:gravity="center">
+
+
+        <View
+            android:layout_width="@dimen/constellate_view_fortune_today_width"
+            android:layout_height="match_parent"
+            android:background="@drawable/constellate_fortune_title_view_bg"
+            android:layout_marginLeft="@dimen/constellate_view_fortune_today_margin_left"/>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/constellate_today_fortune_title"
+            android:textColor="@color/constellate_today_title_text_color"
+            android:layout_marginLeft="@dimen/constellate_view_fortune_today_margin_left"
+            android:textSize="@dimen/constellate_today_fortune_title_text_size"
+            android:textStyle="bold"/>
+
+    </LinearLayout>
+
+
+
+    <com.yanzhenjie.recyclerview.SwipeRecyclerView
+        android:id="@+id/rv_constellate_type_value"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ll_today_fortune_title" />
 </androidx.constraintlayout.widget.ConstraintLayout>

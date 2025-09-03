@@ -1,10 +1,10 @@
 package com.knight.kotlin.module_constellate.repo
 
+import com.core.library_base.ktx.dimissLoadingDialog
 import com.knight.kotlin.library_base.repository.BaseRepository
 import com.knight.kotlin.library_network.model.responseCodeExceptionHandler
 import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_constellate.api.ConstellateFortuneApi
-import com.knight.kotlin.module_constellate.entity.ConstellateFortuneEntity
 import com.knight.kotlin.module_constellate.entity.ConstellateResponseEntity
 import javax.inject.Inject
 
@@ -27,10 +27,12 @@ class ConstellateFortuneRepo @Inject constructor() : BaseRepository(){
       */
     fun getConstellateFortune(type:String,time:String,failureCallback:((String?) ->Unit) ?= null) = request<ConstellateResponseEntity> ({
         mConstellateFortuneApi.getConstellateFortune(type,time).run {
+            dimissLoadingDialog()
             responseCodeExceptionHandler(code,msg)
             emit(data)
         }
     }){
+        dimissLoadingDialog()
         it?.let {
                 it1 -> toast(it1)
         }

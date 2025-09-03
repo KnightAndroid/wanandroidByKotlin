@@ -2,8 +2,8 @@ package com.knight.kotlin.module_constellate.vm
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
+import com.core.library_base.ktx.showLoadingDialog
 import com.core.library_base.vm.BaseViewModel
-import com.knight.kotlin.module_constellate.entity.ConstellateFortuneEntity
 import com.knight.kotlin.module_constellate.entity.ConstellateResponseEntity
 import com.knight.kotlin.module_constellate.repo.ConstellateFortuneRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -25,7 +25,8 @@ class ConstellateFortuneVm @Inject constructor(private val mRepo : ConstellateFo
      * 根据类型星座运势
      */
     fun getConstellateFortune(type:String,time:String) : LiveData<ConstellateResponseEntity> {
-             return mRepo.getConstellateFortune(type,time).asLiveData()
+        showLoadingDialog()
+        return mRepo.getConstellateFortune(type,time).asLiveData()
         }
 
 

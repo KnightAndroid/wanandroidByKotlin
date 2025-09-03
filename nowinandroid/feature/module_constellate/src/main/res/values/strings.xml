@@ -2,4 +2,5 @@
     <string name="constellate_app_name">星座</string>
     <string name="constellate_fate_toolbar_title">星座运势</string>
     <string name="constellate_detail_toolbar_title">运势</string>
+    <string name="constellate_today_fortune_title">今日运势指数</string>
 </resources>

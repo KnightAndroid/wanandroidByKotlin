@@ -1294,6 +1294,9 @@
             <attr name="vertical_progressColor" format="color" />
             <attr name="vertical_backgroundColorCustom" format="color" />
             <attr name="vertical_cornerRadius" format="dimension" />
+            <attr name="vertical_startProgressColor" format="color" />
+            <attr name="vertical_endProgressColor" format="color" />
+            <attr name="vertical_isGradientEnabled" format="boolean" />
         </declare-styleable>
 
 </resources>

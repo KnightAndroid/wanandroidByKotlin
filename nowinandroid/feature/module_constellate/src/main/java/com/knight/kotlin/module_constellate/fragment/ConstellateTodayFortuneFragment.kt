@@ -3,19 +3,20 @@ package com.knight.kotlin.module_constellate.fragment
 import android.os.Build
 import android.os.Bundle
 import androidx.annotation.RequiresApi
+import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.core.library_base.route.RouteFragment
-import com.core.library_base.util.GsonUtils
-import com.google.gson.reflect.TypeToken
 import com.knight.kotlin.library_base.fragment.BaseFragment
-import com.knight.kotlin.library_util.JsonUtils
+import com.knight.kotlin.library_util.ViewInitUtils
 import com.knight.kotlin.library_widget.ktx.init
 import com.knight.kotlin.module_constellate.R
+import com.knight.kotlin.module_constellate.activity.ConstellateFateActivity
 import com.knight.kotlin.module_constellate.adapter.ConstellateDateAdapter
+import com.knight.kotlin.module_constellate.adapter.ConstellateFortuneTypeValueAdapter
 import com.knight.kotlin.module_constellate.databinding.ConstellateTodayFortuneFragmentBinding
 import com.knight.kotlin.module_constellate.entity.ConstellateDateEntity
 import com.knight.kotlin.module_constellate.entity.ConstellateFortuneEntity
-import com.knight.kotlin.module_constellate.entity.ConstellateTypeEntity
+import com.knight.kotlin.module_constellate.entity.ConstellateTypeValueEntity
 import com.knight.kotlin.module_constellate.vm.ConstellateFortuneVm
 import com.wyjson.router.annotation.Route
 import dagger.hilt.android.AndroidEntryPoint
@@ -39,9 +40,15 @@ class ConstellateTodayFortuneFragment : BaseFragment<ConstellateTodayFortuneFrag
 
 
     private val mConstellateDateAdapter: ConstellateDateAdapter by lazy { ConstellateDateAdapter() }
-
+    //各运势百分比
+    private val mConstellateFortuneTypeValueAdapter: ConstellateFortuneTypeValueAdapter by lazy { ConstellateFortuneTypeValueAdapter() }
     //今日数据
     private var today:ConstellateFortuneEntity? = null
+    //各子运势的值
+    val fortuneTypeValues = mutableListOf<ConstellateTypeValueEntity>()
+
+
+    private lateinit var nestedScrollView: NestedScrollView
     private val constellationIconMap = mapOf(
         "白羊座" to R.drawable.constellate_aries_icon,
         "金牛座" to R.drawable.constellate_taurus_icon,
@@ -72,6 +79,7 @@ class ConstellateTodayFortuneFragment : BaseFragment<ConstellateTodayFortuneFrag
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun ConstellateTodayFortuneFragmentBinding.initView() {
+        nestedScrollView = requireActivity().findViewById(R.id.nest_fortune)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             today = arguments?.getParcelable("today", ConstellateFortuneEntity::class.java)
         } else {
@@ -83,10 +91,34 @@ class ConstellateTodayFortuneFragment : BaseFragment<ConstellateTodayFortuneFrag
             ivLuckyConstellate.setBackgroundResource(getConstellationIcon(lucky_star))
             tvConstellateSuitable.text = yi
             tvConstellateTaboo.text = ji
+
+            val mAllConstellateTypeValueEntity = ConstellateTypeValueEntity("综合","all",all.replace("%", "").toInt())
+            val mLoveConstellateTypeValueEntity = ConstellateTypeValueEntity("爱情","love",love.replace("%", "").toInt())
+            val mWorkConstellateTypeValueEntity = ConstellateTypeValueEntity("事学","work",work.replace("%", "").toInt())
+            val mMoneyConstellateTypeValueEntity = ConstellateTypeValueEntity("财富","money",money.replace("%", "").toInt())
+            val mHealthConstellateTypeValueEntity = ConstellateTypeValueEntity("健康","health",health.replace("%", "").toInt())
+            val mDiscussConstellateTypeValueEntity = ConstellateTypeValueEntity("商谈","discuss",discuss.replace("%", "").toInt())
+            fortuneTypeValues.add(mAllConstellateTypeValueEntity)
+            fortuneTypeValues.add(mLoveConstellateTypeValueEntity)
+            fortuneTypeValues.add(mWorkConstellateTypeValueEntity)
+            fortuneTypeValues.add(mMoneyConstellateTypeValueEntity)
+            fortuneTypeValues.add(mHealthConstellateTypeValueEntity)
+            fortuneTypeValues.add(mDiscussConstellateTypeValueEntity)
         }
 
         rvConstellateDate.init(LinearLayoutManager(requireActivity(),LinearLayoutManager.HORIZONTAL,false), mConstellateDateAdapter, false)
         mConstellateDateAdapter.submitList(getWeekData())
+
+
+        rvConstellateTypeValue.init(LinearLayoutManager(requireActivity(),LinearLayoutManager.HORIZONTAL,false),mConstellateFortuneTypeValueAdapter, false)
+        mConstellateFortuneTypeValueAdapter.submitList(fortuneTypeValues)
+        nestedScrollView.setOnScrollChangeListener { _, _, scrollY, _, _ ->
+            if (ViewInitUtils.isViewVisibleInScroll(nestedScrollView,rvConstellateTypeValue)) {
+
+                mConstellateFortuneTypeValueAdapter.executeAnimation()
+                }
+            (requireActivity() as? ConstellateFateActivity)?.updateToolbarColor(scrollY)
+        }
 
     }
 
@@ -134,5 +166,15 @@ class ConstellateTodayFortuneFragment : BaseFragment<ConstellateTodayFortuneFrag
     fun getConstellationIcon(name: String): Int {
         return constellationIconMap[name] ?: R.drawable.constellate_leo_icon
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mConstellateFortuneTypeValueAdapter.cancelAnimation()
+    }
+
+
+
+
+
 
 }

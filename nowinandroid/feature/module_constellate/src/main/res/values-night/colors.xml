@@ -2,4 +2,6 @@
 <resources>
     <color name="constellate_bottom_tv_title_text_color">#D3D3D3</color>
     <color name="constellate_bottom_tv_date_text_color">#999999</color>
+    <color name="constellate_today_title_text_color">#D3D3D3</color>
+    <color name="constellate_fortune_type_text_color">#666666</color>
 </resources>
