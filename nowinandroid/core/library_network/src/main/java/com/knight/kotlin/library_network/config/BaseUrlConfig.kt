@@ -1,7 +1,5 @@
 package com.knight.kotlin.library_network.config
 
-import com.core.library_base.route.RouteActivity
-
 /**
  * Author:Knight
  * Time:2021/12/15 13:49
@@ -36,4 +34,6 @@ object BaseUrlConfig {
     const val VV_HAN_URL = "https://api.vvhan.com/"
     //星座api
     const val CONSTELLATE = "https://api.suxun.site/"
+    //查询星座工作和学习api
+    const val CONSTELLATE_SUB = "https://service-m9yegcn9-1311248022.sh.apigw.tencentcs.com/"
 }

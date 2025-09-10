@@ -5,6 +5,7 @@ import com.knight.kotlin.library_base.repository.BaseRepository
 import com.knight.kotlin.library_network.model.responseCodeExceptionHandler
 import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_constellate.api.ConstellateFortuneApi
+import com.knight.kotlin.module_constellate.entity.ConstellateFortuneSubEntity
 import com.knight.kotlin.module_constellate.entity.ConstellateResponseEntity
 import javax.inject.Inject
 
@@ -36,6 +37,20 @@ class ConstellateFortuneRepo @Inject constructor() : BaseRepository(){
         it?.let {
                 it1 -> toast(it1)
         }
+    }
+
+
+    /**
+     *
+     * 获取今日工作和学习
+     */
+    fun getConstellateFortuneWorkStudy(type:String,failureCallback: ((String?) -> Unit)?= null) = request<ConstellateFortuneSubEntity> ({
+        mConstellateFortuneApi.getConstellateFortuneWorkStudy(type).run {
+            emit(this)
+        }
+    }) { errorMsg ->
+        // 出错时回调
+        failureCallback?.let { it(errorMsg) }
     }
 
 

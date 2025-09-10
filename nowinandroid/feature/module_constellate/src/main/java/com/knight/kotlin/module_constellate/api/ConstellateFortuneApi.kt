@@ -1,7 +1,7 @@
 package com.knight.kotlin.module_constellate.api
 
 import com.knight.kotlin.library_network.bean.BaseResponse
-import com.knight.kotlin.module_constellate.entity.ConstellateFortuneEntity
+import com.knight.kotlin.module_constellate.entity.ConstellateFortuneSubEntity
 import com.knight.kotlin.module_constellate.entity.ConstellateResponseEntity
 import retrofit2.http.GET
 import retrofit2.http.Headers
@@ -24,6 +24,11 @@ interface ConstellateFortuneApi {
     @GET("api/constellation")
     suspend fun getConstellateFortune(@Query("type") type: String, @Query("time") time:String) : BaseResponse<ConstellateResponseEntity>
 
+
+
+    @Headers("Domain-Name:constellate_sub")
+    @GET("release/star")
+    suspend fun getConstellateFortuneWorkStudy(@Query("n") n:String) : ConstellateFortuneSubEntity
 
 
 

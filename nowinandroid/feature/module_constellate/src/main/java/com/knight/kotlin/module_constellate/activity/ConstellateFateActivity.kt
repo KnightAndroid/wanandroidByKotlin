@@ -5,6 +5,7 @@ import android.content.res.TypedArray
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.view.ViewGroup
+import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import com.core.library_base.ktx.setOnClick
 import com.core.library_base.route.RouteActivity
@@ -30,16 +31,16 @@ import dagger.hilt.android.AndroidEntryPoint
 
 /**
  * @author created by luguian
- * @organize 
+ * @organize
  * @Date 2025/6/19 9:25
  * @descript:星座具体信息
  */
 @AndroidEntryPoint
 @Route(path = RouteActivity.Constellate.ConstellateFortuneActivity)
-class ConstellateFateActivity : BaseActivity<ConstellateFortuneActivityBinding, ConstellateFortuneVm>(){
+class ConstellateFateActivity : BaseActivity<ConstellateFortuneActivityBinding, ConstellateFortuneVm>() {
 
     @JvmField
-    @Param(name="constellate")
+    @Param(name = "constellate")
     var constellate: ConstellateTypeEntity? = null
     private lateinit var typeArrayIcons: TypedArray
 
@@ -55,7 +56,29 @@ class ConstellateFateActivity : BaseActivity<ConstellateFortuneActivityBinding, 
     }
 
     override fun initRequestData() {
+        mViewModel.getConstellateFortuneWorkStudy(constellate?.name ?: "") { errorMsg ->
+            // 这里处理失败逻辑
+            getConstellateFortunebyName("","")
+        }.observerKt { fortune ->
+            getConstellateFortunebyName(fortune.study,fortune.work)
+        }
+
+
+    }
+
+    override fun reLoadData() {
+
+    }
+
+    /**
+     *
+     * 根据对应星座获取详情
+     */
+    fun getConstellateFortunebyName(study:String,work:String) {
         mViewModel.getConstellateFortune(constellate?.enName?:"","today").observerKt {
+            //这里如何拿到外面 it.study值？
+            it.tomorrow.study_children_text = study
+            it.tomorrow.work_children_text = work
             mFragments.add(ConstellateTodayFortuneFragment.newInstance(it.tomorrow))
             mFragments.add(ConstellateWeekFortuneFragment())
             mFragments.add(ConstellateMonthFortuneFragment())
@@ -74,10 +97,6 @@ class ConstellateFateActivity : BaseActivity<ConstellateFortuneActivityBinding, 
                 tab.setPadding(4.dp2px(), 0, 4.dp2px(), 0)  // 左右间距为 12dp，你可以改成其他数值
             }
         }
-    }
-
-    override fun reLoadData() {
-
     }
 
     override fun ConstellateFortuneActivityBinding.initView() {
@@ -114,7 +133,7 @@ class ConstellateFateActivity : BaseActivity<ConstellateFortuneActivityBinding, 
 
             constellateCloudView.setAvoidCircle(relativeX, relativeY, radius)
         }
-        constellateCloudView.setCloudImages(R.drawable.constellate_cloud_behind, R.drawable.constellate_cloud_front,0.5f,1.0f)
+        constellateCloudView.setCloudImages(R.drawable.constellate_cloud_behind, R.drawable.constellate_cloud_front, 0.5f, 1.0f)
         constellateCloudView.start()
 
 
@@ -125,17 +144,17 @@ class ConstellateFateActivity : BaseActivity<ConstellateFortuneActivityBinding, 
             tvConstellateName.text = constellate?.enName
         }
 
-        tvConstellateName.setOnClick{
-            ConstellateSelectDialog.newInstance(constellate?.name ?: "").show(supportFragmentManager,"constellateSelect")
+        tvConstellateName.setOnClick {
+            ConstellateSelectDialog.newInstance(constellate?.name ?: "").show(supportFragmentManager, "constellateSelect")
 
         }
 
-        nestFortune.setOnScrollChangeListener { _, _, scrollY, _, _ ->
-            updateToolbarColor(scrollY)
-
-        }
-
-
+        nestFortune.setOnScrollChangeListener(
+            NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+                // 滚动监听逻辑
+                updateToolbarColor(scrollY)
+            }
+        )
     }
 
 

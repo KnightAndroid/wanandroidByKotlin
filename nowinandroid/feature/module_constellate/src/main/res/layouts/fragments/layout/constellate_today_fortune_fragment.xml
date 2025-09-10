@@ -296,4 +296,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ll_today_fortune_title" />
+
+
+    <com.yanzhenjie.recyclerview.SwipeRecyclerView
+        android:id="@+id/rv_constellate_fortune_value"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rv_constellate_type_value" />
 </androidx.constraintlayout.widget.ConstraintLayout>

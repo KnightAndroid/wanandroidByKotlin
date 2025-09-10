@@ -26,8 +26,10 @@ data class ConstellateFortuneEntity (
     val love_text:String,
     val take_star:String,
     val work_text:String,
+    var work_children_text:String,
+    var study_children_text:String,
     val lucky_star:String,
-    val month_text:String,
+    val money_text:String,
     val health_text:String,
     val lucky_color:String,
     val lucky_number:String

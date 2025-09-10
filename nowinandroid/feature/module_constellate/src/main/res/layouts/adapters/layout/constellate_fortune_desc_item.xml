@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:minHeight="120dp">
@@ -43,13 +44,34 @@
             android:layout_marginStart="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:star_space_width="4dp"
             app:star_height="25dp"
             app:star_max="5"
             app:star_orientation="star_horizontal"
-            app:star_rating="3"
+
             app:star_width="25dp"/>
 
+
+
+        <TextView
+            android:id="@+id/tv_fortune_desc"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tv_fortune_type_name"
+            app:layout_constraintStart_toStartOf="@id/tv_fortune_type_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述"/>
+
+
+
+        <com.yanzhenjie.recyclerview.SwipeRecyclerView
+            android:id="@+id/rv_constellate_children"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/tv_fortune_type_name"
+            app:layout_constraintTop_toBottomOf="@id/tv_fortune_desc"
+            android:layout_marginTop="10dp"
+            android:visibility="gone"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -106,6 +106,7 @@ class ClientConfig {
             .setDomain("ip",BaseUrlConfig.IP_URL)
             .setDomain("vvhan",BaseUrlConfig.VV_HAN_URL)
             .setDomain("constellate",BaseUrlConfig.CONSTELLATE)
+            .setDomain("constellate_sub",BaseUrlConfig.CONSTELLATE_SUB)
             .build()
     }
 

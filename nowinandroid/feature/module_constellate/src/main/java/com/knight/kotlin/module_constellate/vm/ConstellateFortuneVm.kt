@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
 import com.core.library_base.ktx.showLoadingDialog
 import com.core.library_base.vm.BaseViewModel
+import com.knight.kotlin.module_constellate.entity.ConstellateFortuneSubEntity
 import com.knight.kotlin.module_constellate.entity.ConstellateResponseEntity
 import com.knight.kotlin.module_constellate.repo.ConstellateFortuneRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -28,6 +29,15 @@ class ConstellateFortuneVm @Inject constructor(private val mRepo : ConstellateFo
         showLoadingDialog()
         return mRepo.getConstellateFortune(type,time).asLiveData()
         }
+
+
+    /**
+     *
+     * 获取今日类型星座运势
+     */
+    fun getConstellateFortuneWorkStudy(type: String,failureCallback: ((String?) -> Unit)?= null): LiveData<ConstellateFortuneSubEntity> {
+        return mRepo.getConstellateFortuneWorkStudy(type,failureCallback).asLiveData()
+    }
 
 
 
