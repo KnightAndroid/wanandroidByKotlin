@@ -1,6 +1,7 @@
 package com.knight.kotlin.library_widget
 
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Rect
 import android.view.View
@@ -22,7 +23,7 @@ class RecyclerItemDecoration : RecyclerView.ItemDecoration {
 
     private var bottom: Int
 
-    private var dividerColor = 0
+    private var dividerColor = Color.TRANSPARENT
 
     private var dividerHeight = 0
 
@@ -35,6 +36,8 @@ class RecyclerItemDecoration : RecyclerView.ItemDecoration {
         this.top = top
         this.right = right
         this.bottom = bottom
+        mPaint = Paint()
+        mPaint!!.color = dividerColor
     }
 
     constructor(

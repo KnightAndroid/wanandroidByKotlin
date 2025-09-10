@@ -6,8 +6,11 @@ import androidx.annotation.RequiresApi
 import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.core.library_base.route.RouteFragment
+import com.core.library_common.util.dp2px
 import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.knight.kotlin.library_util.ViewInitUtils
+import com.knight.kotlin.library_widget.RecyclerItemDecoration
+import com.knight.kotlin.library_widget.SpacesItemDecoration
 import com.knight.kotlin.library_widget.ktx.init
 import com.knight.kotlin.module_constellate.R
 import com.knight.kotlin.module_constellate.activity.ConstellateFateActivity
@@ -122,6 +125,12 @@ class ConstellateTodayFortuneFragment : BaseFragment<ConstellateTodayFortuneFrag
 
         rvConstellateTypeValue.init(LinearLayoutManager(requireActivity(),LinearLayoutManager.HORIZONTAL,false),mConstellateFortuneTypeValueAdapter, false)
         rvConstellateFortuneValue.init(LinearLayoutManager(requireActivity()),mConstellateTypeDescAdapter,false)
+        rvConstellateFortuneValue.addItemDecoration(
+
+            RecyclerItemDecoration(0,10.dp2px(),0,0)
+        )
+
+
         mConstellateFortuneTypeValueAdapter.submitList(fortuneTypeValues)
 
         mConstellateTypeDescAdapter.submitList(fortuneTypeValues)

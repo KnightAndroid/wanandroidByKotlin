@@ -5,4 +5,6 @@
     <dimen name="constellate_view_fortune_today_width">10dp</dimen>
     <dimen name="constellate_view_fortune_today_margin_left">10dp</dimen>
     <dimen name="constellate_today_fortune_title_text_size">20sp</dimen>
+    <dimen name="constellate_tv_fortune_desc_margin_top">10dp</dimen>
+    <dimen name="constellate_tv_fortune_desc_margin_bottom">10dp</dimen>
 </resources>
