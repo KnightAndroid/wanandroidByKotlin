@@ -48,12 +48,20 @@ class ConstellateFortuneTypeValueAdapter :
         }
 
         fun executeAnimation() {
-            if (!hasAnimated) {
+//            if (!hasAnimated) {
+//                hasAnimated = true
+//                binding.pbTypeFortuneValue.doOnPreDraw {
+//
+//                        //   binding.pbTypeFortuneValue.setProgress(0)
+//                        binding.pbTypeFortuneValue.setProgress(mConstellateTypeValueEntity.value, true)
+//
+//                }
+//
+//            }
+
+            if (!hasAnimated && binding.pbTypeFortuneValue.width > 0 && binding.pbTypeFortuneValue.height > 0) {
                 hasAnimated = true
-                binding.pbTypeFortuneValue.post {
-                 //   binding.pbTypeFortuneValue.setProgress(0)
-                    binding.pbTypeFortuneValue.setProgress(mConstellateTypeValueEntity.value, true)
-                }
+                binding.pbTypeFortuneValue.setProgress(mConstellateTypeValueEntity.value, true)
             }
         }
 

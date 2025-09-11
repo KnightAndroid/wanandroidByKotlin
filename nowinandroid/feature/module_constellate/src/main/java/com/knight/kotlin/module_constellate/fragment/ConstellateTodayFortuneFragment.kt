@@ -182,15 +182,7 @@ class ConstellateTodayFortuneFragment : BaseFragment<ConstellateTodayFortuneFrag
 
         mConstellateFortuneTypeValueAdapter.submitList(fortuneTypeValues)
         mConstellateTypeDescAdapter.submitList(fortuneTypeValues)
-        rvConstellateTypeValue.post {
-            nestedScrollView.setOnScrollChangeListener { _, _, scrollY, _, _ ->
-                if (ViewInitUtils.isViewVisibleInScroll(nestedScrollView,rvConstellateTypeValue)) {
 
-                    mConstellateFortuneTypeValueAdapter.executeVisibleAnimation(rvConstellateTypeValue)
-                }
-                (requireActivity() as? ConstellateFateActivity)?.updateToolbarColor(scrollY)
-            }
-        }
 
 
     }
@@ -245,9 +237,37 @@ class ConstellateTodayFortuneFragment : BaseFragment<ConstellateTodayFortuneFrag
         //mConstellateFortuneTypeValueAdapter.cancelAnimation()
     }
 
+    override fun onDestroyView() {
+        mBinding.rvConstellateTypeValue.adapter?.let { adapter ->
+            if (adapter is ConstellateFortuneTypeValueAdapter) {
+                adapter.cancelAllAnimation(mBinding.rvConstellateTypeValue)
+            }
+        }
+        mBinding.rvConstellateTypeValue.adapter = null
+        super.onDestroyView()
+    }
 
 
+    override fun onResume() {
+        super.onResume()
+        nestedScrollView.setOnScrollChangeListener(scrollListener)
+    }
 
+    override fun onPause() {
+        super.onPause()
+        nestedScrollView.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { _, _, _, _, _ -> })
+    }
+    private val scrollListener = NestedScrollView.OnScrollChangeListener { scrollView, _, scrollY, _, _ ->
+        if (!isVisible) return@OnScrollChangeListener // Fragment 不可见，直接返回
+
+        // 判断 RecyclerView 是否在 NestedScrollView 可视区域
+        if (ViewInitUtils.isViewVisibleInScroll(scrollView as NestedScrollView, mBinding.rvConstellateTypeValue)) {
+            mConstellateFortuneTypeValueAdapter.executeVisibleAnimation( mBinding.rvConstellateTypeValue)
+        }
+
+        // 可选：更新 Toolbar 颜色
+        (requireActivity() as? ConstellateFateActivity)?.updateToolbarColor(scrollY)
+    }
 
 
 }

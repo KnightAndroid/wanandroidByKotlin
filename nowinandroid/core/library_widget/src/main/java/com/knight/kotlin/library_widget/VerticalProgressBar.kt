@@ -24,7 +24,6 @@ class VerticalProgressBar @JvmOverloads constructor(
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
-
     private var progress: Int = 0
     private var max: Int = 100
 
