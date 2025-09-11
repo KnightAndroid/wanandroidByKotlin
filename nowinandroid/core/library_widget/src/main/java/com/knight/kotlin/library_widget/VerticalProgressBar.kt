@@ -17,6 +17,7 @@ import android.graphics.Shader
 import android.util.AttributeSet
 import android.view.View
 import androidx.core.content.ContextCompat
+import com.knight.kotlin.library_util.LogUtils
 
 class VerticalProgressBar @JvmOverloads constructor(
     context: Context,
@@ -70,7 +71,7 @@ class VerticalProgressBar @JvmOverloads constructor(
             value > max -> max
             else -> value
         }
-
+        LogUtils.d("sss"+target)
         if (animated) {
             animator?.cancel()
             animator = ValueAnimator.ofInt(progress, target).apply {

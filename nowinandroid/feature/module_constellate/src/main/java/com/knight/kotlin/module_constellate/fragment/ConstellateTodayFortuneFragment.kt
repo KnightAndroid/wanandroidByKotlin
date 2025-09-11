@@ -2,26 +2,29 @@ package com.knight.kotlin.module_constellate.fragment
 
 import android.os.Build
 import android.os.Bundle
+import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.core.library_base.route.RouteFragment
 import com.core.library_common.util.dp2px
 import com.knight.kotlin.library_base.fragment.BaseFragment
+import com.knight.kotlin.library_util.DateUtils
 import com.knight.kotlin.library_util.ViewInitUtils
 import com.knight.kotlin.library_widget.RecyclerItemDecoration
-import com.knight.kotlin.library_widget.SpacesItemDecoration
 import com.knight.kotlin.library_widget.ktx.init
 import com.knight.kotlin.module_constellate.R
 import com.knight.kotlin.module_constellate.activity.ConstellateFateActivity
 import com.knight.kotlin.module_constellate.adapter.ConstellateDateAdapter
 import com.knight.kotlin.module_constellate.adapter.ConstellateFortuneTypeDescAdapter
 import com.knight.kotlin.module_constellate.adapter.ConstellateFortuneTypeValueAdapter
+import com.knight.kotlin.module_constellate.adapter.ConstellateWeekDateAdapter
 import com.knight.kotlin.module_constellate.databinding.ConstellateTodayFortuneFragmentBinding
 import com.knight.kotlin.module_constellate.entity.ConstellateDateEntity
 import com.knight.kotlin.module_constellate.entity.ConstellateFortuneChildrenEntity
 import com.knight.kotlin.module_constellate.entity.ConstellateFortuneEntity
 import com.knight.kotlin.module_constellate.entity.ConstellateTypeValueEntity
+import com.knight.kotlin.module_constellate.enums.FortuneTimeType
 import com.knight.kotlin.module_constellate.vm.ConstellateFortuneVm
 import com.wyjson.router.annotation.Route
 import dagger.hilt.android.AndroidEntryPoint
@@ -43,8 +46,11 @@ class ConstellateTodayFortuneFragment : BaseFragment<ConstellateTodayFortuneFrag
 
 
 
-
+    //日运 日期适配器
     private val mConstellateDateAdapter: ConstellateDateAdapter by lazy { ConstellateDateAdapter() }
+    //周运 周日期适配器
+    private val mConstellateWeekDateAdapter:ConstellateWeekDateAdapter by lazy { ConstellateWeekDateAdapter() }
+
     //各运势百分比
     private val mConstellateFortuneTypeValueAdapter: ConstellateFortuneTypeValueAdapter by lazy { ConstellateFortuneTypeValueAdapter() }
     //今日数据
@@ -52,7 +58,7 @@ class ConstellateTodayFortuneFragment : BaseFragment<ConstellateTodayFortuneFrag
     //各运势详情
     val fortuneTypeValues = mutableListOf<ConstellateTypeValueEntity>()
     private val mConstellateTypeDescAdapter:ConstellateFortuneTypeDescAdapter by lazy { ConstellateFortuneTypeDescAdapter() }
-
+    private var fortuneTimeType: FortuneTimeType? = null
 
     private lateinit var nestedScrollView: NestedScrollView
     private val constellationIconMap = mapOf(
@@ -73,10 +79,11 @@ class ConstellateTodayFortuneFragment : BaseFragment<ConstellateTodayFortuneFrag
 
 
     companion object {
-        fun newInstance(todayFortune: ConstellateFortuneEntity) : ConstellateTodayFortuneFragment {
+        fun newInstance(todayFortune: ConstellateFortuneEntity,type:FortuneTimeType) : ConstellateTodayFortuneFragment {
             val mConstellateTodayFortuneFragment = ConstellateTodayFortuneFragment()
             val args = Bundle()
             args.putParcelable("today", todayFortune)
+            args.putString("type",type.name)
             mConstellateTodayFortuneFragment.arguments = args
             return mConstellateTodayFortuneFragment
         }
@@ -91,36 +98,78 @@ class ConstellateTodayFortuneFragment : BaseFragment<ConstellateTodayFortuneFrag
         } else {
             today = arguments?.getParcelable("today")
         }
+        fortuneTimeType = arguments?.getString("type")?.let { FortuneTimeType.valueOf(it) }
+
+
         today?.run {
-            tvLuckyColor.text = lucky_color
-            tvLuckyNumber.text = lucky_number
-            ivLuckyConstellate.setBackgroundResource(getConstellationIcon(lucky_star))
+            if (fortuneTimeType == FortuneTimeType.DAY || fortuneTimeType == FortuneTimeType.WEEK) {
+                llLuckyMessage.visibility = View.VISIBLE
+                tvLuckyColor.text = lucky_color
+                tvLuckyNumber.text = lucky_number
+                if (fortuneTimeType == FortuneTimeType.DAY) {
+                    rlLuckyStar.visibility = View.VISIBLE
+                    ivLuckyConstellate.setBackgroundResource(getConstellationIcon(lucky_star))
+                } else {
+                    rlLuckyStar.visibility = View.GONE
+                }
+            } else {
+                llLuckyMessage.visibility = View.GONE
+            }
+
+
             tvConstellateSuitable.text = yi
             tvConstellateTaboo.text = ji
 
             val mAllConstellateTypeValueEntity = ConstellateTypeValueEntity("综合","all",all.replace("%", "").toInt(),all_text)
             val mLoveConstellateTypeValueEntity = ConstellateTypeValueEntity("爱情","love",love.replace("%", "").toInt(),love_text)
             val studyWorkchildren:MutableList<ConstellateFortuneChildrenEntity> = mutableListOf()
-            val mChildWorkEntity = ConstellateFortuneChildrenEntity("工作",work_children_text)
-            val mChildStudyEntity = ConstellateFortuneChildrenEntity("学习",study_children_text)
-            studyWorkchildren.add(mChildWorkEntity)
-            studyWorkchildren.add(mChildStudyEntity)
-
-            val mWorkConstellateTypeValueEntity = ConstellateTypeValueEntity("事学","work",work.replace("%", "").toInt(),work_text,studyWorkchildren)
+            val mWorkConstellateTypeValueEntity = if (fortuneTimeType == FortuneTimeType.DAY) {
+                val mChildWorkEntity = ConstellateFortuneChildrenEntity("工作", work_children_text)
+                val mChildStudyEntity = ConstellateFortuneChildrenEntity("学习", study_children_text)
+                studyWorkchildren.add(mChildWorkEntity)
+                studyWorkchildren.add(mChildStudyEntity)
+                ConstellateTypeValueEntity("事学","work", work.replace("%", "").toInt(), work_text, studyWorkchildren)
+            } else {
+                ConstellateTypeValueEntity("事学","work", work.replace("%", "").toInt(), work_text)
+            }
             val mMoneyConstellateTypeValueEntity = ConstellateTypeValueEntity("财富","money",money.replace("%", "").toInt(),money_text)
             val mHealthConstellateTypeValueEntity = ConstellateTypeValueEntity("健康","health",health.replace("%", "").toInt(),health_text)
-            val mDiscussConstellateTypeValueEntity = ConstellateTypeValueEntity("商谈","discuss",discuss.replace("%", "").toInt(),"")
+
             fortuneTypeValues.add(mAllConstellateTypeValueEntity)
             fortuneTypeValues.add(mLoveConstellateTypeValueEntity)
             fortuneTypeValues.add(mWorkConstellateTypeValueEntity)
             fortuneTypeValues.add(mMoneyConstellateTypeValueEntity)
             fortuneTypeValues.add(mHealthConstellateTypeValueEntity)
-            fortuneTypeValues.add(mDiscussConstellateTypeValueEntity)
+            if (fortuneTimeType == FortuneTimeType.DAY) {
+                val mDiscussConstellateTypeValueEntity = ConstellateTypeValueEntity("商谈","discuss",discuss.replace("%", "").toInt(),"")
+                fortuneTypeValues.add(mDiscussConstellateTypeValueEntity)
+            }
+
         }
 
-        rvConstellateDate.init(LinearLayoutManager(requireActivity(),LinearLayoutManager.HORIZONTAL,false), mConstellateDateAdapter, false)
+        when (fortuneTimeType) {
+            FortuneTimeType.DAY -> {
+                rvConstellateDate.init(LinearLayoutManager(requireActivity(),LinearLayoutManager.HORIZONTAL,false), mConstellateDateAdapter, false)
+                mConstellateDateAdapter.submitList(getWeekData())
+            }
+            FortuneTimeType.WEEK -> {
+                rvConstellateDate.init(LinearLayoutManager(requireActivity(),LinearLayoutManager.HORIZONTAL,false), mConstellateWeekDateAdapter, false)
+                mConstellateWeekDateAdapter.submitList(DateUtils.getFiveWeeksLabels())
+            }
 
-        mConstellateDateAdapter.submitList(getWeekData())
+            FortuneTimeType.MONTH -> {
+
+            }
+
+            FortuneTimeType.YEAR -> {
+
+            }
+            null -> {
+
+            }
+
+        }
+
 
 
         rvConstellateTypeValue.init(LinearLayoutManager(requireActivity(),LinearLayoutManager.HORIZONTAL,false),mConstellateFortuneTypeValueAdapter, false)
@@ -132,15 +181,17 @@ class ConstellateTodayFortuneFragment : BaseFragment<ConstellateTodayFortuneFrag
 
 
         mConstellateFortuneTypeValueAdapter.submitList(fortuneTypeValues)
-
         mConstellateTypeDescAdapter.submitList(fortuneTypeValues)
-        nestedScrollView.setOnScrollChangeListener { _, _, scrollY, _, _ ->
-            if (ViewInitUtils.isViewVisibleInScroll(nestedScrollView,rvConstellateTypeValue)) {
+        rvConstellateTypeValue.post {
+            nestedScrollView.setOnScrollChangeListener { _, _, scrollY, _, _ ->
+                if (ViewInitUtils.isViewVisibleInScroll(nestedScrollView,rvConstellateTypeValue)) {
 
-                mConstellateFortuneTypeValueAdapter.executeAnimation()
+                    mConstellateFortuneTypeValueAdapter.executeVisibleAnimation(rvConstellateTypeValue)
                 }
-            (requireActivity() as? ConstellateFateActivity)?.updateToolbarColor(scrollY)
+                (requireActivity() as? ConstellateFateActivity)?.updateToolbarColor(scrollY)
+            }
         }
+
 
     }
 
@@ -191,7 +242,7 @@ class ConstellateTodayFortuneFragment : BaseFragment<ConstellateTodayFortuneFrag
 
     override fun onDestroy() {
         super.onDestroy()
-        mConstellateFortuneTypeValueAdapter.cancelAnimation()
+        //mConstellateFortuneTypeValueAdapter.cancelAnimation()
     }
 
 

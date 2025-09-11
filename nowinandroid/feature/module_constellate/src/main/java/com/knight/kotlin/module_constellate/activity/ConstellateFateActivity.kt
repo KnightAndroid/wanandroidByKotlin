@@ -14,14 +14,15 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.ktx.statusHeight
 import com.knight.kotlin.library_common.util.LanguageFontSizeUtils
+import com.knight.kotlin.library_util.DateUtils
 import com.knight.kotlin.library_util.ViewInitUtils
 import com.knight.kotlin.module_constellate.R
 import com.knight.kotlin.module_constellate.databinding.ConstellateFortuneActivityBinding
 import com.knight.kotlin.module_constellate.dialog.ConstellateSelectDialog
 import com.knight.kotlin.module_constellate.entity.ConstellateTypeEntity
+import com.knight.kotlin.module_constellate.enums.FortuneTimeType
 import com.knight.kotlin.module_constellate.fragment.ConstellateMonthFortuneFragment
 import com.knight.kotlin.module_constellate.fragment.ConstellateTodayFortuneFragment
-import com.knight.kotlin.module_constellate.fragment.ConstellateWeekFortuneFragment
 import com.knight.kotlin.module_constellate.fragment.ConstellateYearFortuneFragment
 import com.knight.kotlin.module_constellate.vm.ConstellateFortuneVm
 import com.wyjson.router.annotation.Param
@@ -79,8 +80,8 @@ class ConstellateFateActivity : BaseActivity<ConstellateFortuneActivityBinding, 
             //这里如何拿到外面 it.study值？
             it.tomorrow.study_children_text = study
             it.tomorrow.work_children_text = work
-            mFragments.add(ConstellateTodayFortuneFragment.newInstance(it.tomorrow))
-            mFragments.add(ConstellateWeekFortuneFragment())
+            mFragments.add(ConstellateTodayFortuneFragment.newInstance(it.tomorrow,FortuneTimeType.DAY))
+            mFragments.add(ConstellateTodayFortuneFragment.newInstance(it.week,FortuneTimeType.WEEK))
             mFragments.add(ConstellateMonthFortuneFragment())
             mFragments.add(ConstellateYearFortuneFragment())
 
@@ -90,6 +91,19 @@ class ConstellateFateActivity : BaseActivity<ConstellateFortuneActivityBinding, 
             )
             TabLayoutMediator(mBinding.constellateTabLayout, mBinding.constellateViewPager) { tab, pos ->
                 tab.text = titleFortunes[pos]
+                if (pos == 0) {
+                    //如果是日运
+                    mBinding.tvFirstTime.text = DateUtils.getCurrentDay().toString()
+                    mBinding.tvEndTime.text = "/${DateUtils.getCurrentMonth()}月"
+                } else if (pos == 1) {
+                    //如果是周运
+                    mBinding.tvFirstTime.text = DateUtils.getCurrentWeekRangeSundayStart()
+                    mBinding.tvEndTime.text = "/${DateUtils.getCurrentMonth()}月"
+                } else if (pos == 2) {
+                    //如果是月运
+                } else {
+                    //如果是年运
+                }
             }.attach()
             val tabStrip = mBinding.constellateTabLayout.getChildAt(0) as ViewGroup
             for (i in 0 until tabStrip.childCount) {

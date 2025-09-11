@@ -2,8 +2,8 @@ package com.knight.kotlin.library_util
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import com.knight.kotlin.library_common.util.LanguageFontSizeUtils
 import com.knight.kotlin.library_common.util.CacheUtils
+import com.knight.kotlin.library_common.util.LanguageFontSizeUtils
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.time.LocalDate
@@ -419,4 +419,94 @@ object DateUtils {
     fun getCurrentDateByFormat(format:String = "yyyy-MM-dd"):String {
         return SimpleDateFormat(format, Locale.getDefault()).format(Date())
     }
+
+
+    /**
+     *
+     * 获取当前年份
+     */
+    fun getCurrentYear(): Int {
+        val year = Calendar.getInstance().get(Calendar.YEAR)
+        return year
+    }
+
+    /**
+     *
+     * 获取当前月份
+      */
+    fun getCurrentMonth():Int {
+        val month = Calendar.getInstance().get(Calendar.MONTH) + 1 // 注意：从 0 开始，所以要 +1
+        return month
+    }
+
+
+    /**
+     *
+     * 获取日
+      */
+    fun getCurrentDay():Int {
+        val day = Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
+        return day
+    }
+
+    /**
+     *
+     * 返回第几周
+     */
+    fun getCurrentWeek():Int {
+        val calendar = Calendar.getInstance()
+        val currentWeek = calendar.get(Calendar.WEEK_OF_YEAR) // 当前是第几周
+        return currentWeek
+    }
+
+    /**
+     *
+     * 返回当前五周
+     */
+    fun getFiveWeeksThisYear(): List<Int> {
+        val calendar = Calendar.getInstance()
+        val currentWeek = calendar.get(Calendar.WEEK_OF_YEAR) // 当前是第几周
+
+        // 返回 [currentWeek-3, currentWeek-2, currentWeek-1, currentWeek, currentWeek+1]
+        return (currentWeek - 3..currentWeek + 1).toList()
+    }
+
+
+    /**
+     * 返回本年第几周（列表形式，五个字符串，第四个是“本周”）
+     */
+    fun getFiveWeeksLabels(): List<String> {
+        val calendar = Calendar.getInstance()
+        val currentWeek = calendar.get(Calendar.WEEK_OF_YEAR) // 当前周数
+
+        // 五周范围
+        val weeks = (currentWeek - 3..currentWeek + 1).toList()
+
+        return weeks.mapIndexed { index, week ->
+            if (index == 3) "本周" else "${week}周"
+        }
+    }
+
+
+    /**
+     * 获取当前周区间（周日 ~ 周六）
+     * 格式：d-d，例如 "7-13"
+     */
+    fun getCurrentWeekRangeSundayStart(): String {
+        val calendar = Calendar.getInstance()
+        calendar.firstDayOfWeek = Calendar.SUNDAY
+
+        // 当前周的周日
+        calendar.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY)
+        val startDate = calendar.time
+
+        // 当前周的周六
+        calendar.add(Calendar.DAY_OF_WEEK, 6)
+        val endDate = calendar.time
+
+        val sdf = SimpleDateFormat("d", Locale.getDefault()) // 只取“日”
+        return "${sdf.format(startDate)}-${sdf.format(endDate)}"
+    }
+
+
 }

@@ -137,15 +137,22 @@
 
 
                    <TextView
-                       android:id="@+id/tv_time"
+                       android:id="@+id/tv_first_time"
                        android:layout_width="wrap_content"
                        android:layout_height="wrap_content"
-                       android:textColor="#555555"
+                       android:textColor="@color/constellate_tv_first_time_text_color"
                        android:textStyle="bold"
-                       android:text="2025"
                        android:textSize="24sp"
                        android:layout_marginStart="10dp"/>
 
+
+                   <TextView
+                       android:id="@+id/tv_end_time"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:textColor="@color/constellate_tv_end_time_text_color"
+                       android:textSize="16sp"
+                       android:layout_marginStart="2dp"/>
                    <!-- 空的 View 占满中间区域，实现右对齐 -->
                    <View
                        android:layout_width="0dp"

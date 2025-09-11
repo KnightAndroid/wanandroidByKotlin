@@ -66,9 +66,27 @@ object ViewInitUtils {
      * 判断 View 是否在 NestedScrollView 的“可视区域”
      */
     fun isViewVisibleInScroll(scrollView: NestedScrollView, view: View): Boolean {
+//        val scrollBounds = Rect()
+//        scrollView.getHitRect(scrollBounds)
+//        return view.getLocalVisibleRect(scrollBounds)
+
+//        val scrollBounds = Rect()
+//        scrollView.getHitRect(scrollBounds) // ScrollView 可视区域
+//
+//        val viewTop = view.y.toInt()
+//        val viewBottom = (view.y + view.height).toInt()
+//
+//        // 判断 View 的上下边界是否在 ScrollView 可视区域
+//        return viewBottom >= scrollBounds.top && viewTop <= scrollBounds.bottom
+
         val scrollBounds = Rect()
-        scrollView.getHitRect(scrollBounds)
-        return view.getLocalVisibleRect(scrollBounds)
+        scrollView.getHitRect(scrollBounds) // ScrollView 可视区域，相对父布局
+
+        val top = view.top
+        val bottom = view.bottom
+
+        // View 是否在 ScrollView 可视区域
+        return bottom >= scrollBounds.top && top <= scrollBounds.bottom
     }
 
 
