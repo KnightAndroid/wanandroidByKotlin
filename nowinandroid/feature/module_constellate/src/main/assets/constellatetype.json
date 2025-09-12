@@ -3,73 +3,73 @@
     "name": "白羊座",
     "enName": "aries",
     "date" : "3.21-4.19",
-    "position" : 1
+    "position" : 0
   },
   {
     "name": "金牛座",
     "enName": "taurus",
     "date" : "4.20-5.20",
-    "position" : 2
+    "position" : 1
   },
   {
     "name": "双子座",
     "enName": "gemini",
     "date" : "5.21-6.21",
-    "position" : 3
+    "position" : 2
   },
   {
     "name": "巨蟹座",
     "enName": "cancer",
     "date" : "6.22-7.22",
-    "position" : 4
+    "position" : 3
   },
   {
     "name": "狮子座",
     "enName": "leo",
     "date" : "7.23-8.22",
-    "position" : 5
+    "position" : 4
   },
   {
     "name": "处女座",
     "enName": "virgo",
     "date" : "8.23-9.22",
-    "position" : 6
+    "position" : 5
   },
   {
     "name": "天秤座",
     "enName": "libra",
     "date" : "9.23-10.23",
-    "position" : 7
+    "position" : 6
   },
   {
     "name": "天蝎座",
     "enName": "scorpio",
     "date" : "10.24-11.22",
-    "position" : 8
+    "position" : 7
   },
   {
     "name": "射手座",
     "enName": "sagittarius",
     "date" : "11.23-12.21",
-    "position" : 9
+    "position" : 8
   },
   {
     "name": "魔蝎座",
     "enName": "capricorn",
     "date" : "12.22-1.19",
-    "position" : 10
+    "position" : 9
   },
   {
     "name": "水瓶座",
     "enName": "aquarius",
     "date" : "1.20-2.18",
-    "position" : 11
+    "position" : 10
   },
   {
     "name": "双鱼座",
     "enName": "pisces",
     "date" : "2.19-3.20",
-    "position" : 12
+    "position" : 11
   }
 
 ]

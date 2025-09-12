@@ -477,16 +477,84 @@ object DateUtils {
      */
     fun getFiveWeeksLabels(): List<String> {
         val calendar = Calendar.getInstance()
-        val currentWeek = calendar.get(Calendar.WEEK_OF_YEAR) // 当前周数
+        val currentWeek = calendar.get(Calendar.WEEK_OF_YEAR)
 
-        // 五周范围
-        val weeks = (currentWeek - 3..currentWeek + 1).toList()
+        val weeks = mutableListOf<Int>()
+        // 前三周
+        for (i in 3 downTo 1) {
+            var week = currentWeek - i
+            if (week <= 0) week += calendar.getActualMaximum(Calendar.WEEK_OF_YEAR) // 跨年处理
+            weeks.add(week)
+        }
 
+        // 本周
+        weeks.add(currentWeek)
+
+        // 下一周
+        var nextWeek = currentWeek + 1
+        if (nextWeek > calendar.getActualMaximum(Calendar.WEEK_OF_YEAR)) nextWeek = 1 // 跨年
+        weeks.add(nextWeek)
+
+        // 转成字符串，第四个显示 "本周"
         return weeks.mapIndexed { index, week ->
             if (index == 3) "本周" else "${week}周"
         }
     }
 
+    /**
+     *
+     * 取出前三个月 后一个月
+     */
+    fun getFiveMonthsLabels(): List<String> {
+        val calendar = Calendar.getInstance()
+        val currentMonth = calendar.get(Calendar.MONTH) + 1 // Calendar.MONTH 从0开始
+        val months = mutableListOf<String>()
+
+        // 往前取 3 个月
+        for (i in 3 downTo 1) {
+            var month = currentMonth - i
+            if (month <= 0) month += 12 // 前一年月份
+            months.add("${month}月")
+        }
+
+        // 本月
+        months.add("本月")
+
+        // 往后取 1 个月
+        var nextMonth = currentMonth + 1
+        if (nextMonth > 12) nextMonth -= 12 // 下一年
+        months.add("${nextMonth}月")
+
+        return months
+    }
+
+
+    /**
+     *
+     * 取出前三年 第四个是今年 第五个是下一年
+     */
+    fun getFiveYearsLabels(): List<String> {
+        val calendar = Calendar.getInstance()
+        val currentYear = calendar.get(Calendar.YEAR)
+
+        val years = mutableListOf<Int>()
+
+        // 前三年
+        for (i in 3 downTo 1) {
+            years.add(currentYear - i)
+        }
+
+        // 今年
+        years.add(currentYear)
+
+        // 下一年
+        years.add(currentYear + 1)
+
+        // 转成字符串，第四个显示 "今年"
+        return years.mapIndexed { index, year ->
+            if (index == 3) "今年" else "${year}"
+        }
+    }
 
     /**
      * 获取当前周区间（周日 ~ 周六）

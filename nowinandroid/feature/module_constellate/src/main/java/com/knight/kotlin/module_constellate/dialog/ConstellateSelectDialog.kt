@@ -3,23 +3,21 @@ package com.knight.kotlin.module_constellate.dialog
 import android.content.res.TypedArray
 import android.os.Bundle
 import android.view.Gravity
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.core.library_base.util.GsonUtils
 import com.core.library_base.vm.EmptyViewModel
-import com.core.library_common.util.dp2px
 import com.google.gson.reflect.TypeToken
 import com.knight.kotlin.library_base.fragment.BaseDialogFragment
-import com.knight.kotlin.library_base.ktx.getScreenHeight
 import com.knight.kotlin.library_base.ktx.getScreenWidth
-import com.knight.kotlin.library_database.entity.EveryDayPushEntity
 import com.knight.kotlin.library_util.JsonUtils
-import com.knight.kotlin.library_widget.CustomGridItemDecoration
 import com.knight.kotlin.library_widget.ktx.init
+import com.knight.kotlin.library_widget.ktx.setSafeOnItemClickListener
 import com.knight.kotlin.module_constellate.R
 import com.knight.kotlin.module_constellate.adapter.ConstellateBottomTypeAdapter
-import com.knight.kotlin.module_constellate.adapter.ConstellateTypeAdapter
 import com.knight.kotlin.module_constellate.databinding.ConstellateSelectDialogBinding
 import com.knight.kotlin.module_constellate.entity.ConstellateTypeEntity
+import com.knight.kotlin.module_constellate.vm.ConstellateShareVm
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -37,6 +35,7 @@ class ConstellateSelectDialog :BaseDialogFragment<ConstellateSelectDialogBinding
 
     private lateinit var selectConstellateName:String
 
+    private val sharedViewModel: ConstellateShareVm by activityViewModels()
     companion object {
         fun newInstance(selectConstellateName:String) : ConstellateSelectDialog {
             val mConstellateSelectDialog = ConstellateSelectDialog()
@@ -53,6 +52,15 @@ class ConstellateSelectDialog :BaseDialogFragment<ConstellateSelectDialogBinding
         rvConstellateBottomType.post {
             setupConstellateBottomGrid()
         }
+
+        mConstellateBottomTypeAdapter.run {
+            setSafeOnItemClickListener{adapter,view,position ->
+                val item = getItem(position) as? ConstellateTypeEntity ?: return@setSafeOnItemClickListener
+                sharedViewModel.selectConstellate(item) // ✅ 发消息
+                dismiss()
+            }
+        }
+
     }
 
     override fun getGravity() = Gravity.BOTTOM
@@ -78,17 +86,6 @@ class ConstellateSelectDialog :BaseDialogFragment<ConstellateSelectDialogBinding
      */
     private fun setupConstellateBottomGrid() {
         val itemSize = (getScreenWidth()) / 3
-       // val verticalSpacing = (getScreenHeight() - mBinding.constellateMainToolbar.root.height  -  itemSize * 4) / 5  // 4 行，3 个间隔
-//        mBinding.rvConstellateBottomType.addItemDecoration(
-//            CustomGridItemDecoration(
-//                spanCount = 3,
-//                horizontalSpacing = 0.dp2px(),
-//                verticalSpacing = 0,
-//                totalRows = 4
-//            )
-//        )
-
-
         val constellateType = object : TypeToken<List<ConstellateTypeEntity>>() {}.type
         val jsonData: String = JsonUtils.getJson(requireActivity(), "constellatetype.json")
         val mDataList: MutableList<ConstellateTypeEntity> = GsonUtils.getList(jsonData, constellateType)

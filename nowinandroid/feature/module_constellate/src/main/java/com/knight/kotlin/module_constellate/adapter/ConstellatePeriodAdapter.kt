@@ -17,9 +17,9 @@ import com.knight.kotlin.module_constellate.databinding.ConstellateWeekItemBindi
  * @author created by luguian
  * @organize
  * @Date 2025/9/11 14:16
- * @descript:周运适配器
+ * @descript:周运/月运/年运适配器
  */
-class ConstellateWeekDateAdapter:BaseQuickAdapter<String,ConstellateWeekDateAdapter.VH>(){
+class ConstellatePeriodAdapter:BaseQuickAdapter<String,ConstellatePeriodAdapter.VH>(){
     class VH(
         parent: ViewGroup,
         val binding: ConstellateWeekItemBinding = ConstellateWeekItemBinding.inflate(

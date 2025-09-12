@@ -118,7 +118,6 @@
                    android:id="@+id/tv_shortcomment"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
-                   android:text="“捡了芝麻丢西瓜”"
                    android:layout_below="@id/rl_change_constellate"
                    android:layout_centerHorizontal="true"
                    android:textColor="#555555"

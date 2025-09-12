@@ -2,9 +2,12 @@ package com.knight.kotlin.module_constellate.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter4.BaseQuickAdapter
+import com.knight.kotlin.library_widget.ktx.init
 import com.knight.kotlin.module_constellate.R
 import com.knight.kotlin.module_constellate.databinding.ConstellateFortuneDescItemBinding
 import com.knight.kotlin.module_constellate.entity.ConstellateTypeValueEntity
@@ -47,7 +50,14 @@ class ConstellateFortuneTypeDescAdapter:BaseQuickAdapter<ConstellateTypeValueEnt
 
             holder.binding.tvFortuneDesc.text = desc
             holder.binding.fortuneStarBar.setStarRating(scoreToStars(value))
-
+            if (children.size > 0 && !children[0].desc.isNullOrEmpty() && !children[1].desc.isNullOrEmpty()) {
+                val mConstellateFortuneChildTypeDescAdapter: ConstellateFortuneChildTypeDescAdapter by lazy { ConstellateFortuneChildTypeDescAdapter() }
+                holder.binding.rvConstellateChildren.init(LinearLayoutManager(context),mConstellateFortuneChildTypeDescAdapter, false)
+                mConstellateFortuneChildTypeDescAdapter.submitList(children)
+                holder.binding.rvConstellateChildren.visibility = View.VISIBLE
+            } else {
+                holder.binding.rvConstellateChildren.visibility = View.GONE
+            }
 
         }
     }

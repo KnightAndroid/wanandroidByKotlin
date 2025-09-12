@@ -18,7 +18,7 @@ import com.knight.kotlin.module_constellate.activity.ConstellateFateActivity
 import com.knight.kotlin.module_constellate.adapter.ConstellateDateAdapter
 import com.knight.kotlin.module_constellate.adapter.ConstellateFortuneTypeDescAdapter
 import com.knight.kotlin.module_constellate.adapter.ConstellateFortuneTypeValueAdapter
-import com.knight.kotlin.module_constellate.adapter.ConstellateWeekDateAdapter
+import com.knight.kotlin.module_constellate.adapter.ConstellatePeriodAdapter
 import com.knight.kotlin.module_constellate.databinding.ConstellateTodayFortuneFragmentBinding
 import com.knight.kotlin.module_constellate.entity.ConstellateDateEntity
 import com.knight.kotlin.module_constellate.entity.ConstellateFortuneChildrenEntity
@@ -49,7 +49,7 @@ class ConstellateTodayFortuneFragment : BaseFragment<ConstellateTodayFortuneFrag
     //日运 日期适配器
     private val mConstellateDateAdapter: ConstellateDateAdapter by lazy { ConstellateDateAdapter() }
     //周运 周日期适配器
-    private val mConstellateWeekDateAdapter:ConstellateWeekDateAdapter by lazy { ConstellateWeekDateAdapter() }
+    private val mConstellatePeriodAdapter:ConstellatePeriodAdapter by lazy { ConstellatePeriodAdapter() }
 
     //各运势百分比
     private val mConstellateFortuneTypeValueAdapter: ConstellateFortuneTypeValueAdapter by lazy { ConstellateFortuneTypeValueAdapter() }
@@ -102,20 +102,14 @@ class ConstellateTodayFortuneFragment : BaseFragment<ConstellateTodayFortuneFrag
 
 
         today?.run {
-            if (fortuneTimeType == FortuneTimeType.DAY || fortuneTimeType == FortuneTimeType.WEEK) {
+            if (fortuneTimeType == FortuneTimeType.DAY) {
                 llLuckyMessage.visibility = View.VISIBLE
                 tvLuckyColor.text = lucky_color
                 tvLuckyNumber.text = lucky_number
-                if (fortuneTimeType == FortuneTimeType.DAY) {
-                    rlLuckyStar.visibility = View.VISIBLE
-                    ivLuckyConstellate.setBackgroundResource(getConstellationIcon(lucky_star))
-                } else {
-                    rlLuckyStar.visibility = View.GONE
-                }
+                ivLuckyConstellate.setBackgroundResource(getConstellationIcon(lucky_star))
             } else {
                 llLuckyMessage.visibility = View.GONE
             }
-
 
             tvConstellateSuitable.text = yi
             tvConstellateTaboo.text = ji
@@ -153,16 +147,18 @@ class ConstellateTodayFortuneFragment : BaseFragment<ConstellateTodayFortuneFrag
                 mConstellateDateAdapter.submitList(getWeekData())
             }
             FortuneTimeType.WEEK -> {
-                rvConstellateDate.init(LinearLayoutManager(requireActivity(),LinearLayoutManager.HORIZONTAL,false), mConstellateWeekDateAdapter, false)
-                mConstellateWeekDateAdapter.submitList(DateUtils.getFiveWeeksLabels())
+                rvConstellateDate.init(LinearLayoutManager(requireActivity(),LinearLayoutManager.HORIZONTAL,false), mConstellatePeriodAdapter, false)
+                mConstellatePeriodAdapter.submitList(DateUtils.getFiveWeeksLabels())
             }
 
             FortuneTimeType.MONTH -> {
-
+                rvConstellateDate.init(LinearLayoutManager(requireActivity(),LinearLayoutManager.HORIZONTAL,false), mConstellatePeriodAdapter, false)
+                mConstellatePeriodAdapter.submitList(DateUtils.getFiveMonthsLabels())
             }
 
             FortuneTimeType.YEAR -> {
-
+                rvConstellateDate.init(LinearLayoutManager(requireActivity(),LinearLayoutManager.HORIZONTAL,false), mConstellatePeriodAdapter, false)
+                mConstellatePeriodAdapter.submitList(DateUtils.getFiveYearsLabels())
             }
             null -> {
 
