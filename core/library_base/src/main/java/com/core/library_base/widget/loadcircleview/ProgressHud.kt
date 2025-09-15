@@ -1,9 +1,11 @@
 package com.core.library_base.widget.loadcircleview
 
+import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.os.Looper
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
@@ -52,12 +54,48 @@ class ProgressHud constructor(context: Context) {
 
     //展示
     fun show(msg:String = appStr(R.string.base_loading)): ProgressHud {
-        if (!isShowing()) {
-            mProgressHudDialog?.let {
-                it.show()
-                it.setShowMessage(msg)
+//        if (!isShowing()) {
+//            mProgressHudDialog?.let {
+//                it.show()
+//                it.setShowMessage(msg)
+//            }
+//        }
+//        return this
+
+        val activity = mContext as? Activity ?: return this
+
+        val showRunnable = Runnable {
+            mProgressHudDialog?.let { dialog ->
+                if (!dialog.isShowing) {
+                    dialog.show()
+                }
+                dialog.setShowMessage(msg)
             }
         }
+
+        if (Looper.myLooper() == Looper.getMainLooper()) {
+            // 主线程
+            if (activity.window.decorView.isAttachedToWindow) {
+                showRunnable.run()
+            } else {
+                // 等待 attach 后再显示
+                activity.window.decorView.post {
+                    showRunnable.run()
+                }
+            }
+        } else {
+            // 子线程切到主线程
+            activity.runOnUiThread {
+                if (activity.window.decorView.isAttachedToWindow) {
+                    showRunnable.run()
+                } else {
+                    activity.window.decorView.post {
+                        showRunnable.run()
+                    }
+                }
+            }
+        }
+
         return this
     }
 

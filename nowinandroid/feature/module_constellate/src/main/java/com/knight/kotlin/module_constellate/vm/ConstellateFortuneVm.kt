@@ -26,7 +26,6 @@ class ConstellateFortuneVm @Inject constructor(private val mRepo : ConstellateFo
      * 根据类型星座运势
      */
     fun getConstellateFortune(type:String,time:String) : LiveData<ConstellateResponseEntity> {
-        showLoadingDialog()
         return mRepo.getConstellateFortune(type,time).asLiveData()
         }
 
@@ -36,6 +35,7 @@ class ConstellateFortuneVm @Inject constructor(private val mRepo : ConstellateFo
      * 获取今日类型星座运势
      */
     fun getConstellateFortuneWorkStudy(type: String,failureCallback: ((String?) -> Unit)?= null): LiveData<ConstellateFortuneSubEntity> {
+        showLoadingDialog()
         return mRepo.getConstellateFortuneWorkStudy(type,failureCallback).asLiveData()
     }
 

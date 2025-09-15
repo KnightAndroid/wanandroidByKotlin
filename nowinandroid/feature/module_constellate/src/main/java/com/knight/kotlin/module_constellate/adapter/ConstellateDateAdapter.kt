@@ -42,8 +42,6 @@ class ConstellateDateAdapter : BaseQuickAdapter<ConstellateDateEntity,Constellat
                 holder.binding.tvDateNumber.setTextColor(Color.WHITE)
                 holder.binding.tvDateNumber.setBackgroundResource(R.drawable.constellate_today_bg)
             } else {
-
-
                 val weekDayColor = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     if (CacheUtils.getNormalDark()) {
                         Color.parseColor("#666666")
@@ -76,7 +74,7 @@ class ConstellateDateAdapter : BaseQuickAdapter<ConstellateDateEntity,Constellat
                     context.resources.getColor(R.color.constellate_tv_week_number_text_color)
                 }
 
-                if (display == "明") {
+                if (display == "明" || position < 4) {
                     if (CacheUtils.getNormalDark()) {
                         holder.binding.tvDateNumber.setTextColor(Color.parseColor("#666666"))
                     } else {

@@ -85,9 +85,9 @@ class ConstellateFateActivity : BaseActivity<ConstellateFortuneActivityBinding, 
      * 根据对应星座获取详情
      */
     fun getConstellateFortunebyName(study:String,work:String,isFirstInit:Boolean = true) {
-        mBinding.constellateCloudView.start()
-        mFragments.clear()
         mViewModel.getConstellateFortune(constellate?.enName?:"","today").observerKt {
+            mFragments.clear()
+            mBinding.constellateCloudView.start()
             constellateResponseEntity = it
             //这里如何拿到外面 it.study值？
             it.tomorrow.study_children_text = study
