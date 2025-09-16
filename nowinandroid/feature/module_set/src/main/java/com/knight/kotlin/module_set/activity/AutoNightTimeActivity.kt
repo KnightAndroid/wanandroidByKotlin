@@ -58,7 +58,7 @@ class AutoNightTimeActivity : BaseActivity<SetAutonighttimeActivityBinding, Empt
         }
 
         setCbNightMode.setOnCheckedChangeListener(object:CompoundButton.OnCheckedChangeListener{
-            override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
+            override fun onCheckedChanged(buttonView: CompoundButton, isChecked: Boolean) {
                 if (isChecked) {
                     mBinding.setRlStartDayTime.visibility = View.VISIBLE
                     mBinding.setRlStartNightTime.visibility = View.VISIBLE

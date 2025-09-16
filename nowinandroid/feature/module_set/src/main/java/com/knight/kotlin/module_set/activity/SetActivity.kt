@@ -58,10 +58,10 @@ class SetActivity : BaseActivity<SetActivityBinding, SetVm>(){
         setCbEyecare.buttonTintList = ColorUtils.createColorStateList(CacheUtils.getThemeColor(), ColorUtils.convertToColorInt("a6a6a6"))
         initDarkMode()
         setCbStatusTheme.setOnCheckedChangeListener(object:CompoundButton.OnCheckedChangeListener{
-            override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
+            override fun onCheckedChanged(buttonView: CompoundButton, isChecked: Boolean) {
                 statusIsWithTheme = isChecked
                 CacheUtils.statusBarIsWithTheme(isChecked)
-                buttonView?.buttonTintList = ColorUtils.createColorStateList(CacheUtils.getThemeColor(), ColorUtils.convertToColorInt("a6a6a6"))
+                buttonView.buttonTintList = ColorUtils.createColorStateList(CacheUtils.getThemeColor(), ColorUtils.convertToColorInt("a6a6a6"))
                 EventBusUtils.postEvent(MessageEvent(MessageEvent.MessageType.ChangeStatusTheme).put(isChecked))
             }
         })
