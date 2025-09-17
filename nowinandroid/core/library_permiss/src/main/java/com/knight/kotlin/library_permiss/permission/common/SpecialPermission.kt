@@ -3,14 +3,13 @@ package com.knight.kotlin.library_permiss.permission.common
 import android.app.Activity
 import android.content.Context
 import android.os.Parcel
-import com.knight.kotlin.library_permiss.permission.PermissionType
 import com.knight.kotlin.library_permiss.permission.base.BasePermission
 import com.knight.kotlin.library_permiss.tools.PermissionVersion
 import com.knight.kotlin.library_permiss.tools.PhoneRomUtils
 
 
 /**
- * @Description
+ * @Description 特殊权限的基类
  * @Author knight
  * @Time 2025/7/10 20:55
  * 
@@ -22,9 +21,16 @@ abstract class SpecialPermission : BasePermission {
 
     constructor(inParcel: Parcel) : super(inParcel)
 
+
     
-    override fun getPermissionType(): PermissionType {
-        return PermissionType.SPECIAL
+    override fun getPermissionChannel(context: Context): PermissionChannel {
+        return PermissionChannel.START_ACTIVITY_FOR_RESULT
+    }
+
+
+    
+    override fun getPermissionPageType( context: Context): PermissionPageType {
+        return PermissionPageType.OPAQUE_ACTIVITY
     }
 
     override fun isDoNotAskAgainPermission( activity: Activity): Boolean {

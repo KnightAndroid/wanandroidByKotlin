@@ -12,21 +12,21 @@ import com.knight.kotlin.library_permiss.permission.base.IPermission
  */
 internal class DefaultPermissionDescription : OnPermissionDescription {
     override fun askWhetherRequestPermission(
-        activity: Activity, requestPermissions: List<IPermission>,
-        continueRequestRunnable: Runnable, breakRequestRunnable: Runnable
+         activity: Activity,
+         requestList: List<IPermission>,
+         continueRequestRunnable: Runnable,
+         breakRequestRunnable: Runnable
     ) {
         // 继续执行请求任务
         continueRequestRunnable.run()
     }
 
-    override fun onRequestPermissionStart( activity: Activity,  requestPermissions: List<IPermission>) {
+    override fun onRequestPermissionStart( activity: Activity,  requestList: List<IPermission>) {
         // default implementation ignored
     }
 
-    override fun onRequestPermissionEnd( activity: Activity,  requestPermissions: List<IPermission>) {
+    override fun onRequestPermissionEnd( activity: Activity,  requestList: List<IPermission>) {
         // default implementation ignored
-
     }
-
 
 }

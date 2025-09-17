@@ -19,28 +19,30 @@ class AndroidManifestInfo {
     var packageName: String = ""
 
     /** 使用 sdk 信息  */
-    var usesSdkManifestInfo: UsesSdkManifestInfo? = null
+
+    var usesSdkInfo: UsesSdkManifestInfo? = null
 
     /** 权限节点信息  */
     
-    val permissionManifestInfoList: MutableList<PermissionManifestInfo> = mutableListOf()
+    val permissionInfoList: MutableList<PermissionManifestInfo> = mutableListOf()
 
     /** 查询包名列表  */
     
     val queriesPackageList: MutableList<String> = mutableListOf()
 
     /** Application 节点信息  */
-    var applicationManifestInfo: ApplicationManifestInfo? = null
+
+    var applicationInfo: ApplicationManifestInfo? = null
 
     /** Activity 节点信息  */
     
-    val activityManifestInfoList: MutableList<ActivityManifestInfo> = mutableListOf()
+    val activityInfoList: MutableList<ActivityManifestInfo> = mutableListOf()
 
     /** Service 节点信息  */
     
-    val serviceManifestInfoList: MutableList<ServiceManifestInfo> = mutableListOf()
+    val serviceInfoList: MutableList<ServiceManifestInfo> = mutableListOf()
 
     /** BroadcastReceiver 节点信息  */
     
-    val broadcastReceiverManifestInfoList:MutableList<BroadcastReceiverManifestInfo> = mutableListOf()
+    val receiverInfoList: MutableList<BroadcastReceiverManifestInfo> = mutableListOf()
 }

@@ -2,6 +2,7 @@ package com.knight.kotlin.library_permiss.permission.dangerous
 
 import android.Manifest
 import android.app.Activity
+import android.content.Context
 import android.os.Parcel
 import android.os.Parcelable
 import com.knight.kotlin.library_permiss.manifest.AndroidManifestInfo
@@ -11,6 +12,7 @@ import com.knight.kotlin.library_permiss.permission.PermissionNames
 import com.knight.kotlin.library_permiss.permission.base.IPermission
 import com.knight.kotlin.library_permiss.permission.common.DangerousPermission
 import com.knight.kotlin.library_permiss.tools.PermissionVersion
+import com.knight.kotlin.library_permiss.tools.PermissionVersion.isAndroid12
 
 
 /**
@@ -29,40 +31,33 @@ class BluetoothAdvertisePermission : DangerousPermission {
         return PERMISSION_NAME
     }
 
-    override fun getFromAndroidVersion(): Int {
+    override fun getFromAndroidVersion( context: Context): Int {
         return PermissionVersion.ANDROID_12
     }
 
-    override fun getPermissionGroup(): String {
+    override fun getPermissionGroup( context: Context): String {
         // 注意：在 Android 12 的时候，蓝牙相关的权限已经归到附近设备的权限组了，但是在 Android 12 之前，蓝牙相关的权限归属定位权限组
-        return if (PermissionVersion.isAndroid12()) PermissionGroups.NEARBY_DEVICES else PermissionGroups.LOCATION
+        return if (isAndroid12()) PermissionGroups.NEARBY_DEVICES else PermissionGroups.LOCATION
     }
 
-    override fun getMinTargetSdkVersion(): Int {
+    override fun getMinTargetSdkVersion( context: Context): Int {
         // 部分厂商修改了蓝牙权限机制，在 targetSdk 不满足条件的情况下（小于 31），仍需要让应用申请这个权限，相关的 issue 地址：
         // 1. https://github.com/getActivity/XXPermissions/issues/123
         // 2. https://github.com/getActivity/XXPermissions/issues/302
         return PermissionVersion.ANDROID_6
     }
 
-    protected override fun checkSelfByManifestFile(
-        activity: Activity,
-        requestPermissions: List<IPermission>,
-        androidManifestInfo: AndroidManifestInfo,
-        permissionManifestInfoList: List<PermissionManifestInfo>,
-        currentPermissionManifestInfo: PermissionManifestInfo
+    override fun checkSelfByManifestFile(
+         activity: Activity,
+         requestList: List<IPermission>,
+         manifestInfo: AndroidManifestInfo,
+         permissionInfoList: List<PermissionManifestInfo>,
+        currentPermissionInfo: PermissionManifestInfo
     ) {
-        super.checkSelfByManifestFile(
-            activity, requestPermissions, androidManifestInfo, permissionManifestInfoList,
-            currentPermissionManifestInfo
-        )
+        super.checkSelfByManifestFile(activity, requestList, manifestInfo, permissionInfoList, currentPermissionInfo)
         // 如果权限出现的版本小于 minSdkVersion，则证明该权限可能会在旧系统上面申请，需要在 AndroidManifest.xml 文件注册一下旧版权限
-        if (getFromAndroidVersion() > getMinSdkVersion(activity, androidManifestInfo)) {
-            checkPermissionRegistrationStatus(
-                permissionManifestInfoList,
-                Manifest.permission.BLUETOOTH_ADMIN,
-                PermissionVersion.ANDROID_11
-            )
+        if (getFromAndroidVersion(activity) > getMinSdkVersion(activity, manifestInfo)) {
+            checkPermissionRegistrationStatus(permissionInfoList, Manifest.permission.BLUETOOTH_ADMIN, PermissionVersion.ANDROID_11)
         }
     }
 

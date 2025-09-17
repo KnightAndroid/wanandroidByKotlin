@@ -6,7 +6,7 @@ import android.os.SystemClock
 
 
 /**
- * @Description
+ * @Description 权限任务处理类
  * @Author knight
  * @Time 2025/6/8 19:53
  *

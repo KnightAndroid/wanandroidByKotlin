@@ -1,11 +1,12 @@
 package com.knight.kotlin.library_permiss.manager
 
+import XXPermissions
 import androidx.annotation.IntRange
 import java.util.Random
 
 
 /**
- * @Description
+ * @Description 权限请求码管理类
  * @Author knight
  * @Time 2025/6/8 19:52
  *

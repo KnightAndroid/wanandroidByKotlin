@@ -6,7 +6,9 @@ import android.content.Intent
 import androidx.annotation.IntRange
 import androidx.fragment.app.Fragment
 import com.knight.kotlin.library_permiss.tools.PermissionSettingPage
+import com.knight.kotlin.library_permiss.tools.PermissionSettingPage.getAndroidSettingsIntent
 import com.knight.kotlin.library_permiss.tools.PermissionUtils
+
 
 /**
  * @author created by luguian
@@ -17,14 +19,14 @@ import com.knight.kotlin.library_permiss.tools.PermissionUtils
 object StartActivityAgent {
     fun startActivity(
          context: Context,
-         intentList: MutableList<Intent?>
+         intentList: MutableList<Intent>
     ) {
         startActivity(context, StartActivityDelegateByContext(context), intentList)
     }
 
     fun startActivity(
         activity: Activity,
-        intentList: MutableList<Intent?>
+        intentList: MutableList<Intent>
     ) {
         startActivity(activity, StartActivityDelegateByActivity(activity), intentList)
     }
@@ -32,7 +34,7 @@ object StartActivityAgent {
     @Suppress("deprecation")
     fun startActivity(
         fragment: Fragment,
-        intentList: MutableList<Intent?>
+        intentList: MutableList<Intent>
     ) {
         fragment.getActivity()?.let { startActivity(it, StartActivityDelegateByFragmentApp(fragment), intentList) }
     }
@@ -42,9 +44,9 @@ object StartActivityAgent {
     fun startActivity(
          context: Context,
          delegate: IStartActivityDelegate,
-         intentList: MutableList<Intent?>
+         intentList: MutableList<Intent>
     ) {
-        var iterator = intentList.iterator()
+        var iterator: MutableIterator<Intent> = intentList.iterator()
         while (iterator.hasNext()) {
             val intent = iterator.next()
             if (PermissionUtils.areActivityIntent(context, intent)) {
@@ -56,15 +58,23 @@ object StartActivityAgent {
             iterator.remove()
         }
 
+
+        // 当所有的 Intent 都不存在的时候，那么就默认添加一个 Android 系统设置的 Intent，这样写的原因如下：
+        // 不至于用户一点申请权限就立马提示失败，用户会一头雾水，这样的体验太差了，最起码跳转一下 Android 系统设置页，这样效果会好很多
+        if (intentList.isEmpty()) {
+            intentList.add(getAndroidSettingsIntent())
+        }
+
+
         // 由于 Iterator 接口中没有重置索引的方法，所以这里只能重新获取一次 Iterator 对象
         iterator = intentList.iterator()
         while (iterator.hasNext()) {
-            val intent = iterator.next()
+            val intent = iterator.next() ?: continue
             try {
-                delegate.startActivity(intent!!)
+                delegate.startActivity(intent)
                 // 跳转成功，结束循环
                 break
-            } catch (e: Exception) {
+            } catch (e: java.lang.Exception) {
                 e.printStackTrace()
             }
         }
@@ -72,7 +82,7 @@ object StartActivityAgent {
 
     fun startActivityForResult(
          activity: Activity,
-         intentList: MutableList<Intent?>,
+         intentList: MutableList<Intent>,
         @IntRange(from = 1, to = 65535) requestCode: Int
     ) {
         startActivityForResult(activity, StartActivityDelegateByActivity(activity), intentList, requestCode)
@@ -81,7 +91,7 @@ object StartActivityAgent {
     @Suppress("deprecation")
     fun startActivityForResult(
          fragment: Fragment,
-         intentList: MutableList<Intent?>,
+         intentList: MutableList<Intent>,
         @IntRange(from = 1, to = 65535) requestCode: Int
     ) {
         fragment.getActivity()?.let { startActivityForResult(it, StartActivityDelegateByFragmentApp(fragment), intentList, requestCode) }
@@ -92,7 +102,7 @@ object StartActivityAgent {
     fun startActivityForResult(
          context: Context,
          delegate: IStartActivityDelegate,
-         intentList: MutableList<Intent?>,
+         intentList: MutableList<Intent>,
         @IntRange(from = 1, to = 65535) requestCode: Int,
          ignoreActivityResultCallback: Runnable? = null
     ) {

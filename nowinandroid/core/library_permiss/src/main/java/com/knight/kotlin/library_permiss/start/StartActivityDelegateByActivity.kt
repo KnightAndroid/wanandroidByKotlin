@@ -7,7 +7,7 @@ import androidx.annotation.IntRange
 
 
 /**
- * @Description
+ * @Description {@link android.app.Activity} 跳转 Activity 实现
  * @Author knight
  * @Time 2025/6/8 20:38
  *

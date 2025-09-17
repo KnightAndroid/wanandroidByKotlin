@@ -7,12 +7,16 @@ import android.os.Parcelable
 import com.knight.kotlin.library_permiss.manifest.AndroidManifestInfo
 import com.knight.kotlin.library_permiss.manifest.node.PermissionManifestInfo
 import com.knight.kotlin.library_permiss.permission.PermissionGroups
-import com.knight.kotlin.library_permiss.permission.PermissionLists
+import com.knight.kotlin.library_permiss.permission.PermissionLists.getReadMediaAudioPermission
+import com.knight.kotlin.library_permiss.permission.PermissionLists.getReadMediaImagesPermission
+import com.knight.kotlin.library_permiss.permission.PermissionLists.getReadMediaVideoPermission
 import com.knight.kotlin.library_permiss.permission.PermissionNames
 import com.knight.kotlin.library_permiss.permission.base.IPermission
 import com.knight.kotlin.library_permiss.permission.common.DangerousPermission
 import com.knight.kotlin.library_permiss.tools.PermissionUtils
 import com.knight.kotlin.library_permiss.tools.PermissionVersion
+import com.knight.kotlin.library_permiss.tools.PermissionVersion.getTargetVersion
+import com.knight.kotlin.library_permiss.tools.PermissionVersion.isAndroid13
 
 
 /**
@@ -32,69 +36,60 @@ class ReadExternalStoragePermission : DangerousPermission {
         return PERMISSION_NAME
     }
 
-    override fun getPermissionGroup(): String {
+    override fun getPermissionGroup( context: Context): String {
         return PermissionGroups.STORAGE
     }
 
-    override fun getFromAndroidVersion(): Int {
+    override fun getFromAndroidVersion( context: Context): Int {
         return PermissionVersion.ANDROID_6
     }
 
-    override fun isGrantedPermissionByStandardVersion(
-         context: Context,
-        skipRequest: Boolean
-    ): Boolean {
-        if (PermissionVersion.isAndroid13() && PermissionVersion.getCurrentVersion() >= PermissionVersion.ANDROID_13) {
-            return PermissionLists.getReadMediaImagesPermission()
-                .isGrantedPermission(context, skipRequest) &&
-                    PermissionLists.getReadMediaVideoPermission()
-                        .isGrantedPermission(context, skipRequest) &&
-                    PermissionLists.getReadMediaAudioPermission()
-                        .isGrantedPermission(context, skipRequest)
+    override fun isGrantedPermissionByStandardVersion( context: Context, skipRequest: Boolean): Boolean {
+        if (isAndroid13() && getTargetVersion(context) >= PermissionVersion.ANDROID_13) {
+            return getReadMediaImagesPermission().isGrantedPermission(context, skipRequest) &&
+                    getReadMediaVideoPermission().isGrantedPermission(context, skipRequest) &&
+                    getReadMediaAudioPermission().isGrantedPermission(context, skipRequest)
         }
         return super.isGrantedPermissionByStandardVersion(context, skipRequest)
     }
 
     override fun isDoNotAskAgainPermissionByStandardVersion( activity: Activity): Boolean {
-        if (PermissionVersion.isAndroid13() && PermissionVersion.getCurrentVersion() >= PermissionVersion.ANDROID_13) {
-            return PermissionLists.getReadMediaImagesPermission()
-                .isDoNotAskAgainPermission(activity) &&
-                    PermissionLists.getReadMediaVideoPermission()
-                        .isDoNotAskAgainPermission(activity) &&
-                    PermissionLists.getReadMediaAudioPermission()
-                        .isDoNotAskAgainPermission(activity)
+        if (isAndroid13() && getTargetVersion(activity) >= PermissionVersion.ANDROID_13) {
+            return getReadMediaImagesPermission().isDoNotAskAgainPermission(activity) &&
+                    getReadMediaVideoPermission().isDoNotAskAgainPermission(activity) &&
+                    getReadMediaAudioPermission().isDoNotAskAgainPermission(activity)
         }
         return super.isDoNotAskAgainPermissionByStandardVersion(activity)
     }
 
     protected override fun checkSelfByManifestFile(
          activity: Activity,
-         requestPermissions: List<IPermission>,
-         androidManifestInfo: AndroidManifestInfo,
-         permissionManifestInfoList: List<PermissionManifestInfo>,
-         currentPermissionManifestInfo: PermissionManifestInfo
+         requestList: List<IPermission>,
+         manifestInfo: AndroidManifestInfo,
+         permissionInfoList: List<PermissionManifestInfo>,
+        currentPermissionInfo: PermissionManifestInfo
     ) {
-        super.checkSelfByManifestFile(
-            activity, requestPermissions, androidManifestInfo, permissionManifestInfoList,
-            currentPermissionManifestInfo
-        )
+        super.checkSelfByManifestFile(activity, requestList, manifestInfo, permissionInfoList, currentPermissionInfo)
         // 如果申请的是 Android 10 获取媒体位置权限，则绕过本次检查
-        if (PermissionUtils.containsPermission(
-                requestPermissions,
-                PermissionNames.ACCESS_MEDIA_LOCATION
-            )
-        ) {
+        if (PermissionUtils.containsPermission(requestList, PermissionNames.ACCESS_MEDIA_LOCATION)) {
             return
         }
 
-        val applicationManifestInfo = androidManifestInfo.applicationManifestInfo ?: return
+        val applicationInfo = manifestInfo.applicationInfo ?: return
 
-        val targetSdkVersion: Int = PermissionVersion.getTargetVersion(activity)
-        // 是否适配了分区存储
-        val scopedStorage: Boolean =
-            PermissionUtils.getBooleanByMetaData(activity, META_DATA_KEY_SCOPED_STORAGE, false)
+        val targetSdkVersion = getTargetVersion(activity)
+        // 是否适配了分区存储（默认是没有的）
+        var scopedStorage = false
+        if (applicationInfo.metaDataInfoList != null) {
+            for (metaDataManifestInfo in applicationInfo.metaDataInfoList) {
+                if (META_DATA_KEY_SCOPED_STORAGE.equals(metaDataManifestInfo.name)) {
+                    scopedStorage = metaDataManifestInfo.value.toBoolean()
+                    break
+                }
+            }
+        }
         // 如果在已经适配 Android 10 的情况下
-        check(!(targetSdkVersion >= PermissionVersion.ANDROID_10 && !applicationManifestInfo.requestLegacyExternalStorage && !scopedStorage)) {
+        check(!(targetSdkVersion >= PermissionVersion.ANDROID_10 && !applicationInfo.requestLegacyExternalStorage && !scopedStorage)) {
             "Please register the android:requestLegacyExternalStorage=\"true\" " +
                     "attribute in the AndroidManifest.xml file, otherwise it will cause incompatibility with the old version"
         }
@@ -107,13 +102,10 @@ class ReadExternalStoragePermission : DangerousPermission {
         }
     }
 
-    override fun checkSelfByRequestPermissions(
-         activity: Activity,
-         requestPermissions: List<IPermission>
-    ) {
-        super.checkSelfByRequestPermissions(activity, requestPermissions)
+    protected override fun checkSelfByRequestPermissions( activity: Activity,  requestList: List<IPermission>) {
+        super.checkSelfByRequestPermissions(activity, requestList)
 
-        require(!(PermissionVersion.getTargetVersion(activity) >= PermissionVersion.ANDROID_13)) {
+        require(getTargetVersion(activity) < PermissionVersion.ANDROID_13) {
             ("When the project targetSdkVersion >= 33, the \"" + PermissionNames.READ_EXTERNAL_STORAGE +
                     "\" permission cannot be applied for, and some problems will occur." + "Because after testing, if targetSdkVersion >= 33 applies for \"" +
                     PermissionNames.READ_EXTERNAL_STORAGE + "\" or \"" + PermissionNames.WRITE_EXTERNAL_STORAGE +

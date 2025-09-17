@@ -2,13 +2,10 @@ package com.knight.kotlin.library_permiss.fragment.factory
 
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
-import com.knight.kotlin.library_permiss.core.OnPermissionFlowCallback
+import com.knight.kotlin.library_permiss.core.OnPermissionFragmentCallback
 import com.knight.kotlin.library_permiss.fragment.IFragmentMethod
-import com.knight.kotlin.library_permiss.fragment.impl.support.PermissionFragmentSupportByDangerous
-import com.knight.kotlin.library_permiss.fragment.impl.support.PermissionFragmentSupportBySpecial
 import com.knight.kotlin.library_permiss.manager.PermissionRequestCodeManager
 import com.knight.kotlin.library_permiss.manager.PermissionRequestCodeManager.generateRandomRequestCode
-import com.knight.kotlin.library_permiss.permission.PermissionType
 import com.knight.kotlin.library_permiss.permission.base.IPermission
 
 
@@ -22,15 +19,15 @@ import com.knight.kotlin.library_permiss.permission.base.IPermission
 class PermissionFragmentFactoryBySupport( activity: FragmentActivity,  fragmentManager: FragmentManager) :
     PermissionFragmentFactory<FragmentActivity, FragmentManager>(activity, fragmentManager) {
     override fun createAndCommitFragment(
-         permissions: List<IPermission>,
-         permissionType: PermissionType,
-         callback: OnPermissionFlowCallback
+         permissions: List<IPermission?>,
+         permissionChannel: PermissionChannel,
+         callback: OnPermissionFragmentCallback
     ) {
         val fragment: IFragmentMethod<FragmentActivity, FragmentManager>
-        if (permissionType === PermissionType.SPECIAL) {
-            fragment = PermissionFragmentSupportBySpecial()
+        if (permissionChannel === PermissionChannel.REQUEST_PERMISSIONS) {
+            fragment = PermissionSupportFragmentByRequestPermissions()
         } else {
-            fragment = PermissionFragmentSupportByDangerous()
+            fragment = PermissionSupportFragmentByStartActivityForResult()
         }
         // 新版本的 Support 库限制请求码必须小于 65536（不能包含 65536），所以实际的取值区间在：1 ~ 65535
         // java.lang.IllegalArgumentException: Can only use lower 16 bits for requestCode
@@ -41,10 +38,10 @@ class PermissionFragmentFactoryBySupport( activity: FragmentActivity,  fragmentM
         // 2. https://github.com/domoticz/domoticz-android/issues/92
         // 3. https://github.com/journeyapps/zxing-android-embedded/issues/117
         var maxRequestCode: Int
-        // 判断当前是不是申请的危险权限
-        if (permissionType === PermissionType.DANGEROUS) {
+        // 判断当前是不是通过 requestPermissions 申请的权限
+        if (permissionChannel === PermissionChannel.REQUEST_PERMISSIONS) {
             try {
-                val activity = getActivity()!!
+                val activity = getActivity()
                 // 检查一下大值的 requestCode 会不会超过 FragmentActivity 类中的设定
                 // 如果是，则证明当前的 Support 的版本是比较旧的，如果不是，则证明当前的 Support 的版本不是很旧
                 // 因为新版的 Support 版本已经纠错了这个问题，将 requestCode 最大值限制从 255 已经调整到了 65535
@@ -76,8 +73,8 @@ class PermissionFragmentFactoryBySupport( activity: FragmentActivity,  fragmentM
         val requestCode = generateRandomRequestCode(maxRequestCode)
         fragment.setArguments(generatePermissionArguments(permissions!!, requestCode))
         fragment.setRetainInstance(true)
-        fragment.setRequestFlag(true)
-        fragment.setCallback(callback)
-        getFragmentManager()?.let { fragment.commitAttach(it) }
+        fragment.setNonSystemRestartMark(true)
+        fragment.setPermissionFragmentCallback(callback)
+        fragment.commitFragmentAttach(getFragmentManager())
     }
 }

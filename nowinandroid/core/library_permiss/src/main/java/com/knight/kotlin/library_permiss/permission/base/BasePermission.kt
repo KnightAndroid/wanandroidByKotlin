@@ -15,11 +15,12 @@ import com.knight.kotlin.library_permiss.tools.PermissionSettingPage.getApplicat
 import com.knight.kotlin.library_permiss.tools.PermissionSettingPage.getManageApplicationSettingsIntent
 import com.knight.kotlin.library_permiss.tools.PermissionUtils
 import com.knight.kotlin.library_permiss.tools.PermissionVersion
+import com.knight.kotlin.library_permiss.tools.PermissionVersion.isAndroid7
 import java.lang.reflect.InvocationTargetException
 
 
 /**
- * @Description
+ * @Description 权限基类
  * @Author knight
  * @Time 2025/7/10 20:52
  *
@@ -80,30 +81,26 @@ abstract class BasePermission : IPermission {
 
     override fun checkCompliance(
         activity: Activity,
-        requestPermissions: List<IPermission>,
-        androidManifestInfo: AndroidManifestInfo
+        requestList: List<IPermission>,
+        manifestInfo: AndroidManifestInfo
     ) {
         // 检查 targetSdkVersion 是否符合要求
-        checkSelfByTargetSdkVersion(activity)
+        checkSelfByTargetSdkVersion(activity!!)
         // 检查 AndroidManifest.xml 是否符合要求
-        if (androidManifestInfo != null) {
-            val permissionManifestInfoList = androidManifestInfo.permissionManifestInfoList
-            val currentPermissionManifestInfo =
-                findPermissionInfoByList(permissionManifestInfoList, getPermissionName())
-            checkSelfByManifestFile(
-                activity, requestPermissions, androidManifestInfo, permissionManifestInfoList,
-                currentPermissionManifestInfo!!
-            )
+        if (manifestInfo != null) {
+            val permissionInfoList: List<PermissionManifestInfo> = manifestInfo.permissionInfoList
+            val currentPermissionInfo = findPermissionInfoByList(permissionInfoList, getPermissionName())
+            checkSelfByManifestFile(activity, requestList, manifestInfo, permissionInfoList, currentPermissionInfo!!)
         }
         // 检查请求的权限列表是否符合要求
-        checkSelfByRequestPermissions(activity, requestPermissions)
+        checkSelfByRequestPermissions(activity, requestList)
     }
 
     /**
      * 检查 targetSdkVersion 是否符合要求，如果不合规则会抛出异常
      */
     protected fun checkSelfByTargetSdkVersion(context: Context) {
-        val minTargetSdkVersion = getMinTargetSdkVersion()
+        val minTargetSdkVersion = getMinTargetSdkVersion(context)
         // 必须设置正确的 targetSdkVersion 才能正常检测权限
         if (PermissionVersion.getTargetVersion(context) >= minTargetSdkVersion) {
             return
@@ -173,7 +170,7 @@ abstract class BasePermission : IPermission {
         /**
          * 检查权限的注册状态，如果是则会抛出异常
          */
-        protected fun checkPermissionRegistrationStatus(
+        fun checkPermissionRegistrationStatus(
              permissionManifestInfo: PermissionManifestInfo,
              checkPermission: String?,
             lowestMaxSdkVersion: Int = Int.MAX_VALUE
@@ -196,18 +193,15 @@ abstract class BasePermission : IPermission {
         /**
          * 获得当前项目的 minSdkVersion
          */
-        fun getMinSdkVersion(
-             context: Context,
-             androidManifestInfo: AndroidManifestInfo?
-        ): Int {
-            if (PermissionVersion.isAndroid7()) {
+        fun getMinSdkVersion( context: Context,  manifestInfo: AndroidManifestInfo): Int {
+            if (isAndroid7()) {
                 return context.applicationInfo.minSdkVersion
             }
 
-            if (androidManifestInfo?.usesSdkManifestInfo == null) {
+            if (manifestInfo?.usesSdkInfo == null) {
                 return PermissionVersion.ANDROID_4_2
             }
-            return androidManifestInfo.usesSdkManifestInfo!!.minSdkVersion
+            return manifestInfo.usesSdkInfo!!.minSdkVersion
         }
 
         /**

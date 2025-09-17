@@ -7,12 +7,13 @@ import android.os.Parcelable
 import com.knight.kotlin.library_permiss.manifest.AndroidManifestInfo
 import com.knight.kotlin.library_permiss.manifest.node.PermissionManifestInfo
 import com.knight.kotlin.library_permiss.permission.PermissionGroups
-import com.knight.kotlin.library_permiss.permission.PermissionLists
+import com.knight.kotlin.library_permiss.permission.PermissionLists.getAccessFineLocationPermission
 import com.knight.kotlin.library_permiss.permission.PermissionNames
 import com.knight.kotlin.library_permiss.permission.base.IPermission
 import com.knight.kotlin.library_permiss.permission.common.DangerousPermission
 import com.knight.kotlin.library_permiss.tools.PermissionUtils
 import com.knight.kotlin.library_permiss.tools.PermissionVersion
+import com.knight.kotlin.library_permiss.tools.PermissionVersion.isAndroid13
 
 
 /**
@@ -32,67 +33,52 @@ class NearbyWifiDevicesPermission : DangerousPermission {
         return PERMISSION_NAME
     }
 
-    override fun getPermissionGroup(): String {
+    override fun getPermissionGroup(context: Context): String {
         // 注意：在 Android 13 的时候，WIFI 相关的权限已经归到附近设备的权限组了，但是在 Android 13 之前，WIFI 相关的权限归属定位权限组
-        return if (PermissionVersion.isAndroid13()) PermissionGroups.NEARBY_DEVICES else PermissionGroups.LOCATION
+        return if (isAndroid13()) PermissionGroups.NEARBY_DEVICES else PermissionGroups.LOCATION
     }
 
-    override fun getFromAndroidVersion(): Int {
+    override fun getFromAndroidVersion(context: Context): Int {
         return PermissionVersion.ANDROID_13
     }
 
     
     override fun getOldPermissions(context: Context): List<IPermission> {
         // Android 13 以下使用 WIFI 功能需要用到精确定位的权限
-        return PermissionUtils.asArrayList(PermissionLists.getAccessFineLocationPermission())
+        return PermissionUtils.asArrayList(getAccessFineLocationPermission())
     }
 
-    override fun isGrantedPermissionByLowVersion(
-         context: Context,
-        skipRequest: Boolean
-    ): Boolean {
-        return PermissionLists.getAccessFineLocationPermission()
-            .isGrantedPermission(context, skipRequest)
+    override fun isGrantedPermissionByLowVersion( context: Context, skipRequest: Boolean): Boolean {
+        return getAccessFineLocationPermission().isGrantedPermission(context, skipRequest)
     }
 
     override fun isDoNotAskAgainPermissionByLowVersion( activity: Activity): Boolean {
-        return PermissionLists.getAccessFineLocationPermission().isDoNotAskAgainPermission(activity)
+        return getAccessFineLocationPermission().isDoNotAskAgainPermission(activity)
     }
 
-     override fun checkSelfByManifestFile(
+    protected override fun checkSelfByManifestFile(
          activity: Activity,
-         requestPermissions: List<IPermission>,
-         androidManifestInfo: AndroidManifestInfo,
-         permissionManifestInfoList: List<PermissionManifestInfo>,
-         currentPermissionManifestInfo: PermissionManifestInfo
+         requestList: List<IPermission>,
+         manifestInfo: AndroidManifestInfo,
+         permissionInfoList: List<PermissionManifestInfo>,
+         currentPermissionInfo: PermissionManifestInfo
     ) {
-        super.checkSelfByManifestFile(
-            activity, requestPermissions, androidManifestInfo, permissionManifestInfoList,
-            currentPermissionManifestInfo
-        )
+        super.checkSelfByManifestFile(activity, requestList, manifestInfo, permissionInfoList, currentPermissionInfo)
         // 如果权限出现的版本小于 minSdkVersion，则证明该权限可能会在旧系统上面申请，需要在 AndroidManifest.xml 文件注册一下旧版权限
-        if (getFromAndroidVersion() > getMinSdkVersion(activity, androidManifestInfo)) {
-            checkPermissionRegistrationStatus(
-                permissionManifestInfoList,
-                PermissionNames.ACCESS_FINE_LOCATION,
-                PermissionVersion.ANDROID_12_L
-            )
+        if (getFromAndroidVersion(activity) > getMinSdkVersion(activity, manifestInfo)) {
+            checkPermissionRegistrationStatus(permissionInfoList, PermissionNames.ACCESS_FINE_LOCATION, PermissionVersion.ANDROID_12_L)
         }
 
         // 如果请求的权限已经包含了精确定位权限，就跳过检查
-        if (PermissionUtils.containsPermission(
-                requestPermissions,
-                PermissionNames.ACCESS_FINE_LOCATION
-            )
-        ) {
+        if (PermissionUtils.containsPermission(requestList, PermissionNames.ACCESS_FINE_LOCATION)) {
             return
         }
         // 如果当前权限没有在清单文件中注册，就跳过检查
-        if (currentPermissionManifestInfo == null) {
+        if (currentPermissionInfo == null) {
             return
         }
         // 如果当前权限有在清单文件注册，并且设置了 neverForLocation 标记，就跳过检查
-        if (currentPermissionManifestInfo.neverForLocation()) {
+        if (currentPermissionInfo.neverForLocation()) {
             return
         }
 
@@ -100,22 +86,21 @@ class NearbyWifiDevicesPermission : DangerousPermission {
         // 在以 Android 13 为目标平台时，请考虑您的应用是否会通过 WIFI API 推导物理位置，如果不会，则应坚定声明此情况。
         // 如需做出此声明，请在应用的清单文件中将 usesPermissionFlags 属性设为 neverForLocation
         val maxSdkVersionString =
-            if (currentPermissionManifestInfo.maxSdkVersion != Int.MAX_VALUE) "android:maxSdkVersion=\"" + currentPermissionManifestInfo.maxSdkVersion + "\" " else ""
+            if (currentPermissionInfo.maxSdkVersion != PermissionManifestInfo.DEFAULT_MAX_SDK_VERSION) "android:maxSdkVersion=\"" + currentPermissionInfo.maxSdkVersion + "\" " else ""
         // 根据不同的需求场景决定，解决方法分为两种：
         //   1. 不需要使用 WIFI 权限来获取物理位置：只需要在清单文件中注册的权限上面加上 android:usesPermissionFlags="neverForLocation" 即可
         //   2. 需要使用 WIFI 权限来获取物理位置：在申请 WIFI 权限时，还需要动态申请 ACCESS_FINE_LOCATION 权限
         // 通常情况下，我们都不需要使用 WIFI 权限来获取物理位置，所以选择第一种方法即可
         throw IllegalArgumentException(
-            "If your app doesn't use " + currentPermissionManifestInfo.name +
+            "If your app doesn't use " + currentPermissionInfo.name +
                     " to get physical location, " + "please change the <uses-permission android:name=\"" +
-                    currentPermissionManifestInfo.name + "\" " + maxSdkVersionString + "/> node in the " +
-                    "manifest file to <uses-permission android:name=\"" + currentPermissionManifestInfo.name +
+                    currentPermissionInfo.name + "\" " + maxSdkVersionString + "/> node in the " +
+                    "manifest file to <uses-permission android:name=\"" + currentPermissionInfo.name +
                     "\" android:usesPermissionFlags=\"neverForLocation\" " + maxSdkVersionString + "/> node, " +
-                    "if your app need use \"" + currentPermissionManifestInfo.name + "\" to get physical location, " +
+                    "if your app need use \"" + currentPermissionInfo.name + "\" to get physical location, " +
                     "also need to add \"" + PermissionNames.ACCESS_FINE_LOCATION + "\" permissions"
         )
     }
-
 
     companion object {
         val PERMISSION_NAME: String = PermissionNames.NEARBY_WIFI_DEVICES

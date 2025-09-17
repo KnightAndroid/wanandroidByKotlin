@@ -7,12 +7,15 @@ import android.net.VpnService
 import android.os.Parcel
 import android.os.Parcelable
 import com.knight.kotlin.library_permiss.manifest.AndroidManifestInfo
+import com.knight.kotlin.library_permiss.manifest.node.IntentFilterManifestInfo
 import com.knight.kotlin.library_permiss.manifest.node.PermissionManifestInfo
+import com.knight.kotlin.library_permiss.manifest.node.ServiceManifestInfo
 import com.knight.kotlin.library_permiss.permission.PermissionNames
 import com.knight.kotlin.library_permiss.permission.base.IPermission
 import com.knight.kotlin.library_permiss.permission.common.SpecialPermission
 import com.knight.kotlin.library_permiss.tools.PermissionUtils
 import com.knight.kotlin.library_permiss.tools.PermissionVersion
+import com.knight.kotlin.library_permiss.tools.PermissionVersion.isAndroid15
 
 
 /**
@@ -44,46 +47,83 @@ class BindVpnServicePermission : SpecialPermission {
 
     override fun getPermissionName(): String = PERMISSION_NAME
 
-    override fun getFromAndroidVersion(): Int = PermissionVersion.ANDROID_4_0
+    
+    override fun getPermissionPageType(context: Context): PermissionPageType {
+        // VPN 权限在 Android 15 及以上版本的 OPPO 系统上面是一个不透明的 Activity 页面
+        if (DeviceOs.isColorOs() && isAndroid15()) {
+            return PermissionPageType.OPAQUE_ACTIVITY
+        }
+        return if (VpnService.prepare(context) != null) PermissionPageType.TRANSPARENT_ACTIVITY else PermissionPageType.OPAQUE_ACTIVITY
+    }
 
-    override fun isGrantedPermission(context: Context, skipRequest: Boolean): Boolean {
+    override fun getFromAndroidVersion( context: Context): Int {
+        return PermissionVersion.ANDROID_4_0
+    }
+
+    override fun isGrantedPermission( context: Context, skipRequest: Boolean): Boolean {
         return VpnService.prepare(context) == null
     }
 
-    override fun getPermissionSettingIntents(context: Context): MutableList<Intent> {
-        return mutableListOf<Intent>().apply {
-            VpnService.prepare(context)?.let { add(it) }
-            add(getAndroidSettingIntent())
-        }
+    
+    override fun getPermissionSettingIntents( context: Context, skipRequest: Boolean): List<Intent> {
+        val intentList: MutableList<Intent> = ArrayList(2)
+        intentList.add(VpnService.prepare(context))
+        intentList.add(getAndroidSettingIntent())
+        return intentList
     }
 
-    override fun checkSelfByManifestFile(
-        activity: Activity,
-        requestPermissions: List<IPermission>,
-        androidManifestInfo: AndroidManifestInfo,
-        permissionManifestInfoList: List<PermissionManifestInfo>,
-        currentPermissionManifestInfo: PermissionManifestInfo
+    protected override fun checkSelfByManifestFile(
+         activity: Activity,
+         requestList: List<IPermission>,
+         manifestInfo: AndroidManifestInfo,
+         permissionInfoList: List<PermissionManifestInfo>,
+        currentPermissionInfo: PermissionManifestInfo
     ) {
-        super.checkSelfByManifestFile(
-            activity,
-            requestPermissions,
-            androidManifestInfo,
-            permissionManifestInfoList,
-            currentPermissionManifestInfo
-        )
+        super.checkSelfByManifestFile(activity, requestList, manifestInfo, permissionInfoList, currentPermissionInfo)
+        // 判断有没有 Service 类注册了 android:permission="android.permission.BIND_VPN_SERVICE" 属性
+        val serviceInfoList: List<ServiceManifestInfo> = manifestInfo.serviceInfoList
+        for (i in serviceInfoList.indices) {
+            val serviceInfo = serviceInfoList[i]
+            val permission = serviceInfo.permission ?: continue
 
-        val serviceManifestInfoList = androidManifestInfo.serviceManifestInfoList
-        for (serviceInfo in serviceManifestInfoList) {
-            val permission = serviceInfo.permission
-            if (permission != null && PermissionUtils.equalsPermission(this, permission)) {
-                return // 找到了正确注册的 Service，跳出检查
+            if (!PermissionUtils.equalsPermission(this, permission)) {
+                continue
             }
+
+            val action = "android.net.VpnService"
+            // 当前是否注册了 VPN 服务的意图
+            var registeredVpnServiceAction = false
+            val intentFilterInfoList: List<IntentFilterManifestInfo> = serviceInfo.intentFilterInfoList
+            if (intentFilterInfoList != null) {
+                for (intentFilterInfo in intentFilterInfoList) {
+                    if (intentFilterInfo.actionList.contains(action)) {
+                        registeredVpnServiceAction = true
+                        break
+                    }
+                }
+            }
+            if (registeredVpnServiceAction) {
+                // 符合要求，中断所有的循环并返回，避免走到后面的抛异常代码
+                return
+            }
+
+            val xmlCode = ("\t\t<intent-filter>\n"
+                    + "\t\t    <action android:name=\"" + action + "\" />\n"
+                    + "\t\t</intent-filter>")
+            throw IllegalArgumentException(
+                """Please add an intent filter for "${serviceInfo.name}" in the AndroidManifest.xml file.
+$xmlCode"""
+            )
         }
 
+        /*
+         没有找到有任何 Service 注册过 android:permission="android.permission.BIND_VPN_SERVICE" 属性，
+         请注册该属性给 VpnService 的子类到 AndroidManifest.xml 文件中
+         */
         throw IllegalArgumentException(
-            "No Service was found to have registered the android:permission=\"${getPermissionName()}\" property, " +
-                    "Please register this property to VpnService subclass by AndroidManifest.xml file, " +
-                    "otherwise it will lead to can't apply for the permission"
+            ("No Service was found to have registered the android:permission=\"" + getPermissionName() +
+                    "\" property, Please register this property to VpnService subclass by AndroidManifest.xml file, "
+                    + "otherwise it will lead to can't apply for the permission")
         )
     }
 }

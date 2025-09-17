@@ -11,8 +11,12 @@ import com.knight.kotlin.library_permiss.permission.PermissionGroups
 import com.knight.kotlin.library_permiss.permission.PermissionNames
 import com.knight.kotlin.library_permiss.permission.base.IPermission
 import com.knight.kotlin.library_permiss.permission.common.DangerousPermission
+import com.knight.kotlin.library_permiss.permission.dangerous.ReadExternalStoragePermission.Companion.META_DATA_KEY_SCOPED_STORAGE
 import com.knight.kotlin.library_permiss.tools.PermissionUtils
 import com.knight.kotlin.library_permiss.tools.PermissionVersion
+import com.knight.kotlin.library_permiss.tools.PermissionVersion.getTargetVersion
+import com.knight.kotlin.library_permiss.tools.PermissionVersion.isAndroid10
+import com.knight.kotlin.library_permiss.tools.PermissionVersion.isAndroid11
 
 
 /**
@@ -32,19 +36,16 @@ class WriteExternalStoragePermission : DangerousPermission {
         return PERMISSION_NAME
     }
 
-    override fun getPermissionGroup(): String {
+    override fun getPermissionGroup( context: Context): String {
         return PermissionGroups.STORAGE
     }
 
-    override fun getFromAndroidVersion(): Int {
+    override fun getFromAndroidVersion( context: Context): Int {
         return PermissionVersion.ANDROID_6
     }
 
-    override fun isGrantedPermissionByStandardVersion(
-         context: Context,
-        skipRequest: Boolean
-    ): Boolean {
-        if (PermissionVersion.isAndroid11() && PermissionVersion.getTargetVersion(context) >= PermissionVersion.ANDROID_11) {
+    override fun isGrantedPermissionByStandardVersion( context: Context, skipRequest: Boolean): Boolean {
+        if (isAndroid11() && getTargetVersion(context) >= PermissionVersion.ANDROID_11) {
             // 这里补充一下这样写的具体原因：
             // 1. 当 targetSdk >= Android 11 并且在此版本及之上申请 WRITE_EXTERNAL_STORAGE，虽然可以弹出授权框，但是没有什么实际作用
             //    相关文档地址：https://developer.android.google.cn/reference/android/Manifest.permission#WRITE_EXTERNAL_STORAGE
@@ -56,20 +57,24 @@ class WriteExternalStoragePermission : DangerousPermission {
             // 判断 WRITE_EXTERNAL_STORAGE 权限，结果无论是否授予，最终都会直接返回 true 给外层
             return true
         }
-        if (PermissionVersion.isAndroid10() && PermissionVersion.getTargetVersion(context) >= PermissionVersion.ANDROID_10) {
-            // Environment.isExternalStorageLegacy API 解释：是否采用的是非分区存储的模式
-            return Environment.isExternalStorageLegacy()
+        // 如果当前项目 targetSdk > Android 10 并且运行在 Android 10 的设备上面，
+        // 但是在适配了分区存储的情况下，就直接返回 true 给外层（表示授予了该权限）
+        if (getTargetVersion(context) >= PermissionVersion.ANDROID_10 &&
+            isAndroid10() && !Environment.isExternalStorageLegacy()
+        ) {
+            return true
         }
         return super.isGrantedPermissionByStandardVersion(context, skipRequest)
     }
 
     override fun isDoNotAskAgainPermissionByStandardVersion( activity: Activity): Boolean {
-        if (PermissionVersion.isAndroid11() && PermissionVersion.getTargetVersion(activity) >= PermissionVersion.ANDROID_11) {
+        if (isAndroid11() && getTargetVersion(activity) >= PermissionVersion.ANDROID_11) {
             return false
         }
-        // Environment.isExternalStorageLegacy API 解释：是否采用的是非分区存储的模式
-        if (PermissionVersion.isAndroid10() && PermissionVersion.getTargetVersion(activity) >= PermissionVersion.ANDROID_10 &&
-            Environment.isExternalStorageLegacy()
+        // 如果当前项目 targetSdk > Android 10 并且运行在 Android 10 的设备上面，
+        // 但是在适配了分区存储的情况下，就直接返回 false 给外层（表示没有勾选不再询问）
+        if (getTargetVersion(activity) >= PermissionVersion.ANDROID_10 &&
+            isAndroid10() && !Environment.isExternalStorageLegacy()
         ) {
             return false
         }
@@ -83,65 +88,55 @@ class WriteExternalStoragePermission : DangerousPermission {
 
     protected override fun checkSelfByManifestFile(
          activity: Activity,
-         requestPermissions: List<IPermission>,
-         androidManifestInfo: AndroidManifestInfo,
-         permissionManifestInfoList: List<PermissionManifestInfo>,
-         currentPermissionManifestInfo: PermissionManifestInfo
+         requestList: List<IPermission>,
+         manifestInfo: AndroidManifestInfo,
+         permissionInfoList: List<PermissionManifestInfo>,
+         currentPermissionInfo: PermissionManifestInfo
     ) {
-        super.checkSelfByManifestFile(
-            activity, requestPermissions, androidManifestInfo, permissionManifestInfoList,
-            currentPermissionManifestInfo
-        )
-        val applicationManifestInfo = androidManifestInfo.applicationManifestInfo ?: return
+        super.checkSelfByManifestFile(activity, requestList, manifestInfo, permissionInfoList, currentPermissionInfo)
+        val applicationInfo = manifestInfo.applicationInfo ?: return
 
         // 如果当前 targetSdk 版本比较低，甚至还没有到分区存储的版本，就直接跳过后面的检查，只检查当前权限有没有在清单文件中静态注册
-        if (PermissionVersion.getTargetVersion(activity) < PermissionVersion.ANDROID_10) {
-            checkPermissionRegistrationStatus(permissionManifestInfoList, getPermissionName())
+        if (getTargetVersion(activity) < PermissionVersion.ANDROID_10) {
+            checkPermissionRegistrationStatus(permissionInfoList, getPermissionName())
             return
         }
 
         // 判断：当前项目是否适配了Android 11，并且还在清单文件中是否注册了 MANAGE_EXTERNAL_STORAGE 权限
-        if (PermissionVersion.getTargetVersion(activity) >= PermissionVersion.ANDROID_11 &&
-            findPermissionInfoByList(
-                permissionManifestInfoList,
-                PermissionNames.MANAGE_EXTERNAL_STORAGE
-            ) != null
+        if (getTargetVersion(activity) >= PermissionVersion.ANDROID_11 &&
+            findPermissionInfoByList(permissionInfoList, PermissionNames.MANAGE_EXTERNAL_STORAGE) != null
         ) {
             // 如果有的话，那么 maxSdkVersion 就必须是 Android 10 及以上的版本
-            checkPermissionRegistrationStatus(
-                permissionManifestInfoList,
-                getPermissionName(),
-                PermissionVersion.ANDROID_10
-            )
+            checkPermissionRegistrationStatus(permissionInfoList, getPermissionName(), PermissionVersion.ANDROID_10)
         } else {
             // 检查这个权限有没有在清单文件中注册，WRITE_EXTERNAL_STORAGE 权限比较特殊，要单独拎出来判断
             // 如果在清单文件中注册了 android:requestLegacyExternalStorage="true" 属性，即可延长一个 Android 版本适配
             // 所以 requestLegacyExternalStorage 属性在开启的状态下，对 maxSdkVersion 属性的要求延长一个版本
             checkPermissionRegistrationStatus(
-                permissionManifestInfoList,
+                permissionInfoList,
                 getPermissionName(),
-                if (applicationManifestInfo.requestLegacyExternalStorage) PermissionVersion.ANDROID_10 else PermissionVersion.ANDROID_9
+                if (applicationInfo.requestLegacyExternalStorage) PermissionVersion.ANDROID_10 else PermissionVersion.ANDROID_9
             )
         }
 
         // 如果申请的是 Android 10 获取媒体位置权限，则跳过后面的检查
-        if (PermissionUtils.containsPermission(
-                requestPermissions,
-                PermissionNames.ACCESS_MEDIA_LOCATION
-            )
-        ) {
+        if (PermissionUtils.containsPermission(requestList, PermissionNames.ACCESS_MEDIA_LOCATION)) {
             return
         }
 
-        val targetSdkVersion: Int = PermissionVersion.getTargetVersion(activity)
-        // 是否适配了分区存储
-        val scopedStorage: Boolean = PermissionUtils.getBooleanByMetaData(
-            activity,
-            ReadExternalStoragePermission.META_DATA_KEY_SCOPED_STORAGE,
-            false
-        )
+        val targetSdkVersion = getTargetVersion(activity)
+        // 是否适配了分区存储（默认是没有的）
+        var scopedStorage = false
+        if (applicationInfo.metaDataInfoList != null) {
+            for (metaDataManifestInfo in applicationInfo.metaDataInfoList) {
+                if (META_DATA_KEY_SCOPED_STORAGE.equals(metaDataManifestInfo.name)) {
+                    scopedStorage = metaDataManifestInfo.value.toBoolean()
+                    break
+                }
+            }
+        }
         // 如果在已经适配 Android 10 的情况下
-        check(!(targetSdkVersion >= PermissionVersion.ANDROID_10 && !applicationManifestInfo.requestLegacyExternalStorage && !scopedStorage)) {
+        check(!(targetSdkVersion >= PermissionVersion.ANDROID_10 && !applicationInfo.requestLegacyExternalStorage && !scopedStorage)) {
             "Please register the android:requestLegacyExternalStorage=\"true\" " +
                     "attribute in the AndroidManifest.xml file, otherwise it will cause incompatibility with the old version"
         }

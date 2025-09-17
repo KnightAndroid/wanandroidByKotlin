@@ -9,6 +9,8 @@ import android.provider.Settings
 import com.knight.kotlin.library_permiss.permission.PermissionNames
 import com.knight.kotlin.library_permiss.permission.common.SpecialPermission
 import com.knight.kotlin.library_permiss.tools.PermissionVersion
+import com.knight.kotlin.library_permiss.tools.PermissionVersion.isAndroid10
+import com.knight.kotlin.library_permiss.tools.PermissionVersion.isAndroid6
 import com.knight.kotlin.library_permiss.tools.PhoneRomUtils.isHarmonyOs
 import com.knight.kotlin.library_permiss.tools.PhoneRomUtils.isMagicOs
 
@@ -29,12 +31,12 @@ class AccessNotificationPolicyPermission : SpecialPermission {
         return PERMISSION_NAME
     }
 
-    override fun getFromAndroidVersion(): Int {
+    override fun getFromAndroidVersion( context: Context): Int {
         return PermissionVersion.ANDROID_6
     }
 
     override fun isGrantedPermission( context: Context, skipRequest: Boolean): Boolean {
-        if (!PermissionVersion.isAndroid6()) {
+        if (!isAndroid6()) {
             return true
         }
         val notificationManager = context.getSystemService(NotificationManager::class.java) ?: return false
@@ -43,31 +45,33 @@ class AccessNotificationPolicyPermission : SpecialPermission {
     }
 
     
-    override fun getPermissionSettingIntents( context: Context): MutableList<Intent> {
+    override fun getPermissionSettingIntents( context: Context, skipRequest: Boolean): List<Intent> {
         val intentList: MutableList<Intent> = ArrayList(6)
         var intent: Intent
 
-        // 这里解释一下，为什么要排除 HarmonyOs 和 Magic，因为用代码能检测到有这个 Intent，也能跳转过去，但是会被马上拒绝
-        // 测试过了其他厂商系统及 Android 原生系统都没有这个问题，就只有鸿蒙有这个问题
-        // 只因为这个 Intent 是隐藏的意图，所以就不让用，鸿蒙 2.0 和 3.0 都有这个问题
-        // 别问鸿蒙 1.0 有没有问题，问就是鸿蒙一发布就 2.0 了，1.0 版本都没有问世过
+        // 这里解释一下，为什么要排除 HarmonyOS 和 MagicOS，因为用代码能检测到有这个 Intent，也能跳转过去，但是会被马上拒绝
+        // 测试过了其他厂商系统及 Android 原生系统都没有这个问题，就只有 HarmonyOS 有这个问题
+        // 只因为这个 Intent 是隐藏的意图，所以就不让用，HarmonyOS 2.0、3.0、4.2.0 都有这个问题
+        // 别问 HarmonyOS 1.0 有没有问题，问就是 HarmonyOS 一发布就 2.0 了，1.0 版本都没有问世过
         // ------------------------ 我是一条华丽的分割线 ----------------------------
         // 相关的 issue 地址：
         // 1. https://github.com/getActivity/XXPermissions/issues/190
         // 2. https://github.com/getActivity/XXPermissions/issues/233
         // 经过测试，荣耀下面这些机子都会出现加包名跳转不过去的问题
-        // 荣耀 magic4 Android 13  MagicOs 7.0
-        // 荣耀 80 Pro Android 12  MagicOs 7.0
-        // 荣耀 X20 SE Android 11  MagicOs 4.1
-        // 荣耀 Play5 Android 10  MagicOs 4.0
-        if (PermissionVersion.isAndroid10() && !isHarmonyOs() && !isMagicOs()) {
+        // 荣耀 Magic V5 Android 15  MagicOS 9.0.1
+        // 荣耀 magic4 Android 13  MagicOS 7.0
+        // 荣耀 80 Pro Android 12  MagicOS 7.0
+        // 荣耀 X20 SE Android 11  MagicOS 4.1
+        // 荣耀 Play5 Android 10  MagicOS 4.0
+        // 华为 nova 8 Android 10  EMUI 11.0
+        if (isAndroid10() && !(DeviceOs.isHarmonyOs() || DeviceOs.isMagicOs() || DeviceOs.isEmui())) {
             // android.provider.Settings.ACTION_NOTIFICATION_POLICY_ACCESS_DETAIL_SETTINGS
             intent = Intent("android.settings.NOTIFICATION_POLICY_ACCESS_DETAIL_SETTINGS")
             intent.setData(getPackageNameUri(context))
             intentList.add(intent)
         }
 
-        if (PermissionVersion.isAndroid6()) {
+        if (isAndroid6()) {
             intent = Intent(Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS)
             intentList.add(intent)
         }

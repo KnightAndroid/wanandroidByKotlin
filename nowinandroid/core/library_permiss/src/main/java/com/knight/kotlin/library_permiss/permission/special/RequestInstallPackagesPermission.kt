@@ -8,6 +8,7 @@ import android.provider.Settings
 import com.knight.kotlin.library_permiss.permission.PermissionNames
 import com.knight.kotlin.library_permiss.permission.common.SpecialPermission
 import com.knight.kotlin.library_permiss.tools.PermissionVersion
+import com.knight.kotlin.library_permiss.tools.PermissionVersion.isAndroid8
 
 
 /**
@@ -37,34 +38,49 @@ class RequestInstallPackagesPermission: SpecialPermission {
 
     override fun getPermissionName(): String = PERMISSION_NAME
 
-    override fun getFromAndroidVersion(): Int = PermissionVersion.ANDROID_8
+    override fun getFromAndroidVersion( context: Context): Int {
+        return PermissionVersion.ANDROID_8
+    }
 
-    override fun isGrantedPermission(context: Context, skipRequest: Boolean): Boolean {
-        if (!PermissionVersion.isAndroid8()) {
+    override fun isGrantedPermission( context: Context, skipRequest: Boolean): Boolean {
+        if (!isAndroid8()) {
             return true
         }
         return context.packageManager.canRequestPackageInstalls()
     }
 
-    override fun getPermissionSettingIntents(context: Context): MutableList<Intent> {
-        val intentList = ArrayList<Intent>(6)
+    
+    override fun getPermissionSettingIntents( context: Context, skipRequest: Boolean): MutableList<Intent> {
+        val intentList: MutableList<Intent> = ArrayList(6)
+        var intent: Intent
 
-        if (PermissionVersion.isAndroid8()) {
-            intentList.add(Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES).apply {
-                data = getPackageNameUri(context)
-            })
+        if (isAndroid8()) {
+            intent = Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES)
+            intent.setData(getPackageNameUri(context))
+            intentList.add(intent)
 
-            // 如果带包名不能跳转，则不带包名也尝试一下
-            intentList.add(Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES))
+            // 如果是因为加包名的数据后导致不能跳转，就把包名的数据移除掉
+            intent = Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES)
+            intentList.add(intent)
         }
 
-        intentList.add(getApplicationDetailsSettingIntent(context))
-        intentList.add(getManageApplicationSettingIntent())
-        intentList.add(getApplicationSettingIntent())
-        intentList.add(getAndroidSettingIntent())
+        intent = getApplicationDetailsSettingIntent(context)
+        intentList.add(intent)
+
+        intent = getManageApplicationSettingIntent()
+        intentList.add(intent)
+
+        intent = getApplicationSettingIntent()
+        intentList.add(intent)
+
+        intent = getAndroidSettingIntent()
+        intentList.add(intent)
 
         return intentList
     }
 
-    override fun isRegisterPermissionByManifestFile(): Boolean = true
+    override fun isRegisterPermissionByManifestFile(): Boolean {
+        // 表示当前权限需要在 AndroidManifest.xml 文件中进行静态注册
+        return true
+    }
 }

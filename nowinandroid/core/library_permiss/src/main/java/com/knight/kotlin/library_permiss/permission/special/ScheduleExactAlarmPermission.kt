@@ -14,6 +14,9 @@ import com.knight.kotlin.library_permiss.permission.PermissionNames
 import com.knight.kotlin.library_permiss.permission.base.IPermission
 import com.knight.kotlin.library_permiss.permission.common.SpecialPermission
 import com.knight.kotlin.library_permiss.tools.PermissionVersion
+import com.knight.kotlin.library_permiss.tools.PermissionVersion.getTargetVersion
+import com.knight.kotlin.library_permiss.tools.PermissionVersion.isAndroid12
+import com.knight.kotlin.library_permiss.tools.PermissionVersion.isAndroid13
 
 
 /**
@@ -43,33 +46,45 @@ class ScheduleExactAlarmPermission : SpecialPermission {
 
     override fun getPermissionName(): String = PERMISSION_NAME
 
-    override fun getFromAndroidVersion(): Int = PermissionVersion.ANDROID_12
-
-    override fun isGrantedPermission(context: Context, skipRequest: Boolean): Boolean {
-        if (!PermissionVersion.isAndroid12()) {
-            return true
-        }
-        val alarmManager = context.getSystemService(AlarmManager::class.java)
-        // 虽然这个 SystemService 永远不为空，但是不怕一万，就怕万一，开展防御性编程
-        return alarmManager?.canScheduleExactAlarms() ?: false
+    override fun getFromAndroidVersion( context: Context): Int {
+        return PermissionVersion.ANDROID_12
     }
 
-    override fun getPermissionSettingIntents(context: Context): MutableList<Intent> {
-        val intentList = ArrayList<Intent>(6)
+    override fun isGrantedPermission( context: Context, skipRequest: Boolean): Boolean {
+        if (!isAndroid12()) {
+            return true
+        }
+        val alarmManager = context.getSystemService(AlarmManager::class.java) ?: return false
+        // 虽然这个 SystemService 永远不为空，但是不怕一万，就怕万一，开展防御性编程
+        return alarmManager.canScheduleExactAlarms()
+    }
 
-        if (PermissionVersion.isAndroid12()) {
-            intentList.add(Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM).apply {
-                data = getPackageNameUri(context)
-            })
+
+    override fun getPermissionSettingIntents( context: Context, skipRequest: Boolean): MutableList<Intent> {
+        val intentList: MutableList<Intent> = ArrayList(6)
+        var intent: Intent
+
+        if (isAndroid12()) {
+            intent = Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
+            intent.setData(getPackageNameUri(context))
+            intentList.add(intent)
 
             // 如果是因为加包名的数据后导致不能跳转，就把包名的数据移除掉
-            intentList.add(Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM))
+            intent = Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
+            intentList.add(intent)
         }
 
-        intentList.add(getApplicationDetailsSettingIntent(context))
-        intentList.add(getManageApplicationSettingIntent())
-        intentList.add(getApplicationSettingIntent())
-        intentList.add(getAndroidSettingIntent())
+        intent = getApplicationDetailsSettingIntent(context)
+        intentList.add(intent)
+
+        intent = getManageApplicationSettingIntent()
+        intentList.add(intent)
+
+        intent = getApplicationSettingIntent()
+        intentList.add(intent)
+
+        intent = getAndroidSettingIntent()
+        intentList.add(intent)
 
         return intentList
     }
@@ -80,37 +95,30 @@ class ScheduleExactAlarmPermission : SpecialPermission {
     }
 
     override fun checkSelfByManifestFile(
-        activity: Activity,
-        requestPermissions: List<IPermission>,
-        androidManifestInfo: AndroidManifestInfo,
-        permissionManifestInfoList: List<PermissionManifestInfo>,
-        currentPermissionManifestInfo: PermissionManifestInfo
+         activity: Activity,
+         requestList: List<IPermission>,
+         manifestInfo: AndroidManifestInfo,
+         permissionInfoList: List<PermissionManifestInfo>,
+         currentPermissionInfo: PermissionManifestInfo
     ) {
-        super.checkSelfByManifestFile(
-            activity,
-            requestPermissions,
-            androidManifestInfo,
-            permissionManifestInfoList,
-            currentPermissionManifestInfo
-        )
-
-        val useExactAlarmPermissionName = if (PermissionVersion.isAndroid13()) {
+        super.checkSelfByManifestFile(activity, requestList, manifestInfo, permissionInfoList, currentPermissionInfo)
+        val useExactAlarmPermissionName = if (isAndroid13()) {
             permission.USE_EXACT_ALARM
         } else {
             "android.permission.USE_EXACT_ALARM"
         }
 
-        if (PermissionVersion.getTargetVersion(activity) >= PermissionVersion.ANDROID_13 &&
-            findPermissionInfoByList(permissionManifestInfoList, useExactAlarmPermissionName) != null
+        if (getTargetVersion(activity) >= PermissionVersion.ANDROID_13 &&
+            findPermissionInfoByList(permissionInfoList, useExactAlarmPermissionName) != null
         ) {
             // 如果当前项目适配了 Android 13 的话，并且在清单文件中注册了 USE_EXACT_ALARM 权限，那么 SCHEDULE_EXACT_ALARM 权限在清单文件中可以这样注册
             // <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" android:maxSdkVersion="32" />
             // 相关文档地址：https://developer.android.google.cn/reference/android/Manifest.permission#USE_EXACT_ALARM
             // 如果你的应用要上架 GooglePlay，那么需要慎重添加 USE_EXACT_ALARM 权限，因为不是日历、闹钟、时钟这类应用添加 USE_EXACT_ALARM 权限很难通过 GooglePlay 上架审核
-            checkPermissionRegistrationStatus(permissionManifestInfoList, getPermissionName(), PermissionVersion.ANDROID_12_L)
+            checkPermissionRegistrationStatus(permissionInfoList, getPermissionName(), PermissionVersion.ANDROID_12_L)
             return
         }
 
-        checkPermissionRegistrationStatus(permissionManifestInfoList, getPermissionName())
+        checkPermissionRegistrationStatus(permissionInfoList, getPermissionName())
     }
 }

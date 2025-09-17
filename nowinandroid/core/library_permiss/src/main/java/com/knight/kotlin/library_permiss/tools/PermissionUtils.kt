@@ -270,11 +270,22 @@ object PermissionUtils {
      * 将 List<IPermission> 转换成 String[] 对象
     </IPermission> */
 
-    fun convertPermissionArray(permissions: List<IPermission>?): Array<String> {
+    fun convertPermissionArray(permissions: List<IPermission>): Array<String> {
         if (permissions.isNullOrEmpty()) {
             return emptyArray()
         }
         return Array(permissions.size) { i -> permissions[i].getPermissionName() }
+    }
+
+    /**
+     * 将 List<IPermission> 转换成 String[] 对象
+    </IPermission> */
+
+    fun convertPermissionArray(context: Context, permissions: List<IPermission>): Array<String> {
+        if (permissions.isEmpty()) {
+            return emptyArray()
+        }
+        return permissions.map { it.getRequestPermissionName(context) }.toTypedArray()
     }
 
 

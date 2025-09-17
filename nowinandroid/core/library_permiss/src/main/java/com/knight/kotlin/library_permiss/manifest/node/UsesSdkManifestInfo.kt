@@ -1,7 +1,7 @@
 package com.knight.kotlin.library_permiss.manifest.node
 
 /**
- * @Description
+ * @Description 清单信息类
  * @Author knight
  * @Time 2025/7/10 20:47
  *

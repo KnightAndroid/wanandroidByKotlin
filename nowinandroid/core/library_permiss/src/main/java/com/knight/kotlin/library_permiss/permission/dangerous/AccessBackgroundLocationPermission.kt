@@ -7,12 +7,17 @@ import android.os.Parcelable
 import com.knight.kotlin.library_permiss.manifest.AndroidManifestInfo
 import com.knight.kotlin.library_permiss.manifest.node.PermissionManifestInfo
 import com.knight.kotlin.library_permiss.permission.PermissionGroups
-import com.knight.kotlin.library_permiss.permission.PermissionLists
+import com.knight.kotlin.library_permiss.permission.PermissionLists.getAccessCoarseLocationPermission
+import com.knight.kotlin.library_permiss.permission.PermissionLists.getAccessFineLocationPermission
 import com.knight.kotlin.library_permiss.permission.PermissionNames
 import com.knight.kotlin.library_permiss.permission.base.IPermission
 import com.knight.kotlin.library_permiss.permission.common.DangerousPermission
 import com.knight.kotlin.library_permiss.tools.PermissionUtils
 import com.knight.kotlin.library_permiss.tools.PermissionVersion
+import com.knight.kotlin.library_permiss.tools.PermissionVersion.getTargetVersion
+import com.knight.kotlin.library_permiss.tools.PermissionVersion.isAndroid10
+import com.knight.kotlin.library_permiss.tools.PermissionVersion.isAndroid11
+import com.knight.kotlin.library_permiss.tools.PermissionVersion.isAndroid12
 
 
 /**
@@ -32,85 +37,94 @@ class AccessBackgroundLocationPermission : DangerousPermission {
         return PERMISSION_NAME
     }
 
-    override fun getPermissionGroup(): String {
+    
+    override fun getPermissionPageType( context: Context): PermissionPageType {
+        // 后台定位权限在 HyperOS 或者 MIUI 上面一直是透明的 Activity
+        if (DeviceOs.isHyperOs() || DeviceOs.isMiui()) {
+            return PermissionPageType.TRANSPARENT_ACTIVITY
+        }
+        // 后台定位权限在 MagicOS 上面一直是透明的 Activity
+        if (DeviceOs.isMagicOs()) {
+            return PermissionPageType.TRANSPARENT_ACTIVITY
+        }
+        // 后台定位权限在 HarmonyOS 上面一直是透明的 Activity
+        if (DeviceOs.isHarmonyOs()) {
+            return PermissionPageType.TRANSPARENT_ACTIVITY
+        }
+        // 后台定位权限申请页在 Android 10 还是透明的 Activity，到了 Android 11 就变成了不透明的 Activity
+        if (isAndroid10() && !isAndroid11()) {
+            return PermissionPageType.TRANSPARENT_ACTIVITY
+        }
+        return PermissionPageType.OPAQUE_ACTIVITY
+    }
+
+    override fun getPermissionGroup(context: Context): String {
         return PermissionGroups.LOCATION
     }
 
-    override fun getFromAndroidVersion(): Int {
+    override fun getFromAndroidVersion( context: Context): Int {
         return PermissionVersion.ANDROID_10
     }
 
     
     override fun getForegroundPermissions( context: Context): List<IPermission> {
         // 判断当前是否运行在 Android 12 及以上
-        return if (PermissionVersion.isAndroid12()) {
+        return if (isAndroid12()) {
             // 如果是的话，那么这个前台定位权限既可以是精确定位权限也可以是模糊定位权限
-            PermissionUtils.asArrayList(
-                PermissionLists.getAccessFineLocationPermission(),
-                PermissionLists.getAccessCoarseLocationPermission()
-            )
+            PermissionUtils.asArrayList(getAccessFineLocationPermission(), getAccessCoarseLocationPermission())
         } else {
             // 如果不是的话，那么这个前台定位权限只能是精确定位权限
-            PermissionUtils.asArrayList(PermissionLists.getAccessFineLocationPermission())
+            PermissionUtils.asArrayList(getAccessFineLocationPermission())
         }
     }
 
-    override fun isGrantedPermissionByStandardVersion(
-         context: Context,
-        skipRequest: Boolean
-    ): Boolean {
-        if (PermissionVersion.isAndroid12()) {
+    override fun isBackgroundPermission( context: Context): Boolean {
+        // 表示当前权限是后台权限
+        return true
+    }
+
+    override fun isGrantedPermissionByStandardVersion( context: Context, skipRequest: Boolean): Boolean {
+        if (isAndroid12()) {
             // 在 Android 12 及之后的版本，前台定位权限既可以用精确定位权限也可以用模糊定位权限
-            if (!PermissionLists.getAccessFineLocationPermission()
-                    .isGrantedPermission(context, skipRequest) &&
-                !PermissionLists.getAccessCoarseLocationPermission()
-                    .isGrantedPermission(context, skipRequest)
+            if (!getAccessFineLocationPermission().isGrantedPermission(context, skipRequest) &&
+                !getAccessCoarseLocationPermission().isGrantedPermission(context, skipRequest)
             ) {
                 return false
             }
         } else {
             // 在 Android 11 及之前的版本，前台定位权限需要精确定位权限
-            if (!PermissionLists.getAccessFineLocationPermission()
-                    .isGrantedPermission(context, skipRequest)
-            ) {
+            if (!getAccessFineLocationPermission().isGrantedPermission(context, skipRequest)) {
                 return false
             }
         }
         return super.isGrantedPermissionByStandardVersion(context, skipRequest)
     }
 
-    override fun isGrantedPermissionByLowVersion(
-         context: Context,
-        skipRequest: Boolean
-    ): Boolean {
-        return PermissionLists.getAccessFineLocationPermission()
-            .isGrantedPermission(context, skipRequest)
+    override fun isGrantedPermissionByLowVersion( context: Context, skipRequest: Boolean): Boolean {
+        return getAccessFineLocationPermission().isGrantedPermission(context, skipRequest)
     }
 
-    override fun isDoNotAskAgainPermissionByStandardVersion(activity: Activity): Boolean {
+    override fun isDoNotAskAgainPermissionByStandardVersion( activity: Activity): Boolean {
         // 如果前台定位权限没有授予，那么后台定位权限不再询问的状态要跟随前台定位权限
-        if (PermissionVersion.isAndroid12()) {
+        if (isAndroid12()) {
             // 在 Android 12 及之后的版本，前台定位权限既可以用精确定位权限也可以用模糊定位权限
-            if (!PermissionLists.getAccessFineLocationPermission().isGrantedPermission(activity) &&
-                !PermissionLists.getAccessCoarseLocationPermission().isGrantedPermission(activity)
+            if (!getAccessFineLocationPermission().isGrantedPermission(activity) &&
+                !getAccessCoarseLocationPermission().isGrantedPermission(activity)
             ) {
-                return PermissionLists.getAccessFineLocationPermission()
-                    .isDoNotAskAgainPermission(activity) &&
-                        PermissionLists.getAccessCoarseLocationPermission()
-                            .isDoNotAskAgainPermission(activity)
+                return getAccessFineLocationPermission().isDoNotAskAgainPermission(activity) &&
+                        getAccessCoarseLocationPermission().isDoNotAskAgainPermission(activity)
             }
         } else {
             // 在 Android 11 及之前的版本，前台定位权限需要精确定位权限
-            if (!PermissionLists.getAccessFineLocationPermission().isGrantedPermission(activity)) {
-                return PermissionLists.getAccessFineLocationPermission()
-                    .isDoNotAskAgainPermission(activity)
+            if (!getAccessFineLocationPermission().isGrantedPermission(activity)) {
+                return getAccessFineLocationPermission().isDoNotAskAgainPermission(activity)
             }
         }
         return super.isDoNotAskAgainPermissionByStandardVersion(activity)
     }
 
     override fun isDoNotAskAgainPermissionByLowVersion( activity: Activity): Boolean {
-        return PermissionLists.getAccessFineLocationPermission().isDoNotAskAgainPermission(activity)
+        return getAccessFineLocationPermission().isDoNotAskAgainPermission(activity)
     }
 
     override fun getRequestIntervalTime( context: Context): Int {
@@ -123,79 +137,53 @@ class AccessBackgroundLocationPermission : DangerousPermission {
 
     override fun checkSelfByManifestFile(
          activity: Activity,
-         requestPermissions: List<IPermission>,
-         androidManifestInfo: AndroidManifestInfo,
-         permissionManifestInfoList: List<PermissionManifestInfo>,
-       currentPermissionManifestInfo: PermissionManifestInfo
+         requestList: List<IPermission>,
+         manifestInfo: AndroidManifestInfo,
+         permissionInfoList: List<PermissionManifestInfo>,
+         currentPermissionInfo: PermissionManifestInfo
     ) {
-        super.checkSelfByManifestFile(
-            activity,
-            requestPermissions,
-            androidManifestInfo,
-            permissionManifestInfoList,
-            currentPermissionManifestInfo
-        )
+        super.checkSelfByManifestFile(activity, requestList, manifestInfo, permissionInfoList, currentPermissionInfo)
         // 如果您的应用以 Android 12 为目标平台并且您请求 ACCESS_FINE_LOCATION 权限
         // 则还必须请求 ACCESS_COARSE_LOCATION 权限。您必须在单个运行时请求中包含这两项权限
         // 如果您尝试仅请求 ACCESS_FINE_LOCATION，则系统会忽略该请求并在 Logcat 中记录以下错误消息：
         // ACCESS_FINE_LOCATION must be requested with ACCESS_COARSE_LOCATION
         // 官方适配文档：https://developer.android.google.cn/develop/sensors-and-location/location/permissions/runtime?hl=zh-cn#approximate-request
-        if (PermissionVersion.getTargetVersion(activity) >= PermissionVersion.ANDROID_12) {
-            checkPermissionRegistrationStatus(
-                permissionManifestInfoList,
-                PermissionNames.ACCESS_COARSE_LOCATION
-            )
-            checkPermissionRegistrationStatus(
-                permissionManifestInfoList,
-                PermissionNames.ACCESS_FINE_LOCATION
-            )
+        if (getTargetVersion(activity) >= PermissionVersion.ANDROID_12) {
+            checkPermissionRegistrationStatus(permissionInfoList, PermissionNames.ACCESS_COARSE_LOCATION)
+            checkPermissionRegistrationStatus(permissionInfoList, PermissionNames.ACCESS_FINE_LOCATION)
         } else {
-            checkPermissionRegistrationStatus(
-                permissionManifestInfoList,
-                PermissionNames.ACCESS_FINE_LOCATION
-            )
+            checkPermissionRegistrationStatus(permissionInfoList, PermissionNames.ACCESS_FINE_LOCATION)
         }
     }
 
-    override fun checkSelfByRequestPermissions(
-         activity: Activity,
-         requestPermissions: List<IPermission>
-    ) {
-        super.checkSelfByRequestPermissions(activity, requestPermissions)
+   override fun checkSelfByRequestPermissions( activity: Activity,  requestList: List<IPermission>) {
+        super.checkSelfByRequestPermissions(activity, requestList)
         // 如果您的应用以 Android 12 为目标平台并且您请求 ACCESS_FINE_LOCATION 权限
         // 则还必须请求 ACCESS_COARSE_LOCATION 权限。您必须在单个运行时请求中包含这两项权限
         // 如果您尝试仅请求 ACCESS_FINE_LOCATION，则系统会忽略该请求并在 Logcat 中记录以下错误消息：
         // ACCESS_FINE_LOCATION must be requested with ACCESS_COARSE_LOCATION
         // 官方适配文档：https://developer.android.google.cn/develop/sensors-and-location/location/permissions/runtime?hl=zh-cn#approximate-request
         require(
-            !(PermissionVersion.getTargetVersion(activity) >= PermissionVersion.ANDROID_12 &&
-                    PermissionUtils.containsPermission(
-                        requestPermissions,
-                        PermissionNames.ACCESS_COARSE_LOCATION
-                    ) && !PermissionUtils.containsPermission(
-                requestPermissions,
+            !(getTargetVersion(activity) >= PermissionVersion.ANDROID_12 &&
+                    PermissionUtils.containsPermission(requestList, PermissionNames.ACCESS_COARSE_LOCATION) && !PermissionUtils.containsPermission(
+                requestList,
                 PermissionNames.ACCESS_FINE_LOCATION
             ))
-        ) { "Applying for background positioning permissions must include \"" + PermissionNames.ACCESS_FINE_LOCATION + "\"" }
+        ) {
+            "Applying for background positioning permissions must include \"" +
+                    PermissionNames.ACCESS_FINE_LOCATION + "\""
+        }
 
         var thisPermissionIndex = -1
         var accessFineLocationPermissionIndex = -1
         var accessCoarseLocationPermissionIndex = -1
-        for (i in requestPermissions.indices) {
-            val permission = requestPermissions[i]
-            if (PermissionUtils.equalsPermission(permission, this)) {
+        for (i in requestList.indices) {
+            val permission = requestList[i]
+            if (PermissionUtils.equalsPermission(permission!!, this)) {
                 thisPermissionIndex = i
-            } else if (PermissionUtils.equalsPermission(
-                    permission,
-                    PermissionNames.ACCESS_FINE_LOCATION
-                )
-            ) {
+            } else if (PermissionUtils.equalsPermission(permission, PermissionNames.ACCESS_FINE_LOCATION)) {
                 accessFineLocationPermissionIndex = i
-            } else if (PermissionUtils.equalsPermission(
-                    permission,
-                    PermissionNames.ACCESS_COARSE_LOCATION
-                )
-            ) {
+            } else if (PermissionUtils.equalsPermission(permission, PermissionNames.ACCESS_COARSE_LOCATION)) {
                 accessCoarseLocationPermissionIndex = i
             }
         }
@@ -210,23 +198,6 @@ class AccessBackgroundLocationPermission : DangerousPermission {
                     "\" permission after the \"" + PermissionNames.ACCESS_COARSE_LOCATION + "\" permission"
         }
     }
-
-//    companion object CREATOR : Parcelable.Creator<AccessBackgroundLocationPermission> {
-//
-//        /** 当前权限名称，注意：该常量字段仅供框架内部使用，不提供给外部引用，
-//         * 如果需要获取权限名称的字符串，请直接通过 [PermissionNames] 类获取
-//         */
-//        val PERMISSION_NAME: String = PermissionNames.ACCESS_BACKGROUND_LOCATION
-//
-//        override fun createFromParcel(parcel: Parcel): AccessBackgroundLocationPermission {
-//            return AccessBackgroundLocationPermission(parcel)
-//        }
-//
-//        override fun newArray(size: Int): Array<AccessBackgroundLocationPermission?> {
-//            return arrayOfNulls(size)
-//        }
-//    }
-
 
     companion object {
         val PERMISSION_NAME: String = PermissionNames.ACCESS_BACKGROUND_LOCATION

@@ -7,12 +7,13 @@ import android.os.Parcelable
 import com.knight.kotlin.library_permiss.manifest.AndroidManifestInfo
 import com.knight.kotlin.library_permiss.manifest.node.PermissionManifestInfo
 import com.knight.kotlin.library_permiss.permission.PermissionGroups
-import com.knight.kotlin.library_permiss.permission.PermissionLists
+import com.knight.kotlin.library_permiss.permission.PermissionLists.getBodySensorsPermission
 import com.knight.kotlin.library_permiss.permission.PermissionNames
 import com.knight.kotlin.library_permiss.permission.base.IPermission
 import com.knight.kotlin.library_permiss.permission.common.DangerousPermission
 import com.knight.kotlin.library_permiss.tools.PermissionUtils
 import com.knight.kotlin.library_permiss.tools.PermissionVersion
+import com.knight.kotlin.library_permiss.tools.PermissionVersion.getTargetVersion
 
 
 /**
@@ -32,89 +33,97 @@ class BodySensorsBackgroundPermission : DangerousPermission {
         return PERMISSION_NAME
     }
 
-    override fun getPermissionGroup(): String {
+    
+    override fun getPermissionPageType( context: Context): PermissionPageType {
+        if (DeviceOs.isHyperOs() || DeviceOs.isMiui()) {
+            return PermissionPageType.TRANSPARENT_ACTIVITY
+        }
+        return PermissionPageType.OPAQUE_ACTIVITY
+    }
+
+    override fun getPermissionGroup( context: Context): String {
         return PermissionGroups.SENSORS
     }
 
-    override fun getFromAndroidVersion(): Int {
+    override fun getFromAndroidVersion( context: Context): Int {
         return PermissionVersion.ANDROID_13
     }
 
-  
-    override fun getForegroundPermissions(context: Context): List<IPermission> {
-        return PermissionUtils.asArrayList(PermissionLists.getBodySensorsPermission())
+    
+    override fun getForegroundPermissions( context: Context): List<IPermission> {
+        return PermissionUtils.asArrayList(getBodySensorsPermission())
     }
 
-    override fun isGrantedPermissionByStandardVersion(
-        context: Context,
-        skipRequest: Boolean
-    ): Boolean {
+    override fun isBackgroundPermission( context: Context): Boolean {
+        // 表示当前权限是后台权限
+        return true
+    }
+
+    override fun isGrantedPermissionByStandardVersion( context: Context, skipRequest: Boolean): Boolean {
         // 判断后台传感器权限授予之前，需要先判断前台传感器权限是否授予，如果前台传感器权限没有授予，那么后台传感器权限就算授予了也没用
-        if (!PermissionLists.getBodySensorsPermission().isGrantedPermission(context, skipRequest)) {
+        if (!getBodySensorsPermission().isGrantedPermission(context, skipRequest)) {
             return false
         }
         return super.isGrantedPermissionByStandardVersion(context, skipRequest)
     }
 
-    override fun isGrantedPermissionByLowVersion(
-        context: Context,
-        skipRequest: Boolean
-    ): Boolean {
-        return PermissionLists.getBodySensorsPermission().isGrantedPermission(context, skipRequest)
+    override fun isGrantedPermissionByLowVersion( context: Context, skipRequest: Boolean): Boolean {
+        return getBodySensorsPermission().isGrantedPermission(context, skipRequest)
     }
 
-    override fun isDoNotAskAgainPermissionByStandardVersion(activity: Activity): Boolean {
+    override fun isDoNotAskAgainPermissionByStandardVersion( activity: Activity): Boolean {
         // 如果前台传感器权限没有授予，那么后台传感器权限不再询问的状态要跟随前台传感器权限
-        if (!PermissionLists.getBodySensorsPermission().isGrantedPermission(activity)) {
-            return PermissionLists.getBodySensorsPermission().isDoNotAskAgainPermission(activity)
+        if (!getBodySensorsPermission().isGrantedPermission(activity)) {
+            return getBodySensorsPermission().isDoNotAskAgainPermission(activity)
         }
         return super.isDoNotAskAgainPermissionByStandardVersion(activity)
     }
 
-    override fun isDoNotAskAgainPermissionByLowVersion(activity: Activity): Boolean {
-        return PermissionLists.getBodySensorsPermission().isDoNotAskAgainPermission(activity)
+    override fun isDoNotAskAgainPermissionByLowVersion( activity: Activity): Boolean {
+        return getBodySensorsPermission().isDoNotAskAgainPermission(activity)
     }
 
-    override fun getRequestIntervalTime(context: Context): Int {
+    override fun getRequestIntervalTime( context: Context): Int {
         // 经过测试，在 Android 13 设备上面，先申请前台权限，然后立马申请后台权限大概率会出现失败
         // 这里为了避免这种情况出现，所以加了一点延迟，这样就没有什么问题了
         // 为什么延迟时间是 150 毫秒？ 经过实践得出 100 还是有概率会出现失败，但是换成 150 试了很多次就都没有问题了
         return if (isSupportRequestPermission(context)) 150 else 0
     }
 
-    override fun checkSelfByManifestFile(
-        activity: Activity,
-        requestPermissions: List<IPermission>,
-        androidManifestInfo: AndroidManifestInfo,
-        permissionManifestInfoList: List<PermissionManifestInfo>,
-         currentPermissionManifestInfo: PermissionManifestInfo
+    protected override fun checkSelfByManifestFile(
+         activity: Activity,
+         requestList: List<IPermission>,
+         manifestInfo: AndroidManifestInfo,
+         permissionInfoList: List<PermissionManifestInfo>,
+         currentPermissionInfo: PermissionManifestInfo
     ) {
-        super.checkSelfByManifestFile(
-            activity, requestPermissions, androidManifestInfo, permissionManifestInfoList,
-            currentPermissionManifestInfo
-        )
+        super.checkSelfByManifestFile(activity, requestList, manifestInfo, permissionInfoList, currentPermissionInfo)
         // 申请后台的传感器权限必须要先注册前台的传感器权限
-        checkPermissionRegistrationStatus(permissionManifestInfoList, PermissionNames.BODY_SENSORS)
+        checkPermissionRegistrationStatus(permissionInfoList, PermissionNames.BODY_SENSORS)
     }
 
-     override fun checkSelfByRequestPermissions(
-        activity: Activity,
-        requestPermissions: List<IPermission>
-    ) {
-        super.checkSelfByRequestPermissions(activity, requestPermissions)
+    protected override fun checkSelfByRequestPermissions( activity: Activity,  requestList: List<IPermission>) {
+        super.checkSelfByRequestPermissions(activity, requestList)
+        // 当项目 targetSdkVersion >= 36 时，不能申请 BODY_SENSORS_BACKGROUND 权限，应该请求在后台读取健康数据权限：READ_HEALTH_DATA_IN_BACKGROUND
+        require(!(getTargetVersion(activity) >= PermissionVersion.ANDROID_16)) {
+            "When the project targetSdkVersion is greater than or equal to " + PermissionVersion.ANDROID_16 +
+                    ", the \"" + getPermissionName() + "\" permission cannot be requested, but the \"" +
+                    PermissionNames.READ_HEALTH_DATA_IN_BACKGROUND + "\" permission should be requested instead"
+        }
+
         // 必须要申请前台传感器权限才能申请后台传感器权限
         require(
             PermissionUtils.containsPermission(
-                requestPermissions,
+                requestList,
                 PermissionNames.BODY_SENSORS
             )
         ) { "Applying for background sensor permissions must contain \"" + PermissionNames.BODY_SENSORS + "\"" }
 
         var thisPermissionIndex = -1
         var bodySensorsPermissionindex = -1
-        for (i in requestPermissions.indices) {
-            val permission = requestPermissions[i]
-            if (PermissionUtils.equalsPermission(permission, this)) {
+        for (i in requestList.indices) {
+            val permission = requestList[i]
+            if (PermissionUtils.equalsPermission(permission!!, this)) {
                 thisPermissionIndex = i
             } else if (PermissionUtils.equalsPermission(permission, PermissionNames.BODY_SENSORS)) {
                 bodySensorsPermissionindex = i

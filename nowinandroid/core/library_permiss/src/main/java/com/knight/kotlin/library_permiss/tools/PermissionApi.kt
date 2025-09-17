@@ -3,8 +3,12 @@ package com.knight.kotlin.library_permiss.tools
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import com.knight.kotlin.library_permiss.permission.PermissionType
+import com.knight.kotlin.library_permiss.permission.PermissionChannel
 import com.knight.kotlin.library_permiss.permission.base.IPermission
+import com.knight.kotlin.library_permiss.tools.PermissionSettingPage.getCommonPermissionSettingIntent
+import com.knight.kotlin.library_permiss.tools.PermissionUtils.containsPermission
+import com.knight.kotlin.library_permiss.tools.PermissionUtils.equalsIntentList
+import com.knight.kotlin.library_permiss.tools.PermissionVersion.getCurrentVersion
 import kotlin.math.max
 
 
@@ -14,32 +18,24 @@ import kotlin.math.max
  * Description:PermissionApi
  */
 object PermissionApi {
-    /**
-     * 判断某个权限集合是否包含特殊权限
-     */
-    fun containsSpecialPermission( permissions: List<IPermission>?): Boolean {
-        if (permissions == null || permissions.isEmpty()) {
-            return false
-        }
 
-        for (permission in permissions) {
-            if (permission.getPermissionType() === PermissionType.SPECIAL) {
-                return true
-            }
-        }
-        return false
+    /**
+     * 判断某个权限是否为健康权限
+     */
+    fun isHealthPermission( permission: IPermission): Boolean {
+        return permission.getPermissionName().startsWith("android.permission.health.")
     }
 
     /**
-     * 判断某个权限集合是否包含后台权限
+     * 判断某个权限集合是否包含需要通过 startActivityForResult 授权的权限
      */
-    fun containsBackgroundPermission( context: Context,  permissions: List<IPermission>?): Boolean {
+    fun containsPermissionByStartActivityForResult( context: Context,  permissions: List<IPermission>?): Boolean {
         if (permissions == null || permissions.isEmpty()) {
             return false
         }
 
         for (permission in permissions) {
-            if (permission.isBackgroundPermission(context)) {
+            if (permission.getPermissionChannel(context) === PermissionChannel.START_ACTIVITY_FOR_RESULT) {
                 return true
             }
         }
@@ -67,32 +63,31 @@ object PermissionApi {
      * 获取已经授予的权限
      */
     fun getGrantedPermissions( context: Context,  permissions: List<IPermission>): List<IPermission> {
-        val grantedPermissions: MutableList<IPermission> = ArrayList(permissions.size)
+        val grantedList: MutableList<IPermission> = ArrayList(permissions.size)
         for (permission in permissions) {
             if (permission.isGrantedPermission(context)) {
-                grantedPermissions.add(permission)
+                grantedList.add(permission)
             }
         }
-        return grantedPermissions
+        return grantedList
     }
 
     /**
      * 获取已经拒绝的权限
      */
     fun getDeniedPermissions( context: Context,  permissions: List<IPermission>): List<IPermission> {
-        val deniedPermissions: MutableList<IPermission> = ArrayList(permissions.size)
+        val deniedList: MutableList<IPermission> = ArrayList(permissions.size)
         for (permission in permissions) {
             if (!permission.isGrantedPermission(context)) {
-                deniedPermissions.add(permission)
+                deniedList.add(permission)
             }
         }
-        return deniedPermissions
+        return deniedList
     }
 
     /**
      * 在权限组中检查是否有某个权限是否被永久拒绝
      *
-     * @param activity              Activity对象
      * @param permissions            请求的权限
      */
     fun isDoNotAskAgainPermissions( activity: Activity,  permissions: List<IPermission>): Boolean {
@@ -107,102 +102,91 @@ object PermissionApi {
     /**
      * 根据传入的权限自动选择最合适的权限设置页的意图
      */
-
-    fun getBestPermissionSettingIntent(
-        context: Context,
-        permissions: List<IPermission>?
-    ): MutableList<Intent> {
-        if (permissions.isNullOrEmpty()) {
-            return PermissionSettingPage.getCommonPermissionSettingIntent(context)
+    
+    fun getBestPermissionSettingIntent( context: Context,  permissions: List<IPermission>?, skipRequest: Boolean): MutableList<Intent> {
+        // 如果失败的权限里面不包含特殊权限
+        if (permissions == null || permissions.isEmpty()) {
+            return getCommonPermissionSettingIntent(context)
         }
 
-        // 过滤出适配当前版本的有效权限（拷贝一份）
-        val realPermissions = permissions
-            .filter { it.getFromAndroidVersion() <= PermissionVersion.getCurrentVersion() }
-            .toMutableList()
+        // 创建一个新的集合对象，避免复用对象可能引发外层的冲突
+        val realPermissions: MutableList<IPermission> = ArrayList(permissions)
+        for (permission in permissions) {
+            if (permission.getFromAndroidVersion(context) > getCurrentVersion()) {
+                // 如果当前权限是高版本才出现的权限，则进行剔除
+                realPermissions.remove(permission)
+                continue
+            }
 
-        // 移除与特殊权限冲突的旧权限
-        val iterator = realPermissions.iterator()
-        while (iterator.hasNext()) {
-            val permission = iterator.next()
             val oldPermissions = permission.getOldPermissions(context)
-
-            if (!oldPermissions.isNullOrEmpty() &&
-                (permission.getPermissionType() == PermissionType.SPECIAL || containsSpecialPermission(oldPermissions))
+            // 1. 如果旧版本列表不为空，并且当前权限是需要通过 startActivityForResult 授权的权限，就剔除它对应的旧版本权限
+            // 例如：MANAGE_EXTERNAL_STORAGE -> READ_EXTERNAL_STORAGE、WRITE_EXTERNAL_STORAGE
+            // 2. 如果旧版本列表不为空，并且当前权限对应的旧版本权限包含了需要通过 startActivityForResult 授权的权限，就剔除它对应的旧版本权限
+            // 例如：POST_NOTIFICATIONS -> NOTIFICATION_SERVICE
+            if (oldPermissions != null && !oldPermissions.isEmpty() &&
+                (permission.getPermissionChannel(context) === PermissionChannel.START_ACTIVITY_FOR_RESULT ||
+                        containsPermissionByStartActivityForResult(context, oldPermissions))
             ) {
-                // 移除其旧版本权限（若包含在列表中）
-                realPermissions.removeAll(oldPermissions.toSet())
+                realPermissions.removeAll(oldPermissions)
             }
         }
 
         if (realPermissions.isEmpty()) {
-            return PermissionSettingPage.getCommonPermissionSettingIntent(context)
+            return getCommonPermissionSettingIntent(context)
         }
 
         if (realPermissions.size == 1) {
-            return realPermissions[0].getPermissionSettingIntents(context)
+            return realPermissions[0].getPermissionSettingIntents(context, skipRequest)
         }
 
-        // 多个权限时，检测其 Intent 是否一致
-        val baseIntents = realPermissions[0].getPermissionSettingIntents(context) ?: return PermissionSettingPage.getCommonPermissionSettingIntent(context)
+        var prePermissionIntentList: List<Intent> = realPermissions[0].getPermissionSettingIntents(context, skipRequest)
+        for (i in 1..<realPermissions.size) {
+            val currentPermissionIntentList: MutableList<Intent> = realPermissions[i].getPermissionSettingIntents(context, skipRequest)
+            // 对比这两个 Intent 列表的内容是否一致
+            if (!equalsIntentList(currentPermissionIntentList, prePermissionIntentList)) {
+                // 如果不一致，就结束循环
+                break
+            }
+            // 当前权限列表在下次循环就是上一个了，记录一下，可以避免重复获取，节省代码性能
+            prePermissionIntentList = currentPermissionIntentList
 
-        for (i in 1 until realPermissions.size) {
-            val currentIntents = realPermissions[i].getPermissionSettingIntents(context) ?: return PermissionSettingPage.getCommonPermissionSettingIntent(context)
-            if (!PermissionUtils.equalsIntentList(baseIntents, currentIntents)) {
-                return PermissionSettingPage.getCommonPermissionSettingIntent(context)
+            // 如果集合中的 Intent 列表都一样，就直接按照当前的 Intent 列表去做跳转
+            if (i == realPermissions.size - 1) {
+                return currentPermissionIntentList
             }
         }
-
-        return baseIntents
+        return getCommonPermissionSettingIntent(context)
     }
 
     /**
      * 根据新权限添加旧权限
      */
     @Synchronized
-    fun addOldPermissionsByNewPermissions(
-        context: Context,
-        requestPermissions: MutableList<IPermission>
-    ) {
-        var index = 0
-        while (index < requestPermissions.size) {
-            val permission = requestPermissions[index]
-
-            if (PermissionVersion.getCurrentVersion() >= permission.getFromAndroidVersion()) {
-                index++
+    fun addOldPermissionsByNewPermissions( context: Context,  requestList: MutableList<IPermission>) {
+        // 这里需要将 index 设置成 -1，这样走到下面循环的时候，++i 第一次循环 index 就是 0 了
+        var index = -1
+        // ++index 是前置递增（先将 index 的值加 1，再返回增加后的值）
+        // index++ 是后置递增（先返回 i 的当前值，再将 i 的值加 1）
+        while (++index < requestList.size) {
+            val permission = requestList[index]
+            // 如果当前运行的 Android 版本大于权限出现的 Android 版本，则证明这个权限在当前设备上不用添加旧权限
+            if (getCurrentVersion() >= permission.getFromAndroidVersion(context)) {
                 continue
             }
-
+            // 通过新权限查询到对应的旧权限
             val oldPermissions = permission.getOldPermissions(context)
-            if (oldPermissions.isNullOrEmpty()) {
-                index++
+            if (oldPermissions == null || oldPermissions.isEmpty()) {
                 continue
             }
-
-            // 使用 set 提高 contains 判断效率
-            val permissionSet = requestPermissions.toHashSet()
-
             for (oldPermission in oldPermissions) {
-                if (!permissionSet.contains(oldPermission)) {
-                    // 插入旧权限到当前权限之后
-                    requestPermissions.add(++index, oldPermission)
-                    permissionSet.add(oldPermission) // 避免重复添加
+                // 如果请求列表已经包含此权限，就不重复添加，直接跳过
+                if (containsPermission(requestList, oldPermission)) {
+                    continue
                 }
-            }
-
-            index++
-        }
-    }
-    /**
-     * 判断传入的权限组是不是都是危险权限
-     */
-    fun areAllDangerousPermission( permissions: List<IPermission>): Boolean {
-        for (permission in permissions) {
-            if (permission.getPermissionType() === PermissionType.SPECIAL) {
-                return false
+                // index + 1 是将旧版本的权限添加到新版本的权限后面，这样才能确保不打乱申请的传入顺序
+                requestList.add(++index, oldPermission)
             }
         }
-        return true
     }
 
     /**

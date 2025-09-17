@@ -4,12 +4,18 @@ import android.app.Activity
 import android.content.Context
 import android.os.Parcel
 import android.os.Parcelable
-import com.knight.kotlin.library_permiss.permission.PermissionLists
+import com.knight.kotlin.library_permiss.permission.PermissionLists.getManageExternalStoragePermission
+import com.knight.kotlin.library_permiss.permission.PermissionLists.getReadExternalStoragePermission
+import com.knight.kotlin.library_permiss.permission.PermissionLists.getReadMediaImagesPermission
+import com.knight.kotlin.library_permiss.permission.PermissionLists.getReadMediaVideoPermission
 import com.knight.kotlin.library_permiss.permission.PermissionNames
 import com.knight.kotlin.library_permiss.permission.base.IPermission
 import com.knight.kotlin.library_permiss.permission.common.DangerousPermission
 import com.knight.kotlin.library_permiss.tools.PermissionUtils
 import com.knight.kotlin.library_permiss.tools.PermissionVersion
+import com.knight.kotlin.library_permiss.tools.PermissionVersion.getTargetVersion
+import com.knight.kotlin.library_permiss.tools.PermissionVersion.isAndroid11
+import com.knight.kotlin.library_permiss.tools.PermissionVersion.isAndroid13
 
 
 /**
@@ -29,24 +35,17 @@ class AccessMediaLocationPermission : DangerousPermission {
         return PERMISSION_NAME
     }
 
-    override fun getFromAndroidVersion(): Int {
+    override fun getFromAndroidVersion( context: Context): Int {
         return PermissionVersion.ANDROID_10
     }
 
-    override fun isGrantedPermissionByStandardVersion(
-         context: Context,
-        skipRequest: Boolean
-    ): Boolean {
+    override fun isGrantedPermissionByStandardVersion( context: Context, skipRequest: Boolean): Boolean {
         return isGrantedReadMediaPermission(context, skipRequest) &&
                 super.isGrantedPermissionByStandardVersion(context, skipRequest)
     }
 
-    override fun isGrantedPermissionByLowVersion(
-         context: Context,
-        skipRequest: Boolean
-    ): Boolean {
-        return PermissionLists.getReadExternalStoragePermission()
-            .isGrantedPermission(context, skipRequest)
+    override fun isGrantedPermissionByLowVersion( context: Context, skipRequest: Boolean): Boolean {
+        return getReadExternalStoragePermission().isGrantedPermission(context, skipRequest)
     }
 
     override fun isDoNotAskAgainPermissionByStandardVersion( activity: Activity): Boolean {
@@ -54,43 +53,30 @@ class AccessMediaLocationPermission : DangerousPermission {
                 super.isDoNotAskAgainPermissionByStandardVersion(activity)
     }
 
-    override fun isDoNotAskAgainPermissionByLowVersion(activity: Activity): Boolean {
-        return PermissionLists.getReadExternalStoragePermission()
-            .isDoNotAskAgainPermission(activity)
+    override fun isDoNotAskAgainPermissionByLowVersion( activity: Activity): Boolean {
+        return getReadExternalStoragePermission().isDoNotAskAgainPermission(activity)
     }
 
     /**
      * 判断是否授予了读取媒体的权限
      */
-    private fun isGrantedReadMediaPermission(
-         context: Context,
-        skipRequest: Boolean
-    ): Boolean {
-        if (PermissionVersion.isAndroid13() && PermissionVersion.getTargetVersion(context) >= PermissionVersion.ANDROID_13) {
+    private fun isGrantedReadMediaPermission( context: Context, skipRequest: Boolean): Boolean {
+        if (isAndroid13() && getTargetVersion(context) >= PermissionVersion.ANDROID_13) {
             // 这里为什么不加上 Android 14 和 READ_MEDIA_VISUAL_USER_SELECTED 权限判断？这是因为如果获取部分照片和视频
             // 然后申请 Permission.ACCESS_MEDIA_LOCATION 系统会返回失败，必须要选择获取全部照片和视频才可以申请该权限
-            return PermissionLists.getReadMediaImagesPermission()
-                .isGrantedPermission(context, skipRequest) ||
-                    PermissionLists.getReadMediaVideoPermission()
-                        .isGrantedPermission(context, skipRequest) ||
-                    PermissionLists.getManageExternalStoragePermission()
-                        .isGrantedPermission(context, skipRequest)
+            return getReadMediaImagesPermission().isGrantedPermission(context, skipRequest) ||
+                    getReadMediaVideoPermission().isGrantedPermission(context, skipRequest) ||
+                    getManageExternalStoragePermission().isGrantedPermission(context, skipRequest)
         }
-        if (PermissionVersion.isAndroid11() && PermissionVersion.getTargetVersion(context) >= PermissionVersion.ANDROID_11) {
-            return PermissionLists.getReadExternalStoragePermission()
-                .isGrantedPermission(context, skipRequest) ||
-                    PermissionLists.getManageExternalStoragePermission()
-                        .isGrantedPermission(context, skipRequest)
+        if (isAndroid11() && getTargetVersion(context) >= PermissionVersion.ANDROID_11) {
+            return getReadExternalStoragePermission().isGrantedPermission(context, skipRequest) ||
+                    getManageExternalStoragePermission().isGrantedPermission(context, skipRequest)
         }
-        return PermissionLists.getReadExternalStoragePermission()
-            .isGrantedPermission(context, skipRequest)
+        return getReadExternalStoragePermission().isGrantedPermission(context, skipRequest)
     }
 
-    override fun checkSelfByRequestPermissions(
-         activity: Activity,
-         requestPermissions: List<IPermission>
-    ) {
-        super.checkSelfByRequestPermissions(activity, requestPermissions)
+     override fun checkSelfByRequestPermissions( activity: Activity,  requestList: List<IPermission>) {
+        super.checkSelfByRequestPermissions(activity, requestList)
 
         var thisPermissionIndex = -1
         var readMediaImagesPermissionIndex = -1
@@ -99,45 +85,21 @@ class AccessMediaLocationPermission : DangerousPermission {
         var manageExternalStoragePermissionIndex = -1
         var readExternalStoragePermissionIndex = -1
         var writeExternalStoragePermissionIndex = -1
-        for (i in requestPermissions.indices) {
-            val permission = requestPermissions[i]
-            if (PermissionUtils.equalsPermission(permission, this)) {
+        for (i in requestList.indices) {
+            val permission = requestList[i]
+            if (PermissionUtils.equalsPermission(permission!!, this)) {
                 thisPermissionIndex = i
-            } else if (PermissionUtils.equalsPermission(
-                    permission,
-                    PermissionNames.READ_MEDIA_IMAGES
-                )
-            ) {
+            } else if (PermissionUtils.equalsPermission(permission!!, PermissionNames.READ_MEDIA_IMAGES)) {
                 readMediaImagesPermissionIndex = i
-            } else if (PermissionUtils.equalsPermission(
-                    permission,
-                    PermissionNames.READ_MEDIA_VIDEO
-                )
-            ) {
+            } else if (PermissionUtils.equalsPermission(permission!!, PermissionNames.READ_MEDIA_VIDEO)) {
                 readMediaVideoPermissionIndex = i
-            } else if (PermissionUtils.equalsPermission(
-                    permission,
-                    PermissionNames.READ_MEDIA_VISUAL_USER_SELECTED
-                )
-            ) {
+            } else if (PermissionUtils.equalsPermission(permission!!, PermissionNames.READ_MEDIA_VISUAL_USER_SELECTED)) {
                 readMediaVisualUserSelectedPermissionIndex = i
-            } else if (PermissionUtils.equalsPermission(
-                    permission,
-                    PermissionNames.MANAGE_EXTERNAL_STORAGE
-                )
-            ) {
+            } else if (PermissionUtils.equalsPermission(permission!!, PermissionNames.MANAGE_EXTERNAL_STORAGE)) {
                 manageExternalStoragePermissionIndex = i
-            } else if (PermissionUtils.equalsPermission(
-                    permission,
-                    PermissionNames.READ_EXTERNAL_STORAGE
-                )
-            ) {
+            } else if (PermissionUtils.equalsPermission(permission!!, PermissionNames.READ_EXTERNAL_STORAGE)) {
                 readExternalStoragePermissionIndex = i
-            } else if (PermissionUtils.equalsPermission(
-                    permission,
-                    PermissionNames.WRITE_EXTERNAL_STORAGE
-                )
-            ) {
+            } else if (PermissionUtils.equalsPermission(permission!!, PermissionNames.WRITE_EXTERNAL_STORAGE)) {
                 writeExternalStoragePermissionIndex = i
             }
         }
@@ -173,20 +135,11 @@ class AccessMediaLocationPermission : DangerousPermission {
         }
 
         // 判断当前项目是否适配了 Android 13
-        if (PermissionVersion.getTargetVersion(activity) >= PermissionVersion.ANDROID_13) {
+        if (getTargetVersion(activity) >= PermissionVersion.ANDROID_13) {
             // 判断请求的权限中是否包含了某些特定权限
-            if (PermissionUtils.containsPermission(
-                    requestPermissions,
-                    PermissionNames.READ_MEDIA_IMAGES
-                ) ||
-                PermissionUtils.containsPermission(
-                    requestPermissions,
-                    PermissionNames.READ_MEDIA_VIDEO
-                ) ||
-                PermissionUtils.containsPermission(
-                    requestPermissions,
-                    PermissionNames.MANAGE_EXTERNAL_STORAGE
-                )
+            if (PermissionUtils.containsPermission(requestList, PermissionNames.READ_MEDIA_IMAGES) ||
+                PermissionUtils.containsPermission(requestList, PermissionNames.READ_MEDIA_VIDEO) ||
+                PermissionUtils.containsPermission(requestList, PermissionNames.MANAGE_EXTERNAL_STORAGE)
             ) {
                 // 如果请求的权限中，包含了上面这些权限，就不往下执行
                 return
@@ -201,14 +154,8 @@ class AccessMediaLocationPermission : DangerousPermission {
         }
 
         // 如果当前项目还没有适配 Android 13，就判断请求的权限中是否包含了某些特定权限
-        if (PermissionUtils.containsPermission(
-                requestPermissions,
-                PermissionNames.READ_EXTERNAL_STORAGE
-            ) ||
-            PermissionUtils.containsPermission(
-                requestPermissions,
-                PermissionNames.MANAGE_EXTERNAL_STORAGE
-            )
+        if (PermissionUtils.containsPermission(requestList, PermissionNames.READ_EXTERNAL_STORAGE) ||
+            PermissionUtils.containsPermission(requestList, PermissionNames.MANAGE_EXTERNAL_STORAGE)
         ) {
             // 如果请求的权限中，包含了上面这些权限，就不往下执行
             return
@@ -220,7 +167,6 @@ class AccessMediaLocationPermission : DangerousPermission {
                     PermissionNames.MANAGE_EXTERNAL_STORAGE + "\" rights to apply for \"" + getPermissionName() + "\" rights"
         )
     }
-
 
     companion object {
         val PERMISSION_NAME: String = PermissionNames.ACCESS_MEDIA_LOCATION

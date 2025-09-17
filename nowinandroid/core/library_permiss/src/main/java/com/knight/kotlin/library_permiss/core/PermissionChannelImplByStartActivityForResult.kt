@@ -6,38 +6,32 @@ import androidx.annotation.IntRange
 import com.knight.kotlin.library_permiss.fragment.IFragmentMethod
 import com.knight.kotlin.library_permiss.manager.PermissionRequestCodeManager.releaseRequestCode
 import com.knight.kotlin.library_permiss.permission.base.IPermission
-import com.knight.kotlin.library_permiss.start.StartActivityAgent
+import com.knight.kotlin.library_permiss.start.StartActivityAgent.startActivityForResult
 import com.knight.kotlin.library_permiss.tools.PermissionApi.getBestPermissionSettingIntent
 
+
 /**
- * @Description
+ * @Description 请求权限实现类（通过 {@link android.app.Activity#startActivityForResult(Intent, int)} 实现）
  * @Author knight
  * @Time 2025/6/8 20:17
  *
  */
-class RequestPermissionDelegateImplBySpecial( fragmentMethod: IFragmentMethod<*, *>) :
-    RequestPermissionDelegateImpl(fragmentMethod) {
+class PermissionChannelImplByStartActivityForResult( fragmentMethod: IFragmentMethod<*, *>) : PermissionChannelImpl(fragmentMethod) {
     /** 忽略 onActivityResult 回调的总次数  */
     private var mIgnoreActivityResultCount = 0
 
-    override fun startPermissionRequest(
-        activity: Activity, permissions: List<IPermission>?,
+    protected override fun startPermissionRequest(
+         activity: Activity,
+         permissions: List<IPermission?>,
         @IntRange(from = 1, to = 65535) requestCode: Int
     ) {
-        getBestPermissionSettingIntent(activity, permissions)?.let {
-            StartActivityAgent.startActivityForResult(
-                activity, getStartActivityDelegate(),
-                it.toMutableList(),
-                requestCode
-            ) { mIgnoreActivityResultCount++ }
-        }
+        startActivityForResult(
+            activity, getStartActivityDelegate(),
+            getBestPermissionSettingIntent(activity, permissions, false),
+            requestCode, Runnable { mIgnoreActivityResultCount++ })
     }
 
-    override fun onFragmentActivityResult(
-        requestCode: Int,
-        resultCode: Int,
-        data: Intent?
-    ) {
+    override fun onFragmentActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
         // 如果回调中的请求码和请求时设置的请求码不一致，则证明回调有问题，则不往下执行代码
         if (requestCode != getPermissionRequestCode()) {
             return

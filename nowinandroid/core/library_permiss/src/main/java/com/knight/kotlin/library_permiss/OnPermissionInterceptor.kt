@@ -1,7 +1,7 @@
 package com.knight.kotlin.library_permiss
 
 import android.app.Activity
-import com.knight.kotlin.library_permiss.core.RequestPermissionLogicPresenter
+import com.knight.kotlin.library_permiss.core.PermissionRequestMainLogic
 import com.knight.kotlin.library_permiss.fragment.factory.PermissionFragmentFactory
 import com.knight.kotlin.library_permiss.permission.base.IPermission
 
@@ -15,84 +15,56 @@ interface OnPermissionInterceptor {
     /**
      * 发起权限申请（可在此处先弹 Dialog 再申请权限，如果用户已经授予权限，则不会触发此回调）
      *
-     * @param requestPermissions        申请的权限
+     * @param requestList               请求的权限列表
+     * @param fragmentFactory           权限 Fragment 工厂类
+     * @param permissionDescription     权限描述器
      * @param callback                  权限申请回调
      */
-    fun launchPermissionRequest(
+    fun onRequestPermissionStart(
          activity: Activity,
-         requestPermissions: List<IPermission>,
+         requestList: List<IPermission>,
          fragmentFactory: PermissionFragmentFactory<*, *>,
          permissionDescription: OnPermissionDescription,
          callback: OnPermissionCallback
     ) {
-        dispatchPermissionRequest(activity, requestPermissions, fragmentFactory, permissionDescription, callback)
-    }
-
-    /**
-     * 用户授予了权限（注意需要在此处回调 [OnPermissionCallback.onGranted]）
-     *
-     * @param requestPermissions         申请的权限
-     * @param grantedPermissions         已授予的权限
-     * @param allGranted                 是否全部授予
-     * @param callback                   权限申请回调
-     */
-    fun grantedPermissionRequest(
-         activity: Activity,
-         requestPermissions: List<IPermission>,
-         grantedPermissions: List<IPermission>, allGranted: Boolean,
-         callback: OnPermissionCallback
-    ) {
-        if (callback == null) {
-            return
-        }
-        callback.onGranted(grantedPermissions, allGranted)
-    }
-
-    /**
-     * 用户拒绝了权限（注意需要在此处回调 [OnPermissionCallback.onDenied]）
-     *
-     * @param requestPermissions        申请的权限
-     * @param deniedPermissions         已拒绝的权限
-     * @param doNotAskAgain             是否勾选了不再询问选项
-     * @param callback                  权限申请回调
-     */
-    fun deniedPermissionRequest(
-         activity: Activity,  requestPermissions: List<IPermission>,
-         deniedPermissions: List<IPermission>, doNotAskAgain: Boolean,
-         callback: OnPermissionCallback
-    ) {
-        if (callback == null) {
-            return
-        }
-        callback.onDenied(deniedPermissions, doNotAskAgain)
+        dispatchPermissionRequest(activity, requestList, fragmentFactory, permissionDescription, callback)
     }
 
     /**
      * 权限请求完成
      *
-     * @param requestPermissions        申请的权限
+     * @param grantedList               授予权限列表
+     * @param deniedList                拒绝权限列表
      * @param skipRequest               是否跳过了申请过程
      * @param callback                  权限申请回调
      */
-    fun finishPermissionRequest(
-         activity: Activity,  requestPermissions: List<IPermission>,
-        skipRequest: Boolean,  callback: OnPermissionCallback
+    fun onRequestPermissionEnd(
+         activity: Activity, skipRequest: Boolean,
+         requestList: List<IPermission>,
+         grantedList: List<IPermission>,
+         deniedList: List<IPermission>,
+         callback: OnPermissionCallback
     ) {
+        if (callback == null) {
+            return
+        }
+        callback.onResult(grantedList, deniedList)
     }
 
     /**
      * 派发权限请求
      *
-     * @param requestPermissions        申请的权限
+     * @param requestList               请求的权限列表
      * @param callback                  权限申请回调
      */
     fun dispatchPermissionRequest(
-         activity: Activity,  requestPermissions: List<IPermission>,
+         activity: Activity,
+         requestList: List<IPermission>,
          fragmentFactory: PermissionFragmentFactory<*, *>,
          permissionDescription: OnPermissionDescription,
          callback: OnPermissionCallback
     ) {
-        RequestPermissionLogicPresenter(activity, requestPermissions, fragmentFactory, this, permissionDescription, callback)
+        PermissionRequestMainLogic(activity, requestList, fragmentFactory, this, permissionDescription, callback)
             .request()
     }
 }

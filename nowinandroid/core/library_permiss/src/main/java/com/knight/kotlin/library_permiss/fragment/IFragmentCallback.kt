@@ -5,7 +5,7 @@ import android.content.Intent
 
 
 /**
- * @Description
+ * @Description Fragment 回调接口
  * @Author knight
  * @Time 2025/6/8 16:56
  *
@@ -26,5 +26,5 @@ interface IFragmentCallback {
     }
 
     /** Fragment onActivityResult 方法回调  */
-    fun onFragmentActivityResult(requestCode: Int, resultCode: Int,  data: Intent?) {}
+    fun onFragmentActivityResult(requestCode: Int, resultCode: Int,  data: Intent) {}
 }

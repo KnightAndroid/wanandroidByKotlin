@@ -5,12 +5,13 @@ import android.content.Context
 import android.content.Intent
 import android.os.Parcelable
 import com.knight.kotlin.library_permiss.manifest.AndroidManifestInfo
-import com.knight.kotlin.library_permiss.permission.PermissionType
+import com.knight.kotlin.library_permiss.permission.PermissionChannel
+import com.knight.kotlin.library_permiss.permission.PermissionPageType
 import com.knight.kotlin.library_permiss.tools.PermissionVersion
 
 
 /**
- * @Description
+ * @Description 权限接口
  * @Author knight
  * @Time 2025/7/10 20:51
  *
@@ -24,16 +25,30 @@ interface IPermission : Parcelable {
     fun getPermissionName(): String
 
     /**
-     * 获取权限的类型
+     * 获取请求时的权限名称（默认为权限的名称）
+     */
+    fun getRequestPermissionName(context: Context?): String {
+        return getPermissionName()
+    }
+
+    /**
+     * 获取权限请求通道
      */
     
-    fun getPermissionType(): PermissionType
+    fun getPermissionChannel( context: Context): PermissionChannel
+
+    /**
+     * 获取权限页面的类型
+     */
+    
+    fun getPermissionPageType( context: Context): PermissionPageType
+
 
     /**
      * 获取权限的组别
      */
-    
-    fun getPermissionGroup(): String? {
+
+    fun getPermissionGroup(context: Context): String? {
         // 返回空表示没有组别
         return null
     }
@@ -41,13 +56,13 @@ interface IPermission : Parcelable {
     /**
      * 获取权限出现的 Android 版本
      */
-    fun getFromAndroidVersion(): Int
+    fun getFromAndroidVersion(context: Context): Int
 
     /**
      * 获取使用这个权限最低要求的 targetSdk 版本
      */
-    fun getMinTargetSdkVersion(): Int {
-        return getFromAndroidVersion()
+    fun getMinTargetSdkVersion(context: Context): Int {
+        return getFromAndroidVersion(context)
     }
 
     /**
@@ -82,7 +97,7 @@ interface IPermission : Parcelable {
     fun isSupportRequestPermission(context: Context): Boolean {
         // 如果当前权限是否在低版本（不受支持的版本）上面运行，则证明不支持请求该权限
         // 例如 MANAGE_EXTERNAL_STORAGE 权限是 Android 11 才出现的权限，在 Android 10 上面肯定是不支持申请
-        return getFromAndroidVersion() <= PermissionVersion.getCurrentVersion()
+        return getFromAndroidVersion(context) <= PermissionVersion.getCurrentVersion()
     }
 
     /**
@@ -106,15 +121,25 @@ interface IPermission : Parcelable {
 
     /**
      * 获取当前权限所有可用的设置页意图
+     */
+
+    fun getPermissionSettingIntents( context: Context): MutableList<Intent> {
+        return getPermissionSettingIntents(context, true)
+    }
+
+    /**
+     * 获取当前权限所有可用的设置页意图
      *
      * 需要注意的是：无需在此方法中判断设置页的意图是否存在再添加，
      * 因为框架在跳转的时候框架会先过滤一遍不存在的意图，
      * 另外通过代码事先判断出来存在的意图也有可能会跳转失败，
      * 如果出现跳转失败会自动使用下一个意图进行跳转，
      * 总结：不存在的意图铁定会跳转失败，存在的意图不一定 100% 会跳转成功。
+     *
+     * @param skipRequest       是否跳过申请直接获取的 Intent
      */
-    
-    fun getPermissionSettingIntents( context: Context): MutableList<Intent>
+
+    fun getPermissionSettingIntents(context: Context, skipRequest: Boolean): MutableList<Intent>
 
     /**
      * 获取权限请求的间隔时间

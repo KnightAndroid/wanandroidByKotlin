@@ -19,7 +19,9 @@ import com.knight.kotlin.library_permiss.permission.base.IPermission
 import com.knight.kotlin.library_permiss.permission.common.SpecialPermission
 import com.knight.kotlin.library_permiss.tools.PermissionUtils
 import com.knight.kotlin.library_permiss.tools.PermissionVersion
-import com.knight.kotlin.library_permiss.tools.PhoneRomUtils
+import com.knight.kotlin.library_permiss.tools.PermissionVersion.isAndroid14
+import com.knight.kotlin.library_permiss.tools.PermissionVersion.isAndroid8
+
 
 class UseFullScreenIntentPermission : SpecialPermission {
 
@@ -45,88 +47,96 @@ class UseFullScreenIntentPermission : SpecialPermission {
     
     override fun getPermissionName(): String = PERMISSION_NAME
 
-    override fun getFromAndroidVersion(): Int = PermissionVersion.ANDROID_14
+    override fun getFromAndroidVersion( context: Context): Int {
+        return PermissionVersion.ANDROID_14
+    }
 
-    override fun isGrantedPermission(context: Context, skipRequest: Boolean): Boolean {
-        if (!PermissionVersion.isAndroid14()) {
+    override fun isGrantedPermission( context: Context, skipRequest: Boolean): Boolean {
+        if (!isAndroid14()) {
             return true
         }
-        val notificationManager = context.getSystemService(NotificationManager::class.java)
+        val notificationManager = context.getSystemService(NotificationManager::class.java) ?: return false
         // 虽然这个 SystemService 永远不为空，但是不怕一万，就怕万一，开展防御性编程
-        return notificationManager?.canUseFullScreenIntent() ?: false
+        return notificationManager.canUseFullScreenIntent()
     }
 
     
-    override fun getPermissionSettingIntents( context: Context): MutableList<Intent> {
-        val intentList = ArrayList<Intent>(6)
+    override fun getPermissionSettingIntents( context: Context, skipRequest: Boolean): MutableList<Intent> {
+        val intentList: MutableList<Intent> = ArrayList(6)
+        var intent: Intent
 
-        if (PermissionVersion.isAndroid14()) {
-            Intent(Settings.ACTION_MANAGE_APP_USE_FULL_SCREEN_INTENT).apply {
-                data = getPackageNameUri(context)
-                intentList.add(this)
-            }
+        if (isAndroid14()) {
+            intent = Intent(Settings.ACTION_MANAGE_APP_USE_FULL_SCREEN_INTENT)
+            intent.setData(getPackageNameUri(context))
+            intentList.add(intent)
         }
 
-        // 经过测试，miui 和 Hyper 不支持在通知界面设置全屏通知权限的，但是 Android 原生是可以的
-        if (PhoneRomUtils.isHyperOs() || PhoneRomUtils.isMiui()) {
-            intentList.add(getAndroidSettingIntent())
+        // 经过测试，MIUI 和 HyperOS 不支持在通知界面设置全屏通知权限的，但是 Android 原生是可以的
+        if (DeviceOs.isHyperOs() || DeviceOs.isMiui()) {
+            intent = getAndroidSettingIntent()
+            intentList.add(intent)
             return intentList
         }
 
-        if (PermissionVersion.isAndroid8()) {
-            Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS).apply {
-                putExtra(Settings.EXTRA_APP_PACKAGE, context.packageName)
-                intentList.add(this)
-            }
+        if (isAndroid8()) {
+            intent = Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
+            intent.putExtra(Settings.EXTRA_APP_PACKAGE, context.packageName)
+            intentList.add(intent)
         }
 
-        intentList.add(getApplicationDetailsSettingIntent(context))
-        intentList.add(getManageApplicationSettingIntent())
-        intentList.add(getApplicationSettingIntent())
-        intentList.add(getAndroidSettingIntent())
+        intent = getApplicationDetailsSettingIntent(context)
+        intentList.add(intent)
+
+        intent = getManageApplicationSettingIntent()
+        intentList.add(intent)
+
+        intent = getApplicationSettingIntent()
+        intentList.add(intent)
+
+        intent = getAndroidSettingIntent()
+        intentList.add(intent)
 
         return intentList
     }
 
-    override fun isRegisterPermissionByManifestFile(): Boolean = true
+    override fun isRegisterPermissionByManifestFile(): Boolean {
+        // 表示当前权限需要在 AndroidManifest.xml 文件中进行静态注册
+        return true
+    }
 
-    override fun checkSelfByRequestPermissions(
-         activity: Activity,
-         requestPermissions: List<IPermission>
-    ) {
-        super.checkSelfByRequestPermissions(activity, requestPermissions)
-
-        if (!PermissionUtils.containsPermission(requestPermissions, PermissionNames.NOTIFICATION_SERVICE) &&
-            !PermissionUtils.containsPermission(requestPermissions, PermissionNames.POST_NOTIFICATIONS)
+    protected override fun checkSelfByRequestPermissions( activity: Activity,  requestList: List<IPermission>) {
+        super.checkSelfByRequestPermissions(activity, requestList)
+        // 全屏通知权限需要通知权限一起使用（NOTIFICATION_SERVICE 或者 POST_NOTIFICATIONS）
+        require(
+            !(!PermissionUtils.containsPermission(requestList, PermissionNames.NOTIFICATION_SERVICE) &&
+                    !PermissionUtils.containsPermission(requestList, PermissionNames.POST_NOTIFICATIONS))
         ) {
-            throw IllegalArgumentException(
-                "The \"${getPermissionName()}\" needs to be used together with the notification permission. " +
-                        "(\"${PermissionNames.NOTIFICATION_SERVICE}\" or \"${PermissionNames.POST_NOTIFICATIONS}\")"
-            )
+            ("The \"" + getPermissionName() + "\" needs to be used together with the notification permission. "
+                    + "(\"" + PermissionNames.NOTIFICATION_SERVICE + "\" or \"" + PermissionNames.POST_NOTIFICATIONS + "\")")
         }
 
         var thisPermissionIndex = -1
         var notificationServicePermissionIndex = -1
         var postNotificationsPermissionIndex = -1
-
-        requestPermissions.forEachIndexed { i, permission ->
-            when {
-                PermissionUtils.equalsPermission(permission, getPermissionName()) -> thisPermissionIndex = i
-                PermissionUtils.equalsPermission(permission, PermissionNames.NOTIFICATION_SERVICE) -> notificationServicePermissionIndex = i
-                PermissionUtils.equalsPermission(permission, PermissionNames.POST_NOTIFICATIONS) -> postNotificationsPermissionIndex = i
+        for (i in requestList.indices) {
+            val permission = requestList[i]
+            if (PermissionUtils.equalsPermission(permission!!, getPermissionName())) {
+                thisPermissionIndex = i
+            } else if (PermissionUtils.equalsPermission(permission, PermissionNames.NOTIFICATION_SERVICE)) {
+                notificationServicePermissionIndex = i
+            } else if (PermissionUtils.equalsPermission(permission, PermissionNames.POST_NOTIFICATIONS)) {
+                postNotificationsPermissionIndex = i
             }
         }
 
-        if (notificationServicePermissionIndex != -1 && notificationServicePermissionIndex > thisPermissionIndex) {
-            throw IllegalArgumentException(
-                "Please place the \"${getPermissionName()}\" permission after the \"${PermissionNames.NOTIFICATION_SERVICE}\" permission"
-            )
+        require(!(notificationServicePermissionIndex != -1 && notificationServicePermissionIndex > thisPermissionIndex)) {
+            "Please place the " + getPermissionName() +
+                    "\" permission after the \"" + PermissionNames.NOTIFICATION_SERVICE + "\" permission"
         }
 
-        if (postNotificationsPermissionIndex != -1 && postNotificationsPermissionIndex > thisPermissionIndex) {
-            throw IllegalArgumentException(
-                "Please place the \"${getPermissionName()}\" permission after the \"${PermissionNames.POST_NOTIFICATIONS}\" permission"
-            )
+        require(!(postNotificationsPermissionIndex != -1 && postNotificationsPermissionIndex > thisPermissionIndex)) {
+            "Please place the \"" + getPermissionName() +
+                    "\" permission after the \"" + PermissionNames.POST_NOTIFICATIONS + "\" permission"
         }
     }
 }

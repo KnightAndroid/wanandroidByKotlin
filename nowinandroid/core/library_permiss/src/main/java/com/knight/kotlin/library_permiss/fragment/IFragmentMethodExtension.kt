@@ -1,7 +1,7 @@
 package com.knight.kotlin.library_permiss.fragment
 
-import com.knight.kotlin.library_permiss.core.OnPermissionFlowCallback
-import com.knight.kotlin.library_permiss.core.RequestPermissionDelegateImpl
+import com.knight.kotlin.library_permiss.core.OnPermissionFragmentCallback
+import com.knight.kotlin.library_permiss.core.PermissionChannelImpl
 
 
 /**
@@ -12,18 +12,28 @@ import com.knight.kotlin.library_permiss.core.RequestPermissionDelegateImpl
  */
 
 interface IFragmentMethodExtension<FM> {
-    /** 获取请求权限的实现逻辑  */
-    fun getRequestPermissionDelegateImpl(): RequestPermissionDelegateImpl
+    /**
+     * 获取权限请求通道的实现逻辑
+     */
+    fun getPermissionChannelImpl(): PermissionChannelImpl
 
-    /** 提交绑定  */
-    fun commitAttach(fragmentManager: FM)
+    /**
+     * 提交 Fragment 绑定
+     */
+    fun commitFragmentAttach(fragmentManager: FM)
 
-    /** 提交解绑  */
-    fun commitDetach()
+    /**
+     * 提交 Fragment 解绑
+     */
+    fun commitFragmentDetach()
 
-    /** 设置权限回调监听  */
-    fun setCallback( callback: OnPermissionFlowCallback)
+    /**
+     * 设置权限请求流程回调
+     */
+    fun setPermissionFragmentCallback(callback: OnPermissionFragmentCallback)
 
-    /** 设置权限申请标记  */
-    fun setRequestFlag(flag: Boolean)
+    /**
+     * 设置非系统重启标记
+     */
+    fun setNonSystemRestartMark(nonSystemRestartMark: Boolean)
 }

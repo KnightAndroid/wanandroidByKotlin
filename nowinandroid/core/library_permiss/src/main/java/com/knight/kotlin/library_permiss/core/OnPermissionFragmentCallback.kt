@@ -1,12 +1,12 @@
 package com.knight.kotlin.library_permiss.core
 
 /**
- * @Description
+ * @Description 权限 Fragment 回调
  * @Author knight
  * @Time 2025/7/10 20:13
  *
  */
-interface OnPermissionFlowCallback {
+interface OnPermissionFragmentCallback {
     /**
      * 权限请求时回调
      */

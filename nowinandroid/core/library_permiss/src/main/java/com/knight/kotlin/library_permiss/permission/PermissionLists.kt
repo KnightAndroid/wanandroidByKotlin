@@ -16,11 +16,16 @@ import com.knight.kotlin.library_permiss.permission.dangerous.GetInstalledAppsPe
 import com.knight.kotlin.library_permiss.permission.dangerous.NearbyWifiDevicesPermission
 import com.knight.kotlin.library_permiss.permission.dangerous.PostNotificationsPermission
 import com.knight.kotlin.library_permiss.permission.dangerous.ReadExternalStoragePermission
+import com.knight.kotlin.library_permiss.permission.dangerous.ReadHealthDataHistoryPermission
+import com.knight.kotlin.library_permiss.permission.dangerous.ReadHealthDataInBackgroundPermission
+import com.knight.kotlin.library_permiss.permission.dangerous.ReadHealthRatePermission
 import com.knight.kotlin.library_permiss.permission.dangerous.ReadMediaAudioPermission
 import com.knight.kotlin.library_permiss.permission.dangerous.ReadMediaImagesPermission
 import com.knight.kotlin.library_permiss.permission.dangerous.ReadMediaVideoPermission
 import com.knight.kotlin.library_permiss.permission.dangerous.ReadMediaVisualUserSelectedPermission
 import com.knight.kotlin.library_permiss.permission.dangerous.ReadPhoneNumbersPermission
+import com.knight.kotlin.library_permiss.permission.dangerous.StandardFitnessAndWellnessDataPermission
+import com.knight.kotlin.library_permiss.permission.dangerous.StandardHealthRecordsPermission
 import com.knight.kotlin.library_permiss.permission.dangerous.WriteExternalStoragePermission
 import com.knight.kotlin.library_permiss.permission.special.AccessNotificationPolicyPermission
 import com.knight.kotlin.library_permiss.permission.special.BindAccessibilityServicePermission
@@ -53,7 +58,7 @@ import com.knight.kotlin.library_permiss.tools.PermissionVersion
  */
 object PermissionLists {
     /** 权限数量  */
-    private const val PERMISSION_COUNT = 54
+    private const val PERMISSION_COUNT = 151;
 
     /**
      * 权限对象缓存集合
@@ -927,5 +932,1252 @@ object PermissionLists {
             return permission
         }
         return putCachePermission(StandardDangerousPermission(permissionName, PermissionGroups.SMS, PermissionVersion.ANDROID_6))
+    }
+
+
+    /* ------------------------------------ 我是一条华丽的分割线 ------------------------------------ */
+    /**
+     * 获取后台读取健康数据权限（Android 15.0 新增的权限）
+     *
+     * 为了兼容 Android 15 以下版本，需要在清单文件中注册 [PermissionNames.BODY_SENSORS_BACKGROUND] 权限
+     * 另外框架会自动在旧的安卓设备上自动添加 [PermissionLists.getReadHealthDataInBackgroundPermission] ()} 权限进行动态申请，无需你手动添加
+     */
+    
+    fun getReadHealthDataInBackgroundPermission(): IPermission {
+        val permissionName = ReadHealthDataInBackgroundPermission.PERMISSION_NAME
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(ReadHealthDataInBackgroundPermission())
+    }
+
+    /**
+     * 获取读取历史的健康数据权限（Android 15.0 新增的权限）
+     *
+     * Health Connect 可以读取授予权限前最多 30 天的数据。如果您希望应用读取 30 天之前的记录，请需要申请此权限，相关文档地址：
+     * https://developer.android.google.cn/health-and-fitness/guides/health-connect/develop/read-data?hl=zh-cn#read-older-data
+     */
+    
+    fun getReadHealthDataHistoryPermission(): IPermission {
+        val permissionName = ReadHealthDataHistoryPermission.PERMISSION_NAME
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(ReadHealthDataHistoryPermission())
+    }
+
+    /**
+     * 获取读取运动消耗的卡路里数据权限（Android 14.0 新增的权限）
+     */
+    
+    fun getReadActiveCaloriesBurnedPermission(): IPermission {
+        val permissionName: String = PermissionNames.READ_ACTIVE_CALORIES_BURNED
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_14))
+    }
+
+    /**
+     * 获取写入运动消耗的卡路里数据权限（Android 14.0 新增的权限）
+     */
+    
+    fun getWriteActiveCaloriesBurnedPermission(): IPermission {
+        val permissionName: String = PermissionNames.WRITE_ACTIVE_CALORIES_BURNED
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_14))
+    }
+
+    /**
+     * 获取读取活动强度数据权限（Android 16.0 新增的权限）
+     */
+    
+    fun getReadActivityIntensityPermission(): IPermission {
+        val permissionName: String = PermissionNames.READ_ACTIVITY_INTENSITY
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_16))
+    }
+
+    /**
+     * 获取写入活动强度数据权限（Android 16.0 新增的权限）
+     */
+    
+    fun getWriteActivityIntensityPermission(): IPermission {
+        val permissionName: String = PermissionNames.WRITE_ACTIVITY_INTENSITY
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_16))
+    }
+
+    /**
+     * 获取读取基础体温数据权限（Android 14.0 新增的权限）
+     */
+    
+    fun getReadBasalBodyTemperaturePermission(): IPermission {
+        val permissionName: String = PermissionNames.READ_BASAL_BODY_TEMPERATURE
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_14))
+    }
+
+    /**
+     * 获取写入基础体温数据权限（Android 14.0 新增的权限）
+     */
+    
+    fun getWriteBasalBodyTemperaturePermission(): IPermission {
+        val permissionName: String = PermissionNames.WRITE_BASAL_BODY_TEMPERATURE
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_14))
+    }
+
+    /**
+     * 获取读取基础代谢率数据权限（Android 14.0 新增的权限）
+     */
+    
+    fun getReadBasalMetabolicRatePermission(): IPermission {
+        val permissionName: String = PermissionNames.READ_BASAL_METABOLIC_RATE
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_14))
+    }
+
+    /**
+     * 获取写入基础代谢率数据权限（Android 14.0 新增的权限）
+     */
+    
+    fun getWriteBasalMetabolicRatePermission(): IPermission {
+        val permissionName: String = PermissionNames.WRITE_BASAL_METABOLIC_RATE
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_14))
+    }
+
+    /**
+     * 获取读取血糖数据权限（Android 14.0 新增的权限）
+     */
+    
+    fun getReadBloodGlucosePermission(): IPermission {
+        val permissionName: String = PermissionNames.READ_BLOOD_GLUCOSE
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_14))
+    }
+
+    /**
+     * 获取写入血糖数据权限（Android 14.0 新增的权限）
+     */
+    
+    fun getWriteBloodGlucosePermission(): IPermission {
+        val permissionName: String = PermissionNames.WRITE_BLOOD_GLUCOSE
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_14))
+    }
+
+    /**
+     * 获取读取血压数据权限（Android 14.0 新增的权限）
+     */
+    
+    fun getReadBloodPressurePermission(): IPermission {
+        val permissionName: String = PermissionNames.READ_BLOOD_PRESSURE
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_14))
+    }
+
+    /**
+     * 获取写入血压数据权限（Android 14.0 新增的权限）
+     */
+    
+    fun getWriteBloodPressurePermission(): IPermission {
+        val permissionName: String = PermissionNames.WRITE_BLOOD_PRESSURE
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_14))
+    }
+
+    /**
+     * 获取读取体脂数据权限（Android 14.0 新增的权限）
+     */
+    
+    fun getReadBodyFatPermission(): IPermission {
+        val permissionName: String = PermissionNames.READ_BODY_FAT
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_14))
+    }
+
+    /**
+     * 获取写入体脂数据权限（Android 14.0 新增的权限）
+     */
+    
+    fun getWriteBodyFatPermission(): IPermission {
+        val permissionName: String = PermissionNames.WRITE_BODY_FAT
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_14))
+    }
+
+    /**
+     * 获取读取体温数据权限（Android 14.0 新增的权限）
+     */
+    
+    fun getReadBodyTemperaturePermission(): IPermission {
+        val permissionName: String = PermissionNames.READ_BODY_TEMPERATURE
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_14))
+    }
+
+    /**
+     * 获取写入体温数据权限（Android 14.0 新增的权限）
+     */
+    
+    fun getWriteBodyTemperaturePermission(): IPermission {
+        val permissionName: String = PermissionNames.WRITE_BODY_TEMPERATURE
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_14))
+    }
+
+    /**
+     * 获取读取身体含水量数据权限（Android 14.0 新增的权限）
+     */
+    
+    fun getReadBodyWaterMassPermission(): IPermission {
+        val permissionName: String = PermissionNames.READ_BODY_WATER_MASS
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_14))
+    }
+
+    /**
+     * 获取写入身体含水量数据权限（Android 14.0 新增的权限）
+     */
+    
+    fun getWriteBodyWaterMassPermission(): IPermission {
+        val permissionName: String = PermissionNames.WRITE_BODY_WATER_MASS
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_14))
+    }
+
+    /**
+     * 获取读取骨质密度数据权限（Android 14.0 新增的权限）
+     */
+    
+    fun getReadBoneMassPermission(): IPermission {
+        val permissionName: String = PermissionNames.READ_BONE_MASS
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_14))
+    }
+
+    /**
+     * 获取写入骨质密度数据权限（Android 14.0 新增的权限）
+     */
+    
+    fun getWriteBoneMassPermission(): IPermission {
+        val permissionName: String = PermissionNames.WRITE_BONE_MASS
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_14))
+    }
+
+    /**
+     * 获取读取宫颈粘液数据权限（Android 14.0 新增的权限）
+     */
+    
+    fun getReadCervicalMucusPermission(): IPermission {
+        val permissionName: String = PermissionNames.READ_CERVICAL_MUCUS
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_14))
+    }
+
+    /**
+     * 获取写入宫颈粘液数据权限（Android 14.0 新增的权限）
+     */
+    
+    fun getWriteCervicalMucusPermission(): IPermission {
+        val permissionName: String = PermissionNames.WRITE_CERVICAL_MUCUS
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_14))
+    }
+
+    /**
+     * 获取读取距离数据权限（Android 14.0 新增的权限）
+     */
+    
+    fun getReadDistancePermission(): IPermission {
+        val permissionName: String = PermissionNames.READ_DISTANCE
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_14))
+    }
+
+    /**
+     * 获取写入距离数据权限（Android 14.0 新增的权限）
+     */
+    
+    fun getWriteDistancePermission(): IPermission {
+        val permissionName: String = PermissionNames.WRITE_DISTANCE
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_14))
+    }
+
+    /**
+     * 获取读取爬升高度数据权限（Android 14.0 新增的权限）
+     */
+    
+    fun getReadElevationGainedPermission(): IPermission {
+        val permissionName: String = PermissionNames.READ_ELEVATION_GAINED
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_14))
+    }
+
+    /**
+     * 获取写入爬升高度数据权限（Android 14.0 新增的权限）
+     */
+    
+    fun getWriteElevationGainedPermission(): IPermission {
+        val permissionName: String = PermissionNames.WRITE_ELEVATION_GAINED
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_14))
+    }
+
+    /**
+     * 获取读取锻炼数据权限（Android 14.0 新增的权限）
+     */
+    
+    fun getReadExercisePermission(): IPermission {
+        val permissionName: String = PermissionNames.READ_EXERCISE
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_14))
+    }
+
+    /**
+     * 获取写入锻炼数据权限（Android 14.0 新增的权限）
+     */
+    
+    fun getWriteExercisePermission(): IPermission {
+        val permissionName: String = PermissionNames.WRITE_EXERCISE
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_14))
+    }
+
+    /**
+     * 获取读取锻炼路线数据权限（Android 15.0 新增的权限）
+     */
+    
+    fun getReadExerciseRoutesPermission(): IPermission {
+        val permissionName: String = PermissionNames.READ_EXERCISE_ROUTES
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_15))
+    }
+
+    /**
+     * 获取写入锻炼路线数据权限（Android 15.0 新增的权限）
+     */
+    
+    fun getWriteExerciseRoutePermission(): IPermission {
+        val permissionName: String = PermissionNames.WRITE_EXERCISE_ROUTE
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_15))
+    }
+
+    /**
+     * 获取读取爬楼层数数据权限（Android 14.0 新增的权限）
+     */
+    
+    fun getReadFloorsClimbedPermission(): IPermission {
+        val permissionName: String = PermissionNames.READ_FLOORS_CLIMBED
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_14))
+    }
+
+    /**
+     * 获取写入爬楼层数数据权限（Android 14.0 新增的权限）
+     */
+    
+    fun getWriteFloorsClimbedPermission(): IPermission {
+        val permissionName: String = PermissionNames.WRITE_FLOORS_CLIMBED
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_14))
+    }
+
+    /**
+     * 获取读取心率数据权限（Android 14.0 新增的权限）
+     *
+     * 为了兼容 Android 14 以下版本，需要在清单文件中注册 [PermissionNames.BODY_SENSORS] 权限
+     * 另外框架会自动在旧的安卓设备上自动添加 [PermissionLists.getBodySensorsPermission] 权限进行动态申请，无需你手动添加
+     */
+    
+    fun getReadHeartRatePermission(): IPermission {
+        val permission = getCachePermission(ReadHealthRatePermission.PERMISSION_NAME)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(ReadHealthRatePermission())
+    }
+
+    /**
+     * 获取写入心率数据权限（Android 14.0 新增的权限）
+     */
+    
+    fun getWriteHeartRatePermission(): IPermission {
+        val permissionName: String = PermissionNames.WRITE_HEART_RATE
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_14))
+    }
+
+    /**
+     * 获取读取心率变异性数据权限（Android 14.0 新增的权限）
+     */
+    
+    fun getReadHeartRateVariabilityPermission(): IPermission {
+        val permissionName: String = PermissionNames.READ_HEART_RATE_VARIABILITY
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_14))
+    }
+
+    /**
+     * 获取写入心率变异性数据权限（Android 14.0 新增的权限）
+     */
+    
+    fun getWriteHeartRateVariabilityPermission(): IPermission {
+        val permissionName: String = PermissionNames.WRITE_HEART_RATE_VARIABILITY
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_14))
+    }
+
+    /**
+     * 获取读取身高数据权限（Android 14.0 新增的权限）
+     */
+    
+    fun getReadHeightPermission(): IPermission {
+        val permissionName: String = PermissionNames.READ_HEIGHT
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_14))
+    }
+
+    /**
+     * 获取写入身高数据权限（Android 14.0 新增的权限）
+     */
+    
+    fun getWriteHeightPermission(): IPermission {
+        val permissionName: String = PermissionNames.WRITE_HEIGHT
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_14))
+    }
+
+    /**
+     * 获取读取饮水量权限（Android 14.0 新增的权限）
+     */
+    
+    fun getReadHydrationPermission(): IPermission {
+        val permissionName: String = PermissionNames.READ_HYDRATION
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_14))
+    }
+
+    /**
+     * 获取写入饮水量权限（Android 14.0 新增的权限）
+     */
+    
+    fun getWriteHydrationPermission(): IPermission {
+        val permissionName: String = PermissionNames.WRITE_HYDRATION
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_14))
+    }
+
+    /**
+     * 获取读取点状出血数据权限（Android 14.0 新增的权限）
+     */
+    
+    fun getReadIntermenstrualBleedingPermission(): IPermission {
+        val permissionName: String = PermissionNames.READ_INTERMENSTRUAL_BLEEDING
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_14))
+    }
+
+    /**
+     * 获取写入点状出血数据权限（Android 14.0 新增的权限）
+     */
+    
+    fun getWriteIntermenstrualBleedingPermission(): IPermission {
+        val permissionName: String = PermissionNames.WRITE_INTERMENSTRUAL_BLEEDING
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_14))
+    }
+
+    /**
+     * 获取读取净体重数据权限（Android 14.0 新增的权限）
+     */
+    
+    fun getReadLeanBodyMassPermission(): IPermission {
+        val permissionName: String = PermissionNames.READ_LEAN_BODY_MASS
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_14))
+    }
+
+    /**
+     * 获取写入净体重数据权限（Android 14.0 新增的权限）
+     */
+    
+    fun getWriteLeanBodyMassPermission(): IPermission {
+        val permissionName: String = PermissionNames.WRITE_LEAN_BODY_MASS
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_14))
+    }
+
+    /**
+     * 获取读取经期数据权限（Android 14.0 新增的权限）
+     */
+    
+    fun getReadMenstruationPermission(): IPermission {
+        val permissionName: String = PermissionNames.READ_MENSTRUATION
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_14))
+    }
+
+    /**
+     * 获取写入经期数据权限（Android 14.0 新增的权限）
+     */
+    
+    fun getWriteMenstruationPermission(): IPermission {
+        val permissionName: String = PermissionNames.WRITE_MENSTRUATION
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_14))
+    }
+
+    /**
+     * 获取读取正念数据权限（Android 16.0 新增的权限）
+     */
+    
+    fun getReadMindfulnessPermission(): IPermission {
+        val permissionName: String = PermissionNames.READ_MINDFULNESS
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_16))
+    }
+
+    /**
+     * 获取写入正念数据权限（Android 16.0 新增的权限）
+     */
+    
+    fun getWriteMindfulnessPermission(): IPermission {
+        val permissionName: String = PermissionNames.WRITE_MINDFULNESS
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_16))
+    }
+
+    /**
+     * 获取读取营养数据权限（Android 14.0 新增的权限）
+     */
+    
+    fun getReadNutritionPermission(): IPermission {
+        val permissionName: String = PermissionNames.READ_NUTRITION
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_14))
+    }
+
+    /**
+     * 获取写入营养数据权限（Android 14.0 新增的权限）
+     */
+    
+    fun getWriteNutritionPermission(): IPermission {
+        val permissionName: String = PermissionNames.WRITE_NUTRITION
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_14))
+    }
+
+    /**
+     * 获取读取排卵检测数据权限（Android 14.0 新增的权限）
+     */
+    
+    fun getReadOvulationTestPermission(): IPermission {
+        val permissionName: String = PermissionNames.READ_OVULATION_TEST
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_14))
+    }
+
+    /**
+     * 获取写入排卵检测数据权限（Android 14.0 新增的权限）
+     */
+    
+    fun getWriteOvulationTestPermission(): IPermission {
+        val permissionName: String = PermissionNames.WRITE_OVULATION_TEST
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_14))
+    }
+
+    /**
+     * 获取读取血氧饱和度数据权限（Android 14.0 新增的权限）
+     */
+    
+    fun getReadOxygenSaturationPermission(): IPermission {
+        val permissionName: String = PermissionNames.READ_OXYGEN_SATURATION
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_14))
+    }
+
+    /**
+     * 获取写入血氧饱和度数据权限（Android 14.0 新增的权限）
+     */
+    
+    fun getWriteOxygenSaturationPermission(): IPermission {
+        val permissionName: String = PermissionNames.WRITE_OXYGEN_SATURATION
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_14))
+    }
+
+    /**
+     * 获取读取训练计划数据权限（Android 15.0 新增的权限）
+     */
+    
+    fun getReadPlannedExercisePermission(): IPermission {
+        val permissionName: String = PermissionNames.READ_PLANNED_EXERCISE
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_15))
+    }
+
+    /**
+     * 获取写入训练计划数据权限（Android 15.0 新增的权限）
+     */
+    
+    fun getWritePlannedExercisePermission(): IPermission {
+        val permissionName: String = PermissionNames.WRITE_PLANNED_EXERCISE
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_15))
+    }
+
+    /**
+     * 获取读取体能数据权限（Android 14.0 新增的权限）
+     */
+    
+    fun getReadPowerPermission(): IPermission {
+        val permissionName: String = PermissionNames.READ_POWER
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_14))
+    }
+
+    /**
+     * 获取写入体能数据权限（Android 14.0 新增的权限）
+     */
+    
+    fun getWritePowerPermission(): IPermission {
+        val permissionName: String = PermissionNames.WRITE_POWER
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_14))
+    }
+
+    /**
+     * 获取读取呼吸频率数据权限（Android 14.0 新增的权限）
+     */
+    
+    fun getReadRespiratoryRatePermission(): IPermission {
+        val permissionName: String = PermissionNames.READ_RESPIRATORY_RATE
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_14))
+    }
+
+    /**
+     * 获取写入呼吸频率数据权限（Android 14.0 新增的权限）
+     */
+    
+    fun getWriteRespiratoryRatePermission(): IPermission {
+        val permissionName: String = PermissionNames.WRITE_RESPIRATORY_RATE
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_14))
+    }
+
+    /**
+     * 获取读取静息心率数据权限（Android 14.0 新增的权限）
+     */
+    
+    fun getReadRestingHeartRatePermission(): IPermission {
+        val permissionName: String = PermissionNames.READ_RESTING_HEART_RATE
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_14))
+    }
+
+    /**
+     * 获取写入静息心率数据权限（Android 14.0 新增的权限）
+     */
+    
+    fun getWriteRestingHeartRatePermission(): IPermission {
+        val permissionName: String = PermissionNames.WRITE_RESTING_HEART_RATE
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_14))
+    }
+
+    /**
+     * 获取读取性活动数据权限（Android 14.0 新增的权限）
+     */
+    
+    fun getReadSexualActivityPermission(): IPermission {
+        val permissionName: String = PermissionNames.READ_SEXUAL_ACTIVITY
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_14))
+    }
+
+    /**
+     * 获取写入性活动数据权限（Android 14.0 新增的权限）
+     */
+    
+    fun getWriteSexualActivityPermission(): IPermission {
+        val permissionName: String = PermissionNames.WRITE_SEXUAL_ACTIVITY
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_14))
+    }
+
+    /**
+     * 获取读取体表温度数据权限（Android 15.0 新增的权限）
+     */
+    
+    fun getReadSkinTemperaturePermission(): IPermission {
+        val permissionName: String = PermissionNames.READ_SKIN_TEMPERATURE
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_15))
+    }
+
+    /**
+     * 获取写入体表温度数据权限（Android 15.0 新增的权限）
+     */
+    
+    fun getWriteSkinTemperaturePermission(): IPermission {
+        val permissionName: String = PermissionNames.WRITE_SKIN_TEMPERATURE
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_15))
+    }
+
+    /**
+     * 获取读取睡眠数据权限（Android 14.0 新增的权限）
+     */
+    
+    fun getReadSleepPermission(): IPermission {
+        val permissionName: String = PermissionNames.READ_SLEEP
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_14))
+    }
+
+    /**
+     * 获取写入睡眠数据权限（Android 14.0 新增的权限）
+     */
+    
+    fun getWriteSleepPermission(): IPermission {
+        val permissionName: String = PermissionNames.WRITE_SLEEP
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_14))
+    }
+
+    /**
+     * 获取读取速度数据权限（Android 14.0 新增的权限）
+     */
+    
+    fun getReadSpeedPermission(): IPermission {
+        val permissionName: String = PermissionNames.READ_SPEED
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_14))
+    }
+
+    /**
+     * 获取写入速度数据权限（Android 14.0 新增的权限）
+     */
+    
+    fun getWriteSpeedPermission(): IPermission {
+        val permissionName: String = PermissionNames.WRITE_SPEED
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_14))
+    }
+
+    /**
+     * 获取读取步数数据权限（Android 14.0 新增的权限）
+     */
+    
+    fun getReadStepsPermission(): IPermission {
+        val permissionName: String = PermissionNames.READ_STEPS
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_14))
+    }
+
+    /**
+     * 获取写入步数数据权限（Android 14.0 新增的权限）
+     */
+    
+    fun getWriteStepsPermission(): IPermission {
+        val permissionName: String = PermissionNames.WRITE_STEPS
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_14))
+    }
+
+    /**
+     * 获取读取消耗的卡路里总数数据权限（Android 14.0 新增的权限）
+     */
+    
+    fun getReadTotalCaloriesBurnedPermission(): IPermission {
+        val permissionName: String = PermissionNames.READ_TOTAL_CALORIES_BURNED
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_14))
+    }
+
+    /**
+     * 获取写入消耗的卡路里总数数据权限（Android 14.0 新增的权限）
+     */
+    
+    fun getWriteTotalCaloriesBurnedPermission(): IPermission {
+        val permissionName: String = PermissionNames.WRITE_TOTAL_CALORIES_BURNED
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_14))
+    }
+
+    /**
+     * 获取读取最大摄氧量数据权限（Android 14.0 新增的权限）
+     */
+    
+    fun getReadVo2MaxPermission(): IPermission {
+        val permissionName: String = PermissionNames.READ_VO2_MAX
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_14))
+    }
+
+    /**
+     * 获取写入最大摄氧量数据权限（Android 14.0 新增的权限）
+     */
+    
+    fun getWriteVo2MaxPermission(): IPermission {
+        val permissionName: String = PermissionNames.WRITE_VO2_MAX
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_14))
+    }
+
+    /**
+     * 获取读取体重数据权限（Android 14.0 新增的权限）
+     */
+    
+    fun getReadWeightPermission(): IPermission {
+        val permissionName: String = PermissionNames.READ_WEIGHT
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_14))
+    }
+
+    /**
+     * 获取写入体重数据权限（Android 14.0 新增的权限）
+     */
+    
+    fun getWriteWeightPermission(): IPermission {
+        val permissionName: String = PermissionNames.WRITE_WEIGHT
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_14))
+    }
+
+    /**
+     * 获取读取推轮椅次数数据权限（Android 14.0 新增的权限）
+     */
+    
+    fun getReadWheelchairPushesPermission(): IPermission {
+        val permissionName: String = PermissionNames.READ_WHEELCHAIR_PUSHES
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_14))
+    }
+
+    /**
+     * 获取写入推轮椅次数数据权限（Android 14.0 新增的权限）
+     */
+    
+    fun getWriteWheelchairPushesPermission(): IPermission {
+        val permissionName: String = PermissionNames.WRITE_WHEELCHAIR_PUSHES
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardFitnessAndWellnessDataPermission(permissionName, PermissionVersion.ANDROID_14))
+    }
+
+
+    /* ------------------------------------ 我是一条华丽的分割线 ------------------------------------ */
+    /**
+     * 获取读取过敏反应数据权限（Android 16.0 新增的权限）
+     */
+    
+    fun getReadMedicalDataAllergiesIntolerancesPermission(): IPermission {
+        val permissionName: String = PermissionNames.READ_MEDICAL_DATA_ALLERGIES_INTOLERANCES
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardHealthRecordsPermission(permissionName, PermissionVersion.ANDROID_16))
+    }
+
+    /**
+     * 获取读取病症数据权限（Android 16.0 新增的权限）
+     */
+    
+    fun getReadMedicalDataConditionsPermission(): IPermission {
+        val permissionName: String = PermissionNames.READ_MEDICAL_DATA_CONDITIONS
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardHealthRecordsPermission(permissionName, PermissionVersion.ANDROID_16))
+    }
+
+    /**
+     * 获取读取化验结果数据权限（Android 16.0 新增的权限）
+     */
+    
+    fun getReadMedicalDataLaboratoryResultsPermission(): IPermission {
+        val permissionName: String = PermissionNames.READ_MEDICAL_DATA_LABORATORY_RESULTS
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardHealthRecordsPermission(permissionName, PermissionVersion.ANDROID_16))
+    }
+
+    /**
+     * 获取读取用药情况数据权限（Android 16.0 新增的权限）
+     */
+    
+    fun getReadMedicalDataMedicationsPermission(): IPermission {
+        val permissionName: String = PermissionNames.READ_MEDICAL_DATA_MEDICATIONS
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardHealthRecordsPermission(permissionName, PermissionVersion.ANDROID_16))
+    }
+
+    /**
+     * 获取读取个人详细信息数据权限（Android 16.0 新增的权限）
+     */
+    
+    fun getReadMedicalDataPersonalDetailsPermission(): IPermission {
+        val permissionName: String = PermissionNames.READ_MEDICAL_DATA_PERSONAL_DETAILS
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardHealthRecordsPermission(permissionName, PermissionVersion.ANDROID_16))
+    }
+
+    /**
+     * 获取读取就医情况数据权限（Android 16.0 新增的权限）
+     */
+    
+    fun getReadMedicalDataPractitionerDetailsPermission(): IPermission {
+        val permissionName: String = PermissionNames.READ_MEDICAL_DATA_PRACTITIONER_DETAILS
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardHealthRecordsPermission(permissionName, PermissionVersion.ANDROID_16))
+    }
+
+    /**
+     * 获取读取怀孕情况数据权限（Android 16.0 新增的权限）
+     */
+    
+    fun getReadMedicalDataPregnancyPermission(): IPermission {
+        val permissionName: String = PermissionNames.READ_MEDICAL_DATA_PREGNANCY
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardHealthRecordsPermission(permissionName, PermissionVersion.ANDROID_16))
+    }
+
+    /**
+     * 获取读取医疗程序数据权限（Android 16.0 新增的权限）
+     */
+    
+    fun getReadMedicalDataProceduresPermission(): IPermission {
+        val permissionName: String = PermissionNames.READ_MEDICAL_DATA_PROCEDURES
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardHealthRecordsPermission(permissionName, PermissionVersion.ANDROID_16))
+    }
+
+    /**
+     * 获取读取个人生活史数据权限（Android 16.0 新增的权限）
+     */
+    
+    fun getReadMedicalDataSocialHistoryPermission(): IPermission {
+        val permissionName: String = PermissionNames.READ_MEDICAL_DATA_SOCIAL_HISTORY
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardHealthRecordsPermission(permissionName, PermissionVersion.ANDROID_16))
+    }
+
+    /**
+     * 获取读取疫苗接种数据权限（Android 16.0 新增的权限）
+     */
+    
+    fun getReadMedicalDataVaccinesPermission(): IPermission {
+        val permissionName: String = PermissionNames.READ_MEDICAL_DATA_VACCINES
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardHealthRecordsPermission(permissionName, PermissionVersion.ANDROID_16))
+    }
+
+    /**
+     * 获取读取医师详细信息数据权限，包括地点、预约时间以及就诊组织名称等数据权限（Android 16.0 新增的权限）
+     */
+    
+    fun getReadMedicalDataVisitsPermission(): IPermission {
+        val permissionName: String = PermissionNames.READ_MEDICAL_DATA_VISITS
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardHealthRecordsPermission(permissionName, PermissionVersion.ANDROID_16))
+    }
+
+    /**
+     * 获取读取生命体征数据权限（Android 16.0 新增的权限）
+     */
+    
+    fun getReadMedicalDataVitalSignsPermission(): IPermission {
+        val permissionName: String = PermissionNames.READ_MEDICAL_DATA_VITAL_SIGNS
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardHealthRecordsPermission(permissionName, PermissionVersion.ANDROID_16))
+    }
+
+    /**
+     * 获取写入所有健康记录数据权限（Android 16.0 新增的权限）
+     */
+    
+    fun getWriteMedicalDataPermission(): IPermission {
+        val permissionName: String = PermissionNames.WRITE_MEDICAL_DATA
+        val permission = getCachePermission(permissionName)
+        if (permission != null) {
+            return permission
+        }
+        return putCachePermission(StandardHealthRecordsPermission(permissionName, PermissionVersion.ANDROID_16))
     }
 }

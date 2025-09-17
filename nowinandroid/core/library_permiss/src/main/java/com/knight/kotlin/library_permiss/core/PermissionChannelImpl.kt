@@ -4,28 +4,28 @@ import android.app.Activity
 import androidx.annotation.IntRange
 import com.knight.kotlin.library_permiss.fragment.IFragmentCallback
 import com.knight.kotlin.library_permiss.fragment.IFragmentMethod
-import com.knight.kotlin.library_permiss.manager.ActivityOrientationManager
+import com.knight.kotlin.library_permiss.manager.ActivityOrientationManager.unlockActivityOrientation
 import com.knight.kotlin.library_permiss.permission.base.IPermission
 import com.knight.kotlin.library_permiss.start.IStartActivityDelegate
-import com.knight.kotlin.library_permiss.tools.PermissionApi
+import com.knight.kotlin.library_permiss.tools.PermissionApi.getMaxWaitTimeByPermissions
 import com.knight.kotlin.library_permiss.tools.PermissionTaskHandler
 import com.knight.kotlin.library_permiss.tools.PermissionUtils
-import com.knight.kotlin.library_permiss.tools.PermissionVersion
+import com.knight.kotlin.library_permiss.tools.PermissionVersion.isAndroid13
+
 
 /**
- * @Description
+ * @Description 请求权限实现类
  * @Author knight
  * @Time 2025/6/8 20:09
  *
  */
 
-abstract class RequestPermissionDelegateImpl internal constructor(fragmentMethod: IFragmentMethod<*, *>) :
-    IFragmentCallback {
+abstract class PermissionChannelImpl protected constructor(fragmentMethod: IFragmentMethod<*, *>) : IFragmentCallback {
     /** 任务令牌  */
     private val mTaskToken = Any()
 
-    /** 权限申请标记（防止系统杀死应用后重新触发请求的问题）  */
-    private var mRequestFlag = false
+    /** 非系统重启标记  */
+    private var mNonSystemRestartMark = false
 
     /** 权限请求是否已经发起  */
     private var mAlreadyRequest = false
@@ -34,46 +34,44 @@ abstract class RequestPermissionDelegateImpl internal constructor(fragmentMethod
     private var mManualDetach = false
 
     /** Fragment 方法对象  */
+    
     private val mFragmentMethod = fragmentMethod
 
     /** 权限回调对象  */
+    
+    private var mPermissionFragmentCallback: OnPermissionFragmentCallback? = null
 
-    private var mCallBack: OnPermissionFlowCallback? = null
-
-    fun setRequestFlag(flag: Boolean) {
-        mRequestFlag = flag
+    fun setNonSystemRestartMark(nonSystemRestartMark: Boolean) {
+        mNonSystemRestartMark = nonSystemRestartMark
     }
 
-    fun setCallback( callback: OnPermissionFlowCallback?) {
-        mCallBack = callback
+    fun setPermissionFragmentCallback( callback: OnPermissionFragmentCallback?) {
+        mPermissionFragmentCallback = callback
     }
 
-
-    fun getCallBack():OnPermissionFlowCallback? {
-        return mCallBack
+    
+    private fun getPermissionFragmentCallback(): OnPermissionFragmentCallback? {
+        return mPermissionFragmentCallback
     }
 
-
-    fun getActivity(): Activity {
-        return mFragmentMethod.getActivity()!!
+    
+    private fun getActivity(): Activity? {
+        return mFragmentMethod.getActivity()
     }
 
-    fun commitDetach() {
+    private fun commitFragmentDetach() {
         mManualDetach = true
-        mFragmentMethod.commitDetach()
+        mFragmentMethod.commitFragmentDetach()
     }
 
-    fun isFragmentUnavailable(): Boolean {
+    private fun isFragmentUnavailable(): Boolean {
         // 如果用户离开太久，会导致 Activity 被回收掉
         // 所以这里要判断当前 Fragment 是否有被添加到 Activity
         // 可在开发者模式中开启不保留活动来复现这个 Bug
         return !mFragmentMethod.isAdded() || mFragmentMethod.isRemoving()
     }
 
-    fun requestPermissions(
-       permissions: Array<String>,
-        @IntRange(from = 1, to = 65535) requestCode: Int
-    ) {
+    protected fun requestPermissions(permissions: Array<String>, @IntRange(from = 1, to = 65535) requestCode: Int) {
         try {
             mFragmentMethod.requestPermissions(permissions, requestCode)
         } catch (e: Exception) {
@@ -92,6 +90,7 @@ abstract class RequestPermissionDelegateImpl internal constructor(fragmentMethod
             // 发现无论是 onRequestPermissionsResult 还是 onActivityResult，回调它们的都是 dispatchActivityResult 方法，
             // 在那种极端情况下，既然 onActivityResult 能被回调，那么就证明 dispatchActivityResult 肯定有被系统正常调用的，
             // 同理 onRequestPermissionsResult 也肯定会被 dispatchActivityResult 正常调用，从而形成一个完整的逻辑闭环。
+            // 补充测试结论：我在 debug 了 Activity.requestPermissions 方法，偷偷修改权限请求 Intent 的 Action 成错误的，结果权限回调能正常回调。
             // 如果真的出现这种极端情况，所有危险权限的申请必然会走失败的回调，但是框架要做的是：尽量让应用不要崩溃，并且能走完整个权限申请的流程。
             // 涉及到此问题相关 Github issue 地址：
             //   1. https://github.com/getActivity/XXPermissions/issues/153
@@ -118,47 +117,46 @@ abstract class RequestPermissionDelegateImpl internal constructor(fragmentMethod
     }
 
     @Suppress("deprecation")
-    fun getPermissionRequestList(): List<IPermission>? {
+    
+    protected fun getPermissionRequestList(): List<IPermission>? {
         val arguments = mFragmentMethod.getArguments() ?: return null
-        return if (PermissionVersion.isAndroid13()) {
-            arguments.getParcelableArrayList<IPermission>(
-                REQUEST_PERMISSIONS,
-                IPermission::class.java
-            )
+        return if (isAndroid13()) {
+            arguments.getParcelableArrayList(REQUEST_PERMISSIONS, IPermission::class.java)
         } else {
-            arguments.getParcelableArrayList<IPermission>(REQUEST_PERMISSIONS)
+            arguments.getParcelableArrayList(REQUEST_PERMISSIONS)
         }
     }
 
-    fun getPermissionRequestCode(): Int {
+    protected fun getPermissionRequestCode(): Int {
         val arguments = mFragmentMethod.getArguments() ?: return 0
         return arguments.getInt(REQUEST_CODE)
     }
 
-    fun sendTask(runnable: Runnable, delayMillis: Long) {
-        PermissionTaskHandler.sendTask(runnable, mTaskToken, delayMillis)
+    protected fun sendTask( runnable: Runnable?, delayMillis: Long) {
+        PermissionTaskHandler.sendTask(runnable!!, mTaskToken, delayMillis)
     }
 
-    fun cancelTask() {
+    protected fun cancelTask() {
         PermissionTaskHandler.cancelTask(mTaskToken)
     }
 
-    fun getStartActivityDelegate(): IStartActivityDelegate {
+    protected fun getStartActivityDelegate(): IStartActivityDelegate {
         return mFragmentMethod
     }
 
     /**
      * 开启权限请求
      */
-    abstract fun startPermissionRequest(
-        activity: Activity, permissions: List<IPermission>?,
+    protected abstract fun startPermissionRequest(
+         activity: Activity,  permissions: List<IPermission>,
         @IntRange(from = 1, to = 65535) requestCode: Int
     )
 
     override fun onFragmentResume() {
         // 如果当前 Fragment 是通过系统重启应用触发的，则不进行权限申请
-        if (!mRequestFlag) {
-            mFragmentMethod.commitDetach()
+        // 防止系统杀死应用后重新触发请求权限的问题
+        if (!mNonSystemRestartMark) {
+            mFragmentMethod.commitFragmentDetach()
             return
         }
 
@@ -178,25 +176,27 @@ abstract class RequestPermissionDelegateImpl internal constructor(fragmentMethod
         if (requestCode <= 0) {
             return
         }
-        val permissions: List<IPermission>? = getPermissionRequestList()
+        val permissions = getPermissionRequestList()
         if (permissions == null || permissions.isEmpty()) {
             return
         }
-        startPermissionRequest(activity, permissions, requestCode)
-        val callback = getCallBack() ?: return
+        if (activity != null) {
+            startPermissionRequest(activity, permissions, requestCode)
+        }
+        val callback = getPermissionFragmentCallback() ?: return
         callback.onRequestPermissionNow()
     }
 
     override fun onFragmentDestroy() {
         // 取消执行任务
         cancelTask()
-        val callBack = getCallBack()
+        val callback = getPermissionFragmentCallback()
         // 如果回调还没有置空，则证明前面没有回调权限回调完成
-        if (callBack != null) {
+        if (callback != null) {
             // 告诉外层本次权限回调有异常
-            callBack.onRequestPermissionAnomaly()
+            callback.onRequestPermissionAnomaly()
             // 释放回调对象，避免内存泄漏
-            setCallback(null)
+            setPermissionFragmentCallback(null)
         }
         if (mManualDetach) {
             return
@@ -208,7 +208,7 @@ abstract class RequestPermissionDelegateImpl internal constructor(fragmentMethod
         }
         // 如果不是手动解绑绑定，则证明是系统解除绑定，这里需要恢复 Activity 屏幕方向
         // 如果是手动解除绑定，则会在所有的权限都申请完了之后恢复 Activity 屏幕方向
-        ActivityOrientationManager.unlockActivityOrientation(activity)
+        unlockActivityOrientation(activity!!)
     }
 
     /**
@@ -220,10 +220,7 @@ abstract class RequestPermissionDelegateImpl internal constructor(fragmentMethod
             return
         }
         // 延迟处理权限请求的结果
-        sendTask(
-            { this.handlerPermissionCallback() },
-            PermissionApi.getMaxWaitTimeByPermissions(activity, getPermissionRequestList()).toLong()
-        )
+        sendTask({ this.handlerPermissionCallback() }, getMaxWaitTimeByPermissions(activity!!, getPermissionRequestList()).toLong())
     }
 
     /**
@@ -239,14 +236,14 @@ abstract class RequestPermissionDelegateImpl internal constructor(fragmentMethod
             return
         }
 
-        val callback = getCallBack()
+        val callback = getPermissionFragmentCallback()
         // 释放监听对象的引用
-        setCallback(null)
+        setPermissionFragmentCallback(null)
 
         callback?.onRequestPermissionFinish()
 
-        // 将 Fragment 从 Activity 移除
-        commitDetach()
+        // 将 Fragment 移除
+        commitFragmentDetach()
     }
 
     companion object {

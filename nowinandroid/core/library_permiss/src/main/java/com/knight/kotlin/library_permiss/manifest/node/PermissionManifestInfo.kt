@@ -5,27 +5,25 @@ import com.knight.kotlin.library_permiss.tools.PermissionVersion
 
 
 /**
- * @Description
+ * @Description  权限清单信息类
  * @Author knight
  * @Time 2025/7/10 20:45
  *
  */
 
 class PermissionManifestInfo {
-    /**
-     * 权限名称
-     */
+
+    /** 默认最大生效 sdk 版本  */
+    val DEFAULT_MAX_SDK_VERSION: Int = Int.MAX_VALUE
+    /** 权限名称  */
     var name: String? = null
 
-    /**
-     * 最大生效 sdk 版本
-     */
-    var maxSdkVersion: Int = 0
+    /** 最大生效 sdk 版本  */
+    var maxSdkVersion: Int = DEFAULT_MAX_SDK_VERSION
 
-    /**
-     * 权限使用标志
-     */
+    /** 权限使用标志  */
     var usesPermissionFlags: Int = 0
+
 
     /**
      * 是否不会用当前权限需要推导地理位置

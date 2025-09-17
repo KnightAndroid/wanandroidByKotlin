@@ -5,7 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Parcel
 import android.os.Parcelable
-import com.knight.kotlin.library_permiss.permission.PermissionLists
+import com.knight.kotlin.library_permiss.permission.PermissionLists.getNotificationServicePermission
 import com.knight.kotlin.library_permiss.permission.PermissionNames
 import com.knight.kotlin.library_permiss.permission.base.IPermission
 import com.knight.kotlin.library_permiss.permission.common.DangerousPermission
@@ -30,35 +30,29 @@ class PostNotificationsPermission : DangerousPermission {
         return PERMISSION_NAME
     }
 
-    override fun getFromAndroidVersion(): Int {
+    override fun getFromAndroidVersion( context: Context): Int {
         return PermissionVersion.ANDROID_13
     }
 
     
     override fun getOldPermissions(context: Context): List<IPermission> {
         // Android 13 以下开启通知栏服务，需要用到旧的通知栏权限（框架自己虚拟出来的）
-        return PermissionUtils.asArrayList(PermissionLists.getNotificationServicePermission())
+        return PermissionUtils.asArrayList(getNotificationServicePermission())
     }
 
-    override fun isGrantedPermissionByLowVersion(
-         context: Context,
-        skipRequest: Boolean
-    ): Boolean {
-        return PermissionLists.getNotificationServicePermission()
-            .isGrantedPermission(context, skipRequest)
+    override fun isGrantedPermissionByLowVersion( context: Context, skipRequest: Boolean): Boolean {
+        return getNotificationServicePermission().isGrantedPermission(context, skipRequest)
     }
 
     override fun isDoNotAskAgainPermissionByLowVersion( activity: Activity): Boolean {
-        return PermissionLists.getNotificationServicePermission()
-            .isDoNotAskAgainPermission(activity)
+        return getNotificationServicePermission().isDoNotAskAgainPermission(activity)
     }
 
     
-    override fun getPermissionSettingIntents( context: Context): MutableList<Intent> {
+    override fun getPermissionSettingIntents( context: Context, skipRequest: Boolean): MutableList<Intent> {
         // Github issue 地址：https://github.com/getActivity/XXPermissions/issues/208
         // POST_NOTIFICATIONS 要跳转到权限设置页和 NOTIFICATION_SERVICE 权限是一样的
-        return PermissionLists.getNotificationServicePermission()
-            .getPermissionSettingIntents(context)
+        return getNotificationServicePermission().getPermissionSettingIntents(context, skipRequest)
     }
 
 

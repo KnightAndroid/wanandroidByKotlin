@@ -9,6 +9,8 @@ import android.provider.Settings
 import com.knight.kotlin.library_permiss.permission.PermissionNames
 import com.knight.kotlin.library_permiss.permission.common.SpecialPermission
 import com.knight.kotlin.library_permiss.tools.PermissionVersion
+import com.knight.kotlin.library_permiss.tools.PermissionVersion.isAndroid10
+import com.knight.kotlin.library_permiss.tools.PermissionVersion.isAndroid5
 
 
 /**
@@ -42,34 +44,44 @@ class PackageUsageStatsPermission : SpecialPermission {
 
     override fun getPermissionName(): String = PERMISSION_NAME
 
-    override fun getFromAndroidVersion(): Int = PermissionVersion.ANDROID_5
 
-    override fun isGrantedPermission(context: Context, skipRequest: Boolean): Boolean {
-        // Android 5 以下系统默认授予权限
-        return if (!PermissionVersion.isAndroid5()) {
-            true
-        } else {
-            checkOpPermission(context, AppOpsManager.OPSTR_GET_USAGE_STATS, false)
-        }
+    override fun getFromAndroidVersion( context: Context): Int {
+        return PermissionVersion.ANDROID_5
     }
 
-    override fun getPermissionSettingIntents(context: Context): MutableList<Intent> {
-        val intentList = ArrayList<Intent>(3)
+    override fun isGrantedPermission( context: Context, skipRequest: Boolean): Boolean {
+        if (!isAndroid5()) {
+            return true
+        }
+        return checkOpPermission(context, AppOpsManager.OPSTR_GET_USAGE_STATS, false)
+    }
 
-        if (PermissionVersion.isAndroid10()) {
-            // Android 10+ 加包名有效
-            intentList.add(Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS).apply {
-                data = getPackageNameUri(context)
-            })
+    
+    override fun getPermissionSettingIntents( context: Context, skipRequest: Boolean): MutableList<Intent> {
+        val intentList: MutableList<Intent> = ArrayList(3)
+        var intent: Intent
+
+        if (isAndroid10()) {
+            intent = Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS)
+            // 经过测试，只有在 Android 10 及以上加包名才有效果
+            // 如果在 Android 10 以下加包名会导致无法跳转
+            intent.setData(getPackageNameUri(context))
+            intentList.add(intent)
         }
 
-        if (PermissionVersion.isAndroid5()) {
-            intentList.add(Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS))
+        if (isAndroid5()) {
+            intent = Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS)
+            intentList.add(intent)
         }
 
-        intentList.add(getAndroidSettingIntent())
+        intent = getAndroidSettingIntent()
+        intentList.add(intent)
+
         return intentList
     }
 
-    override fun isRegisterPermissionByManifestFile(): Boolean = true
+    override fun isRegisterPermissionByManifestFile(): Boolean {
+        // 表示当前权限需要在 AndroidManifest.xml 文件中进行静态注册
+        return true
+    }
 }

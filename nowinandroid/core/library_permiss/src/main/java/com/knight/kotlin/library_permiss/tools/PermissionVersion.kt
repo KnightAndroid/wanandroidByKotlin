@@ -11,6 +11,7 @@ import android.os.Build
  * @descript:Android 版本工具
  */
 object PermissionVersion {
+    const val ANDROID_16: Int = Build.VERSION_CODES.BAKLAVA
     const val ANDROID_15: Int = Build.VERSION_CODES.VANILLA_ICE_CREAM
     const val ANDROID_14: Int = Build.VERSION_CODES.UPSIDE_DOWN_CAKE
     const val ANDROID_13: Int = Build.VERSION_CODES.TIRAMISU
@@ -55,6 +56,13 @@ object PermissionVersion {
         return context.applicationInfo.targetSdkVersion
     }
 
+
+    /**
+     * 是否是 Android 16 及以上版本
+     */
+    fun isAndroid16(): Boolean {
+        return Build.VERSION.SDK_INT >= ANDROID_16
+    }
     /**
      * 是否是 Android 15 及以上版本
      */

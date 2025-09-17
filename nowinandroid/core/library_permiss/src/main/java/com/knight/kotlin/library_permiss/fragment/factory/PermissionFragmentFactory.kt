@@ -4,9 +4,9 @@ package com.knight.kotlin.library_permiss.fragment.factory
 import android.app.Activity
 import android.os.Bundle
 import androidx.annotation.IntRange
-import com.knight.kotlin.library_permiss.core.OnPermissionFlowCallback
-import com.knight.kotlin.library_permiss.core.RequestPermissionDelegateImpl
-import com.knight.kotlin.library_permiss.permission.PermissionType
+import com.knight.kotlin.library_permiss.core.OnPermissionFragmentCallback
+import com.knight.kotlin.library_permiss.core.PermissionChannelImpl
+import com.knight.kotlin.library_permiss.permission.PermissionChannel
 import com.knight.kotlin.library_permiss.permission.base.IPermission
 
 
@@ -67,14 +67,13 @@ abstract class PermissionFragmentFactory<A : Activity, F> internal constructor(
     }
 
     /**
-     * 创建 Fragment 对象
+     * 创建并提交 Fragment
      */
     abstract fun createAndCommitFragment(
-        permissions: List<IPermission>,
-        permissionType: PermissionType,
-        callback: OnPermissionFlowCallback
+        permissions: List<IPermission?>,
+        permissionChannel: PermissionChannel,
+        callback: OnPermissionFragmentCallback
     )
-
 }
 
 /**
@@ -87,11 +86,11 @@ abstract class PermissionFragmentFactory<A : Activity, F> internal constructor(
 
 fun generatePermissionArguments(permissions: List<IPermission?>, @IntRange(from = 1, to = 65535) requestCode: Int): Bundle {
     val bundle = Bundle()
-    bundle.putInt(RequestPermissionDelegateImpl.REQUEST_CODE, requestCode)
+    bundle.putInt(PermissionChannelImpl.REQUEST_CODE, requestCode)
     if (permissions is ArrayList<*>) {
-        bundle.putParcelableArrayList(RequestPermissionDelegateImpl.REQUEST_PERMISSIONS, permissions as ArrayList<IPermission?>)
+        bundle.putParcelableArrayList(PermissionChannelImpl.REQUEST_PERMISSIONS, permissions as ArrayList<IPermission?>)
     } else {
-        bundle.putParcelableArrayList(RequestPermissionDelegateImpl.REQUEST_PERMISSIONS, ArrayList(permissions))
+        bundle.putParcelableArrayList(PermissionChannelImpl.REQUEST_PERMISSIONS, ArrayList(permissions))
     }
     return bundle
 }

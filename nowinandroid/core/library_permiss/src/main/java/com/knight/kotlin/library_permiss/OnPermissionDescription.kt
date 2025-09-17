@@ -4,7 +4,6 @@ import android.app.Activity
 import com.knight.kotlin.library_permiss.permission.base.IPermission
 
 
-
 /**
  * @Description 权限说明接口
  * @Author knight
@@ -16,31 +15,28 @@ interface OnPermissionDescription {
     /**
      * 询问是否要发起权限请求
      *
-     * @param activity                      Activity 对象
-     * @param requestPermissions            请求的权限
+     * @param requestList                   请求的权限列表
      * @param continueRequestRunnable       继续请求任务对象
      * @param breakRequestRunnable          中断请求任务对象
      */
     fun askWhetherRequestPermission(
-         activity: Activity,
-         requestPermissions: List<IPermission>,
-         continueRequestRunnable: Runnable,
-         breakRequestRunnable: Runnable
+        activity: Activity,
+        requestList: List<IPermission>,
+        continueRequestRunnable: Runnable,
+        breakRequestRunnable: Runnable
     )
 
     /**
      * 权限请求开始
      *
-     * @param activity                      Activity 对象
-     * @param requestPermissions            请求的权限
+     * @param requestList                   请求的权限列表
      */
-    fun onRequestPermissionStart( activity: Activity,  requestPermissions: List<IPermission>)
+    fun onRequestPermissionStart(activity: Activity, requestList: List<IPermission>)
 
     /**
      * 权限请求结束
      *
-     * @param activity                      Activity 对象
-     * @param requestPermissions            请求的权限
+     * @param requestList                   请求的权限列表
      */
-    fun onRequestPermissionEnd( activity: Activity,  requestPermissions: List<IPermission>)
+    fun onRequestPermissionEnd(activity: Activity, requestList: List<IPermission>)
 }

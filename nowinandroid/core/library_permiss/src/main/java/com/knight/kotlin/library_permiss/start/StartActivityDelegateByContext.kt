@@ -19,9 +19,14 @@ class StartActivityDelegateByContext( context: Context) : IStartActivityDelegate
     private val mContext = context
 
     override fun startActivity(intent: Intent) {
-        if (intent == null) {
+        val activity = PermissionUtils.findActivity(mContext)
+        if (activity != null) {
+            activity.startActivity(intent)
             return
         }
+
+        // https://developer.android.google.cn/about/versions/pie/android-9.0-changes-all?hl=zh-cn#fant-required
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         mContext.startActivity(intent)
     }
 
