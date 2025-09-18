@@ -8,4 +8,6 @@
     <color name="constellate_tv_fortune_desc_text_color">#D3D3D3</color>
     <color name="constellate_tv_first_time_text_color">#D3D3D3</color>
     <color name="constellate_tv_end_time_text_color">#D3D3D3</color>
+    <color name="constellate_tv_shortcomment_text_color">#D3D3D3</color>
+    <color name="constellate_fortune_rv_background_color">#000000</color>
 </resources>

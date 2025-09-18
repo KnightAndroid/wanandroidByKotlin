@@ -3,6 +3,7 @@ package com.knight.kotlin.module_constellate.adapter
 import android.content.Context
 import android.graphics.Color
 import android.graphics.Typeface
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -37,11 +38,24 @@ class ConstellatePeriodAdapter:BaseQuickAdapter<String,ConstellatePeriodAdapter.
                 holder.binding.tvWeekIndex.setBackgroundResource(R.drawable.constellate_week_select_bg)
             } else {
                 holder.binding.tvWeekIndex.setTypeface(null, Typeface.NORMAL)   // 普通
-                if (CacheUtils.getNormalDark()) {
-                    holder.binding.tvWeekIndex.setTextColor(Color.parseColor("#555555"))
+                if (position < 3) {
+                    if (CacheUtils.getNormalDark()) {
+                        holder.binding.tvWeekIndex.setTextColor(Color.parseColor("#000000"))
+                    } else {
+                        holder.binding.tvWeekIndex.setTextColor(Color.parseColor("#303030"))
+                    }
                 } else {
-                    holder.binding.tvWeekIndex.setTextColor(Color.parseColor("#303030"))
+                    val color = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        context.getColor(R.color.constellate_tv_week_number_text_color)
+                    } else {
+                        @Suppress("DEPRECATION")
+                        context.resources.getColor(R.color.constellate_tv_week_number_text_color)
+                    }
+
+                    holder.binding.tvWeekIndex.setTextColor(color)
                 }
+
+
                 holder.binding.tvWeekIndex.setBackgroundResource(R.drawable.constellate_week_normal_bg)
             }
 

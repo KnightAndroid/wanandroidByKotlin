@@ -5,7 +5,6 @@ import android.app.admin.DeviceAdminReceiver
 import android.service.notification.NotificationListenerService
 import android.util.LruCache
 import com.knight.kotlin.library_permiss.permission.base.IPermission
-import com.knight.kotlin.library_permiss.permission.common.StandardDangerousPermission
 import com.knight.kotlin.library_permiss.permission.dangerous.AccessBackgroundLocationPermission
 import com.knight.kotlin.library_permiss.permission.dangerous.AccessMediaLocationPermission
 import com.knight.kotlin.library_permiss.permission.dangerous.BluetoothAdvertisePermission
@@ -24,6 +23,7 @@ import com.knight.kotlin.library_permiss.permission.dangerous.ReadMediaImagesPer
 import com.knight.kotlin.library_permiss.permission.dangerous.ReadMediaVideoPermission
 import com.knight.kotlin.library_permiss.permission.dangerous.ReadMediaVisualUserSelectedPermission
 import com.knight.kotlin.library_permiss.permission.dangerous.ReadPhoneNumbersPermission
+import com.knight.kotlin.library_permiss.permission.dangerous.StandardDangerousPermission
 import com.knight.kotlin.library_permiss.permission.dangerous.StandardFitnessAndWellnessDataPermission
 import com.knight.kotlin.library_permiss.permission.dangerous.StandardHealthRecordsPermission
 import com.knight.kotlin.library_permiss.permission.dangerous.WriteExternalStoragePermission
@@ -517,7 +517,7 @@ object PermissionLists {
         if (permission != null) {
             return permission
         }
-        return putCachePermission(StandardDangerousPermission(permissionName, PermissionVersion.ANDROID_10))
+        return putCachePermission(StandardDangerousPermission(permissionName, fromAndroidVersion = PermissionVersion.ANDROID_10))
     }
 
     /**
@@ -622,7 +622,7 @@ object PermissionLists {
         if (permission != null) {
             return permission
         }
-        return putCachePermission(StandardDangerousPermission(permissionName, PermissionVersion.ANDROID_6))
+        return putCachePermission(StandardDangerousPermission(permissionName, fromAndroidVersion = PermissionVersion.ANDROID_6))
     }
 
     /**
@@ -635,7 +635,7 @@ object PermissionLists {
         if (permission != null) {
             return permission
         }
-        return putCachePermission(StandardDangerousPermission(permissionName, PermissionVersion.ANDROID_6))
+        return putCachePermission(StandardDangerousPermission(permissionName, fromAndroidVersion = PermissionVersion.ANDROID_6))
     }
 
     /**

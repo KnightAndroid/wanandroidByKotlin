@@ -14,6 +14,7 @@ dependencies {
     implementation project(":nowinandroid:core:library_util")
     //implementation project(path: ':library_base')
     implementation project(path: ':nowinandroid:core:library_base')
+    implementation project(path: ':core:library_devicecompat')
     kapt Dependencies.JetPack.HILT_APT
     kapt Dependencies.JetPack.HILT_ANDROIDX
     kapt Dependencies.GitHub.AUTO_SERVICE_ANNOTATIONS

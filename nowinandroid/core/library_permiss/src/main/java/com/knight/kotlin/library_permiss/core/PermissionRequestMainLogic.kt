@@ -1,12 +1,14 @@
 package com.knight.kotlin.library_permiss.core
 
 import android.app.Activity
+import android.text.TextUtils
 import com.knight.kotlin.library_permiss.OnPermissionCallback
 import com.knight.kotlin.library_permiss.OnPermissionDescription
 import com.knight.kotlin.library_permiss.OnPermissionInterceptor
 import com.knight.kotlin.library_permiss.fragment.factory.PermissionFragmentFactory
 import com.knight.kotlin.library_permiss.manager.ActivityOrientationManager.lockActivityOrientation
 import com.knight.kotlin.library_permiss.manager.ActivityOrientationManager.unlockActivityOrientation
+import com.knight.kotlin.library_permiss.permission.PermissionChannel
 import com.knight.kotlin.library_permiss.permission.base.IPermission
 import com.knight.kotlin.library_permiss.tools.PermissionApi.getMaxIntervalTimeByPermissions
 import com.knight.kotlin.library_permiss.tools.PermissionApi.isGrantedPermissions

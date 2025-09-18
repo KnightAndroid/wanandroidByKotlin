@@ -1,6 +1,7 @@
 package com.knight.kotlin.library_permiss.manager
 
 import com.knight.kotlin.library_permiss.permission.base.IPermission
+import com.knight.kotlin.library_permiss.tools.PermissionUtils
 
 
 /**
@@ -22,7 +23,7 @@ object AlreadyRequestPermissionsManager {
         }
         for (permission in permissions) {
             val permissionName = permission.getPermissionName()
-            if (PermissionUtils.containsPermission(ALREADY_REQUEST_PERMISSIONS_LIST, permissionName)) {
+            if (PermissionUtils.containsPermissionByString(ALREADY_REQUEST_PERMISSIONS_LIST, permissionName)) {
                 continue
             }
             ALREADY_REQUEST_PERMISSIONS_LIST.add(permissionName)
@@ -32,10 +33,10 @@ object AlreadyRequestPermissionsManager {
     /**
      * 判断某些权限是否申请过
      */
-    fun isAlreadyRequestPermissions( permission: IPermission?): Boolean {
+    fun isAlreadyRequestPermissions(permission: IPermission?): Boolean {
         if (permission == null) {
             return false
         }
-        return PermissionUtils.containsPermission(ALREADY_REQUEST_PERMISSIONS_LIST, permission.getPermissionName())
+        return PermissionUtils.containsPermissionByString(ALREADY_REQUEST_PERMISSIONS_LIST, permission.getPermissionName())
     }
 }

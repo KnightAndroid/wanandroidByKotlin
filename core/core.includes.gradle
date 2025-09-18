@@ -1,2 +1,3 @@
 include(":core:library_base")
 include(":core:library_common")
+include(":core:library_devicecompat")

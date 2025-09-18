@@ -22,6 +22,7 @@ import com.knight.kotlin.library_base.ktx.statusHeight
 import com.knight.kotlin.library_common.util.LanguageFontSizeUtils
 import com.knight.kotlin.library_util.DateUtils
 import com.knight.kotlin.library_util.ViewInitUtils
+import com.knight.kotlin.library_widget.ktx.setViewPager2Height
 import com.knight.kotlin.module_constellate.R
 import com.knight.kotlin.module_constellate.databinding.ConstellateFortuneActivityBinding
 import com.knight.kotlin.module_constellate.dialog.ConstellateSelectDialog
@@ -205,6 +206,16 @@ class ConstellateFateActivity : BaseActivity<ConstellateFortuneActivityBinding, 
                         mBinding.tvShortcomment.text = constellateResponseEntity?.year?.notice
                     }
                 }
+
+//                val recyclerView = mBinding.constellateViewPager.getChildAt(0) as RecyclerView
+//                val view = recyclerView.layoutManager?.findViewByPosition(position)
+//                view?.post {
+//                    val params = mBinding.constellateViewPager.layoutParams
+//                    params.height = view.measuredHeight
+//                    mBinding.constellateViewPager.layoutParams = params
+//                }
+
+                setViewPager2Height(mBinding.constellateViewPager,position)
             }
         })
     }

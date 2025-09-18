@@ -1,6 +1,5 @@
 package com.knight.kotlin.module_home.fragment
 
-import XXPermissions
 import android.animation.Animator
 import android.animation.AnimatorSet
 import android.animation.ArgbEvaluator
@@ -52,6 +51,7 @@ import com.core.library_common.util.dp2px
 import com.flyjingfish.android_aop_core.annotations.SingleClick
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.gson.reflect.TypeToken
+import com.hjq.permissions.XXPermissions
 import com.knight.kotlin.library_aop.loginintercept.LoginCheck
 import com.knight.kotlin.library_base.entity.AppUpdateBean
 import com.knight.kotlin.library_base.entity.BaiduContent
@@ -900,18 +900,17 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
                             .permission(PermissionLists.getAccessBackgroundLocationPermission())
                             .description(PermissionDescription())
                             .request(object : OnPermissionCallback {
+                                override fun onResult(grantedList: List<IPermission>, deniedList: List<IPermission>) {
+                                    val allGranted = deniedList.isEmpty()
+                                    if (allGranted) {
+                                        requestOnceLocation()
 
-                                override fun onGranted(permissions: List<IPermission>, allGranted: Boolean) {
-                                    if (!allGranted) {
-                                        // 如果是被永久拒绝就跳转到应用权限系统设置页面
-                                        XXPermissions.startPermissionActivity(requireActivity(), permissions)
-                                        return
+                                    } else {
+                                        // 判断请求失败的权限是否被用户勾选了不再询问的选项
+                                        //val doNotAskAgain = XXPermissions.isDoNotAskAgainPermissions(requireActivity(), deniedList)
+                                       // XXPermissions.startPermissionActivity(requireActivity(), deniedList)
+                                        toast(getString(R.string.home_miss_location_permission))
                                     }
-                                    requestOnceLocation()
-                                }
-
-                                override fun onDenied(permissions: List<IPermission>, doNotAskAgain: Boolean) {
-                                    toast(getString(R.string.home_miss_location_permission))
                                 }
                             })
                     }
@@ -1273,21 +1272,18 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
                 XXPermissions.with(this@HomeRecommendFragment)
                     .permission(PermissionLists.getCameraPermission())
                     .request(object : OnPermissionCallback {
-
-                        override fun onDenied(permissions: List<IPermission>, doNotAskAgain: Boolean) {
-                               super.onDenied(permissions, doNotAskAgain)
-                               toast(getString(R.string.home_miss_camera_permission))
-                        }
-
-                        override fun onGranted(permissions: List<IPermission>, allGranted: Boolean) {
-                            if (allGranted) {
-                                ScanCodeConfig.Builder()
-                                    .setFragment(this@HomeRecommendFragment)
-                                    .setActivity(activity)
-                                    .setPlayAudio(true)
-                                    .setStyle(ScanStyle.FULL_SCREEN)
-                                    .build().start(ScanCodeActivity::class.java)
+                        override fun onResult(grantedList: List<IPermission>, deniedList: List<IPermission>) {
+                            val allGranted = deniedList.isEmpty()
+                            if (!allGranted) {
+                                toast(getString(R.string.home_miss_camera_permission))
+                                return
                             }
+                            ScanCodeConfig.Builder()
+                                .setFragment(this@HomeRecommendFragment)
+                                .setActivity(activity)
+                                .setPlayAudio(true)
+                                .setStyle(ScanStyle.FULL_SCREEN)
+                                .build().start(ScanCodeActivity::class.java)
                         }
                     })
             }
@@ -1590,17 +1586,13 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
                                 .permission(PermissionLists.getAccessBackgroundLocationPermission())
                                 .description(PermissionDescription())
                                 .request(object : OnPermissionCallback {
-
-
-                                    override fun onDenied(permissions: List<IPermission>, doNotAskAgain: Boolean) {
-                                        super.onDenied(permissions, doNotAskAgain)
-                                        toast(getString(R.string.home_miss_location_permission))
-                                    }
-
-                                    override fun onGranted(permissions: List<IPermission>, allGranted: Boolean) {
-                                        if (allGranted) {
-                                            requestOnceLocation()
+                                    override fun onResult(grantedList: List<IPermission>, deniedList: List<IPermission>) {
+                                        val allGranted = deniedList.isEmpty()
+                                        if (!allGranted) {
+                                            toast(getString(R.string.home_miss_location_permission))
+                                            return
                                         }
+                                        requestOnceLocation()
                                     }
                                 })
                         }

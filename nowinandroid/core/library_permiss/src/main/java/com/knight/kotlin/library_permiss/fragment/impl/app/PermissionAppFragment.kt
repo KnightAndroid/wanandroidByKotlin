@@ -16,7 +16,7 @@ import com.knight.kotlin.library_permiss.fragment.IFragmentMethod
  */
 
 abstract class PermissionAppFragment : Fragment(), IFragmentMethod<Activity, FragmentManager> {
-    override fun setPermissionFragmentCallback( callback: OnPermissionFragmentCallback?) {
+    override fun setPermissionFragmentCallback(callback: OnPermissionFragmentCallback) {
         getPermissionChannelImpl().setPermissionFragmentCallback(callback)
     }
 
@@ -24,7 +24,7 @@ abstract class PermissionAppFragment : Fragment(), IFragmentMethod<Activity, Fra
         getPermissionChannelImpl().setNonSystemRestartMark(nonSystemRestartMark)
     }
 
-    override fun commitFragmentAttach( fragmentManager: FragmentManager?) {
+    override fun commitFragmentAttach( fragmentManager: FragmentManager) {
         if (fragmentManager == null) {
             return
         }
@@ -46,7 +46,7 @@ abstract class PermissionAppFragment : Fragment(), IFragmentMethod<Activity, Fra
         getPermissionChannelImpl().onFragmentDestroy()
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String?>,  grantResults: IntArray) {
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>,  grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         getPermissionChannelImpl().onFragmentRequestPermissionsResult(requestCode, permissions, grantResults)
     }

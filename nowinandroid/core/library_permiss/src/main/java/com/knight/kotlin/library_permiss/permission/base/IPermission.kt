@@ -27,7 +27,7 @@ interface IPermission : Parcelable {
     /**
      * 获取请求时的权限名称（默认为权限的名称）
      */
-    fun getRequestPermissionName(context: Context?): String {
+    fun getRequestPermissionName(context: Context): String {
         return getPermissionName()
     }
 

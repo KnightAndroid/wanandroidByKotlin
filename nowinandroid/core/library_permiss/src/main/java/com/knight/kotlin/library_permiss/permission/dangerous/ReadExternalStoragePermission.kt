@@ -62,7 +62,7 @@ class ReadExternalStoragePermission : DangerousPermission {
         return super.isDoNotAskAgainPermissionByStandardVersion(activity)
     }
 
-    protected override fun checkSelfByManifestFile(
+    override fun checkSelfByManifestFile(
          activity: Activity,
          requestList: List<IPermission>,
          manifestInfo: AndroidManifestInfo,

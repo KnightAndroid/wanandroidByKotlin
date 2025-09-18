@@ -76,7 +76,7 @@ class ConstellateDateAdapter : BaseQuickAdapter<ConstellateDateEntity,Constellat
 
                 if (display == "明" || position < 4) {
                     if (CacheUtils.getNormalDark()) {
-                        holder.binding.tvDateNumber.setTextColor(Color.parseColor("#666666"))
+                        holder.binding.tvDateNumber.setTextColor(Color.parseColor("#000000"))
                     } else {
                         holder.binding.tvDateNumber.setTextColor(Color.parseColor("#333333"))
                     }

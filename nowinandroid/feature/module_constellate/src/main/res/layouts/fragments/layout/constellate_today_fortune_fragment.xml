@@ -310,7 +310,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/rv_constellate_type_value"
-        android:background="@color/base_activity_bg"
+        android:background="@color/constellate_fortune_rv_background_color"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

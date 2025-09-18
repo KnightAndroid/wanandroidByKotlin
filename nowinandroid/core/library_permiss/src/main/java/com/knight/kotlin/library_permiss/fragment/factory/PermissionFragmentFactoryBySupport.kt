@@ -4,8 +4,11 @@ import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import com.knight.kotlin.library_permiss.core.OnPermissionFragmentCallback
 import com.knight.kotlin.library_permiss.fragment.IFragmentMethod
+import com.knight.kotlin.library_permiss.fragment.impl.support.PermissionSupportFragmentByRequestPermissions
+import com.knight.kotlin.library_permiss.fragment.impl.support.PermissionSupportFragmentByStartActivityForResult
 import com.knight.kotlin.library_permiss.manager.PermissionRequestCodeManager
 import com.knight.kotlin.library_permiss.manager.PermissionRequestCodeManager.generateRandomRequestCode
+import com.knight.kotlin.library_permiss.permission.PermissionChannel
 import com.knight.kotlin.library_permiss.permission.base.IPermission
 
 
@@ -19,9 +22,9 @@ import com.knight.kotlin.library_permiss.permission.base.IPermission
 class PermissionFragmentFactoryBySupport( activity: FragmentActivity,  fragmentManager: FragmentManager) :
     PermissionFragmentFactory<FragmentActivity, FragmentManager>(activity, fragmentManager) {
     override fun createAndCommitFragment(
-         permissions: List<IPermission?>,
-         permissionChannel: PermissionChannel,
-         callback: OnPermissionFragmentCallback
+        permissions: List<IPermission?>,
+        permissionChannel: PermissionChannel,
+        callback: OnPermissionFragmentCallback
     ) {
         val fragment: IFragmentMethod<FragmentActivity, FragmentManager>
         if (permissionChannel === PermissionChannel.REQUEST_PERMISSIONS) {
@@ -71,10 +74,10 @@ class PermissionFragmentFactoryBySupport( activity: FragmentActivity,  fragmentM
             maxRequestCode = PermissionRequestCodeManager.REQUEST_CODE_LIMIT_HIGH_VALUE
         }
         val requestCode = generateRandomRequestCode(maxRequestCode)
-        fragment.setArguments(generatePermissionArguments(permissions!!, requestCode))
+        fragment.setArguments(generatePermissionArguments(permissions, requestCode))
         fragment.setRetainInstance(true)
         fragment.setNonSystemRestartMark(true)
         fragment.setPermissionFragmentCallback(callback)
-        fragment.commitFragmentAttach(getFragmentManager())
+        getFragmentManager()?.let { fragment.commitFragmentAttach(it) }
     }
 }

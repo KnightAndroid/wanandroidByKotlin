@@ -13,8 +13,7 @@ import com.knight.kotlin.library_permiss.tools.PermissionVersion
 
 class PermissionManifestInfo {
 
-    /** 默认最大生效 sdk 版本  */
-    val DEFAULT_MAX_SDK_VERSION: Int = Int.MAX_VALUE
+
     /** 权限名称  */
     var name: String? = null
 
@@ -37,7 +36,8 @@ class PermissionManifestInfo {
          * 不需要请求地理位置标志
          */
         private var REQUESTED_PERMISSION_NEVER_FOR_LOCATION = 0
-
+        /** 默认最大生效 sdk 版本  */
+        const val DEFAULT_MAX_SDK_VERSION: Int = Int.MAX_VALUE
         init {
             if (PermissionVersion.isAndroid12()) {
                 REQUESTED_PERMISSION_NEVER_FOR_LOCATION =

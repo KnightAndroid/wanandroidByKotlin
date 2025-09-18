@@ -26,5 +26,5 @@ interface IFragmentCallback {
     }
 
     /** Fragment onActivityResult 方法回调  */
-    fun onFragmentActivityResult(requestCode: Int, resultCode: Int,  data: Intent) {}
+    fun onFragmentActivityResult(requestCode: Int, resultCode: Int,  data: Intent?) {}
 }

@@ -14,6 +14,7 @@ import android.content.Intent
 import android.os.Parcel
 import android.os.Parcelable
 import android.provider.Settings
+import com.core.library_devicecompat.DeviceOs
 import com.knight.kotlin.library_permiss.permission.PermissionNames
 import com.knight.kotlin.library_permiss.permission.base.IPermission
 import com.knight.kotlin.library_permiss.permission.common.SpecialPermission

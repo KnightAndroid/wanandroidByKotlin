@@ -20,9 +20,9 @@ class PermissionChannelImplByStartActivityForResult( fragmentMethod: IFragmentMe
     /** 忽略 onActivityResult 回调的总次数  */
     private var mIgnoreActivityResultCount = 0
 
-    protected override fun startPermissionRequest(
+    override fun startPermissionRequest(
          activity: Activity,
-         permissions: List<IPermission?>,
+         permissions: List<IPermission>,
         @IntRange(from = 1, to = 65535) requestCode: Int
     ) {
         startActivityForResult(
@@ -31,7 +31,7 @@ class PermissionChannelImplByStartActivityForResult( fragmentMethod: IFragmentMe
             requestCode, Runnable { mIgnoreActivityResultCount++ })
     }
 
-    override fun onFragmentActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+    override fun onFragmentActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         // 如果回调中的请求码和请求时设置的请求码不一致，则证明回调有问题，则不往下执行代码
         if (requestCode != getPermissionRequestCode()) {
             return

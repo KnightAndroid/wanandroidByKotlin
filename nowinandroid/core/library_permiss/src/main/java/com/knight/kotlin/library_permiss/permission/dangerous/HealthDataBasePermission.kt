@@ -8,6 +8,7 @@ import android.os.Parcel
 import com.knight.kotlin.library_permiss.manifest.AndroidManifestInfo
 import com.knight.kotlin.library_permiss.manifest.node.PermissionManifestInfo
 import com.knight.kotlin.library_permiss.permission.PermissionGroups
+import com.knight.kotlin.library_permiss.permission.PermissionPageType
 import com.knight.kotlin.library_permiss.permission.base.IPermission
 import com.knight.kotlin.library_permiss.permission.common.DangerousPermission
 import com.knight.kotlin.library_permiss.tools.PermissionVersion
@@ -36,7 +37,7 @@ abstract class HealthDataBasePermission : DangerousPermission {
     }
 
     
-    override fun getPermissionSettingIntents( context: Context, skipRequest: Boolean): List<Intent> {
+    override fun getPermissionSettingIntents( context: Context, skipRequest: Boolean): MutableList<Intent> {
         val intentList = super.getPermissionSettingIntents(context, skipRequest)
 
         var intent: Intent
@@ -121,7 +122,7 @@ abstract class HealthDataBasePermission : DangerousPermission {
             //   3. 转到设置 > 安全与隐私权 > 隐私权 > 隐私信息中心 > 查看其他权限 > Health Connect > 选定应用 > 阅读隐私政策
             //   4. 转到设置 > 安全与隐私权 > 隐私权 > 权限管理器 > Health Connect > 选定应用 > 阅读隐私政策
             throw IllegalArgumentException(
-                """Please add an intent filter for "${activity.getClass()}" in the AndroidManifest.xml file.
+                """Please add an intent filter for "${activity::class.java}" in the AndroidManifest.xml file.
 $xmlCode"""
             )
         }

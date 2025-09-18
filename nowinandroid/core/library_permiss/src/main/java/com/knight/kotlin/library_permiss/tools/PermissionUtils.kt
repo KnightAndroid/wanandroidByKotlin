@@ -210,7 +210,7 @@ object PermissionUtils {
     /**
      * 判断权限集合中是否包含某个权限
      */
-    fun containsPermission( permissions: Collection<IPermission>,  permission: IPermission): Boolean {
+    fun containsPermission(permissions: Collection<IPermission>,  permission: IPermission): Boolean {
         if (permissions.isEmpty()) {
             return false
         }
@@ -223,10 +223,23 @@ object PermissionUtils {
         return false
     }
 
+
+    fun containsPermissionByString(
+        permissions: Collection<String>,
+        permission: String
+    ): Boolean {
+        if (permissions.isEmpty()) return false
+        for (item in permissions) {
+            if (equalsPermission(permission, item)) {
+                return true
+            }
+        }
+        return false
+    }
     /**
      * 判断权限集合中是否包含某个权限
      */
-    fun containsPermission( permissions: Collection<IPermission>,  permissionName: String): Boolean {
+    fun containsPermission(permissions: Collection<IPermission>,  permissionName: String): Boolean {
         if (permissions.isEmpty()) {
             return false
         }

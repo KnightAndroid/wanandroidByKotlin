@@ -1,6 +1,5 @@
 package com.knight.kotlin.module_welcome.activity
 
-import XXPermissions
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.os.Build
@@ -8,6 +7,7 @@ import androidx.annotation.RequiresApi
 import com.baidu.location.BDLocation
 import com.core.library_base.route.RouteActivity
 import com.core.library_common.util.ColorUtils
+import com.hjq.permissions.XXPermissions
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_common.config.Appconfig
 import com.knight.kotlin.library_common.util.CacheUtils

@@ -7,8 +7,11 @@ import android.os.Parcel
 import android.os.Parcelable
 import android.os.PowerManager
 import android.provider.Settings
+import com.core.library_devicecompat.DeviceOs
 import com.knight.kotlin.library_permiss.permission.PermissionNames
+import com.knight.kotlin.library_permiss.permission.PermissionPageType
 import com.knight.kotlin.library_permiss.permission.common.SpecialPermission
+import com.knight.kotlin.library_permiss.tools.PermissionUtils
 import com.knight.kotlin.library_permiss.tools.PermissionVersion
 import com.knight.kotlin.library_permiss.tools.PermissionVersion.isAndroid11
 import com.knight.kotlin.library_permiss.tools.PermissionVersion.isAndroid12

@@ -1,7 +1,6 @@
 package com.knight.kotlin.module_home.activity
 
 
-import XXPermissions
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +12,7 @@ import androidx.media3.common.util.UnstableApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.core.library_base.ktx.setOnClick
 import com.core.library_base.route.RouteActivity
+import com.hjq.permissions.XXPermissions
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.ktx.getScreenWidth
 import com.knight.kotlin.library_permiss.OnPermissionCallback
@@ -119,24 +119,21 @@ class HomeNewsActivity: BaseActivity<HomeNewsActivityBinding, HomeNewsVm>(), OnR
                             XXPermissions.with(this@HomeNewsActivity)
                                 .permission(PermissionLists.getSystemAlertWindowPermission())
                                 .request(object : OnPermissionCallback {
-
-
-                                    override fun onDenied(permissions: List<IPermission>, doNotAskAgain: Boolean) {
+                                    override fun onResult(grantedList: List<IPermission>, deniedList: List<IPermission>) {
+                                        val allGranted = deniedList.isEmpty()
+                                        if (!allGranted) {
+                                            toast(getString(R.string.home_miss_float_window))
+                                            return
+                                        }
+                                        val doNotAskAgain = XXPermissions.isDoNotAskAgainPermissions(this@HomeNewsActivity, deniedList)
                                         if (doNotAskAgain) {
                                             // 如果是被永久拒绝就跳转到应用权限系统设置页面
-                                            XXPermissions.startPermissionActivity(this@HomeNewsActivity, permissions)
-                                        } else {
-                                            toast(getString(R.string.home_miss_float_window))
+                                            XXPermissions.startPermissionActivity(this@HomeNewsActivity, deniedList)
+                                            return
                                         }
-
-                                    }
-
-                                    override fun onGranted(permissions: List<IPermission>, allGranted: Boolean) {
-                                        if (allGranted) {
-                                            FloatMenuManager.initFloatMenu(this@HomeNewsActivity,initFloatViewActions(),true)
-                                            FloatMenuManager.show()
-                                            showFloatMenu = !showFloatMenu
-                                        }
+                                        FloatMenuManager.initFloatMenu(this@HomeNewsActivity,initFloatViewActions(),true)
+                                        FloatMenuManager.show()
+                                        showFloatMenu = !showFloatMenu
                                     }
                                 })
 

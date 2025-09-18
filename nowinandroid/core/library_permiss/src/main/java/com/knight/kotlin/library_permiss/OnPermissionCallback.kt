@@ -15,5 +15,5 @@ interface OnPermissionCallback {
      * @param grantedList               授予权限列表
      * @param deniedList                拒绝权限列表
      */
-    fun onResult(grantedList: List<IPermission?>, deniedList: List<IPermission?>)
+    fun onResult(grantedList: List<IPermission>, deniedList: List<IPermission>)
 }

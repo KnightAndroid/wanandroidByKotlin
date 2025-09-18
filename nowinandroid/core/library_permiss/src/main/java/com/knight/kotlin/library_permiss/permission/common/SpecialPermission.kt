@@ -3,6 +3,8 @@ package com.knight.kotlin.library_permiss.permission.common
 import android.app.Activity
 import android.content.Context
 import android.os.Parcel
+import com.knight.kotlin.library_permiss.permission.PermissionChannel
+import com.knight.kotlin.library_permiss.permission.PermissionPageType
 import com.knight.kotlin.library_permiss.permission.base.BasePermission
 import com.knight.kotlin.library_permiss.tools.PermissionVersion
 import com.knight.kotlin.library_permiss.tools.PhoneRomUtils

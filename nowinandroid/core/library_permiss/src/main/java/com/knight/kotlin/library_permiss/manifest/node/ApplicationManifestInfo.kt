@@ -15,6 +15,6 @@ class ApplicationManifestInfo {
     var requestLegacyExternalStorage: Boolean = false
 
     /** MetaData 列表  */
-    @
+
     var metaDataInfoList: MutableList<MetaDataManifestInfo> = mutableListOf()
 }

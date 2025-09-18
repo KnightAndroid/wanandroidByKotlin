@@ -7,6 +7,7 @@ import com.knight.kotlin.library_permiss.permission.PermissionChannel
 import com.knight.kotlin.library_permiss.permission.base.IPermission
 import com.knight.kotlin.library_permiss.tools.PermissionSettingPage.getCommonPermissionSettingIntent
 import com.knight.kotlin.library_permiss.tools.PermissionUtils.containsPermission
+
 import com.knight.kotlin.library_permiss.tools.PermissionUtils.equalsIntentList
 import com.knight.kotlin.library_permiss.tools.PermissionVersion.getCurrentVersion
 import kotlin.math.max

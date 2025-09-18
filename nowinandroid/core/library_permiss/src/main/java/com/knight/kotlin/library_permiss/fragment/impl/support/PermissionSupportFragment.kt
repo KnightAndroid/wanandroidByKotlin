@@ -20,7 +20,7 @@ abstract class PermissionSupportFragment : Fragment(),
     /**
      * 设置回调对象
      */
-    override fun setPermissionFragmentCallback( callback: OnPermissionFragmentCallback?) {
+    override fun setPermissionFragmentCallback(callback: OnPermissionFragmentCallback) {
         getPermissionChannelImpl().setPermissionFragmentCallback(callback)
     }
 
@@ -34,7 +34,7 @@ abstract class PermissionSupportFragment : Fragment(),
     /**
      * 提交 Fragment 绑定
      */
-    override fun commitFragmentAttach( fragmentManager: FragmentManager?) {
+    override fun commitFragmentAttach( fragmentManager: FragmentManager) {
         if (fragmentManager == null) {
             return
         }
@@ -59,7 +59,7 @@ abstract class PermissionSupportFragment : Fragment(),
         getPermissionChannelImpl().onFragmentDestroy()
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int,  permissions: Array<String?>,  grantResults: IntArray) {
+    override fun onRequestPermissionsResult(requestCode: Int,  permissions: Array<String>,  grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         getPermissionChannelImpl().onFragmentRequestPermissionsResult(requestCode, permissions, grantResults)
     }

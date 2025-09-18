@@ -14,7 +14,7 @@ import com.knight.kotlin.library_permiss.permission.common.DangerousPermission
  * @Date 2025/9/17 15:32
  * @descript:危险权限标准实现类
  */
-class StandardDangerousPermission( permissionName: String,  permissionGroup: String?, fromAndroidVersion: Int) :
+class StandardDangerousPermission( permissionName: String,  permissionGroup: String?=null, fromAndroidVersion: Int) :
     DangerousPermission() {
     /** 权限名称  */
     

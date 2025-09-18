@@ -6,13 +6,12 @@ import android.content.Intent
 import android.os.Parcel
 import android.os.Parcelable
 import android.provider.Settings
+import com.core.library_devicecompat.DeviceOs
 import com.knight.kotlin.library_permiss.permission.PermissionNames
 import com.knight.kotlin.library_permiss.permission.common.SpecialPermission
 import com.knight.kotlin.library_permiss.tools.PermissionVersion
 import com.knight.kotlin.library_permiss.tools.PermissionVersion.isAndroid10
 import com.knight.kotlin.library_permiss.tools.PermissionVersion.isAndroid6
-import com.knight.kotlin.library_permiss.tools.PhoneRomUtils.isHarmonyOs
-import com.knight.kotlin.library_permiss.tools.PhoneRomUtils.isMagicOs
 
 
 /**
@@ -45,7 +44,7 @@ class AccessNotificationPolicyPermission : SpecialPermission {
     }
 
     
-    override fun getPermissionSettingIntents( context: Context, skipRequest: Boolean): List<Intent> {
+    override fun getPermissionSettingIntents( context: Context, skipRequest: Boolean): MutableList<Intent> {
         val intentList: MutableList<Intent> = ArrayList(6)
         var intent: Intent
 

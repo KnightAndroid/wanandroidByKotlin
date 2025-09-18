@@ -19,68 +19,60 @@ object WindowLifecycleManager {
     /**
      * 将 Activity 和 Dialog 的生命周期绑定在一起
      */
-    fun bindDialogLifecycle( activity: Activity,  dialog: Dialog) {
-        val windowLifecycleCallbacks: WindowLifecycleCallbacks =
-            object : WindowLifecycleCallbacks(activity) {
-                override fun onWindowDismiss() {
-                    if (!dialog.isShowing) {
-                        return
-                    }
-                    dialog.dismiss()
+    fun bindDialogLifecycle(activity: Activity, dialog: Dialog) {
+        val windowLifecycleCallbacks: WindowLifecycleCallbacks = object : WindowLifecycleCallbacks(activity) {
+            override fun onWindowDismiss() {
+                if (!dialog.isShowing) {
+                    return
                 }
+                dialog.dismiss()
             }
+        }
         registerWindowLifecycleCallbacks(activity, windowLifecycleCallbacks)
     }
 
     /**
      * 将 Activity 和 PopupWindow 的生命周期绑定在一起
      */
-    fun bindPopupWindowLifecycle( activity: Activity,  popupWindow: PopupWindow) {
-        val windowLifecycleCallbacks: WindowLifecycleCallbacks =
-            object : WindowLifecycleCallbacks(activity) {
-                override fun onWindowDismiss() {
-                    if (!popupWindow.isShowing) {
-                        return
-                    }
-                    popupWindow.dismiss()
+    fun bindPopupWindowLifecycle(activity: Activity, popupWindow: PopupWindow) {
+        val windowLifecycleCallbacks: WindowLifecycleCallbacks = object : WindowLifecycleCallbacks(activity) {
+            override fun onWindowDismiss() {
+                if (!popupWindow.isShowing) {
+                    return
                 }
+                popupWindow.dismiss()
             }
+        }
         registerWindowLifecycleCallbacks(activity, windowLifecycleCallbacks)
     }
 
     /**
      * 注册窗口回调
      */
-    private fun registerWindowLifecycleCallbacks(
-         activity: Activity,
-         callbacks: WindowLifecycleCallbacks
-    ) {
+    private fun registerWindowLifecycleCallbacks(activity: Activity, callbacks: WindowLifecycleCallbacks) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             activity.registerActivityLifecycleCallbacks(callbacks)
         } else {
-            activity.getApplication().registerActivityLifecycleCallbacks(callbacks)
+            activity.application.registerActivityLifecycleCallbacks(callbacks)
         }
     }
 
     /**
      * 反注册窗口回调
      */
-    private fun unregisterWindowLifecycleCallbacks(
-         activity: Activity,
-         callbacks: WindowLifecycleCallbacks
-    ) {
+    private fun unregisterWindowLifecycleCallbacks(activity: Activity, callbacks: WindowLifecycleCallbacks) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             activity.unregisterActivityLifecycleCallbacks(callbacks)
         } else {
-            activity.getApplication().unregisterActivityLifecycleCallbacks(callbacks)
+            activity.application.unregisterActivityLifecycleCallbacks(callbacks)
         }
     }
 
     /**
      * 窗口生命周期回调
      */
-    private abstract class WindowLifecycleCallbacks( activity: Activity) :
-        ActivityLifecycleCallbacks {
+
+    abstract class WindowLifecycleCallbacks(activity: Activity) : ActivityLifecycleCallbacks {
 
         private var mActivity: Activity?
 
@@ -90,27 +82,31 @@ object WindowLifecycleManager {
 
         abstract fun onWindowDismiss()
 
-        override fun onActivityCreated(
-             activity: Activity,
-            savedInstanceState: Bundle?
-        ) {
+        override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
+            // default implementation ignored
         }
 
-        override fun onActivityStarted( activity: Activity) {}
-
-        override fun onActivityResumed( activity: Activity) {}
-
-        override fun onActivityPaused( activity: Activity) {}
-
-        override fun onActivityStopped( activity: Activity) {}
-
-        override fun onActivitySaveInstanceState(
-            activity: Activity,
-            outState: Bundle
-        ) {
+        override fun onActivityStarted(activity: Activity) {
+            // default implementation ignored
         }
 
-        override fun onActivityDestroyed( activity: Activity) {
+        override fun onActivityResumed(activity: Activity) {
+            // default implementation ignored
+        }
+
+        override fun onActivityPaused(activity: Activity) {
+            // default implementation ignored
+        }
+
+        override fun onActivityStopped(activity: Activity) {
+            // default implementation ignored
+        }
+
+        override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {
+            // default implementation ignored
+        }
+
+        override fun onActivityDestroyed(activity: Activity) {
             if (activity !== mActivity) {
                 return
             }

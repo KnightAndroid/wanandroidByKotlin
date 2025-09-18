@@ -6,11 +6,13 @@ import android.content.Intent
 import android.net.VpnService
 import android.os.Parcel
 import android.os.Parcelable
+import com.core.library_devicecompat.DeviceOs
 import com.knight.kotlin.library_permiss.manifest.AndroidManifestInfo
 import com.knight.kotlin.library_permiss.manifest.node.IntentFilterManifestInfo
 import com.knight.kotlin.library_permiss.manifest.node.PermissionManifestInfo
 import com.knight.kotlin.library_permiss.manifest.node.ServiceManifestInfo
 import com.knight.kotlin.library_permiss.permission.PermissionNames
+import com.knight.kotlin.library_permiss.permission.PermissionPageType
 import com.knight.kotlin.library_permiss.permission.base.IPermission
 import com.knight.kotlin.library_permiss.permission.common.SpecialPermission
 import com.knight.kotlin.library_permiss.tools.PermissionUtils
@@ -65,7 +67,7 @@ class BindVpnServicePermission : SpecialPermission {
     }
 
     
-    override fun getPermissionSettingIntents( context: Context, skipRequest: Boolean): List<Intent> {
+    override fun getPermissionSettingIntents( context: Context, skipRequest: Boolean): MutableList<Intent> {
         val intentList: MutableList<Intent> = ArrayList(2)
         intentList.add(VpnService.prepare(context))
         intentList.add(getAndroidSettingIntent())

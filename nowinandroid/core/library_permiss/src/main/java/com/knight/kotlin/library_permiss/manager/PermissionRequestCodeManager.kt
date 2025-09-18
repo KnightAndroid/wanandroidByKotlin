@@ -1,7 +1,7 @@
 package com.knight.kotlin.library_permiss.manager
 
-import XXPermissions
 import androidx.annotation.IntRange
+import com.hjq.permissions.XXPermissions
 import java.util.Random
 
 

@@ -4,7 +4,10 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Parcel
+import com.core.library_devicecompat.DeviceOs
 import com.knight.kotlin.library_permiss.manager.AlreadyRequestPermissionsManager
+import com.knight.kotlin.library_permiss.permission.PermissionChannel
+import com.knight.kotlin.library_permiss.permission.PermissionPageType
 import com.knight.kotlin.library_permiss.permission.base.BasePermission
 import com.knight.kotlin.library_permiss.tools.PermissionSettingPage.getXiaoMiApplicationPermissionPageIntent
 import com.knight.kotlin.library_permiss.tools.PermissionVersion
@@ -35,7 +38,7 @@ abstract class DangerousPermission : BasePermission {
     }
     override fun isGrantedPermission( context: Context, skipRequest: Boolean): Boolean {
         // 判断权限是不是在旧系统上面运行（权限出现的版本 > 当前系统的版本）
-        if (getFromAndroidVersion() > PermissionVersion.getCurrentVersion()) {
+        if (getFromAndroidVersion(context) > PermissionVersion.getCurrentVersion()) {
             return isGrantedPermissionByLowVersion(context, skipRequest)
         }
         return isGrantedPermissionByStandardVersion(context, skipRequest)
@@ -66,7 +69,7 @@ abstract class DangerousPermission : BasePermission {
 
     override fun isDoNotAskAgainPermission(activity: Activity): Boolean {
         // 判断权限是不是在旧系统上面运行（权限出现的版本 > 当前系统的版本）
-        if (getFromAndroidVersion() > PermissionVersion.getCurrentVersion()) {
+        if (getFromAndroidVersion(activity) > PermissionVersion.getCurrentVersion()) {
             return isDoNotAskAgainPermissionByLowVersion(activity)
         }
         return isDoNotAskAgainPermissionByStandardVersion(activity)

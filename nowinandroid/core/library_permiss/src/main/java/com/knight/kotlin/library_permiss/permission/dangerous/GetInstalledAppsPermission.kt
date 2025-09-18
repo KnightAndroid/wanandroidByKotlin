@@ -11,9 +11,12 @@ import android.os.Parcelable
 import android.provider.Settings
 import android.provider.Settings.SettingNotFoundException
 import androidx.annotation.RequiresApi
+import com.core.library_devicecompat.DeviceOs
 import com.knight.kotlin.library_permiss.manifest.AndroidManifestInfo
 import com.knight.kotlin.library_permiss.manifest.node.PermissionManifestInfo
+import com.knight.kotlin.library_permiss.permission.PermissionChannel
 import com.knight.kotlin.library_permiss.permission.PermissionNames
+import com.knight.kotlin.library_permiss.permission.PermissionPageType
 import com.knight.kotlin.library_permiss.permission.base.IPermission
 import com.knight.kotlin.library_permiss.permission.common.DangerousPermission
 import com.knight.kotlin.library_permiss.tools.PermissionSettingPage.getXiaoMiApplicationPermissionPageIntent
@@ -23,7 +26,6 @@ import com.knight.kotlin.library_permiss.tools.PermissionVersion.isAndroid11
 import com.knight.kotlin.library_permiss.tools.PermissionVersion.isAndroid4_4
 import com.knight.kotlin.library_permiss.tools.PermissionVersion.isAndroid6
 import com.knight.kotlin.library_permiss.tools.PermissionVersion.isAndroid9
-import com.knight.kotlin.library_permiss.tools.PhoneRomUtils.isMiui
 
 
 /**
@@ -127,7 +129,7 @@ class GetInstalledAppsPermission : DangerousPermission {
     }
 
     
-    override fun getPermissionSettingIntents( context: Context, skipRequest: Boolean): List<Intent> {
+    override fun getPermissionSettingIntents( context: Context, skipRequest: Boolean): MutableList<Intent> {
         val intentList: MutableList<Intent> = ArrayList()
         var intent: Intent
 
@@ -270,8 +272,9 @@ class GetInstalledAppsPermission : DangerousPermission {
 
     companion object {
         val PERMISSION_NAME: String = PermissionNames.GET_INSTALLED_APPS
-        private const val MIUI_OP_GET_INSTALLED_APPS_FIELD_NAME = "OP_GET_INSTALLED_APPS"
-        private const val MIUI_OP_GET_INSTALLED_APPS_DEFAULT_VALUE = 10022
+        const val MIUI_OP_GET_INSTALLED_APPS_FIELD_NAME = "OP_GET_INSTALLED_APPS"
+        const val MIUI_OP_GET_INSTALLED_APPS_DEFAULT_VALUE = 10022
+        const val ONE_UI_GET_APP_LIST_PERMISSION_NAME: String = "com.samsung.android.permission.GET_APP_LIST"
         @JvmField
         val CREATOR : Parcelable.Creator<GetInstalledAppsPermission> =
 
@@ -290,13 +293,4 @@ class GetInstalledAppsPermission : DangerousPermission {
                 }
             }
     }
-
-
-        @get:RequiresApi(PermissionVersion.ANDROID_4_4)
-        private val isSupportRequestPermissionByMiui: Boolean
-            /**
-             * 判断当前 miui 版本是否支持申请读取应用列表权限
-             */
-            get() = isExistOpPermission(MIUI_OP_GET_INSTALLED_APPS_FIELD_NAME)
-
 }

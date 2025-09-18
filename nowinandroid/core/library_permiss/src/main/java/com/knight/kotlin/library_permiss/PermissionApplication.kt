@@ -1,12 +1,12 @@
 package com.knight.kotlin.library_permiss
 
-import XXPermissions
 import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
 import com.core.library_common.app.ApplicationLifecycle
 import com.core.library_common.util.ProcessUtil
 import com.google.auto.service.AutoService
+import com.hjq.permissions.XXPermissions
 import com.knight.kotlin.library_base.BaseApp
 
 /**
@@ -52,7 +52,7 @@ class PermissionApplication : ApplicationLifecycle {
      * 注册阿里ARoute 初始化
      */
     private fun initPermission():String {
-       XXPermissions.setPermissionInterceptor(PermissionInterceptor::class.java)
+        XXPermissions.setPermissionInterceptor(PermissionInterceptor::class.java)
         return "Permission --->> init complete"
     }
 }

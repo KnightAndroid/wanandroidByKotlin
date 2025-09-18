@@ -120,7 +120,7 @@
                    android:layout_height="wrap_content"
                    android:layout_below="@id/rl_change_constellate"
                    android:layout_centerHorizontal="true"
-                   android:textColor="#555555"
+                   android:textColor="@color/constellate_tv_shortcomment_text_color"
                    android:textStyle="bold"
                    android:textSize="24sp"
                    android:layout_marginTop="20dp"/>
@@ -180,13 +180,13 @@
 
                <com.knight.kotlin.library_widget.NestedScrollableHost
                    android:layout_width="match_parent"
-                   android:layout_height="match_parent"
+                   android:layout_height="wrap_content"
                    android:layout_below="@id/view_line"
                    android:layout_marginTop="10dp">
                    <androidx.viewpager2.widget.ViewPager2
                        android:id="@+id/constellate_viewPager"
                        android:layout_width="match_parent"
-                       android:layout_height="match_parent" />
+                       android:layout_height="wrap_content" />
                </com.knight.kotlin.library_widget.NestedScrollableHost>
 
 

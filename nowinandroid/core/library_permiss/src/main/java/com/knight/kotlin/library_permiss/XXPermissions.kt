@@ -23,9 +23,12 @@ import com.knight.kotlin.library_permiss.manifest.AndroidManifestParser
 import com.knight.kotlin.library_permiss.permission.PermissionChannel
 import com.knight.kotlin.library_permiss.permission.base.IPermission
 import com.knight.kotlin.library_permiss.start.StartActivityAgent
+import com.knight.kotlin.library_permiss.start.StartActivityAgent.startActivity
 import com.knight.kotlin.library_permiss.tools.PermissionApi
+import com.knight.kotlin.library_permiss.tools.PermissionApi.getBestPermissionSettingIntent
 import com.knight.kotlin.library_permiss.tools.PermissionSettingPage
 import com.knight.kotlin.library_permiss.tools.PermissionUtils
+
 
 /**
  *    author : Android 轮子哥
@@ -210,6 +213,29 @@ object XXPermissions {
             PermissionApi.getBestPermissionSettingIntent(activity, permissions, true),
             requestCode
         )
+    }
+
+
+    /**
+     * 跳转到应用权限设置页
+     *
+     * @param permissions           没有授予或者被拒绝的权限组
+     */
+    fun startPermissionActivity(context: Context, permissions: List<IPermission>) {
+        val activity = PermissionUtils.findActivity(context)
+        if (activity != null) {
+            startPermissionActivity(activity, permissions)
+            return
+        }
+        startActivity(context, getBestPermissionSettingIntent(context, permissions, true))
+    }
+
+
+    fun startPermissionActivity(
+        activity: Activity,
+        permissions: List<IPermission>
+    ) {
+        startPermissionActivity(activity, permissions, REQUEST_CODE)
     }
 
     fun startPermissionActivity(

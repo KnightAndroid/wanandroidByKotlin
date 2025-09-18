@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Parcel
 import android.os.Parcelable
 import android.provider.Settings
+import com.core.library_devicecompat.DeviceOs
 import com.knight.kotlin.library_permiss.permission.PermissionNames
 import com.knight.kotlin.library_permiss.permission.common.SpecialPermission
 import com.knight.kotlin.library_permiss.tools.PermissionSettingPage.getHuaWeiMobileManagerAppIntent
@@ -58,7 +59,7 @@ class SystemAlertWindowPermission : SpecialPermission {
         return PermissionVersion.ANDROID_4_2
     }
 
-    override fun isGrantedPermission( context: Context, skipRequest: Boolean): Boolean {
+    override fun isGrantedPermission(context: Context, skipRequest: Boolean): Boolean {
         if (isAndroid6()) {
             return Settings.canDrawOverlays(context)
         }
@@ -70,7 +71,7 @@ class SystemAlertWindowPermission : SpecialPermission {
         // 经过测试在 vivo x7 Plus（Android 5.1）和 OPPO A53 （Android 5.1 ColorOS 2.1）的机子上面判断不准确
         // 经过 debug 发现并不是 vivo 和 oppo 修改了 OP_SYSTEM_ALERT_WINDOW 的赋值导致的
         // 估计是 vivo 和 oppo 的机子修改了整个悬浮窗机制，这种就没有办法了
-        return checkOpPermission(context!!, OP_SYSTEM_ALERT_WINDOW_FIELD_NAME, OP_SYSTEM_ALERT_WINDOW_DEFAULT_VALUE, true)
+        return checkOpPermission(context, OP_SYSTEM_ALERT_WINDOW_FIELD_NAME, OP_SYSTEM_ALERT_WINDOW_DEFAULT_VALUE, true)
     }
 
     

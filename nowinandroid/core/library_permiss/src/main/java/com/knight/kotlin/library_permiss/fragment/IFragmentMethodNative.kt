@@ -25,10 +25,10 @@ interface IFragmentMethodNative<A : Activity> : IStartActivityDelegate {
     )
 
     /** 获得参数集  */
-    fun getArguments(): Bundle
+    fun getArguments(): Bundle?
 
     /** 设置参数集  */
-    fun setArguments(args: Bundle)
+    fun setArguments(args: Bundle?)
 
     /** 设置是否保存实例，如果设置保存，则不会因为屏幕方向或配置变化而重新创建  */
     fun setRetainInstance(retain: Boolean)
