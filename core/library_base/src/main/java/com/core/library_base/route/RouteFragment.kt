@@ -136,10 +136,7 @@ object RouteFragment {
      */
     object Constellate {
         private const val Constellate = "/module_constellate"
-        const val ConstellateFortuneDateFragment = "$Constellate/ConstellateFortuneDateFragment"
-        const val ConstellateFortuneWeekFragment = "$Constellate/ConstellateFortuneWeekFragment"
-        const val ConstellateFortuneMonthFragment = "$Constellate/ConstellateFortuneMonthFragment"
-        const val ConstellateFortuneYearFragment = "$Constellate/ConstellateFourtuneYearFragment"
+        const val ConstellateFortunePeriodFragment = "$Constellate/ConstellateFortunePeriodFragment"
 
     }
 

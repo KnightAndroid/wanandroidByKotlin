@@ -1,5 +1,6 @@
 package com.knight.kotlin.library_base.entity
 
+import com.knight.kotlin.library_base.config.EyeCardType
 import kotlinx.serialization.json.JsonObject
 
 /**
@@ -20,7 +21,7 @@ sealed class EyeItemCard {
  * 头部卡片
  */
 data class EyeHeaderItemCard(
-    override val tpl_label:String = com.knight.kotlin.library_base.config.EyeCardType.HEADER,
+    override val tpl_label:String = EyeCardType.HEADER,
     val left: EyeLayout
 ) : EyeItemCard() {
     override val uniqueId:String
@@ -57,7 +58,7 @@ data class EyeSlideItemCard(
  *
  * 底部卡片
  */
-data class FooterItemCard(override val tpl_label: String = com.knight.kotlin.library_base.config.EyeCardType.FOOTER) : EyeItemCard() {
+data class FooterItemCard(override val tpl_label: String = EyeCardType.FOOTER) : EyeItemCard() {
     override val uniqueId:String
         get() = toString()
 

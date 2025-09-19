@@ -411,7 +411,7 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
         )
 
         homeRecommentMenu.homeRecommendMenu.setOnScrollChangeListener { _, _, _, _, _ ->
-            if (ViewInitUtils.isViewVisibleInScroll(homeRecommentMenu.homeRecommendMenu,homeRecommentMenu.sunMoonControlView) &&  homeRecommentMenu.sunMoonControlView.getDrawStatus() == SunMoonView.SunMoonDrawStatus.NOTDRAW){
+            if (ViewInitUtils.isViewNormalVisibleInScroll(homeRecommentMenu.homeRecommendMenu,homeRecommentMenu.sunMoonControlView) &&  homeRecommentMenu.sunMoonControlView.getDrawStatus() == SunMoonView.SunMoonDrawStatus.NOTDRAW){
                 if (homeSlidingMenu.getMenuViewIsOpen()) {
                         val timeDay = ValueAnimator.ofObject(LongEvaluator(), mStartTimes[0], mCurrentTimes[0])
                         timeDay.addUpdateListener { animation: ValueAnimator ->
@@ -472,7 +472,7 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
 
             }
 
-            if (ViewInitUtils.isViewVisibleInScroll(homeRecommentMenu.homeRecommendMenu,homeRecommentMenu.rlAirAqi) &&  homeRecommentMenu.weatherMainAqiProgress.getDrawStatus() == ArcProgress.ArcProgressDrawStatus.NOTDRAW) {
+            if (ViewInitUtils.isViewNormalVisibleInScroll(homeRecommentMenu.homeRecommendMenu,homeRecommentMenu.rlAirAqi) &&  homeRecommentMenu.weatherMainAqiProgress.getDrawStatus() == ArcProgress.ArcProgressDrawStatus.NOTDRAW) {
                 val aqiColor = WeatherUtils.getColor(homeRecommentMenu.weatherMainAqiProgress.context,mAqiQualityLevel)
                 val progressColor = ValueAnimator.ofObject(
                     ArgbEvaluator(),

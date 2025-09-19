@@ -29,7 +29,7 @@ import com.knight.kotlin.module_constellate.dialog.ConstellateSelectDialog
 import com.knight.kotlin.module_constellate.entity.ConstellateResponseEntity
 import com.knight.kotlin.module_constellate.entity.ConstellateTypeEntity
 import com.knight.kotlin.module_constellate.enums.FortuneTimeType
-import com.knight.kotlin.module_constellate.fragment.ConstellateTodayFortuneFragment
+import com.knight.kotlin.module_constellate.fragment.ConstellatePeriodFortuneFragment
 import com.knight.kotlin.module_constellate.vm.ConstellateFortuneVm
 import com.knight.kotlin.module_constellate.vm.ConstellateShareVm
 import com.wyjson.router.annotation.Param
@@ -94,10 +94,10 @@ class ConstellateFateActivity : BaseActivity<ConstellateFortuneActivityBinding, 
             it.tomorrow.study_children_text = study
             it.tomorrow.work_children_text = work
             mBinding.tvShortcomment.text = it.tomorrow.notice
-            mFragments.add(ConstellateTodayFortuneFragment.newInstance(it.tomorrow,FortuneTimeType.DAY))
-            mFragments.add(ConstellateTodayFortuneFragment.newInstance(it.week,FortuneTimeType.WEEK))
-            mFragments.add(ConstellateTodayFortuneFragment.newInstance(it.month,FortuneTimeType.MONTH))
-            mFragments.add(ConstellateTodayFortuneFragment.newInstance(it.year,FortuneTimeType.YEAR))
+            mFragments.add(ConstellatePeriodFortuneFragment.newInstance(it.tomorrow,FortuneTimeType.DAY))
+            mFragments.add(ConstellatePeriodFortuneFragment.newInstance(it.week,FortuneTimeType.WEEK))
+            mFragments.add(ConstellatePeriodFortuneFragment.newInstance(it.month,FortuneTimeType.MONTH))
+            mFragments.add(ConstellatePeriodFortuneFragment.newInstance(it.year,FortuneTimeType.YEAR))
 
             ViewInitUtils.setViewPager2Init(this@ConstellateFateActivity,mBinding.constellateViewPager,mFragments,
                 isOffscreenPageLimit = true,

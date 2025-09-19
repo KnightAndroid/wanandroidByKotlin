@@ -19,7 +19,7 @@ import com.knight.kotlin.module_constellate.adapter.ConstellateDateAdapter
 import com.knight.kotlin.module_constellate.adapter.ConstellateFortuneTypeDescAdapter
 import com.knight.kotlin.module_constellate.adapter.ConstellateFortuneTypeValueAdapter
 import com.knight.kotlin.module_constellate.adapter.ConstellatePeriodAdapter
-import com.knight.kotlin.module_constellate.databinding.ConstellateTodayFortuneFragmentBinding
+import com.knight.kotlin.module_constellate.databinding.ConstellatePeriodFortuneFragmentBinding
 import com.knight.kotlin.module_constellate.entity.ConstellateDateEntity
 import com.knight.kotlin.module_constellate.entity.ConstellateFortuneChildrenEntity
 import com.knight.kotlin.module_constellate.entity.ConstellateFortuneEntity
@@ -40,8 +40,8 @@ import java.time.format.DateTimeFormatter
  */
 
 @AndroidEntryPoint
-@Route(path = RouteFragment.Constellate.ConstellateFortuneDateFragment)
-class ConstellateTodayFortuneFragment : BaseFragment<ConstellateTodayFortuneFragmentBinding,ConstellateFortuneVm>(){
+@Route(path = RouteFragment.Constellate.ConstellateFortunePeriodFragment)
+class ConstellatePeriodFortuneFragment : BaseFragment<ConstellatePeriodFortuneFragmentBinding,ConstellateFortuneVm>(){
 
 
 
@@ -79,19 +79,19 @@ class ConstellateTodayFortuneFragment : BaseFragment<ConstellateTodayFortuneFrag
 
 
     companion object {
-        fun newInstance(todayFortune: ConstellateFortuneEntity,type:FortuneTimeType) : ConstellateTodayFortuneFragment {
-            val mConstellateTodayFortuneFragment = ConstellateTodayFortuneFragment()
+        fun newInstance(todayFortune: ConstellateFortuneEntity,type:FortuneTimeType) : ConstellatePeriodFortuneFragment {
+            val mConstellatePeriodFortuneFragment = ConstellatePeriodFortuneFragment()
             val args = Bundle()
             args.putParcelable("today", todayFortune)
             args.putString("type",type.name)
-            mConstellateTodayFortuneFragment.arguments = args
-            return mConstellateTodayFortuneFragment
+            mConstellatePeriodFortuneFragment.arguments = args
+            return mConstellatePeriodFortuneFragment
         }
     }
 
 
     @RequiresApi(Build.VERSION_CODES.O)
-    override fun ConstellateTodayFortuneFragmentBinding.initView() {
+    override fun ConstellatePeriodFortuneFragmentBinding.initView() {
         nestedScrollView = requireActivity().findViewById(R.id.nest_fortune)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             today = arguments?.getParcelable("today", ConstellateFortuneEntity::class.java)

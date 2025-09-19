@@ -1,7 +1,7 @@
 package com.knight.kotlin.module_eye_recommend.activity
 
-import com.knight.kotlin.library_base.activity.BaseActivity
 import com.core.library_base.route.RouteActivity
+import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.module_eye_recommend.databinding.EyeRecommendActivityBinding
 import com.knight.kotlin.module_eye_recommend.vm.EyeRecommendVm
 import com.wyjson.router.annotation.Route
@@ -28,6 +28,7 @@ class EyeRecommendActivity: BaseActivity<EyeRecommendActivityBinding, EyeRecomme
     override fun initRequestData() {
          mViewModel.getRecommendData("card","recommend").observerKt {
                //后续处理 要筛选掉广告，因为广告图片打不开
+
          }
     }
 
