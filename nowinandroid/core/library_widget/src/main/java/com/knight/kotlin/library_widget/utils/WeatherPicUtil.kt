@@ -26,7 +26,7 @@ object WeatherPicUtil {
             "小雨" -> return com.knight.kotlin.library_widget.R.drawable.widget_weather_icon_w7
             "中雨" -> return com.knight.kotlin.library_widget.R.drawable.widget_weather_icon_w8
             "大雨" -> return com.knight.kotlin.library_widget.R.drawable.widget_weather_icon_w9
-            "暴雨" -> return com.knight.kotlin.library_widget.R.drawable.widget_weather_icon_w10
+            "暴雨","大暴雨","特大暴雨" -> return com.knight.kotlin.library_widget.R.drawable.widget_weather_icon_w10
             "小雪" -> return com.knight.kotlin.library_widget.R.drawable.widget_weather_icon_w38
             "大雪" -> return com.knight.kotlin.library_widget.R.drawable.widget_weather_icon_w17
             "中雪" -> return com.knight.kotlin.library_widget.R.drawable.widget_weather_icon_w16
@@ -55,7 +55,7 @@ object WeatherPicUtil {
             "小雨" -> return com.knight.kotlin.library_widget.R.drawable.widget_weather_icon_w7
             "中雨" -> return com.knight.kotlin.library_widget.R.drawable.widget_weather_icon_w8
             "大雨" -> return com.knight.kotlin.library_widget.R.drawable.widget_weather_icon_w9
-            "暴雨" -> return com.knight.kotlin.library_widget.R.drawable.widget_weather_icon_w10
+            "暴雨","大暴雨","特大暴雨" -> return com.knight.kotlin.library_widget.R.drawable.widget_weather_icon_w10
             "小雪" -> return com.knight.kotlin.library_widget.R.drawable.widget_weather_icon_w38
             "大雪" -> return com.knight.kotlin.library_widget.R.drawable.widget_weather_icon_w17
             "中雪" -> return com.knight.kotlin.library_widget.R.drawable.widget_weather_icon_w16

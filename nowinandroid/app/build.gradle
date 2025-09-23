@@ -153,21 +153,6 @@ android {
             exclude("lib/arm64-v8a/libBaiduMapSDK_map_for_navi_v7_6_4.so")
             exclude("lib/armeabi-v7a/libapp_BaiduNaviApplib.so")
             exclude("lib/arm64-v8a/libapp_BaiduNaviApplib.so")
-//            exclude("lib/armeabi-v7a/libNative.so")
-//            exclude("lib/arm64-v8a/libNative.so")
-//            exclude("lib/armeabi-v7a/libLaneSeg.so")
-//            exclude("lib/arm64-v8a/libLaneSeg.so")
-//
-//
-//            exclude("lib/armeabi-v7a/libBaiduMapSDK_base_v7_6_4.so")
-//            exclude("lib/arm64-v8a/libBaiduMapSDK_base_v7_6_4.so")
-//
-//
-//            exclude("lib/armeabi-v7a/libc++_shared.so")
-//            exclude("lib/arm64-v8a/libc++_shared.so")
-//
-//            exclude("lib/armeabi-v7a/libtiny_magic.so")
-//            exclude("lib/arm64-v8a/libtiny_magic.so")
         }
 
     }

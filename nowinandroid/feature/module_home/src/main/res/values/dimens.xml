@@ -293,4 +293,5 @@
      <dimen name="home_tv_new_title_margin_top">5dp</dimen>
      <dimen name="home_cb_weather_margin_top">10dp</dimen>
      <dimen name="home_tv_constellate_margin_left">5dp</dimen>
+     <dimen name="home_tv_alarm_text_size">16sp</dimen>
 </resources>

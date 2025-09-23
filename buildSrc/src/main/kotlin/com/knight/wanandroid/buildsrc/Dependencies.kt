@@ -73,7 +73,7 @@ object Dependencies {
        const val RETROFIT = "2.9.0"                        // Retrofit
        const val RETROFIT_FIT_CONVERTER_GSON = "2.9.0"           // Retrofit Gson 转换器
        const val GSON = "2.8.7"                            // Gson
-       const val MMKV = "1.2.11"                           // 腾讯 MMKV 替代SP
+       const val MMKV = "2.2.3"                           // 腾讯 MMKV 替代SP
        const val AUTO_SERVICE = "1.0"                       // 自动生成SPI暴露服务文件
        const val EVENT_BUS = "3.3.1"                        // 事件总线
        const val AUTO_SIZE = "v1.2.1"                        // 屏幕适配
@@ -90,8 +90,8 @@ object Dependencies {
        const val BANNER_VERSION = "2.2.2"                   // Banner
        const val SHIMMER_LAYOUT_VERSION = "2.1.0"            // shimmerLayout
        //第三方其他相关------------------------------------------------------
-       const val LEAKCANARY_VERSION = "2.8.1"               // 内存泄漏相关
-       const val BUG_LY = "4.1.9.2"                   // bugly异常上报
+       const val LEAKCANARY_VERSION = "2.14"               // 内存泄漏相关
+       const val BUG_LY = "4.1.9.3"                   // bugly异常上报
        const val ANDROID_AOP = "2.6.2"                       //aop相关
        const val ANDROID_KSP_VERSION = "2.0.21-1.0.25"         //ksp版本  https://github.com/google/ksp/releases?page=1
 

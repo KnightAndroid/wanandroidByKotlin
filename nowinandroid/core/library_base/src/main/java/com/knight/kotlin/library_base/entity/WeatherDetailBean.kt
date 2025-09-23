@@ -144,6 +144,7 @@ data class TipObserve(
 // 预警详情类
 @Parcelize
 data class AlarmDetail(
+    @SerializedName("city") val city: String,          // 预警详情
     @SerializedName("detail") val detail: String,          // 预警详情
     @SerializedName("info") val info: String,              // 预警信息编码
     @SerializedName("level_code") val levelCode: String,  // 预警级别编码

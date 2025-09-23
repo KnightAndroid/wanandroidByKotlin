@@ -72,5 +72,6 @@
      <color name="home_tv_location_text_color">#ffffff</color>
      <color name="home_tv_weather_wind_text_color">#ffffff</color>
      <color name="home_air_quality_level_text_color">#333333</color>
+     <color name="home_tv_alarm_text_color">#55232e</color>
 
 </resources>

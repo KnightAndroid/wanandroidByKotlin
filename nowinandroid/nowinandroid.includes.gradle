@@ -37,5 +37,6 @@ include(":nowinandroid:core:library_biometric")
 include(":nowinandroid:core:library_network")
 include(":nowinandroid:core:library_scan")
 include(":nowinandroid:core:library_video")
+include(":nowinandroid:core:library_crypt")
 //依赖aar
 include(":nowinandroid:core:module_aar:aar")

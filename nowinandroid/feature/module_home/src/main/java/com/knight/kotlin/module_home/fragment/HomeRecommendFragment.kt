@@ -186,7 +186,7 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
         HourWeatherAdapter()
     }
 
-    //今日提示
+    //今日提示 最底部rv
     private val mWeatherIndexAdapter:WeatherIndexAdapter by lazy {
         WeatherIndexAdapter()
 
@@ -732,6 +732,15 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
         }
 
         mViewModel.getDetailWeekWeather(province, city, district).observerKt {
+            val firstAlarm = it.alarm.firstOrNull()
+            if (firstAlarm != null) {
+                mBinding.homeRecommentMenu.tvAlarm.visibility = View.VISIBLE
+                val suffix = if (LanguageFontSizeUtils.isChinese()) "预警" else "Warning"
+                mBinding.homeRecommentMenu.tvAlarm.text = "${firstAlarm.typeName}${firstAlarm.levelName}$suffix"
+            } else {
+                mBinding.homeRecommentMenu.tvAlarm.visibility = View.GONE
+                mBinding.homeRecommentMenu.tvAlarm.text = ""
+            }
             mBinding.homeRecommentMenu.tvSunSunriseSunsetTime.text = it.rise.get(0).sunrise + "↑\n"  + it.rise.get(0).sunset+ "↓"
             val sunriseTime = DateUtils.getTimestamp(it.rise.get(0).time,it.rise.get(0).sunrise, TimeUtils.getDefaultTimeZoneId())
             val sunsetTime = DateUtils.getTimestamp(it.rise.get(0).time,it.rise.get(0).sunset,TimeUtils.getDefaultTimeZoneId())

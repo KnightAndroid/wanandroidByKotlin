@@ -148,13 +148,27 @@
 
 
                 <TextView
+                    android:id="@+id/tv_alarm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/home_tv_alarm_text_color"
+                    android:background="@drawable/home_alarm_bg"
+                    app:layout_constraintLeft_toLeftOf="@id/tv_weather_degree"
+                    app:layout_constraintTop_toBottomOf="@id/tv_weather_degree"
+                    android:visibility="invisible"
+                    android:textSize="@dimen/home_tv_alarm_text_size"
+                    />
+
+
+
+                <TextView
                     android:id="@+id/tv_zaobao_day_tip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     android:background="@drawable/home_zaobao_title_tip_shape"
-                    app:layout_constraintTop_toBottomOf="@id/tv_weather_degree"
+                    app:layout_constraintTop_toBottomOf="@id/tv_alarm"
                     android:drawableRight="@drawable/home_icon_zaobao_tip"
                     android:drawablePadding="@dimen/base_dimen_4"
                     android:textSize="@dimen/home_tv_zaobao_title_tip_text_size"

@@ -94,7 +94,7 @@ class HomeWeatherNewsFragment: BaseDialogFragment<HomeTodayWeatherNewsDialogBind
          mViewModel.getTwoHourRainFall(getLatitude(), getLongitude(),"precipitation",2,TimeUtils.getDefaultTimeZoneId()).observe(this,{ data->
              var rainAmount:Float = 0f
              for (number in data.hourly.precipitation) {
-                 rainAmount + number
+                 rainAmount = rainAmount + number
              }
              if (rainAmount > 0) {
                  mBinding.homeTodayWeatherItem.tvRainInfo.text = "未来两小时有降雨"
