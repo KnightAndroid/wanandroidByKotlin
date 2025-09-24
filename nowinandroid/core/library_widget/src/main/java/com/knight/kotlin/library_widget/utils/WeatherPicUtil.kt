@@ -25,8 +25,8 @@ object WeatherPicUtil {
             "雨夹雪" -> return com.knight.kotlin.library_widget.R.drawable.widget_weather_icon_w6
             "小雨" -> return com.knight.kotlin.library_widget.R.drawable.widget_weather_icon_w7
             "中雨" -> return com.knight.kotlin.library_widget.R.drawable.widget_weather_icon_w8
-            "大雨" -> return com.knight.kotlin.library_widget.R.drawable.widget_weather_icon_w9
-            "暴雨","大暴雨","特大暴雨" -> return com.knight.kotlin.library_widget.R.drawable.widget_weather_icon_w10
+            "大雨","中到大雨" -> return com.knight.kotlin.library_widget.R.drawable.widget_weather_icon_w9
+            "暴雨","大到暴雨","大暴雨","特大暴雨" -> return com.knight.kotlin.library_widget.R.drawable.widget_weather_icon_w10
             "小雪" -> return com.knight.kotlin.library_widget.R.drawable.widget_weather_icon_w38
             "大雪" -> return com.knight.kotlin.library_widget.R.drawable.widget_weather_icon_w17
             "中雪" -> return com.knight.kotlin.library_widget.R.drawable.widget_weather_icon_w16
@@ -54,8 +54,8 @@ object WeatherPicUtil {
             "阵雨" -> return com.knight.kotlin.library_widget.R.drawable.widget_weather_icon_w12
             "小雨" -> return com.knight.kotlin.library_widget.R.drawable.widget_weather_icon_w7
             "中雨" -> return com.knight.kotlin.library_widget.R.drawable.widget_weather_icon_w8
-            "大雨" -> return com.knight.kotlin.library_widget.R.drawable.widget_weather_icon_w9
-            "暴雨","大暴雨","特大暴雨" -> return com.knight.kotlin.library_widget.R.drawable.widget_weather_icon_w10
+            "大雨","中到大雨" -> return com.knight.kotlin.library_widget.R.drawable.widget_weather_icon_w9
+            "暴雨","大到暴雨","大暴雨","特大暴雨" -> return com.knight.kotlin.library_widget.R.drawable.widget_weather_icon_w10
             "小雪" -> return com.knight.kotlin.library_widget.R.drawable.widget_weather_icon_w38
             "大雪" -> return com.knight.kotlin.library_widget.R.drawable.widget_weather_icon_w17
             "中雪" -> return com.knight.kotlin.library_widget.R.drawable.widget_weather_icon_w16

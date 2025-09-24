@@ -31,8 +31,8 @@ object WeatherUtils {
             "阵雨" -> WeatherView.WEATHER_KIND_RAINY
             "小雨" -> WeatherView.WEATHER_KIND_RAINY
             "中雨" -> WeatherView.WEATHER_KIND_RAINY
-            "大雨" -> WeatherView.WEATHER_KIND_RAINY
-            "暴雨","大暴雨","特大暴雨","降雨" -> WeatherView.WEATHER_KIND_RAINY
+            "大雨","中到大雨" -> WeatherView.WEATHER_KIND_RAINY
+            "暴雨","大到暴雨","大暴雨","特大暴雨","降雨" -> WeatherView.WEATHER_KIND_RAINY
             "雷雨" -> WeatherView.WEATHER_KIND_RAINY
             "小雪","降雪","下雪","雪" -> WeatherView.WEATHER_KIND_SNOW
             "大雪" -> WeatherView.WEATHER_KIND_SNOW
