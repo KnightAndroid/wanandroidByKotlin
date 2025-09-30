@@ -8,7 +8,6 @@
     android:background="@color/home_toolbar_color"
     android:theme="@style/ThemeOverlay.AppCompat.DayNight.ActionBar"
     app:layout_scrollFlags="scroll|enterAlways"
-
     app:popupTheme="@style/ThemeOverlay.AppCompat.DayNight">
 
     <RelativeLayout
@@ -20,7 +19,6 @@
             android:id="@+id/home_iv_more_menu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/home_icon_menu"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/base_dimen_10"/>
 
@@ -95,5 +93,4 @@
 
     </RelativeLayout>
 
-<!--    @drawable/home_holiday_test-->
 </com.knight.kotlin.library_widget.CompatToolBar>

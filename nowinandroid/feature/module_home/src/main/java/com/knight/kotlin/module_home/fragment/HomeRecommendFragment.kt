@@ -97,6 +97,7 @@ import com.knight.kotlin.library_util.startPage
 import com.knight.kotlin.library_util.startPageWithRightAnimate
 import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.library_util.toast.ToastUtils
+import com.knight.kotlin.library_widget.CompatToolBar
 import com.knight.kotlin.library_widget.SpacesItemDecoration
 import com.knight.kotlin.library_widget.ZzWeatherView
 import com.knight.kotlin.library_widget.ktx.init
@@ -1542,34 +1543,100 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
             gradientDrawable.shape = GradientDrawable.RECTANGLE
             gradientDrawable.cornerRadius = 45.dp2px().toFloat()
             if (statusWIthTheme) {
-                gradientDrawable.setColor(Color.WHITE)
+
                 mBinding.homeRecommentConent.homeIncludeToolbar?.run {
-                   // homeTvLoginname.setTextColor(Color.WHITE)
-                    homeIvAdd.setBackgroundResource(R.drawable.home_icon_add_white)
-                    homeIvEveryday.setBackgroundResource(R.drawable.home_icon_everyday_white)
-                    toolbar.setBackgroundColor(CacheUtils.getThemeColor())
+
+                    setToolBarPicture(toolbar,true,gradientDrawable)
                 }
 
             } else {
                 gradientDrawable.setColor(Color.parseColor("#1f767680"))
                 mBinding.homeRecommentConent.homeIncludeToolbar?.run {
-                  //  homeTvLoginname.setTextColor(Color.parseColor("#333333"))
-                    homeIvEveryday.setBackgroundResource(R.drawable.home_icon_everyday)
-                    homeIvAdd.setBackgroundResource(R.drawable.home_icon_add)
-                    toolbar.setBackgroundColor(Color.WHITE)
+
+                    setToolBarPicture(toolbar,false,gradientDrawable)
                 }
 
             }
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                mBinding.homeRecommentConent.homeIncludeToolbar!!.homeRlSearch.background = gradientDrawable
-            } else {
-                mBinding.homeRecommentConent.homeIncludeToolbar!!.homeRlSearch.setBackgroundDrawable(gradientDrawable)
-            }
+
 
 
         }
 
+    }
+
+    /**
+     *
+     * 对Toolbar进行图片加载
+     */
+    private fun setToolBarPicture(toolBar: CompatToolBar,statusWIthTheme:Boolean,gradientDrawable: GradientDrawable) {
+        Appconfig.appThemeData?.let {
+            if(it.usePicture){
+                ImageLoader.loadUriPhotoAsBitmap(requireActivity(),it.pictureUrl) {
+                        drawable ->
+                    if (drawable != null) {
+                        mBinding.homeRecommentConent.homeIncludeToolbar.homeIvEveryday.setBackgroundResource(R.drawable.home_icon_everyday_white)
+                        mBinding.homeRecommentConent.homeIncludeToolbar.homeIvAdd.setBackgroundResource(R.drawable.home_icon_add_white)
+                        mBinding.homeRecommentConent.homeIncludeToolbar.homeScanIcon.setBackgroundResource(R.drawable.home_icon_scan_white)
+                        mBinding.homeRecommentConent.homeIncludeToolbar.homeIvSearch.setBackgroundResource(com.core.library_base.R.drawable.base_icon_search_edittext_white)
+                        mBinding.homeRecommentConent.homeIncludeToolbar.homeEtSearch.setHintTextColor(Color.parseColor("#666666"))
+                        mBinding.homeRecommentConent.homeIncludeToolbar.homeIvMoreMenu.setBackgroundResource(R.drawable.home_icon_menu_white)
+                        toolBar.background = drawable
+                        gradientDrawable.setColor(Color.parseColor("#40FFFFFF"))
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                            mBinding.homeRecommentConent.homeIncludeToolbar!!.homeRlSearch.background = gradientDrawable
+                        } else {
+                            mBinding.homeRecommentConent.homeIncludeToolbar!!.homeRlSearch.setBackgroundDrawable(gradientDrawable)
+                        }
+                    }
+                }
+            } else {
+                if (statusWIthTheme) {
+                    mBinding.homeRecommentConent.homeIncludeToolbar.homeIvAdd.setBackgroundResource(R.drawable.home_icon_add_white)
+                    mBinding.homeRecommentConent.homeIncludeToolbar.homeIvEveryday.setBackgroundResource(R.drawable.home_icon_everyday_white)
+                    toolBar.setBackgroundColor(CacheUtils.getThemeColor())
+                    gradientDrawable.setColor(Color.WHITE)
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                        mBinding.homeRecommentConent.homeIncludeToolbar!!.homeRlSearch.background = gradientDrawable
+                    } else {
+                        mBinding.homeRecommentConent.homeIncludeToolbar!!.homeRlSearch.setBackgroundDrawable(gradientDrawable)
+                    }
+                } else {
+                    mBinding.homeRecommentConent.homeIncludeToolbar.homeIvEveryday.setBackgroundResource(R.drawable.home_icon_everyday)
+                    mBinding.homeRecommentConent.homeIncludeToolbar.homeIvAdd.setBackgroundResource(R.drawable.home_icon_add)
+                    toolBar.setBackgroundColor(Color.WHITE)
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                        mBinding.homeRecommentConent.homeIncludeToolbar!!.homeRlSearch.background = gradientDrawable
+                    } else {
+                        mBinding.homeRecommentConent.homeIncludeToolbar!!.homeRlSearch.setBackgroundDrawable(gradientDrawable)
+                    }
+                }
+                mBinding.homeRecommentConent.homeIncludeToolbar.homeEtSearch.setHintTextColor(Color.parseColor("#999999"))
+                mBinding.homeRecommentConent.homeIncludeToolbar.homeIvMoreMenu.setBackgroundResource(R.drawable.home_icon_menu_black)
+            }
+        } ?:run{
+            if (statusWIthTheme) {
+                mBinding.homeRecommentConent.homeIncludeToolbar.homeIvAdd.setBackgroundResource(R.drawable.home_icon_add_white)
+                mBinding.homeRecommentConent.homeIncludeToolbar.homeIvEveryday.setBackgroundResource(R.drawable.home_icon_everyday_white)
+                toolBar.setBackgroundColor(CacheUtils.getThemeColor())
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                    mBinding.homeRecommentConent.homeIncludeToolbar!!.homeRlSearch.background = gradientDrawable
+                } else {
+                    mBinding.homeRecommentConent.homeIncludeToolbar!!.homeRlSearch.setBackgroundDrawable(gradientDrawable)
+                }
+            } else {
+                mBinding.homeRecommentConent.homeIncludeToolbar.homeIvEveryday.setBackgroundResource(R.drawable.home_icon_everyday)
+                mBinding.homeRecommentConent.homeIncludeToolbar.homeIvAdd.setBackgroundResource(R.drawable.home_icon_add)
+                toolBar.setBackgroundColor(Color.WHITE)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                    mBinding.homeRecommentConent.homeIncludeToolbar!!.homeRlSearch.background = gradientDrawable
+                } else {
+                    mBinding.homeRecommentConent.homeIncludeToolbar!!.homeRlSearch.setBackgroundDrawable(gradientDrawable)
+                }
+            }
+            mBinding.homeRecommentConent.homeIncludeToolbar.homeEtSearch.setHintTextColor(Color.parseColor("#999999"))
+            mBinding.homeRecommentConent.homeIncludeToolbar.homeIvMoreMenu.setBackgroundResource(R.drawable.home_icon_menu_black)
+        }
     }
 
     /**

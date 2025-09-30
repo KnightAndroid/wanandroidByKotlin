@@ -1,6 +1,7 @@
 package com.knight.kotlin.library_common.config
 
 import com.baidu.location.BDLocation
+import com.knight.kotlin.library_common.entity.AppThemeBean
 import com.knight.kotlin.library_common.entity.UserInfoEntity
 import java.util.UUID
 
@@ -12,15 +13,23 @@ import java.util.UUID
  */
 object Appconfig {
 
-     /**
-      * 是否变灰
-      */
-     var gray = false
 
-     /**
-      * APP主题颜色
-      */
-     var appThemeColor = "#55aff4"
+     var appThemeData: AppThemeBean? = null
+//     /**
+//      * 是否变灰
+//      */
+//     var gray = false
+//
+//     /**
+//      * APP主题颜色
+//      */
+//     var appThemeColor = "#55aff4"
+//
+//     /**
+//      *
+//      * 图片Url路径
+//      */
+//     var toolBarPictureUrl = ""
 
      /**
       * 文章类型：文字文章

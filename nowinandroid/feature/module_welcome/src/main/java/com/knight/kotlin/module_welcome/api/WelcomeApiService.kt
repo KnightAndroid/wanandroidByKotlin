@@ -1,7 +1,7 @@
 package com.knight.kotlin.module_welcome.api
 
 import com.knight.kotlin.library_network.bean.BaseResponse
-import com.knight.kotlin.module_welcome.entity.AppThemeBean
+import com.knight.kotlin.library_common.entity.AppThemeBean
 import retrofit2.http.GET
 import retrofit2.http.Headers
 

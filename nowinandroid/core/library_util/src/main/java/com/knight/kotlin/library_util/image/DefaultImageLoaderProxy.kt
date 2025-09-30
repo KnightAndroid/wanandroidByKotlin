@@ -2,6 +2,7 @@ package com.knight.kotlin.library_util.image
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.view.View
@@ -67,6 +68,27 @@ class DefaultImageLoaderProxy :ImageLoaderProxy {
     override fun loadUriPhoto(mFragment: Fragment, uri: Uri, imageView: ImageView) {
         Glide.with(mFragment).load(uri).transition(DrawableTransitionOptions.withCrossFade())
             .into(imageView)
+    }
+
+    override fun loadUriPhotoAsBitmap(context: Context, uri: String, callback: (Drawable?) -> Unit) {
+        Glide.with(context)
+            .asBitmap()
+            .load(uri)
+            .into(object : CustomTarget<Bitmap>() {
+                override fun onResourceReady(
+                    resource: Bitmap,
+                    transition: Transition<in Bitmap>?
+                ) {
+                    // 转成 Drawable 回调出去
+                    val drawable = BitmapDrawable(context.resources, resource)
+                    callback(drawable)
+                }
+
+                override fun onLoadCleared(placeholder: Drawable?) {
+                    // 占位符或清理时也回调
+                    callback(placeholder)
+                }
+            })
     }
 
     override fun loadUriPhoto(

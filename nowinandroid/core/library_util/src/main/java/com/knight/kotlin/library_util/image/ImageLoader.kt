@@ -2,6 +2,7 @@ package com.knight.kotlin.library_util.image
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
@@ -95,6 +96,16 @@ class ImageLoader {
          */
         fun loadStringPhoto(context: Context, uri: String, imageView: ImageView) {
             mImageLoaderProxy.loadStringPhoto(context, uri, imageView)
+        }
+
+        /**
+         * 加载 Uri 对应的图片为 Drawable
+         * @param context 上下文
+         * @param uri 图片 Uri
+         * @param callback 加载完成后回调 Drawable
+         */
+        fun loadUriPhotoAsBitmap(context: Context, uri: String,callback: (Drawable?) -> Unit) {
+            mImageLoaderProxy.loadUriPhotoAsBitmap(context,uri,callback)
         }
 
         /**

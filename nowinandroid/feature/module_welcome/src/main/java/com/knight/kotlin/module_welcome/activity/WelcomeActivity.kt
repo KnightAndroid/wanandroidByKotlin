@@ -10,13 +10,13 @@ import com.core.library_common.util.ColorUtils
 import com.hjq.permissions.XXPermissions
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_common.config.Appconfig
+import com.knight.kotlin.library_common.entity.AppThemeBean
 import com.knight.kotlin.library_common.util.CacheUtils
 import com.knight.kotlin.library_permiss.permission.PermissionLists
 import com.knight.kotlin.library_permiss.permission.base.IPermission
 import com.knight.kotlin.library_util.baidu.LocationUtils
 import com.knight.kotlin.library_util.baidu.OnceLocationListener
 import com.knight.kotlin.module_welcome.databinding.WelcomeActivityBinding
-import com.knight.kotlin.module_welcome.entity.AppThemeBean
 import com.knight.kotlin.module_welcome.fragment.WelcomePrivacyAgreeFragment
 import com.knight.kotlin.module_welcome.vm.WelcomeVm
 import com.wyjson.router.GoRouter
@@ -118,14 +118,15 @@ class WelcomeActivity : BaseActivity<WelcomeActivityBinding, WelcomeVm>() {
 
 
     private fun setAppThemeData(data: AppThemeBean) {
-        if (data.forceTheme) {
-            Appconfig.appThemeColor = data.themeColor
-            CacheUtils.setThemeColor(ColorUtils.convertToColorInt(Appconfig.appThemeColor))
-        } else {
-            Appconfig.appThemeColor = ColorUtils.convertToRGB(CacheUtils.getThemeColor())
-        }
+        Appconfig.appThemeData = data
+        Appconfig.appThemeData?.let {
+            if (data.forceTheme) {
+                CacheUtils.setThemeColor(ColorUtils.convertToColorInt(it.themeColor))
+            } else {
+                it.themeColor = ColorUtils.convertToRGB(CacheUtils.getThemeColor())
+            }
 
-       Appconfig.gray = data.gray
+        }
     }
 
     override fun reLoadData() {
