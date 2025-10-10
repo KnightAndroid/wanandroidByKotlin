@@ -10,7 +10,6 @@ import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.knight.kotlin.library_util.JsonUtils
 import com.knight.kotlin.library_util.startPage
 import com.knight.kotlin.library_util.startPageWithParams
-import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.library_widget.ktx.init
 import com.knight.kotlin.library_widget.ktx.setSafeOnItemClickListener
 import com.knight.kotlin.module_home.adapter.EyepetizerCategoryAdapter
@@ -67,8 +66,7 @@ class HomeEyeClassifyFragment : BaseFragment<HomeEyeClassifyFragmentBinding, Emp
                     startPageWithParams(RouteActivity.EyeDaily.DailyListActivity,"tabTitle" to mDataList[position].categoryName)
                 } else if (position === 1) {
                     //推荐
-                    //startPage(RouteActivity.EyeRecommend.EyeRecommendActivity)
-                    toast("静等十月份下旬开放~")
+                    startPage(RouteActivity.EyeRecommend.EyeRecommendActivity)
                 } else if (position === 2) {
                     //发现
                     startPage(RouteActivity.EyeDiscover.EyeDiscoverActivity)
