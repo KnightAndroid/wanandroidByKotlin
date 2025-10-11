@@ -65,3 +65,12 @@ object EyeCardUIType {
     const val FEEDITEM = 3
     const val PIC = 4 //图文
 }
+
+/**
+ *
+ * 开眼推荐视频类型
+ */
+object EyeRecommendVideoType {
+    const val COVERLARGEVIDEO = 1 //大视频
+    const val COVERSMALLVIDEO = 2 //小视频
+}

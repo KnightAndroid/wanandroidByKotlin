@@ -1,3 +1,4 @@
 <resources>
     <string name="eye_recommend_app_name">module_eye_recommend</string>
+    <string name="eye_recommend_video_title">Recommend</string>
 </resources>

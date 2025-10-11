@@ -2,6 +2,7 @@ package com.knight.kotlin.module_eye_recommend.activity
 
 import com.core.library_base.route.RouteActivity
 import com.knight.kotlin.library_base.activity.BaseActivity
+import com.knight.kotlin.module_eye_recommend.R
 import com.knight.kotlin.module_eye_recommend.databinding.EyeRecommendActivityBinding
 import com.knight.kotlin.module_eye_recommend.vm.EyeRecommendVm
 import com.wyjson.router.annotation.Route
@@ -37,6 +38,6 @@ class EyeRecommendActivity: BaseActivity<EyeRecommendActivityBinding, EyeRecomme
     }
 
     override fun EyeRecommendActivityBinding.initView() {
-
+        mBinding.title = getString(R.string.eye_recommend_video_title)
     }
 }

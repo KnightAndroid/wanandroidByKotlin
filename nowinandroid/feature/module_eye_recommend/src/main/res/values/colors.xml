@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
   <resources>
   <color name="eye_recommend_video_item_tv_title_text_color">#333333</color>
+  <color name="eye_recommend_video_item_tv_desc_text_color">#9a9a9a</color>
+  <color name="eye_recommend_video_item_tv_category_text_color">#9a9a9a</color>
+  <color name="eye_recommend_video_item_tv_video_time_text_color">#333333</color>
+  <color name="eye_recommend_small_video_card_mb_time_background_tint">#8A000000</color>
+  <color name="eye_recommend_small_video_item_title_text_color">#000000</color>
+  <color name="eye_recommend_small_video_category_text_color">#333333</color>
   </resources>

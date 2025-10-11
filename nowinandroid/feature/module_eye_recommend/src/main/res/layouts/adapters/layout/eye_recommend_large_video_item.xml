@@ -24,24 +24,7 @@
        />
 
 
-        <TextView
-            android:id="@+id/tv_daily_banner_category"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/eye_discover_category_item_type_icon"
-            android:gravity="center"
-            android:paddingRight="@dimen/eye_discover_detail_item_tv_category_padding_right"
-            android:paddingBottom="@dimen/eye_discover_detail_item_tv_category_padding_bottom"
-            android:paddingStart="@dimen/eye_discover_detail_item_tv_category_padding_start"
-            android:shadowColor="@android:color/black"
-            android:shadowDx="2"
-            android:shadowDy="2"
-            android:shadowRadius="1"
-            android:textColor="@android:color/white"
-            android:textStyle="bold"
-            android:text="@{viewModel.data.category}"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+
 
 
 
@@ -72,41 +55,57 @@
             app:layout_constraintTop_toBottomOf="@id/iv_eye_recommend_video_author" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_desc"
+            android:id="@+id/tv_eye_recommend_video_desc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/eye_discover_detail_item_tv_author_margin_start"
-            android:layout_marginTop="@dimen/eye_discover_detail_item_tv_author_margin_top"
-            android:text="@{viewModel.data.author == null ? viewModel.data.tags[0].name : viewModel.data.author.name}"
-            android:textColor="@color/eye_discover_item_detail_tv_author_color"
-            android:textSize="@dimen/eye_discover_detail_item_tv_author_text_size"
-            app:layout_constraintLeft_toRightOf="@id/iv_author"
-            app:layout_constraintTop_toBottomOf="@id/tv_title" />
+            android:layout_marginStart="@dimen/eye_recommend_video_item_tv_desc_margin_start"
+            android:layout_marginTop="@dimen/eye_recommend_video_item_tv_desc_margin_top"
+            android:textColor="@color/eye_recommend_video_item_tv_desc_text_color"
+            android:textSize="@dimen/eye_recommend_video_item_tv_desc_text_size"
+            app:layout_constraintLeft_toRightOf="@id/iv_eye_recommend_video_author"
+            app:layout_constraintTop_toBottomOf="@id/tv_eye_recommend_video_title" />
+
+
+
+
+
+        <TextView
+            android:id="@+id/tv_eye_recommend_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/eye_recommend_video_item_tv_category_text_color"
+            android:layout_marginLeft="@dimen/eye_recommend_video_category_margin_left"
+            app:layout_constraintLeft_toRightOf="@id/tv_eye_recommend_video_desc"
+            app:layout_constraintTop_toTopOf="@id/tv_eye_recommend_video_desc" />
+
+
+
+
+
 
 
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_video_time"
+            android:id="@+id/tv_eye_recommend_video_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{DateUtils.INSTANCE.formatDateMsByMS(viewModel.data.duration * 1000)}"
-            app:layout_constraintTop_toTopOf="@id/tv_desc"
-            app:layout_constraintStart_toEndOf="@id/tv_desc"
-            android:textColor="@color/eye_discover_item_detail_tv_video_time_text_color"
-            android:drawableLeft="@drawable/eye_discover_category_play_icon"
-            android:drawablePadding="@dimen/eye_discover_detail_item_tv_video_time_drawable_padding"
-            android:layout_marginStart="@dimen/eye_discover_detail_item_tv_video_time_margin_start"
+            app:layout_constraintTop_toTopOf="@id/tv_eye_recommend_video_desc"
+            app:layout_constraintStart_toEndOf="@id/tv_eye_recommend_category"
+            android:textColor="@color/eye_recommend_video_item_tv_video_time_text_color"
+            android:drawableLeft="@drawable/eye_recommend_video_play_icon"
+            android:drawablePadding="@dimen/eye_recommend_video_item_tv_time_drawable_padding"
+            android:layout_marginStart="@dimen/eye_recommend_video_item_tv_time_margin_start"
             />
 
         <ImageView
-            android:id="@+id/tv_share"
+            android:id="@+id/tv_eye_recommend_share"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/eye_discover_share_icon"
+            android:background="@drawable/eye_recommend_video_share_icon"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/iv_cover"
-            android:layout_marginEnd="@dimen/eye_discover_detail_item_tv_share_margin_end"/>
+            app:layout_constraintTop_toBottomOf="@id/iv_eye_recommend_cover"
+            android:layout_marginEnd="@dimen/eye_recommend_video_tv_share_margin_end"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

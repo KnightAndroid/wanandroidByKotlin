@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="eye_recommend_video_item_tv_title_text_color">#333333</color>
+    <color name="eye_recommend_video_item_tv_video_time_text_color">#D3D3D3</color>
+      <color name="eye_recommend_small_video_item_title_text_color">#D3D3D3</color>
+<color name="eye_recommend_small_video_category_text_color">#D3D3D3</color>
 </resources>
