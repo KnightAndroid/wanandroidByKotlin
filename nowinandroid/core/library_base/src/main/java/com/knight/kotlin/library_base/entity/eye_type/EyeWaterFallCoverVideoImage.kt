@@ -1,13 +1,12 @@
 package com.knight.kotlin.library_base.entity.eye_type
 
+import com.core.library_base.ktx.NumberOrStringSerializer
 import com.knight.kotlin.library_base.entity.EyeCommonAuthor
 import com.knight.kotlin.library_base.entity.EyeCommonConsumption
 import com.knight.kotlin.library_base.entity.EyeCommonCover
 import com.knight.kotlin.library_base.entity.EyeCommonDuration
 import com.knight.kotlin.library_base.entity.EyeCommonTag
 import com.knight.kotlin.library_base.entity.EyeCommonTopic
-import com.core.library_base.ktx.NumberOrStringSerializer
-
 import kotlinx.serialization.Serializable
 import org.greenrobot.eventbus.Poster
 

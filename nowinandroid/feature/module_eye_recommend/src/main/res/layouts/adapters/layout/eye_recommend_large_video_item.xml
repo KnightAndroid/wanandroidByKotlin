@@ -4,7 +4,9 @@
     <data>
 
         <import type="com.knight.kotlin.library_util.DateUtils" />
-
+        <variable
+            name="viewModel"
+            type="com.knight.kotlin.module_eye_recommend.entity.EyeRecommendVideoEntity" />
 
     </data>
 
@@ -21,7 +23,8 @@
             android:layout_height="@dimen/eye_recommend_video_item_height"
             android:scaleType="centerCrop"
             app:layout_constraintTop_toTopOf="parent"
-       />
+            bind:imageUrl="@{viewModel.cover.url}"
+            />
 
 
 
@@ -38,7 +41,8 @@
             android:layout_marginStart="@dimen/eye_recommend_video_item_iv_author_margin_start"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@id/iv_eye_recommend_cover"
-            app:shapeAppearance="@style/base_circleStyle" />
+            app:shapeAppearance="@style/base_circleStyle"
+            app:imageUrl="@{viewModel.author.avatar.url}"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_eye_recommend_video_title"
@@ -52,7 +56,8 @@
             android:textSize="@dimen/eye_recommend_video_item_tv_title_text_size"
             android:textStyle="bold"
             app:layout_constraintLeft_toRightOf="@id/iv_eye_recommend_video_author"
-            app:layout_constraintTop_toBottomOf="@id/iv_eye_recommend_video_author" />
+            app:layout_constraintTop_toBottomOf="@id/iv_eye_recommend_video_author"
+            android:text="@{viewModel.title}"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_eye_recommend_video_desc"
