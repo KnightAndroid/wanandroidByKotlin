@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+   >
 
+    <data>
 
+        <import type="com.knight.kotlin.library_util.DateUtils" />
+        <variable
+            name="viewModel"
+            type="com.knight.kotlin.module_eye_recommend.entity.EyeRecommendVideoEntity" />
+
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="160dp">
+        android:layout_height="160dp"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/iv_eye_recommend_small_video_cover"
@@ -21,6 +29,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintWidth_percent="0.45"
             app:shapeAppearance="@style/base_roundedCornerStyle"
+            app:imageUrl="@{viewModel.cover.url}"
             />
 
 
@@ -40,6 +49,7 @@
             android:textSize="@dimen/eye_recommend_small_video_card_mb_time_text_size"
             app:backgroundTint="@color/eye_recommend_small_video_card_mb_time_background_tint"
             app:cornerRadius="@dimen/eye_recommend_small_video_card_mb_time_corner_radius"
+            android:text="@{viewModel.duration.text}"
             app:layout_constraintBottom_toBottomOf="@+id/iv_eye_recommend_small_video_cover"
             app:layout_constraintEnd_toEndOf="@+id/iv_eye_recommend_small_video_cover" />
 
@@ -60,7 +70,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/iv_eye_recommend_small_video_cover"
             app:layout_constraintTop_toTopOf="@+id/iv_eye_recommend_small_video_cover"
-            tools:text="这不是你想的那种羞羞的广告 [ 真的] !" />
+            tools:text="这不是你想的那种羞羞的广告 [ 真的] !"
+            android:text="@{viewModel.title}"/>
 
         <TextView
             android:id="@+id/tv_eye_recommend_small_video_category"

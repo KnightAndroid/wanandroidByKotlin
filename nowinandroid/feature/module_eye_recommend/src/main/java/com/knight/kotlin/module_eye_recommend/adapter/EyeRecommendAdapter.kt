@@ -1,14 +1,20 @@
 package com.knight.kotlin.module_eye_recommend.adapter
 
 import android.content.Context
+import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter4.BaseMultiItemAdapter
 import com.knight.kotlin.library_base.config.EyeCardType
 import com.knight.kotlin.library_base.config.EyeRecommendVideoType
 import com.knight.kotlin.library_base.entity.EyeCardEntity
+import com.knight.kotlin.library_widget.ktx.init
 import com.knight.kotlin.module_eye_recommend.databinding.EyeRecommendRvLargeVideoItemBinding
 import com.knight.kotlin.module_eye_recommend.databinding.EyeRecommendRvSmallVideoItemBinding
+import com.knight.kotlin.module_eye_recommend.entity.EyeRecommendVideoEntity
+import kotlinx.serialization.json.Json
 
 
 /**
@@ -26,13 +32,27 @@ class EyeRecommendAdapter(data:List<EyeCardEntity>): BaseMultiItemAdapter<EyeCar
     class EyeCoverSmallVideoVH(viewBinding: EyeRecommendRvSmallVideoItemBinding) : RecyclerView.ViewHolder(viewBinding.root)
 
     init {
+        //大视频布局
         addItemType(EyeRecommendVideoType.COVERLARGEVIDEO, object : OnMultiItemAdapterListener<EyeCardEntity, EyeCoverLargeVideoVH> {
             override fun onBind(
                 holder: EyeCoverLargeVideoVH,
                 position: Int,
                 item: EyeCardEntity?
             ) {
-                TODO("Not yet implemented")
+                val binding = DataBindingUtil.getBinding<EyeRecommendRvLargeVideoItemBinding>(holder.itemView)
+                val largeVideoLists:List<EyeRecommendVideoEntity>? = item?.card_data?.body?.metro_list?.map {
+                    eyeMetroCard ->
+                    // 将JsonObject转换为JSON字符串
+                    val jsonString = eyeMetroCard.metro_data.toString()
+                    Json.decodeFromString<EyeRecommendVideoEntity>(jsonString)
+                }
+                val mEyeRecommendLargeItemAdapter = EyeRecommendLargeVideoAdapter()
+                binding?.rvEyeRecommendLargeVideo?.init(
+                    LinearLayoutManager(context),
+                    mEyeRecommendLargeItemAdapter,
+                    false
+                )
+                mEyeRecommendLargeItemAdapter.submitList(largeVideoLists)
             }
 
             override fun onCreate(
@@ -40,7 +60,8 @@ class EyeRecommendAdapter(data:List<EyeCardEntity>): BaseMultiItemAdapter<EyeCar
                 parent: ViewGroup,
                 viewType: Int
             ): EyeCoverLargeVideoVH {
-                TODO("Not yet implemented")
+                val viewBinding = EyeRecommendRvLargeVideoItemBinding.inflate(LayoutInflater.from(context), parent, false)
+                return EyeCoverLargeVideoVH(viewBinding)
             }
         }).addItemType(EyeRecommendVideoType.COVERSMALLVIDEO, object : OnMultiItemAdapterListener<EyeCardEntity, EyeCoverSmallVideoVH> {
             override fun onBind(
@@ -48,7 +69,20 @@ class EyeRecommendAdapter(data:List<EyeCardEntity>): BaseMultiItemAdapter<EyeCar
                 position: Int,
                 item: EyeCardEntity?
             ) {
-                TODO("Not yet implemented")
+                val binding = DataBindingUtil.getBinding<EyeRecommendRvSmallVideoItemBinding>(holder.itemView)
+                val largeVideoLists:List<EyeRecommendVideoEntity>? = item?.card_data?.body?.metro_list?.map {
+                        eyeMetroCard ->
+                    // 将JsonObject转换为JSON字符串
+                    val jsonString = eyeMetroCard.metro_data.toString()
+                    Json.decodeFromString<EyeRecommendVideoEntity>(jsonString)
+                }
+                val mEyeRecommendSmallItemAdapter = EyeRecommendSmallVideoAdapter()
+                binding?.rvEyeRecommendSmallVideo?.init(
+                    LinearLayoutManager(context),
+                    mEyeRecommendSmallItemAdapter,
+                    false
+                )
+                mEyeRecommendSmallItemAdapter.submitList(largeVideoLists)
             }
 
             override fun onCreate(
@@ -56,7 +90,8 @@ class EyeRecommendAdapter(data:List<EyeCardEntity>): BaseMultiItemAdapter<EyeCar
                 parent: ViewGroup,
                 viewType: Int
             ): EyeCoverSmallVideoVH {
-                TODO("Not yet implemented")
+                val viewBinding = EyeRecommendRvSmallVideoItemBinding.inflate(LayoutInflater.from(context), parent, false)
+                return EyeCoverSmallVideoVH(viewBinding)
             }
         }).onItemViewType { position, list ->
             val tplLabel = list.getOrNull(position)

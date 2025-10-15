@@ -67,6 +67,7 @@
             android:layout_marginTop="@dimen/eye_recommend_video_item_tv_desc_margin_top"
             android:textColor="@color/eye_recommend_video_item_tv_desc_text_color"
             android:textSize="@dimen/eye_recommend_video_item_tv_desc_text_size"
+            android:text="@{viewModel.author.nick}"
             app:layout_constraintLeft_toRightOf="@id/iv_eye_recommend_video_author"
             app:layout_constraintTop_toBottomOf="@id/tv_eye_recommend_video_title" />
 
@@ -100,6 +101,7 @@
             android:drawableLeft="@drawable/eye_recommend_video_play_icon"
             android:drawablePadding="@dimen/eye_recommend_video_item_tv_time_drawable_padding"
             android:layout_marginStart="@dimen/eye_recommend_video_item_tv_time_margin_start"
+            android:text="@{viewModel.duration.text}"
             />
 
         <ImageView

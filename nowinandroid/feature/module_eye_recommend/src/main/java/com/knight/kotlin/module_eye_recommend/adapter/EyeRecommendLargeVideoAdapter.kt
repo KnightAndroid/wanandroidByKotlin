@@ -21,7 +21,10 @@ class EyeRecommendLargeVideoAdapter: BaseQuickAdapter<EyeRecommendVideoEntity,Ey
         position: Int,
         item: EyeRecommendVideoEntity?
     ) {
-        TODO("Not yet implemented")
+        item?.let {
+            holder.binding.viewModel = it
+
+        }
     }
 
     override fun onCreateViewHolder(
@@ -29,7 +32,7 @@ class EyeRecommendLargeVideoAdapter: BaseQuickAdapter<EyeRecommendVideoEntity,Ey
         parent: ViewGroup,
         viewType: Int
     ): VH {
-        TODO("Not yet implemented")
+        return VH(parent)
     }
 
     // --> eye_discover_category_detail_item

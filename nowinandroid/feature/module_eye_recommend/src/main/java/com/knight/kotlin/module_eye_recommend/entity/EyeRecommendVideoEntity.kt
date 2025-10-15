@@ -22,7 +22,6 @@ data class EyeRecommendVideoEntity(
     val play_ctrl: EyeVideoCtrl? = null,
     val play_url: String = "",
     val preview_url:String = "",
-    val play_url_with_watermark:String = "",
     val tags: List<EyeCommonTag> = emptyList(),
     val cover: EyeCommonCover? = null,
     val author: EyeCommonAuthor,
