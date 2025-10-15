@@ -55,7 +55,7 @@ data class EyeCommonImageInfo(
 data class EyeCommonAuthor(
     val uid: Long = 0,
     val nick: String = "",
-    val description: String = "",
+    val description: String? = null,
     val avatar: EyeCommonAvatar? = null,
     val link: String = "",
     val type: String = "",

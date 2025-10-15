@@ -15,7 +15,8 @@
         xmlns:bind="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingBottom="15dp">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/iv_eye_recommend_cover"
@@ -56,7 +57,7 @@
             android:textSize="@dimen/eye_recommend_video_item_tv_title_text_size"
             android:textStyle="bold"
             app:layout_constraintLeft_toRightOf="@id/iv_eye_recommend_video_author"
-            app:layout_constraintTop_toBottomOf="@id/iv_eye_recommend_video_author"
+            app:layout_constraintTop_toBottomOf="@id/iv_eye_recommend_cover"
             android:text="@{viewModel.title}"/>
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -81,6 +82,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/eye_recommend_video_item_tv_category_text_color"
             android:layout_marginLeft="@dimen/eye_recommend_video_category_margin_left"
+            android:textSize="@dimen/eye_recommend_video_item_tv_category_text_size"
             app:layout_constraintLeft_toRightOf="@id/tv_eye_recommend_video_desc"
             app:layout_constraintTop_toTopOf="@id/tv_eye_recommend_video_desc" />
 

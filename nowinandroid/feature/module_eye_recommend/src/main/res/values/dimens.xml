@@ -3,16 +3,17 @@
     <dimen name="eye_recommend_video_item_height">200dp</dimen>
     <dimen name="eye_recommend_video_item_iv_author_width">40dp</dimen>
     <dimen name="eye_recommend_video_item_iv_author_height">40dp</dimen>
-    <dimen name="eye_recommend_video_item_iv_author_margin_top">10dp</dimen>
+    <dimen name="eye_recommend_video_item_iv_author_margin_top">20dp</dimen>
     <dimen name="eye_recommend_video_item_iv_author_margin_start">10dp</dimen>
     <dimen name="eye_recommend_video_item_tv_title_margin_start">10dp</dimen>
-    <dimen name="eye_recommend_video_item_tv_title_margin_top">10dp</dimen>
+    <dimen name="eye_recommend_video_item_tv_title_margin_top">15dp</dimen>
     <dimen name="eye_recommend_video_item_tv_title_text_size">14sp</dimen>
     <dimen name="eye_recommend_video_item_tv_desc_margin_start">10dp</dimen>
-    <dimen name="eye_recommend_video_item_tv_desc_margin_top">20dp</dimen>
+    <dimen name="eye_recommend_video_item_tv_desc_margin_top">10dp</dimen>
     <dimen name="eye_recommend_video_item_tv_desc_text_size">12sp</dimen>
+    <dimen name="eye_recommend_video_item_tv_category_text_size">12sp</dimen>
     <dimen name="eye_recommend_video_item_tv_time_drawable_padding">5dp</dimen>
-    <dimen name="eye_recommend_video_item_tv_time_margin_start">10dp</dimen>
+    <dimen name="eye_recommend_video_item_tv_time_margin_start">15dp</dimen>
     <dimen name="eye_recommend_video_tv_share_margin_end">10dp</dimen>
     <dimen name="eye_recommend_video_category_margin_left">5dp</dimen>
     <dimen name="eye_recommend_small_video_card_mb_time_width">38dp</dimen>
@@ -21,4 +22,5 @@
     <dimen name="eye_recommend_small_video_card_mb_time_margin_bottom">5dp</dimen>
     <dimen name="eye_recommend_small_video_card_mb_time_text_size">10sp</dimen>
     <dimen name="eye_recommend_small_video_card_mb_time_corner_radius">5dp</dimen>
+    <dimen name="eye_recommend_small_video_item_tv_nick_margin_end">10dp</dimen>
 </resources>

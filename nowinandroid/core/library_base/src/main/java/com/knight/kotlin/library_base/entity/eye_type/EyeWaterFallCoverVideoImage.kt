@@ -17,11 +17,11 @@ import org.greenrobot.eventbus.Poster
  * 社区/广场 视频还是图像卡片
  */
 @Serializable
-data class EyeWaterFallCoverVideoImage (
+data class EyeWaterFallCoverVideoImage(
     val image_id: Long = 0,
-    val video_id:String = "",
-    val duration: EyeCommonDuration?=null,
-    val play_ctrl: EyeVideoCtrl?=null,
+    val video_id: String = "",
+    val duration: EyeCommonDuration? = null,
+    val play_ctrl: EyeVideoCtrl? = null,
     val tags: List<EyeCommonTag> = emptyList(),
     val title: String = "",
     val recommend_level:String = "",
@@ -30,24 +30,37 @@ data class EyeWaterFallCoverVideoImage (
     val liked: Boolean = false,
     val image_count: Long = 0,
     val resource_id: Long = 0,
-    val resource_type:String = "",
-    val debug: EyeVideoItemCard?=null
+    val resource_type: String = "",
+    val debug: EyeVideoItemCard? = null
+)
+
+
+@Serializable
+data class CropArea(
+    val x: Int = 0,
+    val y: Int = 0,
+    val width: Int = 0,
+    val height: Int = 0,
+    val origin_width: Int = 0,
+    val origin_height: Int = 0
 )
 
 @Serializable
 data class EyeVideoCtrl(
-    val autoplay:Boolean,
+    val autoplay: Boolean,
     val autoplay_times: Long,
     val need_wifi: Boolean,
-    val need_cellular:Boolean
+    val need_cellular: Boolean,
+    val need_wifi_preload: Boolean
 )
+
 @Serializable
 data class EyeVideoItemCard(
     val itemId: String = "",
     val publish_time: String = "",
-    val tag_list:List<EyeCommonVideoTag>?=null,
-    val new_tag_list:List<EyeCommonVideoTag>?=null,
-    val add_watermark:Int = 0,
+    val tag_list: List<EyeCommonVideoTag>? = null,
+    val new_tag_list: List<EyeCommonVideoTag>? = null,
+    val add_watermark: Int = 0,
     val raw_publish_time: String = "",
     val location: EyeLocation? = null,
     val topics: List<EyeCommonTopic> = listOf(),
@@ -56,7 +69,7 @@ data class EyeVideoItemCard(
     val text: String = "",
     val video: EyeVideo? = null,
     val recommend_level: String = "",
-    val status:String = "",
+    val status: String = "",
     val author: EyeVideoAuthor? = null,
     val consumption: EyeCommonConsumption? = null,
     val liked: Boolean = false,
@@ -76,7 +89,7 @@ data class EyeLocation(
     val area: String = "",
     val city: String = "",
     @Serializable(with = NumberOrStringSerializer::class)
-    val longitude: String ="0.0000000",
+    val longitude: String = "0.0000000",
     @Serializable(with = NumberOrStringSerializer::class)
     val latitude: String = "0.0000000"
 )
@@ -96,13 +109,13 @@ data class EyeVideo(
     val play_ctrl: EyeVideoCtrl? = null,
     val play_url: String = "",
     val play_info: List<EyePlayInfo> = emptyList(),
-    val preview_url:String = "",
-    val play_url_with_watermark:String = "",
-    val origin_url:String = "",
-    val cover_url:String = "",
-    val cover_blurred:String = "",
-    val summary_url:String = "",
-    val thumbnail_list:List<String> = emptyList(),
+    val preview_url: String = "",
+    val play_url_with_watermark: String = "",
+    val origin_url: String = "",
+    val cover_url: String = "",
+    val cover_blurred: String = "",
+    val summary_url: String = "",
+    val thumbnail_list: List<String> = emptyList(),
     val recommend_level: String = "",
     val tags: List<EyeCommonTag> = emptyList(),
     val cover: EyeCommonCover? = null,
@@ -128,18 +141,20 @@ data class EyeUrlList(
     val url: String,
     val size: Int
 )
+
 @Serializable
 data class EyeCommonVideoTag(
     @Serializable(with = NumberOrStringSerializer::class)
-    val tag_id:String = "",
-    val title:String = ""
+    val tag_id: String = "",
+    val title: String = ""
 )
+
 @Serializable
 data class EyeVideoAuthor(
     val uid: Long = 0,
     val nick: String = "",
     val description: String = "",
-    val avatar: String ="",
+    val avatar: String = "",
     val followed: Boolean = false,
     val user_type: String = "",
     val status: String = "",

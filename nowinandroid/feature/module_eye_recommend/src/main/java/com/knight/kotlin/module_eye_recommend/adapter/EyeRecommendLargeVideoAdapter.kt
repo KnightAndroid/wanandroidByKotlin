@@ -23,7 +23,8 @@ class EyeRecommendLargeVideoAdapter: BaseQuickAdapter<EyeRecommendVideoEntity,Ey
     ) {
         item?.let {
             holder.binding.viewModel = it
-
+            holder.binding.tvEyeRecommendCategory.text =
+                it.tags.takeIf { it.isNotEmpty() }?.joinToString(" ") { it.title } ?: ""
         }
     }
 
@@ -35,7 +36,6 @@ class EyeRecommendLargeVideoAdapter: BaseQuickAdapter<EyeRecommendVideoEntity,Ey
         return VH(parent)
     }
 
-    // --> eye_discover_category_detail_item
     class VH(
         parent: ViewGroup,
         val binding: EyeRecommendLargeVideoItemBinding = EyeRecommendLargeVideoItemBinding.inflate(

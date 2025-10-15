@@ -83,10 +83,33 @@
             android:maxLines="1"
             android:textColor="@color/eye_recommend_small_video_category_text_color"
             android:textSize="11sp"
-            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/iv_eye_recommend_small_video_cover"
             app:layout_constraintStart_toEndOf="@+id/iv_eye_recommend_small_video_cover"
             tools:text="# 广告 / 开眼精选" />
+
+
+
+
+
+
+        <TextView
+            android:id="@+id/tv_eye_recommend_small_video_nick"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@+id/tv_eye_recommend_small_video_category"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:ellipsize="end"
+            android:maxEms="10"
+            android:maxLines="1"
+            android:textColor="@color/eye_recommend_small_video_category_text_color"
+            android:textSize="11sp"
+            android:text="@{viewModel.author.nick}"
+            android:layout_marginEnd="@dimen/eye_recommend_small_video_item_tv_nick_margin_end"
+            />
+
+
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

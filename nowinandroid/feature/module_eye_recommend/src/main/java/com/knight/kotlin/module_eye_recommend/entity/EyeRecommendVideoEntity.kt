@@ -4,6 +4,7 @@ import com.knight.kotlin.library_base.entity.EyeCommonAuthor
 import com.knight.kotlin.library_base.entity.EyeCommonCover
 import com.knight.kotlin.library_base.entity.EyeCommonDuration
 import com.knight.kotlin.library_base.entity.EyeCommonTag
+import com.knight.kotlin.library_base.entity.eye_type.CropArea
 import com.knight.kotlin.library_base.entity.eye_type.EyeVideoCtrl
 import kotlinx.serialization.Serializable
 
@@ -22,6 +23,9 @@ data class EyeRecommendVideoEntity(
     val play_ctrl: EyeVideoCtrl? = null,
     val play_url: String = "",
     val preview_url:String = "",
+    val recommend_level: String = "",
+    val hot_value: Int = 0,
+    val crop_area: CropArea?=null,
     val tags: List<EyeCommonTag> = emptyList(),
     val cover: EyeCommonCover? = null,
     val author: EyeCommonAuthor,

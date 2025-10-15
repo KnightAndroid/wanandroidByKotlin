@@ -23,6 +23,8 @@ class EyeRecommendSmallVideoAdapter: BaseQuickAdapter<EyeRecommendVideoEntity,Ey
     ) {
         item?.let {
             holder.binding.viewModel = it
+            holder.binding.tvEyeRecommendSmallVideoCategory.text =
+                it.tags.takeIf { it.isNotEmpty() }?.joinToString(" ") { it.title } ?: ""
         }
     }
 
