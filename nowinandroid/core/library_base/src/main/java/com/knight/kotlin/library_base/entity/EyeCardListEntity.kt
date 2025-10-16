@@ -34,7 +34,7 @@ data class EyeCardEntity(
     val type: String = "",
     val style: EyeStyle? = null,
     val interaction: EyeInteraction? = null,
-    val card_data: EyeCardDataEntity? = null,
+    var card_data: EyeCardDataEntity? = null,
     val card_unique_id: String = "",
 )
 
@@ -85,7 +85,7 @@ data class EyeLayout(
 @Serializable
 data class EyeMetroList(
     val api_request: EyeApiRequest? = null,
-    val metro_list: List<EyeMetroCard<JsonObject>>? = null,
+    var metro_list: List<EyeMetroCard<JsonObject>>? = null,
 )
 
 @Serializable

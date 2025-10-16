@@ -30,6 +30,16 @@
 
 
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/iv_eye_recommend_cover"
+            android:background="@drawable/eye_recommend_video_home_play_icon"
+            app:layout_constraintBottom_toBottomOf="@id/iv_eye_recommend_cover"
+            app:layout_constraintLeft_toLeftOf="@id/iv_eye_recommend_cover"
+            app:layout_constraintRight_toRightOf="@id/iv_eye_recommend_cover"/>
+
+
 
 
 

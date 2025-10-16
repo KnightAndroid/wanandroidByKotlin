@@ -54,14 +54,6 @@ class ProgressHud constructor(context: Context) {
 
     //展示
     fun show(msg:String = appStr(R.string.base_loading)): ProgressHud {
-//        if (!isShowing()) {
-//            mProgressHudDialog?.let {
-//                it.show()
-//                it.setShowMessage(msg)
-//            }
-//        }
-//        return this
-
         val activity = mContext as? Activity ?: return this
 
         val showRunnable = Runnable {

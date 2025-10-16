@@ -262,7 +262,7 @@ class DefaultImageLoaderProxy :ImageLoaderProxy {
         Glide.with(imageView.context)
             .asBitmap()
             .load(imageUrl)
-            .override(Target.SIZE_ORIGINAL)
+            .override(900,500)
             .into(object : CustomTarget<Bitmap>() {
                 override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
                     val bitmapWidth = resource.width

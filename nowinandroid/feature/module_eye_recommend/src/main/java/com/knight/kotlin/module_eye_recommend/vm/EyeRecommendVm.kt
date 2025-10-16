@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
 import com.core.library_base.vm.BaseViewModel
 import com.knight.kotlin.library_base.entity.EyeCardListEntity
+import com.knight.kotlin.module_eye_recommend.entity.EyeSmallRecommendEntity
 import com.knight.kotlin.module_eye_recommend.repo.EyeRecommendRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -24,6 +25,15 @@ class EyeRecommendVm @Inject constructor(private val mRepo:EyeRecommendRepo) : B
      */
     fun getRecommendData(page_type:String, page_label:String): LiveData<EyeCardListEntity> {
         return mRepo.getEyeRecommendData(page_type, page_label).asLiveData()
+    }
+
+
+    /**
+     *
+     * 获取上滑加载更多数据
+     */
+    fun getEyeRecommendMoreData(url:String,params:MutableMap<String,String>): LiveData<EyeSmallRecommendEntity> {
+        return mRepo.getEyeRecommendMoreData(url,params).asLiveData()
     }
 
 }

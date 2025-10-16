@@ -1,5 +1,6 @@
 package com.knight.kotlin.module_eye_recommend.adapter
 
+import android.app.Activity
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -23,7 +24,7 @@ import kotlinx.serialization.json.Json
  * @Date 2025/9/19 11:19
  * @descript:开眼推荐页面适配器 具体逻辑参考EyeSquareAdapter
  */
-class EyeRecommendAdapter(data:List<EyeCardEntity>): BaseMultiItemAdapter<EyeCardEntity>(data) {
+class EyeRecommendAdapter(private val activity: Activity, data:List<EyeCardEntity>): BaseMultiItemAdapter<EyeCardEntity>(data) {
 
     //类型1 大视频(包含广告视频)
     class EyeCoverLargeVideoVH(viewBinding: EyeRecommendRvLargeVideoItemBinding) : RecyclerView.ViewHolder(viewBinding.root)
@@ -46,7 +47,7 @@ class EyeRecommendAdapter(data:List<EyeCardEntity>): BaseMultiItemAdapter<EyeCar
                     val jsonString = eyeMetroCard.metro_data.toString()
                     Json.decodeFromString<EyeRecommendVideoEntity>(jsonString)
                 }
-                val mEyeRecommendLargeItemAdapter = EyeRecommendLargeVideoAdapter()
+                val mEyeRecommendLargeItemAdapter = EyeRecommendLargeVideoAdapter(activity)
                 binding?.rvEyeRecommendLargeVideo?.init(
                     LinearLayoutManager(context),
                     mEyeRecommendLargeItemAdapter,
@@ -76,7 +77,7 @@ class EyeRecommendAdapter(data:List<EyeCardEntity>): BaseMultiItemAdapter<EyeCar
                     val jsonString = eyeMetroCard.metro_data.toString()
                     Json.decodeFromString<EyeRecommendVideoEntity>(jsonString)
                 }
-                val mEyeRecommendSmallItemAdapter = EyeRecommendSmallVideoAdapter()
+                val mEyeRecommendSmallItemAdapter = EyeRecommendSmallVideoAdapter(activity)
                 binding?.rvEyeRecommendSmallVideo?.init(
                     LinearLayoutManager(context),
                     mEyeRecommendSmallItemAdapter,

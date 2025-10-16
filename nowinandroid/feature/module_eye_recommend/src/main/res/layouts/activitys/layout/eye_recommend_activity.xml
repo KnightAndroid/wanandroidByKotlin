@@ -27,15 +27,17 @@
             app:title="@{title}"/>
 
 
-        <com.yanzhenjie.recyclerview.SwipeRecyclerView
-            android:id="@+id/rv_eye_recommend"
+
+        <include
+            android:id="@+id/eye_recommend_refresh_layout"
+            layout="@layout/base_layout_recycleview"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/eye_commend_toolbar"
-            app:layout_constraintBottom_toBottomOf="parent"
-            />
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
