@@ -7,9 +7,9 @@
 
     <data>
 
-        <variable
-            name="videoEntity"
-            type="com.knight.kotlin.library_base.entity.EyeVideoDetailEntity" />
+<!--        <variable-->
+<!--            name="videoEntity"-->
+<!--            type="com.knight.kotlin.library_base.entity.EyeVideoDetailEntity" />-->
 
 
 

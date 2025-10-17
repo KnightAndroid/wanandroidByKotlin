@@ -10,13 +10,10 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter4.BaseMultiItemAdapter
 import com.core.library_base.ktx.setOnClick
-import com.core.library_base.ktx.toJson
 import com.core.library_base.route.RouteActivity
-import com.knight.kotlin.library_common.util.CacheUtils
-import com.knight.kotlin.library_common.config.Appconfig
 import com.knight.kotlin.library_base.config.EyeTypeConstants
 import com.knight.kotlin.library_base.entity.EyeDailyItemEntity
-import com.knight.kotlin.library_base.entity.EyeVideoDetailEntity
+import com.knight.kotlin.library_common.util.CacheUtils
 import com.knight.kotlin.library_util.startPageWithAnimate
 import com.knight.kotlin.module_eye_daily.R
 import com.knight.kotlin.module_eye_daily.databinding.EyeDailyImageItemBinding
@@ -65,27 +62,11 @@ class EyeDailyAdapter(data: List<EyeDailyItemEntity>, activity: Activity):
                 val binding = DataBindingUtil.getBinding<EyeDailyImageItemBinding>(holder.itemView)
                 binding?.model = item?.data?.content
                 binding?.ivDailyCover?.setOnClick{
-                    val videoDetailData = EyeVideoDetailEntity(
-                        item?.data?.content!!.data.id,
-                        item?.data?.content!!.data.title,
-                        item?.data?.content!!.data.playUrl,
-                        item?.data?.content!!.data.category,
-
-                        item?.data?.content!!.data.author?.latestReleaseTime ?: System.currentTimeMillis(),
-                        item?.data?.content!!.data.description,
-                        item?.data?.content!!.data.consumption.collectionCount,
-                        item?.data?.content!!.data.consumption.replyCount,
-                        item?.data?.content!!.data.consumption.shareCount,
-                        item?.data?.content!!.data.author?.icon ?: "",
-                        item?.data?.content!!.data.author?.name ?: "",
-                        item?.data?.content!!.data.author?.description ?: "",
-                        item?.data?.content!!.data.cover?.blurred ?: ""
-                    )
                     startPageWithAnimate(
                         activity,
                         RouteActivity.EyeVideo.EyeVideoDetail, binding.root,
                         activity.getString(com.core.library_base.R.string.base_daily_share_image),
-                        Appconfig.EYE_VIDEO_PARAM_KEY to toJson(videoDetailData)
+                        "video_id" to item?.data?.content!!.data.id
                     )
                 }
             }

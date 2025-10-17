@@ -6,12 +6,10 @@ import com.chad.library.adapter4.QuickAdapterHelper
 import com.chad.library.adapter4.loadState.LoadState
 import com.chad.library.adapter4.loadState.trailing.TrailingLoadStateAdapter
 import com.core.library_base.ktx.init
-import com.core.library_base.ktx.toJson
 import com.core.library_base.route.RouteActivity
 import com.google.android.material.appbar.AppBarLayout
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_common.config.Appconfig
-import com.knight.kotlin.library_base.entity.EyeVideoDetailEntity
 import com.knight.kotlin.library_util.startPageWithAnimate
 import com.knight.kotlin.library_widget.ktx.setSafeOnItemClickListener
 import com.knight.kotlin.library_widget.ktx.transformShareElementConfig
@@ -168,29 +166,11 @@ class EyeCategoryDetailActivity : BaseActivity<EyeDiscoverCategoryDetailActivity
     private fun addItemClickListener() {
         mEyeDiscoverCategoryDetailAdapter.run {
             setSafeOnItemClickListener {adapter, view, position ->
-
-                val videoDetailData = EyeVideoDetailEntity(
-                    adapter.items[position].data.id,
-                    adapter.items[position].data.title,
-                    adapter.items[position].data.playUrl,
-                    adapter.items[position].data.category,
-                    adapter.items[position].data.author?.latestReleaseTime ?: System.currentTimeMillis(),
-                    adapter.items[position].data.description,
-                    adapter.items[position].data.consumption.collectionCount,
-                    adapter.items[position].data.consumption.replyCount,
-                    adapter.items[position].data.consumption.shareCount,
-                    adapter.items[position].data.author?.icon ?: "",
-                    adapter.items[position].data.author?.name ?: "",
-                    adapter.items[position].data.author?.description ?: "",
-                    adapter.items[position].data.cover?.blurred ?: ""
-                )
-
-
                 startPageWithAnimate(
                     this@EyeCategoryDetailActivity,
                     RouteActivity.EyeVideo.EyeVideoDetail,view,
                     getString(com.core.library_base.R.string.base_daily_share_image),
-                    Appconfig.EYE_VIDEO_PARAM_KEY to toJson(videoDetailData)
+                    "video_id" to adapter.items[position].data.id
                 )
 
             }

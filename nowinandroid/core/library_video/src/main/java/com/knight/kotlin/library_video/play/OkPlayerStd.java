@@ -1,5 +1,6 @@
 package com.knight.kotlin.library_video.play;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
@@ -19,6 +20,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -35,6 +38,8 @@ import java.util.ArrayDeque;
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import static com.knight.kotlin.library_base.BaseApp.context;
 
 /**
  * Author:Knight
@@ -486,6 +491,9 @@ public class OkPlayerStd extends OkPlayer {
     @Override
     public void showWifiDialog() {
         super.showWifiDialog();
+        if (!(jzvdContext instanceof Activity)) return; // 确保是 Activity
+        Activity activity = (Activity) jzvdContext;
+        if (activity.isFinishing() || activity.isDestroyed()) return; // 确保没销毁
         AlertDialog.Builder builder = new AlertDialog.Builder(jzvdContext);
         builder.setMessage(getResources().getString(R.string.vi_tips_not_wifi));
         builder.setPositiveButton(getResources().getString(R.string.vi_tips_not_wifi_confirm), (dialog, which) -> {
@@ -771,6 +779,12 @@ public class OkPlayerStd extends OkPlayer {
         topContainer.setVisibility(topCon);
         bottomContainer.setVisibility(bottomCon);
         startButton.setVisibility(startBtn);
+        if (loadingPro == VISIBLE) {
+            Animation rotate = AnimationUtils.loadAnimation(context, R.anim.vi_play_loading);
+            loadingProgressBar.startAnimation(rotate);
+        } else {
+            loadingProgressBar.clearAnimation();
+        }
         loadingProgressBar.setVisibility(loadingPro);
         posterImageView.setVisibility(posterImg);
         bottomProgressBar.setVisibility(bottomPro);

@@ -181,6 +181,7 @@
         android:layout_height="@dimen/vi_start_button_w_h_normal"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
+        android:indeterminate="true"
         android:indeterminateDrawable="@drawable/vi_loading"
         android:visibility="invisible" />
 

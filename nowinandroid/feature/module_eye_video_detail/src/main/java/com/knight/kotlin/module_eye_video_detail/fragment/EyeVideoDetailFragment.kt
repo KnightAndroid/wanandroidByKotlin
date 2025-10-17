@@ -4,12 +4,12 @@ import android.os.Build
 import android.view.LayoutInflater
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.core.library_base.route.RouteFragment
-import com.knight.kotlin.library_base.entity.EyeVideoDetailEntity
 import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.knight.kotlin.library_widget.ktx.init
 import com.knight.kotlin.module_eye_video_detail.adapter.EyeVideoRelateAdapter
 import com.knight.kotlin.module_eye_video_detail.databinding.EyeVideoDetailFragmentBinding
 import com.knight.kotlin.module_eye_video_detail.databinding.EyeVideoDetailHeadBinding
+import com.knight.kotlin.module_eye_video_detail.entity.EyeVideoDetailResponseEntity
 import com.knight.kotlin.module_eye_video_detail.vm.EyeVideoDetailVm
 import com.wyjson.router.annotation.Route
 import dagger.hilt.android.AndroidEntryPoint
@@ -36,7 +36,7 @@ class EyeVideoDetailFragment: BaseFragment<EyeVideoDetailFragmentBinding, EyeVid
      *
      * 详细实体
      */
-    private lateinit var videoDetailData: EyeVideoDetailEntity
+    private lateinit var videoDetailData: EyeVideoDetailResponseEntity
     override fun setThemeColor(isDarkMode: Boolean) {
 
     }
@@ -47,10 +47,17 @@ class EyeVideoDetailFragment: BaseFragment<EyeVideoDetailFragmentBinding, EyeVid
 
     override fun initRequestData() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            videoDetailData = arguments?.getParcelable("videoDetailData", EyeVideoDetailEntity::class.java)!!
+            videoDetailData = arguments?.getParcelable("videoDetailData", EyeVideoDetailResponseEntity::class.java)!!
         } else {
             videoDetailData = arguments?.getParcelable("videoDetailData")!!
         }
+
+
+
+
+
+
+
 
         getRelateVideoList()
     }
@@ -86,9 +93,12 @@ class EyeVideoDetailFragment: BaseFragment<EyeVideoDetailFragmentBinding, EyeVid
         }
     }
 
-
+    /**
+     *
+     * 获取关联视频数据
+     */
     private fun getRelateVideoList() {
-        mViewModel.getVideoDetail(videoDetailData.videoId).observerKt {
+        mViewModel.getRelateVideoList(videoDetailData.video.video_id.toLong()).observerKt {
             initHeaderView()
             mEyeVideoRelateAdapter.submitList(it.itemList)
         }

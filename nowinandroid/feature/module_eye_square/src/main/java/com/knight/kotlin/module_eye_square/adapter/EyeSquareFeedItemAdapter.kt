@@ -9,15 +9,11 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter4.BaseQuickAdapter
 import com.core.library_base.ktx.setOnClick
-import com.core.library_base.ktx.toJson
 import com.core.library_base.route.RouteActivity
 import com.core.library_common.ktx.screenWidth
 import com.google.android.material.chip.Chip
 import com.google.android.material.shape.CornerFamily
-import com.knight.kotlin.library_common.config.Appconfig
-import com.knight.kotlin.library_base.entity.EyeVideoDetailEntity
 import com.knight.kotlin.library_base.entity.eye_type.EyeFeedItemDetail
-import com.knight.kotlin.library_util.DateUtils
 import com.knight.kotlin.library_util.startPageWithAnimate
 import com.knight.kotlin.module_eye_square.R
 import com.knight.kotlin.module_eye_square.databinding.EyeSquareFeedDetailItemBinding
@@ -52,28 +48,12 @@ class EyeSquareFeedItemAdapter(private val activity: Activity) : BaseQuickAdapte
         }
 
         item?.video?.run {
-            val videoDetailData = EyeVideoDetailEntity(
-                video_id.toLong(),
-                title,
-                play_url,
-                if (tags.size > 0) tags[0].title else "",
-                DateUtils.convertToTimestamp(item.raw_publish_time) ?: 0L,
-                item.text,
-                item.consumption?.collection_count ?: 0,
-                item.consumption?.comment_count ?: 0,
-                item.consumption?.share_count ?: 0,
-                item.author?.avatar?.url ?: "",
-                item.author?.nick ?: "",
-                item.author?.description ?: "",
-                cover?.url ?: ""
-            )
-
             holder.binding.ivFeedItemCover.setOnClick {
                 startPageWithAnimate(
                     activity,
                     RouteActivity.EyeVideo.EyeVideoDetail, holder.binding.root,
                     activity.getString(com.core.library_base.R.string.base_daily_share_image),
-                    Appconfig.EYE_VIDEO_PARAM_KEY to toJson(videoDetailData)
+                    "video_id" to video_id.toLong()
                 )
             }
         }

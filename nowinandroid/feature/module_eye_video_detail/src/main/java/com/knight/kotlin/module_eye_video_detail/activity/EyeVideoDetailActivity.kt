@@ -5,13 +5,9 @@ import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import com.core.library_base.ktx.fromJson
 import com.core.library_base.route.RouteActivity
-import com.core.library_base.vm.EmptyViewModel
 import com.google.android.material.tabs.TabLayoutMediator
 import com.knight.kotlin.library_base.activity.BaseActivity
-import com.knight.kotlin.library_common.config.Appconfig
-import com.knight.kotlin.library_base.entity.EyeVideoDetailEntity
 import com.knight.kotlin.library_util.ViewInitUtils
 import com.knight.kotlin.library_video.play.OkPlayer
 import com.knight.kotlin.library_widget.ktx.transformShareElementConfig
@@ -19,6 +15,7 @@ import com.knight.kotlin.module_eye_video_detail.R
 import com.knight.kotlin.module_eye_video_detail.databinding.EyeVideoDetailActivityBinding
 import com.knight.kotlin.module_eye_video_detail.fragment.EyeVideoCommentFragment
 import com.knight.kotlin.module_eye_video_detail.fragment.EyeVideoDetailFragment
+import com.knight.kotlin.module_eye_video_detail.vm.EyeVideoDetailVm
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener
 import com.wyjson.router.annotation.Param
@@ -32,7 +29,7 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 @AndroidEntryPoint
 @Route(path = RouteActivity.EyeVideo.EyeVideoDetail)
-class EyeVideoDetailActivity : BaseActivity<EyeVideoDetailActivityBinding, EmptyViewModel>(),
+class EyeVideoDetailActivity : BaseActivity<EyeVideoDetailActivityBinding, EyeVideoDetailVm>(),
     OnRefreshListener {
     private var mTransition: Transition? = null
 
@@ -42,13 +39,15 @@ class EyeVideoDetailActivity : BaseActivity<EyeVideoDetailActivityBinding, Empty
      *
      * 详细实体
      */
-    private lateinit var videoDetailData: EyeVideoDetailEntity
+//    private lateinit var videoDetailData: EyeVideoDetailEntity
+
+//    @JvmField
+//    @Param(name = Appconfig.EYE_VIDEO_PARAM_KEY)
+//    var videoJson:String = ""
 
     @JvmField
-    @Param(name = Appconfig.EYE_VIDEO_PARAM_KEY)
-    var videoJson:String = ""
-
-
+    @Param(name = "video_id")
+    var video_id:Long = 0
 
 
     private val mFragments = mutableListOf<Fragment>()
@@ -62,7 +61,33 @@ class EyeVideoDetailActivity : BaseActivity<EyeVideoDetailActivityBinding, Empty
     }
 
     override fun initRequestData() {
+        mViewModel.getVideoDetail(video_id,"pgc_video").observerKt {
 
+
+            mFragments.add(EyeVideoDetailFragment().also { fragment ->
+                fragment.arguments = bundleOf("videoDetailData" to it.result)
+            })
+
+            mFragments.add(EyeVideoCommentFragment().also { fragment ->
+                fragment.arguments = bundleOf("videoId" to video_id)
+            })
+
+            if (mFragments.size > 0) {
+                ViewInitUtils.setViewPager2Init(this@EyeVideoDetailActivity,mBinding.eyeVideoDetailViewPager,mFragments,
+                    isOffscreenPageLimit = true,
+                    isUserInputEnabled = false
+                )
+
+                TabLayoutMediator(mBinding.eyeVideoDetailTabLayout, mBinding.eyeVideoDetailViewPager) { tab, pos ->
+                    tab.text = mTitleDatas[pos]
+                }.attach()
+            }
+
+            mBinding.jzVideo.setUp(it.result?.video?.play_url
+                , it.result?.video?.title)
+
+            mBinding.jzVideo.startVideo()
+        }
     }
 
     override fun reLoadData() {
@@ -70,35 +95,35 @@ class EyeVideoDetailActivity : BaseActivity<EyeVideoDetailActivityBinding, Empty
     }
 
     override fun EyeVideoDetailActivityBinding.initView() {
-        videoDetailData = fromJson(videoJson)
-        mFragments.add(EyeVideoDetailFragment().also { fragment ->
-            fragment.arguments = bundleOf("videoDetailData" to videoDetailData)
-        })
-
-        mFragments.add(EyeVideoCommentFragment().also { fragment ->
-            fragment.arguments = bundleOf("videoId" to videoDetailData.videoId)
-        })
-
-        if (mFragments.size > 0) {
-            ViewInitUtils.setViewPager2Init(this@EyeVideoDetailActivity,mBinding.eyeVideoDetailViewPager,mFragments,
-                isOffscreenPageLimit = true,
-                isUserInputEnabled = false
-            )
-
-            TabLayoutMediator(mBinding.eyeVideoDetailTabLayout, mBinding.eyeVideoDetailViewPager) { tab, pos ->
-                tab.text = mTitleDatas[pos]
-            }.attach()
-        }
+      //  videoDetailData = fromJson(videoJson)
+//        mFragments.add(EyeVideoDetailFragment().also { fragment ->
+//            fragment.arguments = bundleOf("videoDetailData" to videoDetailData)
+//        })
+//
+//        mFragments.add(EyeVideoCommentFragment().also { fragment ->
+//            fragment.arguments = bundleOf("videoId" to video_id)
+//        })
+//
+//        if (mFragments.size > 0) {
+//            ViewInitUtils.setViewPager2Init(this@EyeVideoDetailActivity,mBinding.eyeVideoDetailViewPager,mFragments,
+//                isOffscreenPageLimit = true,
+//                isUserInputEnabled = false
+//            )
+//
+//            TabLayoutMediator(mBinding.eyeVideoDetailTabLayout, mBinding.eyeVideoDetailViewPager) { tab, pos ->
+//                tab.text = mTitleDatas[pos]
+//            }.attach()
+//        }
 
 
 
         eyeDetailRefreshLayout.setOnRefreshListener(this@EyeVideoDetailActivity)
 
         //注入xml中
-        videoEntity = videoDetailData
-        jzVideo.setUp(videoDetailData.videoUrl
-            , videoDetailData.videoTitle)
-        jzVideo.startVideo()
+//        videoEntity = videoDetailData
+//        jzVideo.setUp(videoDetailData.videoUrl
+//            , videoDetailData.videoTitle)
+//        jzVideo.startVideo()
         jzVideo.setNormalBackListener(object : OkPlayer.NormalBackListener{
             override fun backFinifsh() {
                 finishAfterTransition()
