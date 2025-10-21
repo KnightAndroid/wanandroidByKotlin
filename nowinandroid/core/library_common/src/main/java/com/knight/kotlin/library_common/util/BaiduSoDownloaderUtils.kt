@@ -161,8 +161,8 @@ object BaiduSoDownloaderUtils {
     private fun getRemoteFileLength(urlStr: String): Long {
         val conn = URL(urlStr).openConnection() as HttpURLConnection
         conn.requestMethod = "HEAD"
-        conn.connectTimeout = 5000
-        conn.readTimeout = 5000
+        conn.connectTimeout = 15000
+        conn.readTimeout = 15000
         val size = conn.contentLengthLong
         conn.disconnect()
         return size
@@ -179,8 +179,8 @@ object BaiduSoDownloaderUtils {
     ) {
         val url = URL(urlStr)
         val conn = url.openConnection() as HttpURLConnection
-        conn.connectTimeout = 10000
-        conn.readTimeout = 20000
+        conn.connectTimeout = 15000
+        conn.readTimeout = 15000
         conn.requestMethod = "GET"
         conn.setRequestProperty("User-Agent", "Mozilla/5.0 (Android)")
         conn.setRequestProperty("Referer", "https://gitee.com/")
