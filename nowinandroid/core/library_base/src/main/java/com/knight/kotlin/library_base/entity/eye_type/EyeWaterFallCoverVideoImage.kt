@@ -51,7 +51,7 @@ data class EyeVideoCtrl(
     val autoplay_times: Long,
     val need_wifi: Boolean,
     val need_cellular: Boolean,
-    val need_wifi_preload: Boolean
+    val need_wifi_preload: Boolean = false
 )
 
 @Serializable

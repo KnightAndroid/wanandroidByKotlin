@@ -15,7 +15,7 @@ object Dependencies {
      */
     object Version {
        //构建相关-----------------------------------------------
-       const val TOOL_BUILD_VERSION= "8.0.0"
+       const val TOOL_BUILD_VERSION= "8.7.0"
        const val KOTLIN_GRADLE_PLUGIN_VERSION = "2.0.21"
        //kotlin Serialization序列化（KOTLIN_GRADLE_PLUGIN_VERSION后续要和这个版本统一）
        const val KOTLIN_SERIALIZATION = "1.8.10"
@@ -100,8 +100,8 @@ object Dependencies {
        const val SLF4J = "1.7.21"                    //slf4j版本
        const val windowx = "1.3.0"                      //window 版本
        const val kotlinxSerializationJson = "1.7.3"   //kotlin序列化帮助类
-       const val BaiduMapSdkVersion = "9.6.4" //地图定位
-       const val BaiduNaviSdkVersion = "7.6.4" //导航版本
+       const val BaiduMapSdkVersion = "9.6.6" //地图定位
+       const val BaiduNaviSdkVersion = "7.6.6" //导航版本
        const val Suncalc = "3.11" //日月日出日落月出月落 计算
        const val Media3Exoplayer  = "1.6.1" //播放音频
        const val MediaCache = "1.6.1" //音视频缓存

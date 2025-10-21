@@ -52,9 +52,9 @@ object BaiduSoDownloaderUtils {
 
 
         Triple(
-            "libBaiduMapSDK_map_for_navi_v7_6_4.so",
-            "https://gitee.com/MengSuiXinSuoYuan/baidu-so/releases/download/Baidu_map_navi_v7a/libBaiduMapSDK_map_for_navi_v7_6_4.zip",
-            "https://gitee.com/MengSuiXinSuoYuan/baidu-so/releases/download/Baidu_map_navi_v8a/libBaiduMapSDK_map_for_navi_v7_6_4.zip"
+            "libBaiduMapSDK_map_for_navi_v7_6_6.so",
+            "https://gitee.com/MengSuiXinSuoYuan/baidu-so/releases/download/Baidu_map_navi_v7a/libBaiduMapSDK_map_for_navi_v7_6_6.zip",
+            "https://gitee.com/MengSuiXinSuoYuan/baidu-so/releases/download/Baidu_map_navi_v8a/libBaiduMapSDK_map_for_navi_v7_6_6.zip"
         ),
 //        Triple(
 //            "liblocSDK8b.so",

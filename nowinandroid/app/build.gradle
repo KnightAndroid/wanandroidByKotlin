@@ -147,10 +147,8 @@ android {
     //打包排除加载so文件
     packaging {
         jniLibs {
-            //exclude("lib/armeabi-v7a/liblocSDK8b.so")
-         //   exclude("lib/arm64-v8a/liblocSDK8b.so")
-            exclude("lib/armeabi-v7a/libBaiduMapSDK_map_for_navi_v7_6_4.so")
-            exclude("lib/arm64-v8a/libBaiduMapSDK_map_for_navi_v7_6_4.so")
+            exclude("lib/armeabi-v7a/libBaiduMapSDK_map_for_navi_v7_6_6.so")
+            exclude("lib/arm64-v8a/libBaiduMapSDK_map_for_navi_v7_6_6.so")
             exclude("lib/armeabi-v7a/libapp_BaiduNaviApplib.so")
             exclude("lib/arm64-v8a/libapp_BaiduNaviApplib.so")
         }

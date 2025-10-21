@@ -4,10 +4,12 @@ import android.app.Activity
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter4.BaseQuickAdapter
 import com.core.library_base.ktx.setOnClick
 import com.core.library_base.route.RouteActivity
+import com.knight.kotlin.library_share.ShareDialog
 import com.knight.kotlin.library_util.startPageWithAnimate
 import com.knight.kotlin.module_eye_recommend.databinding.EyeRecommendLargeVideoItemBinding
 import com.knight.kotlin.module_eye_recommend.entity.EyeRecommendVideoEntity
@@ -37,6 +39,11 @@ class EyeRecommendLargeVideoAdapter(private val activity: Activity): BaseQuickAd
                     activity.getString(com.core.library_base.R.string.base_daily_share_image),
                     "video_id" to video_id.toLong()
                 )
+            }
+
+
+            holder.binding.ivEyeRecommendShare.setOnClick {
+                ShareDialog.newInstance(title,author.description ?: "",cover?.url ?: "https://wanandroid.com/").showAllowingStateLoss((activity as FragmentActivity).supportFragmentManager, "dialog_share")
             }
 
 

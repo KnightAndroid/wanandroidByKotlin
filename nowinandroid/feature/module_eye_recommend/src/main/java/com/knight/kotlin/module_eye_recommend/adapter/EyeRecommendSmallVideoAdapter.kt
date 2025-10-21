@@ -29,21 +29,26 @@ class EyeRecommendSmallVideoAdapter(private val activity: Activity): BaseQuickAd
             holder.binding.viewModel = this
             holder.binding.tvEyeRecommendSmallVideoCategory.text =
                 this.tags.takeIf { it.isNotEmpty() }?.joinToString(" ") { it.title } ?: ""
-            holder.binding.ivEyeRecommendSmallVideoCover.setOnClick {
-                startPageWithAnimate(
-                    activity,
-                    RouteActivity.EyeVideo.EyeVideoDetail, holder.binding.root,
-                    activity.getString(com.core.library_base.R.string.base_daily_share_image),
-                    "video_id" to video_id.toLong()
-                )
-            }
+//            holder.binding.ivEyeRecommendSmallVideoCover.setOnClick {
+//                startPageWithAnimate(
+//                    activity,
+//                    RouteActivity.EyeVideo.EyeVideoDetail, holder.binding.root,
+//                    activity.getString(com.core.library_base.R.string.base_daily_share_image),
+//                    "video_id" to video_id.toLong()
+//                )
+//            }
 
-
-
-
-
-
+        holder.binding.root.setOnClick {
+            startPageWithAnimate(
+                activity,
+                RouteActivity.EyeVideo.EyeVideoDetail, holder.binding.root,
+                activity.getString(com.core.library_base.R.string.base_daily_share_image),
+                "video_id" to video_id.toLong()
+            )
         }
+        }
+
+
     }
 
     override fun onCreateViewHolder(
