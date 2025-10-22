@@ -95,7 +95,7 @@ object Dependencies {
        const val ANDROID_AOP = "2.6.2"                       //aop相关
        const val ANDROID_KSP_VERSION = "2.0.21-1.0.25"         //ksp版本  https://github.com/google/ksp/releases?page=1
 
-       const val EXOPLAYER = "2.17.0"                //视频播放器版本
+       const val EXOPLAYER = "1.8.0"                //视频播放器版本         //rtmp版本
        const val LOTTIE =  "2.8.0"                  //lottie 动画版本
        const val SLF4J = "1.7.21"                    //slf4j版本
        const val windowx = "1.3.0"                      //window 版本
@@ -154,13 +154,23 @@ object Dependencies {
         //flexLayout
         const val FLEXLAYOUT = "com.google.android.flexbox:flexbox:${Version.FLEX_LAYOUT_VERSION}"
         //exoPlayer
-        const val EXOPLAYER = "com.google.android.exoplayer:exoplayer:${Version.EXOPLAYER}"
-        const val EXOPLAYER_CORE = "com.google.android.exoplayer:exoplayer-core:${Version.EXOPLAYER}"
-        const val EXOPLAYER_DASH = "com.google.android.exoplayer:exoplayer-dash:${Version.EXOPLAYER}"
-        const val EXOPLAYER_HLS = "com.google.android.exoplayer:exoplayer-hls:${Version.EXOPLAYER}" //如果要播放 m3u8 ，添加exoplayer-hls
-        const val EXOPLAYER_UI = "com.google.android.exoplayer:exoplayer-ui:${Version.EXOPLAYER}"
-        const val EXOPLAYER_RTMP = "com.google.android.exoplayer:extension-rtmp:${Version.EXOPLAYER}"
+        const val EXOPLAYER = "androidx.media3:media3-exoplayer:${Version.EXOPLAYER}"
+      //  const val EXOPLAYER_CORE = "com.google.android.exoplayer:exoplayer-core:${Version.EXOPLAYER}"
+        const val EXOPLAYER_DASH = "androidx.media3:media3-exoplayer-dash:${Version.EXOPLAYER}"
+        const val EXOPLAYER_HLS = "androidx.media3:media3-exoplayer-hls:${Version.EXOPLAYER}" //如果要播放 m3u8 ，添加exoplayer-hls
+        const val EXOPLAYER_UI = "androidx.media3:media3-ui:${Version.EXOPLAYER}"
+        const val EXOPLAYER_RTMP = "androidx.media3:media3-datasource-rtmp:${Version.EXOPLAYER}"
+
+
+
+
+
     }
+
+
+
+
+
 
     /**
      * Kotlin相关依赖

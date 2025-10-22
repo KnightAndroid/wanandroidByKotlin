@@ -1,6 +1,6 @@
 package com.knight.kotlin.module_video.player
 
-import com.google.android.exoplayer2.ExoPlayer
+import androidx.media3.exoplayer.ExoPlayer
 
 /**
  * Author:Knight

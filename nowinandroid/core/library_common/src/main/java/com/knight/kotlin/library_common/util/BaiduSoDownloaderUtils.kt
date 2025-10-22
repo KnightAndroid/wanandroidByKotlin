@@ -32,23 +32,6 @@ object BaiduSoDownloaderUtils {
     private const val TAG = "BaiduSoDownloader"
 
     private val soFiles = listOf(
-//        Triple(
-//            "libc++_shared.so",
-//            "https://gitee.com/MengSuiXinSuoYuan/baidu-so/releases/download/Baidu_libc++_shared_v7a/libc%20%20_shared.zip",
-//            "https://gitee.com/MengSuiXinSuoYuan/baidu-so/releases/download/Baidu_libc++_shared_v8a/libc%20%20_shared.zip"
-//        ),
-//        Triple(
-//            "libtiny_magic.so",
-//            "https://gitee.com/MengSuiXinSuoYuan/baidu-so/releases/download/Baidu_libtiny_magic_v7a/libtiny_magic.zip",
-//            "https://gitee.com/MengSuiXinSuoYuan/baidu-so/releases/download/Baidu_libtiny_magic_v8a/libtiny_magic.zip"
-//        ),
-//
-//        Triple(
-//            "libBaiduMapSDK_base_v7_6_4.so",
-//            "https://gitee.com/MengSuiXinSuoYuan/baidu-so/releases/download/Baidu_libBaiduMapSDK_v7a/libBaiduMapSDK_base_v7_6_4.zip",
-//            "https://gitee.com/MengSuiXinSuoYuan/baidu-so/releases/download/Baidu_libBaiduMapSDK_v8a/libBaiduMapSDK_base_v7_6_4.zip"
-//        ),
-
 
 
         Triple(
@@ -56,34 +39,12 @@ object BaiduSoDownloaderUtils {
             "https://gitee.com/MengSuiXinSuoYuan/baidu-so/releases/download/Baidu_map_navi_v7a/libBaiduMapSDK_map_for_navi_v7_6_6.zip",
             "https://gitee.com/MengSuiXinSuoYuan/baidu-so/releases/download/Baidu_map_navi_v8a/libBaiduMapSDK_map_for_navi_v7_6_6.zip"
         ),
-//        Triple(
-//            "liblocSDK8b.so",
-//            "https://gitee.com/MengSuiXinSuoYuan/baidu-so/releases/download/Baidu_location_v7a/liblocSDK8b.zip",
-//            "https://gitee.com/MengSuiXinSuoYuan/baidu-so/releases/download/Baidu_location_v8a/liblocSDK8b.zip"
-//        ),
 
-
-//        Triple(
-//            "libLaneSeg.so",
-//            "https://gitee.com/MengSuiXinSuoYuan/baidu-so/releases/download/Baidu_libLaneSeg_v7a/libLaneSeg.zip",
-//            "https://gitee.com/MengSuiXinSuoYuan/baidu-so/releases/download/Baidu_libLaneSeg_v8a/libLaneSeg.zip"
-//        ),
         Triple(
             "libapp_BaiduNaviApplib.so",
             "https://gitee.com/MengSuiXinSuoYuan/baidu-so/releases/download/Baidu_map_navi_applib_v7a/libapp_BaiduNaviApplib.zip",
             "https://gitee.com/MengSuiXinSuoYuan/baidu-so/releases/download/Baidu_map_navi_applib_v8a/libapp_BaiduNaviApplib.zip"
-        ),
-
-//        Triple(
-//            "libNative.so",
-//            "https://gitee.com/MengSuiXinSuoYuan/baidu-so/releases/download/Baidu_libNative_v7a/libNative.zip",
-//            "https://gitee.com/MengSuiXinSuoYuan/baidu-so/releases/download/Baidu_libNative_v8a/libNative.zip"
-//        )
-
-
-
-
-
+        )
     )
 
     interface OnSoLoadCallback {

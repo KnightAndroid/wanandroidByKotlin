@@ -5,12 +5,14 @@ import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import android.widget.ImageView
 import android.widget.RelativeLayout.LayoutParams
+import androidx.annotation.OptIn
+import androidx.media3.common.Player
+import androidx.media3.common.util.UnstableApi
+import androidx.media3.exoplayer.ExoPlaybackException
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
-import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.core.library_base.vm.EmptyViewModel
-import com.google.android.exoplayer2.ExoPlaybackException
-import com.google.android.exoplayer2.Player
+import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.knight.kotlin.module_video.DataConstant
 import com.knight.kotlin.module_video.R
 import com.knight.kotlin.module_video.adapter.VideoPlayAdapter
@@ -72,6 +74,7 @@ class VideoPlayFragment(curPlayPos : Int) : BaseFragment<VideoPlayFragmentBindin
         adapter?.appendList(DataConstant.videoDatas)
     }
 
+    @OptIn(UnstableApi::class)
     private fun initVideoPlayer() {
         var params = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
         videoView = VideoPlayer(requireActivity())
@@ -110,6 +113,7 @@ class VideoPlayFragment(curPlayPos : Int) : BaseFragment<VideoPlayFragmentBindin
 
         //暂停事件
         likeView.setOnPlayPauseListener(object : LikeView.OnPlayPauseListener{
+            @OptIn(UnstableApi::class)
             override fun onPlayOrPause() {
                 if (videoView.isPlaying()) {
                     videoView.pause()
@@ -175,6 +179,7 @@ class VideoPlayFragment(curPlayPos : Int) : BaseFragment<VideoPlayFragmentBindin
     /**
      * 自动播放视频
      */
+    @OptIn(UnstableApi::class)
     private fun autoPlayVideo(position: Int, ivCover: ImageView) {
       //  videoView.playVideo(adapter!!.getDatas()[position].mediaSource!!)
         //使用预加载的缓存路径

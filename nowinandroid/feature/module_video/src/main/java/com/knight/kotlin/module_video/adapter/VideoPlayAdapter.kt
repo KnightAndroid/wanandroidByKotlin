@@ -4,13 +4,16 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.OptIn
+import androidx.media3.common.MediaItem
+import androidx.media3.common.util.UnstableApi
+import androidx.media3.datasource.DefaultDataSource
+import androidx.media3.datasource.cache.CacheDataSource
+import androidx.media3.exoplayer.source.ProgressiveMediaSource
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.knight.kotlin.library_base.adapter.BaseAdapter
-import com.google.android.exoplayer2.MediaItem
-import com.google.android.exoplayer2.source.ProgressiveMediaSource
-import com.google.android.exoplayer2.upstream.DefaultDataSource
-import com.google.android.exoplayer2.upstream.cache.CacheDataSource
+
 import com.knight.kotlin.library_util.image.ImageLoader
 import com.knight.kotlin.module_video.databinding.VideoPlayItemBinding
 import com.knight.kotlin.module_video.entity.VideoPlayEntity
@@ -30,23 +33,39 @@ class VideoPlayAdapter(val context: Context, val recyclerView :RecyclerView) : B
 
     override fun onBindViewHolder(holder: VideoViewHolder, position: Int) {
         //开始预加载
-        PreloadManager.getInstance(context).addPreloadTask(mList[position].videoUrl, holder.absoluteAdapterPosition)
-        mList[position]?.let {
-            holder.binding.controller.setVideoData(it)
-            ImageLoader.loadVideoFirstFrame(context, it.videoUrl, holder.binding.ivCover)
-            holder.binding.videoLikeview.setOnLikeListener(object : LikeView.OnLikeListener {
-                override fun onLikeListener() {
-                    if (!it.isLike) {  //未点赞，会有点赞效果，否则无
-                        holder.binding.controller.like()
-                    }
+//        PreloadManager.getInstance(context).addPreloadTask(mList[position].videoUrl, holder.absoluteAdapterPosition)
+//        mList[position]?.let {
+//            holder.binding.controller.setVideoData(it)
+//            ImageLoader.loadVideoFirstFrame(context, it.videoUrl, holder.binding.ivCover)
+//            holder.binding.videoLikeview.setOnLikeListener(object : LikeView.OnLikeListener {
+//                override fun onLikeListener() {
+//                    if (!it.isLike) {  //未点赞，会有点赞效果，否则无
+//                        holder.binding.controller.like()
+//                    }
+//                }
+//            })
+//            //利用预加item，提前加载缓存资源
+//            mList[position].mediaSource = buildMediaSource(mList[position].videoUrl)
+//        }
+//
+//        holder.mPosition =  holder.absoluteAdapterPosition
+        val adapterPos = holder.bindingAdapterPosition
+        if (adapterPos == RecyclerView.NO_POSITION) return
+
+        val item = mList[adapterPos]
+        PreloadManager.getInstance(context).addPreloadTask(item.videoUrl, adapterPos)
+
+        holder.binding.controller.setVideoData(item)
+        ImageLoader.loadVideoFirstFrame(context, item.videoUrl, holder.binding.ivCover)
+        holder.binding.videoLikeview.setOnLikeListener(object : LikeView.OnLikeListener {
+            override fun onLikeListener() {
+                if (!item.isLike) {
+                    holder.binding.controller.like()
                 }
-            })
-            //利用预加item，提前加载缓存资源
-            mList[position].mediaSource = buildMediaSource(mList[position].videoUrl)
-        }
-
-        holder.mPosition =  holder.absoluteAdapterPosition
-
+            }
+        })
+        item.mediaSource = buildMediaSource(item.videoUrl)
+        holder.mPosition = adapterPos
 
     }
 
@@ -63,6 +82,7 @@ class VideoPlayAdapter(val context: Context, val recyclerView :RecyclerView) : B
     /**
      * 构建当前url视频的缓存
      */
+    @OptIn(UnstableApi::class)
     private fun buildMediaSource(url: String): ProgressiveMediaSource {
         //开启缓存文件
         val mediaItem = MediaItem.fromUri(url)

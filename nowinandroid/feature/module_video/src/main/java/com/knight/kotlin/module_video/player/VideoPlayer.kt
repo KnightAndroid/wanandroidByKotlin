@@ -7,16 +7,17 @@ import android.view.LayoutInflater
 import android.widget.FrameLayout
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
-import com.google.android.exoplayer2.DefaultLoadControl
-import com.google.android.exoplayer2.ExoPlayer
-import com.google.android.exoplayer2.MediaItem
-import com.google.android.exoplayer2.Player
-import com.google.android.exoplayer2.source.BaseMediaSource
-import com.google.android.exoplayer2.source.ProgressiveMediaSource
-import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
-import com.google.android.exoplayer2.trackselection.TrackSelector
-import com.google.android.exoplayer2.upstream.DefaultDataSource
-import com.google.android.exoplayer2.upstream.cache.CacheDataSource
+import androidx.media3.common.MediaItem
+import androidx.media3.common.Player
+import androidx.media3.common.util.UnstableApi
+import androidx.media3.datasource.DefaultDataSource
+import androidx.media3.datasource.cache.CacheDataSource
+import androidx.media3.exoplayer.DefaultLoadControl
+import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.exoplayer.source.BaseMediaSource
+import androidx.media3.exoplayer.source.ProgressiveMediaSource
+import androidx.media3.exoplayer.trackselection.DefaultTrackSelector
+import androidx.media3.exoplayer.trackselection.TrackSelector
 import com.knight.kotlin.module_video.databinding.VideoPlayviewBinding
 import com.knight.kotlin.module_video.utils.VideoCache
 
@@ -25,6 +26,7 @@ import com.knight.kotlin.module_video.utils.VideoCache
  * Time:2024/3/5 9:48
  * Description:VideoPlayer 视频播放器类
  */
+@UnstableApi
 class VideoPlayer @JvmOverloads constructor(context: Context, attrs : AttributeSet? = null) : FrameLayout(context,attrs),Iplayer,DefaultLifecycleObserver{
 
     private val trackSelector : TrackSelector = DefaultTrackSelector(context)

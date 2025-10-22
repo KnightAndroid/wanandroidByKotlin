@@ -53,3 +53,6 @@
 -dontwarn com.google.android.material.R$id
 
 
+
+-dontwarn com.core.library_common.util.SIzeUnikKtxKt
+-keep class com.core.library_common.util.SIzeUnikKtxKt { *; }

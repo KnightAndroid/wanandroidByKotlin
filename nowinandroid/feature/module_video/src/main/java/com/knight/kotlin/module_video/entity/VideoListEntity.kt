@@ -1,8 +1,6 @@
 package com.knight.kotlin.module_video.entity
 
-import android.os.Parcelable
-import com.google.android.exoplayer2.source.BaseMediaSource
-import kotlinx.parcelize.Parcelize
+import androidx.media3.exoplayer.source.BaseMediaSource
 
 /**
  * Author:Knight

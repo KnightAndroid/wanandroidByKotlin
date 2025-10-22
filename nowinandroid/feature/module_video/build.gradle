@@ -8,10 +8,14 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation Dependencies.Android.EXOPLAYER
-    implementation Dependencies.Android.EXOPLAYER_CORE
     implementation Dependencies.Android.EXOPLAYER_DASH
     implementation Dependencies.Android.EXOPLAYER_HLS
-    implementation Dependencies.Android.EXOPLAYER_RTMP
+    //暂时为了适配16kb page sizes  ==》 等后面直接改成 implementation Dependencies.Android.EXOPLAYER_RTMP 即可
+    implementation(Dependencies.Android.EXOPLAYER_RTMP) {
+        exclude group: "io.antmedia", module: "rtmp-client"
+    }
+    implementation "com.github.mcxinyu:LibRtmp-Client-for-Android:v3.2.0.m2"
+
     implementation Dependencies.Android.EXOPLAYER_UI
     implementation Dependencies.OtherUtils.LOTTIE
     implementation Dependencies.OtherUtils.SLF4J

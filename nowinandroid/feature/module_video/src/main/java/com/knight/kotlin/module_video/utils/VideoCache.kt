@@ -1,9 +1,11 @@
 package com.knight.kotlin.module_video.utils
 
 import android.content.Context
-import com.google.android.exoplayer2.database.StandaloneDatabaseProvider
-import com.google.android.exoplayer2.upstream.cache.LeastRecentlyUsedCacheEvictor
-import com.google.android.exoplayer2.upstream.cache.SimpleCache
+import androidx.annotation.OptIn
+import androidx.media3.common.util.UnstableApi
+import androidx.media3.database.StandaloneDatabaseProvider
+import androidx.media3.datasource.cache.LeastRecentlyUsedCacheEvictor
+import androidx.media3.datasource.cache.SimpleCache
 import com.knight.kotlin.module_video.player.VideoPlayer
 
 
@@ -12,6 +14,7 @@ import com.knight.kotlin.module_video.player.VideoPlayer
  * Time:2024/4/7 15:54
  * Description:VideoCache
  */
+@UnstableApi
 class VideoCache {
 
     companion object {
@@ -32,6 +35,7 @@ class VideoCache {
         @Volatile
         private var sDownloadCache: SimpleCache? = null
 
+        @OptIn(UnstableApi::class)
         fun getInstance(context: Context) =
             sDownloadCache ?: synchronized(this) {
                 val cacheFile = context.cacheDir.resolve("tiktok_cache_file$this.hashCode()")

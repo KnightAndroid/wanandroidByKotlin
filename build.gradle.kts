@@ -11,6 +11,7 @@ buildscript {
 
         mavenCentral()
         maven {
+            //com.android.tools.r8.internal.Jc: Sealed classes are not supported as program classes
             url = uri("https://storage.googleapis.com/r8-releases/raw")
         }
         jcenter()
@@ -26,7 +27,9 @@ buildscript {
         classpath(com.knight.wanandroid.buildsrc.ProjectPluginDencies.HILT_PLUGIN)
        // classpath(com.knight.wanandroid.buildsrc.ProjectPluginDencies.KOTLIN_SERIALIZATION)
         classpath(com.knight.wanandroid.buildsrc.ProjectPluginDencies.ANDROID_AOP)
-        classpath("com.android.tools:r8:8.2.24")
+        //com.android.tools.r8.internal.Jc: Sealed classes are not supported as program classes
+        //classpath("com.android.tools:r8:8.2.24")
+        classpath("com.android.tools:r8:8.7.18")
     }
 }
 
