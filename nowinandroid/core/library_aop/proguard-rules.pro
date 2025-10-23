@@ -43,3 +43,7 @@
 #-keep class * implements com.flyjingfish.android_aop_annotation.base.MatchClassMethod{
 #    public <init>();
 #}
+
+-dontwarn com.core.library_common.app.ApplicationLifecycle
+-dontwarn com.knight.kotlin.library_common.entity.UserInfoEntity
+-dontwarn com.knight.kotlin.library_common.ktx.AppCommonKtxKt

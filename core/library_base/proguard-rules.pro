@@ -55,4 +55,3 @@
 
 
 -dontwarn com.core.library_common.util.SIzeUnikKtxKt
--keep class com.core.library_common.util.SIzeUnikKtxKt { *; }

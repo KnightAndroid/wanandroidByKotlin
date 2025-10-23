@@ -22,6 +22,7 @@ android {
         targetSdkVersion ProjectBuildDencies.TARGET_SDK_VERSION
         versionCode ProjectBuildDencies.VERSION_CODE
         versionName ProjectBuildDencies.VERSION_NAME
+      //  proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         testInstrumentationRunner Dependencies.Androidx.ANDROID_JUNIT_RUNNER
         ndk {
             // 设置支持的SO库架构
@@ -85,7 +86,7 @@ android {
         }
         release {
             buildConfigField "String","TYPE","\"${ProjectBuildDencies.Variants.RELEASE}\""
-            minifyEnabled true
+            minifyEnabled false
            // consumerProguardFiles 'proguard-rules.pro'
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }

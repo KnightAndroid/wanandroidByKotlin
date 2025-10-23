@@ -19,3 +19,9 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+-dontwarn com.core.library_base.annotation.EventBusRegister
+-dontwarn com.core.library_base.event.MessageEvent$MessageType
+-dontwarn com.core.library_base.event.MessageEvent
+-dontwarn com.core.library_base.vm.BaseViewModel
+-dontwarn com.knight.kotlin.library_base.activity.BaseActivity
+-dontwarn com.knight.kotlin.library_base.utils.StatusBarUtils

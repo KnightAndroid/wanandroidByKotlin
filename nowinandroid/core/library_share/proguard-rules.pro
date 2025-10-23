@@ -19,3 +19,7 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+-dontwarn com.knight.kotlin.library_base.fragment.BaseDialogFragment
+-dontwarn com.knight.kotlin.library_util.FileUtils
+-dontwarn com.knight.kotlin.library_util.UtilsKt
+-dontwarn com.knight.kotlin.library_util.bitmap.BitmapKtxKt

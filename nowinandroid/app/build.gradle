@@ -68,9 +68,9 @@ android {
 
         release {
             //代码混淆开关
-            minifyEnabled true
+            minifyEnabled false
             //移除无用资源
-            shrinkResources true
+            shrinkResources false
             //压缩对齐开关
             zipAlignEnabled true
             //混淆规则文件

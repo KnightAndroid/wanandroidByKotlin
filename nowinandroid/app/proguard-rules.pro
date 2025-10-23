@@ -120,4 +120,14 @@
 }
 
 
+-keep class * extends androidx.lifecycle.ViewModel {
+    <init>(...);
+}
+
+
+# 保持你的 Application 类
+-keep class com.knight.kotlin.wanandroid.WanandroidApp
+
+
+
 

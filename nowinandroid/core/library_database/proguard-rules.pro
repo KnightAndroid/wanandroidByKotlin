@@ -19,3 +19,6 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+-dontwarn com.knight.kotlin.library_base.repository.BaseRepository
+-dontwarn com.knight.kotlin.library_common.entity.UserInfoEntity
+-dontwarn com.knight.kotlin.library_common.ktx.AppCommonKtxKt

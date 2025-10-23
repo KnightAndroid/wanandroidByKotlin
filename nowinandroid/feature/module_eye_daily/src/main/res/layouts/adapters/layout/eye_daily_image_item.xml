@@ -31,7 +31,7 @@
                 android:layout_height="match_parent"
                 android:scaleType="fitXY"
                 android:transitionName="@string/base_daily_share_image"
-                bind:imageUrl="@{model.data.component9().feed}"/>
+                bind:imageUrl="@{model.data.cover == null ? @string/eye_daily_default_cover : model.data.cover.feed}"/>
 
 
             <TextView

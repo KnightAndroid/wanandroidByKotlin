@@ -15,7 +15,7 @@ android {
         targetSdkVersion ProjectBuildDencies.TARGET_SDK_VERSION
         versionCode ProjectBuildDencies.VERSION_CODE
         versionName ProjectBuildDencies.VERSION_NAME
-        //consumerProguardFiles "consumer-rules.pro"
+        //consumerProguardFiles "proguard-rules.pro"
         ndk {
             // 设置支持的SO库架构
             abiFilters 'armeabi-v7a', 'arm64-v8a'
@@ -38,19 +38,19 @@ android {
             buildConfigField "String","TYPE","\"${ProjectBuildDencies.Variants.DEVELOP}\""
             minifyEnabled false
             consumerProguardFiles 'proguard-rules.pro'
-            //proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         release {
             buildConfigField "String","TYPE","\"${ProjectBuildDencies.Variants.RELEASE}\""
-            minifyEnabled true
+            minifyEnabled false
             consumerProguardFiles 'proguard-rules.pro'
-           // proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         master {
             buildConfigField "String","TYPE","\"${ProjectBuildDencies.Variants.MASTER}\""
             minifyEnabled true
             consumerProguardFiles 'proguard-rules.pro'
-           // proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
 
     }

@@ -2,5 +2,5 @@
     <string name="eye_daily_app_name">开眼日报</string>
     <string name="eye_daily_toolbar_title">日报</string>
     <string name="eye_daily_today_recommend">今日精选</string>
-
+    <string name="eye_daily_default_cover">https://ali-img.kaiyanapp.com/7865166bc4d8600672b35fbe3b1ff88f.jpeg?imageMogr2/auto-orient/thumbnail/1242x/interlace/1/quality/80/format/webp</string>
 </resources>

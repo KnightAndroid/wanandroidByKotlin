@@ -54,10 +54,10 @@ object Dependencies {
        const val LIFECYCLE = "2.5.1"
        const val LIFECYCLE_EXTENSION = "2.2.0"
        //DI框架-Hilt
-       const val HILT = "2.51.1"
-       const val HILT_ANDROIDX = "1.0.0"
+       const val HILT = "2.57.1"
+       const val HILT_ANDROIDX = "1.3.0"
        //数据库Room
-       const val ROOM_VERSION = "2.6.0"
+       const val ROOM_VERSION = "2.8.2"
        //camerax
        const val CAMERAX_VERSION = "1.0.2"
        //cameraView
