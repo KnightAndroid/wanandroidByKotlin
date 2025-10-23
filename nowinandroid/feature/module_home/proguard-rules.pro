@@ -114,3 +114,5 @@
 -dontwarn com.knight.kotlin.library_widget.weatherview.sunmoon.SunMoonView
 -dontwarn com.knight.library_biometric.listener.BiometricStatusCallback
 
+
+

@@ -336,16 +336,15 @@ object StringUtils {
         val style = SpannableStringBuilder(str)
         var sonStr: String
         if (str.isNotEmpty() && keywords.isNotEmpty()) {
+            val upperStr = str.uppercase(Locale.CHINESE)
+            val upperKeywords = keywords.uppercase(Locale.CHINESE)
             for (i in str.indices) {
-                sonStr = str.substring(i, str.length).toUpperCase(Locale.CHINESE)
-                if (sonStr.startsWith(keywords.toUpperCase(Locale.CHINESE))) {
+                // 只检查从 i 开始的子串是否以关键字开头
+                if (upperStr.startsWith(upperKeywords, i)) {
                     style.setSpan(
-                        ForegroundColorSpan(
-                            ContextCompat.getColor(
-                                context,
-                                R.color.holo_red_light
-                            )
-                        ), i, i + keywords.length, Spannable.SPAN_EXCLUSIVE_INCLUSIVE
+                        ForegroundColorSpan(ContextCompat.getColor(context, R.color.holo_red_light)),
+                        i, i + keywords.length,
+                        Spannable.SPAN_EXCLUSIVE_INCLUSIVE
                     )
                 }
             }

@@ -8,7 +8,7 @@ import com.flyjingfish.android_aop_annotation.anno.AndroidAopPointCut
  * Description:LoginCHeck
  */
 
-@AndroidAopPointCut(LoginInterceptCut::class)
+//@AndroidAopPointCut(LoginInterceptCut::class)。最新不能这么用
 @Retention(AnnotationRetention.RUNTIME)
 @Target(AnnotationTarget.FUNCTION)
 annotation class LoginCheck(

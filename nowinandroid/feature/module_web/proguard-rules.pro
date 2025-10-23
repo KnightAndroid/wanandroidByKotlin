@@ -44,3 +44,4 @@
 -dontwarn com.knight.kotlin.library_widget.TransitWebCoorLayout
 -dontwarn com.knight.kotlin.library_widget.WebContainer
 -dontwarn com.knight.kotlin.library_widget.databinding.BaseIncludeToolbarBinding
+

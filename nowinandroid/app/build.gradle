@@ -67,10 +67,11 @@ android {
         }
 
         release {
+            //R8 shrinking Dagger/Hilt components - component method cannot be void。暂时不开启 等后面开启
             //代码混淆开关
-            minifyEnabled false
+            minifyEnabled true
             //移除无用资源
-            shrinkResources false
+            shrinkResources true
             //压缩对齐开关
             zipAlignEnabled true
             //混淆规则文件

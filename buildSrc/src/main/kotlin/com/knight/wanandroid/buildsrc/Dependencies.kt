@@ -15,8 +15,8 @@ object Dependencies {
      */
     object Version {
        //构建相关-----------------------------------------------
-       const val TOOL_BUILD_VERSION= "8.7.0"
-       const val KOTLIN_GRADLE_PLUGIN_VERSION = "2.0.21"
+       const val TOOL_BUILD_VERSION= "8.13.0"
+       const val KOTLIN_GRADLE_PLUGIN_VERSION = "2.2.20"
        //kotlin Serialization序列化（KOTLIN_GRADLE_PLUGIN_VERSION后续要和这个版本统一）
        const val KOTLIN_SERIALIZATION = "1.8.10"
        //AndroidX----------------------------------------------
@@ -93,7 +93,7 @@ object Dependencies {
        const val LEAKCANARY_VERSION = "2.14"               // 内存泄漏相关
        const val BUG_LY = "4.1.9.3"                   // bugly异常上报
        const val ANDROID_AOP = "2.6.2"                       //aop相关
-       const val ANDROID_KSP_VERSION = "2.0.21-1.0.25"         //ksp版本  https://github.com/google/ksp/releases?page=1
+       const val ANDROID_KSP_VERSION = "2.2.20-2.0.4"     //2.0.21-1.0.25    //ksp版本  https://github.com/google/ksp/releases?page=1
 
        const val EXOPLAYER = "1.8.0"                //视频播放器版本         //rtmp版本
        const val LOTTIE =  "2.8.0"                  //lottie 动画版本

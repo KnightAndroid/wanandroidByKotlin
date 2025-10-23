@@ -25,3 +25,6 @@
 -dontwarn com.core.library_base.vm.BaseViewModel
 -dontwarn com.knight.kotlin.library_base.activity.BaseActivity
 -dontwarn com.knight.kotlin.library_base.utils.StatusBarUtils
+
+
+

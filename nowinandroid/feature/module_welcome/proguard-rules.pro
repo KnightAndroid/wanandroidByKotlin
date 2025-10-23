@@ -32,3 +32,4 @@
 -dontwarn com.knight.kotlin.library_util.baidu.OnceLocationListener
 -dontwarn com.knight.kotlin.library_widget.AnimLogoView
 -dontwarn com.knight.kotlin.library_widget.SimpleProgressBar
+

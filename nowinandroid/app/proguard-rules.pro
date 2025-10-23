@@ -125,8 +125,7 @@
 }
 
 
-# 保持你的 Application 类
--keep class com.knight.kotlin.wanandroid.WanandroidApp
+
 
 
 

@@ -40,3 +40,4 @@
 -dontwarn com.knight.kotlin.library_util.image.ImageLoader$Companion
 -dontwarn com.knight.kotlin.library_util.image.ImageLoader
 -dontwarn com.knight.kotlin.library_widget.ReuseNestedScrollView
+

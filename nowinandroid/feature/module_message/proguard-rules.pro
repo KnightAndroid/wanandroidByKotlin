@@ -26,3 +26,5 @@
 -dontwarn com.knight.kotlin.library_util.UtilsKt
 -dontwarn com.knight.kotlin.library_widget.databinding.BaseIncludeToolbarBinding
 -dontwarn com.knight.kotlin.library_widget.databinding.BaseLayoutRecycleviewBinding
+
+

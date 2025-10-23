@@ -97,7 +97,8 @@ class ColorPickerDialog(context: Context,initialColor:Int,mColorStyle:Int,mRecov
         set_tv_recovertheme.setOnClickListener(this)
         set_color_picker_view.setOnColorChangedListener(this)
         set_color_picker_view.setColor(color, true)
-        et_color.setText(ColorUtils.convertToRGB(color).toUpperCase(Locale.getDefault()))
+        val rgb = ColorUtils.convertToRGB(color).uppercase(Locale.getDefault())
+        et_color.setText(rgb)
         et_color.addTextChangedListener(object:TextWatcher{
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
