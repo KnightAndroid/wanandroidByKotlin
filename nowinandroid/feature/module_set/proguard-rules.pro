@@ -42,5 +42,7 @@
 -dontwarn com.knight.kotlin.library_widget.RippleAnimation
 -dontwarn com.knight.kotlin.library_widget.databinding.BaseIncludeToolbarBinding
 -dontwarn com.knight.kotlin.library_widget.databinding.BaseLayoutRecycleviewBinding
+-dontwarn com.core.library_base.ktx.CommonExtKt
+
 
 

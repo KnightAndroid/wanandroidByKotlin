@@ -113,6 +113,12 @@
 -dontwarn com.knight.kotlin.library_widget.weatherview.sunmoon.SunMoonView$SunMoonDrawStatus
 -dontwarn com.knight.kotlin.library_widget.weatherview.sunmoon.SunMoonView
 -dontwarn com.knight.library_biometric.listener.BiometricStatusCallback
+-dontwarn com.knight.kotlin.library_widget.citypicker.CityListAdapter
+-dontwarn com.knight.kotlin.library_util.Mp3PlayerUtils$Companion
+-dontwarn com.knight.kotlin.library_util.Mp3PlayerUtils
+-dontwarn com.knight.kotlin.library_widget.overlaymenu.FloatWindow
+-dontwarn com.knight.kotlin.library_database.entity.CityBean
+
 
 
 

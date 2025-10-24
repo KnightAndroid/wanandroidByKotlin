@@ -38,3 +38,4 @@
 -dontwarn com.knight.kotlin.library_widget.AppendEndTextView
 -dontwarn com.knight.kotlin.library_widget.ExpandableTextView
 -dontwarn com.knight.kotlin.library_widget.SlowShowTextView
+

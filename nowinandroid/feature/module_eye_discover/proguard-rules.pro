@@ -82,4 +82,3 @@
 -dontwarn com.knight.kotlin.library_widget.databinding.BaseIncludeToolbarBinding
 -dontwarn com.knight.kotlin.library_widget.ktx.ViewExtKt
 -dontwarn com.knight.kotlin.library_widget.listener.AppBarStateChangeListener
-

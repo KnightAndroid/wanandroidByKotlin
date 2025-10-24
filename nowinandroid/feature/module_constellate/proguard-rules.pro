@@ -40,4 +40,3 @@
 -dontwarn com.knight.kotlin.library_widget.VerticalProgressBar
 -dontwarn com.knight.kotlin.library_widget.databinding.BaseIncludeToolbarBinding
 -dontwarn com.knight.kotlin.library_widget.ktx.ViewExtKt
-

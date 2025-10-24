@@ -57,5 +57,8 @@
 -dontwarn com.knight.kotlin.library_widget.floatmenu.FloatMenu$OnItemClickListener
 -dontwarn com.knight.kotlin.library_widget.slidinglayout.SlidingUpPanelLayout
 -dontwarn com.knight.library_biometric.listener.BiometricStatusCallback
+-dontwarn com.knight.library_biometric.control.BiometricControl$Companion
+-dontwarn com.knight.library_biometric.control.BiometricControl
+
 
 

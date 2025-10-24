@@ -28,5 +28,5 @@ dependencies {
     //必须项
     api Dependencies.GitHub.ANDROID_AOP
     api Dependencies.GitHub.ANDROID_EXTRA_AOP
-    api Dependencies.GitHub.ANDROID_AOP_ANNOTATION
+    //api Dependencies.GitHub.ANDROID_AOP_ANNOTATION
 }

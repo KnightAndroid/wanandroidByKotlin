@@ -33,3 +33,4 @@
 -dontwarn com.knight.kotlin.library_widget.AnimLogoView
 -dontwarn com.knight.kotlin.library_widget.SimpleProgressBar
 
+

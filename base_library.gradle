@@ -38,7 +38,7 @@ android {
             buildConfigField "String","TYPE","\"${ProjectBuildDencies.Variants.DEVELOP}\""
             minifyEnabled false
             consumerProguardFiles 'proguard-rules.pro'
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+          //  proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         release {
             buildConfigField "String","TYPE","\"${ProjectBuildDencies.Variants.RELEASE}\""
@@ -50,7 +50,7 @@ android {
             buildConfigField "String","TYPE","\"${ProjectBuildDencies.Variants.MASTER}\""
             minifyEnabled true
             consumerProguardFiles 'proguard-rules.pro'
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+         //   proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
 
     }

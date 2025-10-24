@@ -22,7 +22,6 @@
 -dontwarn com.core.library_base.R$string
 -dontwarn com.knight.kotlin.library_widget.R$layout
 
--dontwarn com.core.library_base.ktx.CommonExtKt
 -dontwarn com.core.library_base.vm.BaseViewModel
 -dontwarn com.core.library_common.ktx.KtxKt
 -dontwarn com.knight.kotlin.library_base.activity.BaseActivity
@@ -39,4 +38,5 @@
 -dontwarn com.knight.kotlin.library_util.UtilsKt
 -dontwarn com.knight.kotlin.library_util.image.ImageExtKt
 -dontwarn com.knight.kotlin.library_widget.databinding.BaseIncludeToolbarBinding
+-dontwarn com.core.library_base.ktx.CommonExtKt
 

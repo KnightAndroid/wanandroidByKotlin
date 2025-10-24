@@ -37,3 +37,5 @@
 -dontwarn com.knight.kotlin.library_widget.databinding.BaseLayoutRecycleviewBinding
 
 
+
+

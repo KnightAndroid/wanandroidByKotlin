@@ -12,7 +12,7 @@ object ProjectPluginDencies {
     const val KOTLIN_SERIALIZATION = "org.jetbrains.kotlin.plugin.serialization:${Dependencies.Version.KOTLIN_SERIALIZATION}"
     const val GO_ROUTER_REGISTER = "com.github.wyjsonGo.GoRouter:GoRouter-Gradle-Plugin:${Dependencies.Version.GO_ROUTER}"
     const val HILT_PLUGIN = "com.google.dagger:hilt-android-gradle-plugin:${Dependencies.Version.HILT}"
-    const val ANDROID_AOP = "io.github.FlyJingFish.AndroidAop:android-aop-plugin:${Dependencies.Version.ANDROID_AOP}"
+    const val ANDROID_AOP = "io.github.flyjingfish:androidaop-plugin:${Dependencies.Version.ANDROID_AOP}"
     const val ANDROID_KSP = "com.google.devtools.ksp:${Dependencies.Version.ANDROID_KSP_VERSION}"
 }
 

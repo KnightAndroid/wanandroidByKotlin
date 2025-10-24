@@ -15,7 +15,7 @@ object Dependencies {
      */
     object Version {
        //构建相关-----------------------------------------------
-       const val TOOL_BUILD_VERSION= "8.13.0"
+       const val TOOL_BUILD_VERSION= "8.7.0" // 8.13.0
        const val KOTLIN_GRADLE_PLUGIN_VERSION = "2.2.20"
        //kotlin Serialization序列化（KOTLIN_GRADLE_PLUGIN_VERSION后续要和这个版本统一）
        const val KOTLIN_SERIALIZATION = "1.8.10"
@@ -92,7 +92,7 @@ object Dependencies {
        //第三方其他相关------------------------------------------------------
        const val LEAKCANARY_VERSION = "2.14"               // 内存泄漏相关
        const val BUG_LY = "4.1.9.3"                   // bugly异常上报
-       const val ANDROID_AOP = "2.6.2"                       //aop相关
+       const val ANDROID_AOP = "2.7.3"                       //aop相关
        const val ANDROID_KSP_VERSION = "2.2.20-2.0.4"     //2.0.21-1.0.25    //ksp版本  https://github.com/google/ksp/releases?page=1
 
        const val EXOPLAYER = "1.8.0"                //视频播放器版本         //rtmp版本
@@ -281,11 +281,11 @@ object Dependencies {
         //内存泄漏 https://github.com/square/leakcanary
         const val LEAK_CANARY = "com.squareup.leakcanary:leakcanary-android:${Version.LEAKCANARY_VERSION}"
         //aop相关 https://github.com/FlyJingFish/AndroidAOP
-        const val ANDROID_AOP = "io.github.FlyJingFish.AndroidAop:android-aop-core:${Version.ANDROID_AOP}"
+        const val ANDROID_AOP = "io.github.flyjingfish:androidaop-core:${Version.ANDROID_AOP}"
         //👇非必须项 👈 这个包提供了一些常见的注解切面
-        const val ANDROID_EXTRA_AOP =  "io.github.FlyJingFish.AndroidAop:android-aop-extra:${Version.ANDROID_AOP}"
+        const val ANDROID_EXTRA_AOP =  "io.github.flyjingfish:androidaop-extra:${Version.ANDROID_AOP}"
         const val ANDROID_AOP_ANNOTATION = "io.github.FlyJingFish.AndroidAop:android-aop-annotation:${Version.ANDROID_AOP}"
-        const val ANDROID_KSP = "io.github.FlyJingFish.AndroidAop:android-aop-ksp:${Version.ANDROID_AOP}"
+        const val ANDROID_KSP = "io.github.flyjingfish:androidaop-apt:${Version.ANDROID_AOP}"
     }
 
     /**
