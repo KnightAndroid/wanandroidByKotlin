@@ -21,21 +21,5 @@
 #-renamesourcefileattribute SourceFile
 -dontwarn com.core.library_base.R$string
 
--dontwarn com.core.library_base.ktx.CommonExtKt
--dontwarn com.core.library_base.vm.BaseViewModel
--dontwarn com.knight.kotlin.library_base.activity.BaseActivity
--dontwarn com.knight.kotlin.library_base.entity.EyeAuthorEntity
--dontwarn com.knight.kotlin.library_base.entity.EyeCover
--dontwarn com.knight.kotlin.library_base.entity.EyeData
--dontwarn com.knight.kotlin.library_base.entity.EyeItemEntity
--dontwarn com.knight.kotlin.library_base.fragment.BaseFragment
--dontwarn com.knight.kotlin.library_network.model.ExceptionHandlerKt
--dontwarn com.knight.kotlin.library_util.DateUtils
--dontwarn com.knight.kotlin.library_util.UtilsKt
--dontwarn com.knight.kotlin.library_util.image.ImageExtKt
--dontwarn com.knight.kotlin.library_video.play.OkPlayer$NormalBackListener
--dontwarn com.knight.kotlin.library_video.play.OkPlayerStd
--dontwarn com.knight.kotlin.library_widget.AppendEndTextView
--dontwarn com.knight.kotlin.library_widget.ExpandableTextView
--dontwarn com.knight.kotlin.library_widget.SlowShowTextView
+
 

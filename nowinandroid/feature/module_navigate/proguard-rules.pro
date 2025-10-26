@@ -25,21 +25,4 @@
 -dontwarn java.lang.invoke.StringConcatFactory
 -dontwarn com.knight.kotlin.library_widget.R$layout
 
--dontwarn com.core.library_base.databinding.BaseArticleItemBinding
--dontwarn com.core.library_base.databinding.BaseTextItemBinding
--dontwarn com.core.library_base.ktx.CommonExtKt
--dontwarn com.core.library_base.vm.BaseViewModel
--dontwarn com.knight.kotlin.library_base.activity.BaseActivity
--dontwarn com.knight.kotlin.library_base.fragment.BaseFragment
--dontwarn com.knight.kotlin.library_base.utils.ArouteUtils$Companion
--dontwarn com.knight.kotlin.library_base.utils.ArouteUtils
--dontwarn com.knight.kotlin.library_common.config.Appconfig
--dontwarn com.knight.kotlin.library_network.model.ExceptionHandlerKt
--dontwarn com.knight.kotlin.library_util.StringUtils
--dontwarn com.knight.kotlin.library_util.UtilsKt
--dontwarn com.knight.kotlin.library_util.image.ImageLoader$Companion
--dontwarn com.knight.kotlin.library_util.image.ImageLoader
--dontwarn com.knight.kotlin.library_widget.databinding.BaseIncludeToolbarBinding
--dontwarn com.knight.kotlin.library_widget.databinding.BaseLayoutRecycleviewBinding
-
 

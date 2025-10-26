@@ -19,13 +19,6 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
--dontwarn com.core.library_base.vm.BaseViewModel
--dontwarn com.knight.kotlin.library_base.activity.BaseActivity
--dontwarn com.knight.kotlin.library_base.fragment.BaseFragment
--dontwarn com.knight.kotlin.library_network.model.ExceptionHandlerKt
--dontwarn com.knight.kotlin.library_util.UtilsKt
--dontwarn com.knight.kotlin.library_widget.databinding.BaseIncludeToolbarBinding
--dontwarn com.knight.kotlin.library_widget.databinding.BaseLayoutRecycleviewBinding
 
 
 

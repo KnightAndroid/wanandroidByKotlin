@@ -15,7 +15,7 @@ object Dependencies {
      */
     object Version {
        //构建相关-----------------------------------------------
-       const val TOOL_BUILD_VERSION= "8.7.0" // 8.13.0
+       const val TOOL_BUILD_VERSION= "8.13.0" // 8.13.0
        const val KOTLIN_GRADLE_PLUGIN_VERSION = "2.2.20"
        //kotlin Serialization序列化（KOTLIN_GRADLE_PLUGIN_VERSION后续要和这个版本统一）
        const val KOTLIN_SERIALIZATION = "1.8.10"

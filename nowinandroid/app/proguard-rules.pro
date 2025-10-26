@@ -127,8 +127,6 @@
 
 
 
--keep class com.knight.kotlin.wanandroid.*Hilt* {
-    *;
-}
+
 
 

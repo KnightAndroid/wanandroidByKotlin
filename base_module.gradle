@@ -86,13 +86,13 @@ android {
         }
         release {
             buildConfigField "String","TYPE","\"${ProjectBuildDencies.Variants.RELEASE}\""
-            minifyEnabled true
+            minifyEnabled false
            // consumerProguardFiles 'proguard-rules.pro'
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         master {
             buildConfigField "String","TYPE","\"${ProjectBuildDencies.Variants.MASTER}\""
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
 
@@ -137,7 +137,7 @@ dependencies {
     kapt Dependencies.GitHub.EVENTBUS_APT
     kapt Dependencies.GitHub.AUTO_SERVICE_ANNOTATIONS
     kapt Dependencies.JetPack.HILT_APT
-    kapt Dependencies.JetPack.HILT_ANDROIDX
+    //kapt Dependencies.JetPack.HILT_ANDROIDX
     kapt Dependencies.JetPack.LIFECYCLE_COMPILER_APT
 
 

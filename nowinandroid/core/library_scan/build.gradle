@@ -17,7 +17,7 @@ dependencies {
     implementation project(path: ':nowinandroid:core:library_base')
     implementation Dependencies.JetPack.HILT_CORE
     kapt Dependencies.JetPack.HILT_APT
-    kapt Dependencies.JetPack.HILT_ANDROIDX
+    //kapt Dependencies.JetPack.HILT_ANDROIDX
     kapt Dependencies.GitHub.AUTO_SERVICE_ANNOTATIONS
 
     implementation Dependencies.JetPack.CAMERA_CORE

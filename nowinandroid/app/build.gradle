@@ -189,5 +189,5 @@ dependencies {
     implementation project(":nowinandroid:feature:module_constellate")
     implementation Dependencies.JetPack.HILT_CORE
     kapt Dependencies.JetPack.HILT_APT
-    kapt Dependencies.JetPack.HILT_ANDROIDX
+    //kapt Dependencies.JetPack.HILT_ANDROIDX
 }

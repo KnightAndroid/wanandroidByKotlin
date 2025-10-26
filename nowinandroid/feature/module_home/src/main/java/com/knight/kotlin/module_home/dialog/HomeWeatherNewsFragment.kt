@@ -3,6 +3,7 @@ package com.knight.kotlin.module_home.dialog
 import android.os.Build
 import android.os.Bundle
 import android.view.Gravity
+import androidx.lifecycle.Lifecycle
 import com.core.library_base.ktx.setOnClick
 import com.core.library_common.util.dp2px
 import com.knight.kotlin.library_base.entity.TodayWeatherDataBean
@@ -62,33 +63,39 @@ class HomeWeatherNewsFragment: BaseDialogFragment<HomeTodayWeatherNewsDialogBind
     override fun initRequestData() {
 
             //获取日报新闻
-            mViewModel.getZaoBao("json").observe(viewLifecycleOwner,{data->
-               data?.let {
-                   zaoBaoDate = data.date
-                   mBinding.homeTodayNewsItem.tvNewsTop.text = data.news.get(0)
-                   ImageLoader.loadImageWithAdaptiveSize(mBinding.homeTodayNewsItem.ivZaobaoHead,getScreenWidth() - 20.dp2px(), 0,data.head_image,{
-                           width,height->
+        mViewModel.getZaoBao("json").observe(viewLifecycleOwner) { data ->
+            data?.let {
+                zaoBaoDate = data.date
 
+                if (!isAdded || view == null) return@let  // Fragment 已销毁
+                mBinding.homeTodayNewsItem.tvNewsTop.text = data.news[0]
 
-                       mBinding.flipView.post {
-                           val params = mBinding.flipView.layoutParams
-                           params.width = width
-                           params.height = height + 130.dp2px()
-                           mBinding.flipView.layoutParams = params
-                           mViewModel.getTodayImage("js","0","1").observe(viewLifecycleOwner,{ data ->
+                ImageLoader.loadImageWithAdaptiveSize(
+                    mBinding.homeTodayNewsItem.ivZaobaoHead,
+                    getScreenWidth() - 20.dp2px(),
+                    0,
+                    data.head_image
+                ) { width, height ->
+                    if (!isAdded || view == null || viewLifecycleOwner.lifecycle.currentState < Lifecycle.State.STARTED) return@loadImageWithAdaptiveSize
 
-                               //1920×1080，1366×768，1280×768，1024×768，800×600，800×480，768×1280，720×1280，640×480，480×800，400×240，320×240，240×320
-                               ImageLoader.loadStringPhoto(requireActivity(), "https://cn.bing.com" + data.images.get(0).urlbase + "_640x480.jpg",mBinding.homeTodayWeatherItem.ivTodayBg)
-                           })
-                       }
+                    mBinding.flipView.post {
+                        val params = mBinding.flipView.layoutParams
+                        params.width = width
+                        params.height = height + 130.dp2px()
+                        mBinding.flipView.layoutParams = params
 
-
-
-                   })
-               }
-
-
-            })
+                        mViewModel.getTodayImage("js", "0", "1").observe(viewLifecycleOwner) { data ->
+                            if (!isAdded || view == null) return@observe
+                            ImageLoader.loadStringPhoto(
+                                requireActivity(),
+                                "https://cn.bing.com${data.images[0].urlbase}_640x480.jpg",
+                                mBinding.homeTodayWeatherItem.ivTodayBg
+                            )
+                        }
+                    }
+                }
+            }
+        }
 
 
          mViewModel.getTwoHourRainFall(getLatitude(), getLongitude(),"precipitation",2,TimeUtils.getDefaultTimeZoneId()).observe(this,{ data->
