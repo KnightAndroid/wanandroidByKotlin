@@ -25,8 +25,8 @@ class ConstellateFortuneVm @Inject constructor(private val mRepo : ConstellateFo
      *
      * 根据类型星座运势
      */
-    fun getConstellateFortune(type:String,time:String) : LiveData<ConstellateResponseEntity> {
-        return mRepo.getConstellateFortune(type,time).asLiveData()
+    fun getAllConstellateFortunes(type:String) : LiveData<ConstellateResponseEntity> {
+        return mRepo.getAllConstellateFortunes(type).asLiveData()
         }
 
 

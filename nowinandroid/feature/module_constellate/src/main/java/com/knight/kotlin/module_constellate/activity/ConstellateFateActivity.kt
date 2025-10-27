@@ -86,7 +86,7 @@ class ConstellateFateActivity : BaseActivity<ConstellateFortuneActivityBinding, 
      * 根据对应星座获取详情
      */
     fun getConstellateFortunebyName(study:String,work:String,isFirstInit:Boolean = true) {
-        mViewModel.getConstellateFortune(constellate?.enName?:"","today").observerKt {
+        mViewModel.getAllConstellateFortunes(constellate?.enName?:"").observerKt {
             mFragments.clear()
             mBinding.constellateCloudView.start()
             constellateResponseEntity = it

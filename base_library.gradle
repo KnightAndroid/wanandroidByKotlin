@@ -43,7 +43,9 @@ android {
         release {
             buildConfigField "String","TYPE","\"${ProjectBuildDencies.Variants.RELEASE}\""
             minifyEnabled false
+            // 当app开启混淆后 会自动合并
             consumerProguardFiles 'proguard-rules.pro'
+            // 只在当前 library 构建时生效，AAR 不会带出
          //   proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         master {

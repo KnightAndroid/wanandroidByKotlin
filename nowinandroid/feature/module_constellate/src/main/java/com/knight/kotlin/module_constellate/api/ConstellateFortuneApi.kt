@@ -1,8 +1,8 @@
 package com.knight.kotlin.module_constellate.api
 
 import com.knight.kotlin.library_network.bean.BaseResponse
+import com.knight.kotlin.module_constellate.entity.ConstellateFortuneEntity
 import com.knight.kotlin.module_constellate.entity.ConstellateFortuneSubEntity
-import com.knight.kotlin.module_constellate.entity.ConstellateResponseEntity
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Query
@@ -22,7 +22,7 @@ interface ConstellateFortuneApi {
     //https://api.vvhan.com/api/horoscope?type=scorpio&time=today 由于本接口极其不稳定改用 http://api.suxun.site/api/constellation?type=scorpio&time=nextday
     @Headers("Domain-Name:constellate")
     @GET("api/constellation")
-    suspend fun getConstellateFortune(@Query("type") type: String, @Query("time") time:String) : BaseResponse<ConstellateResponseEntity>
+    suspend fun getConstellateFortune(@Query("type") type: String, @Query("time") time:String) : BaseResponse<ConstellateFortuneEntity>
 
 
 

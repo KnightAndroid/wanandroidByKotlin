@@ -128,15 +128,17 @@
 - [LeakCanary](https://github.com/square/leakcanary)
 
 ## 本项目开发环境
-- 基于Android Studio Meerkat Feature Drop | 2024.3.2 Patch 1
-- Android Gradle Plugin 8.9
-- Android Gradle插件8.0.0
+- 基于Android Studio Narwhal 3 Feature Drop | 2025.1.3
+- Android Gradle Plugin 8.13
+- Android Gradle插件8.13.0
 - Gradle JDK 17
 
 打包方式如下图：
+本项目旨在学习交流，由于涉及第三方Sdk密钥，正式签名文件不公开，若需要正式打包，请自行新建。
+
 ![wanandroid_release_apk.png](https://gitee.com/MengSuiXinSuoYuan/wanandroid_server/raw/master/wanandroid_picture/wanandroid_release_apk.png)
 
-打包成功后会在`app\build\outputs\apk\pro\release`目录下有`wanandroid_vxxx_release_xxx.apk`形式的release安装包,如下
+打包成功后会在`app\build\outputs\apk\pro\release`目录下有`wanandroid_vxxx_release_xxx.apk`形式的release安装包,如下:
 
 ![wanandroid_app_path.png](https://gitee.com/MengSuiXinSuoYuan/wanandroid_server/raw/master/wanandroid_picture/wanandroid_app_path.png)
 
