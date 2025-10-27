@@ -133,9 +133,11 @@
 - Android Gradle插件8.13.0
 - Gradle JDK 17
 
-打包方式如下图：
+
 本项目旨在学习交流，由于涉及第三方Sdk密钥，正式签名文件不公开，若需要正式打包，请自行新建。
 
+
+打包方式如下图：
 ![wanandroid_release_apk.png](https://gitee.com/MengSuiXinSuoYuan/wanandroid_server/raw/master/wanandroid_picture/wanandroid_release_apk.png)
 
 打包成功后会在`app\build\outputs\apk\pro\release`目录下有`wanandroid_vxxx_release_xxx.apk`形式的release安装包,如下:
