@@ -22,4 +22,7 @@
     <dimen name="web_transite_chaptername_margin_left">20dp</dimen>
     <dimen name="web_transite_chaptername_margin_bottom">10dp</dimen>
     <dimen name="web_transite_chaptername_text_size">16sp</dimen>
+    <dimen name="web_no_network_title_margin_top">65dp</dimen>
+    <dimen name="web_no_network_title_text_size">16sp</dimen>
+    <dimen name="web_no_network_margin_top">4dp</dimen>
 </resources>

@@ -7,13 +7,13 @@ import android.text.SpannableStringBuilder
 import android.text.method.LinkMovementMethod
 import android.view.Gravity
 import androidx.annotation.RequiresApi
-import com.knight.kotlin.library_base.BaseApp
-import com.knight.kotlin.library_base.fragment.BaseDialogFragment
 import com.core.library_base.ktx.setOnClick
 import com.core.library_base.route.RouteActivity
 import com.core.library_base.util.ActivityManagerUtils
-import com.knight.kotlin.library_common.util.CacheUtils
 import com.core.library_base.vm.EmptyViewModel
+import com.knight.kotlin.library_base.BaseApp
+import com.knight.kotlin.library_base.fragment.BaseDialogFragment
+import com.knight.kotlin.library_common.util.CacheUtils
 import com.knight.kotlin.library_util.TextClickUtils
 import com.knight.kotlin.library_util.ViewInitUtils
 import com.knight.kotlin.library_util.startPage
@@ -85,22 +85,22 @@ class WelcomePrivacyAgreeFragment : BaseDialogFragment<WelcomePrivacyAgreeFragme
 
                     when(target) {
                         "用户协议","User Agreement"->{
-                            startPageWithParams(RouteActivity.Web.WebPager,
+                            startPageWithParams(RouteActivity.Web.NewWebPager,
                                 "webUrl" to "file:android_asset/wanandroid_useragree.html",
                                 "webTitle" to "用户协议")
                         }
                         "隐私政策","Privacy Policy"->{
-                            startPageWithParams(RouteActivity.Web.WebPager,
+                            startPageWithParams(RouteActivity.Web.NewWebPager,
                                 "webUrl" to "file:android_asset/wanandroid_userprivacy.html",
                                 "webTitle" to "隐私政策")
                         }
                         "ShareSdk隐私政策","ShareSdk Privacy Policy"->{
-                            startPageWithParams(RouteActivity.Web.WebPager,
+                            startPageWithParams(RouteActivity.Web.NewWebPager,
                                 "webUrl" to "file:android_asset/wanandroid_sharesdk_userprivacy.html",
                                 "webTitle" to "ShareSdk隐私政策")
                         }
                         "百度地图Sdk隐私政策","Baidu MapSdk Policy"->{
-                            startPageWithParams(RouteActivity.Web.WebPager,
+                            startPageWithParams(RouteActivity.Web.NewWebPager,
                                 "webUrl" to "file:android_asset/wanandroid_baidu_sdk_userprivacy.html",
                                 "webTitle" to "百度地图Sdk隐私政策")
                         }

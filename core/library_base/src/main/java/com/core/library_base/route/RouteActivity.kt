@@ -79,6 +79,7 @@ object RouteActivity {
     object Web {
         private const val WEB = "/module_web"
         const val WebPager = "$WEB/WebPagerActivity"
+        const val NewWebPager = "$WEB/WebNewPagerActivity"
         const val WebArticlePager = "$WEB/WebArticleActivity"
         const val WebPreviewPhotoPager = "$WEB/WebPreviewActivity"
         const val WebTransitionPager = "$WEB/WebTransitActivity"

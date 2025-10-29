@@ -83,7 +83,7 @@ object Dependencies {
        const val SKETCH = "2.7.1"                          // 预览大图
        const val LOAD_SIR = "1.3.8"                         // 全局视图加载
        const val COOKIE = "v1.0.0"                         // Cookie管理
-       const val GLIDE = "4.11.0"                          // Glide图像版本
+       const val GLIDE = "4.12.0"                          // Glide图像版本
        const val SMART_REFRESH = "2.1.0"                    // 智能刷新库
        const val BASE_ADAPTER = "4.1.4"                     // Base适配器
        const val RECYCLEVIEW_VERSION = "1.3.2"              // recycleview

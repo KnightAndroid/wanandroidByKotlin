@@ -8,4 +8,6 @@
     <string name="web_collect_article">收藏</string>
     <string name="web_share_article_url">%1$s分享【%2$s】：%3$s</string>
     <string name="web_success_collect">收藏成功</string>
+    <string name="web_network_error">网络遇到了一些问题</string>
+    <string name="web_view_please_retry">请点击页面重试</string>
 </resources>

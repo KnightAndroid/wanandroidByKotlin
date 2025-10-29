@@ -282,4 +282,12 @@ interface ImageLoaderProxy {
      */
     @Throws(Exception::class)
     fun getCacheBitmap(mActivity: FragmentActivity, uri: Uri, width: Int, height: Int): Bitmap?
+
+    /**
+     *
+     * 通过url返回Bitmap
+     */
+    fun loadUrlByBitmap(context: Context,url:String):Bitmap
+
+
 }

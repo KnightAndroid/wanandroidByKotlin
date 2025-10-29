@@ -435,4 +435,46 @@ class DefaultImageLoaderProxy :ImageLoaderProxy {
     ): Bitmap? {
         return Glide.with(mActivity).asBitmap().load(uri).submit(width, height).get()
     }
+
+    override fun loadUrlByBitmap(context: Context, url: String): Bitmap {
+        return Glide.with(context)
+            .asBitmap()
+            .load(url)
+            .listener(object :RequestListener<Bitmap>{
+                override fun onLoadFailed(
+                    e: GlideException?,
+                    model: Any?,
+                    target: Target<Bitmap>?,
+                    isFirstResource: Boolean,
+                ): Boolean {
+
+                    return false
+                }
+
+                override fun onResourceReady(
+                    resource: Bitmap?,
+                    model: Any?,
+                    target: Target<Bitmap>?,
+                    dataSource: DataSource?,
+                    isFirstResource: Boolean,
+                ): Boolean { if (dataSource == DataSource.MEMORY_CACHE) {
+                    // 图片来自内存缓存
+                    // 处理内存缓存的逻辑
+
+                } else if (dataSource == DataSource.DATA_DISK_CACHE) {
+                    // 图片来自磁盘缓存
+                    // 处理磁盘缓存的逻辑
+
+                } else {
+                    // 图片来自网络
+                    // 处理网络加载的逻辑
+
+                }
+                    return false
+                }
+
+            })
+            .submit()
+            .get()
+    }
 }

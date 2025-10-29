@@ -358,5 +358,14 @@ class ImageLoader {
         fun loadImageWithAdaptiveSize(imageView: ImageView, targetWidth:Int,targetHeight:Int ,imageUrl: String,callback: ((width: Int, height: Int) -> Unit)?=null) {
             return mImageLoaderProxy.loadImageWithAdaptiveSize(imageView, targetWidth, targetHeight, imageUrl,callback)
         }
+
+
+        /**
+         * 加载url并且返回Bitmap
+         *
+         */
+        fun loadUrlByBitmap(context: Context,url:String):Bitmap {
+            return mImageLoaderProxy.loadUrlByBitmap(context,url)
+        }
     }
 }

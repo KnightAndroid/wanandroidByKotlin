@@ -5,4 +5,6 @@
     <color name="web_open_browser_color">#333333</color>
     <color name="web_share_article_color">#333333</color>
     <color name="web_collect_article_color">#333333</color>
+    <color name="web_no_network_title_text_color">#676961</color>
+    <color name="web_no_network_retry">#a9aaaa</color>
 </resources>
