@@ -287,7 +287,7 @@ class MineFragment: BaseFragment<MineFragmentBinding, MineViewModel>(),OnRefresh
         mOpenSourceAdapter.run {
             //子view点击事件
             setSafeOnItemChildClickListener(R.id.mine_opensource_abroadlink) { adapter, view, position ->
-                GoRouter.getInstance().build(RouteActivity.Web.WebPager)
+                GoRouter.getInstance().build(RouteActivity.Web.NewWebPager)
                     .withString("webUrl", mOpenSourceAdapter.items[position].abroadlink)
                     .withString("webTitle", mOpenSourceAdapter.items[position].name)
                     .go()
@@ -305,7 +305,7 @@ class MineFragment: BaseFragment<MineFragmentBinding, MineViewModel>(),OnRefresh
             //Item点击事件
             setSafeOnItemClickListener { adapter, view, position ->
                 //跳到webview
-                GoRouter.getInstance().build(RouteActivity.Web.WebPager)
+                GoRouter.getInstance().build(RouteActivity.Web.NewWebPager)
                     .withString("webUrl", mOpenSourceAdapter.items[position].abroadlink)
                     .withString("webTitle", mOpenSourceAdapter.items[position].name)
                     .go()

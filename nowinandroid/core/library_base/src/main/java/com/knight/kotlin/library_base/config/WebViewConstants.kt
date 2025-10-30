@@ -1,12 +1,12 @@
 package com.knight.kotlin.library_base.config
 
 /**
- * author ：Peakmain
- * createTime：2023/04/10
- * mail:2726449200@qq.com
+ * author ：knight
+ * createTime：2025/10/30
+ * mail:15015706912@163.com
  * describe：
  */
 object WebViewConstants {
-    const val LIBRARY_WEB_VIEW = "LIBRARY_WEB_VIEW"
-
+    const val WEB_PARAMS = "WEB_PARAMS_BEAN"
+    const val WEB_URL = "WEB_URL"
 }

@@ -1,10 +1,10 @@
 package com.knight.kotlin.module_utils.activity
 
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.knight.kotlin.library_base.activity.BaseActivity
 import com.core.library_base.ktx.init
 import com.core.library_base.ktx.setOnClick
 import com.core.library_base.route.RouteActivity
+import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_util.startPageWithParams
 import com.knight.kotlin.library_widget.ktx.setSafeOnItemClickListener
 import com.knight.kotlin.module_utils.R
@@ -75,7 +75,7 @@ class UtilsActivity : BaseActivity<UtilsActivityBinding, UtilsVm>(),OnRefreshLis
     private fun initListener() {
         mUtilItemAdapter.run {
             setSafeOnItemClickListener { adapter, view, position ->
-                startPageWithParams(RouteActivity.Web.WebPager,
+                startPageWithParams(RouteActivity.Web.NewWebPager,
                     "webUrl" to items[position].link,
                     "webTitle" to items[position].tabName)
             }

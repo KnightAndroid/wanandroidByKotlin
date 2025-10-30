@@ -6,7 +6,8 @@ import android.view.View
 import android.widget.FrameLayout
 import android.widget.ProgressBar
 import android.widget.TextView
-import com.peakmain.webview.R
+import com.knight.kotlin.module_web.R
+
 
 /**
  * author ：Peakmain
@@ -25,7 +26,7 @@ class AppProgressLoadingView @JvmOverloads constructor(
     private var isShowLoading: Boolean
 
     init {
-        View.inflate(context, R.layout.layout_progress_bar_loading, this)
+        View.inflate(context, R.layout.web_progress_bar_loading, this)
         mProgressBar = findViewById(R.id.progress_circular)
         mTvLoading = findViewById(R.id.tv_loading)
         isShowLoading = true

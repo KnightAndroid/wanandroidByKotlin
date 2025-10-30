@@ -6,6 +6,7 @@ import android.graphics.Canvas
 import android.text.TextUtils
 import android.util.AttributeSet
 import android.webkit.WebView
+import com.peakmain.webview.manager.WebViewController
 
 
 /**

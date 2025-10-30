@@ -2,7 +2,10 @@ package com.peakmain.webview.manager
 
 import android.content.Context
 import android.content.MutableContextWrapper
+import android.os.Handler
+import android.os.Looper
 import android.view.ViewGroup
+import com.knight.kotlin.library_base.BaseApp
 import com.peakmain.webview.implement.WebViewChromeClientImpl
 import com.peakmain.webview.implement.WebViewClientImpl
 import com.peakmain.webview.utils.WebViewEventManager
@@ -32,15 +35,32 @@ internal class WebViewPool private constructor() {
      * 初始化WebView池
      */
     fun initWebViewPool(params: WebViewController.WebViewParams?) {
+//        if (params == null) return
+//        WEB_VIEW_COUNT = params.mWebViewCount
+//        mWebViewPool = LinkedList()
+//        mUserAgent = params.userAgent
+//        mParams = params
+//        for (i in 0 until WEB_VIEW_COUNT) {
+//            mWebViewPool.add(createWebView(params, mUserAgent))
+//        }
+//        registerEntities(params)
         if (params == null) return
         WEB_VIEW_COUNT = params.mWebViewCount
-        mWebViewPool = LinkedList()
         mUserAgent = params.userAgent
         mParams = params
-        for (i in 0 until WEB_VIEW_COUNT) {
-            mWebViewPool.add(createWebView(params, mUserAgent))
+        mWebViewPool = LinkedList()
+
+        Handler(Looper.getMainLooper()).post {
+            repeat(WEB_VIEW_COUNT) { index ->
+                Handler(Looper.getMainLooper()).postDelayed({
+                    mWebViewPool.add(createWebView(params, mUserAgent))
+                }, index * 400L) // 每隔400ms创建1个WebView
+            }
         }
         registerEntities(params)
+
+
+
     }
 
     private fun registerEntities(params: WebViewController.WebViewParams) {
@@ -80,6 +100,10 @@ internal class WebViewPool private constructor() {
             clearHistory()
             clearCache(true)
             destroy()
+            webChromeClient = null
+
+            // 还原上下文为 Application，避免 Activity 泄漏
+            (context as? MutableContextWrapper)?.baseContext = BaseApp.application
             (parent as ViewGroup?)?.removeView(this)
             if (!::mWebViewPool.isInitialized) {
                 return

@@ -60,7 +60,7 @@ class NewWebViewActivity : BaseActivity<WebActivityBinding, EmptyViewModel>(){
 
     private fun initFragment() {
         val bundle = Bundle()
-        bundle.putString(WebViewConstants.LIBRARY_WEB_VIEW, webUrl)
+        bundle.putString(WebViewConstants.WEB_URL, webUrl)
         mWebViewFragment = WebViewFragment()
         mWebViewFragment!!.arguments = bundle
         supportFragmentManager.beginTransaction().replace(R.id.web_ll, mWebViewFragment!!)
@@ -74,7 +74,16 @@ class NewWebViewActivity : BaseActivity<WebActivityBinding, EmptyViewModel>(){
                 exit()
             }
             mBinding.includeWebToolbar.baseIvRight -> {
-                WebBottomFragment.newInstance(webUrl,WebViewPool.instance.getWebView(this@NewWebViewActivity)).show(supportFragmentManager,"dialog_webnormal")
+              //  WebBottomFragment.newInstance(webUrl,WebViewPool.instance.getWebView(this@NewWebViewActivity)).show(supportFragmentManager,"dialog_webnormal")
+                val dialog = WebBottomFragment.newInstance(webUrl,WebViewPool.instance.getWebView(this@NewWebViewActivity))
+                dialog.setOnWebActionListener(object : WebBottomFragment.OnWebActionListener {
+                    override fun onRefreshUrl() {
+                        // 这里执行外部的刷新逻辑
+                        mWebViewFragment?.reloadUrl(WebViewPool.instance.getWebView(this@NewWebViewActivity),webUrl)
+                    }
+                })
+                dialog.show(supportFragmentManager, "WebBottomDialog")
+
             }
         }
     }

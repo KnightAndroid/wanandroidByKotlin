@@ -212,13 +212,13 @@ class SetActivity : BaseActivity<SetActivityBinding, SetVm>(){
                 }
             }
             mBinding.setRlRepository -> {
-                startPageWithParams(RouteActivity.Web.WebPager,
+                startPageWithParams(RouteActivity.Web.NewWebPager,
                     "webUrl" to "https://github.com/KnightAndroid/wanandroidByKotlin",
                     "webTitle" to getString(R.string.set_project_repository))
             }
 
             mBinding.setRlOfficialwebsite -> {
-                startPageWithParams(RouteActivity.Web.WebPager,
+                startPageWithParams(RouteActivity.Web.NewWebPager,
                     "webUrl" to "https://www.wanandroid.com/",
                     "webTitle" to getString(R.string.set_official_website)  )
             }

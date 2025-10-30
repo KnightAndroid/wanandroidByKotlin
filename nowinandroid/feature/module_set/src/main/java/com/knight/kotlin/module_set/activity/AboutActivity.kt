@@ -1,11 +1,10 @@
 package com.knight.kotlin.module_set.activity
 
 import android.view.View
-import com.knight.kotlin.library_base.activity.BaseActivity
 import com.core.library_base.ktx.setOnClick
 import com.core.library_base.route.RouteActivity
 import com.flyjingfish.android_aop_core.annotations.SingleClick
-
+import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.fragment.UpdateAppDialogFragment
 import com.knight.kotlin.library_util.SystemUtils
 import com.knight.kotlin.library_util.startPage
@@ -74,19 +73,19 @@ class AboutActivity: BaseActivity<SetAboutActivityBinding, AboutVm>() {
             }
 
             mBinding.tvServiceProtocol -> {
-                startPageWithParams(RouteActivity.Web.WebPager,
+                startPageWithParams(RouteActivity.Web.NewWebPager,
                     "webUrl" to "file:android_asset/wanandroid_useragree.html",
                     "webTitle" to getString(R.string.set_suser_ervice_protocol))
             }
 
             mBinding.tvPrivacyProtocol -> {
-                startPageWithParams(RouteActivity.Web.WebPager,
+                startPageWithParams(RouteActivity.Web.NewWebPager,
                     "webUrl" to "file:android_asset/wanandroid_userprivacy.html",
                     "webTitle" to getString(R.string.set_privacy_protocol))
             }
 
             mBinding.setRlAccessPartner -> {
-                startPageWithParams(RouteActivity.Web.WebPager,
+                startPageWithParams(RouteActivity.Web.NewWebPager,
                     "webUrl" to "file:android_asset/access_partner_directory.html",
                     "webTitle" to getString(R.string.set_access_partner_directory))
             }

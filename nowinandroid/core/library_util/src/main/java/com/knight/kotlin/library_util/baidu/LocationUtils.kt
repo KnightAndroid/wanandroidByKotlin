@@ -10,6 +10,7 @@ import com.knight.kotlin.library_common.config.Appconfig
 import com.knight.kotlin.library_common.config.CacheKey
 import com.knight.kotlin.library_common.util.CacheUtils
 import com.knight.kotlin.library_util.HandlerUtils
+import com.knight.kotlin.library_util.toast
 
 
 /**
@@ -117,7 +118,11 @@ object LocationUtils {
             //此处的BDLocation为定位结果信息类，通过它的各种get方法可获取定位相关的全部结果
             //以下只列举部分获取经纬度相关（常用）的结果信息
             //更多结果信息获取说明，请参照类参考中BDLocation类中的说明
+
             location?.run {
+                if (locType != 61 || locType != 161) {
+                    toast(locTypeDescription)
+                }
                 Appconfig.location = this
                 mOnceLocationListener?.let {
                     //这里因为百度会多次回调，因此屏蔽 只回调一次
@@ -136,6 +141,17 @@ object LocationUtils {
 
             }
 
+        }
+
+
+        override fun onLocDiagnosticMessage(resultCode: Int, locationType: Int, strategy: String?) {
+            super.onLocDiagnosticMessage(resultCode, locationType, strategy)
+            if (resultCode != 161) {
+                strategy?.let {
+                    toast(it)
+                }
+
+            }
         }
     }
 

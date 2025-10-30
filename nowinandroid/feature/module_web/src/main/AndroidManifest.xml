@@ -8,6 +8,7 @@
         <activity android:name=".activity.WebArticleActivity"/>
         <activity android:name=".activity.WebTransitionActivity"/>
         <activity android:name=".activity.NewWebViewActivity"/>
+        <activity android:name=".activity.NewArticleWebActivity"/>
 
     </application>
 

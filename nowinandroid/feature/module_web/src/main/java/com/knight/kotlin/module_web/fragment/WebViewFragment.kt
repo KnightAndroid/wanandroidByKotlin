@@ -3,6 +3,7 @@ package com.knight.kotlin.module_web.fragment
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
@@ -18,6 +19,9 @@ import android.widget.FrameLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.knight.kotlin.library_base.config.WebViewConstants
+import com.knight.kotlin.library_base.entity.WebDataEntity
+import com.knight.kotlin.library_util.StringUtils
+import com.knight.kotlin.module_web.utils.ViewBindUtils
 import com.knight.kotlin.module_web.vm.WebViewFragmentViewModel
 import com.peakmain.webview.WebViewJsUtils
 import com.peakmain.webview.annotation.CacheMode
@@ -52,8 +56,18 @@ open class WebViewFragment : Fragment() {
     private lateinit var mLoadingWebViewState: LoadingWebViewState
     private val mH5UtilsParams = H5UtilsParams.instance
     private val mStartTime = System.currentTimeMillis()
+    //字符串参数
     private val webUrl by lazy {
-        arguments?.getString(WebViewConstants.LIBRARY_WEB_VIEW)
+        arguments?.getString(WebViewConstants.WEB_URL,"")
+    }
+
+    //业务模型参数
+    private val webData by lazy  {
+       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+           arguments ?.getParcelable(WebViewConstants.WEB_PARAMS, WebDataEntity::class.java)
+       } else {
+           arguments ?.getParcelable(WebViewConstants.WEB_PARAMS)
+       }
     }
     private val mViewModel by viewModels<WebViewFragmentViewModel>()
     private var mWebViewHandle: WebViewHandle? = null
@@ -117,7 +131,9 @@ open class WebViewFragment : Fragment() {
 
     private fun initView(fragmentView: FrameLayout?) {
         mWebView = WebViewPool.instance.getWebView(context)
-
+        mWebView?.let {
+            ViewBindUtils.previewWebViewPhoto(it)
+        }
         WebViewManager.instance.register(this)
         mWebView?.apply {
             //不显示滚动条
@@ -144,7 +160,12 @@ open class WebViewFragment : Fragment() {
     }
 
     private fun getWebViewUrl(): String? {
-        return webUrl
+        if (!StringUtils.isEmpty(webUrl)) {
+            return webUrl
+        } else {
+            return webData?.webUrl
+        }
+
     }
 
 
@@ -235,6 +256,13 @@ open class WebViewFragment : Fragment() {
     fun loadUrl(url: String) {
         mWebView?.loadUrl(url)
     }
+
+
+    fun reloadUrl(view: WebView?,url: String) {
+       // mViewModel.showLoading(view, mLoadingWebViewState, mLoadingViewConfig)
+        mWebView?.loadUrl(url)
+    }
+
 
     fun openFileInput(
         fileUploadCallbackFirst: ValueCallback<Uri>?,

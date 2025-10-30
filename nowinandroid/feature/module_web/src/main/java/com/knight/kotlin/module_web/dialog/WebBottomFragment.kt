@@ -5,9 +5,9 @@ import android.net.Uri
 import android.view.Gravity
 import android.view.View
 import android.webkit.WebView
-import com.knight.kotlin.library_base.fragment.BaseDialogFragment
 import com.core.library_base.vm.EmptyViewModel
 import com.flyjingfish.android_aop_core.annotations.SingleClick
+import com.knight.kotlin.library_base.fragment.BaseDialogFragment
 import com.knight.kotlin.library_util.SystemUtils
 import com.knight.kotlin.library_util.toast.ToastUtils
 import com.knight.kotlin.module_web.R
@@ -26,7 +26,7 @@ class WebBottomFragment constructor(url: String?, mWebView: WebView?) :
 
     private var url: String? = null
     private var mWebView: WebView? = null
-
+    private var webActionListener: OnWebActionListener? = null
     init {
         this.url = url
         this.mWebView = mWebView
@@ -37,6 +37,14 @@ class WebBottomFragment constructor(url: String?, mWebView: WebView?) :
         fun newInstance(url: String?, mWebView: WebView?): WebBottomFragment {
             return WebBottomFragment(url, mWebView)
         }
+    }
+
+    interface OnWebActionListener {
+        fun onRefreshUrl()
+    }
+
+    fun setOnWebActionListener(listener: OnWebActionListener) {
+        this.webActionListener = listener
     }
 
     override fun getGravity() = Gravity.BOTTOM
@@ -68,8 +76,11 @@ class WebBottomFragment constructor(url: String?, mWebView: WebView?) :
             }
             //重新刷新
             mBinding.webTvRefreshUrl -> {
-                mWebView?.reload()
+
+                webActionListener?.onRefreshUrl() // ✅ 改为回调
                 dismiss()
+//                mWebView?.reload()
+//                dismiss()
             }
 
             //用外部浏览器打开

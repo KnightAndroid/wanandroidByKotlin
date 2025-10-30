@@ -81,6 +81,7 @@ object RouteActivity {
         const val WebPager = "$WEB/WebPagerActivity"
         const val NewWebPager = "$WEB/WebNewPagerActivity"
         const val WebArticlePager = "$WEB/WebArticleActivity"
+        const val NewWebArticleWebPager = "$WEB/WebNewArticleActivity"
         const val WebPreviewPhotoPager = "$WEB/WebPreviewActivity"
         const val WebTransitionPager = "$WEB/WebTransitActivity"
     }

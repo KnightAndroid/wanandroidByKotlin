@@ -7,6 +7,7 @@ import android.widget.FrameLayout
 import androidx.annotation.LayoutRes
 import androidx.lifecycle.ViewModel
 import com.knight.kotlin.module_web.R
+import com.knight.kotlin.module_web.activity.NewArticleWebActivity
 import com.knight.kotlin.module_web.activity.NewWebViewActivity
 import com.peakmain.webview.interfaces.LoadingViewConfig
 import com.peakmain.webview.manager.WebViewController
@@ -35,19 +36,35 @@ class WebViewFragmentViewModel() : ViewModel() {
 
 
     fun onReceivedTitle(activity: Activity?, view: WebView?, title: String) {
-        if (!isWebViewActivity(activity)) return
-        val webViewActivity = activity as NewWebViewActivity
-        webViewActivity.onReceivedTitle(title)
+        if (isWebViewActivity(activity)) {
+            val webViewActivity = activity as NewWebViewActivity
+            webViewActivity.onReceivedTitle(title)
+        } else if (isWebArticleActivity(activity)) {
+            val webArticleActivity = activity as NewArticleWebActivity
+            webArticleActivity.onReceivedTitle(title)
+        }
     }
 
     fun shouldOverrideUrlLoading(activity: Activity?, view: WebView, url: String) {
-        if (!isWebViewActivity(activity)) return
-        val webViewActivity = activity as NewWebViewActivity
-        webViewActivity.shouldOverrideUrlLoading(view, url)
+        if (isWebViewActivity(activity)) {
+            val webViewActivity = activity as NewWebViewActivity
+            webViewActivity.shouldOverrideUrlLoading(view, url)
+        } else if (isWebArticleActivity(activity)) {
+            val webArticleActivity = activity as NewArticleWebActivity
+            webArticleActivity.shouldOverrideUrlLoading(view, url)
+        }
+
+
     }
 
     private fun isWebViewActivity(activity: Activity?): Boolean {
         return activity != null && activity is NewWebViewActivity
+    }
+
+
+
+    private fun isWebArticleActivity(activity: Activity?) : Boolean {
+        return activity != null && activity is NewArticleWebActivity
     }
 
     fun hideLoading(

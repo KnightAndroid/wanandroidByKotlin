@@ -23,7 +23,7 @@ class ArouteUtils {
                 author
                     ?: shareUser ?: ""
             )
-            GoRouter.getInstance().build(RouteActivity.Web.WebArticlePager)
+            GoRouter.getInstance().build(RouteActivity.Web.NewWebArticleWebPager)
                 .withParcelable("webDataEntity", mWebDataEntity).go()
         }
 

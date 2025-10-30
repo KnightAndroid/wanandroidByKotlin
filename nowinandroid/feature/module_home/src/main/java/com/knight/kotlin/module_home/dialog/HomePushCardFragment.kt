@@ -2,10 +2,10 @@ package com.knight.kotlin.module_home.dialog
 
 import android.os.Bundle
 import android.view.View
-import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.core.library_base.route.RouteActivity
 import com.core.library_base.vm.EmptyViewModel
 import com.flyjingfish.android_aop_core.annotations.SingleClick
+import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.knight.kotlin.library_database.entity.EveryDayPushEntity
 import com.knight.kotlin.library_util.image.ImageLoader
 import com.knight.kotlin.module_home.databinding.HomePushcardDialogBinding
@@ -62,7 +62,7 @@ class HomePushCardFragment: BaseFragment<HomePushcardDialogBinding, EmptyViewMod
     override fun onClick(v: View) {
         when(v) {
             mBinding.cvArticle -> {
-                GoRouter.getInstance().build(RouteActivity.Web.WebPager)
+                GoRouter.getInstance().build(RouteActivity.Web.NewWebPager)
                     .withString("webUrl",mEveryDayPushEntity?.articleLink)
                     .withString("webTitle",mEveryDayPushEntity?.articleTitle)
                     .go()

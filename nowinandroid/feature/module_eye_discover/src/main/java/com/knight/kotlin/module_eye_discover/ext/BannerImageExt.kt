@@ -57,7 +57,7 @@ fun Banner<EyeDiscoverTopBannerItemListData, BannerImageAdapter<EyeDiscoverTopBa
             }
             holder.imageView.setOnClick {
                 startPageWithParams(
-                    RouteActivity.Web.WebPager,
+                    RouteActivity.Web.NewWebPager,
                     "webUrl" to webUrl,
                     "webTitle" to data.data.title)
             }

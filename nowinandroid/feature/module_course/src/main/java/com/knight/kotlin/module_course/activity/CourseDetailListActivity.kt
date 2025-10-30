@@ -1,14 +1,12 @@
 package com.knight.kotlin.module_course.activity
 
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.knight.kotlin.library_base.activity.BaseActivity
 import com.core.library_base.ktx.init
 import com.core.library_base.ktx.setOnClick
 import com.core.library_base.route.RouteActivity
-
+import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_util.startPageWithParams
 import com.knight.kotlin.library_widget.ktx.setSafeOnItemClickListener
-
 import com.knight.kotlin.module_course.R
 import com.knight.kotlin.module_course.adapter.CourseDetailListAdapter
 import com.knight.kotlin.module_course.databinding.CourseDetailListActivityBinding
@@ -107,7 +105,7 @@ class CourseDetailListActivity: BaseActivity<CourseDetailListActivityBinding, Co
         mCourseDetailListAdapter.run {
             setSafeOnItemClickListener { adapter, view, position ->
                 startPageWithParams(
-                    RouteActivity.Web.WebPager,
+                    RouteActivity.Web.NewWebPager,
                     "webUrl" to items[position].link,
                     "webTitle" to items[position].title)
             }

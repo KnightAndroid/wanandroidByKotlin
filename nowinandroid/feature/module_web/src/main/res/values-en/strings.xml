@@ -11,4 +11,5 @@
     <string name="web_success_collect">Success collect</string>
     <string name="web_network_error">Network error. Please try again later</string>
     <string name="web_view_please_retry">Please tap the page to retry</string>
+    <string name="web_loading">loading...</string>
 </resources>

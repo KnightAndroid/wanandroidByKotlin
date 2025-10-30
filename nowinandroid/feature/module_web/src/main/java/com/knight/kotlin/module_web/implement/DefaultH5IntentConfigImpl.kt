@@ -19,13 +19,17 @@ import com.peakmain.webview.interfaces.H5IntentConfig
  */
 class DefaultH5IntentConfigImpl : H5IntentConfig {
     override fun startActivity(context: Context?, url: String) {
-
+        context?.startActivity(
+            Intent(context, NewWebViewActivity::class.java)
+                .putExtra(WebViewConstants.WEB_URL, url)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        )
     }
 
     override fun startActivity(context: Context?, bean: WebDataEntity) {
         context?.startActivity(
             Intent(context, NewWebViewActivity::class.java)
-                .putExtra(WebViewConstants.LIBRARY_WEB_VIEW, bean)
+                .putExtra(WebViewConstants.WEB_PARAMS, bean)
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         )
     }
@@ -41,7 +45,7 @@ class DefaultH5IntentConfigImpl : H5IntentConfig {
         requestCode: Int,
     ) {
         val intent = Intent(context, NewWebViewActivity::class.java)
-            .putExtra(WebViewConstants.LIBRARY_WEB_VIEW, bean)
+            .putExtra(WebViewConstants.WEB_PARAMS, bean)
         context?.startActivityForResult(intent, requestCode)
     }
 
@@ -52,7 +56,7 @@ class DefaultH5IntentConfigImpl : H5IntentConfig {
     ) {
         if (context == null || context.context == null) return
         val intent = Intent(context.context, NewWebViewActivity::class.java)
-            .putExtra(WebViewConstants.LIBRARY_WEB_VIEW, bean)
+            .putExtra(WebViewConstants.WEB_PARAMS, bean)
         context.startActivityForResult(intent, requestCode)
     }
 
@@ -71,7 +75,7 @@ class DefaultH5IntentConfigImpl : H5IntentConfig {
         bean: WebDataEntity,
     ) {
         val intent = Intent(context, NewWebViewActivity::class.java)
-            .putExtra(WebViewConstants.LIBRARY_WEB_VIEW, bean)
+            .putExtra(WebViewConstants.WEB_PARAMS, bean)
         launcher?.launch(intent)
     }
 
@@ -82,7 +86,7 @@ class DefaultH5IntentConfigImpl : H5IntentConfig {
     ) {
         if (context == null || context.context == null) return
         val intent = Intent(context.context, NewWebViewActivity::class.java)
-            .putExtra(WebViewConstants.LIBRARY_WEB_VIEW, bean)
+            .putExtra(WebViewConstants.WEB_PARAMS, bean)
         launcher?.launch(intent)
     }
 

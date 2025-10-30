@@ -14,7 +14,8 @@ import com.peakmain.webview.callback.WebViewClientCallback
 internal class WebViewClientImpl(webViewClientCallback: WebViewClientCallback?) :
     AbstractWebViewClient(webViewClientCallback) {
     override fun initWebClient(webView: WebView) {
-        val webViewClient = WebViewClientImpl(webViewClientCallback)
-        webView.webViewClient = webViewClient
+//        val webViewClient = WebViewClientImpl(webViewClientCallback)
+//        webView.webViewClient = webViewClient
+        webView.webViewClient = this
     }
 }

@@ -13,6 +13,8 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.FrameLayout.LayoutParams
 import android.widget.ProgressBar
+import androidx.core.graphics.ColorUtils
+import com.knight.kotlin.library_common.util.CacheUtils
 import com.peakmain.webview.interfaces.LoadingViewConfig
 
 /**
@@ -48,14 +50,42 @@ class HorizontalProgressBarLoadingConfigImpl : LoadingViewConfig {
                 context.applicationContext.resources.displayMetrics
             ).toInt()
             mProgressBar?.layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, height)
+//
+//            // 创建一个从#FF5722到#CDDC39的水平渐变
+//            val colors = intArrayOf(Color.parseColor("#FF5722"), Color.parseColor("#CDDC39"))
+//            val gradientDrawable = GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, colors)
+//
 
-            // 创建一个从#FF5722到#CDDC39的水平渐变
-            val colors = intArrayOf(Color.parseColor("#FF5722"), Color.parseColor("#CDDC39"))
+
+
+
+            // 原始颜色
+            val baseColor = CacheUtils.getThemeColor()
+
+// 将颜色转换为 HSL
+            val hsl = FloatArray(3)
+            ColorUtils.colorToHSL(baseColor, hsl)
+
+// 提高亮度（lightness），例如 +0.2（范围0~1）
+            hsl[2] = (hsl[2] + 0.2f).coerceAtMost(1f)
+
+// 得到变浅后的颜色
+            val lighterColor = ColorUtils.HSLToColor(hsl)
+
+// 创建渐变
+            val colors = intArrayOf(baseColor, lighterColor)
             val gradientDrawable = GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, colors)
+
 
             // 设置Drawable的形状和圆角半径
             gradientDrawable.shape = GradientDrawable.RECTANGLE
-            gradientDrawable.cornerRadius = 8f
+
+
+
+
+
+
+
 
             // 创建一个ClipDrawable，将渐变Drawable作为其Drawable，并设置其绘制区域为进度条的宽度
             val clipDrawable =
