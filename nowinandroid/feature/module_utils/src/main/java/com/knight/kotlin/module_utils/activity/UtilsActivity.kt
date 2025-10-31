@@ -75,7 +75,7 @@ class UtilsActivity : BaseActivity<UtilsActivityBinding, UtilsVm>(),OnRefreshLis
     private fun initListener() {
         mUtilItemAdapter.run {
             setSafeOnItemClickListener { adapter, view, position ->
-                startPageWithParams(RouteActivity.Web.NewWebPager,
+                startPageWithParams(RouteActivity.Web.WebPager,
                     "webUrl" to items[position].link,
                     "webTitle" to items[position].tabName)
             }

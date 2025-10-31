@@ -7,9 +7,9 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * author ：Peakmain
- * createTime：2024/3/4
- * mail:2726449200@qq.com
+ * author ：knight
+ * createTime：2025/10/30
+ * mail:15015706912@163.com
  * describe：
  */
 public class CacheRequest {

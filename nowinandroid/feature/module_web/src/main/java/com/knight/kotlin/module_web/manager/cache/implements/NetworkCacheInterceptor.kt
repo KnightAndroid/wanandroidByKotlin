@@ -8,9 +8,9 @@ import com.peakmain.webview.manager.cache.interfaces.ICacheInterceptor
 import com.peakmain.webview.utils.WebViewUtils
 
 /**
- * author ：Peakmain
+ * author ：knight
  * createTime：2024/3/4
- * mail:2726449200@qq.com
+ * mail:15015706912@163.com
  * describe：网络缓存拦截器
  */
 class NetworkCacheInterceptor(val context: Context?) : ICacheInterceptor {

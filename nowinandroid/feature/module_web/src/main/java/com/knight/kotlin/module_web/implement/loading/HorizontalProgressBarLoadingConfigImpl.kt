@@ -18,9 +18,9 @@ import com.knight.kotlin.library_common.util.CacheUtils
 import com.peakmain.webview.interfaces.LoadingViewConfig
 
 /**
- * author ：Peakmain
+ * author ：knight
  * createTime：2023/04/20
- * mail:2726449200@qq.com
+ * mail:15015706912@163.com
  * describe：
  */
 class HorizontalProgressBarLoadingConfigImpl : LoadingViewConfig {
@@ -46,7 +46,7 @@ class HorizontalProgressBarLoadingConfigImpl : LoadingViewConfig {
 
             val height = TypedValue.applyDimension(
                 COMPLEX_UNIT_DIP,
-                5f,
+                2f,
                 context.applicationContext.resources.displayMetrics
             ).toInt()
             mProgressBar?.layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, height)

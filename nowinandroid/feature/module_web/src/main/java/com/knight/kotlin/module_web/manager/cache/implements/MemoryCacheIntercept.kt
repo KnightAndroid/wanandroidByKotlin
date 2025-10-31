@@ -6,9 +6,9 @@ import com.peakmain.webview.manager.cache.MemorySizeCalculator
 import com.peakmain.webview.manager.cache.interfaces.ICacheInterceptor
 
 /**
- * author ：Peakmain
+ * author ：knight
  * createTime：2024/3/4
- * mail:2726449200@qq.com
+ * mail:15015706912@163.com
  * describe：内存缓存拦截器
  */
 class MemoryCacheIntercept : ICacheInterceptor {

@@ -62,7 +62,7 @@ class HomePushCardFragment: BaseFragment<HomePushcardDialogBinding, EmptyViewMod
     override fun onClick(v: View) {
         when(v) {
             mBinding.cvArticle -> {
-                GoRouter.getInstance().build(RouteActivity.Web.NewWebPager)
+                GoRouter.getInstance().build(RouteActivity.Web.WebPager)
                     .withString("webUrl",mEveryDayPushEntity?.articleLink)
                     .withString("webTitle",mEveryDayPushEntity?.articleTitle)
                     .go()

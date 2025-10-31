@@ -10,9 +10,9 @@ import com.knight.kotlin.module_web.R
 
 
 /**
- * author ：Peakmain
- * createTime：2023/04/20
- * mail:2726449200@qq.com
+ * author ：knight
+ * createTime：2025/10/20
+ * mail:15015706912@163.com
  * describe：
  */
 class AppProgressLoadingView @JvmOverloads constructor(

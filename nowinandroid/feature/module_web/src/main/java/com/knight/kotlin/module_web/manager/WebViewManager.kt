@@ -3,9 +3,9 @@ package com.peakmain.webview.manager
 import com.knight.kotlin.module_web.fragment.WebViewFragment
 
 /**
- * author ：Peakmain
+ * author ：knight
  * createTime：2023/04/06
- * mail:2726449200@qq.com
+ * mail:15015706912@163.com
  * describe：
  */
 internal class WebViewManager private constructor(){

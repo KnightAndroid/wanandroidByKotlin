@@ -5,9 +5,9 @@ import com.peakmain.webview.utils.WebViewUtils
 import java.io.File
 
 /**
- * author ：Peakmain
+ * author ：knight
  * createTime：2024/3/5
- * mail:2726449200@qq.com
+ * mail:15015706912@163.com
  * describe：
  */
 class CacheConfig private constructor() {

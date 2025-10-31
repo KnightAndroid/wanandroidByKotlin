@@ -7,8 +7,8 @@ import android.widget.FrameLayout
 import androidx.annotation.LayoutRes
 import androidx.lifecycle.ViewModel
 import com.knight.kotlin.module_web.R
-import com.knight.kotlin.module_web.activity.NewArticleWebActivity
-import com.knight.kotlin.module_web.activity.NewWebViewActivity
+import com.knight.kotlin.module_web.activity.ArticleWebActivity
+import com.knight.kotlin.module_web.activity.WebViewActivity
 import com.peakmain.webview.interfaces.LoadingViewConfig
 import com.peakmain.webview.manager.WebViewController
 import com.peakmain.webview.manager.WebViewManager
@@ -17,9 +17,9 @@ import com.peakmain.webview.sealed.LoadingWebViewState
 import com.peakmain.webview.view.WanWebView
 
 /**
- * author ：Peakmain
- * createTime：2023/04/25
- * mail:2726449200@qq.com
+ * author ：knight
+ * createTime：2025/7/25
+ * mail:15015706912@163.com
  * describe：
  */
 class WebViewFragmentViewModel() : ViewModel() {
@@ -37,20 +37,20 @@ class WebViewFragmentViewModel() : ViewModel() {
 
     fun onReceivedTitle(activity: Activity?, view: WebView?, title: String) {
         if (isWebViewActivity(activity)) {
-            val webViewActivity = activity as NewWebViewActivity
+            val webViewActivity = activity as WebViewActivity
             webViewActivity.onReceivedTitle(title)
         } else if (isWebArticleActivity(activity)) {
-            val webArticleActivity = activity as NewArticleWebActivity
+            val webArticleActivity = activity as ArticleWebActivity
             webArticleActivity.onReceivedTitle(title)
         }
     }
 
     fun shouldOverrideUrlLoading(activity: Activity?, view: WebView, url: String) {
         if (isWebViewActivity(activity)) {
-            val webViewActivity = activity as NewWebViewActivity
+            val webViewActivity = activity as WebViewActivity
             webViewActivity.shouldOverrideUrlLoading(view, url)
         } else if (isWebArticleActivity(activity)) {
-            val webArticleActivity = activity as NewArticleWebActivity
+            val webArticleActivity = activity as ArticleWebActivity
             webArticleActivity.shouldOverrideUrlLoading(view, url)
         }
 
@@ -58,13 +58,13 @@ class WebViewFragmentViewModel() : ViewModel() {
     }
 
     private fun isWebViewActivity(activity: Activity?): Boolean {
-        return activity != null && activity is NewWebViewActivity
+        return activity != null && activity is WebViewActivity
     }
 
 
 
     private fun isWebArticleActivity(activity: Activity?) : Boolean {
-        return activity != null && activity is NewArticleWebActivity
+        return activity != null && activity is ArticleWebActivity
     }
 
     fun hideLoading(

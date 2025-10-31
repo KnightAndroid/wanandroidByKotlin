@@ -4,13 +4,13 @@ import com.peakmain.webview.annotation.Handler
 import com.peakmain.webview.annotation.HandlerMethod
 import com.peakmain.webview.bean.WebViewEvent
 import com.peakmain.webview.sealed.HandleResult
-import java.lang.String.*
+import java.lang.String.format
 import java.lang.reflect.Method
 
 /**
- * author ：Peakmain
- * createTime：2023/04/26
- * mail:2726449200@qq.com
+ * author ：knight
+ * createTime：2025/10/2
+ * mail:15015706912@163.com
  * describe：
  */
 internal class WebViewEventManager private constructor() {

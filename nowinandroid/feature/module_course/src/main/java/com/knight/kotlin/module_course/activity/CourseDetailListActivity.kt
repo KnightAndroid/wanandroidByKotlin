@@ -105,7 +105,7 @@ class CourseDetailListActivity: BaseActivity<CourseDetailListActivityBinding, Co
         mCourseDetailListAdapter.run {
             setSafeOnItemClickListener { adapter, view, position ->
                 startPageWithParams(
-                    RouteActivity.Web.NewWebPager,
+                    RouteActivity.Web.WebPager,
                     "webUrl" to items[position].link,
                     "webTitle" to items[position].title)
             }

@@ -6,9 +6,9 @@ import com.knight.kotlin.module_web.abstracts.AbstractWebViewChromeClient
 import com.peakmain.webview.callback.WebViewChromeClientCallback
 
 /**
- * author ：Peakmain
+ * author ：knight
  * createTime：2023/04/07
- * mail:2726449200@qq.com
+ * mail:15015706912@163.com
  * describe：
  */
 internal class WebViewChromeClientImpl(webViewChromeClientCallback: WebViewChromeClientCallback?) :

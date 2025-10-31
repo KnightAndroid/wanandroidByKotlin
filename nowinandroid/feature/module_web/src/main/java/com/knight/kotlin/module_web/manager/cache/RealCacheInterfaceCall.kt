@@ -10,9 +10,9 @@ import com.peakmain.webview.manager.cache.interfaces.ICacheInterceptor
 import com.peakmain.webview.manager.cache.interfaces.ICall
 
 /**
- * author ：Peakmain
+ * author ：knight
  * createTime：2024/3/4
- * mail:2726449200@qq.com
+ * mail:15015706912@163.com
  * describe：管理拦截器
  */
 class RealCacheInterfaceCall(private val context: Context?,private val cacheRequest: CacheRequest) : ICall {

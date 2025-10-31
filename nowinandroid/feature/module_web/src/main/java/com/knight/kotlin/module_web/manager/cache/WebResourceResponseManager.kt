@@ -12,9 +12,9 @@ import java.io.ByteArrayInputStream
 import java.util.Locale
 
 /**
- * author ：Peakmain
+ * author ：knight
  * createTime：2024/3/4
- * mail:2726449200@qq.com
+ * mail:15015706912@163.com
  * describe：
  */
 class WebResourceResponseManager private constructor() {

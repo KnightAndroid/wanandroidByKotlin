@@ -9,9 +9,9 @@ import android.webkit.WebView
 import com.peakmain.webview.manager.WebViewController
 
 /**
- * author ：Peakmain
- * createTime：2023/4/1
- * mail:2726449200@qq.com
+ * author ：knight
+ * createTime：2025/8/6
+ * mail:15015706912@163.com
  * describe：
  */
 class WanWebView : WebView {

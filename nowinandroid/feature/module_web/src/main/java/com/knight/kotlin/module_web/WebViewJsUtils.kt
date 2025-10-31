@@ -4,9 +4,9 @@ import android.webkit.WebView
 import com.knight.kotlin.library_util.EncodeUtils
 
 /**
- * author ：Peakmain
- * createTime：2023/04/26
- * mail:2726449200@qq.com
+ * author ：knight
+ * createTime：2025/10/3
+ * mail:15015706912@163.com
  * describe：
  */
 class WebViewJsUtils private constructor(val jsNameSpace: String) {

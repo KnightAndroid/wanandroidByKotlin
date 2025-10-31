@@ -73,19 +73,19 @@ class AboutActivity: BaseActivity<SetAboutActivityBinding, AboutVm>() {
             }
 
             mBinding.tvServiceProtocol -> {
-                startPageWithParams(RouteActivity.Web.NewWebPager,
+                startPageWithParams(RouteActivity.Web.WebPager,
                     "webUrl" to "file:android_asset/wanandroid_useragree.html",
                     "webTitle" to getString(R.string.set_suser_ervice_protocol))
             }
 
             mBinding.tvPrivacyProtocol -> {
-                startPageWithParams(RouteActivity.Web.NewWebPager,
+                startPageWithParams(RouteActivity.Web.WebPager,
                     "webUrl" to "file:android_asset/wanandroid_userprivacy.html",
                     "webTitle" to getString(R.string.set_privacy_protocol))
             }
 
             mBinding.setRlAccessPartner -> {
-                startPageWithParams(RouteActivity.Web.NewWebPager,
+                startPageWithParams(RouteActivity.Web.WebPager,
                     "webUrl" to "file:android_asset/access_partner_directory.html",
                     "webTitle" to getString(R.string.set_access_partner_directory))
             }

@@ -30,41 +30,7 @@ class WelcomeActivity : BaseActivity<WelcomeActivityBinding, WelcomeVm>() {
     @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
     override fun WelcomeActivityBinding.initView() {
 
-//        if (!BaiduSoDownloaderUtils.isSoDownloaded(this@WelcomeActivity)) {
-//            pbLoadSo.visibility = View.VISIBLE
-//            BaiduSoDownloaderUtils.load(this@WelcomeActivity, object : BaiduSoDownloaderUtils.OnSoLoadCallback {
-//
-//                override fun onProgress(totalProgress: Int, text: String) {
-//                    ThreadUtils.postMain({
-//                        pbLoadSo.setProgressWithText(totalProgress, text)
-//                    })
-//
-//                }
-//                override fun onSuccess() {
-//                    ThreadUtils.postMain({
-//                        if (CacheUtils.getAgreeStatus()) {
-//                            GoRouter.getInstance().build(RouteActivity.Main.MainActivity).go()
-//                            finish()
-//                        } else {
-//                            WelcomePrivacyAgreeFragment().show(supportFragmentManager, "dialog_privacy")
-//                        }
-//                    })
-//
-//                }
-//
-//                override fun onFailure(e: Throwable) {
-//
-//                }
-//            })
-//            startLogoAnim(false)
-//        } else {
-//            startLogoAnim(true)
-//        }
-
-
         startLogoAnim(true)
-
-
     }
 
 

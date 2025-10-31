@@ -10,9 +10,9 @@ import com.knight.kotlin.module_web.bean.cache.WebResource
 import java.io.ByteArrayOutputStream
 
 /**
- * author ：Peakmain
+ * author ：knight
  * createTime：2023/11/15
- * mail:2726449200@qq.com
+ * mail:15015706912@163.com
  * describe：
  */
 class InterceptRequestManager private constructor() {

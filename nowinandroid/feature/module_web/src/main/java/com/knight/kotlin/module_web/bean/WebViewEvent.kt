@@ -4,9 +4,9 @@ import android.content.Context
 import android.webkit.WebView
 
 /**
- * author ：Peakmain
- * createTime：2023/04/26
- * mail:2726449200@qq.com
+ * author ：knight
+ * createTime：2025/10/30
+ * mail:15015706912@163.com
  * describe：
  */
 open class WebViewEvent(

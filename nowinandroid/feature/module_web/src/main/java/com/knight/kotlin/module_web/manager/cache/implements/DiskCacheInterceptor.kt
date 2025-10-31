@@ -16,9 +16,9 @@ import okio.source
 import java.io.File
 
 /**
- * author ：Peakmain
+ * author ：knight
  * createTime：2024/3/4
- * mail:2726449200@qq.com
+ * mail:15015706912@163.com
  * describe：磁盘缓存拦截器
  */
 class DiskCacheInterceptor(val context: Context?) : ICacheInterceptor {

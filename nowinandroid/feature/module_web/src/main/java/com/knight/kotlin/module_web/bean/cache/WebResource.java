@@ -16,9 +16,9 @@ import static java.net.HttpURLConnection.HTTP_OK;
 import static java.net.HttpURLConnection.HTTP_REQ_TOO_LONG;
 
 /**
- * author ：Peakmain
- * createTime：2024/3/4
- * mail:2726449200@qq.com
+ * author ：knight
+ * createTime：2025/10/30
+ * mail:15015706912@163.com
  * describe：
  */
 public class WebResource {

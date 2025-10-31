@@ -4,9 +4,9 @@ import android.webkit.WebSettings
 import androidx.annotation.IntDef
 
 /**
- * author ：Peakmain
- * createTime：2023/06/01
- * mail:2726449200@qq.com
+ * author ：knight
+ * createTime：2025/10/30
+ * mail:15015706912@163.com
  * describe：
  */
 /**

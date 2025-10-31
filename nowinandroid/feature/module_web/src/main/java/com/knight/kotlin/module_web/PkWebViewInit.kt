@@ -17,9 +17,9 @@ import com.peakmain.webview.manager.WebViewPool
 import com.peakmain.webview.sealed.LoadingWebViewState
 
 /**
- * author ：Peakmain
- * createTime：2023/04/04
- * mail:2726449200@qq.com
+ * author ：knight
+ * createTime：2025/7/13
+ * mail:15015706912@163.com
  * describe：WebView初始化类
  */
 @MainThread

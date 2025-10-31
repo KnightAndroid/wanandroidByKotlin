@@ -11,9 +11,9 @@ import com.peakmain.webview.interfaces.H5IntentConfig
 import com.peakmain.webview.manager.H5UtilsParams
 
 /**
- * author ：Peakmain
- * createTime：2023/04/10
- * mail:2726449200@qq.com
+ * author ：knight
+ * createTime：2025/10/30
+ * mail:15015706912@163.com
  * describe：H5启动装饰器类
  */
 abstract class AbstractH5IntentConfigDecorator(private val decoratorConfig: H5IntentConfig) :

@@ -31,8 +31,8 @@ import dagger.hilt.android.AndroidEntryPoint
  * @descript:基类webview页面
  */
 @AndroidEntryPoint
-@Route(path = RouteActivity.Web.NewWebPager)
-class NewWebViewActivity : BaseActivity<WebActivityBinding, EmptyViewModel>(){
+@Route(path = RouteActivity.Web.WebPager)
+class WebViewActivity : BaseActivity<WebActivityBinding, EmptyViewModel>(){
 
     private var isNotifyTitle: Boolean = true
     @JvmField
@@ -75,11 +75,11 @@ class NewWebViewActivity : BaseActivity<WebActivityBinding, EmptyViewModel>(){
             }
             mBinding.includeWebToolbar.baseIvRight -> {
               //  WebBottomFragment.newInstance(webUrl,WebViewPool.instance.getWebView(this@NewWebViewActivity)).show(supportFragmentManager,"dialog_webnormal")
-                val dialog = WebBottomFragment.newInstance(webUrl,WebViewPool.instance.getWebView(this@NewWebViewActivity))
+                val dialog = WebBottomFragment.newInstance(webUrl,WebViewPool.instance.getWebView(this@WebViewActivity))
                 dialog.setOnWebActionListener(object : WebBottomFragment.OnWebActionListener {
                     override fun onRefreshUrl() {
                         // 这里执行外部的刷新逻辑
-                        mWebViewFragment?.reloadUrl(WebViewPool.instance.getWebView(this@NewWebViewActivity),webUrl)
+                        mWebViewFragment?.reloadUrl(WebViewPool.instance.getWebView(this@WebViewActivity),webUrl)
                     }
                 })
                 dialog.show(supportFragmentManager, "WebBottomDialog")

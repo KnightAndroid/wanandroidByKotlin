@@ -16,9 +16,9 @@ import com.peakmain.webview.interfaces.LoadingViewConfig
 import com.peakmain.webview.sealed.LoadingWebViewState
 
 /**
- * author ：Peakmain
+ * author ：knight
  * createTime：2023/04/06
- * mail:2726449200@qq.com
+ * mail:15015706912@163.com
  * describe：
  */
 class WebViewController {

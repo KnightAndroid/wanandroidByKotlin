@@ -1,9 +1,9 @@
 package com.peakmain.webview.manager.cache
 
 /**
- * author ：Peakmain
+ * author ：knight
  * createTime：2024/3/5
- * mail:2726449200@qq.com
+ * mail:15015706912@163.com
  * describe：
  */
 class MemorySizeCalculator private constructor() {

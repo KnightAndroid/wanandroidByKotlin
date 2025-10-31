@@ -7,9 +7,9 @@ import com.knight.kotlin.module_web.fragment.WebViewFragment
 
 
 /**
- * author ：Peakmain
- * createTime：2023/4/1
- * mail:2726449200@qq.com
+ * author ：knight
+ * createTime：2025/10/30
+ * mail:15015706912@163.com
  * describe：
  */
 interface WebViewChromeClientCallback {

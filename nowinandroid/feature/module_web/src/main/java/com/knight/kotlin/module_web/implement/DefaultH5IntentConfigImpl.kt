@@ -8,19 +8,19 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.knight.kotlin.library_base.config.WebViewConstants
 import com.knight.kotlin.library_base.entity.WebDataEntity
-import com.knight.kotlin.module_web.activity.NewWebViewActivity
+import com.knight.kotlin.module_web.activity.WebViewActivity
 import com.peakmain.webview.interfaces.H5IntentConfig
 
 /**
- * author ：Peakmain
+ * author ：knight
  * createTime：2023/04/10
- * mail:2726449200@qq.com
+ * mail:15015706912@163.com
  * describe：
  */
 class DefaultH5IntentConfigImpl : H5IntentConfig {
     override fun startActivity(context: Context?, url: String) {
         context?.startActivity(
-            Intent(context, NewWebViewActivity::class.java)
+            Intent(context, WebViewActivity::class.java)
                 .putExtra(WebViewConstants.WEB_URL, url)
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         )
@@ -28,7 +28,7 @@ class DefaultH5IntentConfigImpl : H5IntentConfig {
 
     override fun startActivity(context: Context?, bean: WebDataEntity) {
         context?.startActivity(
-            Intent(context, NewWebViewActivity::class.java)
+            Intent(context, WebViewActivity::class.java)
                 .putExtra(WebViewConstants.WEB_PARAMS, bean)
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         )
@@ -44,7 +44,7 @@ class DefaultH5IntentConfigImpl : H5IntentConfig {
         bean: WebDataEntity,
         requestCode: Int,
     ) {
-        val intent = Intent(context, NewWebViewActivity::class.java)
+        val intent = Intent(context, WebViewActivity::class.java)
             .putExtra(WebViewConstants.WEB_PARAMS, bean)
         context?.startActivityForResult(intent, requestCode)
     }
@@ -55,7 +55,7 @@ class DefaultH5IntentConfigImpl : H5IntentConfig {
         requestCode: Int,
     ) {
         if (context == null || context.context == null) return
-        val intent = Intent(context.context, NewWebViewActivity::class.java)
+        val intent = Intent(context.context, WebViewActivity::class.java)
             .putExtra(WebViewConstants.WEB_PARAMS, bean)
         context.startActivityForResult(intent, requestCode)
     }
@@ -74,7 +74,7 @@ class DefaultH5IntentConfigImpl : H5IntentConfig {
         launcher: ActivityResultLauncher<Intent>?,
         bean: WebDataEntity,
     ) {
-        val intent = Intent(context, NewWebViewActivity::class.java)
+        val intent = Intent(context, WebViewActivity::class.java)
             .putExtra(WebViewConstants.WEB_PARAMS, bean)
         launcher?.launch(intent)
     }
@@ -85,7 +85,7 @@ class DefaultH5IntentConfigImpl : H5IntentConfig {
         bean: WebDataEntity,
     ) {
         if (context == null || context.context == null) return
-        val intent = Intent(context.context, NewWebViewActivity::class.java)
+        val intent = Intent(context.context, WebViewActivity::class.java)
             .putExtra(WebViewConstants.WEB_PARAMS, bean)
         launcher?.launch(intent)
     }

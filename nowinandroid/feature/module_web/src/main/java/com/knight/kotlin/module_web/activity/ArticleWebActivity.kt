@@ -37,8 +37,8 @@ import java.util.Date
  */
 
 @AndroidEntryPoint
-@Route(path = RouteActivity.Web.NewWebArticleWebPager)
-class NewArticleWebActivity: BaseActivity<WebArticleActivityBinding, WebVm>(),LoveAnimatorRelativeLayout.onCollectListener {
+@Route(path = RouteActivity.Web.WebArticleWebPager)
+class ArticleWebActivity: BaseActivity<WebArticleActivityBinding, WebVm>(),LoveAnimatorRelativeLayout.onCollectListener {
 
     @JvmField
     @Param(name="webDataEntity")
@@ -54,7 +54,7 @@ class NewArticleWebActivity: BaseActivity<WebArticleActivityBinding, WebVm>(),Lo
     override fun WebArticleActivityBinding.initView() {
         webToolbar.baseIvRight.visibility = View.VISIBLE
         title = webDataEntity?.title
-        webLikeRl.setOnCollectListener(this@NewArticleWebActivity)
+        webLikeRl.setOnCollectListener(this@ArticleWebActivity)
         initFragment()
 
         webToolbar.baseIvBack.setOnClickListener { exit() }

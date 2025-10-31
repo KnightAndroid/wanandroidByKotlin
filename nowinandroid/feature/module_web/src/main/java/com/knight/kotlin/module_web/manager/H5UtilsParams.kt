@@ -10,9 +10,9 @@ import com.peakmain.webview.sealed.LoadingWebViewState
 import com.peakmain.webview.view.WanWebView
 
 /**
- * author ：Peakmain
+ * author ：knight
  * createTime：2023/04/23
- * mail:2726449200@qq.com
+ * mail:15015706912@163.com
  * describe：
  */
 class H5UtilsParams private constructor() {

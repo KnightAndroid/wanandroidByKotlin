@@ -5,120 +5,138 @@ import android.content.MutableContextWrapper
 import android.os.Handler
 import android.os.Looper
 import android.view.ViewGroup
+import android.webkit.WebView
 import com.knight.kotlin.library_base.BaseApp
 import com.peakmain.webview.implement.WebViewChromeClientImpl
 import com.peakmain.webview.implement.WebViewClientImpl
 import com.peakmain.webview.utils.WebViewEventManager
 import com.peakmain.webview.view.WanWebView
 import java.util.LinkedList
+import java.util.concurrent.Executors
 
 /**
- * author ：Peakmain
- * createTime：2023/04/04
- * mail:2726449200@qq.com
- * describe：WebView缓存池管理
+ * author ：knight
+ * createTime：2025/10/04
+ * mail:15015706912@163.com
+ * describe：WebView 缓存池（异步预热 + 主线程安全创建）
  */
 internal class WebViewPool private constructor() {
+
     private lateinit var mUserAgent: String
     private lateinit var mWebViewPool: LinkedList<WanWebView?>
+    private val mainHandler = Handler(Looper.getMainLooper())
+    private val lock = Any()
     var mParams: WebViewController.WebViewParams? = null
 
     companion object {
         private var WEB_VIEW_COUNT = 3
-        val instance by lazy(LazyThreadSafetyMode.SYNCHRONIZED) {
-            WebViewPool()
-        }
-
+        val instance by lazy(LazyThreadSafetyMode.SYNCHRONIZED) { WebViewPool() }
     }
 
     /**
-     * 初始化WebView池
+     * 初始化 WebView 缓存池
      */
     fun initWebViewPool(params: WebViewController.WebViewParams?) {
-//        if (params == null) return
-//        WEB_VIEW_COUNT = params.mWebViewCount
-//        mWebViewPool = LinkedList()
-//        mUserAgent = params.userAgent
-//        mParams = params
-//        for (i in 0 until WEB_VIEW_COUNT) {
-//            mWebViewPool.add(createWebView(params, mUserAgent))
-//        }
-//        registerEntities(params)
         if (params == null) return
         WEB_VIEW_COUNT = params.mWebViewCount
         mUserAgent = params.userAgent
         mParams = params
         mWebViewPool = LinkedList()
 
-        Handler(Looper.getMainLooper()).post {
-            repeat(WEB_VIEW_COUNT) { index ->
-                Handler(Looper.getMainLooper()).postDelayed({
-                    mWebViewPool.add(createWebView(params, mUserAgent))
-                }, index * 400L) // 每隔400ms创建1个WebView
+        // 1️⃣ 先在子线程预热 WebView 内核（避免首次创建卡顿）
+        Executors.newSingleThreadExecutor().execute {
+            try {
+                WebView(params.application)
+            } catch (_: Throwable) {
+            }
+
+            // 2️⃣ 主线程空闲时分批创建 WebView
+            mainHandler.post {
+                val queue = Looper.myQueue()
+                var createdCount = 0
+                queue.addIdleHandler {
+                    if (createdCount < WEB_VIEW_COUNT) {
+                        try {
+                            val webView = createWebView(params, mUserAgent)
+                            synchronized(lock) {
+                                mWebViewPool.add(webView)
+                            }
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+                        createdCount++
+                        true
+                    } else false
+                }
             }
         }
-        registerEntities(params)
 
-
-
+        // 3️⃣ JS 实体注册可异步处理
+        Thread {
+            registerEntities(params)
+        }.start()
     }
 
     private fun registerEntities(params: WebViewController.WebViewParams) {
-        params.mEntities?.let { WebViewEventManager.instance.registerEntities(*it) }
+        params.mEntities?.let {
+            WebViewEventManager.instance.registerEntities(*it)
+        }
     }
 
     /**
-     * 获取webView
+     * 获取可复用的 WebView
      */
     fun getWebView(context: Context?): WanWebView? {
-        if (!::mWebViewPool.isInitialized) {
-            return null
-        }
-        if (mWebViewPool.size <= 0) {
-            if (mParams == null) return null
-            mWebViewPool.add(createWebView(mParams!!, mUserAgent))
-        }
-        for (i in 0 until WEB_VIEW_COUNT) {
-            if (mWebViewPool[i] != null) {
-                val webView = mWebViewPool[i]
-                val contextWrapper = webView?.context as MutableContextWrapper?
-                contextWrapper?.baseContext = context
-                mWebViewPool.remove()
-                return webView
+        if (!::mWebViewPool.isInitialized) return null
+
+        synchronized(lock) {
+            if (mWebViewPool.isEmpty()) {
+                if (mParams == null) return null
+                val webView = createWebView(mParams!!, mUserAgent)
+                return resetWebViewContext(webView, context)
             }
+
+            val webView = mWebViewPool.removeFirst()
+            return resetWebViewContext(webView, context)
         }
-        return null
+    }
+
+    private fun resetWebViewContext(webView: WanWebView?, context: Context?): WanWebView? {
+        (webView?.context as? MutableContextWrapper)?.baseContext = context
+        return webView
     }
 
     /**
-     * Activity销毁时需要释放当前WebView
+     * 释放 WebView（回收到池中）
      */
     fun releaseWebView(webView: WanWebView?) {
         webView?.apply {
             stopLoading()
             removeAllViews()
             clearHistory()
-            clearCache(true)
-            destroy()
+            clearCache(false)
             webChromeClient = null
 
-            // 还原上下文为 Application，避免 Activity 泄漏
+            // 还原 Context 避免内存泄漏
             (context as? MutableContextWrapper)?.baseContext = BaseApp.application
-            (parent as ViewGroup?)?.removeView(this)
-            if (!::mWebViewPool.isInitialized) {
-                return
-            }
-            if (mWebViewPool.size < WEB_VIEW_COUNT) {
-               mParams?.let {
-                   mWebViewPool.add(createWebView(it, mUserAgent))
-               }
+            (parent as? ViewGroup)?.removeView(this)
+
+            synchronized(lock) {
+                if (::mWebViewPool.isInitialized && mWebViewPool.size < WEB_VIEW_COUNT) {
+                    mWebViewPool.add(this)
+                } else {
+                    destroy()
+                }
             }
         }
-
     }
 
+    /**
+     * 真正创建 WebView（必须在主线程）
+     */
     private fun createWebView(
-        params: WebViewController.WebViewParams, userAgent: String,
+        params: WebViewController.WebViewParams,
+        userAgent: String,
     ): WanWebView {
         val webView = WanWebView(MutableContextWrapper(params.application))
         webView.setWebViewParams(params)
@@ -130,5 +148,4 @@ internal class WebViewPool private constructor() {
         }
         return webView
     }
-
 }

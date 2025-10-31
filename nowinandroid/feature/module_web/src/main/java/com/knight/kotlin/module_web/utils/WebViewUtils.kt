@@ -20,9 +20,9 @@ import java.security.MessageDigest
 import java.util.Locale
 
 /**
- * author ：Peakmain
- * createTime：2023/04/24
- * mail:2726449200@qq.com
+ * author ：knight
+ * createTime：2025/06/22
+ * mail:15015706912@163.com
  * describe：
  */
 class WebViewUtils private constructor() {

@@ -1,9 +1,9 @@
 package com.peakmain.webview.sealed
 
 /**
- * author ：Peakmain
- * createTime：2023/04/26
- * mail:2726449200@qq.com
+ * author ：knight
+ * createTime：2025/08/21
+ * mail:15015706912@163.com
  * describe：
  */
 sealed class HandleResult {

@@ -9,9 +9,9 @@ import com.peakmain.webview.sealed.HandleResult
 import com.peakmain.webview.utils.WebViewEventManager
 
 /**
- * author ：Peakmain
+ * author ：knight
  * createTime：2023/04/26
- * mail:2726449200@qq.com
+ * mail:15015706912@163.com
  * describe：
  */
 internal class WebViewHandle(
@@ -40,7 +40,7 @@ internal class WebViewHandle(
      *   <p>port:主机端口号:8080</p>
      *   <p>authority:主机和端口号，www.example.com:8080</p>
      *   <p>path:资源在服务器上的路径,index/html</p>
-     *   <p>query:一串参数，可以用于传递信息，name=Peakmain&age=18</p>
+     *   <p>query:一串参数，可以用于传递信息，name=knight&age=18</p>
      *   <p>fragment:片段标识符号,section-1</p>
      */
     private fun handleUrl(url: Uri?): HandleResult {

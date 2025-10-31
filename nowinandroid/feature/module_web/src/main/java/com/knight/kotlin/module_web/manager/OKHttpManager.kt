@@ -15,9 +15,9 @@ import java.net.HttpURLConnection
 import java.util.Locale
 
 /**
- * author ：Peakmain
- * createTime：2023/11/17
- * mail:2726449200@qq.com
+ * author ：knight
+ * createTime：2025/10/17
+ * mail:15015706912@163.com
  * describe：
  */
 internal class OKHttpManager(context: Context) {

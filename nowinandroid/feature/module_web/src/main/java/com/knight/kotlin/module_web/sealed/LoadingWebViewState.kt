@@ -1,9 +1,9 @@
 package com.peakmain.webview.sealed
 
 /**
- * author ：Peakmain
+ * author ：knight
  * createTime：2023/04/20
- * mail:2726449200@qq.com
+ * mail:15015706912@163.com
  * describe：
  */
 sealed class LoadingWebViewState {

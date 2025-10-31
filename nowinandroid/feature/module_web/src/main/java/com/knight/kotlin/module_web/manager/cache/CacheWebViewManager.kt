@@ -7,9 +7,9 @@ import com.peakmain.webview.manager.WebViewPool
 import com.peakmain.webview.view.WanWebView
 
 /**
- * author ：Peakmain
+ * author ：knight
  * createTime：2024/3/11
- * mail:2726449200@qq.com
+ * mail:15015706912@163.com
  * describe：外部WebView的管理，提供给外部使用
  */
 class CacheWebViewManager private constructor() {

@@ -3,12 +3,10 @@
     package="com.knight.kotlin.module_web">
 
     <application>
-        <activity android:name=".activity.WebActivity" />
         <activity android:name=".activity.WebPreviewPhotoActivity"/>
-        <activity android:name=".activity.WebArticleActivity"/>
         <activity android:name=".activity.WebTransitionActivity"/>
-        <activity android:name=".activity.NewWebViewActivity"/>
-        <activity android:name=".activity.NewArticleWebActivity"/>
+        <activity android:name=".activity.WebViewActivity"/>
+        <activity android:name=".activity.ArticleWebActivity"/>
 
     </application>
 

@@ -85,22 +85,22 @@ class WelcomePrivacyAgreeFragment : BaseDialogFragment<WelcomePrivacyAgreeFragme
 
                     when(target) {
                         "用户协议","User Agreement"->{
-                            startPageWithParams(RouteActivity.Web.NewWebPager,
+                            startPageWithParams(RouteActivity.Web.WebPager,
                                 "webUrl" to "file:android_asset/wanandroid_useragree.html",
                                 "webTitle" to "用户协议")
                         }
                         "隐私政策","Privacy Policy"->{
-                            startPageWithParams(RouteActivity.Web.NewWebPager,
+                            startPageWithParams(RouteActivity.Web.WebPager,
                                 "webUrl" to "file:android_asset/wanandroid_userprivacy.html",
                                 "webTitle" to "隐私政策")
                         }
                         "ShareSdk隐私政策","ShareSdk Privacy Policy"->{
-                            startPageWithParams(RouteActivity.Web.NewWebPager,
+                            startPageWithParams(RouteActivity.Web.WebPager,
                                 "webUrl" to "file:android_asset/wanandroid_sharesdk_userprivacy.html",
                                 "webTitle" to "ShareSdk隐私政策")
                         }
                         "百度地图Sdk隐私政策","Baidu MapSdk Policy"->{
-                            startPageWithParams(RouteActivity.Web.NewWebPager,
+                            startPageWithParams(RouteActivity.Web.WebPager,
                                 "webUrl" to "file:android_asset/wanandroid_baidu_sdk_userprivacy.html",
                                 "webTitle" to "百度地图Sdk隐私政策")
                         }
