@@ -71,11 +71,11 @@ class WebViewActivity : BaseActivity<WebActivityBinding, EmptyViewModel>(){
     override fun onClick(v: View) {
         when(v) {
             mBinding.includeWebToolbar.baseIvBack -> {
-                exit()
+                finish()
             }
             mBinding.includeWebToolbar.baseIvRight -> {
               //  WebBottomFragment.newInstance(webUrl,WebViewPool.instance.getWebView(this@NewWebViewActivity)).show(supportFragmentManager,"dialog_webnormal")
-                val dialog = WebBottomFragment.newInstance(webUrl,WebViewPool.instance.getWebView(this@WebViewActivity))
+                val dialog = WebBottomFragment.newInstance(webUrl,mWebViewFragment?.mWebView)
                 dialog.setOnWebActionListener(object : WebBottomFragment.OnWebActionListener {
                     override fun onRefreshUrl() {
                         // 这里执行外部的刷新逻辑

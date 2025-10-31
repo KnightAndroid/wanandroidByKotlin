@@ -48,7 +48,7 @@ import com.peakmain.webview.view.WanWebView
 open class WebViewFragment : Fragment() {
     protected var mFileUploadCallbackFirst: ValueCallback<Uri>? = null
     protected var mFileUploadCallbackSecond: ValueCallback<Array<Uri>>? = null
-    private var mWebView: WanWebView? = null
+    public var mWebView: WanWebView? = null
     private var mEndTime: Long = 0L
     private var mGroup: FrameLayout? = null
     private var mLoadingViewConfig: LoadingViewConfig? = null
@@ -136,6 +136,7 @@ open class WebViewFragment : Fragment() {
         }
         WebViewManager.instance.register(this)
         mWebView?.apply {
+
             //不显示滚动条
             isHorizontalScrollBarEnabled = false
             isVerticalScrollBarEnabled = false
@@ -147,7 +148,12 @@ open class WebViewFragment : Fragment() {
 
             }
         }
+
+
+
+
         loadUrl2WebView()
+
     }
 
     private fun loadUrl2WebView() {
