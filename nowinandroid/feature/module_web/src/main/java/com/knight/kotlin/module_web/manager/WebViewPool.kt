@@ -120,12 +120,17 @@ internal class WebViewPool private constructor() {
             // 还原 Context 避免内存泄漏
             (context as? MutableContextWrapper)?.baseContext = BaseApp.application
             (parent as? ViewGroup)?.removeView(this)
-
+            destroy()
             synchronized(lock) {
                 if (::mWebViewPool.isInitialized && mWebViewPool.size < WEB_VIEW_COUNT) {
-                    mWebViewPool.add(this)
-                } else {
-                    destroy()
+                  //  mWebViewPool.add(this)
+                    mParams?.let {
+                        val webView = createWebView(it, mUserAgent)
+                        synchronized(lock) {
+                            mWebViewPool.add(webView)
+                        }
+
+                    }
                 }
             }
         }
