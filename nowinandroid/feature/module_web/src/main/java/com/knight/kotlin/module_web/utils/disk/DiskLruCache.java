@@ -17,7 +17,8 @@
 package com.knight.kotlin.module_web.utils.disk;
 
 
-import com.peakmain.webview.utils.WebViewUtils;
+
+import com.knight.kotlin.module_web.utils.WebViewUtils;
 
 import java.io.BufferedWriter;
 import java.io.Closeable;

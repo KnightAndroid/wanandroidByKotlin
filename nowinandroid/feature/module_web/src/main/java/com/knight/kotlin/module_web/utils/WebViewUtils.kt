@@ -1,4 +1,4 @@
-package com.peakmain.webview.utils
+package com.knight.kotlin.module_web.utils
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -8,9 +8,10 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
 import android.text.TextUtils
-import androidx.collection.ArraySet
+import android.util.ArraySet
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
-import com.knight.kotlin.module_web.bean.cache.WebResource
+import com.knight.kotlin.module_web.cache.WebResource
 import okhttp3.Headers
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -18,6 +19,16 @@ import java.io.IOException
 import java.io.InputStream
 import java.security.MessageDigest
 import java.util.Locale
+
+
+/**
+ * @author created by luguian
+ * @organize
+ * @Date 2025/11/7 9:56
+ * @descript:
+ */
+
+
 
 /**
  * author ：knight
@@ -68,7 +79,7 @@ class WebViewUtils private constructor() {
         mCacheContentType.add("application/octet-stream")
         mCacheContentType.add("application/pdf")
         mCacheContentType.add("text/plain")
-       // mCacheContentType.add("text/html")
+        // mCacheContentType.add("text/html")
         mCacheContentType.add("text/xml")
 
         // 字体文件
@@ -291,6 +302,7 @@ class WebViewUtils private constructor() {
         return versionCode
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     fun generateHeadersMap(headers: Headers): Map<String, String>? {
         val headersMap: MutableMap<String, String> = HashMap()
         for (key in headers.names()) {
@@ -306,6 +318,7 @@ class WebViewUtils private constructor() {
         return headersMap
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     private fun listToSet(origin: List<String?>): Set<String?> {
         val target: MutableSet<String?> = ArraySet(origin.size)
         target.addAll(origin)

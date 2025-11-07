@@ -1,16 +1,16 @@
 package com.knight.kotlin.module_web.activity
 
-import android.content.Intent
-import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
+import android.view.ViewGroup
 import android.webkit.WebView
+import android.widget.LinearLayout
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.core.library_base.event.MessageEvent
 import com.core.library_base.route.RouteActivity
 import com.core.library_base.util.EventBusUtils
 import com.knight.kotlin.library_aop.loginintercept.LoginCheck
 import com.knight.kotlin.library_base.activity.BaseActivity
-import com.knight.kotlin.library_base.config.WebViewConstants
 import com.knight.kotlin.library_base.entity.WebDataEntity
 import com.knight.kotlin.library_common.ktx.getUser
 import com.knight.kotlin.library_database.entity.HistoryReadRecordsEntity
@@ -18,14 +18,16 @@ import com.knight.kotlin.library_database.util.DataBaseUtils
 import com.knight.kotlin.library_util.toast.ToastUtils
 import com.knight.kotlin.library_widget.LoveAnimatorRelativeLayout
 import com.knight.kotlin.module_web.R
+import com.knight.kotlin.module_web.WebViewCacheHolder
 import com.knight.kotlin.module_web.databinding.WebArticleActivityBinding
 import com.knight.kotlin.module_web.dialog.WebArticleBottomFragment
-import com.knight.kotlin.module_web.fragment.WebViewFragment
+import com.knight.kotlin.module_web.view.WanWebView
+import com.knight.kotlin.module_web.view.WebViewListener
 import com.knight.kotlin.module_web.vm.WebVm
-import com.peakmain.webview.manager.H5UtilsParams
 import com.wyjson.router.annotation.Param
 import com.wyjson.router.annotation.Route
 import dagger.hilt.android.AndroidEntryPoint
+import github.leavesczy.robustwebview.loading.HorizontalProgressBarLoadingConfigImpl
 import java.util.Date
 
 
@@ -43,9 +45,30 @@ class ArticleWebActivity: BaseActivity<WebArticleActivityBinding, WebVm>(),LoveA
     @JvmField
     @Param(name="webDataEntity")
     var webDataEntity: WebDataEntity?=null
+    private lateinit var webView: WanWebView
+    private val loadingConfig = HorizontalProgressBarLoadingConfigImpl()
 
-    var mWebViewFragment: WebViewFragment? = null
-    private val mH5UtilsParams = H5UtilsParams.instance
+
+
+    private val webViewListener = object : WebViewListener {
+        override fun onProgressChanged(webView: WanWebView, progress: Int) {
+            //  tvProgress.text = progress.toString()
+            loadingConfig.setProgress(progress)
+            if (progress >= 100) {
+                loadingConfig.hideLoading()
+            } else {
+                loadingConfig.showLoading(this@ArticleWebActivity)
+            }
+        }
+
+        override fun onReceivedTitle(webView: WanWebView, title: String) {
+
+        }
+
+        override fun onPageFinished(webView: WanWebView, url: String) {
+
+        }
+    }
 
     override fun setThemeColor(isDarkMode: Boolean) {
 
@@ -55,8 +78,34 @@ class ArticleWebActivity: BaseActivity<WebArticleActivityBinding, WebVm>(),LoveA
         webToolbar.baseIvRight.visibility = View.VISIBLE
         title = webDataEntity?.title
         webLikeRl.setOnCollectListener(this@ArticleWebActivity)
-        initFragment()
+        // 强转成 ConstraintLayout
+        val parent = mBinding.root as ConstraintLayout
 
+        val loadingView = loadingConfig.getLoadingView(this@ArticleWebActivity)
+        val lp = ConstraintLayout.LayoutParams(
+            ConstraintLayout.LayoutParams.MATCH_PARENT,
+            ConstraintLayout.LayoutParams.WRAP_CONTENT
+        )
+        lp.topToBottom = mBinding.webToolbar.baseCompatToolbar.id
+
+        // 添加到 ConstraintLayout 中
+        parent.addView(loadingView, lp)
+
+
+        webView = WebViewCacheHolder.acquireWebViewInternal(this@ArticleWebActivity)
+        val layoutParams = LinearLayout.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.MATCH_PARENT
+        )
+        webLl.addView(webView, layoutParams)
+        webView?.apply {
+            //不显示滚动条
+            isHorizontalScrollBarEnabled = false
+            isVerticalScrollBarEnabled = false
+            blackMonitorCallback = {
+
+            }
+        }
         webToolbar.baseIvBack.setOnClickListener { exit() }
         webToolbar.baseIvRight.setOnClickListener {
             webDataEntity?.let {
@@ -64,18 +113,12 @@ class ArticleWebActivity: BaseActivity<WebArticleActivityBinding, WebVm>(),LoveA
             }
 
         }
+        webView.loadUrl(webDataEntity?.webUrl ?: "https://wanandroid.com/")
         DataBaseUtils.saveHistoryRecord(setHistoryReadRecord())
     }
 
 
-    private fun initFragment() {
-        val bundle = Bundle()
-        bundle.putParcelable(WebViewConstants.WEB_PARAMS, webDataEntity)
-        mWebViewFragment = WebViewFragment()
-        mWebViewFragment!!.arguments = bundle
-        supportFragmentManager.beginTransaction().replace(R.id.web_ll, mWebViewFragment!!)
-            .commitAllowingStateLoss()
-    }
+
 
     override fun initObserver() {
 
@@ -113,27 +156,30 @@ class ArticleWebActivity: BaseActivity<WebArticleActivityBinding, WebVm>(),LoveA
         EventBusUtils.postEvent(MessageEvent(MessageEvent.MessageType.CollectSuccess))
     }
 
+
+
+
+
     private fun exit() {
         if (!canGoBack()) {
             finish()
             return
         }
-        webViewGoBack()
+        webViewPageGoBack()
+    }
+    fun canGoBack(): Boolean {
+        return webView?.canGoBack() ?: false
     }
 
-
-
-    private fun canGoBack(): Boolean {
-        return mWebViewFragment != null && mWebViewFragment!!.canGoBack()
-    }
-
-    private fun webViewGoBack() {
-        mWebViewFragment?.webViewPageGoBack()
+    fun webViewPageGoBack() {
+        if (canGoBack()) {
+            webView?.goBack()
+        }
     }
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
         return if (keyCode == KeyEvent.KEYCODE_BACK) {
             if (canGoBack()) {
-                webViewGoBack()
+                webViewPageGoBack()
                 true
             } else {
                 finish()
@@ -142,10 +188,6 @@ class ArticleWebActivity: BaseActivity<WebArticleActivityBinding, WebVm>(),LoveA
         } else super.onKeyDown(keyCode, event)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        mWebViewFragment?.onActivityResult(requestCode, resultCode, data)
-    }
 
 
     fun onReceivedTitle(title: String) {
@@ -156,10 +198,6 @@ class ArticleWebActivity: BaseActivity<WebArticleActivityBinding, WebVm>(),LoveA
 
 
     fun shouldOverrideUrlLoading(view: WebView, url: String) {
-    }
-    override fun onDestroy() {
-        super.onDestroy()
-        mH5UtilsParams.clear()
     }
 
 
