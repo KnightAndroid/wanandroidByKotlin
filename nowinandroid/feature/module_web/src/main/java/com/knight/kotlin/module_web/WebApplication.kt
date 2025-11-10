@@ -7,7 +7,6 @@ import com.core.library_common.app.ApplicationLifecycle
 import com.core.library_common.util.ProcessUtil
 import com.google.auto.service.AutoService
 import com.knight.kotlin.library_base.BaseApp
-import com.knight.kotlin.library_util.ThreadUtils
 import github.leavesczy.robustwebview.utils.ContextHolder
 
 
@@ -55,7 +54,7 @@ class WebApplication: ApplicationLifecycle {
 
     fun initWeb() :String{
         //因和开屏动画卡顿 先延迟2500毫秒在初始化
-        ThreadUtils.postMainDelayed({
+  //      ThreadUtils.postMainDelayed({
 //            PkWebViewInit.Builder(BaseApp.application)
 //                //.setLoadingView(ReplaceLoadingConfigImpl())
 //                //设置全局拦截url回调
@@ -70,7 +69,7 @@ class WebApplication: ApplicationLifecycle {
 
             ContextHolder.init(application = BaseApp.application)
             WebViewInitTask.init(application = BaseApp.application)
-        },2500)
+       // },2500)
 
         return "Web --->> init complete"
     }

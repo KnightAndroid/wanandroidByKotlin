@@ -1,5 +1,6 @@
 package com.knight.kotlin.module_web.activity
 
+import android.graphics.Bitmap
 import android.view.KeyEvent
 import android.view.View
 import android.view.ViewGroup
@@ -51,13 +52,18 @@ class ArticleWebActivity: BaseActivity<WebArticleActivityBinding, WebVm>(),LoveA
 
 
     private val webViewListener = object : WebViewListener {
+
+
+        override fun onPageStarted(webView: WebView, url: String?, favicon: Bitmap?) {
+            loadingConfig.showLoading(this@ArticleWebActivity)
+        }
         override fun onProgressChanged(webView: WanWebView, progress: Int) {
             //  tvProgress.text = progress.toString()
             loadingConfig.setProgress(progress)
             if (progress >= 100) {
                 loadingConfig.hideLoading()
             } else {
-                loadingConfig.showLoading(this@ArticleWebActivity)
+              //  loadingConfig.showLoading(this@ArticleWebActivity)
             }
         }
 
@@ -78,6 +84,7 @@ class ArticleWebActivity: BaseActivity<WebArticleActivityBinding, WebVm>(),LoveA
         webToolbar.baseIvRight.visibility = View.VISIBLE
         title = webDataEntity?.title
         webLikeRl.setOnCollectListener(this@ArticleWebActivity)
+
         // 强转成 ConstraintLayout
         val parent = mBinding.root as ConstraintLayout
 
@@ -93,6 +100,7 @@ class ArticleWebActivity: BaseActivity<WebArticleActivityBinding, WebVm>(),LoveA
 
 
         webView = WebViewCacheHolder.acquireWebViewInternal(this@ArticleWebActivity)
+        webView.webViewListener = webViewListener
         val layoutParams = LinearLayout.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.MATCH_PARENT

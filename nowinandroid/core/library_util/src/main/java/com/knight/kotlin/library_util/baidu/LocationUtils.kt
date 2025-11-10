@@ -146,7 +146,7 @@ object LocationUtils {
 
         override fun onLocDiagnosticMessage(resultCode: Int, locationType: Int, strategy: String?) {
             super.onLocDiagnosticMessage(resultCode, locationType, strategy)
-            if (resultCode != 161) {
+            if (resultCode != 161 && resultCode != 61) {
                 strategy?.let {
                     toast(it)
                 }

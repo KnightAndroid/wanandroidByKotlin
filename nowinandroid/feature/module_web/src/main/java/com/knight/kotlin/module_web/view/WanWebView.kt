@@ -31,6 +31,13 @@ import java.io.File
  */
 interface WebViewListener {
 
+
+    fun onPageStarted(webView: WebView, url: String?, favicon: Bitmap?) {
+
+    }
+
+
+
     fun onProgressChanged(webView: WanWebView, progress: Int) {
 
     }
@@ -48,6 +55,11 @@ interface WebViewListener {
 class WanWebView(context: Context, attributeSet: AttributeSet? = null) :
     WebView(context, attributeSet) {
     var blackMonitorCallback: ((Boolean) -> Unit)? = null
+
+
+
+    //observer 引用与安全解绑逻辑
+    private var hostLifecycleObserver: DefaultLifecycleObserver? = null
     private val baseCacheDir by lazy {
         File(context.cacheDir, "webView")
     }
@@ -113,13 +125,21 @@ class WanWebView(context: Context, attributeSet: AttributeSet? = null) :
         private var startTime = 0L
 
         override fun shouldOverrideUrlLoading(webView: WebView, url: String): Boolean {
-            webView.loadUrl(url)
-            return true
+            if (url.startsWith("baiduboxapp://") || url.startsWith("v6:/%C2%A5^RFZvXweH1N^%")) {
+                if (url.startsWith("baiduboxapp://")) {
+                    webView.loadUrl("https://a.app.qq.com/o/simple.jsp?pkgname=com.baidu.searchbox&android_schema=v6%3A%2F%C2%A5%5ERFZvXweH1N%5E%25")
+                }
+                return true
+            } else {
+                return false
+            }
+
         }
 
         override fun onPageStarted(webView: WebView, url: String?, favicon: Bitmap?) {
             super.onPageStarted(webView, url, favicon)
             startTime = System.currentTimeMillis()
+            webViewListener?.onPageStarted(webView,url,favicon)
         }
 
         override fun onPageFinished(webView: WebView, url: String?) {
@@ -147,7 +167,7 @@ class WanWebView(context: Context, attributeSet: AttributeSet? = null) :
 
             if (toProxy(request)) {
                 return WebResourceResponseManager.getResponse(
-                    (webView?.context as MutableContextWrapper?)?.baseContext,
+                    webView.context,
                     request,
                     "Android"
                 )
@@ -279,7 +299,11 @@ class WanWebView(context: Context, attributeSet: AttributeSet? = null) :
     }
 
     private fun addHostLifecycleObserver(lifecycleOwner: LifecycleOwner) {
-        lifecycleOwner.lifecycle.addObserver(object : DefaultLifecycleObserver {
+        // 避免重复添加
+        if (hostLifecycleObserver != null) {
+            lifecycleOwner.lifecycle.removeObserver(hostLifecycleObserver!!)
+        }
+        val observer = object : DefaultLifecycleObserver {
             override fun onResume(owner: LifecycleOwner) {
                 onHostResume()
             }
@@ -291,7 +315,9 @@ class WanWebView(context: Context, attributeSet: AttributeSet? = null) :
             override fun onDestroy(owner: LifecycleOwner) {
                 onHostDestroy()
             }
-        })
+        }
+        lifecycleOwner.lifecycle.addObserver(observer)
+        hostLifecycleObserver = observer
     }
 
     private fun onHostResume() {
@@ -307,6 +333,10 @@ class WanWebView(context: Context, attributeSet: AttributeSet? = null) :
     }
 
     private fun release() {
+        hostLifecycleObserver?.let {
+            hostLifecycleOwner?.lifecycle?.removeObserver(it)
+        }
+
         hostLifecycleOwner = null
         webViewListener = null
         webChromeClient = null

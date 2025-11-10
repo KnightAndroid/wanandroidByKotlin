@@ -1,5 +1,6 @@
 package com.knight.kotlin.module_web.activity
 
+import android.graphics.Bitmap
 import android.os.Build
 import android.text.Html
 import android.view.KeyEvent
@@ -46,6 +47,11 @@ class WebViewActivity : BaseActivity<WebActivityBinding, EmptyViewModel>(){
 
     private val loadingConfig = HorizontalProgressBarLoadingConfigImpl()
     private val webViewListener = object : WebViewListener {
+
+        override fun onPageStarted(webView: WebView, url: String?, favicon: Bitmap?) {
+
+        }
+
         override fun onProgressChanged(webView: WanWebView, progress: Int) {
           //  tvProgress.text = progress.toString()
             loadingConfig.setProgress(progress)
