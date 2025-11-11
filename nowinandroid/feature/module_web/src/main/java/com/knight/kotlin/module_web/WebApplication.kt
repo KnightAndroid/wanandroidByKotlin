@@ -7,6 +7,7 @@ import com.core.library_common.app.ApplicationLifecycle
 import com.core.library_common.util.ProcessUtil
 import com.google.auto.service.AutoService
 import com.knight.kotlin.library_base.BaseApp
+import com.knight.kotlin.module_web.manager.WebViewInitTask
 import github.leavesczy.robustwebview.utils.ContextHolder
 
 
@@ -40,9 +41,6 @@ class WebApplication: ApplicationLifecycle {
         if (ProcessUtil.isMainProcess(BaseApp.context)){
             list.add{initWeb()}
         }
-
-
-
         return list
     }
 
@@ -51,26 +49,9 @@ class WebApplication: ApplicationLifecycle {
     }
 
 
-
-    fun initWeb() :String{
-        //因和开屏动画卡顿 先延迟2500毫秒在初始化
-  //      ThreadUtils.postMainDelayed({
-//            PkWebViewInit.Builder(BaseApp.application)
-//                //.setLoadingView(ReplaceLoadingConfigImpl())
-//                //设置全局拦截url回调
-//                //.setHandleUrlParamsCallback(HandlerUrlParamsImpl())
-//                .setLoadingWebViewState(LoadingWebViewState.HorizontalProgressBarLoadingStyle)
-//                //.registerEntities(OnlineServiceHandle::class.java, PageActionHandle::class.java)
-//                .setUserAgent("Android")
-//                .setNoCacheUrl(arrayOf("signIn/signIn"))
-//                .setWebViewCount(2)
-//                .build()
-//            H5Utils().setWebViewCacheMode(CacheMode.LOAD_DEFAULT)
-
-            ContextHolder.init(application = BaseApp.application)
-            WebViewInitTask.init(application = BaseApp.application)
-       // },2500)
-
+    fun initWeb(): String {
+        ContextHolder.init(application = BaseApp.application)
+        WebViewInitTask.init(application = BaseApp.application)
         return "Web --->> init complete"
     }
 }

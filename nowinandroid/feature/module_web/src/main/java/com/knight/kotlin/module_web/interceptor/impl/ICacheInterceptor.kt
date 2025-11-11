@@ -1,8 +1,7 @@
+package com.knight.kotlin.module_web.interceptor.impl
 
-package com.knight.kotlin.module_web
-
+import com.knight.kotlin.module_web.cache.CacheRequest
 import com.knight.kotlin.module_web.cache.WebResource
-
 
 /**
  * @author created by luguian

@@ -17,8 +17,8 @@ import android.webkit.WebViewClient
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import com.knight.kotlin.library_base.BaseApp
-import com.knight.kotlin.module_web.JsInterface
-import com.knight.kotlin.module_web.WebResourceResponseManager
+import com.knight.kotlin.module_web.bridge.JsInterface
+import com.knight.kotlin.module_web.manager.WebResourceResponseManager
 
 
 import java.io.File

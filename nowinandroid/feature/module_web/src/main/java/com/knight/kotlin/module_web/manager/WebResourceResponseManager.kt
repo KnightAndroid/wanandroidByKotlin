@@ -1,14 +1,15 @@
-package com.knight.kotlin.module_web
+package com.knight.kotlin.module_web.manager
 
 import android.content.Context
 import android.os.Build
 import android.text.TextUtils
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
+import com.knight.kotlin.module_web.cache.CacheRequest
+import com.knight.kotlin.module_web.interceptor.RealCacheInterfaceCall
 import com.knight.kotlin.module_web.utils.WebViewUtils
 import java.io.ByteArrayInputStream
 import java.util.Locale
-
 
 /**
  * @author created by luguian
@@ -25,7 +26,7 @@ class WebResourceResponseManager private constructor() {
         ): WebResourceResponse? {
             val url = request.url.toString()
             //资源类型
-            val mimeType = WebViewUtils.instance.getMimeType(url)
+            val mimeType = WebViewUtils.Companion.instance.getMimeType(url)
             val cacheRequest = CacheRequest()
             cacheRequest.url = url
             cacheRequest.mimeType = mimeType
@@ -76,13 +77,13 @@ class WebResourceResponseManager private constructor() {
                 val responseCode = response.responseCode
                 var message = response.message
                 if (TextUtils.isEmpty(message)) {
-                    message = WebViewUtils.instance.getMessage(responseCode)
+                    message = WebViewUtils.Companion.instance.getMessage(responseCode)
                 }
                 return WebResourceResponse(
                     mineType,
                     charset,
                     responseCode,
-                    message ?:"",
+                    message ?: "",
                     response.responseHeaders,
                     bis
                 )

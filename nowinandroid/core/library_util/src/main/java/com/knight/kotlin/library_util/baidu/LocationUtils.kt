@@ -120,7 +120,7 @@ object LocationUtils {
             //更多结果信息获取说明，请参照类参考中BDLocation类中的说明
 
             location?.run {
-                if (locType != 61 || locType != 161) {
+                if (locType != 61 && locType != 161) {
                     toast(locTypeDescription)
                 }
                 Appconfig.location = this

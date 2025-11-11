@@ -1,5 +1,5 @@
+package com.knight.kotlin.module_web.interceptor
 
-package com.knight.kotlin.module_web
 import android.app.Application
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
@@ -28,7 +28,6 @@ object WebViewInterceptRequestProxy {
         OkHttpClient.Builder().cache(Cache(webViewResourceCacheDir, 600L * 1024 * 1024))
             .followRedirects(false)
             .followSslRedirects(false)
-         //   .addInterceptor(getChuckerInterceptor(application = application))
             .addNetworkInterceptor(getWebViewCacheInterceptor())
             .build()
     }

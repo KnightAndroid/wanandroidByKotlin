@@ -1,10 +1,10 @@
-package com.knight.kotlin.module_web
+package com.knight.kotlin.module_web.manager
 
 import android.app.Application
 import android.content.Context
 import android.webkit.WebResourceResponse
+import com.knight.kotlin.module_web.cache.CacheRequest
 import com.knight.kotlin.module_web.cache.WebResource
-
 
 /**
  * @author created by luguian
@@ -17,7 +17,7 @@ class InterceptRequestManager private constructor() {
 
 
 
-    fun loadImage(context:Context, request: CacheRequest): WebResource? {
+    fun loadImage(context: Context, request: CacheRequest): WebResource? {
         val url = request.url
         try {
 //            // 使用 Glide 加载图片

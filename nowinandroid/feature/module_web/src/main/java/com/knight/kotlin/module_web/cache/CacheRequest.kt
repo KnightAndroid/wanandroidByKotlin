@@ -1,4 +1,4 @@
-package com.knight.kotlin.module_web
+package com.knight.kotlin.module_web.cache
 
 import com.knight.kotlin.module_web.utils.WebViewUtils
 import java.util.Locale
@@ -18,7 +18,7 @@ class CacheRequest {
         set(value) {
             field = value
             // md5 进入 DiskLruCache 缓存时必须为小写字母
-            key = WebViewUtils.instance.getMd5(value, true).lowercase(Locale.getDefault())
+            key = WebViewUtils.Companion.instance.getMd5(value, true).lowercase(Locale.getDefault())
         }
 
     // 资源类型

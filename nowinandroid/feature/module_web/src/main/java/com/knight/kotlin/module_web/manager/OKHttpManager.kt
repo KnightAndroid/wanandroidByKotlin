@@ -1,9 +1,9 @@
-package com.knight.kotlin.module_web
-
+package com.knight.kotlin.module_web.manager
 
 import android.content.Context
 import android.os.Build
 import androidx.annotation.RequiresApi
+import com.knight.kotlin.module_web.cache.CacheRequest
 import com.knight.kotlin.module_web.cache.WebResource
 import com.knight.kotlin.module_web.utils.WebViewUtils
 import okhttp3.Cache
@@ -15,7 +15,6 @@ import okhttp3.ResponseBody
 import java.io.File
 import java.net.HttpURLConnection
 import java.util.Locale
-
 
 /**
  * @author created by luguian
@@ -88,10 +87,10 @@ internal class OKHttpManager(context: Context) {
                     remoteResource.originBytes = responseBody.bytes()
                 }
                 remoteResource.responseHeaders =
-                    WebViewUtils.instance.generateHeadersMap(response.headers)
-                val contentType = WebViewUtils.instance.getContentType(remoteResource)
+                    WebViewUtils.Companion.instance.generateHeadersMap(response.headers)
+                val contentType = WebViewUtils.Companion.instance.getContentType(remoteResource)
                 if (contentType != null) {
-                    if (!WebViewUtils.instance.isCacheContentType(contentType)) {
+                    if (!WebViewUtils.Companion.instance.isCacheContentType(contentType)) {
                         return null
                     }
                 }

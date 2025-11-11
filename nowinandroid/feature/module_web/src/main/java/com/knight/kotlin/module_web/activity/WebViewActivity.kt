@@ -14,7 +14,7 @@ import com.core.library_base.vm.EmptyViewModel
 import com.flyjingfish.android_aop_core.annotations.SingleClick
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_util.StringUtils
-import com.knight.kotlin.module_web.WebViewCacheHolder
+import com.knight.kotlin.module_web.manager.WebViewCacheHolder
 import com.knight.kotlin.module_web.databinding.WebActivityBinding
 import com.knight.kotlin.module_web.dialog.WebBottomFragment
 import com.knight.kotlin.module_web.view.WanWebView

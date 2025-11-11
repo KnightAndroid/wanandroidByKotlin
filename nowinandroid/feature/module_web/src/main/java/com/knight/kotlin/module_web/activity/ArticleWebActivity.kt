@@ -19,7 +19,7 @@ import com.knight.kotlin.library_database.util.DataBaseUtils
 import com.knight.kotlin.library_util.toast.ToastUtils
 import com.knight.kotlin.library_widget.LoveAnimatorRelativeLayout
 import com.knight.kotlin.module_web.R
-import com.knight.kotlin.module_web.WebViewCacheHolder
+import com.knight.kotlin.module_web.manager.WebViewCacheHolder
 import com.knight.kotlin.module_web.databinding.WebArticleActivityBinding
 import com.knight.kotlin.module_web.dialog.WebArticleBottomFragment
 import com.knight.kotlin.module_web.view.WanWebView

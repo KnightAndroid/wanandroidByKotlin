@@ -5,8 +5,8 @@ import android.content.Context
 import android.os.Build
 import android.text.TextUtils
 import androidx.annotation.RequiresApi
-import com.knight.kotlin.module_web.ICacheInterceptor
-import com.knight.kotlin.module_web.WebViewCacheHolder
+import com.knight.kotlin.module_web.interceptor.impl.ICacheInterceptor
+import com.knight.kotlin.module_web.manager.WebViewCacheHolder
 import com.knight.kotlin.module_web.cache.CacheConfig
 import com.knight.kotlin.module_web.cache.WebResource
 import com.knight.kotlin.module_web.utils.WebViewUtils

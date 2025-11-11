@@ -1,4 +1,4 @@
-package com.knight.kotlin.module_web
+package com.knight.kotlin.module_web.manager
 
 import android.app.Application
 import android.content.Context

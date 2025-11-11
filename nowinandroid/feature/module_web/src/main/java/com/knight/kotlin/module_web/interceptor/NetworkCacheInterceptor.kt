@@ -1,9 +1,9 @@
 package com.knight.kotlin.module_web.interceptor
 
 import android.content.Context
-import com.knight.kotlin.module_web.ICacheInterceptor
-import com.knight.kotlin.module_web.InterceptRequestManager
-import com.knight.kotlin.module_web.OKHttpManager
+import com.knight.kotlin.module_web.interceptor.impl.ICacheInterceptor
+import com.knight.kotlin.module_web.manager.InterceptRequestManager
+import com.knight.kotlin.module_web.manager.OKHttpManager
 import com.knight.kotlin.module_web.cache.WebResource
 import com.knight.kotlin.module_web.utils.WebViewUtils
 

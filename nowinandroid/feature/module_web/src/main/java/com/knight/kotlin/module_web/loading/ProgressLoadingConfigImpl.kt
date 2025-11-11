@@ -2,7 +2,7 @@ package github.leavesczy.robustwebview.loading
 
 import android.content.Context
 import android.view.View
-import com.knight.kotlin.module_web.AppProgressLoadingView
+import com.knight.kotlin.module_web.widget.AppProgressLoadingView
 
 
 /**

@@ -1,8 +1,8 @@
 package com.knight.kotlin.module_web.interceptor
 
 import android.util.LruCache
-import com.knight.kotlin.module_web.ICacheInterceptor
-import com.knight.kotlin.module_web.MemorySizeCalculator
+import com.knight.kotlin.module_web.interceptor.impl.ICacheInterceptor
+import com.knight.kotlin.module_web.cache.MemorySizeCalculator
 import com.knight.kotlin.module_web.cache.WebResource
 
 
