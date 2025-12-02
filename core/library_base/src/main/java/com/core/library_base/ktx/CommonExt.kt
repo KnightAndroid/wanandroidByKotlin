@@ -11,6 +11,7 @@ import androidx.annotation.Px
 import com.core.library_base.R
 import com.core.library_base.util.ActivityManagerUtils
 import com.core.library_base.widget.loadcircleview.ProgressHud
+import com.core.library_common.ktx.getApplicationContext
 import com.core.library_common.util.dp2px
 import java.lang.reflect.ParameterizedType
 import kotlin.math.min
@@ -120,7 +121,7 @@ var loadingDialog: ProgressHud? = null
  */
 @MainThread
 fun showLoadingDialog(msg:String = appStr(R.string.base_loading)) {
-    loadingDialog = ActivityManagerUtils.getInstance()?.getTopActivity()?.let { ProgressHud(it) }
+    loadingDialog = ProgressHud(getApplicationContext())
     loadingDialog?.run {
         show(msg)
     }

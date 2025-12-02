@@ -47,7 +47,11 @@ class SignInterceptor(
 
                 val response = chain.proceed(requestBuilder.build())
                 val refresh = tryRefreshToken(requestBuilder, response)
-                return if (refresh) intercept(chain) else response
+                if (refresh) {
+                    response.close()  // 关闭旧响应，释放资源
+                   return intercept(chain)  // 重试请求
+                }
+                return response
             }
         }
         return chain.proceed(chain.request())

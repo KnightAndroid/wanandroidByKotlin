@@ -10,6 +10,8 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
+import java.io.IOException
+import java.util.concurrent.CancellationException
 
 
 /**
@@ -50,20 +52,46 @@ open class BaseRepository {
      * @param requestBlock 请求的整体逻辑
      * @return Flow<T>
      */
-    protected fun<T> request(requestBlock:suspend FlowCollector<T>.() -> Unit,failureCallBack:((String?) ->Unit) ?= null): Flow<T> {
-        return flow(block = requestBlock).flowOn(Dispatchers.IO).onStart {
-            //开始
-        }
+    protected fun <T> request(
+        requestBlock: suspend FlowCollector<T>.() -> Unit,
+        failureCallBack: ((String?) -> Unit)? = null
+    ): Flow<T> {
+        return flow(requestBlock)
+            .onStart {
+                // 请求开始，可以放一些准备逻辑
+            }
             .onEach {
-
+                // 请求中间过程，可以做数据处理
             }
             .onCompletion {
-                //结束
+                // 请求完成，可以做收尾操作
+            }
+            .catch { e ->
+                when {
+                    // 忽略OkHttp取消请求异常
+                    e is IOException && e.message?.contains(
+                        "cancel",
+                        ignoreCase = true
+                    ) == true -> {
+                        // 可选：打印日志或静默处理
 
+                    }
+
+                    // 忽略协程取消异常
+                    e is CancellationException -> {
+
+                    }
+
+                    else -> {
+                        // 其他异常，调用回调并传递异常信息
+                        failureCallBack?.let { it1 ->
+                            it1(e.cause?.message + e.message)
+                        }
+                    }
+                }
             }
-            .catch {
-                failureCallBack?.let { it1 -> it1(it.cause?.message + it.message) }
-            }
+
+
     }
 
 

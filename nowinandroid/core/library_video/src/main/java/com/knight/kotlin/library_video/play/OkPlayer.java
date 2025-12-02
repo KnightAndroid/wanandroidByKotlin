@@ -250,9 +250,11 @@ public abstract class OkPlayer extends FrameLayout implements View.OnClickListen
             CURRENT_JZVD.clearFloatScreen();
             return true;
         } else if (CONTAINER_LIST.size() == 0 && CURRENT_JZVD != null && CURRENT_JZVD.screen == SCREEN_NORMAL) {
+            CURRENT_JZVD.cancelProgressTimer();
             CURRENT_JZVD.releaseFinishPlayer();
             return true;
         }
+
         return false;
     }
 
