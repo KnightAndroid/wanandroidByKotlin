@@ -15,7 +15,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    api Dependencies.Androidx.CORE_KTS
+    api (libs.androidx.core.ktx)
     api Dependencies.Androidx.APP_COMPAT
     implementation Dependencies.JetPack.HILT_CORE
     kapt Dependencies.JetPack.HILT_APT
