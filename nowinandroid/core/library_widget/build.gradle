@@ -12,8 +12,8 @@ android {
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation Dependencies.JetPack.HILT_CORE
-    kapt Dependencies.JetPack.HILT_APT
+    implementation (libs.hilt.android)
+    kapt (libs.hilt.compiler)
     //kapt Dependencies.JetPack.HILT_ANDROIDX
     implementation project(":nowinandroid:core:library_util")
     implementation project(":nowinandroid:core:library_base")
@@ -24,7 +24,8 @@ dependencies {
     api Dependencies.GitHub.SMART_FOOTER
     api Dependencies.GitHub.SMART_HEADER_TWO_LEVEL
     api Dependencies.GitHub.MAGIC_INDICATOR
-    api Dependencies.Android.FLEXLAYOUT
+
+    api (libs.flexbox)
     implementation Dependencies.GitHub.SHIMMER_LAYOUT
     //依赖dataBase 数据库 因本库需要用到数据库里面的实体CityBean
     implementation project(":nowinandroid:core:library_database")

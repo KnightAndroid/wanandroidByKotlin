@@ -17,24 +17,30 @@ android {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     api (libs.androidx.core.ktx)
-    api Dependencies.Androidx.APP_COMPAT
-    api Dependencies.Androidx.CONSTRAINTLAYOUT
-    api Dependencies.Androidx.ACTIVITY_KTX
-    api Dependencies.Androidx.FRAGMENT_KTX
-    api Dependencies.Android.MATERIAL
-    api Dependencies.Androidx.MULTIDEX
+    api (libs.androidx.appcompat)
+    api (libs.androidx.constraintlayout)
+    api (libs.androidx.activity)
+    api (libs.androidx.fragment)
+    api (libs.material)
+
+
+
+    api (libs.androidx.multidex)
     api Dependencies.Androidx.WINDOWX
-    api Dependencies.Kotlin.KOTLIN
-    api Dependencies.Kotlin.COROUTINES_CORE
-    api Dependencies.Kotlin.COROUTINES_ANDROID
-    api Dependencies.JetPack.VIEWMODEL
-    api Dependencies.JetPack.VIEWMODEL_SAVEDSTATE
-    api Dependencies.JetPack.LIVEDATA
-    api Dependencies.JetPack.LIFECYCLE
-    api Dependencies.JetPack.HILT_CORE
-    kapt Dependencies.JetPack.HILT_APT
-    kapt Dependencies.JetPack.HILT_ANDROIDX
-    kapt Dependencies.JetPack.LIFECYCLE_COMPILER_APT
+    api (libs.kotlin.stdlib)
+
+    api (libs.coroutines)
+    api (libs.android.coroutines)
+    api (libs.androidx.lifecycle.vm)
+    api (libs.androidx.vm.savedstate)
+    api (libs.androidx.livedata.ktx)
+    api (libs.androidx.lifecycle.runtime)
+
+    api (libs.hilt.android)
+    kapt (libs.hilt.compiler)
+
+    kapt (libs.androidx.hilt.compiler)
+    kapt (libs.androidx.lifecycle.compiler)
     api Dependencies.GitHub.EVENTBUS
     kapt Dependencies.GitHub.EVENTBUS_APT
     api Dependencies.GitHub.AUTO_SIZE

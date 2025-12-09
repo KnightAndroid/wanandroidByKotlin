@@ -12,8 +12,8 @@ android {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     api project(path:':core:library_common')
-    implementation Dependencies.JetPack.HILT_CORE
-    kapt Dependencies.JetPack.HILT_APT
+    implementation (libs.hilt.android)
+    kapt (libs.hilt.compiler)
     //kapt Dependencies.JetPack.HILT_ANDROIDX
 
     //百度地图

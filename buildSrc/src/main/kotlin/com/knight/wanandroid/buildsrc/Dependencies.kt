@@ -15,60 +15,58 @@ object Dependencies {
      */
     object Version {
        //构建相关-----------------------------------------------
-       const val TOOL_BUILD_VERSION= "8.13.0" // 8.13.0
-       const val KOTLIN_GRADLE_PLUGIN_VERSION = "2.2.20"
-       //kotlin Serialization序列化（KOTLIN_GRADLE_PLUGIN_VERSION后续要和这个版本统一）
-       const val KOTLIN_SERIALIZATION = "1.8.10"
+      // const val TOOL_BUILD_VERSION= "8.13.0" // 8.13.0
+      // const val KOTLIN_GRADLE_PLUGIN_VERSION = "2.2.20"
        //AndroidX----------------------------------------------
-       const val APPCOMPAT_VERSION = "1.7.0"
+      // const val APPCOMPAT_VERSION = "1.7.0"
        //核心依赖
-       const val CORE_KTX_VERSION = "1.7.0"
+      // const val CORE_KTX_VERSION = "1.7.0"
        //约束布局
-       const val CONSTRAINTLAYOUT_VERSION = "2.0.1"
+      // const val CONSTRAINTLAYOUT_VERSION = "2.0.1"
        //单元测试
-       const val TEST_JUNIT_VERSION = "1.1.2"
-       const val TEST_ESPRESSO_VERSION = "3.3.0"
+       //const val TEST_JUNIT_VERSION = "1.1.2"
+      // const val TEST_ESPRESSO_VERSION = "3.3.0"
        //Activity
-       const val ACTIVITY_KTX_VERSION = "1.10.1"
+       //const val ACTIVITY_KTX_VERSION = "1.10.1"
        //Fragment
-       const val FRAGMENT_KTX_VERSION = "1.8.8"
+       //const val FRAGMENT_KTX_VERSION = "1.8.8"
        //分包 MultiDex
-       const val MULTIDEX_VERSION = "2.0.1"
+       //const val MULTIDEX_VERSION = "2.0.1"
 
        //Android-------------------------------------------------
        //单元测试
-       const val JUNIT_VERSION = "4.13"
+       //const val JUNIT_VERSION = "4.13"
        //Material样式
-       const val MATERIAL_VERSION = "1.12.0"
+       //const val MATERIAL_VERSION = "1.12.0"
        //智能排版
-       const val FLEX_LAYOUT_VERSION = "3.0.0"
+       //const val FLEX_LAYOUT_VERSION = "3.0.0"
 
 
        //kotlin相关-----------------------------------------------
-       const val KOTLIN_VERSION = "2.0.21"
+       //const val KOTLIN_VERSION = "2.0.21"
        //协程
-       const val COROUTINES_VERSION = "1.7.0"
+       //const val COROUTINES_VERSION = "1.7.0"
 
        //JetPack--------------------------------------------------
        //Lifecycle相关（ViewModel & LiveData & Lifecycle）
-       const val LIFECYCLE = "2.5.1"
-       const val LIFECYCLE_EXTENSION = "2.2.0"
+//       const val LIFECYCLE = "2.5.1"
+       //const val LIFECYCLE_EXTENSION = "2.2.0"
        //DI框架-Hilt
-       const val HILT = "2.57.1"
-       const val HILT_ANDROIDX = "1.3.0"
+       //const val HILT = "2.57.1"
+       //const val HILT_ANDROIDX = "1.3.0"
        //数据库Room
-       const val ROOM_VERSION = "2.8.2"
+       //const val ROOM_VERSION = "2.8.2"
        //camerax
-       const val CAMERAX_VERSION = "1.0.2"
+       //const val CAMERAX_VERSION = "1.0.2"
        //cameraView
-       const val CAMERA_VIEW_VERSION = "1.0.0-alpha26"
+       //const val CAMERA_VIEW_VERSION = "1.0.0-alpha26"
        //zxing
-       const val ZXING_VERSION = "3.4.1"
+       //const val ZXING_VERSION = "3.4.1"
 
        //GitHub相关--------------------------------------------------
-       const val GO_ROUTER = "2.5.1"                          // GoRoute路由
-       const val GO_ROUTER_COMPILER = "2.5.1"                  // 阿里路由 APT
-       const val OKHTTP = "4.11.0"                         // OkHttp
+       //const val GO_ROUTER = "2.5.1"                          // GoRoute路由
+//       const val GO_ROUTER_COMPILER = "2.5.1"                  // 阿里路由 APT
+       //const val OKHTTP = "4.11.0"                         // OkHttp
        const val OKHTTP_INTERCEPTOR_LOGGING = "4.11.0"       // OkHttp 请求Log拦截器
        const val RETROFIT = "2.9.0"                        // Retrofit
        const val RETROFIT_FIT_CONVERTER_GSON = "2.9.0"           // Retrofit Gson 转换器
@@ -93,8 +91,6 @@ object Dependencies {
        const val LEAKCANARY_VERSION = "2.14"               // 内存泄漏相关
        const val BUG_LY = "4.1.9.3"                   // bugly异常上报
        const val ANDROID_AOP = "2.7.3"                       //aop相关
-       const val ANDROID_KSP_VERSION = "2.2.20-2.0.4"     //2.0.21-1.0.25    //ksp版本  https://github.com/google/ksp/releases?page=1
-
        const val EXOPLAYER = "1.8.0"                //视频播放器版本         //rtmp版本
        const val LOTTIE =  "2.8.0"                  //lottie 动画版本
        const val SLF4J = "1.7.21"                    //slf4j版本
@@ -118,20 +114,7 @@ object Dependencies {
     object Androidx {
         //单元测试
         const val ANDROID_JUNIT_RUNNER = "androidx.test.runner.AndroidJUnitRunner"
-        const val TEST_EXT_JUNIT = "androidx.test.ext:junit:${Version.TEST_JUNIT_VERSION}"
-        const val TEST_ESPRESSO = "androidx.test.espresso:espresso-core:${Version.TEST_ESPRESSO_VERSION}"
-        //AppCompat
-        const val APP_COMPAT = "androidx.appcompat:appcompat:${Version.APPCOMPAT_VERSION}"
-        //CoreKts
-        const val CORE_KTS = "androidx.core:core-ktx:${Version.CORE_KTX_VERSION}"
-        //约束布局
-        const val CONSTRAINTLAYOUT = "androidx.constraintlayout:constraintlayout:${Version.CONSTRAINTLAYOUT_VERSION}"
-        //ActivityKtx
-        const val ACTIVITY_KTX = "androidx.activity:activity-ktx:${Version.ACTIVITY_KTX_VERSION}"
-        //FragmentKtx
-        const val FRAGMENT_KTX = "androidx.fragment:fragment-ktx:${Version.FRAGMENT_KTX_VERSION}"
-        //MultiDex
-        const val MULTIDEX = "androidx.multidex:multidex:${Version.MULTIDEX_VERSION}"
+
         //windows
         const val WINDOWX = "androidx.window:window:${Version.windowx}"
         //RecycleView
@@ -149,10 +132,7 @@ object Dependencies {
      * @since 14/12/21 15:48 PM
      */
     object Android {
-        const val JUNIT = "junit:junit:${Version.JUNIT_VERSION}"
-        const val MATERIAL = "com.google.android.material:material:${Version.MATERIAL_VERSION}"
-        //flexLayout
-        const val FLEXLAYOUT = "com.google.android.flexbox:flexbox:${Version.FLEX_LAYOUT_VERSION}"
+
         //exoPlayer
         const val EXOPLAYER = "androidx.media3:media3-exoplayer:${Version.EXOPLAYER}"
       //  const val EXOPLAYER_CORE = "com.google.android.exoplayer:exoplayer-core:${Version.EXOPLAYER}"
@@ -179,11 +159,6 @@ object Dependencies {
      * @since 14/12/21 15:57 PM
      */
     object Kotlin {
-        const val KOTLIN = "org.jetbrains.kotlin:kotlin-stdlib:${Version.KOTLIN_VERSION}"
-        const val COROUTINES_CORE =
-            "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Version.COROUTINES_VERSION}"
-        const val COROUTINES_ANDROID =
-            "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Version.COROUTINES_VERSION}"
 
         const val kotlinx_serialization_json =
             "org.jetbrains.kotlinx:kotlinx-serialization-json:${Version.kotlinxSerializationJson}"
@@ -195,25 +170,6 @@ object Dependencies {
      * @since 14/12/21 15:54 PM
      */
     object JetPack {
-        const val VIEWMODEL = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Version.LIFECYCLE}"
-        const val VIEWMODEL_SAVEDSTATE =
-            "androidx.lifecycle:lifecycle-viewmodel-savedstate:${Version.LIFECYCLE}"
-        const val LIVEDATA = "androidx.lifecycle:lifecycle-livedata-ktx:${Version.LIFECYCLE}"
-        const val LIFECYCLE = "androidx.lifecycle:lifecycle-runtime-ktx:${Version.LIFECYCLE}"
-        const val LIFECYCLE_EXTENSIONS = "androidx.lifecycle:lifecycle-extensions:${Version.LIFECYCLE_EXTENSION}"
-        const val CAMERA_CORE = "androidx.camera:camera-core:${Version.CAMERAX_VERSION}"
-        const val CAMERA2 = "androidx.camera:camera-camera2:${Version.CAMERAX_VERSION}"
-        const val CAMERA_LIFECYCLE = "androidx.camera:camera-lifecycle:${Version.CAMERAX_VERSION}"
-        const val CAMERA_VIEW = "androidx.camera:camera-view:${Version.CAMERA_VIEW_VERSION}"
-        const val ZXNG = "com.google.zxing:core:${Version.ZXING_VERSION}"
-        const val LIFECYCLE_COMPILER_APT =
-            "androidx.lifecycle:lifecycle-compiler:${Version.LIFECYCLE}"
-        const val HILT_CORE = "com.google.dagger:hilt-android:${Version.HILT}"
-        const val HILT_APT = "com.google.dagger:hilt-compiler:${Version.HILT}"
-        const val HILT_ANDROIDX = "androidx.hilt:hilt-compiler:${Version.HILT_ANDROIDX}"
-        const val ROOM_RUNTIME = "androidx.room:room-runtime:${Version.ROOM_VERSION}"
-        const val ROOM_COMPILER = "androidx.room:room-compiler:${Version.ROOM_VERSION}"
-        const val ROOM_KTX = "androidx.room:room-ktx:${Version.ROOM_VERSION}"
         const val WORK_MANAGER = "androidx.work:work-runtime-ktx:${Version.WorkManagerVersion}"
     }
 
@@ -224,15 +180,10 @@ object Dependencies {
      * @since 14/12/21 19:07 PM
      */
     object GitHub {
-        //GoRouter https://github.com/wyjsonGo/GoRouter
-        const val GO_ROUTER = "com.github.wyjsonGo.GoRouter:GoRouter-Api:${Version.GO_ROUTER}"
-        const val GO_ROUTER_COMPILER = "com.github.wyjsonGo.GoRouter:GoRouter-Compiler:${Version.GO_ROUTER_COMPILER}"
         //google https://github.com/google/auto
         const val AUTO_SERVICE = "com.google.auto.service:auto-service:${Version.AUTO_SERVICE}"
         const val AUTO_SERVICE_ANNOTATIONS =
             "com.google.auto.service:auto-service-annotations:${Version.AUTO_SERVICE}"
-        //okhttp https://github.com/square/okhttp
-        const val OKHTTP = "com.squareup.okhttp3:okhttp:${Version.OKHTTP}"
         //retrofit https://github.com/square/retrofit
         const val RETROFIT = "com.squareup.retrofit2:retrofit:${Version.RETROFIT}"
 

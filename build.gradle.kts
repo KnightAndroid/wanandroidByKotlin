@@ -1,7 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
-    id("com.google.devtools.ksp") version com.knight.wanandroid.buildsrc.Dependencies.Version.ANDROID_KSP_VERSION
-    id("org.jetbrains.kotlin.plugin.serialization") version com.knight.wanandroid.buildsrc.Dependencies.Version.KOTLIN_SERIALIZATION
+    alias(libs.plugins.ksp) apply false //声明这个插件可以被其他 module 使用，但当前 module 不应用这个插件。
+    alias(libs.plugins.kotlin.serialization) apply false
 }
 
 
@@ -23,10 +23,10 @@ buildscript {
         gradlePluginPortal()
     }
     dependencies {
-        classpath(com.knight.wanandroid.buildsrc.ProjectPluginDencies.ANDROID_TOOLS_PLUGIN)
-        classpath(com.knight.wanandroid.buildsrc.ProjectPluginDencies.KOTLIN_PLUGIN)
-        classpath(com.knight.wanandroid.buildsrc.ProjectPluginDencies.GO_ROUTER_REGISTER)
-        classpath(com.knight.wanandroid.buildsrc.ProjectPluginDencies.HILT_PLUGIN)
+        classpath(libs.android.gradlePlugin)
+        classpath(libs.kotlin.gradlePlugin)
+        classpath(libs.gorouter.gradlePlugin)
+        classpath(libs.hilt.android.gradlePlugin)
         classpath(com.knight.wanandroid.buildsrc.ProjectPluginDencies.ANDROID_AOP)
     }
 }

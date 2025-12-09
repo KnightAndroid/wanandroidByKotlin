@@ -73,8 +73,8 @@ kapt {
 }
 
 dependencies {
-    testImplementation Dependencies.Android.JUNIT
-    androidTestImplementation Dependencies.Androidx.TEST_EXT_JUNIT
-    androidTestImplementation Dependencies.Androidx.TEST_ESPRESSO
+    testImplementation (libs.junit4)
+    androidTestImplementation (libs.androidx.test.ext)
+    androidTestImplementation (libs.androidx.test.esp)
 }
 

@@ -15,14 +15,15 @@ android {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation project(path: ':nowinandroid:core:library_base')
-    implementation Dependencies.JetPack.HILT_CORE
-    kapt Dependencies.JetPack.HILT_APT
+    implementation (libs.hilt.android)
+    kapt (libs.hilt.compiler)
     //kapt Dependencies.JetPack.HILT_ANDROIDX
     kapt Dependencies.GitHub.AUTO_SERVICE_ANNOTATIONS
 
-    implementation Dependencies.JetPack.CAMERA_CORE
-    implementation Dependencies.JetPack.CAMERA2
-    implementation Dependencies.JetPack.CAMERA_LIFECYCLE
-    implementation Dependencies.JetPack.CAMERA_VIEW
-    implementation Dependencies.JetPack.ZXNG
+    implementation (libs.camera.core)
+    implementation (libs.camera.camera2)
+    implementation (libs.camera.lifecycle)
+    implementation (libs.camera.view)
+    implementation (libs.zxing.core)
+
 }

@@ -9,14 +9,14 @@ android {
     namespace = "com.knight.kotlin.library_permiss"
 }
 dependencies {
-    implementation Dependencies.JetPack.HILT_CORE
+    implementation (libs.hilt.android)
     //依赖Util
     implementation project(":nowinandroid:core:library_util")
     //implementation project(path: ':library_base')
     implementation project(path: ':nowinandroid:core:library_base')
     implementation project(path: ':core:library_devicecompat')
-    kapt Dependencies.JetPack.HILT_APT
+    kapt (libs.hilt.compiler)
     //kapt Dependencies.JetPack.HILT_ANDROIDX
     kapt Dependencies.GitHub.AUTO_SERVICE_ANNOTATIONS
-    kapt Dependencies.GitHub.GO_ROUTER_COMPILER
+    kapt (libs.gorouter.compiler)
 }

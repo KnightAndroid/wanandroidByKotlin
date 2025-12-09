@@ -1,4 +1,3 @@
-import com.knight.wanandroid.buildsrc.Dependencies
 apply from: "${project.rootDir}/base_library.gradle"
 android {
     buildFeatures {
@@ -11,8 +10,8 @@ android {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation project(path: ':nowinandroid:core:library_base')
-    implementation Dependencies.JetPack.HILT_CORE
-    kapt Dependencies.JetPack.HILT_APT
+    implementation (libs.hilt.android)
+    kapt (libs.hilt.compiler)
     //kapt Dependencies.JetPack.HILT_ANDROIDX
 
 }

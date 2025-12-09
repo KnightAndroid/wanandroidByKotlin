@@ -1,8 +1,101 @@
-[versions]
+[versions] #版本
 agp = "8.13.0"
 kotlin = "2.2.20"
 coreKtx = "1.7.0"
+ksp = "2.2.20-2.0.4" #//2.0.21-1.0.25    //ksp版本  https://github.com/google/ksp/releases?page=1
+kotlinxSerializationJson = "1.8.10"
+androidxAppCompat = "1.7.0"
+androidxConstraintlayout = "2.0.1" #约束布局
+androidxTestExt = "1.1.2" #单元测试
+androidxTestEsp = "3.3.0"
+androidxActivity = "1.10.1"
+androidxFragment = "1.8.8"
+androidxMultidex = "2.0.1"
+junit4 = "4.13.2"
+material = "1.12.0"
+flexbox = "3.0.0"
+kotlinStdlib = "2.0.21"
+coroutines = "1.7.0"
+lifecycle = "2.5.1"
+lifecycleExtension = "2.2.0"
+hilt = "2.57.1"
+androidxHilt = "1.3.0"
+room = "2.8.2"
+camerax = "1.0.2"
+cameraView = "1.0.0-alpha26"
+zxing = "3.4.1"
+goRouter = "2.5.1"
+okhttp = "4.11.0"
 
 
-[libraries]
+[libraries] #依赖
+# 核心依赖 CoreKts
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "androidxAppCompat" }
+androidx-constraintlayout = {group = "androidx.constraintlayout",name="constraintlayout",version.ref = "androidxConstraintlayout"}
+androidx-test-ext = { group = "androidx.test.ext", name = "junit", version.ref = "androidxTestExt" }
+androidx-test-esp = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "androidxTestEsp" }
+androidx-activity = { group = "androidx.activity",name = "activity-ktx",version.ref = "androidxActivity"}
+androidx-fragment = { group = "androidx.fragment",name = "fragment-ktx",version.ref = "androidxFragment"}
+androidx-multidex = { group = "androidx.multidex",name = "multidex",version.ref = "androidxMultidex"}
+junit4 = { group = "junit", name = "junit", version.ref = "junit4" }
+material = { group = "com.google.android.material",name = "material",version.ref = "material"}
+flexbox = { group = "com.google.android.flexbox",name = "flexbox",version.ref = "flexbox"}
+kotlin-stdlib = { group = "org.jetbrains.kotlin",name = "kotlin-stdlib",version.ref = "kotlinStdlib"}
+coroutines = { group = "org.jetbrains.kotlinx",name = "kotlinx-coroutines-core",version.ref = "coroutines"}
+android-coroutines = { group = "org.jetbrains.kotlinx",name = "kotlinx-coroutines-android",version.ref = "coroutines"}
+androidx-lifecycle-vm = { group = "androidx.lifecycle",name = "lifecycle-viewmodel-ktx",version.ref = "lifecycle"}
+androidx-vm_savedstate = { group = "androidx.lifecycle",name = "lifecycle-viewmodel-savedstate",version.ref = "lifecycle"}
+androidx-livedata-ktx = { group = "androidx.lifecycle",name = "lifecycle-livedata-ktx",version.ref = "lifecycle"}
+androidx-lifecycle-runtime = { group = "androidx.lifecycle",name = "lifecycle-runtime-ktx",version.ref = "lifecycle"}
+androidx-lifecycle-extension = { group = "androidx.lifecycle",name = "lifecycle-extensions",version.ref = "lifecycleExtension"}
+androidx-lifecycle-compiler = { group = "androidx.lifecycle",name = "lifecycle-compiler",version.ref = "lifecycle"}
+hilt-android = { group = "com.google.dagger",name = "hilt-android",version.ref = "hilt"}
+hilt-compiler = { group = "com.google.dagger",name = "hilt-compiler",version.ref = "hilt"}
+androidx-hilt-compiler = { group = "androidx.hilt",name = "hilt-compiler",version.ref = "androidxHilt"}
+room-runtime = { group = "androidx.room",name = "room-runtime",version.ref = "room"}
+room-compiler = { group = "androidx.room",name = "room-compiler",version.ref = "room"}
+room-ktx = { group = "androidx.room",name = "room-ktx",version.ref = "room"}
+camera-core = { group = "androidx.camera",name = "camera-core",version.ref = "camerax"}
+camera-camera2 = { group = "androidx.camera",name = "camera-camera2",version.ref = "camerax"}
+camera-lifecycle = { group = "androidx.camera",name = "camera-lifecycle",version.ref = "camerax"}
+camera-view = { group = "androidx.camera",name = "camera-view",version.ref = "cameraView"}
+zxing-core = { group = "com.google.zxing",name = "core",version.ref = "zxing"}
+gorouter-api = { group = "com.github.wyjsonGo.GoRouter",name = "GoRouter-Api",version.ref = "goRouter"}  #GoRouter https://github.com/wyjsonGo/GoRouter
+gorouter-compiler = { group = "com.github.wyjsonGo.GoRouter",name = "GoRouter-Compiler",version.ref = "goRouter"}
+okhttp = { group = "com.squareup.okhttp3",name = "okhttp",version.ref = "okhttp"} #https://github.com/square/okhttp
+
+
+
+
+
+
+
+
+android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
+kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
+hilt-android-gradlePlugin = { group = "com.google.dagger",name = "hilt-android-gradle-plugin",version.ref = "hilt"}
+gorouter-gradlePlugin = { group = "com.github.wyjsonGo.GoRouter",name = "GoRouter-Gradle-Plugin",version.ref = "goRouter"}
+
+
+
+
+
+[bundles] #组合
+
+
+
+
+
+
+[plugins] #插件
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinxSerializationJson" } #kotlin Serialization序列化（KOTLIN_GRADLE_PLUGIN_VERSION后续要和这个版本统一）
+
+
+
+
+#传统apply from的方式（也是本文想讲的一种方式）：新建一个 「config.gradle」 文件，然后将项目中所有依赖写在里面，更新只需修改 「config.gradle」 文件内容，作用于所有module。
+#buildSrc 方式：当运行 Gradle 时会检查项目中是否存在一个名为 buildSrc 的目录。然后 Gradle 会自动编译并测试这段代码，并将其放入构建脚本的类路径中, 对于多项目构建，只能有一个 buildSrc 目录，该目录必须位于根项目目录中, buildSrc 是 Gradle 项目根目录下的一个目录。
+#Composing builds 方式：复合构建只是包含其他构建的构建. 在许多方面，复合构建类似于 Gradle 多项目构建，不同之处在于，它包括完整的 builds ，而不是包含单个 projects，总的来说，他有 buildSrc 方式的优点，同时更新不需要重新构建整个项目。
+#versionCatalogs 最新发布的一种方式，发布于nowinAndroid官方项目上,集成方便，有代码提示。
