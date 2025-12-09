@@ -17,7 +17,7 @@ dependencies {
     kapt (libs.room.compiler)
     kapt (libs.hilt.compiler)
     //kapt Dependencies.JetPack.HILT_ANDROIDX
-    kapt Dependencies.GitHub.AUTO_SERVICE_ANNOTATIONS
+    kapt (libs.auto.service.annotations)
     kapt (libs.gorouter.compiler)
     implementation project(path: ':nowinandroid:core:library_base')
 

@@ -67,16 +67,16 @@ object Dependencies {
        //const val GO_ROUTER = "2.5.1"                          // GoRoute路由
 //       const val GO_ROUTER_COMPILER = "2.5.1"                  // 阿里路由 APT
        //const val OKHTTP = "4.11.0"                         // OkHttp
-       const val OKHTTP_INTERCEPTOR_LOGGING = "4.11.0"       // OkHttp 请求Log拦截器
-       const val RETROFIT = "2.9.0"                        // Retrofit
-       const val RETROFIT_FIT_CONVERTER_GSON = "2.9.0"           // Retrofit Gson 转换器
-       const val GSON = "2.8.7"                            // Gson
-       const val MMKV = "2.2.3"                           // 腾讯 MMKV 替代SP
-       const val AUTO_SERVICE = "1.0"                       // 自动生成SPI暴露服务文件
-       const val EVENT_BUS = "3.3.1"                        // 事件总线
-       const val AUTO_SIZE = "v1.2.1"                        // 屏幕适配
-       const val BOTTOM_NAVIGATION = "2.2.0"                // 底部导航栏
-       const val MAGIC_INDICATOR = "1.7.0"                  // 指示器
+      // const val OKHTTP_INTERCEPTOR_LOGGING = "4.11.0"       // OkHttp 请求Log拦截器
+//       const val RETROFIT = "2.9.0"                        // Retrofit
+//       const val RETROFIT_FIT_CONVERTER_GSON = "2.9.0"           // Retrofit Gson 转换器
+ //      const val GSON = "2.8.7"                            // Gson
+//       const val MMKV = "2.2.3"                           // 腾讯 MMKV 替代SP
+//       const val AUTO_SERVICE = "1.0"                       // 自动生成SPI暴露服务文件
+//       const val EVENT_BUS = "3.3.1"                        // 事件总线
+//       const val AUTO_SIZE = "v1.2.1"                        // 屏幕适配
+//       const val BOTTOM_NAVIGATION = "2.2.0"                // 底部导航栏
+//       const val MAGIC_INDICATOR = "1.7.0"                  // 指示器
        const val AGENT = "v5.0.0-alpha.1-androidx"         // Android WebView
        const val SKETCH = "2.7.1"                          // 预览大图
        const val LOAD_SIR = "1.3.8"                         // 全局视图加载
@@ -180,30 +180,7 @@ object Dependencies {
      * @since 14/12/21 19:07 PM
      */
     object GitHub {
-        //google https://github.com/google/auto
-        const val AUTO_SERVICE = "com.google.auto.service:auto-service:${Version.AUTO_SERVICE}"
-        const val AUTO_SERVICE_ANNOTATIONS =
-            "com.google.auto.service:auto-service-annotations:${Version.AUTO_SERVICE}"
-        //retrofit https://github.com/square/retrofit
-        const val RETROFIT = "com.squareup.retrofit2:retrofit:${Version.RETROFIT}"
 
-        const val RETROFIT_CONVERTER_GSON =
-            "com.squareup.retrofit2:converter-gson:${Version.RETROFIT_FIT_CONVERTER_GSON}"
-        //Gson https://github.com/google/gson
-        const val GSON = "com.google.code.gson:gson:${Version.GSON}"
-        const val OKHTTP_INTERCEPTOR_LOGGING = "com.squareup.okhttp3:logging-interceptor:${Version.OKHTTP_INTERCEPTOR_LOGGING}"
-        //EventBus https://github.com/greenrobot/EventBus
-        const val EVENTBUS = "org.greenrobot:eventbus:${Version.EVENT_BUS}"
-        const val EVENTBUS_APT = "org.greenrobot:eventbus-annotation-processor:${Version.EVENT_BUS}"
-        //屏幕适配 https://github.com/JessYanCoding/AndroidAutoSize
-        const val AUTO_SIZE = "com.github.JessYanCoding:AndroidAutoSize:${Version.AUTO_SIZE}"
-        //底部导航栏 https://github.com/CListery/BottomNavigationEx
-        const val BOTTOM_NAVIGATE = "io.github.clistery:bottomnavigationex-ex:${Version.BOTTOM_NAVIGATION}"
-        const val BOTTOM_NAVIGATE_X = "io.github.clistery:bottomnavigationex-110x:${Version.BOTTOM_NAVIGATION}"
-        //MMKV https://github.com/Tencent/MMKV
-        const val MMKV = "com.tencent:mmkv:${Version.MMKV}"
-        //滑动切换 https://github.com/hackware1993/MagicIndicator
-        const val MAGIC_INDICATOR = "com.github.hackware1993:MagicIndicator:${Version.MAGIC_INDICATOR}"
         //网页加载库 https://github.com/Justson/AgentWeb
         const val AGENT_WEB = "com.github.Justson.AgentWeb:agentweb-core:${Version.AGENT}"
         //预览大图插件 https://github.com/panpf/sketch

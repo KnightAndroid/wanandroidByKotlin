@@ -22,9 +22,10 @@ dependencies {
     //kapt Dependencies.JetPack.HILT_ANDROIDX
     api (libs.gorouter.api)
     kapt (libs.gorouter.compiler)
-    api Dependencies.GitHub.GSON
-    api Dependencies.GitHub.AUTO_SERVICE
-    kapt Dependencies.GitHub.AUTO_SERVICE_ANNOTATIONS
+
+    api (libs.gson)
+    api (libs.auto.service)
+    kapt (libs.auto.service.annotations)
     //必须项
     api Dependencies.GitHub.ANDROID_AOP
     api Dependencies.GitHub.ANDROID_EXTRA_AOP

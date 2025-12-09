@@ -22,7 +22,7 @@ dependencies {
     api Dependencies.OtherUtils.BAIDUSEARCH
     api Dependencies.OtherUtils.BAIDUUTIL
     api  Dependencies.JetPack.WORK_MANAGER
-    api Dependencies.GitHub.MMKV
+    api (libs.mmkv)
 
 
 }

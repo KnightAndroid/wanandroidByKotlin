@@ -41,9 +41,9 @@ dependencies {
 
     kapt (libs.androidx.hilt.compiler)
     kapt (libs.androidx.lifecycle.compiler)
-    api Dependencies.GitHub.EVENTBUS
-    kapt Dependencies.GitHub.EVENTBUS_APT
-    api Dependencies.GitHub.AUTO_SIZE
+    api (libs.eventbus)
+    kapt (libs.eventbus.annotation.processor)
+    api (libs.auto.size)
     debugApi Dependencies.GitHub.LEAK_CANARY
     api Dependencies.GitHub.LOAD_SIR
     api Dependencies.Kotlin.kotlinx_serialization_json

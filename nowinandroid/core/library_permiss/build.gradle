@@ -17,6 +17,6 @@ dependencies {
     implementation project(path: ':core:library_devicecompat')
     kapt (libs.hilt.compiler)
     //kapt Dependencies.JetPack.HILT_ANDROIDX
-    kapt Dependencies.GitHub.AUTO_SERVICE_ANNOTATIONS
+    kapt (libs.auto.service.annotations)
     kapt (libs.gorouter.compiler)
 }

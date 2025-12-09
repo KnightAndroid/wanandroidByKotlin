@@ -145,8 +145,8 @@ dependencies {
 
     implementation (libs.hilt.android)
     kapt (libs.gorouter.compiler)
-    kapt Dependencies.GitHub.EVENTBUS_APT
-    kapt Dependencies.GitHub.AUTO_SERVICE_ANNOTATIONS
+    kapt (libs.eventbus.annotation.processor)
+    kapt (libs.auto.service.annotations)
     kapt (libs.hilt.compiler)
     //kapt Dependencies.JetPack.HILT_ANDROIDX
     kapt (libs.androidx.lifecycle.compiler)

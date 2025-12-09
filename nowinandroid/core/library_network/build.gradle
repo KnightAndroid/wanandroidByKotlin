@@ -11,9 +11,9 @@ dependencies {
     //implementation project(path: ':library_base')
     implementation project(path: ':nowinandroid:core:library_base')
     api (libs.okhttp)
-    api Dependencies.GitHub.OKHTTP_INTERCEPTOR_LOGGING
-    api Dependencies.GitHub.RETROFIT
-    api Dependencies.GitHub.RETROFIT_CONVERTER_GSON
+    api (libs.logging.interceptor)
+    api (libs.retrofit)
+    api (libs.retrofit.converter.gson)
     implementation (libs.hilt.android)
 
     kapt (libs.hilt.compiler)

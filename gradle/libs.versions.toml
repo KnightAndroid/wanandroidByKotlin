@@ -26,6 +26,15 @@ cameraView = "1.0.0-alpha26"
 zxing = "3.4.1"
 goRouter = "2.5.1"
 okhttp = "4.11.0"
+logging-interceptor = "4.11.0"
+retrofit = "2.9.0"
+retrofitConverterGson = "2.9.0"
+gson = "2.8.7"
+mmkv = "2.2.3"
+autoservice = "1.0" # 自动生成SPI暴露服务文件
+eventBus = "3.3.1" #事件总线
+autoSize = "v1.2.1" # 屏幕适配
+magicindicator = "1.7.0"
 
 
 [libraries] #依赖
@@ -64,10 +73,17 @@ zxing-core = { group = "com.google.zxing",name = "core",version.ref = "zxing"}
 gorouter-api = { group = "com.github.wyjsonGo.GoRouter",name = "GoRouter-Api",version.ref = "goRouter"}  #GoRouter https://github.com/wyjsonGo/GoRouter
 gorouter-compiler = { group = "com.github.wyjsonGo.GoRouter",name = "GoRouter-Compiler",version.ref = "goRouter"}
 okhttp = { group = "com.squareup.okhttp3",name = "okhttp",version.ref = "okhttp"} #https://github.com/square/okhttp
-
-
-
-
+logging-interceptor = {group = "com.squareup.okhttp3",name = "logging-interceptor",version.ref = "logging-interceptor"}
+retrofit = { group = "com.squareup.retrofit2",name = "retrofit",version.ref = "retrofit"} # https://github.com/square/retrofit
+retrofit-converter-gson = { group = "com.squareup.retrofit2",name = "converter-gson",version.ref = "retrofitConverterGson"}
+gson = {group = "com.google.code.gson",name = "gson",version.ref = "gson"} #https://github.com/google/gson
+mmkv = { group = "com.tencent",name = "mmkv",version.ref = "mmkv"} #https://github.com/Tencent/MMKV
+auto-service = { group = "com.google.auto.service",name = "auto-service",version.ref = "autoservice"} #https://github.com/google/auto
+auto-service-annotations = { group = "com.google.auto.service",name = "auto-service-annotations",version.ref = "autoservice"}
+eventbus = { group = "org.greenrobot",name = "eventbus",version.ref = "eventBus"} #https://github.com/greenrobot/EventBus
+eventbus-annotation-processor = { group = "org.greenrobot",name = "eventbus-annotation-processor",version.ref = "eventBus"}
+auto-size = { group = "com.github.JessYanCoding",name = "AndroidAutoSize",version.ref = "autoSize"} #https://github.com/JessYanCoding/AndroidAutoSize
+magicindictor = { group = "com.github.hackware1993",name = "MagicIndicator",version.ref = "magicindicator"} # https://github.com/hackware1993/MagicIndicator
 
 
 

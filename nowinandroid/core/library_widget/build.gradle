@@ -23,7 +23,7 @@ dependencies {
     api Dependencies.GitHub.SMART_HEADER
     api Dependencies.GitHub.SMART_FOOTER
     api Dependencies.GitHub.SMART_HEADER_TWO_LEVEL
-    api Dependencies.GitHub.MAGIC_INDICATOR
+    api (libs.magicindictor)
 
     api (libs.flexbox)
     implementation Dependencies.GitHub.SHIMMER_LAYOUT
