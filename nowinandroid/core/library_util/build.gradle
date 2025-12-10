@@ -1,7 +1,7 @@
 //*****library_util 配置文件********************
 //apply from : '../base_library.gradle'
 apply from: "${project.rootDir}/base_library.gradle"
-import com.knight.wanandroid.buildsrc.*
+
 android {
     buildFeatures {
         viewBinding = true
@@ -16,18 +16,18 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation project(":nowinandroid:core:library_common")
     implementation (libs.hilt.android)
-    implementation Dependencies.GitHub.GLIDE
-    implementation Dependencies.Androidx.RECYCLEVIEW
+    implementation (libs.glide)
+    implementation (libs.recycleview)
     kapt (libs.hilt.compiler)
     //kapt Dependencies.JetPack.HILT_ANDROIDX
 
     kapt (libs.auto.service.annotations)
     kapt (libs.gorouter.compiler)
-    implementation Dependencies.OtherUtils.Exoplayer
-    implementation Dependencies.OtherUtils.ExoplayerDataSource
-    api Dependencies.OtherUtils.ExoPlayerCommon
-    implementation Dependencies.OtherUtils.WechatSdk
-    implementation Dependencies.OtherUtils.BUGLY
-    implementation Dependencies.Androidx.ViewPager2
+    implementation (libs.exoplayer)
+    implementation (libs.media3.datasource)
+    api (libs.media3.common.ktx)
+    implementation (libs.wechat.sdk.android)
+    implementation (libs.bugly)
+    implementation (libs.viewpager2)
 
 }

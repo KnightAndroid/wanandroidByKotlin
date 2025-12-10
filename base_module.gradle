@@ -1,7 +1,6 @@
 //********* Base module 模块的公共脚本配置 **********
-import com.knight.wanandroid.buildsrc.*
 
-if (ProjectBuildDencies.APP_MODE) {
+if (project.properties["APP_MODE"].toBoolean()) {
     apply plugin: 'com.android.application'
 } else {
     apply plugin: 'com.android.library'
@@ -14,16 +13,16 @@ apply plugin: 'kotlin-parcelize'
 apply plugin: 'kotlinx-serialization'
 
 android {
-    compileSdkVersion ProjectBuildDencies.COMPILE_SDK_VERSION
-    buildToolsVersion ProjectBuildDencies.BUILD_TOOLS_VERSION
+    compileSdkVersion libs.versions.compileSdk.get().toInteger()
+    buildToolsVersion libs.versions.buildTool.get()
 
     defaultConfig {
-        minSdkVersion ProjectBuildDencies.MIN_SDK_VERSION
-        targetSdkVersion ProjectBuildDencies.TARGET_SDK_VERSION
-        versionCode ProjectBuildDencies.VERSION_CODE
-        versionName ProjectBuildDencies.VERSION_NAME
+        minSdkVersion libs.versions.minSdk.get().toInteger()
+        targetSdkVersion libs.versions.targetSdk.get().toInteger()
+        versionCode libs.versions.versionCode.get().toInteger()
+        versionName libs.versions.versionName.get()
       //  proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        testInstrumentationRunner Dependencies.Androidx.ANDROID_JUNIT_RUNNER
+        testInstrumentationRunner libs.versions.androidJUnitRunner.get()
         ndk {
             // 设置支持的SO库架构
             //abiFilters 'armeabi', 'x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a'
@@ -32,7 +31,7 @@ android {
     }
 
     //解决 单moduule 运行 java.lang.RuntimeException: ARouter::Compiler >>> No module name
-    if (ProjectBuildDencies.APP_MODE) {
+    if (project.properties["APP_MODE"].toBoolean()) {
         hilt {
             enableExperimentalClasspathAggregation = true // 此行不加会遇到下面的新问题
             enableAggregatingTask = false
@@ -54,7 +53,7 @@ android {
 
     sourceSets {
         main {
-            if(ProjectBuildDencies.APP_MODE){
+            if(project.properties["APP_MODE"].toBoolean()){
                 manifest.srcFile 'src/main/manifest/AndroidManifest.xml'
             } else {
                 manifest.srcFile 'src/main/AndroidManifest.xml'
@@ -80,15 +79,15 @@ android {
 
     buildTypes {
         debug {
-            buildConfigField "String","TYPE","\"${ProjectBuildDencies.Variants.DEVELOP}\""
+            buildConfigField "String","TYPE","\"${project.properties["APP_ENV_DEVELOP"]}\""
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         release {
-            buildConfigField "String","TYPE","\"${ProjectBuildDencies.Variants.RELEASE}\""
+            buildConfigField "String","TYPE","\"${project.properties["APP_ENV_RELEASE"]}\""
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            if (ProjectBuildDencies.APP_MODE) {
+            if (project.properties["APP_MODE"].toBoolean()) {
                 proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             } else {
                 consumerProguardFiles 'proguard-rules.pro'
@@ -97,10 +96,10 @@ android {
 
         }
         master {
-            buildConfigField "String","TYPE","\"${ProjectBuildDencies.Variants.MASTER}\""
+            buildConfigField "String","TYPE","\"${project.properties["APP_ENV_MASTER"]}\""
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            if (ProjectBuildDencies.APP_MODE) {
+            if (project.properties["APP_MODE"].toBoolean()) {
                 proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             } else {
                 consumerProguardFiles 'proguard-rules.pro'
@@ -118,10 +117,19 @@ android {
 
 }
 
+//kapt {
+//    arguments {
+//
+//        arg("eventBusIndex", "${ProjectBuildDencies.APPLICATION_ID}.eventbus.index.${project.name}EventIndex")
+//        arg("GOROUTER_MODULE_NAME", project.name)
+//    }
+//}
+
 kapt {
     arguments {
+        def appId = project.properties["APPLICATION_ID"]
 
-        arg("eventBusIndex", "${ProjectBuildDencies.APPLICATION_ID}.eventbus.index.${project.name}EventIndex")
+        arg("eventBusIndex", "${appId}.eventbus.index.${project.name}EventIndex")
         arg("GOROUTER_MODULE_NAME", project.name)
     }
 }

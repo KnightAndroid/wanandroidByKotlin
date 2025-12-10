@@ -1,5 +1,5 @@
 //library_base 配置文件
-import com.knight.wanandroid.buildsrc.*
+
 apply from: "${project.rootDir}/base_library.gradle"
 apply plugin: 'dagger.hilt.android.plugin'
 android {
@@ -27,7 +27,7 @@ dependencies {
     api (libs.auto.service)
     kapt (libs.auto.service.annotations)
     //必须项
-    api Dependencies.GitHub.ANDROID_AOP
-    api Dependencies.GitHub.ANDROID_EXTRA_AOP
+    api (libs.android.aop.core)
+    api (libs.android.aop.extra)
     //api Dependencies.GitHub.ANDROID_AOP_ANNOTATION
 }

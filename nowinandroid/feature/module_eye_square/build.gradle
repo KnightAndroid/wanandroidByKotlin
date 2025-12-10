@@ -8,5 +8,5 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(":nowinandroid:core:library_video")
     implementation project(":nowinandroid:core:library_share")
-    implementation com.knight.wanandroid.buildsrc.Dependencies.GitHub.BANNER
+    implementation (libs.banner)
 }

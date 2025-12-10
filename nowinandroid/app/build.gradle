@@ -1,5 +1,5 @@
 //App壳配置文件
-import com.knight.wanandroid.buildsrc.*
+
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'com.wyjson.gorouter'
@@ -12,15 +12,15 @@ apply plugin: 'android.aop'//最好放在最后一行
 
 android {
     namespace = "com.knight.kotlin.wanandroid"
-    compileSdk ProjectBuildDencies.COMPILE_SDK_VERSION
-    buildToolsVersion = ProjectBuildDencies.BUILD_TOOLS_VERSION
+    compileSdk libs.versions.compileSdk.get().toInteger()
+    buildToolsVersion = libs.versions.buildTool.get()
 
     defaultConfig {
-        applicationId ProjectBuildDencies.APPLICATION_ID
-        minSdkVersion ProjectBuildDencies.MIN_SDK_VERSION
-        targetSdkVersion ProjectBuildDencies.TARGET_SDK_VERSION
-        versionCode ProjectBuildDencies.VERSION_CODE
-        versionName ProjectBuildDencies.VERSION_NAME
+        applicationId project.properties["APPLICATION_ID"]
+        minSdkVersion libs.versions.minSdk.get().toInteger()
+        targetSdkVersion libs.versions.targetSdk.get().toInteger()
+        versionCode libs.versions.versionCode.get().toInteger()
+        versionName libs.versions.versionName.get()
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -96,9 +96,9 @@ android {
     android.applicationVariants.all { variant ->
         variant.outputs.all { output ->
             if (outputFileName != null && outputFileName.endsWith('.apk')) {
-                outputFileName = "${ProjectBuildDencies.APPLICATION_ID}" +
-                        "_${ProjectBuildDencies.VERSION_CODE}" +
-                        "(${ProjectBuildDencies.VERSION_NAME})" +
+                outputFileName = "${APPLICATION_ID}" +
+                        "_${libs.versions.versionCode.get().toInteger()}" +
+                        "(${libs.versions.versionName.get()})" +
                         "_${variant.buildType.name}" +
                         ".apk"
             }

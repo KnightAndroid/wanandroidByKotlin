@@ -1,5 +1,5 @@
 //library_base 配置文件
-import com.knight.wanandroid.buildsrc.*
+
 apply from: "${project.rootDir}/base_library.gradle"
 apply plugin: 'dagger.hilt.android.plugin'
 android {
@@ -17,16 +17,16 @@ dependencies {
     //kapt Dependencies.JetPack.HILT_ANDROIDX
     implementation project(":nowinandroid:core:library_util")
     implementation project(":nowinandroid:core:library_base")
-    api Dependencies.GitHub.SWIPE_RECYCLERVIEW
-    api Dependencies.GitHub.BASE_ADAPTER_HELPER
-    api Dependencies.GitHub.SMART_KERNEL
-    api Dependencies.GitHub.SMART_HEADER
-    api Dependencies.GitHub.SMART_FOOTER
-    api Dependencies.GitHub.SMART_HEADER_TWO_LEVEL
+    api (libs.swipe.recycleview)
+    api (libs.base.adapter)
+    api (libs.refresh.layout.kernel)
+    api (libs.refresh.header.classics)
+    api (libs.refresh.footer.classics)
+    api (libs.refresh.header.two.level)
     api (libs.magicindictor)
 
     api (libs.flexbox)
-    implementation Dependencies.GitHub.SHIMMER_LAYOUT
+    implementation (libs.shimmer.layout)
     //依赖dataBase 数据库 因本库需要用到数据库里面的实体CityBean
     implementation project(":nowinandroid:core:library_database")
 

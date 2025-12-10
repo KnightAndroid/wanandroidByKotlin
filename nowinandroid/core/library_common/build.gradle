@@ -1,5 +1,5 @@
 //library-network配置文件
-import com.knight.wanandroid.buildsrc.*
+
 //apply from:'../base_library.gradle'
 apply from: "${project.rootDir}/base_library.gradle"
 android {
@@ -17,11 +17,11 @@ dependencies {
     //kapt Dependencies.JetPack.HILT_ANDROIDX
 
     //百度地图
-    api Dependencies.OtherUtils.BAIDULOCATION
-    api Dependencies.OtherUtils.BAIDUNAVI
-    api Dependencies.OtherUtils.BAIDUSEARCH
-    api Dependencies.OtherUtils.BAIDUUTIL
-    api  Dependencies.JetPack.WORK_MANAGER
+    api (libs.baidu.map.location)
+    api (libs.baidu.map.allnavi)
+    api (libs.baidu.map.search)
+    api (libs.baidu.map.util)
+    api  (libs.work.manager)
     api (libs.mmkv)
 
 

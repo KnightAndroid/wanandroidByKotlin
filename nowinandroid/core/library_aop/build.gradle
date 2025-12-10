@@ -1,5 +1,5 @@
 //library-aop配置文件
-import com.knight.wanandroid.buildsrc.*
+
 //apply from:'../base_library.gradle'
 apply from: "${project.rootDir}/base_library.gradle"
 apply plugin : 'com.google.devtools.ksp'
@@ -15,5 +15,5 @@ dependencies {
     kapt (libs.hilt.compiler)
     //kapt Dependencies.JetPack.HILT_ANDROIDX
     //非必须项 👇，如果你想自定义切面需要用到，⚠️支持Java和Kotlin代码写的切面
-    ksp Dependencies.GitHub.ANDROID_KSP
+    ksp (libs.android.aop.apt)
 }

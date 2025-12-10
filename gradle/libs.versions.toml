@@ -1,9 +1,19 @@
 [versions] #版本
+compileSdk = "36"
+buildTool = "36.0.0"
+minSdk = "23"
+targetSdk = "36"
+
+
+#app 版本号
+versionCode = "15"
+versionName = "2.2.4"
+
 agp = "8.13.0"
 kotlin = "2.2.20"
 coreKtx = "1.7.0"
 ksp = "2.2.20-2.0.4" #//2.0.21-1.0.25    //ksp版本  https://github.com/google/ksp/releases?page=1
-kotlinxSerializationJson = "1.8.10"
+kotlinxPluginSerialization = "1.8.10"
 androidxAppCompat = "1.7.0"
 androidxConstraintlayout = "2.0.1" #约束布局
 androidxTestExt = "1.1.2" #单元测试
@@ -35,6 +45,42 @@ autoservice = "1.0" # 自动生成SPI暴露服务文件
 eventBus = "3.3.1" #事件总线
 autoSize = "v1.2.1" # 屏幕适配
 magicindicator = "1.7.0"
+agentWeb = "v5.0.0-alpha.1-androidx"
+sketch = "2.7.1"
+loadsir = "1.3.8"
+glide = "4.12.0"
+smartRefresh = "2.1.0"
+baseAdapter = "4.1.4"
+swipeRecycleview = "1.3.2"
+banner = "2.2.2"
+shimmerLayout = "2.1.0"
+leakcanary = "2.14"
+bugly = "4.1.9.3"
+androidAop = "2.7.3"
+exoplayer = "1.8.0"
+lottie = "2.8.0"
+slf4j = "1.7.21"
+windowx = "1.3.0"
+kotlinxSerializationJson = "1.7.3"
+baiduMapSdk = "9.6.6" #地图定位
+baiduNaviSdk = "7.6.6" #导航版本
+suncalc = "3.11" #日月日出日落月出月落 计算
+workManager = "2.10.2"
+recycleView = "1.4.0"
+viewpager2 = "1.1.0"
+wechatSdkAndroid = "+"
+androidJUnitRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+
+
+
+
+
+
+
+
+
+
 
 
 [libraries] #依赖
@@ -84,6 +130,44 @@ eventbus = { group = "org.greenrobot",name = "eventbus",version.ref = "eventBus"
 eventbus-annotation-processor = { group = "org.greenrobot",name = "eventbus-annotation-processor",version.ref = "eventBus"}
 auto-size = { group = "com.github.JessYanCoding",name = "AndroidAutoSize",version.ref = "autoSize"} #https://github.com/JessYanCoding/AndroidAutoSize
 magicindictor = { group = "com.github.hackware1993",name = "MagicIndicator",version.ref = "magicindicator"} # https://github.com/hackware1993/MagicIndicator
+agentWeb = { group = "com.github.Justson.AgentWeb",name = "agentweb-core",version.ref = "agentWeb"} # 网页加载库 https://github.com/Justson/AgentWeb
+sketch = { group = "io.github.panpf.sketch",name = "sketch",version.ref = "sketch"} #预览大图插件 https://github.com/panpf/sketch
+loadsir = { group = "com.kingja.loadsir",name = "loadsir",version.ref = "loadsir"} #全局加载视图 https://github.com/KingJA/LoadSir
+glide = { group = "com.github.bumptech.glide",name = "glide",version.ref = "glide"} #图像加载库 https://github.com/bumptech/glide
+refresh-layout-kernel = { group = "io.github.scwang90",name = "refresh-layout-kernel",version.ref = "smartRefresh"} #智能刷新库 核心依赖 https://github.com/scwang90/SmartRefreshLayout
+refresh-header-classics = { group = "io.github.scwang90",name = "refresh-header-classics",version.ref = "smartRefresh"} #经典刷新头
+refresh-footer-classics = { group = "io.github.scwang90",name = "refresh-footer-classics",version.ref = "smartRefresh"} #经典加载
+refresh-header-two-level = { group = "io.github.scwang90",name = "refresh-header-two-level",version.ref = "smartRefresh" } #二楼刷新
+base-adapter = { group = "io.github.cymchad",name = "BaseRecyclerViewAdapterHelper4",version.ref = "baseAdapter"} #BaseAdapter https://github.com/CymChad/BaseRecyclerViewAdapterHelper
+swipe-recycleview = { group = "com.yanzhenjie.recyclerview",name = "x",version.ref = "swipeRecycleview"}  #https://github.com/yanzhenjie/SwipeRecyclerView
+banner = { group = "io.github.youth5201314",name = "banner",version.ref = "banner"} # 广告https://github.com/youth5201314/banner
+shimmer-layout = { group = "io.supercharge",name = "shimmerlayout",version.ref = "shimmerLayout"} # 骨架屏 https://github.com/team-supercharge/ShimmerLayout
+leakcanary = { group = "com.squareup.leakcanary",name = "leakcanary-android",version.ref = "leakcanary"} # 内存泄漏 https://github.com/square/leakcanary
+bugly = { group = "com.tencent.bugly",name = "crashreport",version.ref = "bugly"} #https://bugly.qq.com/docs/release-notes/release-android-bugly
+android-aop-core = { group = "io.github.flyjingfish",name = "androidaop-core",version.ref = "androidAop"} #aop相关 https://github.com/FlyJingFish/AndroidAOP
+android-aop-extra = { group = "io.github.flyjingfish",name = "androidaop-extra",version.ref = "androidAop"} #👇非必须项 👈 这个包提供了一些常见的注解切面
+android-aop-apt = { group = "io.github.flyjingfish",name = "androidaop-apt",version.ref = "androidAop"}#非必须项 👇，如果你想自定义切面需要用到，⚠️支持Java和Kotlin代码写的切面
+exoplayer = { group = "androidx.media3",name = "media3-exoplayer",version.ref = "exoplayer"} #视频播放器
+exoplayer-dash = { group = "androidx.media3",name = "media3-exoplayer-dash",version.ref = "exoplayer"}
+exoplayer-hls = { group = "androidx.media3",name = "media3-exoplayer-hls",version.ref = "exoplayer"} #如果要播放 m3u8 ，添加exoplayer-hls
+media3-ui = { group = "androidx.media3",name = "media3-ui",version.ref = "exoplayer"}
+media3-datasource-rtmp = { group = "androidx.media3",name = "media3-datasource-rtmp",version.ref = "exoplayer"}
+lottie = { group = "com.airbnb.android",name = "lottie",version.ref = "lottie"} #lottie 动画版本
+slf4j = {group= "org.slf4j",name = "slf4j-android",version.ref = "slf4j"}
+windowx = { group = "androidx.window",name = "window",version.ref = "windowx"}
+kotlinx-serialization-json = { group = "org.jetbrains.kotlinx",name = "kotlinx-serialization-json",version.ref = "kotlinxSerializationJson"} #kotlin序列化帮助类
+baidu-map-location = { group = "com.baidu.lbsyun",name = "BaiduMapSDK_Location",version.ref = "baiduMapSdk"}
+baidu-map-allnavi = { group = "com.baidu.lbsyun",name = "BaiduMapSDK_Map-AllNavi",version.ref = "baiduNaviSdk"}
+baidu-map-search = { group = "com.baidu.lbsyun",name = "BaiduMapSDK_Search",version.ref = "baiduNaviSdk"}
+baidu-map-util = { group = "com.baidu.lbsyun",name = "BaiduMapSDK_Util",version.ref = "baiduNaviSdk"}
+suncalc = { group = "org.shredzone.commons",name = "commons-suncalc",version.ref = "suncalc"} #https://github.com/shred/commons-suncalc
+media3-datasource = { group = "androidx.media3",name = "media3-datasource",version.ref = "exoplayer"} #https://github.com/androidx/media "1.6.1"版本 //播放音频
+media3-common-ktx = { group = "androidx.media3",name = "media3-common-ktx",version.ref = "exoplayer"}
+work-manager = { group = "androidx.work",name = "work-runtime-ktx",version.ref = "workManager"}
+recycleview = { group = "androidx.recyclerview",name = "recyclerview",version.ref = "recycleView"}
+viewpager2 = { group = "androidx.viewpager2",name = "viewpager2",version.ref = "viewpager2"}
+wechat-sdk-android = { group = "com.tencent.mm.opensdk",name = "wechat-sdk-android",version.ref = "wechatSdkAndroid"}
+
 
 
 
@@ -92,7 +176,7 @@ android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", ver
 kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
 hilt-android-gradlePlugin = { group = "com.google.dagger",name = "hilt-android-gradle-plugin",version.ref = "hilt"}
 gorouter-gradlePlugin = { group = "com.github.wyjsonGo.GoRouter",name = "GoRouter-Gradle-Plugin",version.ref = "goRouter"}
-
+android-aop-gradlePlugin = { group = "io.github.flyjingfish",name = "androidaop-plugin",version.ref = "androidAop"}
 
 
 
@@ -106,7 +190,7 @@ gorouter-gradlePlugin = { group = "com.github.wyjsonGo.GoRouter",name = "GoRoute
 
 [plugins] #插件
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinxSerializationJson" } #kotlin Serialization序列化（KOTLIN_GRADLE_PLUGIN_VERSION后续要和这个版本统一）
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinxPluginSerialization" } #kotlin Serialization序列化（KOTLIN_GRADLE_PLUGIN_VERSION后续要和这个版本统一）
 
 
 
@@ -115,3 +199,17 @@ kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", versi
 #buildSrc 方式：当运行 Gradle 时会检查项目中是否存在一个名为 buildSrc 的目录。然后 Gradle 会自动编译并测试这段代码，并将其放入构建脚本的类路径中, 对于多项目构建，只能有一个 buildSrc 目录，该目录必须位于根项目目录中, buildSrc 是 Gradle 项目根目录下的一个目录。
 #Composing builds 方式：复合构建只是包含其他构建的构建. 在许多方面，复合构建类似于 Gradle 多项目构建，不同之处在于，它包括完整的 builds ，而不是包含单个 projects，总的来说，他有 buildSrc 方式的优点，同时更新不需要重新构建整个项目。
 #versionCatalogs 最新发布的一种方式，发布于nowinAndroid官方项目上,集成方便，有代码提示。
+
+
+#
+# 一、什么是Gradle、Gradle插件
+# Gradle：gradle-wrapper.properties中配置的是Gradle的版本  distributionUrl=https://services.gradle.org/distributions/gradle-6.2.2-all.zip
+# 一个构建系统，构建项目的工具，用来编译Android app，能够简化你的编译、打包、测试过程 构建工具就是对你的项目进行编译、运行、签名、打包、依赖管理等一系列功能的合集
+#
+# Gradle插件：Android Plugin for Gradle，工程根目录build.gradle中的依赖指定的是Gradle插件的版本 classpath 'com.android.tools.build:gradle:3.6.3'
+# Android Plugin for Gradle，它本质就是一个AS的插件，它一边调用 Gradle本身的代码和批处理工具来构建项目，一边调用Android SDK的编译、打包功能，从而让我们能够顺畅地在AS上进行开发
+#
+# 没错，这就是Gradle替我们做的事。Gradle通过编写一个名为build.gradle的脚本文件对项目进行设置，再根据这个脚本对项目进行构建。
+# 那么，如何来提供这个Gradle构建环境呢？这就需要通过安装Gradle插件来使系统能支持运行Gradle。
+#
+#

@@ -1,5 +1,5 @@
 //library_base 配置文件
-import com.knight.wanandroid.buildsrc.*
+
 //apply from:'../base_library.gradle'
 apply from: "${project.rootDir}/base_library.gradle"
 apply plugin: 'dagger.hilt.android.plugin'
@@ -26,7 +26,7 @@ dependencies {
 
 
     api (libs.androidx.multidex)
-    api Dependencies.Androidx.WINDOWX
+    api (libs.windowx)
     api (libs.kotlin.stdlib)
 
     api (libs.coroutines)
@@ -44,9 +44,9 @@ dependencies {
     api (libs.eventbus)
     kapt (libs.eventbus.annotation.processor)
     api (libs.auto.size)
-    debugApi Dependencies.GitHub.LEAK_CANARY
-    api Dependencies.GitHub.LOAD_SIR
-    api Dependencies.Kotlin.kotlinx_serialization_json
+    debugApi (libs.leakcanary)
+    api (libs.loadsir)
+    api (libs.kotlinx.serialization.json)
 
     //依赖通用库
     api project(path: ':core:library_common')

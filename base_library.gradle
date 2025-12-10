@@ -1,5 +1,5 @@
 //********* Base library 模块的公共脚本配置 **********
-import com.knight.wanandroid.buildsrc.*
+
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
@@ -7,14 +7,14 @@ apply plugin: 'dagger.hilt.android.plugin'
 apply plugin: 'kotlin-parcelize'
 apply plugin: 'kotlinx-serialization'
 android {
-    compileSdkVersion ProjectBuildDencies.COMPILE_SDK_VERSION
-    buildToolsVersion ProjectBuildDencies.BUILD_TOOLS_VERSION
+    compileSdkVersion libs.versions.compileSdk.get().toInteger()
+    buildToolsVersion libs.versions.buildTool.get()
 
     defaultConfig {
-        minSdkVersion ProjectBuildDencies.MIN_SDK_VERSION
-        targetSdkVersion ProjectBuildDencies.TARGET_SDK_VERSION
-        versionCode ProjectBuildDencies.VERSION_CODE
-        versionName ProjectBuildDencies.VERSION_NAME
+        minSdkVersion libs.versions.minSdk.get().toInteger()
+        targetSdkVersion libs.versions.targetSdk.get().toInteger()
+        versionCode libs.versions.versionCode.get().toInteger()
+        versionName libs.versions.versionName.get()
         //consumerProguardFiles "proguard-rules.pro"
         ndk {
             // 设置支持的SO库架构
@@ -35,13 +35,13 @@ android {
     }
     buildTypes {
         debug {
-            buildConfigField "String","TYPE","\"${ProjectBuildDencies.Variants.DEVELOP}\""
+            buildConfigField "String","TYPE","\"${project.properties["APP_ENV_DEVELOP"]}\""
             minifyEnabled false
             consumerProguardFiles 'proguard-rules.pro'
           //  proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         release {
-            buildConfigField "String","TYPE","\"${ProjectBuildDencies.Variants.RELEASE}\""
+            buildConfigField "String","TYPE","\"${project.properties["APP_ENV_RELEASE"]}\""
             minifyEnabled false
             // 当app开启混淆后 会自动合并
             consumerProguardFiles 'proguard-rules.pro'
@@ -49,7 +49,7 @@ android {
          //   proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         master {
-            buildConfigField "String","TYPE","\"${ProjectBuildDencies.Variants.MASTER}\""
+            buildConfigField "String","TYPE","\"${project.properties["APP_ENV_MASTER"]}\""
             minifyEnabled false
             consumerProguardFiles 'proguard-rules.pro'
          //   proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'

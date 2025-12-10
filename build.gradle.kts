@@ -27,7 +27,7 @@ buildscript {
         classpath(libs.kotlin.gradlePlugin)
         classpath(libs.gorouter.gradlePlugin)
         classpath(libs.hilt.android.gradlePlugin)
-        classpath(com.knight.wanandroid.buildsrc.ProjectPluginDencies.ANDROID_AOP)
+        classpath(libs.android.aop.gradlePlugin)
     }
 }
 
