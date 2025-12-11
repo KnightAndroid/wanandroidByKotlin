@@ -263,6 +263,8 @@ class DefaultImageLoaderProxy :ImageLoaderProxy {
             .asBitmap()
             .load(imageUrl)
             .override(900,500)
+            .thumbnail(0.2f)
+            .timeout(6000)
             .into(object : CustomTarget<Bitmap>() {
                 override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
                     val bitmapWidth = resource.width
@@ -476,5 +478,16 @@ class DefaultImageLoaderProxy :ImageLoaderProxy {
             })
             .submit()
             .get()
+    }
+
+
+    /**
+     *
+     * 预加载图片到缓存
+     */
+    override fun preloadUrl(context: Context, url: String) {
+        Glide.with(context)
+            .load(url)
+            .preload()
     }
 }

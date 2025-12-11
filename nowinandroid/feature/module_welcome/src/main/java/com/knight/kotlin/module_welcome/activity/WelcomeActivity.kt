@@ -18,6 +18,7 @@ import com.knight.kotlin.library_util.baidu.LocationUtils
 import com.knight.kotlin.library_util.baidu.OnceLocationListener
 import com.knight.kotlin.module_welcome.databinding.WelcomeActivityBinding
 import com.knight.kotlin.module_welcome.fragment.WelcomePrivacyAgreeFragment
+import com.knight.kotlin.module_welcome.util.WeekImagePreloadUtils
 import com.knight.kotlin.module_welcome.vm.WelcomeVm
 import com.wyjson.router.GoRouter
 import com.wyjson.router.annotation.Route
@@ -61,6 +62,8 @@ class WelcomeActivity : BaseActivity<WelcomeActivityBinding, WelcomeVm>() {
                 }
             })
         }
+
+        WeekImagePreloadUtils.preloadTodayImage(this@WelcomeActivity)
     }
 
 

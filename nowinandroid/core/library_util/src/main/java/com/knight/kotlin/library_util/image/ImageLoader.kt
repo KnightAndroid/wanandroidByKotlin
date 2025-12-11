@@ -367,5 +367,14 @@ class ImageLoader {
         fun loadUrlByBitmap(context: Context,url:String):Bitmap {
             return mImageLoaderProxy.loadUrlByBitmap(context,url)
         }
+
+
+        /**
+         *
+         * 预加载图片
+         */
+        fun preloadUrl(context: Context,url:String) {
+            mImageLoaderProxy.preloadUrl(context,url)
+        }
     }
 }

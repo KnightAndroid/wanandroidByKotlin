@@ -290,4 +290,10 @@ interface ImageLoaderProxy {
     fun loadUrlByBitmap(context: Context,url:String):Bitmap
 
 
+    /**
+     *
+     * 预加载
+     */
+    fun preloadUrl(context: Context,url:String)
+
 }
