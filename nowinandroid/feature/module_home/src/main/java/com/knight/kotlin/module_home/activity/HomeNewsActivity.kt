@@ -208,14 +208,17 @@ class HomeNewsActivity: BaseActivity<HomeNewsActivityBinding, HomeNewsVm>(), OnR
      * 初始化头像
      */
     private fun initHeaderView(zaoBao: ZaoBaoBean) {
-        if (mBinding.includeNews.baseBodyRv.headerCount == 0 || mBinding.includeNews.baseBodyRv.footerCount == 0) {
+        if (mBinding.includeNews.baseBodyRv.headerCount == 0 && mBinding.includeNews.baseBodyRv.footerCount == 0) {
             if (!::mNewsHeaderBinding.isInitialized) {
                 mNewsHeaderBinding =
                 HomeNewsHeadBinding.inflate(LayoutInflater.from(this@HomeNewsActivity))
                 ImageLoader.loadImageWithAdaptiveSize(mNewsHeaderBinding.homeNewsHeadIv, getScreenWidth(), 0,zaoBao.head_image,{
                         width,height->
-                    mNewsAdapter.submitList(zaoBao.news)
-                    mBinding.includeNews.baseBodyRv.addHeaderView(mNewsHeaderBinding.root)
+                    if (mBinding.includeNews.baseBodyRv.headerCount == 0) {
+                        mNewsAdapter.submitList(zaoBao.news)
+                        mBinding.includeNews.baseBodyRv.addHeaderView(mNewsHeaderBinding.root)
+                    }
+
 
                 })
                 mNewsHeaderBinding.tvNewsDate.text = DateUtils.formatDate(zaoBao.date,"yyyy-MM-dd", "yyyy年M月d日")

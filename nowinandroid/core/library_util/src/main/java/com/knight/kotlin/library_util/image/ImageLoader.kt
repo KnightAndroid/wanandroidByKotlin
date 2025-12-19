@@ -352,7 +352,7 @@ class ImageLoader {
 
         /**
          * 要实现图片的宽度与 ImageView 的宽度一致，并且高度放大到 ImageView 的高
-         *
+         * 注意：会回调两次，先回调缩略图 在回调原图
          */
         @Throws(Exception::class)
         fun loadImageWithAdaptiveSize(imageView: ImageView, targetWidth:Int,targetHeight:Int ,imageUrl: String,callback: ((width: Int, height: Int) -> Unit)?=null) {
