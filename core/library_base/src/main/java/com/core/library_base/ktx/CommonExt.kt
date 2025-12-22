@@ -145,6 +145,18 @@ fun <VM> getVmClazz(obj: Any): VM {
     return (obj.javaClass.genericSuperclass as ParameterizedType).actualTypeArguments[1] as VM
 }
 
+
+@Suppress("UNCHECKED_CAST")
+fun <VM> getVmClass(target: Any, index: Int): Class<VM> {
+    var genericSuperclass = target.javaClass.genericSuperclass
+
+    while (genericSuperclass !is ParameterizedType) {
+        genericSuperclass = (genericSuperclass as Class<*>).genericSuperclass
+    }
+
+    return genericSuperclass.actualTypeArguments[index] as Class<VM>
+}
+
 /**
  *
  * 是否横屏

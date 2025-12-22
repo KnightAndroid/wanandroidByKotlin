@@ -10,4 +10,5 @@
     <string name="welcome_privacy_tip">你可以阅读完整版《用户协议》、《隐私政策》、《ShareSdk隐私政策》、《百度地图Sdk隐私政策》来了解详细信息</string>
     <string name="welcome_agree_privacy">同意</string>
     <string name="welcome_disagree_privacy">不同意退出</string>
+    <string name="welcome_error_get_theme_failed">获取主题失败</string>
 </resources>

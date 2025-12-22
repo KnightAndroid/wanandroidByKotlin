@@ -8,7 +8,7 @@ import com.baidu.location.BDLocation
 import com.core.library_base.route.RouteActivity
 import com.core.library_common.util.ColorUtils
 import com.hjq.permissions.XXPermissions
-import com.knight.kotlin.library_base.activity.BaseActivity
+import com.knight.kotlin.library_base.activity.BaseMviActivity
 import com.knight.kotlin.library_common.config.Appconfig
 import com.knight.kotlin.library_common.entity.AppThemeBean
 import com.knight.kotlin.library_common.util.CacheUtils
@@ -16,6 +16,8 @@ import com.knight.kotlin.library_permiss.permission.PermissionLists
 import com.knight.kotlin.library_permiss.permission.base.IPermission
 import com.knight.kotlin.library_util.baidu.LocationUtils
 import com.knight.kotlin.library_util.baidu.OnceLocationListener
+import com.knight.kotlin.library_util.toast
+import com.knight.kotlin.module_welcome.contract.WelcomeContract
 import com.knight.kotlin.module_welcome.databinding.WelcomeActivityBinding
 import com.knight.kotlin.module_welcome.fragment.WelcomePrivacyAgreeFragment
 import com.knight.kotlin.module_welcome.util.WeekImagePreloadUtils
@@ -26,84 +28,135 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 @Route(path = RouteActivity.Weclome.WeclmeActivity)
-class WelcomeActivity : BaseActivity<WelcomeActivityBinding, WelcomeVm>() {
+class WelcomeActivity :
+    BaseMviActivity<
+            WelcomeActivityBinding,
+            WelcomeVm,
+            WelcomeContract.Event,
+            WelcomeContract.State,
+            WelcomeContract.Effect>() {
 
+    // ========================
+    // 初始化 View
+    // ========================
     @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
     override fun WelcomeActivityBinding.initView() {
-
-        startLogoAnim(true)
+        startLogoAnim()
     }
 
-
-    @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
-    fun startLogoAnim(executeAfterAnimation: Boolean) {
-        mBinding.logoAnim.setTextColor(CacheUtils.getThemeColor())
-        mBinding.logoAnim.addOffsetAnimListener(object : AnimatorListenerAdapter() {
-            override fun onAnimationEnd(animation: Animator) {
-                super.onAnimationEnd(animation)
-                if (executeAfterAnimation) {
-                    if (CacheUtils.getAgreeStatus()) {
-                        GoRouter.getInstance().build(RouteActivity.Main.MainActivity).go()
-                        finish()
-                    } else {
-                        WelcomePrivacyAgreeFragment().show(supportFragmentManager, "dialog_privacy")
-                    }
-                }
-
-            }
-        })
-        mBinding.logoAnim.startAnimation()
-        val permission: List<IPermission> = listOf(PermissionLists.getAccessFineLocationPermission(),PermissionLists.getAccessCoarseLocationPermission(),PermissionLists.getAccessBackgroundLocationPermission())
-        if (XXPermissions.isGrantedPermissions(this@WelcomeActivity, permission)) {
-            LocationUtils.getLocation(object : OnceLocationListener {
-                @RequiresApi(Build.VERSION_CODES.O)
-                override fun onReceiveLocation(location: BDLocation?) {
-
-                }
-            })
-        }
-
-        WeekImagePreloadUtils.preloadTodayImage(this@WelcomeActivity)
-    }
-
-
-    /**
-     *
-     * 订阅LiveData
-     */
+    // ========================
+    // 订阅 State / Effect
+    // ========================
     override fun initObserver() {
 
+        // 页面状态
+        mViewModel.viewState.collectInActivity { state ->
+            renderState(state)
+        }
+
+        // 一次性事件
+        mViewModel.effect.collectInActivity { effect ->
+            handleEffect(effect)
+        }
     }
 
-    /**
-     * 页面请求接口
-     *
-     */
+    // ========================
+    // 页面入口事件
+    // ========================
     override fun initRequestData() {
-        mViewModel.getAppTheme().observerKt {
+        mViewModel.setEvent(WelcomeContract.Event.LoadAppTheme)
+    }
+
+    // ========================
+    // 渲染 State
+    // ========================
+    override fun renderState(state: WelcomeContract.State) {
+
+        state.theme?.let {
             setAppThemeData(it)
         }
     }
 
-
-    private fun setAppThemeData(data: AppThemeBean) {
-        Appconfig.appThemeData = data
-        Appconfig.appThemeData?.let {
-            if (data.forceTheme) {
-                CacheUtils.setThemeColor(ColorUtils.convertToColorInt(it.themeColor))
-            } else {
-                it.themeColor = ColorUtils.convertToRGB(CacheUtils.getThemeColor())
+    // ========================
+    // 处理 Effect（一次性）
+    // ========================
+    override fun handleEffect(effect: WelcomeContract.Effect) {
+        when (effect) {
+            is WelcomeContract.Effect.ShowError -> {
+                toast(effect.msg)
+            }
+            WelcomeContract.Effect.GoMain -> {
+                GoRouter.getInstance()
+                    .build(RouteActivity.Main.MainActivity)
+                    .go()
+                finish()
             }
 
+            WelcomeContract.Effect.ShowPrivacyDialog -> {
+                WelcomePrivacyAgreeFragment()
+                    .show(supportFragmentManager, "dialog_privacy")
+            }
         }
     }
 
-    override fun reLoadData() {
+    // ========================
+    // Logo 动画（只发 Event）
+    // ========================
+    @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
+    private fun startLogoAnim() {
 
+        mBinding.logoAnim.setTextColor(CacheUtils.getThemeColor())
+
+        mBinding.logoAnim.addOffsetAnimListener(object : AnimatorListenerAdapter() {
+            override fun onAnimationEnd(animation: Animator) {
+                super.onAnimationEnd(animation)
+
+                // 🔥 动画结束 = 发事件
+                mViewModel.setEvent(WelcomeContract.Event.LogoAnimFinished)
+            }
+        })
+
+        mBinding.logoAnim.startAnimation()
+
+        checkLocationPermission()
+        WeekImagePreloadUtils.preloadTodayImage(this)
     }
 
-    override fun setThemeColor(isDarkMode: Boolean) {
+    // ========================
+    // 权限 & 定位（View 层逻辑）
+    // ========================
+    private fun checkLocationPermission() {
+        val permissions: List<IPermission> = listOf(
+            PermissionLists.getAccessFineLocationPermission(),
+            PermissionLists.getAccessCoarseLocationPermission(),
+            PermissionLists.getAccessBackgroundLocationPermission()
+        )
 
+        if (XXPermissions.isGrantedPermissions(this, permissions)) {
+            LocationUtils.getLocation(object : OnceLocationListener {
+                @RequiresApi(Build.VERSION_CODES.O)
+                override fun onReceiveLocation(location: BDLocation?) {}
+            })
+        }
     }
 
+    // ========================
+    // 设置主题数据
+    // ========================
+    private fun setAppThemeData(data: AppThemeBean) {
+        Appconfig.appThemeData = data
+
+        if (data.forceTheme) {
+            CacheUtils.setThemeColor(
+                ColorUtils.convertToColorInt(data.themeColor)
+            )
+        } else {
+            data.themeColor =
+                ColorUtils.convertToRGB(CacheUtils.getThemeColor())
+        }
+    }
+
+    override fun reLoadData() {}
+
+    override fun setThemeColor(isDarkMode: Boolean) {}
 }
