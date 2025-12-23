@@ -1,9 +1,7 @@
 package com.knight.kotlin.module_wechat.vm
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.asLiveData
-import com.core.library_base.vm.BaseViewModel
-import com.knight.kotlin.module_wechat.entity.WechatArticleListEntity
+import com.core.library_base.vm.BaseMviViewModel
+import com.knight.kotlin.module_wechat.contact.WechatContract
 import com.knight.kotlin.module_wechat.repo.WechatRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -23,39 +21,125 @@ import javax.inject.Inject
  */
 
 @HiltViewModel
-class WechatVm @Inject constructor(private val mRepo:WechatRepo) : BaseViewModel() {
+class WechatVm @Inject constructor(
+    private val repo: WechatRepo
+) : BaseMviViewModel<
+        WechatContract.Event,
+        WechatContract.State,
+        WechatContract.Effect>() {
 
-    /**
-     *
-     * 获取公众号数据
-     */
-    fun getWechatArticle(cid:Int,page:Int,failureCallBack:((String?) ->Unit) ?= null) : LiveData<WechatArticleListEntity> {
-        return mRepo.getWechatArticle(cid,page,failureCallBack).asLiveData()
+    override fun initialState() = WechatContract.State()
+
+    override fun handleEvent(event: WechatContract.Event) {
+        when (event) {
+            is WechatContract.Event.LoadArticles ->
+                loadArticles(event)
+
+            is WechatContract.Event.CollectArticle ->
+                collectArticle(event)
+
+            is WechatContract.Event.UnCollectArticle ->
+                unCollectArticle(event)
+        }
     }
 
-    /**
-     *
-     * 收藏本文章
-     *
-     */
-    fun collectArticle(collectArticleId:Int) :LiveData<Any> {
-        return mRepo.collectArticle(collectArticleId).asLiveData()
+    // ========================
+    // 加载文章列表
+    // ========================
+    private fun loadArticles(event: WechatContract.Event.LoadArticles) {
+        requestFlowMvi(
+            block = {
+                if (event.keyword.isNullOrEmpty()) {
+                    repo.getWechatArticle(event.cid, event.page)
+                } else {
+                    repo.getWechatArticleByKeyWords(
+                        event.cid,
+                        event.page,
+                        event.keyword
+                    )
+                }
+            },
+            onStart = {
+                setState {
+                    copy(
+                        isLoading = !event.isRefresh,
+                        isRefreshing = event.isRefresh
+                    )
+                }
+            },
+            onEach = { pageData ->
+                setState {
+                    copy(
+                        articlePage =
+                            if (event.page == 1 || articlePage == null) {
+                                pageData
+                            } else {
+                                pageData.copy(
+                                    datas = (articlePage!!.datas + pageData.datas)
+                                        .toMutableList()
+                                )
+                            },
+                        isLoading = false,
+                        isRefreshing = false
+                    )
+                }
+            },
+            onError = {
+                setState {
+                    copy(
+                        isLoading = false,
+                        isRefreshing = false,
+                        isError = true
+                    )
+                }
+                setEffect {
+                    WechatContract.Effect.ShowToast("获取公众号文章失败")
+                }
+            }
+        )
     }
 
-    /**
-     *
-     * 取消收藏
-     *
-     */
-    fun unCollectArticle(unCollectArticleId:Int):LiveData<Any>  {
-        return mRepo.collectArticle(unCollectArticleId).asLiveData()
+    // ========================
+    // 收藏
+    // ========================
+    private fun collectArticle(event: WechatContract.Event.CollectArticle) {
+        requestFlowMvi(
+            block = { repo.collectArticle(event.articleId) },
+            onEach = {
+                setEffect {
+                    WechatContract.Effect.UpdateCollect(
+                        event.position,
+                        true
+                    )
+                }
+            },
+            onError = {
+                setEffect {
+                    WechatContract.Effect.ShowToast("收藏失败")
+                }
+            }
+        )
     }
 
-    /**
-     *
-     * 根据关键字搜索
-     */
-    fun getWechatArticleBykeywords(cid:Int,page:Int,keyword:String) :LiveData<WechatArticleListEntity> {
-        return mRepo.getWechatArticleByKeyWords(cid, page,keyword).asLiveData()
+    // ========================
+    // 取消收藏
+    // ========================
+    private fun unCollectArticle(event: WechatContract.Event.UnCollectArticle) {
+        requestFlowMvi(
+            block = { repo.unCollectArticle(event.articleId) },
+            onEach = {
+                setEffect {
+                    WechatContract.Effect.UpdateCollect(
+                        event.position,
+                        false
+                    )
+                }
+            },
+            onError = {
+                setEffect {
+                    WechatContract.Effect.ShowToast("取消收藏失败")
+                }
+            }
+        )
     }
 }

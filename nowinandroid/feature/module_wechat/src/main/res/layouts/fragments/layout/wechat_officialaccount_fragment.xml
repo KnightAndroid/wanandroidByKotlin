@@ -27,7 +27,6 @@
         android:layout_marginRight="@dimen/wechat_float_btn_margin_right"
         android:layout_marginBottom="@dimen/wechat_float_btn_margin_bottom"
         android:src="@drawable/base_icon_up"
-        app:backgroundTint="@color/base_color_theme"
         app:layout_behavior="com.knight.kotlin.library_widget.FloatButtonBehavior"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"

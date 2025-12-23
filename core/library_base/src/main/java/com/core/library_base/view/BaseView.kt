@@ -24,7 +24,7 @@ interface BaseView<VB : ViewBinding> {
 
     /**
      *
-     * 用于在页面创建时进行请求接口
+     * 用于在页面创建时进行请求接口 发送事件
      */
     fun initRequestData()
 

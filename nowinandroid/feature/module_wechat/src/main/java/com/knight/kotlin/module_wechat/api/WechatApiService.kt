@@ -42,7 +42,7 @@ interface WechatApiService {
      * 文章取消点赞
      */
     @POST("lg/uncollect_originId/{uncollectArticleId}/json")
-    suspend fun uncollectArticle(@Path("uncollectArticleId") uncollectArticleId:Int):BaseResponse<Any>
+    suspend fun unCollectArticle(@Path("uncollectArticleId") uncollectArticleId:Int):BaseResponse<Any>
 
     /**
      *

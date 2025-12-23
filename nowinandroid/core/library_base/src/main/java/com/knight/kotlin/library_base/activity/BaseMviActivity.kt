@@ -13,7 +13,9 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.viewbinding.ViewBinding
 import com.core.library_base.R
 import com.core.library_base.annotation.EventBusRegister
@@ -35,13 +37,11 @@ import com.core.library_base.widget.loadcircleview.ProgressHud
 import com.core.library_common.util.ColorUtils
 import com.kingja.loadsir.core.LoadService
 import com.kingja.loadsir.core.LoadSir
-import com.knight.kotlin.library_base.ktx.collectKt
 import com.knight.kotlin.library_base.ktx.createViewModel
 import com.knight.kotlin.library_base.utils.StatusBarUtils
 import com.knight.kotlin.library_common.util.CacheUtils
 import com.knight.kotlin.library_common.util.LanguageFontSizeUtils
 import com.wyjson.router.GoRouter
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -143,28 +143,24 @@ abstract class BaseMviActivity<
     }
 
     //===================== MVI 收集 =====================//
-
     private fun collectState() {
         lifecycleScope.launch {
-            mViewModel.viewState.collectLatest {
-                renderState(it)
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                mViewModel.viewState.collectLatest {
+                    renderState(it)
+                }
             }
         }
     }
 
     private fun collectEffect() {
         lifecycleScope.launch {
-            mViewModel.effect.collectLatest {
-                handleEffect(it)
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                mViewModel.effect.collectLatest {
+                    handleEffect(it)
+                }
             }
         }
-    }
-
-
-    protected fun <T> Flow<T>.collectInActivity(
-        block: (T) -> Unit
-    ) {
-        collectKt(this@BaseMviActivity, block = block)
     }
 
     //===================== 基础功能 =====================//

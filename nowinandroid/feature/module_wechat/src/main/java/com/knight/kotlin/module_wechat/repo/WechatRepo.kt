@@ -2,9 +2,10 @@ package com.knight.kotlin.module_wechat.repo
 
 import com.knight.kotlin.library_base.repository.BaseRepository
 import com.knight.kotlin.library_network.model.responseCodeExceptionHandler
-import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_wechat.api.WechatApiService
 import com.knight.kotlin.module_wechat.entity.WechatArticleListEntity
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 /**
@@ -21,72 +22,54 @@ import javax.inject.Inject
  * @Version:        1.0
  */
 
-class WechatRepo @Inject constructor(): BaseRepository() {
-
-    @Inject
-    lateinit var mWechatApiService: WechatApiService
+class WechatRepo @Inject constructor(
+    private val wechatApiService: WechatApiService
+) : BaseRepository() {
 
     /**
-     * 获取微信文章数据
-     *
+     * 获取微信文章列表
      */
-    fun getWechatArticle(cid:Int,page:Int,failureCallBack:((String?) ->Unit) ?= null) = request<WechatArticleListEntity> ({
-        mWechatApiService.getWechatArticle(cid,page).run {
-            responseCodeExceptionHandler(code, msg)
-            emit(data)
-        }
-    }){
-        it?.run {
-            toast(it)
-        }
-        failureCallBack?.run {
-            this(it)
-        }
+    fun getWechatArticle(
+        cid: Int,
+        page: Int
+    ): Flow<WechatArticleListEntity> = flow {
+        val resp = wechatApiService.getWechatArticle(cid, page)
+        responseCodeExceptionHandler(resp.code, resp.msg)
+        emit(resp.data)
     }
 
     /**
-     *
      * 收藏文章
      */
-    fun collectArticle(collectArticleId:Int) = request<Any>({
-        mWechatApiService.collectArticle(collectArticleId).run {
-            responseCodeExceptionHandler(code, msg)
-            emit(true)
-        }
-    }){
-        it?.run {
-            toast(it)
-        }
+    fun collectArticle(
+        articleId: Int
+    ): Flow<Unit> = flow {
+        val resp = wechatApiService.collectArticle(articleId)
+        responseCodeExceptionHandler(resp.code, resp.msg)
+        emit(Unit)
     }
 
     /**
-     * 取消文章点赞/收藏
-     *
+     * 取消收藏
      */
-    fun cancelCollectArticle(unCollectArticleId:Int) = request<Any> ({
-        mWechatApiService.uncollectArticle(unCollectArticleId).run {
-            responseCodeExceptionHandler(code, msg)
-            emit(data)
-        }
-    }){
-        it?.run {
-            toast(it)
-        }
+    fun unCollectArticle(
+        articleId: Int
+    ): Flow<Unit> = flow {
+        val resp = wechatApiService.unCollectArticle(articleId)
+        responseCodeExceptionHandler(resp.code, resp.msg)
+        emit(Unit)
     }
 
     /**
-     * 根据关键词搜索公众号
-     *
+     * 搜索公众号文章
      */
-    fun getWechatArticleByKeyWords(cid:Int,page:Int,keyword:String) = request<WechatArticleListEntity> ({
-        mWechatApiService.getWechatArticleByKeywords(cid,page,keyword).run {
-            responseCodeExceptionHandler(code, msg)
-            emit(data)
-        }
-    }){
-        it?.run {
-            toast(it)
-        }
+    fun getWechatArticleByKeyWords(
+        cid: Int,
+        page: Int,
+        keyword: String
+    ): Flow<WechatArticleListEntity> = flow {
+        val resp = wechatApiService.getWechatArticleByKeywords(cid, page, keyword)
+        responseCodeExceptionHandler(resp.code, resp.msg)
+        emit(resp.data)
     }
-
 }

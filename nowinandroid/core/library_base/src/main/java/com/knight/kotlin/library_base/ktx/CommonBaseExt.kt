@@ -22,6 +22,7 @@ import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.activity.BaseMviActivity
 import com.knight.kotlin.library_base.fragment.BaseDialogFragment
 import com.knight.kotlin.library_base.fragment.BaseFragment
+import com.knight.kotlin.library_base.fragment.BaseMviFragment
 import com.knight.kotlin.library_base.utils.StatusBarUtils
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
@@ -111,7 +112,7 @@ fun <VM: BaseViewModel,VB: ViewBinding> BaseActivity<VB, VM>.createViewModel(): 
 }
 
 /**
- * MVI 专用 ViewModel 创建
+ * MVI Activity 专用 ViewModel 创建
  */
 @Suppress("UNCHECKED_CAST")
 fun <
@@ -123,6 +124,20 @@ fun <
     return ViewModelProvider(this)[vmClass]
 }
 
+
+
+/**
+ * MVI 专用 ViewModel 创建
+ */
+@Suppress("UNCHECKED_CAST")
+fun <
+        VM : BaseMviViewModel<*, *, *>,
+        VB : ViewBinding
+        > BaseMviFragment<VB, VM, *, *, *>.createViewModel(): VM {
+
+    val vmClass = getVmClass<VM>(this, 1)
+    return ViewModelProvider(this)[vmClass]
+}
 
 /**
  * 创建viewModel

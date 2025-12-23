@@ -3,11 +3,12 @@ import android.graphics.drawable.GradientDrawable
 import android.os.Build
 import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.Fragment
+import com.core.library_base.contact.EmptyContract
 import com.core.library_base.ktx.setOnClick
 import com.core.library_base.route.RouteActivity
-import com.core.library_base.vm.EmptyViewModel
+import com.core.library_base.vm.EmptyMviViewModel
 import com.core.library_common.util.dp2px
-import com.knight.kotlin.library_base.activity.BaseActivity
+import com.knight.kotlin.library_base.activity.BaseMviActivity
 import com.knight.kotlin.library_base.entity.OfficialAccountEntity
 import com.knight.kotlin.library_util.SystemUtils
 import com.knight.kotlin.library_util.ViewInitUtils
@@ -22,91 +23,122 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 @Route(path = RouteActivity.Wechat.WechatTabActivity)
-class WechatTabActivity : BaseActivity<WechatTabActivityBinding, EmptyViewModel>() {
-
+class WechatTabActivity :
+    BaseMviActivity<
+            WechatTabActivityBinding,
+            EmptyMviViewModel,
+            EmptyContract.Event,
+            EmptyContract.State,
+            EmptyContract.Effect>() {
 
     @JvmField
-    @Param(name="data")
-    var data: ArrayList<OfficialAccountEntity>?=null
+    @Param(name = "data")
+    var data: ArrayList<OfficialAccountEntity>? = null
 
     @JvmField
-    @Param(name="position")
-    var position:Int = 0
+    @Param(name = "position")
+    var position: Int = 0
 
-    private var selectIndex:Int = 0
-
+    private var selectIndex: Int = 0
 
     private val wechatArticleFragments = ArrayList<Fragment>()
     private val titleDatas = ArrayList<String>()
+
     override fun WechatTabActivityBinding.initView() {
-        includeWechatToolbar.baseTvTitle.setText(getString(R.string.wechat_official))
+        mBinding.title = getString(R.string.wechat_official)
         includeWechatToolbar.baseIvBack.setOnClick { finish() }
+
         initData()
-        wechatSearchEt.setOnEditorActionListener { v, actionId, event ->
+
+        wechatSearchEt.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                val searchKeywords = wechatSearchEt.text.toString().trim()
-                if (searchKeywords.isNullOrEmpty()) {
+                val keywords = wechatSearchEt.text.toString().trim()
+                if (keywords.isEmpty()) {
                     toast(R.string.wechat_search_hint)
                 } else {
-                    serachWeChatArticles(searchKeywords)
+                    searchWeChatArticles(keywords)
                 }
                 true
+            } else {
+                false
             }
-            false
         }
     }
-
-
-
-    private fun initData() {
-        wechatArticleFragments.clear()
-        titleDatas.clear()
-        for (i in 0 until (data?.size ?:0 )) {
-            wechatArticleFragments.add(WechatOfficialAccountFragment.newInstance(data?.get(i)?.id ?: 0))
-            titleDatas.add(data?.get(i)?.name ?:"")
-        }
-
-        ViewInitUtils.setViewPager2Init(this,mBinding.wechatViewPager,wechatArticleFragments,
-            isOffscreenPageLimit = true,
-            isUserInputEnabled = false
-        )
-        mBinding.wechatIndicator.bindWechatViewPager2(mBinding.wechatViewPager,titleDatas) {
-            selectIndex = it
-        }
-        mBinding.wechatViewPager.currentItem = position
-    }
-
 
     override fun initObserver() {
 
     }
 
-    override fun initRequestData() {
+    private fun initData() {
+        wechatArticleFragments.clear()
+        titleDatas.clear()
 
+        data?.forEach {
+            wechatArticleFragments.add(
+                WechatOfficialAccountFragment.newInstance(it.id)
+            )
+            titleDatas.add(it.name)
+        }
+
+        ViewInitUtils.setViewPager2Init(
+            this,
+            mBinding.wechatViewPager,
+            wechatArticleFragments,
+            isOffscreenPageLimit = true,
+            isUserInputEnabled = false
+        )
+
+        mBinding.wechatIndicator.bindWechatViewPager2(
+            mBinding.wechatViewPager,
+            titleDatas
+        ) {
+            selectIndex = it
+        }
+
+        mBinding.wechatViewPager.currentItem = position
+    }
+
+    // ======================
+    // MVI 必须实现的方法
+    // ======================
+
+    override fun renderState(state: EmptyContract.State) {
+        // no-op
+    }
+
+    override fun handleEffect(effect: EmptyContract.Effect) {
+        // no-op
+    }
+
+    override fun initRequestData() {
+        // no-op
     }
 
     override fun reLoadData() {
-
+        // no-op
     }
 
     override fun setThemeColor(isDarkMode: Boolean) {
-        val cursorDrawable = GradientDrawable()
-        cursorDrawable.shape = GradientDrawable.RECTANGLE
-        cursorDrawable.setColor(themeColor)
-        cursorDrawable.setSize(2.dp2px(),2.dp2px())
+        val cursorDrawable = GradientDrawable().apply {
+            shape = GradientDrawable.RECTANGLE
+            setColor(themeColor)
+            setSize(2.dp2px(), 2.dp2px())
+        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             mBinding.wechatSearchEt.textCursorDrawable = cursorDrawable
         } else {
-            SystemUtils.setCursorDrawableColor(mBinding.wechatSearchEt,themeColor)
+            SystemUtils.setCursorDrawableColor(
+                mBinding.wechatSearchEt,
+                themeColor
+            )
         }
     }
 
-
     /**
-     *
-     * 根据搜索框关键字进行搜索
+     * 搜索当前选中公众号的文章
      */
-    fun serachWeChatArticles(searchKeywords:String){
-        (wechatArticleFragments.get(selectIndex) as WechatOfficialAccountFragment).searchArticlesByKeyWords(searchKeywords)
+    private fun searchWeChatArticles(keyword: String) {
+        (wechatArticleFragments[selectIndex] as? WechatOfficialAccountFragment)
+            ?.searchArticlesByKeyWords(keyword)
     }
 }

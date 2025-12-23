@@ -49,15 +49,6 @@ class WelcomeActivity :
     // ========================
     override fun initObserver() {
 
-        // 页面状态
-        mViewModel.viewState.collectInActivity { state ->
-            renderState(state)
-        }
-
-        // 一次性事件
-        mViewModel.effect.collectInActivity { effect ->
-            handleEffect(effect)
-        }
     }
 
     // ========================
@@ -71,7 +62,7 @@ class WelcomeActivity :
     // 渲染 State
     // ========================
     override fun renderState(state: WelcomeContract.State) {
-
+        //StateFlow / LiveData 一订阅，就会立刻发射当前 State 所以会走两次
         state.theme?.let {
             setAppThemeData(it)
         }
