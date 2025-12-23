@@ -4,6 +4,8 @@ import com.knight.kotlin.library_base.repository.BaseRepository
 import com.knight.kotlin.library_network.model.responseCodeExceptionHandler
 import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_web.api.WebApiService
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 /**
@@ -11,19 +13,21 @@ import javax.inject.Inject
  * Time:2022/2/21 18:11
  * Description:WebRepo
  */
-class WebRepo @Inject constructor() : BaseRepository() {
+class WebRepo @Inject constructor(
+    private val api: WebApiService
+) : BaseRepository() {
 
-    @Inject
-    lateinit var mWebApiService:WebApiService
-
-    fun collectArticle(collectArticleId:Int) = request<Any>({
-        mWebApiService.collectArticle(collectArticleId).run {
-            responseCodeExceptionHandler(code, msg)
-            emit(data)
-        }
-    }){
-        it?.run {
-            toast(it)
-        }
+    /**
+     * 收藏文章
+     *
+     * 只负责：
+     * 1. 调接口
+     * 2. 校验 code
+     * 3. emit data
+     */
+    fun collectArticle(collectArticleId: Int): Flow<Unit> = flow {
+        val response = api.collectArticle(collectArticleId)
+        responseCodeExceptionHandler(response.code, response.msg)
+        emit(Unit)
     }
 }

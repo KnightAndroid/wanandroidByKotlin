@@ -113,9 +113,9 @@ class WechatVm @Inject constructor(
                     )
                 }
             },
-            onError = {
+            onError = { e->
                 setEffect {
-                    WechatContract.Effect.ShowToast("收藏失败")
+                    WechatContract.Effect.ShowToast(e.message ?: "收藏失败")
                 }
             }
         )
@@ -135,9 +135,9 @@ class WechatVm @Inject constructor(
                     )
                 }
             },
-            onError = {
+            onError = { e->
                 setEffect {
-                    WechatContract.Effect.ShowToast("取消收藏失败")
+                    WechatContract.Effect.ShowToast(e.message ?:"取消收藏失败")
                 }
             }
         )

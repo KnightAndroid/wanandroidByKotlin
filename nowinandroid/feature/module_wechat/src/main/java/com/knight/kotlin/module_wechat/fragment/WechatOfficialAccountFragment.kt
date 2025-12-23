@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.core.library_base.ktx.setOnClick
 import com.core.library_base.route.RouteFragment
 import com.core.library_common.util.ColorUtils
+import com.knight.kotlin.library_aop.loginintercept.LoginCheck
 import com.knight.kotlin.library_base.fragment.BaseMviFragment
 import com.knight.kotlin.library_base.utils.ArouteUtils
 import com.knight.kotlin.library_common.util.CacheUtils
@@ -140,22 +141,30 @@ class WechatOfficialAccountFragment :
                 val item = items[position]
                 selectItemPosition = position
 
-                sendEvent(
-                    if (item.collect) {
-                        WechatContract.Event.UnCollectArticle(
-                            articleId = item.id,
-                            position = position
-                        )
-                    } else {
-                        WechatContract.Event.CollectArticle(
-                            articleId = item.id,
-                            position = position
-                        )
-                    }
-                )
+                collectOrunCollect(item.collect,item.id,selectItemPosition)
             }
         }
     }
+
+
+    @LoginCheck
+    private fun collectOrunCollect(collect: Boolean, articleId: Int,position:Int){
+        sendEvent(
+            if (collect) {
+                WechatContract.Event.UnCollectArticle(
+                    articleId = articleId,
+                    position = position
+                )
+            } else {
+                WechatContract.Event.CollectArticle(
+                    articleId = articleId,
+                    position = position
+                )
+            }
+        )
+    }
+
+
 
     // =========================
     // 下拉刷新

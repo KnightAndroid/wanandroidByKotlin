@@ -22,6 +22,7 @@ import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.activity.BaseMviActivity
 import com.knight.kotlin.library_base.fragment.BaseDialogFragment
 import com.knight.kotlin.library_base.fragment.BaseFragment
+import com.knight.kotlin.library_base.fragment.BaseMviDialogFragment
 import com.knight.kotlin.library_base.fragment.BaseMviFragment
 import com.knight.kotlin.library_base.utils.StatusBarUtils
 import kotlinx.coroutines.flow.Flow
@@ -148,9 +149,26 @@ fun <VM: BaseViewModel,VB: ViewBinding> BaseFragment<VB, VM>.createViewModel(): 
 /**
  * 创建viewModel
  */
-fun <VB: ViewBinding,VM: BaseViewModel,> BaseDialogFragment<VB, VM>.createViewModel(): VM {
+fun <VB: ViewBinding,VM: BaseViewModel> BaseDialogFragment<VB, VM>.createViewModel(): VM {
     return ViewModelProvider(this)[getVmClazz(this)]
 }
+
+
+/**
+ * MVI 专用 ViewModel 创建
+ */
+@Suppress("UNCHECKED_CAST")
+fun <
+        VM : BaseMviViewModel<*, *, *>,
+        VB : ViewBinding
+        > BaseMviDialogFragment<VB, VM, *, *, *>.createViewModel(): VM {
+
+    val vmClass = getVmClass<VM>(this, 1)
+    return ViewModelProvider(this)[vmClass]
+}
+
+
+
 
 val Context.sensorManager: SensorManager?
     get() = if (SettingsManager.getInstance(this).isGravitySensorEnabled) {

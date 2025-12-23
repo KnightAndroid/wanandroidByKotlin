@@ -14,7 +14,7 @@ suspend fun responseCodeExceptionHandler(code:Int,msg:String) {
     //进行异常处理
     when (code) {
         ExceptionType.COOKIE_ILLEGAL.getCode() -> {
-            throw ResponseEmptyException()
+            throw ResponseEmptyException(msg)
         }
         ExceptionType.SUCCESS.getCode() -> {}
         else -> {

@@ -14,4 +14,4 @@ class ResponseException(val type:ExceptionType,val msg:String):Exception(msg)
  * 空异常，表示该异常已经被处理过了，不需要再额外处理
  *
  */
-class ResponseEmptyException:Exception()
+class ResponseEmptyException(val msg:String):Exception(msg)
