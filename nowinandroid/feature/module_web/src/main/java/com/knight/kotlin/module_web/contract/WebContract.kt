@@ -1,4 +1,4 @@
-package com.knight.kotlin.module_web.contact
+package com.knight.kotlin.module_web.contract
 
 import com.core.library_base.vm.ViewEvent
 import com.core.library_base.vm.ViewSideEffect

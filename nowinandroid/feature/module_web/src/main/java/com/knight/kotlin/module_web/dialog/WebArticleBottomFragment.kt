@@ -4,22 +4,18 @@ import android.content.Intent
 import android.net.Uri
 import android.view.Gravity
 import android.view.View
-import androidx.lifecycle.lifecycleScope
 import com.core.library_base.event.MessageEvent
-import com.knight.kotlin.library_base.fragment.BaseDialogFragment
 import com.core.library_base.util.EventBusUtils
 import com.flyjingfish.android_aop_core.annotations.SingleClick
-import com.knight.kotlin.library_aop.loginintercept.LoginCheck
 import com.knight.kotlin.library_base.fragment.BaseMviDialogFragment
 import com.knight.kotlin.library_util.SystemUtils
 import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.library_util.toast.ToastUtils
 import com.knight.kotlin.module_web.R
-import com.knight.kotlin.module_web.contact.WebContract
+import com.knight.kotlin.module_web.contract.WebContract
 import com.knight.kotlin.module_web.databinding.WebArticleBottomDialogBinding
 import com.knight.kotlin.module_web.vm.WebVm
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
 
 /**
  * Author:Knight

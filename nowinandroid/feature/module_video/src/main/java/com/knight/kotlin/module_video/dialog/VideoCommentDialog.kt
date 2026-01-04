@@ -6,7 +6,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.core.library_base.ktx.init
 import com.core.library_common.ktx.screenHeight
@@ -14,11 +18,13 @@ import com.core.library_common.ktx.screenWidth
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.knight.kotlin.library_widget.BaseBottomSheetDialog
 import com.knight.kotlin.module_video.adapter.VideoCommentAdapter
+import com.knight.kotlin.module_video.contract.VideoMainContract
 import com.knight.kotlin.module_video.databinding.VideoDialogCommentBinding
 import com.knight.kotlin.module_video.entity.VideoPlayEntity
 import com.knight.kotlin.module_video.player.VideoPlayer
 import com.knight.kotlin.module_video.vm.VideoVm
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 
 /**
@@ -29,8 +35,10 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class VideoCommentDialog(val videoData: VideoPlayEntity, val videoView: VideoPlayer) :  BaseBottomSheetDialog() {
 
-    private val videoVm by lazy{ ViewModelProvider(this)[VideoVm::class.java] }
+    //private val videoVm by lazy{ ViewModelProvider(this)[VideoVm::class.java] }
 
+
+    private val videoVm: VideoVm by viewModels({ requireParentFragment() })
     //视频列表适配器
     private val mVideoCommentAdapter: VideoCommentAdapter by lazy { VideoCommentAdapter() }
     private lateinit var binding: VideoDialogCommentBinding
@@ -90,9 +98,23 @@ class VideoCommentDialog(val videoData: VideoPlayEntity, val videoView: VideoPla
     }
 
     private fun loadData() {
-        videoVm.getVideoCommentList(videoData.playerId).observe(this) {
-            binding.tvTitle.setText(it.total.toString().plus("条评论"))
-            mVideoCommentAdapter.submitList(it.itemList.drop(1))
+
+        videoVm.setEvent(VideoMainContract.Event.GetVideoCommentList(videoData.playerId))
+//        videoVm.getVideoCommentList(videoData.playerId).observe(this) {
+//            binding.tvTitle.setText(it.total.toString().plus("条评论"))
+//            mVideoCommentAdapter.submitList(it.itemList.drop(1))
+//        }
+
+        // 2. 收 State
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                videoVm.viewState.collect { state ->
+                    state.comments?.let {
+                        binding.tvTitle.text = "${it.total}条评论"
+                        mVideoCommentAdapter.submitList(it.itemList.drop(1))
+                    }
+                }
+            }
         }
     }
 

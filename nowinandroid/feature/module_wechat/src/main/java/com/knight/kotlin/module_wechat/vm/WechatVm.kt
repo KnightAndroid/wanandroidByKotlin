@@ -1,7 +1,7 @@
 package com.knight.kotlin.module_wechat.vm
 
 import com.core.library_base.vm.BaseMviViewModel
-import com.knight.kotlin.module_wechat.contact.WechatContract
+import com.knight.kotlin.module_wechat.contract.WechatContract
 import com.knight.kotlin.module_wechat.repo.WechatRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject

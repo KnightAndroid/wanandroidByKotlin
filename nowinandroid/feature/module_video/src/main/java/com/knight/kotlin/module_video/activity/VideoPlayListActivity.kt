@@ -1,11 +1,14 @@
 package com.knight.kotlin.module_video.activity
 
 import android.graphics.Color
+import com.core.library_base.contact.EmptyContract
 import com.knight.kotlin.library_base.activity.BaseActivity
 import com.core.library_base.ktx.setOnClick
 import com.core.library_base.route.RouteActivity
+import com.core.library_base.vm.EmptyMviViewModel
 import com.knight.kotlin.library_base.utils.StatusBarUtils
 import com.core.library_base.vm.EmptyViewModel
+import com.knight.kotlin.library_base.activity.BaseMviActivity
 
 import com.knight.kotlin.module_video.R
 import com.knight.kotlin.module_video.databinding.VideoPlayListActivityBinding
@@ -21,7 +24,13 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 @AndroidEntryPoint
 @Route(path = RouteActivity.Video.VideoPlayListActivity)
-class VideoPlayListActivity : BaseActivity<VideoPlayListActivityBinding, EmptyViewModel>() {
+class VideoPlayListActivity :
+    BaseMviActivity<VideoPlayListActivityBinding,
+            EmptyMviViewModel,
+            EmptyContract.Event,
+            EmptyContract.State,
+            EmptyContract.Effect
+            >() {
 
     @JvmField
     @Param(name = "curPos")
@@ -32,6 +41,14 @@ class VideoPlayListActivity : BaseActivity<VideoPlayListActivityBinding, EmptyVi
          mBinding.includeVideoToolbar.baseTvTitle.setText(R.string.video_play_toolbar_title)
          mBinding.includeVideoToolbar.baseTvTitle.setTextColor(Color.WHITE)
          mBinding.includeVideoToolbar.baseCompatToolbar.setBackgroundResource(android.R.color.transparent)
+
+    }
+
+    override fun renderState(state: EmptyContract.State) {
+
+    }
+
+    override fun handleEffect(effect: EmptyContract.Effect) {
 
     }
 

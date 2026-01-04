@@ -11,7 +11,6 @@ import com.core.library_base.event.MessageEvent
 import com.core.library_base.route.RouteActivity
 import com.core.library_base.util.EventBusUtils
 import com.knight.kotlin.library_aop.loginintercept.LoginCheck
-import com.knight.kotlin.library_base.activity.BaseActivity
 import com.knight.kotlin.library_base.activity.BaseMviActivity
 import com.knight.kotlin.library_base.entity.WebDataEntity
 import com.knight.kotlin.library_common.ktx.getUser
@@ -20,7 +19,7 @@ import com.knight.kotlin.library_database.util.DataBaseUtils
 import com.knight.kotlin.library_util.toast.ToastUtils
 import com.knight.kotlin.library_widget.LoveAnimatorRelativeLayout
 import com.knight.kotlin.module_web.R
-import com.knight.kotlin.module_web.contact.WebContract
+import com.knight.kotlin.module_web.contract.WebContract
 import com.knight.kotlin.module_web.manager.WebViewCacheHolder
 import com.knight.kotlin.module_web.databinding.WebArticleActivityBinding
 import com.knight.kotlin.module_web.dialog.WebArticleBottomFragment

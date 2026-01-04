@@ -14,7 +14,7 @@ import com.knight.kotlin.library_widget.ktx.init
 import com.knight.kotlin.library_widget.ktx.setSafeOnItemChildClickListener
 import com.knight.kotlin.library_widget.ktx.setSafeOnItemClickListener
 import com.knight.kotlin.module_wechat.adapter.WechatArticleAdapter
-import com.knight.kotlin.module_wechat.contact.WechatContract
+import com.knight.kotlin.module_wechat.contract.WechatContract
 import com.knight.kotlin.module_wechat.databinding.WechatOfficialaccountFragmentBinding
 import com.knight.kotlin.module_wechat.vm.WechatVm
 import com.scwang.smart.refresh.layout.api.RefreshLayout

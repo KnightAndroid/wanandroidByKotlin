@@ -8,6 +8,7 @@ import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_video.api.VideoApiService
 import com.knight.kotlin.module_video.entity.VideoCommentList
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 /**
@@ -15,48 +16,25 @@ import javax.inject.Inject
  * Time:2024/2/26 11:31
  * Description:VideoRepo
  */
-class VideoRepo @Inject constructor() : BaseRepository() {
-
-    @Inject
-    lateinit var mVideoService: VideoApiService
-
-
+class VideoRepo @Inject constructor(
+    private val videoService: VideoApiService
+) : BaseRepository() {
 
     /**
-     *
-     *
-     * 得到广告图
-     * @param failureCallBack 失败回调
-     * @return
+     * 获取视频列表
      */
-    fun getVideos(failureCallBack:((String?) ->Unit) ?= null): Flow<EyeDailyListEntity> = request<EyeDailyListEntity> ({
-        mVideoService.getVideos().run {
-            responseCodeExceptionHandler(errorCode, errorMessage)
-            dimissLoadingDialog()
-            emit(this)
-        }
-    }) {
-        dimissLoadingDialog()
-        failureCallBack?.run {
-            this(it)
-        }
+    fun getVideos(): Flow<EyeDailyListEntity> = flow {
+        val response = videoService.getVideos()
+        responseCodeExceptionHandler(response.errorCode, response.errorMessage)
+        emit(response)
     }
 
     /**
      * 获取视频评论列表
-     *
-     *
-     * @param jokeId
-     * @param page
      */
-    fun getVideoCommentList(playerId:Long) = request<VideoCommentList>({
-        mVideoService.getVideoCommentList(playerId).run {
-            responseCodeExceptionHandler(errorCode, errorMessage)
-            emit(this)
-        }
-    }) {
-        it?.run {
-            toast(it)
-        }
+    fun getVideoCommentList(playerId: Long): Flow<VideoCommentList> = flow {
+        val response = videoService.getVideoCommentList(playerId)
+        responseCodeExceptionHandler(response.errorCode, response.errorMessage)
+        emit(response)
     }
 }
