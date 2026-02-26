@@ -1,13 +1,17 @@
 package com.knight.kotlin.module_wechat.fragment
 
 import android.os.Bundle
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.core.library_base.annotation.EventBusRegister
+import com.core.library_base.event.MessageEvent
 import com.core.library_base.ktx.setOnClick
 import com.core.library_base.route.RouteFragment
 import com.core.library_common.util.ColorUtils
 import com.knight.kotlin.library_aop.loginintercept.LoginCheck
 import com.knight.kotlin.library_base.fragment.BaseMviFragment
 import com.knight.kotlin.library_base.utils.ArouteUtils
+import com.knight.kotlin.library_common.ktx.getUser
 import com.knight.kotlin.library_common.util.CacheUtils
 import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.library_widget.ktx.init
@@ -22,6 +26,8 @@ import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener
 import com.wyjson.router.annotation.Route
 import dagger.hilt.android.AndroidEntryPoint
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 /**
  *
@@ -38,6 +44,7 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 
 @AndroidEntryPoint
+@EventBusRegister
 @Route(path = RouteFragment.Wechat.WechatOfficialAccountFragment)
 class WechatOfficialAccountFragment :
     BaseMviFragment<
@@ -277,6 +284,26 @@ class WechatOfficialAccountFragment :
                 page = 1
             )
         )
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onMessageEvent(event: MessageEvent) {
+        when (event.type) {
+            //收藏成功 分享文章成功 登录成功,登出成功
+            MessageEvent.MessageType.CollectSuccess -> {
+                keyword = ""
+
+                sendEvent(
+                    WechatContract.Event.LoadArticles(
+                        cid = cid,
+                        page = 1,
+                        isRefresh = true
+                    )
+                )
+            }
+
+            else -> {}
+        }
     }
 
 }

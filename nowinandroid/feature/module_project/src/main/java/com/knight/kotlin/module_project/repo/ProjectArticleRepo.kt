@@ -71,7 +71,7 @@ class ProjectArticleRepo @Inject constructor() : BaseRepository() {
     fun unCollectArticle(unCollectArticleId:Int) = request<Any> ({
         mProjectViewPagerApi.unCollectArticle(unCollectArticleId).run {
             responseCodeExceptionHandler(code,msg)
-            emit(data)
+            emit(true)
         }
     }){
         it?.run {

@@ -2,4 +2,5 @@
 <resources>
     <string name="utils_app_name">module_utils</string>
     <string name="utils_title">utils</string>
+    <string name="utils_error_load_failed">load failure</string>
 </resources>

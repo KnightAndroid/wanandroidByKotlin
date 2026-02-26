@@ -1,4 +1,5 @@
 <resources>
     <string name="utils_app_name">module_utils</string>
     <string name="utils_title">工具集合</string>
+    <string name="utils_error_load_failed">获取工具失败</string>
 </resources>

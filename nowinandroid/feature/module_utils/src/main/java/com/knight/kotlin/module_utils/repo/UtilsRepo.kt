@@ -5,6 +5,8 @@ import com.knight.kotlin.library_network.model.responseCodeExceptionHandler
 import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_utils.api.UtilsApi
 import com.knight.kotlin.module_utils.entity.UtilsEntity
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 /**
@@ -20,14 +22,22 @@ class UtilsRepo @Inject constructor() : BaseRepository() {
     /**
      * 获取问答文章列表
      */
-    fun getUtils() = request<MutableList<UtilsEntity>>({
-        mUtilsApi.getUtils().run {
-            responseCodeExceptionHandler(code, msg)
-            emit(data)
-        }
-    }){
-        it?.run {
-            toast(it)
-        }
+//    fun getUtils() = request<MutableList<UtilsEntity>>({
+//        mUtilsApi.getUtils().run {
+//            responseCodeExceptionHandler(code, msg)
+//            emit(data)
+//        }
+//    }){
+//        it?.run {
+//            toast(it)
+//        }
+//    }
+
+
+    fun getUtils() : Flow<MutableList<UtilsEntity>> = flow {
+        val response = mUtilsApi.getUtils()
+        responseCodeExceptionHandler(response.code, response.msg)
+        val data = response.data
+        emit(data)
     }
 }

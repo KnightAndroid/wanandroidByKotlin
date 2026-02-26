@@ -1381,7 +1381,14 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
             MessageEvent.MessageType.ChangeStatusTheme -> {
                 isWithStatusTheme(event.getBoolean())
             }
-
+            //收藏成功 分享文章成功 登录成功,登出成功
+            MessageEvent.MessageType.CollectSuccess ->{
+                currentPage = 0
+                //请求首页文章
+                mViewModel.getHomeArticle(currentPage).observerKt {
+                    setArticles(it)
+                }
+            }
             else -> {}
         }
 
