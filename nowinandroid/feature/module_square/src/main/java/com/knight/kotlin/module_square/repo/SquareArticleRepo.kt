@@ -2,9 +2,10 @@ package com.knight.kotlin.module_square.repo
 
 import com.knight.kotlin.library_base.repository.BaseRepository
 import com.knight.kotlin.library_network.model.responseCodeExceptionHandler
-import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_square.api.SquareArticleApi
 import com.knight.kotlin.module_square.entity.SquareArticleListBean
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 /**
@@ -12,56 +13,52 @@ import javax.inject.Inject
  * Time:2022/4/11 11:27
  * Description:SquareArticleRepo
  */
-class SquareArticleRepo @Inject constructor(): BaseRepository() {
-
-    @Inject
-    lateinit var mSquareArticleApi :SquareArticleApi
+class SquareArticleRepo @Inject constructor(
+    private val api: SquareArticleApi
+) : BaseRepository() {
 
     /**
-     * 获取首页文章列表
+     * 获取文章列表
      */
-    fun getArticleByTag(page:Int,keyword:String,failureCallBack:((String?) ->Unit) ?= null) = request<SquareArticleListBean> ({
-        mSquareArticleApi.getArticlebyTag(page,keyword).run {
-            responseCodeExceptionHandler(code,msg)
-            emit(data)
-        }
-    }){
-       it?.run {
-           toast(it)
-       }
-        failureCallBack?.run {
-            this(it)
-        }
+    fun getArticleByTag(
+        page: Int,
+        keyword: String
+    ): Flow<SquareArticleListBean> = flow {
+
+        val response = api.getArticlebyTag(page, keyword)
+
+        responseCodeExceptionHandler(response.code, response.msg)
+
+        val data = response.data
+
+        emit(data)
     }
 
     /**
      * 收藏文章
-     *
      */
-    fun collectArticle(collectArticleId:Int) = request<Any>({
-        mSquareArticleApi.collectArticle(collectArticleId).run {
-            responseCodeExceptionHandler(code,msg)
-            emit(true)
-        }
-    }){
-        it?.run {
-            toast(it)
-        }
+    fun collectArticle(
+        collectArticleId: Int
+    ): Flow<Boolean> = flow {
+
+        val response = api.collectArticle(collectArticleId)
+
+        responseCodeExceptionHandler(response.code, response.msg)
+
+        emit(true)
     }
 
-
     /**
-     *
-     * 取消收藏文章
+     * 取消收藏
      */
-    fun unCollectArticle(unCollectArticleId:Int) = request<Any> ({
-        mSquareArticleApi.unCollectArticle(unCollectArticleId).run {
-            responseCodeExceptionHandler(code,msg)
-            emit(true)
-        }
-    }){
-        it?.run {
-            toast(it)
-        }
+    fun unCollectArticle(
+        unCollectArticleId: Int
+    ): Flow<Boolean> = flow {
+
+        val response = api.unCollectArticle(unCollectArticleId)
+
+        responseCodeExceptionHandler(response.code, response.msg)
+
+        emit(true)
     }
 }
