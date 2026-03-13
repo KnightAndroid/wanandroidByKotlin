@@ -2,9 +2,10 @@ package com.knight.kotlin.module_square.repo
 
 import com.knight.kotlin.library_base.repository.BaseRepository
 import com.knight.kotlin.library_network.model.responseCodeExceptionHandler
-import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_square.api.SquareShareArticleApi
 import com.knight.kotlin.module_square.entity.SquareShareArticleListBean
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 /**
@@ -12,71 +13,64 @@ import javax.inject.Inject
  * Time:2022/4/8 17:41
  * Description:SquareShareListRepo
  */
-class SquareShareListRepo @Inject constructor() : BaseRepository() {
-    @Inject
-    lateinit var mSquareShareArticleApi:SquareShareArticleApi
+class SquareShareListRepo @Inject constructor(
+    private val api: SquareShareArticleApi
+) : BaseRepository() {
 
     /**
      * 分享文章
      */
-    fun shareArticle(title:String,link:String,failureCallBack:((String?) ->Unit) ?= null) = request<Any>({
-        mSquareShareArticleApi.shareArticle(title, link).run {
-            responseCodeExceptionHandler(code, msg)
-            emit(true)
-        }
-    }){
-        it?.run {
-            toast(it)
-        }
-        failureCallBack?.run {
-            this(it)
-        }
+    fun shareArticle(
+        title: String,
+        link: String
+    ): Flow<Boolean> = flow {
+
+        val response = api.shareArticle(title, link)
+
+        responseCodeExceptionHandler(response.code, response.msg)
+
+        emit(true)
     }
 
     /**
-     *
-     * 获取广场文章列表数据
+     * 获取广场文章列表
      */
-    fun getSquareArticles(page:Int) = request<SquareShareArticleListBean>({
-        mSquareShareArticleApi.getSquareArticles(page).run{
-            responseCodeExceptionHandler(code, msg)
-            emit(data)
-        }
+    fun getSquareArticles(
+        page: Int
+    ): Flow<SquareShareArticleListBean> = flow {
 
-    }){
-        it?.run {
-            toast(it)
-        }
+        val response = api.getSquareArticles(page)
+
+        responseCodeExceptionHandler(response.code, response.msg)
+
+        emit(response.data)
     }
 
     /**
      * 收藏文章
-     *
      */
-    fun collectArticle(collectArticleId:Int) = request<Any>({
-        mSquareShareArticleApi.collectArticle(collectArticleId).run {
-            responseCodeExceptionHandler(code,msg)
-            emit(true)
-        }
-    }){
-        it?.run {
-            toast(it)
-        }
+    fun collectArticle(
+        collectArticleId: Int
+    ): Flow<Boolean> = flow {
+
+        val response = api.collectArticle(collectArticleId)
+
+        responseCodeExceptionHandler(response.code, response.msg)
+
+        emit(true)
     }
 
-
     /**
-     *
-     * 取消收藏文章
+     * 取消收藏
      */
-    fun unCollectArticle(unCollectArticleId:Int) = request<Any> ({
-        mSquareShareArticleApi.unCollectArticle(unCollectArticleId).run {
-            responseCodeExceptionHandler(code,msg)
-            emit(true)
-        }
-    }){
-        it?.run {
-            toast(it)
-        }
+    fun unCollectArticle(
+        unCollectArticleId: Int
+    ): Flow<Boolean> = flow {
+
+        val response = api.unCollectArticle(unCollectArticleId)
+
+        responseCodeExceptionHandler(response.code, response.msg)
+
+        emit(true)
     }
 }

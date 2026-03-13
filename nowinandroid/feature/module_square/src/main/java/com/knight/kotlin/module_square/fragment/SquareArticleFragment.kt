@@ -28,7 +28,7 @@ import org.greenrobot.eventbus.ThreadMode
 /**
  * Author:Knight
  * Time:2021/12/29 16:36
- * Description:SquareArticleFragment
+ * Description:SquareArticleFragment 各标题Fragment
  */
 
 @EventBusRegister

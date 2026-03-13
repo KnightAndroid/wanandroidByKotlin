@@ -1,7 +1,6 @@
 package com.knight.kotlin.module_square.activity
 
 import android.text.TextUtils
-import com.knight.kotlin.library_base.activity.BaseActivity
 import com.core.library_base.event.MessageEvent
 import com.core.library_base.ktx.appStr
 import com.core.library_base.ktx.setOnClick
@@ -9,9 +8,11 @@ import com.core.library_base.ktx.showLoadingDialog
 import com.core.library_base.route.RouteActivity
 import com.core.library_base.util.EventBusUtils
 import com.knight.kotlin.library_aop.loginintercept.LoginCheck
+import com.knight.kotlin.library_base.activity.BaseMviActivity
 import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.library_util.toast.ToastUtils
 import com.knight.kotlin.module_square.R
+import com.knight.kotlin.module_square.contract.SquareShareArticleContract
 import com.knight.kotlin.module_square.databinding.SquareShareArticleActivityBinding
 import com.knight.kotlin.module_square.vm.SquareShareArticleVm
 import com.wyjson.router.annotation.Route
@@ -25,23 +26,31 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 @Route(path = RouteActivity.Square.SquareShareArticleActivity)
 class SquareShareArticleActivity :
-    BaseActivity<SquareShareArticleActivityBinding, SquareShareArticleVm>() {
+    BaseMviActivity<
+            SquareShareArticleActivityBinding,
+            SquareShareArticleVm,
+            SquareShareArticleContract.Event,
+            SquareShareArticleContract.State,
+            SquareShareArticleContract.Effect>() {
 
     private var title = ""
     private var link = ""
+
     override fun setThemeColor(isDarkMode: Boolean) {
 
     }
 
     override fun SquareShareArticleActivityBinding.initView() {
+
         squareSharearticleToolbar.baseTvTitle.setText(R.string.square_sharearticle)
-        squareSharearticleToolbar.baseIvBack.setOnClick { finish() }
+
+        squareSharearticleToolbar.baseIvBack.setOnClick {
+            finish()
+        }
+
         squareTvArticle.setOnClick {
             submitArticle()
         }
-
-
-
     }
 
     override fun initObserver() {
@@ -49,49 +58,102 @@ class SquareShareArticleActivity :
     }
 
     override fun initRequestData() {
-
+        // 不需要请求数据
     }
 
     override fun reLoadData() {
 
     }
 
-    private fun successShareArticle(){
+    /**
+     * 渲染状态
+     */
+    override fun renderState(state: SquareShareArticleContract.State) {
+
+        if (state.loading) {
+            showLoadingDialog(msg = appStr(R.string.square_share_article_loading))
+        } else {
+            loadingDialog.dismiss()
+        }
+    }
+
+    /**
+     * 处理一次性事件
+     */
+    override fun handleEffect(effect: SquareShareArticleContract.Effect) {
+
+        when (effect) {
+
+            SquareShareArticleContract.Effect.ShareSuccess -> {
+                successShareArticle()
+            }
+
+            is SquareShareArticleContract.Effect.ShowError -> {
+                toast(effect.msg)
+            }
+        }
+    }
+
+    /**
+     * 分享成功
+     */
+    private fun successShareArticle() {
         toast(R.string.square_share_success)
-        EventBusUtils.postEvent(MessageEvent(MessageEvent.MessageType.ShareArticleSuccess))
+
+        EventBusUtils.postEvent(
+            MessageEvent(
+                MessageEvent.MessageType.ShareArticleSuccess
+            )
+        )
+
         finish()
     }
 
     /**
-     *
-     * 校验文章信息和链接
-     * @return
+     * 校验文章
      */
-    private fun validateArticleMessage():Boolean {
+    private fun validateArticleMessage(): Boolean {
+
         var validFlag = true
+
         title = mBinding.squareSharearticleEt.text.toString().trim()
         link = mBinding.squareSharearticleLink.text.toString().trim()
+
         if (TextUtils.isEmpty(title)) {
+
             ToastUtils.show(R.string.square_title_noempty)
+
             validFlag = false
+
         } else if (TextUtils.isEmpty(link)) {
+
             ToastUtils.show(R.string.square_link_noempty)
+
             validFlag = false
+
         } else if (!link.startsWith("http://") && !link.startsWith("https://")) {
+
             ToastUtils.show(R.string.square_linkstart_rule)
+
             validFlag = false
         }
+
         return validFlag
     }
 
-
+    /**
+     * 提交文章
+     */
     @LoginCheck
     private fun submitArticle() {
-        if (validateArticleMessage()) {
-            showLoadingDialog(msg = appStr(R.string.square_share_article_loading))
-            mViewModel.shareArticle(title, link).observerKt {
-                successShareArticle()
-            }
-        }
+
+        if (!validateArticleMessage()) return
+
+        mViewModel.setEvent(
+            SquareShareArticleContract.Event.ShareArticle(
+                title,
+                link
+            )
+        )
     }
 }

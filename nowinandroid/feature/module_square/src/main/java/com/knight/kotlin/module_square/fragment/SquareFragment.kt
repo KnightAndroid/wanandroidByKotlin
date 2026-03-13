@@ -174,11 +174,12 @@ class SquareFragment :
     override fun renderState(state: SquareContract.State) {
         // Loading 状态
         if (state.isLoading && state.questionPage == null) {
+
             requestLoading(smartRefreshLayout)
             return
         }
-
-       // mViewLoadService.showSuccess()
+        requestSuccess()
+        mViewLoadService.showSuccess()
         smartRefreshLayout.finishRefresh()
         smartRefreshLayout.finishLoadMore()
 
@@ -234,7 +235,7 @@ class SquareFragment :
             .setClosedOnStart(true)
             .setGuillotineListener(object : RightLottieListener {
                 override fun onRightLottieOpened() {
-                  //  mViewLoadService.showCallback(com.core.library_base.loadsir.LoadCallBack::class.java)
+                    mViewLoadService.showCallback(com.core.library_base.loadsir.LoadCallBack::class.java)
                     sendEvent(SquareContract.Event.LoadQuestions(page = questionPage))
                 }
 
