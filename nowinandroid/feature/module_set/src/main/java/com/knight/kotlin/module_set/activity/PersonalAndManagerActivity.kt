@@ -1,10 +1,11 @@
 package com.knight.kotlin.module_set.activity
 
 import android.view.View
+import com.core.library_base.contact.EmptyContract
+import com.core.library_base.ktx.setOnClick
 import com.core.library_base.route.RouteActivity
-import com.core.library_base.vm.EmptyViewModel
-import com.flyjingfish.android_aop_core.annotations.SingleClick
-import com.knight.kotlin.library_base.activity.BaseActivity
+import com.core.library_base.vm.EmptyMviViewModel
+import com.knight.kotlin.library_base.activity.BaseMviActivity
 import com.knight.kotlin.library_common.ktx.getUser
 import com.knight.kotlin.library_util.startPage
 import com.knight.kotlin.module_set.R
@@ -19,45 +20,65 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 @AndroidEntryPoint
 @Route(path = RouteActivity.Set.PersonalDeviceMessage)
-class PersonalAndManagerActivity : BaseActivity<SetPersonalManagerActivityBinding, EmptyViewModel>() {
-
-    override fun setThemeColor(isDarkMode: Boolean) {
-
-    }
+class PersonalAndManagerActivity :
+    BaseMviActivity<
+            SetPersonalManagerActivityBinding,
+            EmptyMviViewModel,
+            EmptyContract.Event,
+            EmptyContract.State,
+            EmptyContract.Effect>() {
 
     override fun SetPersonalManagerActivityBinding.initView() {
-        includeSetMessageManagerToobar.baseTvTitle.setText(getString(R.string.set_personal_message_manager))
-        getUser()?.let {
-            setRlPersonalMessage.visibility = View.VISIBLE
-        } ?: run {
-            setRlPersonalMessage.visibility = View.GONE
+        title = getString(R.string.set_personal_message_manager)
+
+        includeSetMessageManagerToobar.baseTvTitle.text =
+            getString(R.string.set_personal_message_manager)
+
+        includeSetMessageManagerToobar.baseIvBack.setOnClick {
+            finish()
         }
-        setOnClickListener(setRlPersonalMessage,setRlDeviceMessage)
-        includeSetMessageManagerToobar.baseIvBack.setOnClickListener { finish() }
+
+        initData()
+        initListener()
     }
 
-    override fun initObserver() {
+    override fun initObserver() {}
 
+    override fun initRequestData() {}
+
+    override fun reLoadData() {}
+
+    override fun renderState(state: EmptyContract.State) {}
+
+    override fun handleEffect(effect: EmptyContract.Effect) {}
+
+    override fun setThemeColor(isDarkMode: Boolean) {}
+
+    // =========================
+    // 初始化
+    // =========================
+
+    private fun initData() {
+        val hasUser = getUser() != null
+        updateUserVisible(hasUser)
     }
 
-    override fun initRequestData() {
-
-    }
-
-    override fun reLoadData() {
-
-    }
-
-    @SingleClick
-    override fun onClick(v: View) {
-        when (v) {
-            mBinding.setRlPersonalMessage -> {
-                startPage(RouteActivity.Set.PersonalMessage)
-            }
-
-            mBinding.setRlDeviceMessage -> {
-                startPage(RouteActivity.Set.DeviceMessage)
-            }
+    private fun initListener() = with(mBinding) {
+        setRlPersonalMessage.setOnClick {
+            startPage(RouteActivity.Set.PersonalMessage)
         }
+
+        setRlDeviceMessage.setOnClick {
+            startPage(RouteActivity.Set.DeviceMessage)
+        }
+    }
+
+    // =========================
+    // UI控制
+    // =========================
+
+    private fun updateUserVisible(show: Boolean) {
+        mBinding.setRlPersonalMessage.visibility =
+            if (show) View.VISIBLE else View.GONE
     }
 }

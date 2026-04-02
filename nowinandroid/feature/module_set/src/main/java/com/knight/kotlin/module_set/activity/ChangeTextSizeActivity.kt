@@ -2,12 +2,13 @@ package com.knight.kotlin.module_set.activity
 
 import android.content.res.Resources
 import android.view.View
+import com.core.library_base.contact.EmptyContract
 import com.core.library_base.ktx.setOnClick
 import com.core.library_base.route.RouteActivity
-import com.core.library_base.vm.EmptyViewModel
+import com.core.library_base.vm.EmptyMviViewModel
 import com.core.library_common.util.px2sp
 import com.knight.kotlin.library_base.BaseApp
-import com.knight.kotlin.library_base.activity.BaseActivity
+import com.knight.kotlin.library_base.activity.BaseMviActivity
 import com.knight.kotlin.library_common.util.CacheUtils
 import com.knight.kotlin.library_util.SystemUtils
 import com.knight.kotlin.library_widget.ChangeSizeView
@@ -24,96 +25,162 @@ import me.jessyan.autosize.AutoSize
  */
 @AndroidEntryPoint
 @Route(path = RouteActivity.Set.SetChangeTextSizeActivity)
-class ChangeTextSizeActivity : BaseActivity<SetChangetextsizeActivityBinding, EmptyViewModel>() {
-
+class ChangeTextSizeActivity :
+    BaseMviActivity<
+            SetChangetextsizeActivityBinding,
+            EmptyMviViewModel,
+            EmptyContract.Event,
+            EmptyContract.State,
+            EmptyContract.Effect>() {
 
     /**
-     *
      * 字体缩放因子
      */
-    private var fontSizeScale:Float = 1f
+    private var fontSizeScale: Float = 1f
 
-    private var position:Int = 0
-
-    override fun setThemeColor(isDarkMode: Boolean) {
-
-    }
+    private var position: Int = 0
 
     override fun SetChangetextsizeActivityBinding.initView() {
-        includeChangetextToolbar.baseTvTitle.setText(R.string.set_changetextsize)
-        includeChangetextToolbar.baseIvBack.setOnClick { finish() }
-        includeChangetextToolbar.baseTvRight.visibility = View.VISIBLE
-        includeChangetextToolbar.baseTvRight.setText(R.string.set_changetextsize_save)
-        fontSizeScale = CacheUtils.getSystemFontSize()
-        position = ((fontSizeScale - 0.875) / 0.125).toInt()
-        setCsvFontSize.setDefaultPosition(position)
-        changeSize(position)
-        mBinding.includeChangetextToolbar.baseTvRight.setOnClick {
-            CacheUtils.setSystemFontSize(fontSizeScale)
-            //如果是设置标准字体那就开启屏幕适配
-            if (fontSizeScale == 1.0f && !AutoSize.checkInit()) {
-                AutoSize.checkAndInit(BaseApp.application)
-            }
-            SystemUtils.restartApp(this@ChangeTextSizeActivity)
-        }
-        setCsvFontSize.setChangeCallbackListener(object:ChangeSizeView.OnChangeCallbackListener{
-            override fun onChangeListener(position: Int) {
-                changeSize(position)
-                changeTitleSize()
-            }
-        })
+        title = getString(R.string.set_changetextsize)
 
+        includeChangetextToolbar.baseIvBack.setOnClick { finish() }
+
+        includeChangetextToolbar.baseTvTitle.text =
+            getString(R.string.set_changetextsize)
+
+        includeChangetextToolbar.baseTvRight.apply {
+            visibility = View.VISIBLE
+            text = getString(R.string.set_changetextsize_save)
+            setOnClick { saveFontSize() }
+        }
+
+        initData()
+        initListener()
     }
 
     override fun initObserver() {
-
+        // no-op
     }
 
     override fun initRequestData() {
-
+        // no-op
     }
 
     override fun reLoadData() {
-
+        // no-op
     }
 
-    private fun changeSize(position:Int) {
-        val dimension = resources.getDimensionPixelSize(com.core.library_base.R.dimen.base_dimen_16)
-        //根据position 获取字体倍数
-        fontSizeScale = (0.875 + 0.125 * position).toFloat()
-        //放大后获取缩小的sp单位
-        val resultTextSize = (fontSizeScale * dimension.px2sp()).toInt()
-        mBinding.setTvSample.setTextSize(resultTextSize.toFloat())
-
+    override fun renderState(state: EmptyContract.State) {
+        // no-op
     }
 
+    override fun handleEffect(effect: EmptyContract.Effect) {
+        // no-op
+    }
+
+    override fun setThemeColor(isDarkMode: Boolean) {
+        // 可扩展
+    }
+
+    // =========================
+    // 初始化
+    // =========================
+
+    private fun initData() {
+        fontSizeScale = CacheUtils.getSystemFontSize()
+
+        // 反推位置
+        position = ((fontSizeScale - 0.875f) / 0.125f).toInt()
+
+        mBinding.setCsvFontSize.setDefaultPosition(position)
+
+        updatePreview(position)
+    }
+
+    private fun initListener() {
+        mBinding.setCsvFontSize.setChangeCallbackListener(
+            object : ChangeSizeView.OnChangeCallbackListener {
+                override fun onChangeListener(position: Int) {
+                    updatePreview(position)
+                }
+            }
+        )
+    }
+
+    // =========================
+    // UI更新
+    // =========================
+
+    private fun updatePreview(position: Int) {
+        this.position = position
+
+        fontSizeScale = calculateScale(position)
+
+        updateContentTextSize()
+        updateTitleTextSize()
+    }
 
     /**
-     *
-     * 改变标题字体大下
+     * 内容字体
      */
-    private fun changeTitleSize() {
-        val titleBaseDimension = resources.getDimensionPixelSize(com.core.library_base.R.dimen.base_dimen_18)
-        val titleRightDimension = resources.getDimensionPixelSize(com.core.library_base.R.dimen.base_dimen_15)
-        val titleCenterTextSize = (fontSizeScale * titleBaseDimension.px2sp()).toInt()
-        val titleRightTextSize = (fontSizeScale * titleRightDimension.px2sp()).toInt()
-        mBinding.includeChangetextToolbar.baseTvTitle.setTextSize(titleCenterTextSize.toFloat())
-        mBinding.includeChangetextToolbar.baseTvRight.setTextSize(titleRightTextSize.toFloat())
+    private fun updateContentTextSize() {
+        val basePx =
+            resources.getDimensionPixelSize(com.core.library_base.R.dimen.base_dimen_16)
+
+        val sp = basePx.px2sp()
+
+        val resultSize = fontSizeScale * sp
+
+        mBinding.setTvSample.textSize = resultSize
     }
 
     /**
-     * 用这个方法 为了初始化选中字体缩放因子 保证基准是以1 调整字体大小 不然基准是以缩放因子
+     * 标题字体
      */
+    private fun updateTitleTextSize() {
+        val titleBasePx =
+            resources.getDimensionPixelSize(com.core.library_base.R.dimen.base_dimen_18)
+        val rightBasePx =
+            resources.getDimensionPixelSize(com.core.library_base.R.dimen.base_dimen_15)
+
+        val titleSize = fontSizeScale * titleBasePx.px2sp()
+        val rightSize = fontSizeScale * rightBasePx.px2sp()
+
+        mBinding.includeChangetextToolbar.baseTvTitle.textSize = titleSize
+        mBinding.includeChangetextToolbar.baseTvRight.textSize = rightSize
+    }
+
+    // =========================
+    // 业务逻辑
+    // =========================
+
+    private fun calculateScale(position: Int): Float {
+        return 0.875f + 0.125f * position
+    }
+
+    private fun saveFontSize() {
+        CacheUtils.setSystemFontSize(fontSizeScale)
+
+        // 标准字体恢复 AutoSize
+        if (fontSizeScale == 1.0f && !AutoSize.checkInit()) {
+            AutoSize.checkAndInit(BaseApp.application)
+        }
+
+        SystemUtils.restartApp(this)
+    }
+
+    // =========================
+    // 关键：防止系统字体影响
+    // =========================
+
     override fun getResources(): Resources {
         val res = super.getResources()
-        if (res != null) {
-            val config = res.configuration
-            if (config != null && config.fontScale != 1.0f) {
-                config.fontScale = 1.0f
-                res.updateConfiguration(config, res.displayMetrics)
-            }
+        val config = res.configuration
+
+        if (config.fontScale != 1.0f) {
+            config.fontScale = 1.0f
+            res.updateConfiguration(config, res.displayMetrics)
         }
         return res
     }
-
 }

@@ -38,7 +38,7 @@ class ColorPickerDialog(context: Context,initialColor:Int,mColorStyle:Int,mRecov
     private val colorStyle = mColorStyle
     private val recoverText: String = mRecoverText
 
-    interface OnColorPickedListener {
+    fun interface OnColorPickedListener {
         fun onColorPicked(color: Int)
     }
 

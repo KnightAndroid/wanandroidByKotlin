@@ -1,11 +1,8 @@
 package com.knight.kotlin.module_set.vm
 
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.asLiveData
-import com.core.library_base.vm.BaseViewModel
-import com.knight.kotlin.library_base.entity.AppUpdateBean
-import com.knight.kotlin.library_util.toast
+import com.core.library_base.vm.BaseMviViewModel
+import com.knight.kotlin.module_set.contract.AboutContract
 import com.knight.kotlin.module_set.repo.AboutRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -16,15 +13,50 @@ import javax.inject.Inject
  * Description:AboutVm
  */
 @HiltViewModel
-class AboutVm @Inject constructor(private val mRepo: AboutRepo) : BaseViewModel() {
-    /**
-     * 检查APP版本更新
-     */
-    fun checkAppUpdateMessage() :LiveData<AppUpdateBean> {
-        return mRepo.checkAppUpdateMessage(failureCallBack = {
-            toast(com.core.library_base.R.string.base_request_failure)
-        }).asLiveData()
+class AboutVm @Inject constructor(
+    private val mRepo: AboutRepo
+) : BaseMviViewModel<
+        AboutContract.Event,
+        AboutContract.State,
+        AboutContract.Effect>() {
+
+    override fun initialState() = AboutContract.State()
+
+    override fun handleEvent(event: AboutContract.Event) {
+        when (event) {
+            AboutContract.Event.CheckAppUpdate -> {
+                checkAppUpdate()
+            }
+        }
     }
 
+    private fun checkAppUpdate() {
+        requestFlowMvi(
+            block = { mRepo.checkAppUpdateMessage() },
 
+            onStart = {
+                setState { copy(isLoading = true) }
+            },
+
+            onEach = { data ->
+                setState {
+                    copy(
+                        isLoading = false,
+                        updateBean = data
+                    )
+                }
+            },
+
+            onError = {
+                setState { copy(isLoading = false) }
+                setEffect {
+                    AboutContract.Effect.ShowError("请求失败")
+                }
+            },
+
+            onCompletion = {
+                setState { copy(isLoading = false) }
+            }
+        )
+    }
 }

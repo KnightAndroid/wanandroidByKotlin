@@ -2,14 +2,12 @@ package com.knight.kotlin.module_set.activity
 
 import android.app.TimePickerDialog
 import android.view.View
-import android.widget.CompoundButton
-import android.widget.TimePicker
-import com.knight.kotlin.library_base.activity.BaseActivity
+import com.core.library_base.contact.EmptyContract
 import com.core.library_base.ktx.setOnClick
 import com.core.library_base.route.RouteActivity
+import com.core.library_base.vm.EmptyMviViewModel
+import com.knight.kotlin.library_base.activity.BaseMviActivity
 import com.knight.kotlin.library_common.util.CacheUtils
-import com.core.library_base.vm.EmptyViewModel
-import com.flyjingfish.android_aop_core.annotations.SingleClick
 import com.knight.kotlin.module_set.R
 import com.knight.kotlin.module_set.databinding.SetAutonighttimeActivityBinding
 import com.wyjson.router.annotation.Route
@@ -25,120 +23,146 @@ import java.util.Calendar
 
 @AndroidEntryPoint
 @Route(path = RouteActivity.Set.SetAutoNightActivity)
-class AutoNightTimeActivity : BaseActivity<SetAutonighttimeActivityBinding, EmptyViewModel>() {
+class AutoNightTimeActivity :
+    BaseMviActivity<
+            SetAutonighttimeActivityBinding,
+            EmptyMviViewModel,
+            EmptyContract.Event,
+            EmptyContract.State,
+            EmptyContract.Effect>() {
 
+    private val mCalendar: Calendar = Calendar.getInstance()
 
-    private val mCarlendar:Calendar = Calendar.getInstance()
-    private var temphourOfNight = CacheUtils.getStartNightModeHour()
-    private var tempminuterNight = CacheUtils.getStartNightModeMinuter()
-    private var temphourOfDay = CacheUtils.getStartDayModeHour()
-    private var tempminuterDay = CacheUtils.getStartDayModeMinuter()
-
-
-
-    override fun setThemeColor(isDarkMode: Boolean) {
-
-    }
+    private var tempHourOfNight = CacheUtils.getStartNightModeHour()
+    private var tempMinuteNight = CacheUtils.getStartNightModeMinuter()
+    private var tempHourOfDay = CacheUtils.getStartDayModeHour()
+    private var tempMinuteDay = CacheUtils.getStartDayModeMinuter()
 
     override fun SetAutonighttimeActivityBinding.initView() {
+        title = getString(R.string.set_night_mode)
+
         includeAutoNightToolbar.baseIvBack.setOnClick { finish() }
-        includeAutoNightToolbar.baseTvTitle.setText(getString(R.string.set_night_mode))
-        includeAutoNightToolbar.baseTvRight.visibility = View.VISIBLE
-        includeAutoNightToolbar.baseTvRight.setText(getString(R.string.set_night_mode_save))
-        includeAutoNightToolbar.baseTvRight.setOnClick {
-            saveAutoNightTime()
+        includeAutoNightToolbar.baseTvTitle.text = getString(R.string.set_night_mode)
+
+        includeAutoNightToolbar.baseTvRight.apply {
+            visibility = View.VISIBLE
+            text = getString(R.string.set_night_mode_save)
+            setOnClick { saveAutoNightTime() }
         }
 
-        if (CacheUtils.getAutoNightMode()) {
-            setCbNightMode.isChecked = true
-            setRlStartDayTime.visibility = View.VISIBLE
-            setRlStartNightTime.visibility = View.VISIBLE
-        } else {
-            setCbNightMode.isChecked  = false
-        }
-
-        setCbNightMode.setOnCheckedChangeListener(object:CompoundButton.OnCheckedChangeListener{
-            override fun onCheckedChanged(buttonView: CompoundButton, isChecked: Boolean) {
-                if (isChecked) {
-                    mBinding.setRlStartDayTime.visibility = View.VISIBLE
-                    mBinding.setRlStartNightTime.visibility = View.VISIBLE
-                } else {
-                    mBinding.setRlStartDayTime.visibility = View.GONE
-                    mBinding.setRlStartNightTime.visibility = View.GONE
-                }
-            }
-        })
-
-        setTvNightTimeValue.setText(temphourOfNight + ":" + tempminuterNight)
-        setDayTimeValue.setText(temphourOfDay + ":" +tempminuterDay)
-        setOnClickListener(setRlStartNightTime,setRlStartDayTime)
+        initSwitch()
+        initTimeView()
+        initClick()
     }
 
     override fun initObserver() {
-
+        // 如果后面有状态流，这里监听
     }
 
     override fun initRequestData() {
-
+        // no-op
     }
 
     override fun reLoadData() {
-
+        // no-op
     }
 
+    override fun renderState(state: EmptyContract.State) {
+        // no-op
+    }
 
-    /**
-     * 保存
-     * 自动设置夜间模式切换时间
-     *
-     */
+    override fun handleEffect(effect: EmptyContract.Effect) {
+        // no-op
+    }
+
+    override fun setThemeColor(isDarkMode: Boolean) {
+        // 这里你如果想适配颜色，可以补充
+    }
+
+    // =========================
+    // 初始化逻辑
+    // =========================
+
+    private fun initSwitch() {
+        val isOpen = CacheUtils.getAutoNightMode()
+        mBinding.setCbNightMode.isChecked = isOpen
+
+        updateTimeLayoutVisible(isOpen)
+
+        mBinding.setCbNightMode.setOnCheckedChangeListener { _, isChecked ->
+            updateTimeLayoutVisible(isChecked)
+        }
+    }
+
+    private fun initTimeView() {
+        mBinding.setTvNightTimeValue.text = "$tempHourOfNight:$tempMinuteNight"
+        mBinding.setDayTimeValue.text = "$tempHourOfDay:$tempMinuteDay"
+    }
+
+    private fun initClick() {
+        mBinding.setRlStartNightTime.setOnClick { showNightPicker() }
+        mBinding.setRlStartDayTime.setOnClick { showDayPicker() }
+    }
+
+    private fun updateTimeLayoutVisible(show: Boolean) {
+        mBinding.setRlStartDayTime.visibility = if (show) View.VISIBLE else View.GONE
+        mBinding.setRlStartNightTime.visibility = if (show) View.VISIBLE else View.GONE
+    }
+
+    // =========================
+    // 时间选择
+    // =========================
+
+    private fun showNightPicker() {
+        TimePickerDialog(
+            this,
+            com.knight.kotlin.library_widget.R.style.dialog_time_style,
+            { _, hourOfDay, minute ->
+                tempHourOfNight = formatTime(hourOfDay)
+                tempMinuteNight = formatTime(minute)
+                mBinding.setTvNightTimeValue.text =
+                    "$tempHourOfNight:$tempMinuteNight"
+            },
+            mCalendar.get(Calendar.HOUR_OF_DAY),
+            mCalendar.get(Calendar.MINUTE),
+            true
+        ).show()
+    }
+
+    private fun showDayPicker() {
+        TimePickerDialog(
+            this,
+            com.knight.kotlin.library_widget.R.style.dialog_time_style,
+            { _, hourOfDay, minute ->
+                tempHourOfDay = formatTime(hourOfDay)
+                tempMinuteDay = formatTime(minute)
+                mBinding.setDayTimeValue.text =
+                    "$tempHourOfDay:$tempMinuteDay"
+            },
+            mCalendar.get(Calendar.HOUR_OF_DAY),
+            mCalendar.get(Calendar.MINUTE),
+            true
+        ).show()
+    }
+
+    private fun formatTime(value: Int): String {
+        return if (value < 10) "0$value" else value.toString()
+    }
+
+    // =========================
+    // 保存逻辑
+    // =========================
+
     private fun saveAutoNightTime() {
         if (mBinding.setCbNightMode.isChecked) {
             CacheUtils.setOpenAutoNightMode(true)
-            CacheUtils.setStartNightModeHour(temphourOfNight)
-            CacheUtils.setStartNightModeMinuter(tempminuterNight)
-            CacheUtils.setStartDayModeHour(temphourOfDay)
-            CacheUtils.setStartDayModeMinuter(tempminuterDay)
+            CacheUtils.setStartNightModeHour(tempHourOfNight)
+            CacheUtils.setStartNightModeMinuter(tempMinuteNight)
+            CacheUtils.setStartDayModeHour(tempHourOfDay)
+            CacheUtils.setStartDayModeMinuter(tempMinuteDay)
         } else {
             CacheUtils.setOpenAutoNightMode(false)
         }
         finish()
     }
-
-    @SingleClick
-    override fun onClick(v: View) {
-        when (v) {
-
-            /**
-             *
-             * 设置晚间模式时间
-             */
-            mBinding.setRlStartNightTime -> {
-                val nightDialog = TimePickerDialog(this@AutoNightTimeActivity,
-                    com.knight.kotlin.library_widget.R.style.dialog_time_style,object:TimePickerDialog.OnTimeSetListener{
-                    override fun onTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
-                        temphourOfNight = if (hourOfDay < 10) "0$hourOfDay" else hourOfDay.toString()
-                        tempminuterNight = if (minute < 10) "0$minute" else minute.toString()
-                        mBinding.setTvNightTimeValue.setText(temphourOfNight + ":" +tempminuterNight)
-                    }
-                },mCarlendar.get(Calendar.HOUR_OF_DAY),mCarlendar.get(Calendar.MINUTE),true)
-
-                nightDialog.show()
-            }
-
-            mBinding.setRlStartDayTime -> {
-                val dayDialog = TimePickerDialog(this@AutoNightTimeActivity,com.knight.kotlin.library_widget.R.style.dialog_time_style,object : TimePickerDialog.OnTimeSetListener{
-                    override fun onTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
-                        temphourOfDay = if (hourOfDay < 10) "0$hourOfDay" else hourOfDay.toString()
-                        tempminuterDay = if (minute < 10) "0$minute" else minute.toString()
-                        mBinding.setDayTimeValue.setText(temphourOfDay + ":" + tempminuterDay)
-                    }
-                },mCarlendar.get(Calendar.HOUR_OF_DAY),mCarlendar.get(Calendar.MINUTE),true)
-                dayDialog.show()
-            }
-
-        }
-    }
-
-
 }

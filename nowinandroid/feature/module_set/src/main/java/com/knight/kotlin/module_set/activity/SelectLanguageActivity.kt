@@ -2,15 +2,16 @@ package com.knight.kotlin.module_set.activity
 
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.knight.kotlin.library_base.activity.BaseActivity
+import com.core.library_base.contact.EmptyContract
 import com.core.library_base.ktx.init
 import com.core.library_base.ktx.setOnClick
 import com.core.library_base.route.RouteActivity
-import com.knight.kotlin.library_common.util.CacheUtils
 import com.core.library_base.util.GsonUtils
-import com.knight.kotlin.library_common.util.LanguageFontSizeUtils
-import com.core.library_base.vm.EmptyViewModel
+import com.core.library_base.vm.EmptyMviViewModel
 import com.google.common.reflect.TypeToken
+import com.knight.kotlin.library_base.activity.BaseMviActivity
+import com.knight.kotlin.library_common.util.CacheUtils
+import com.knight.kotlin.library_common.util.LanguageFontSizeUtils
 import com.knight.kotlin.library_util.JsonUtils
 import com.knight.kotlin.library_util.SystemUtils
 import com.knight.kotlin.library_widget.ktx.setSafeOnItemClickListener
@@ -20,7 +21,6 @@ import com.knight.kotlin.module_set.databinding.SetLanguageActivityBinding
 import com.knight.kotlin.module_set.entity.LanguageEntity
 import com.wyjson.router.annotation.Route
 import dagger.hilt.android.AndroidEntryPoint
-import java.lang.reflect.Type
 
 /**
  * Author:Knight
@@ -29,86 +29,105 @@ import java.lang.reflect.Type
  */
 @AndroidEntryPoint
 @Route(path = RouteActivity.Set.SetLanguageActivity)
-class SelectLanguageActivity : BaseActivity<SetLanguageActivityBinding, EmptyViewModel>() {
+class SelectLanguageActivity :
+    BaseMviActivity<
+            SetLanguageActivityBinding,
+            EmptyMviViewModel,
+            EmptyContract.Event,
+            EmptyContract.State,
+            EmptyContract.Effect>() {
 
+    private val mAdapter by lazy { SelectLanguageAdapter(arrayListOf()) }
 
-
-    private lateinit var mLanguageList:MutableList<LanguageEntity>
-
-    private lateinit var currentSelecLanguage :String
+    private val mLanguageList = mutableListOf<LanguageEntity>()
 
     private var currentLanguage = CacheUtils.getLanguageMode()
-    private val mSelectLanguageAdapter: SelectLanguageAdapter by lazy {
-        SelectLanguageAdapter(
-            arrayListOf()
-        )
-    }
-    override fun setThemeColor(isDarkMode: Boolean) {
-
-    }
+    private var selectedLanguage: String = currentLanguage // ⭐关键修复
 
     override fun SetLanguageActivityBinding.initView() {
+        title = getString(R.string.set_more_language)
+
         includeLanguageToolbar.baseIvBack.setOnClick { finish() }
-        includeLanguageToolbar.baseTvTitle.setText(getString(R.string.set_more_language))
-        includeLanguageToolbar.baseTvRight.visibility = View.VISIBLE
-        includeLanguageToolbar.baseTvRight.setText(getString(R.string.set_language_save))
-        includeLanguageToolbar.baseTvRight.setOnClick { saveLanguage()  }
-        setRvLanguageSelect.init(LinearLayoutManager(this@SelectLanguageActivity),mSelectLanguageAdapter,true)
-        getLanguageData()
+
+        includeLanguageToolbar.baseTvTitle.text =
+            getString(R.string.set_more_language)
+
+        includeLanguageToolbar.baseTvRight.apply {
+            visibility = View.VISIBLE
+            text = getString(R.string.set_language_save)
+            setOnClick { saveLanguage() }
+        }
+
+        initRecyclerView()
+        initData()
         initListener()
     }
 
-    override fun initObserver() {
+    override fun initObserver() {}
+    override fun initRequestData() {}
+    override fun reLoadData() {}
+    override fun renderState(state: EmptyContract.State) {}
+    override fun handleEffect(effect: EmptyContract.Effect) {}
+    override fun setThemeColor(isDarkMode: Boolean) {}
 
+    // =========================
+    // 初始化
+    // =========================
+
+    private fun initRecyclerView() {
+        mBinding.setRvLanguageSelect.init(
+            LinearLayoutManager(this),
+            mAdapter,
+            true
+        )
     }
 
-    override fun initRequestData() {
+    private fun initData() {
+        val type = object : TypeToken<List<LanguageEntity>>() {}.type
+        val json = JsonUtils.getJson(this, "languageselect.json")
 
-    }
+        mLanguageList.clear()
+        mLanguageList.addAll(GsonUtils.getList(json, type))
 
-    override fun reLoadData() {
-
-    }
-
-    /**
-     *
-     * 初始化数据
-     */
-    private fun getLanguageData() {
-        val type: Type = object : TypeToken<List<LanguageEntity>>() {}.type
-        val jsonData = JsonUtils.getJson(this, "languageselect.json")
-        mLanguageList = GsonUtils.getList(jsonData, type)
-        for (i in mLanguageList.indices) {
-            if (currentLanguage == mLanguageList.get(i).englishName) {
-                mLanguageList.get(i).select = true
-                break
-            }
+        // 设置默认选中
+        mLanguageList.forEach {
+            it.select = it.englishName == currentLanguage
         }
-        mSelectLanguageAdapter.submitList(mLanguageList)
+
+        mAdapter.submitList(mLanguageList.toList())
     }
 
     private fun initListener() {
-        mSelectLanguageAdapter.run {
-            setSafeOnItemClickListener { adapter, view, position ->
-                for (i in mLanguageList.indices) {
-                    mLanguageList.get(i).select = false
-                }
-                mLanguageList.get(position).select = true
-                mSelectLanguageAdapter.notifyDataSetChanged()
-                currentSelecLanguage = mLanguageList.get(position).englishName
-
-            }
+        mAdapter.setSafeOnItemClickListener { _, _, position ->
+            updateSelect(position)
         }
     }
 
-    /**
-     *
-     * 保存语言模式
-     */
-    private fun saveLanguage() {
-        CacheUtils.setLanguageType(currentSelecLanguage)
-        LanguageFontSizeUtils.setAppLanguage(this)
-        SystemUtils.restartApp(this)
+    // =========================
+    // UI逻辑
+    // =========================
+
+    private fun updateSelect(position: Int) {
+        mLanguageList.forEach { it.select = false }
+
+        val item = mLanguageList[position]
+        item.select = true
+
+        selectedLanguage = item.englishName
+
+        // ⭐关键：使用 Diff 刷新
+        mAdapter.submitList(mLanguageList.toList())
     }
 
+    // =========================
+    // 保存逻辑
+    // =========================
+
+    private fun saveLanguage() {
+        CacheUtils.setLanguageType(selectedLanguage)
+
+        LanguageFontSizeUtils.setAppLanguage(this)
+
+        SystemUtils.restartApp(this)
+    }
 }

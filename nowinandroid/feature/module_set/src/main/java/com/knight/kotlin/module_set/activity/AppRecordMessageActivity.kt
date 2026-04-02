@@ -1,14 +1,15 @@
 package com.knight.kotlin.module_set.activity
 
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.knight.kotlin.library_base.activity.BaseActivity
 import com.core.library_base.ktx.init
 import com.core.library_base.ktx.setOnClick
 import com.core.library_base.route.RouteActivity
+import com.knight.kotlin.library_base.activity.BaseMviActivity
+import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_set.R
 import com.knight.kotlin.module_set.adapter.VersionRecordAdapter
+import com.knight.kotlin.module_set.contract.AppUpdateRecordContract
 import com.knight.kotlin.module_set.databinding.SetVersionRecordActivityBinding
-import com.knight.kotlin.module_set.entity.VersionRecordListEntity
 import com.knight.kotlin.module_set.vm.AppUpdateRecordVm
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener
@@ -22,21 +23,32 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 @AndroidEntryPoint
 @Route(path = RouteActivity.Set.AppRecordMessageActivity)
-class AppRecordMessageActivity : BaseActivity<SetVersionRecordActivityBinding, AppUpdateRecordVm>(),
+class AppRecordMessageActivity : BaseMviActivity<
+        SetVersionRecordActivityBinding,
+        AppUpdateRecordVm,
+        AppUpdateRecordContract.Event,
+        AppUpdateRecordContract.State,
+        AppUpdateRecordContract.Effect>(),
     OnRefreshListener {
 
+    private val mVersionRecordAdapter by lazy { VersionRecordAdapter() }
 
-    private val mVersionRecordAdapter:VersionRecordAdapter by lazy {VersionRecordAdapter()}
-    override fun setThemeColor(isDarkMode: Boolean) {
-
-    }
+    override fun setThemeColor(isDarkMode: Boolean) {}
 
     override fun SetVersionRecordActivityBinding.initView() {
-        includeVersionRecordToolbar.baseTvTitle.setText(getString(R.string.set_app_record))
+        includeVersionRecordToolbar.baseTvTitle.text = getString(R.string.set_app_record)
         includeVersionRecordToolbar.baseIvBack.setOnClick { finish() }
+
         requestLoading(includeVersionRecordCollectfreshalayout.baseFreshlayout)
-        includeVersionRecordCollectfreshalayout.baseBodyRv.init(LinearLayoutManager(this@AppRecordMessageActivity),mVersionRecordAdapter,false)
-        includeVersionRecordCollectfreshalayout.baseFreshlayout.setOnRefreshListener(this@AppRecordMessageActivity)
+
+        includeVersionRecordCollectfreshalayout.baseBodyRv.init(
+            LinearLayoutManager(this@AppRecordMessageActivity),
+            mVersionRecordAdapter,
+            false
+        )
+
+        includeVersionRecordCollectfreshalayout.baseFreshlayout
+            .setOnRefreshListener(this@AppRecordMessageActivity)
     }
 
     override fun initObserver() {
@@ -44,29 +56,54 @@ class AppRecordMessageActivity : BaseActivity<SetVersionRecordActivityBinding, A
     }
 
     override fun initRequestData() {
-        mViewModel.checkAppUpdateMessage().observerKt {
-            getAppRecordMessage(it)
+        // 首次加载
+        mViewModel.setEvent(AppUpdateRecordContract.Event.LoadData)
+    }
+
+    //===================== MVI =====================//
+
+    override fun initEvent() {
+
+    }
+
+    override fun renderState(state: AppUpdateRecordContract.State) {
+
+        // 结束刷新
+        mBinding.includeVersionRecordCollectfreshalayout.baseFreshlayout.finishRefresh()
+
+        if (state.isLoading) {
+            requestLoading(mBinding.includeVersionRecordCollectfreshalayout.baseFreshlayout)
         }
+
+        state.listData?.let { data ->
+            requestSuccess()
+
+            if (!data.datas.isNullOrEmpty()) {
+                mVersionRecordAdapter.submitList(data.datas)
+            } else {
+                requestEmptyData()
+            }
+        }
+    }
+
+    override fun handleEffect(effect: AppUpdateRecordContract.Effect) {
+        when (effect) {
+            is AppUpdateRecordContract.Effect.ShowError -> {
+                mBinding.includeVersionRecordCollectfreshalayout.baseFreshlayout.finishRefresh()
+                requestFailure()
+                toast(effect.msg)
+            }
+        }
+    }
+
+    //===================== 刷新 =====================//
+
+    override fun onRefresh(refreshLayout: RefreshLayout) {
+        mViewModel.setEvent(AppUpdateRecordContract.Event.LoadData)
     }
 
     override fun reLoadData() {
-
+        // LoadSir 重试
+        mViewModel.setEvent(AppUpdateRecordContract.Event.LoadData)
     }
-
-    override fun onRefresh(refreshLayout: RefreshLayout) {
-        mViewModel.checkAppUpdateMessage().observerKt {
-            getAppRecordMessage(it)
-        }
-    }
-
-    private fun getAppRecordMessage(data: VersionRecordListEntity) {
-        requestSuccess()
-        mBinding.includeVersionRecordCollectfreshalayout.baseFreshlayout.finishRefresh()
-        if (data.datas.size > 0) {
-            mVersionRecordAdapter.submitList(data.datas)
-        } else {
-            requestEmptyData()
-        }
-    }
-
 }
