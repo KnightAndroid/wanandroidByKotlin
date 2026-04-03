@@ -24,13 +24,14 @@ class AboutVm @Inject constructor(
 
     override fun handleEvent(event: AboutContract.Event) {
         when (event) {
-            AboutContract.Event.CheckAppUpdate -> {
-                checkAppUpdate()
+            is AboutContract.Event.CheckAppUpdate -> {
+                checkAppUpdate(event)
             }
         }
     }
 
-    private fun checkAppUpdate() {
+    private fun checkAppUpdate(event: AboutContract.Event.CheckAppUpdate) {
+
         requestFlowMvi(
             block = { mRepo.checkAppUpdateMessage() },
 
@@ -39,11 +40,19 @@ class AboutVm @Inject constructor(
             },
 
             onEach = { data ->
-                setState {
-                    copy(
-                        isLoading = false,
-                        updateBean = data
-                    )
+
+                setState { copy(isLoading = false) }
+
+                if (event.currentVersionCode < data.versionCode
+                    && data.versionName != event.currentVersionName
+                ) {
+                    setEffect {
+                        AboutContract.Effect.ShowUpdateDialog(data)
+                    }
+                } else {
+                    setEffect {
+                        AboutContract.Effect.ShowNoUpdateToast
+                    }
                 }
             },
 
@@ -52,10 +61,6 @@ class AboutVm @Inject constructor(
                 setEffect {
                     AboutContract.Effect.ShowError("请求失败")
                 }
-            },
-
-            onCompletion = {
-                setState { copy(isLoading = false) }
             }
         )
     }

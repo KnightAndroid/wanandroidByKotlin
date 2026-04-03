@@ -10,15 +10,24 @@ import kotlinx.parcelize.Parcelize
  * @Date 2025/2/20 10:32
  * @descript:早报实体
  */
+
 @Parcelize
 data class ZaoBaoBean(
-    val code :String,
-    val msg:String,
-    val date:String,
-    val news:List<String>,
-    val weiyu:String,
-    val tip:String,
-    val image:String,
-    val audio:String,
-    val head_image:String,
+    val code: Int,
+    val `data`: ZaoBaoData,
+    val ip: String,
+    val msg: String,
+
 ): Parcelable
+
+
+@Parcelize
+data class ZaoBaoData(
+    val audio: String,
+    val date: String,
+    val head_image: String,
+    val image: String,
+    val news: List<String>,
+    val weiyu: String
+): Parcelable
+

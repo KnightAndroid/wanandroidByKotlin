@@ -63,7 +63,7 @@ class HomeWeatherNewsFragment: BaseDialogFragment<HomeTodayWeatherNewsDialogBind
     override fun initRequestData() {
 
             //获取日报新闻
-        mViewModel.getZaoBao("json").observe(viewLifecycleOwner) { data ->
+        mViewModel.getZaoBao().observe(viewLifecycleOwner) { data ->
             data?.let {
                 zaoBaoDate = data.date
 

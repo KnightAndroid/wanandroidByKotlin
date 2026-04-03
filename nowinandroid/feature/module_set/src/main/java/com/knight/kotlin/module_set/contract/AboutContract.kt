@@ -16,17 +16,24 @@ class AboutContract {
 
     /** ========= Event ========= */
     sealed class Event : ViewEvent {
-        object CheckAppUpdate : Event()
+        data class CheckAppUpdate(
+            val currentVersionCode: Long,
+            val currentVersionName: String
+        ) : Event()
     }
 
     /** ========= State ========= */
     data class State(
-        val isLoading: Boolean = false,
-        val updateBean: AppUpdateBean? = null
+        val isLoading: Boolean = false
     ) : ViewState
 
     /** ========= Effect ========= */
     sealed class Effect : ViewSideEffect {
+
+        data class ShowUpdateDialog(val data: AppUpdateBean) : Effect()
+
+        object ShowNoUpdateToast : Effect()
+
         data class ShowError(val msg: String) : Effect()
     }
 }

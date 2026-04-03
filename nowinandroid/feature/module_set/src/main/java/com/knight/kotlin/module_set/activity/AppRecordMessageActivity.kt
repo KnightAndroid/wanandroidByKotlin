@@ -36,9 +36,10 @@ class AppRecordMessageActivity : BaseMviActivity<
     override fun setThemeColor(isDarkMode: Boolean) {}
 
     override fun SetVersionRecordActivityBinding.initView() {
-        includeVersionRecordToolbar.baseTvTitle.text = getString(R.string.set_app_record)
+        mBinding.title = getString(R.string.set_app_record)
         includeVersionRecordToolbar.baseIvBack.setOnClick { finish() }
 
+        // 初始 loading
         requestLoading(includeVersionRecordCollectfreshalayout.baseFreshlayout)
 
         includeVersionRecordCollectfreshalayout.baseBodyRv.init(
@@ -62,32 +63,31 @@ class AppRecordMessageActivity : BaseMviActivity<
 
     //===================== MVI =====================//
 
-    override fun initEvent() {
-
-    }
-
     override fun renderState(state: AppUpdateRecordContract.State) {
 
-        // 结束刷新
-        mBinding.includeVersionRecordCollectfreshalayout.baseFreshlayout.finishRefresh()
-
+        // 1️⃣ loading（首屏）
         if (state.isLoading) {
             requestLoading(mBinding.includeVersionRecordCollectfreshalayout.baseFreshlayout)
         }
 
-        state.listData?.let { data ->
+        // 2️⃣ 空页面
+        if (state.isEmpty) {
+            requestEmptyData()
+        } else {
+            // 3️⃣ 正常数据
             requestSuccess()
-
-            if (!data.datas.isNullOrEmpty()) {
-                mVersionRecordAdapter.submitList(data.datas)
-            } else {
-                requestEmptyData()
-            }
+            mVersionRecordAdapter.submitList(state.list)
         }
     }
 
     override fun handleEffect(effect: AppUpdateRecordContract.Effect) {
         when (effect) {
+
+            // ✅ 停止刷新（只在这里做）
+            AppUpdateRecordContract.Effect.StopRefresh -> {
+                mBinding.includeVersionRecordCollectfreshalayout.baseFreshlayout.finishRefresh()
+            }
+
             is AppUpdateRecordContract.Effect.ShowError -> {
                 mBinding.includeVersionRecordCollectfreshalayout.baseFreshlayout.finishRefresh()
                 requestFailure()
@@ -99,7 +99,8 @@ class AppRecordMessageActivity : BaseMviActivity<
     //===================== 刷新 =====================//
 
     override fun onRefresh(refreshLayout: RefreshLayout) {
-        mViewModel.setEvent(AppUpdateRecordContract.Event.LoadData)
+        // ✅ 正确：用 Refresh 事件
+        mViewModel.setEvent(AppUpdateRecordContract.Event.Refresh)
     }
 
     override fun reLoadData() {

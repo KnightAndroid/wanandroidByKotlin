@@ -4,8 +4,7 @@ import com.knight.kotlin.library_base.repository.BaseRepository
 import com.knight.kotlin.library_network.model.responseCodeExceptionHandler
 import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_home.api.HomeNewsApiService
-import com.knight.kotlin.module_home.entity.ZaoBaoAudioBean
-import com.knight.kotlin.module_home.entity.ZaoBaoBean
+import com.knight.kotlin.module_home.entity.ZaoBaoData
 import javax.inject.Inject
 
 
@@ -30,10 +29,10 @@ class HomeNewsRepo @Inject constructor(): BaseRepository() {
      *
      * 获取早报新闻
      */
-    fun getNews(type:String) = request<ZaoBaoBean>({
-        mHomeNewsApiService.getNews(type).run {
-            responseCodeExceptionHandler(if ( code == "200") 0 else -1,msg)
-            emit(this)
+    fun getNews() = request<ZaoBaoData>({
+        mHomeNewsApiService.getNews().run {
+            responseCodeExceptionHandler( code,msg)
+            emit(this.data)
         }
     }) {
         it?.let { it1 -> toast(it1) }

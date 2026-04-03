@@ -66,39 +66,42 @@ class AboutActivity : BaseMviActivity<
 
     }
 
-    //===================== MVI =====================//
-
     override fun initEvent() {
-        // 如果需要初始化请求，可以在这里发
+        // 如果你想进入页面自动检查更新，可以在这里触发
     }
 
+    //===================== MVI =====================//
+
+    /**
+     * ✅ 只处理 UI 状态
+     */
     override fun renderState(state: AboutContract.State) {
-        // loading 控制
         if (state.isLoading) {
             loadingDialog.show()
         } else {
             loadingDialog.dismiss()
         }
-
-        // 更新数据（检查更新逻辑）
-        state.updateBean?.let {
-            if (SystemUtils.getAppVersionCode(this) < it.versionCode) {
-                if (it.versionName != SystemUtils.getAppVersionName(this)) {
-                    UpdateAppDialogFragment
-                        .newInstance(it)
-                        .showAllowingStateLoss(
-                            supportFragmentManager,
-                            "dialog_update"
-                        )
-                }
-            } else {
-                toast(getString(R.string.set_no_update_version))
-            }
-        }
     }
 
+    /**
+     * ✅ 所有一次性行为（核心）
+     */
     override fun handleEffect(effect: AboutContract.Effect) {
         when (effect) {
+
+            is AboutContract.Effect.ShowUpdateDialog -> {
+                UpdateAppDialogFragment
+                    .newInstance(effect.data)
+                    .showAllowingStateLoss(
+                        supportFragmentManager,
+                        "dialog_update"
+                    )
+            }
+
+            is AboutContract.Effect.ShowNoUpdateToast -> {
+                toast(getString(R.string.set_no_update_version))
+            }
+
             is AboutContract.Effect.ShowError -> {
                 toast(effect.msg)
             }
@@ -116,8 +119,13 @@ class AboutActivity : BaseMviActivity<
             }
 
             mBinding.setRlCheckUpdate -> {
-                // ✅ 改成发事件
-                mViewModel.setEvent(AboutContract.Event.CheckAppUpdate)
+                // ✅ 关键：传当前版本信息给 VM（解决 Context 问题）
+                mViewModel.setEvent(
+                    AboutContract.Event.CheckAppUpdate(
+                        currentVersionCode = SystemUtils.getAppVersionCode(this),
+                        currentVersionName = SystemUtils.getAppVersionName(this) ?: ""
+                    )
+                )
             }
 
             mBinding.tvServiceProtocol -> {
@@ -147,7 +155,12 @@ class AboutActivity : BaseMviActivity<
     }
 
     override fun reLoadData() {
-        // 失败重试
-        mViewModel.setEvent(AboutContract.Event.CheckAppUpdate)
+        // 失败重试（同样要传参数）
+        mViewModel.setEvent(
+            AboutContract.Event.CheckAppUpdate(
+                currentVersionCode = SystemUtils.getAppVersionCode(this),
+                currentVersionName = SystemUtils.getAppVersionName(this) ?: ""
+            )
+        )
     }
 }

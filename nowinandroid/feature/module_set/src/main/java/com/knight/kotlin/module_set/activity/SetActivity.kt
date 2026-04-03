@@ -2,11 +2,13 @@ package com.knight.kotlin.module_set.activity
 
 import android.graphics.drawable.GradientDrawable
 import android.view.View
+import com.core.library_base.event.MessageEvent
 import com.core.library_base.ktx.appStr
 import com.core.library_base.ktx.dimissLoadingDialog
 import com.core.library_base.ktx.showLoadingDialog
 import com.core.library_base.route.RouteActivity
 import com.core.library_base.util.EventBusUtils
+import com.core.library_common.util.ColorUtils
 import com.flyjingfish.android_aop_core.annotations.SingleClick
 import com.knight.kotlin.library_base.activity.BaseMviActivity
 import com.knight.kotlin.library_common.config.Appconfig
@@ -17,6 +19,7 @@ import com.knight.kotlin.library_util.DialogUtils
 import com.knight.kotlin.library_util.startPage
 import com.knight.kotlin.library_util.startPageWithParams
 import com.knight.kotlin.library_util.toast
+import com.knight.kotlin.library_widget.RippleAnimation
 import com.knight.kotlin.module_set.R
 import com.knight.kotlin.module_set.annoation.ColorStyle
 import com.knight.kotlin.module_set.contract.SetContract
@@ -33,49 +36,149 @@ class SetActivity : BaseMviActivity<
         SetVm,
         SetContract.Event,
         SetContract.State,
-        SetContract.Effect
-        >() {
+        SetContract.Effect>() {
+
+    private var ignoreCheckChange = false
+
+    //===================== 初始化 =====================//
 
     override fun SetActivityBinding.initView() {
+
         setOnClickListener(
-            setRlLogout,
-            setRlDarkmode,
-            setRlTheme,
-            setRlLanguage,
-            setRlNightTime,
-            setRlChangeTextSize,
-            setRlGesturePassword,
-            setRlClearCache,
-            setRlRepository,
-            setRlOfficialwebsite,
-            setRlAbout,
-            setRlPersonMessageManager
+            setRlLogout, setRlDarkmode, setRlTheme,
+            setRlLanguage, setRlNightTime, setRlChangeTextSize,
+            setRlGesturePassword, setRlClearCache, setRlRepository,
+            setRlOfficialwebsite, setRlAbout, setRlPersonMessageManager
         )
 
         includeSetToobar.baseIvBack.setOnClickListener { finish() }
         includeSetToobar.baseTvTitle.text = getString(R.string.set_app_name)
 
-        setTvCachememory.text = CacheFileUtils.getToalCacheSize(this@SetActivity)
-
-        initDarkMode()
+        initListener()
     }
 
-    override fun initObserver() {
+    override fun initObserver() {}
 
+    override fun initRequestData() {}
+
+    override fun initEvent() {
+        mViewModel.setEvent(SetContract.Event.Init)
     }
 
-    override fun initRequestData() {
+    //===================== 监听 =====================//
 
+    private fun initListener() {
+
+        mBinding.setCbStatusTheme.setOnCheckedChangeListener { _, isChecked ->
+            if (ignoreCheckChange) return@setOnCheckedChangeListener
+
+            mViewModel.setEvent(SetContract.Event.ChangeStatusTheme(isChecked))
+
+            EventBusUtils.postEvent(
+                MessageEvent(MessageEvent.MessageType.ChangeStatusTheme).put(isChecked)
+            )
+        }
+
+        mBinding.setCbEyecare.setOnCheckedChangeListener { _, isChecked ->
+            if (ignoreCheckChange) return@setOnCheckedChangeListener
+
+            mViewModel.setEvent(SetContract.Event.ChangeEyeCare(isChecked))
+
+            RippleAnimation.create(mBinding.setCbEyecare).setDuration(250).start()
+
+            EventBusUtils.postEvent(
+                MessageEvent(MessageEvent.MessageType.EyeMode).put(isChecked)
+            )
+
+            openOrCloseEye(isChecked)
+            showDarkMode(!isChecked)
+        }
     }
+
+    //===================== MVI - 渲染 =====================//
+
+    override fun renderState(state: SetContract.State) {
+
+        ignoreCheckChange = true
+
+        // ⭐关键：统一数据源
+        themeColor = state.themeColor
+
+        // 登录态
+        mBinding.setRlLogout.visibility =
+            if (state.isLogin) View.VISIBLE else View.GONE
+
+        mBinding.setRlGesturePassword.visibility =
+            if (state.isLogin) View.VISIBLE else View.GONE
+
+        // checkbox
+        mBinding.setCbStatusTheme.isChecked = state.isStatusWithTheme
+        mBinding.setCbEyecare.isChecked = state.isEyeCare
+
+        // 状态栏 tint
+        mBinding.setCbStatusTheme.buttonTintList =
+            ColorUtils.createColorStateList(
+                state.themeColor,
+                ColorUtils.convertToColorInt("a6a6a6")
+            )
+
+        // 主题色圆点
+        val drawable = GradientDrawable().apply {
+            shape = GradientDrawable.OVAL
+            setColor(state.themeColor)
+        }
+        mBinding.setShowThemecolor.background = drawable
+
+        // 文本颜色
+        updateTextColor(state.themeColor)
+
+        // ❗优化点：不要再自己算
+        mBinding.setTvCachememory.text = state.cacheSize
+
+        ignoreCheckChange = false
+    }
+
+    //===================== Effect =====================//
+
+    override fun handleEffect(effect: SetContract.Effect) {
+        when (effect) {
+
+            is SetContract.Effect.ShowLoading -> {
+                showLoadingDialog(appStr(R.string.set_logout))
+            }
+
+            is SetContract.Effect.HideLoading -> {
+                dimissLoadingDialog()
+            }
+
+            is SetContract.Effect.LogoutSuccess -> {
+                logoutSuccess()
+            }
+
+            is SetContract.Effect.ShowToast -> {
+                toast(effect.msg)
+            }
+        }
+    }
+
+    //===================== 主题控制（保留但修正） =====================//
 
     override fun setThemeColor(isDarkMode: Boolean) {
-        val color = CacheUtils.getThemeColor()
-        updateTextColor(color)
-        setThemeTextColor()
+
+        val state = mViewModel.viewState.value
+
+        updateTextColor(state.themeColor)
 
         if (!isDarkMode) {
+
             showEyeCare(true)
-            showDarkMode(!CacheUtils.getIsEyeCare())
+
+            if (state.isEyeCare) {
+                showDarkMode(false)
+            } else {
+                showDarkMode(true)
+            }
+
         } else {
             mBinding.setRlTheme.visibility = View.GONE
             mBinding.setRlStatustheme.visibility = View.GONE
@@ -83,40 +186,21 @@ class SetActivity : BaseMviActivity<
         }
     }
 
-    /**
-     * ================= MVI =================
-     */
-
-    override fun renderState(state: SetContract.State) {
-        with(mBinding) {
-            if (state.isLoading) showLoadingDialog(msg = appStr(R.string.set_logout))
-            else dimissLoadingDialog()
-
-            setRlLogout.visibility = if (state.isLogin) View.VISIBLE else View.GONE
-            setRlGesturePassword.visibility = if (state.isLogin) View.VISIBLE else View.GONE
-
-            setTvCachememory.text = state.cacheSize
-        }
+    private fun updateTextColor(color: Int) {
+        mBinding.setTvBasic.setTextColor(color)
+        mBinding.setTvCommon.setTextColor(color)
+        mBinding.setTvOther.setTextColor(color)
     }
 
-    override fun handleEffect(effect: SetContract.Effect) {
-        when (effect) {
-
-            SetContract.Effect.LogoutSuccess -> logoutSuccess()
-
-            is SetContract.Effect.ShowError -> {
-                toast(effect.msg)
-            }
-
-            SetContract.Effect.CacheCleared -> {
-                toast(R.string.set_clearchae_successfully)
-            } else ->{}
-        }
+    private fun showDarkMode(show: Boolean) {
+        mBinding.setRlDarkmode.visibility = if (show) View.VISIBLE else View.GONE
     }
 
-    /**
-     * ================= 点击 =================
-     */
+    private fun showEyeCare(show: Boolean) {
+        mBinding.setRlEyecare.visibility = if (show) View.VISIBLE else View.GONE
+    }
+
+    //===================== 点击 =====================//
 
     @SingleClick
     override fun onClick(v: View) {
@@ -132,25 +216,48 @@ class SetActivity : BaseMviActivity<
                 ) { _, _ -> }
             }
 
+            mBinding.setRlDarkmode -> startPage(RouteActivity.Set.DarkModelActivity)
+
+            // ⭐⭐⭐核心修复：不再直接改UI！！！
+            mBinding.setRlTheme -> {
+                ColorPickerDialog.Builder(
+                    this,
+                    CacheUtils.getThemeColor(),
+                    ColorStyle.THEMECOLOR,
+                    getString(R.string.set_recover_themecolor)
+                ).setOnColorPickedListener { color ->
+
+                    // ✅ 只发事件 → renderState 自动更新UI
+                    mViewModel.setEvent(
+                        SetContract.Event.ChangeThemeColor(color)
+                    )
+
+                    EventBusUtils.postEvent(
+                        MessageEvent(MessageEvent.MessageType.RecreateMain)
+                    )
+
+                }.build().show()
+            }
+
             mBinding.setRlClearCache -> {
                 DialogUtils.getConfirmDialog(
                     this,
                     getString(R.string.set_clearcache_tip),
                     { _, _ ->
-                        mViewModel.setEvent(SetContract.Event.ClearCache)
+                        CacheFileUtils.cleadAllCache(this)
+                        toast(R.string.set_clearchae_successfully)
+
+                        // ⭐通知VM更新
+                        val size = CacheFileUtils.getToalCacheSize(this)
+                        mViewModel.setEvent(SetContract.Event.UpdateCacheSize(size))
                     }
                 ) { _, _ -> }
             }
 
-            mBinding.setRlTheme -> openColorPicker()
-
-            mBinding.setRlDarkmode -> startPage(RouteActivity.Set.DarkModelActivity)
             mBinding.setRlLanguage -> startPage(RouteActivity.Set.SetLanguageActivity)
             mBinding.setRlNightTime -> startPage(RouteActivity.Set.SetAutoNightActivity)
             mBinding.setRlChangeTextSize -> startPage(RouteActivity.Set.SetChangeTextSizeActivity)
             mBinding.setRlGesturePassword -> startPage(RouteActivity.Set.SetGestureLockActivity)
-            mBinding.setRlPersonMessageManager -> startPage(RouteActivity.Set.PersonalDeviceMessage)
-            mBinding.setRlAbout -> startPage(RouteActivity.Set.AboutActivity)
 
             mBinding.setRlRepository -> {
                 startPageWithParams(
@@ -167,65 +274,24 @@ class SetActivity : BaseMviActivity<
                     "webTitle" to getString(R.string.set_official_website)
                 )
             }
+
+            mBinding.setRlPersonMessageManager -> {
+                startPage(RouteActivity.Set.PersonalDeviceMessage)
+            }
+
+            mBinding.setRlAbout -> {
+                startPage(RouteActivity.Set.AboutActivity)
+            }
         }
     }
 
-    /**
-     * ================= UI =================
-     */
+    //===================== 原逻辑 =====================//
 
     private fun logoutSuccess() {
         CacheUtils.loginOut()
         Appconfig.user = null
         ClientConfig.cookieManager.cookieStore.removeAll()
 
-        EventBusUtils.postEvent(
-            com.core.library_base.event.MessageEvent(
-                com.core.library_base.event.MessageEvent.MessageType.LogoutSuccess
-            )
-        )
-    }
-
-    private fun initDarkMode() {
-        val text = when {
-            CacheUtils.getFollowSystem() -> getString(R.string.set_follow_system)
-            CacheUtils.getNormalDark() -> getString(R.string.set_dark_open)
-            else -> getString(R.string.set_dark_close)
-        }
-        mBinding.setTvDarkmodeStatus.text = text
-    }
-
-    private fun openColorPicker() {
-        ColorPickerDialog.Builder(
-            this,
-            CacheUtils.getThemeColor(),
-            ColorStyle.THEMECOLOR,
-            getString(R.string.set_recover_themecolor)
-        ).setOnColorPickedListener {
-            mViewModel.setEvent(SetContract.Event.ChangeTheme(it))
-        }.build().show()
-    }
-
-    private fun setThemeTextColor() {
-        val color = CacheUtils.getThemeColor()
-        val drawable = GradientDrawable().apply {
-            shape = GradientDrawable.OVAL
-            setColor(color)
-        }
-        mBinding.setShowThemecolor.background = drawable
-    }
-
-    private fun updateTextColor(color: Int) {
-        mBinding.setTvBasic.setTextColor(color)
-        mBinding.setTvCommon.setTextColor(color)
-        mBinding.setTvOther.setTextColor(color)
-    }
-
-    private fun showDarkMode(show: Boolean) {
-        mBinding.setRlDarkmode.visibility = if (show) View.VISIBLE else View.GONE
-    }
-
-    private fun showEyeCare(show: Boolean) {
-        mBinding.setRlEyecare.visibility = if (show) View.VISIBLE else View.GONE
+        EventBusUtils.postEvent(MessageEvent(MessageEvent.MessageType.LogoutSuccess))
     }
 }

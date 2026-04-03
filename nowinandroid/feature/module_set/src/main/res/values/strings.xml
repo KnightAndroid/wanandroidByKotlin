@@ -27,6 +27,7 @@
     <string name="set_quit_account">退出</string>
     <string name="set_confirm_logout">是否退出当前账号</string>
     <string name="set_logout">退出登录中...</string>
+    <string name="set_logout_success">退出登录成功</string>
     <string name="set_follow_system">跟随系统</string>
     <string name="set_followsystem_tip">开启后，将跟随系统打开或关闭深色模式</string>
     <string name="set_manual_select">手动选择</string>

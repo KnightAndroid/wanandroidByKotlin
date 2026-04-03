@@ -15,98 +15,118 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class SetVm @Inject constructor(
-    private val repo: SetRepo
-) : BaseMviViewModel<
-        SetContract.Event,
-        SetContract.State,
-        SetContract.Effect>() {
+    private val mRepo: SetRepo
+) : BaseMviViewModel<SetContract.Event, SetContract.State, SetContract.Effect>() {
 
-    override fun initialState() = SetContract.State(
-        isLogin = checkLogin(),
-        cacheSize = ""
-    )
+    //===================== 初始化 =====================//
 
-    init {
-        loadCacheSize()
-    }
-
-    private fun loadCacheSize() {
-        val size = repo.getCacheSize()
-        setState { copy(cacheSize = size) }
-    }
-
-    override fun handleEvent(event: SetContract.Event) {
-        when (event) {
-            SetContract.Event.Logout -> logout()
-            SetContract.Event.ClearCache -> clearCache()
-            is SetContract.Event.ChangeTheme -> changeTheme(event.color)
-        }
-    }
-
-    /**
-     * ================= 退出登录 =================
-     */
-    private fun logout() {
-        requestFlowMvi(
-            block = { repo.logout() },
-
-            onStart = {
-                setState { copy(isLoading = true) }
-            },
-
-            onEach = {
-                setEffect { SetContract.Effect.LogoutSuccess }
-                setState {
-                    copy(
-                        isLoading = false,
-                        isLogin = false
-                    )
-                }
-            },
-
-            onError = {
-                setState { copy(isLoading = false) }
-                setEffect {
-                    SetContract.Effect.ShowError(it.message ?: "退出失败")
-                }
-            },
-
-            onCompletion = {
-                setState { copy(isLoading = false) }
-            }
+    override fun initialState(): SetContract.State {
+        return SetContract.State(
+            isLogin = getUser() != null,
+            cacheSize = "", // ⭐不在VM计算，由UI传入
+            themeColor = CacheUtils.getThemeColor(),
+            isEyeCare = CacheUtils.getIsEyeCare(),
+            isStatusWithTheme = CacheUtils.getStatusBarIsWithTheme()
         )
     }
 
-    /**
-     * ================= 清缓存 =================
-     */
-    private fun clearCache() {
+    //===================== 事件处理 =====================//
 
-        // ✅ 交给 Repo（核心）
-        repo.clearCache()
+    override fun handleEvent(event: SetContract.Event) {
+        when (event) {
 
-        val newSize = repo.getCacheSize()
+            is SetContract.Event.Init -> {
+                syncStateFromCache()
+            }
 
-        setState {
-            copy(cacheSize = newSize)
+            is SetContract.Event.Refresh -> {
+                syncStateFromCache()
+            }
+
+            is SetContract.Event.Logout -> {
+                logout()
+            }
+
+            is SetContract.Event.ChangeEyeCare -> {
+                updateEyeCare(event.enable)
+            }
+
+            is SetContract.Event.ChangeStatusTheme -> {
+                updateStatusTheme(event.enable)
+            }
+
+            is SetContract.Event.ChangeThemeColor -> {
+                updateThemeColor(event.color)
+            }
+
+            is SetContract.Event.UpdateCacheSize -> {
+                updateCacheSize(event.size)
+            }
         }
-
-        setEffect { SetContract.Effect.CacheCleared }
     }
 
+    //===================== 状态同步 =====================//
+
     /**
-     * ================= 修改主题 =================
+     * ⭐统一从缓存同步（唯一可信源）
      */
-    private fun changeTheme(color: Int) {
+    private fun syncStateFromCache() {
+        setState {
+            copy(
+                isLogin = getUser() != null,
+                themeColor = CacheUtils.getThemeColor(),
+                isEyeCare = CacheUtils.getIsEyeCare(),
+                isStatusWithTheme = CacheUtils.getStatusBarIsWithTheme()
+            )
+        }
+    }
+
+    //===================== 状态更新封装 =====================//
+
+    private fun updateThemeColor(color: Int) {
         CacheUtils.setThemeColor(color)
-        setEffect { SetContract.Effect.ThemeChanged }
+        setState { copy(themeColor = color) }
     }
 
-    /**
-     * ================= 工具 =================
-     */
+    private fun updateEyeCare(enable: Boolean) {
+        CacheUtils.setIsEyeCare(enable)
+        setState { copy(isEyeCare = enable) }
+    }
 
-    private fun checkLogin(): Boolean {
-        return getUser() != null
+    private fun updateStatusTheme(enable: Boolean) {
+        CacheUtils.statusBarIsWithTheme(enable)
+        setState { copy(isStatusWithTheme = enable) }
+    }
+
+    private fun updateCacheSize(size: String) {
+        setState { copy(cacheSize = size) }
+    }
+
+    //===================== 业务逻辑 =====================//
+
+    /**
+     * 退出登录（MVI）
+     */
+    private fun logout() {
+        requestMvi(
+            block = { mRepo.logout() },
+            onStart = {
+                setEffect { SetContract.Effect.ShowLoading }
+            },
+            onSuccess = {
+                setEffect { SetContract.Effect.HideLoading }
+                setEffect { SetContract.Effect.LogoutSuccess }
+
+                setState {
+                    copy(isLogin = false)
+                }
+            },
+            onError = {
+                setEffect { SetContract.Effect.HideLoading }
+                setEffect {
+                    SetContract.Effect.ShowToast(it.message ?: "error")
+                }
+            }
+        )
     }
 }

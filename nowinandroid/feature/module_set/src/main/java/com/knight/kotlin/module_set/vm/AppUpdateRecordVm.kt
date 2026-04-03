@@ -23,40 +23,76 @@ class AppUpdateRecordVm @Inject constructor(
 
     override fun handleEvent(event: AppUpdateRecordContract.Event) {
         when (event) {
+
             AppUpdateRecordContract.Event.LoadData -> {
-                loadData()
+                loadData(isRefresh = false)
+            }
+
+            AppUpdateRecordContract.Event.Refresh -> {
+                loadData(isRefresh = true)
             }
         }
     }
 
-    private fun loadData() {
+    /**
+     * 加载数据（统一入口）
+     */
+    private fun loadData(isRefresh: Boolean) {
+
         requestFlowMvi(
             block = { mRepo.checkAppUpdateRecord() },
 
             onStart = {
-                setState { copy(isLoading = true) }
-            },
-
-            onEach = { data ->
                 setState {
                     copy(
-                        isLoading = false,
-                        listData = data
+                        isLoading = !isRefresh,
+                        isRefreshing = isRefresh
                     )
                 }
             },
 
+            onEach = { data ->
+
+                val list = data.datas ?: emptyList()
+
+                setState {
+                    copy(
+                        isLoading = false,
+                        isRefreshing = false,
+                        list = list,
+                        isEmpty = list.isEmpty()
+                    )
+                }
+
+                // ✅ 停止刷新（一次性行为）
+                if (isRefresh) {
+                    setEffect {
+                        AppUpdateRecordContract.Effect.StopRefresh
+                    }
+                }
+            },
+
             onError = {
-                setState { copy(isLoading = false) }
+
+                setState {
+                    copy(
+                        isLoading = false,
+                        isRefreshing = false
+                    )
+                }
+
+                // ✅ 停止刷新
+                if (isRefresh) {
+                    setEffect {
+                        AppUpdateRecordContract.Effect.StopRefresh
+                    }
+                }
+
                 setEffect {
                     AppUpdateRecordContract.Effect.ShowError(
                         it.message ?: "加载失败"
                     )
                 }
-            },
-
-            onCompletion = {
-                setState { copy(isLoading = false) }
             }
         )
     }
