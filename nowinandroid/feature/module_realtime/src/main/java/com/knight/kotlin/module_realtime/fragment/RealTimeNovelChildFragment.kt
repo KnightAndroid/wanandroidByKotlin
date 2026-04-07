@@ -36,7 +36,7 @@ class RealTimeNovelChildFragment : BaseFragment<RealtimeNovelChildFragmentBindin
 
     override fun initRequestData() {
 
-       mViewModel.getChildDataByTab("wise","novel","{\"category\":\""+category+"\"}").observerKt {
+       mViewModel.getChildDataByTab("pc","novel","{\"category\":\""+category+"\"}").observerKt {
            mNovelChildAdapter.submitList(it.cards.get(0).content)
        }
     }

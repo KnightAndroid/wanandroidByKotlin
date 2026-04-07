@@ -42,7 +42,7 @@ class RealTimeNovelFragment : BaseFragment<RealtimeNovelFragmentBinding, RealTim
     }
 
     override fun initRequestData() {
-         mViewModel.getDataByTab("wise","novel").observerKt {
+         mViewModel.getDataByTab("pc","novel").observerKt {
              var  mNavDatas = it.tag.get(0).content
 
              for (index  in 0 until  it.tag.get(0).content.size) {

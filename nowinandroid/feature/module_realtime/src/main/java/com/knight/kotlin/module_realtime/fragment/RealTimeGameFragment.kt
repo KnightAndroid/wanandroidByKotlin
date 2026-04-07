@@ -37,7 +37,7 @@ class RealTimeGameFragment: BaseFragment<RealtimeGameFragmentBinding, RealTimeGa
     }
 
     override fun initRequestData() {
-        mViewModel.getChildDataByTab("wise","game","{\"category\":\""+category+"\"}").observerKt {
+        mViewModel.getChildDataByTab("pc","game","{\"category\":\""+category+"\"}").observerKt {
             requestSuccess()
             mCategoryAdapter.submitList(it.tag.get(0).content)
             mGameAdapter.submitList(it.cards.get(0).content)
@@ -61,7 +61,7 @@ class RealTimeGameFragment: BaseFragment<RealtimeGameFragmentBinding, RealTimeGa
     }
 
     fun getGameDataByCategory() {
-        mViewModel.getChildDataByTab("wise","car","{\"category\":\""+category+"\"}").observerKt {
+        mViewModel.getChildDataByTab("pc","car","{\"category\":\""+category+"\"}").observerKt {
             if (it.cards.get(0).content.size > 0) {
                 requestSuccess()
                 mGameAdapter.submitList(it.cards.get(0).content)

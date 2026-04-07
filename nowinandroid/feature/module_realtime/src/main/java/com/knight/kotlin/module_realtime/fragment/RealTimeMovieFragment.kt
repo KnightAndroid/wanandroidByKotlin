@@ -27,7 +27,7 @@ class RealTimeMovieFragment : BaseFragment<RealtimeMovieFragmentBinding, Realtim
 
 
     private var category:String = "全部类型"
-    private var country:String = "中国大陆"
+    private var country:String = "全部地区"
 
     private val mCategoryAdapter:HotRankCategoryAdapter by lazy { HotRankCategoryAdapter(this,LevelEnum.PARENT) }
     private val mCountryAdapter:HotRankCategoryAdapter by lazy { HotRankCategoryAdapter(this,LevelEnum.CHILD) }
@@ -42,7 +42,7 @@ class RealTimeMovieFragment : BaseFragment<RealtimeMovieFragmentBinding, Realtim
     }
 
     override fun initRequestData() {
-        mViewModel.getChildDataByTab("wise","movie","{\"category\":\""+category+"\",\"country\":\""+country+"\"}").observerKt {
+        mViewModel.getChildDataByTab("pc","movie","{\"category\":\""+category+"\",\"country\":\""+country+"\"}").observerKt {
            requestSuccess()
            mCategoryAdapter.submitList(it.tag.get(0).content)
            mCountryAdapter.submitList(it.tag.get(1).content)
@@ -74,7 +74,7 @@ class RealTimeMovieFragment : BaseFragment<RealtimeMovieFragmentBinding, Realtim
     }
 
     fun getMovieDataByCategoryWithCountry() {
-        mViewModel.getChildDataByTab("wise","movie","{\"category\":\""+category+"\",\"country\":\""+country+"\"}").observerKt {
+        mViewModel.getChildDataByTab("pc","movie","{\"category\":\""+category+"\",\"country\":\""+country+"\"}").observerKt {
             if (it.cards.get(0).content.size > 0) {
                 requestSuccess()
                 mMovieAdapter.submitList(it.cards.get(0).content)

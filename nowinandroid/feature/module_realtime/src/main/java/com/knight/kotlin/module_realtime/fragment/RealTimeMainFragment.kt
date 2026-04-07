@@ -64,16 +64,16 @@ class RealTimeMainFragment : BaseFragment<RealtimeMainFragmentBinding, RealTimeH
     }
 
     override fun initRequestData() {
-        mViewModel.getDataByTab("wise","homepage").observerKt {
+        mViewModel.getDataByTab("pc","homepage").observerKt {
 
             it.cards.get(0).content.addAll(0,it.cards.get(0).topContent)
             mRealTimeHotMainAdapter.submitList(it.cards.get(0).content)
 
-            mPhraseMainAdapter.submitList(it.cards.get(1).content)
+        //    mPhraseMainAdapter.submitList(it.cards.get(1).content)
 
-            mNovelAdapter.submitList(it.cards.get(2).content)
+            mNovelAdapter.submitList(it.cards.get(1).content)
 
-            mMovieAdapter.submitList(it.cards.get(3).content)
+            mMovieAdapter.submitList(it.cards.get(2).content)
             initHeadFootTabBoard()
 
         }
@@ -107,26 +107,26 @@ class RealTimeMainFragment : BaseFragment<RealtimeMainFragmentBinding, RealTimeH
 
         }
 
-        if (mBinding.rvPhraseList.headerCount == 0) {
-            if (!::mPhraseHeaderBinding.isInitialized) {
-                mPhraseHeaderBinding =
-                    RealtimeTabBoardHeadItemBinding.inflate(LayoutInflater.from(requireActivity()))
-                mBinding.rvPhraseList.addHeaderView(mPhraseHeaderBinding.root)
-                mPhraseHeaderBinding.ivRealtimeIcon.setBackgroundResource(R.drawable.realtime_phrase_icon)
-                mPhraseHeaderBinding.tvTealtimeTitle.text = "热梗榜"
-            }
-        }
+//        if (mBinding.rvPhraseList.headerCount == 0) {
+//            if (!::mPhraseHeaderBinding.isInitialized) {
+//                mPhraseHeaderBinding =
+//                    RealtimeTabBoardHeadItemBinding.inflate(LayoutInflater.from(requireActivity()))
+//                mBinding.rvPhraseList.addHeaderView(mPhraseHeaderBinding.root)
+//                mPhraseHeaderBinding.ivRealtimeIcon.setBackgroundResource(R.drawable.realtime_phrase_icon)
+//                mPhraseHeaderBinding.tvTealtimeTitle.text = "热梗榜"
+//            }
+//        }
 
-        if (mBinding.rvPhraseList.footerCount == 0) {
-            if (!::mPhraseFootBinding.isInitialized) {
-                mPhraseFootBinding = RealtimeTabBoardFootItemBinding.inflate(LayoutInflater.from(requireActivity()))
-                mBinding.rvPhraseList.addFooterView(mPhraseFootBinding.root)
-                mPhraseFootBinding.root.setOnClickListener {
-                    selectRankListener?.onChipClick(HotListEnum.PHRASE)
-                }
-            }
-
-        }
+//        if (mBinding.rvPhraseList.footerCount == 0) {
+//            if (!::mPhraseFootBinding.isInitialized) {
+//                mPhraseFootBinding = RealtimeTabBoardFootItemBinding.inflate(LayoutInflater.from(requireActivity()))
+//                mBinding.rvPhraseList.addFooterView(mPhraseFootBinding.root)
+//                mPhraseFootBinding.root.setOnClickListener {
+//                    selectRankListener?.onChipClick(HotListEnum.PHRASE)
+//                }
+//            }
+//
+//        }
 
 
         if (mBinding.rvNovelList.headerCount == 0) {
@@ -186,7 +186,7 @@ class RealTimeMainFragment : BaseFragment<RealtimeMainFragmentBinding, RealTimeH
 
     override fun RealtimeMainFragmentBinding.initView() {
         rvHotList.init(LinearLayoutManager(requireActivity()), mRealTimeHotMainAdapter,false)
-        rvPhraseList.init(LinearLayoutManager(requireActivity()),mPhraseMainAdapter,false)
+       // rvPhraseList.init(LinearLayoutManager(requireActivity()),mPhraseMainAdapter,false)
         rvNovelList.init(LinearLayoutManager(requireActivity()),mNovelAdapter,false)
         rvMovieList.init(LinearLayoutManager(requireActivity()),mMovieAdapter,false)
         setOnClickListener(rlMainTeleplay,rlMainCar)

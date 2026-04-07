@@ -52,7 +52,7 @@ class RealTimeHomeFragment : BaseFragment<RealtimeHomeFragmentBinding, RealTimeH
     }
 
     override fun initRequestData() {
-        mViewModel.getDataByTab("wise","homepage").observerKt {
+        mViewModel.getDataByTab("pc","homepage").observerKt {
             mNavDatas = it.tabBoard
 
             for (index  in 0 until  it.tabBoard.size) {

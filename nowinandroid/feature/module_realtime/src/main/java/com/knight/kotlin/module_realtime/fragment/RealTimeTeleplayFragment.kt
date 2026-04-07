@@ -50,7 +50,7 @@ class RealTimeTeleplayFragment : BaseFragment<RealtimeTeleplayFragmentBinding, R
     }
 
     override fun initRequestData() {
-        mViewModel.getChildDataByTab("wise","teleplay","{\"category\":\""+category+"\",\"country\":\""+country+"\"}").observerKt {
+        mViewModel.getChildDataByTab("pc","teleplay","{\"category\":\""+category+"\",\"country\":\""+country+"\"}").observerKt {
             requestSuccess()
             mCategoryAdapter.submitList(it.tag.get(0).content)
             mCountryAdapter.submitList(it.tag.get(1).content)
@@ -75,7 +75,7 @@ class RealTimeTeleplayFragment : BaseFragment<RealtimeTeleplayFragmentBinding, R
 
 
     fun getTeleplayDataByCategoryWithCountry() {
-        mViewModel.getChildDataByTab("wise","teleplay","{\"category\":\""+category+"\",\"country\":\""+country+"\"}").observerKt {
+        mViewModel.getChildDataByTab("pc","teleplay","{\"category\":\""+category+"\",\"country\":\""+country+"\"}").observerKt {
             if (it.cards.get(0).content.size > 0) {
                 requestSuccess()
                 mTeleplayAdapter.submitList(it.cards.get(0).content)

@@ -41,7 +41,7 @@ class RealTimeCarFragment : BaseFragment<RealtimeCarFragmentBinding, RealTimeCar
     }
 
     override fun initRequestData() {
-        mViewModel.getChildDataByTab("wise","car","{\"category\":\""+category+"\"}").observerKt {
+        mViewModel.getChildDataByTab("pc","car","{\"category\":\""+category+"\"}").observerKt {
             requestSuccess()
             mCategoryAdapter.submitList(it.tag.get(0).content)
             mHotRankCarAdapter.submitList(it.cards.get(0).content)
@@ -66,7 +66,7 @@ class RealTimeCarFragment : BaseFragment<RealtimeCarFragmentBinding, RealTimeCar
 
 
     fun getCarDataByCategory() {
-        mViewModel.getChildDataByTab("wise","car","{\"category\":\""+category+"\"}").observerKt {
+        mViewModel.getChildDataByTab("pc","car","{\"category\":\""+category+"\"}").observerKt {
             if (it.cards.get(0).content.size > 0) {
                 requestSuccess()
                 mHotRankCarAdapter.submitList(it.cards.get(0).content)

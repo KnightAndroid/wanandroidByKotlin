@@ -38,7 +38,7 @@ class RealTimeTextFragment: BaseFragment<RealtimeTextFragmentBinding, RealTimeTe
     }
 
     override fun initRequestData() {
-        mViewModel.getDataByTab("wise",typeName.lowercase()).observerKt {
+        mViewModel.getDataByTab("pc",typeName.lowercase()).observerKt {
             if (typeName == HotListEnum.REALTIME.name) {
                 it.cards.get(0).content.addAll(0,it.cards.get(0).topContent)
             }
