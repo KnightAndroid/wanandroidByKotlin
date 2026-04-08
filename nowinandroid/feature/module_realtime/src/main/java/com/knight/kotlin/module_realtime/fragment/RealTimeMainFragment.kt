@@ -3,6 +3,7 @@ package com.knight.kotlin.module_realtime.fragment
 import android.view.LayoutInflater
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.core.library_base.route.RouteFragment
 import com.knight.kotlin.library_base.fragment.BaseMviFragment
 import com.knight.kotlin.library_widget.ktx.init
 import com.knight.kotlin.module_realtime.R
@@ -15,6 +16,8 @@ import com.knight.kotlin.module_realtime.databinding.RealtimeTabBoardHeadItemBin
 import com.knight.kotlin.module_realtime.enum.HotListEnum
 import com.knight.kotlin.module_realtime.ktx.handleAdapterClick
 import com.knight.kotlin.module_realtime.vm.RealTimeMainVm
+import com.wyjson.router.annotation.Route
+import dagger.hilt.android.AndroidEntryPoint
 
 
 /**
@@ -23,7 +26,8 @@ import com.knight.kotlin.module_realtime.vm.RealTimeMainVm
  * @Date 2025/3/11 16:43
  * @descript:
  */
-
+@AndroidEntryPoint
+@Route(path = RouteFragment.RealTime.RealTimeMainFragment)
 class RealTimeMainFragment :
     BaseMviFragment<
             RealtimeMainFragmentBinding,
