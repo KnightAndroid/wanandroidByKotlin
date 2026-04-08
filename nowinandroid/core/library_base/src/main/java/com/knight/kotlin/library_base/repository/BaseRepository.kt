@@ -57,6 +57,7 @@ open class BaseRepository {
         failureCallBack: ((String?) -> Unit)? = null
     ): Flow<T> {
         return flow(requestBlock)
+            .flowOn(Dispatchers.IO)
             .onStart {
                 // 请求开始，可以放一些准备逻辑
             }

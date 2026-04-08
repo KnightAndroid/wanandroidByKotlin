@@ -56,6 +56,10 @@ abstract class BaseMviViewModel<
     }
     val viewState: StateFlow<State> = _viewState.asStateFlow()
 
+
+    // ✅ 加这里
+    protected val currentState: State
+        get() = _viewState.value
     /** ========== Event ========== */
 
     private val _event = MutableSharedFlow<Event>()

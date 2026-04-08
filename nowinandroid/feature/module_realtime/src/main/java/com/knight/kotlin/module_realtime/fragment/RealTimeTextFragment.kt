@@ -1,10 +1,11 @@
 package com.knight.kotlin.module_realtime.fragment
 
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.core.library_base.route.RouteFragment
+import com.knight.kotlin.library_base.fragment.BaseMviFragment
 import com.knight.kotlin.library_widget.ktx.init
 import com.knight.kotlin.module_realtime.adapter.HotRankMainAdapter
+import com.knight.kotlin.module_realtime.contract.RealtimeTextContract
 import com.knight.kotlin.module_realtime.databinding.RealtimeTextFragmentBinding
 import com.knight.kotlin.module_realtime.enum.HotListEnum
 import com.knight.kotlin.module_realtime.ktx.handleAdapterClick
@@ -21,38 +22,80 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 @AndroidEntryPoint
 @Route(path = RouteFragment.RealTime.RealTimeTextFragment)
-class RealTimeTextFragment: BaseFragment<RealtimeTextFragmentBinding, RealTimeTextVm>() {
+class RealTimeTextFragment :
+    BaseMviFragment<
+            RealtimeTextFragmentBinding,
+            RealTimeTextVm,
+            RealtimeTextContract.Event,
+            RealtimeTextContract.State,
+            RealtimeTextContract.Effect>() {
 
-
-    private lateinit var typeName:String
-
-    private val mRealTimeHotMainAdapter: HotRankMainAdapter by lazy {
-        HotRankMainAdapter(HotListEnum.valueOf(typeName))
+    // =========================
+    // 参数（安全写法）
+    // =========================
+    private val typeName: String by lazy {
+        arguments?.getString("typeName").orEmpty()
     }
-    override fun setThemeColor(isDarkMode: Boolean) {
 
+    // =========================
+    // Adapter（安全初始化）
+    // =========================
+    private val adapter by lazy {
+        HotRankMainAdapter(
+            HotListEnum.valueOf(typeName.ifEmpty { HotListEnum.REALTIME.name })
+        )
+    }
+
+    // =========================
+    // 初始化
+    // =========================
+    override fun RealtimeTextFragmentBinding.initView() {
+
+        rvHotRank.init(
+            LinearLayoutManager(requireActivity()),
+            adapter,
+            true
+        )
+
+        handleAdapterClick(adapter)
+
+        requestLoading(rvHotRank)
     }
 
     override fun initObserver() {
 
     }
 
+    override fun setThemeColor(isDarkMode: Boolean) {}
+
+    // =========================
+    // 懒加载
+    // =========================
     override fun initRequestData() {
-        mViewModel.getDataByTab("pc",typeName.lowercase()).observerKt {
-            if (typeName == HotListEnum.REALTIME.name) {
-                it.cards.get(0).content.addAll(0,it.cards.get(0).topContent)
-            }
-            mRealTimeHotMainAdapter.submitList(it.cards.get(0).content)
-        }
+        sendEvent(RealtimeTextContract.Event.Init(typeName))
     }
 
     override fun reLoadData() {
-
+        sendEvent(RealtimeTextContract.Event.Init(typeName))
     }
 
-    override fun RealtimeTextFragmentBinding.initView() {
-        typeName = arguments?.getString("typeName") ?:""
-        rvHotRank.init(LinearLayoutManager(requireActivity()),mRealTimeHotMainAdapter,true)
-        handleAdapterClick(mRealTimeHotMainAdapter)
+    // =========================
+    // 渲染
+    // =========================
+    override fun renderState(state: RealtimeTextContract.State) {
+
+        if (state.isLoading) {
+            requestLoading(mBinding.rvHotRank)
+            return
+        }
+
+        if (state.isEmpty) {
+            requestEmptyData()
+        } else {
+            requestSuccess()
+            adapter.submitList(state.list)
+        }
     }
+
+    override fun handleEffect(effect: RealtimeTextContract.Effect) {}
 }

@@ -18,8 +18,8 @@ object BaseUrlConfig {
     const val OPENEYE_SUB_URL = "http://api.eyepetizer.net/"
     //百度接口 访问链接
     const val BAIDU_URL = "https://top.baidu.com/api/"
-    //每日微语
-    const val ZAO_BAO_URL = "https://api.xzdx.top/"//https://api.suxun.site/
+    //每日微语 接口比较稳定 暂用
+    const val ZAO_BAO_URL = "https://api.suxun.site/" //这个不稳定 数据返回比较全   https://api.xzdx.top/zaobao
     //每日微语 另一个接口
     const val ZAO_BAO_OTHER_URL = "https://xzdx.top/api/"
     //天气预报

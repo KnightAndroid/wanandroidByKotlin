@@ -46,7 +46,9 @@ interface HomeWeatherNewsApiService {
      * 获取热早报微语
      */
     @Headers("Domain-Name:zaobao")
-    @GET("zaobao")
-    suspend fun getZaoBao(): ZaoBaoBean
+    @GET("api/sixs")
+    suspend fun getZaoBao(
+        @Query("type") type: String = "json"
+    ): ZaoBaoBean
 
 }

@@ -7,11 +7,12 @@ import android.view.View
 import android.widget.TextView
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.core.library_base.route.RouteFragment
 import com.google.android.material.tabs.TabLayoutMediator
+import com.knight.kotlin.library_base.fragment.BaseMviFragment
 import com.knight.kotlin.library_util.ViewInitUtils
 import com.knight.kotlin.module_realtime.R
+import com.knight.kotlin.module_realtime.contract.RealtimeNovelContract
 import com.knight.kotlin.module_realtime.databinding.RealtimeNovelFragmentBinding
 import com.knight.kotlin.module_realtime.vm.RealTimeNovelVm
 import com.wyjson.router.annotation.Route
@@ -26,67 +27,104 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 @AndroidEntryPoint
 @Route(path = RouteFragment.RealTime.RealTimeNovelFragment)
-class RealTimeNovelFragment : BaseFragment<RealtimeNovelFragmentBinding, RealTimeNovelVm>() {
-    private val mFragments = mutableListOf<Fragment>()
+class RealTimeNovelFragment :
+    BaseMviFragment<
+            RealtimeNovelFragmentBinding,
+            RealTimeNovelVm,
+            RealtimeNovelContract.Event,
+            RealtimeNovelContract.State,
+            RealtimeNovelContract.Effect>() {
 
+    private val fragments = mutableListOf<Fragment>()
 
+    override fun setThemeColor(isDarkMode: Boolean) {}
 
+    override fun initRequestData() {
+        sendEvent(RealtimeNovelContract.Event.Init)
+    }
 
+    override fun reLoadData() {
+        sendEvent(RealtimeNovelContract.Event.Init)
+    }
 
-    override fun setThemeColor(isDarkMode: Boolean) {
-
+    override fun RealtimeNovelFragmentBinding.initView() {
+        requestLoading(realtimeNovelViewPager)
     }
 
     override fun initObserver() {
 
     }
 
-    override fun initRequestData() {
-         mViewModel.getDataByTab("pc","novel").observerKt {
-             var  mNavDatas = it.tag.get(0).content
+    // =========================
+    // 渲染核心
+    // =========================
+    override fun renderState(state: RealtimeNovelContract.State) {
 
-             for (index  in 0 until  it.tag.get(0).content.size) {
-                mFragments.add(RealTimeNovelChildFragment().also { fragment ->
-                    fragment.arguments = bundleOf("category" to it.tag.get(0).content.get(index))
-                })
+        if (state.isLoading) {
+            requestLoading(mBinding.realtimeNovelViewPager)
+            return
+        }
 
-             }
+        if (state.tabs.isEmpty()) {
+            requestEmptyData()
+            return
+        }
 
-             if (mFragments.size > 0) {
-                 ViewInitUtils.setViewPager2Init(requireActivity(),mBinding.realtimeNovelViewPager,mFragments,
-                     isOffscreenPageLimit = true,
-                     isUserInputEnabled = false
-                 )
+        requestSuccess()
 
-                 TabLayoutMediator(mBinding.realtimeNovelTabLayout, mBinding.realtimeNovelViewPager) { tab, pos ->
-                     tab.text = mNavDatas[pos]}.attach()
+        // ❗关键：防止重复 add
+        if (fragments.isNotEmpty()) return
 
-                 //mBinding.realtimeNovelTabLayout.setTabTextColors(Color.parseColor("#BBABAB"), Color.parseColor("#F84C48"))
-                 //选中条颜色
-                // mBinding.realtimeNovelTabLayout.setSelectedTabIndicatorColor(Color.parseColor("#F84C48"))
+        fragments.clear()
 
-                 for (i in 0 until mBinding.realtimeNovelTabLayout.tabCount) {
-                     val tab = mBinding.realtimeNovelTabLayout.getTabAt(i)
-                     tab?.setCustomView(setTabView(requireActivity(),mNavDatas[i]))
-                 }
-             }
-         }
+        state.tabs.forEach { category ->
+            fragments.add(
+                RealTimeNovelChildFragment().apply {
+                    arguments = bundleOf("category" to category)
+                }
+            )
+        }
+
+        initViewPager(state.tabs)
     }
 
-    override fun reLoadData() {
+    override fun handleEffect(effect: RealtimeNovelContract.Effect) {}
 
+    // =========================
+    // ViewPager 初始化
+    // =========================
+    private fun initViewPager(tabs: List<String>) {
+
+        ViewInitUtils.setViewPager2Init(
+            requireActivity(),
+            mBinding.realtimeNovelViewPager,
+            fragments,
+            isOffscreenPageLimit = true,
+            isUserInputEnabled = false
+        )
+
+        TabLayoutMediator(
+            mBinding.realtimeNovelTabLayout,
+            mBinding.realtimeNovelViewPager
+        ) { tab, pos ->
+            tab.text = tabs[pos]
+        }.attach()
+
+        // 自定义 Tab
+        for (i in tabs.indices) {
+            mBinding.realtimeNovelTabLayout.getTabAt(i)
+                ?.setCustomView(createTabView(requireContext(), tabs[i]))
+        }
     }
 
-    override fun RealtimeNovelFragmentBinding.initView() {
-
+    // =========================
+    // TabView
+    // =========================
+    private fun createTabView(context: Context, title: String): View {
+        return LayoutInflater.from(context)
+            .inflate(R.layout.realtime_novel_tab_indicator, null)
+            .apply {
+                findViewById<TextView>(R.id.tab_text).text = title
+            }
     }
-
-    fun setTabView(context: Context,title:String): View {
-        val mInflater = LayoutInflater.from(context)
-        val view: View = mInflater.inflate(R.layout.realtime_novel_tab_indicator, null)
-        val tv = view.findViewById<TextView>(R.id.tab_text)
-        tv.setText(title)
-        return view
-    }
-
 }

@@ -1,12 +1,12 @@
 package com.knight.kotlin.module_realtime.fragment
 
-import android.graphics.Color
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.core.library_base.route.RouteFragment
+import com.knight.kotlin.library_base.fragment.BaseMviFragment
 import com.knight.kotlin.library_widget.ktx.init
 import com.knight.kotlin.module_realtime.adapter.HotRankCategoryAdapter
 import com.knight.kotlin.module_realtime.adapter.HotRankNovelMovieAdapter
+import com.knight.kotlin.module_realtime.contract.RealtimeTeleplayContract
 import com.knight.kotlin.module_realtime.databinding.RealtimeTeleplayFragmentBinding
 import com.knight.kotlin.module_realtime.enum.LevelEnum
 import com.knight.kotlin.module_realtime.ktx.handleAdapterClick
@@ -23,66 +23,122 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 @AndroidEntryPoint
 @Route(path = RouteFragment.RealTime.RealTimeTeleplayFragment)
-class RealTimeTeleplayFragment : BaseFragment<RealtimeTeleplayFragmentBinding, RealTimeTeleplayVm>(),HotRankCategoryAdapter.OnChipClickListener {
+class RealTimeTeleplayFragment :
+    BaseMviFragment<
+            RealtimeTeleplayFragmentBinding,
+            RealTimeTeleplayVm,
+            RealtimeTeleplayContract.Event,
+            RealtimeTeleplayContract.State,
+            RealtimeTeleplayContract.Effect>(),
+    HotRankCategoryAdapter.OnChipClickListener {
 
-    private var category:String = "全部类型"
-    private var country:String = "中国大陆"
-
-    private val mCategoryAdapter: HotRankCategoryAdapter by lazy { HotRankCategoryAdapter(this, LevelEnum.PARENT) }
-    private val mCountryAdapter: HotRankCategoryAdapter by lazy { HotRankCategoryAdapter(this, LevelEnum.CHILD) }
-    private val mTeleplayAdapter: HotRankNovelMovieAdapter by lazy {HotRankNovelMovieAdapter()}
-
-    override fun setThemeColor(isDarkMode: Boolean) {
-
+    // =========================
+    // Adapter
+    // =========================
+    private val categoryAdapter by lazy {
+        HotRankCategoryAdapter(this, LevelEnum.PARENT)
     }
 
-    override fun RealtimeTeleplayFragmentBinding.initView() {
-        requestLoading(rvTeleplay, Color.parseColor("#F84C48"))
+    private val countryAdapter by lazy {
+        HotRankCategoryAdapter(this, LevelEnum.CHILD)
+    }
 
-        rvTeleplayCategory.init(LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false),mCategoryAdapter,false)
-        rvTeleplayCountry.init(LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false),mCountryAdapter,false)
-        rvTeleplay.init(LinearLayoutManager(requireActivity()),mTeleplayAdapter,false)
-        handleAdapterClick(mTeleplayAdapter)
+    private val teleplayAdapter by lazy {
+        HotRankNovelMovieAdapter()
+    }
+
+    // =========================
+    // 筛选条件
+    // =========================
+    private var category: String = "全部类型"
+    private var country: String = "中国大陆"
+
+    // =========================
+    // 初始化
+    // =========================
+    override fun RealtimeTeleplayFragmentBinding.initView() {
+
+        rvTeleplayCategory.init(
+            LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false),
+            categoryAdapter,
+            false
+        )
+
+        rvTeleplayCountry.init(
+            LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false),
+            countryAdapter,
+            false
+        )
+
+        rvTeleplay.init(
+            LinearLayoutManager(requireActivity()),
+            teleplayAdapter,
+            false
+        )
+
+        handleAdapterClick(teleplayAdapter)
+
+        requestLoading(rvTeleplay)
     }
 
     override fun initObserver() {
 
     }
 
+    override fun setThemeColor(isDarkMode: Boolean) {}
+
+    // =========================
+    // 懒加载
+    // =========================
     override fun initRequestData() {
-        mViewModel.getChildDataByTab("pc","teleplay","{\"category\":\""+category+"\",\"country\":\""+country+"\"}").observerKt {
-            requestSuccess()
-            mCategoryAdapter.submitList(it.tag.get(0).content)
-            mCountryAdapter.submitList(it.tag.get(1).content)
-            mTeleplayAdapter.submitList(it.cards.get(0).content)
-        }
+        sendEvent(RealtimeTeleplayContract.Event.Init)
     }
 
     override fun reLoadData() {
-        getTeleplayDataByCategoryWithCountry()
+        sendEvent(
+            RealtimeTeleplayContract.Event.FilterChanged(category, country)
+        )
     }
 
+    // =========================
+    // 渲染
+    // =========================
+    override fun renderState(state: RealtimeTeleplayContract.State) {
+
+        if (state.isLoading) {
+            requestLoading(mBinding.rvTeleplay)
+            return
+        }
+
+        if (state.categoryList.isNotEmpty()) {
+            categoryAdapter.submitList(state.categoryList)
+        }
+
+        if (state.countryList.isNotEmpty()) {
+            countryAdapter.submitList(state.countryList)
+        }
+
+        if (state.isEmpty) {
+            requestEmptyData()
+        } else {
+            requestSuccess()
+            teleplayAdapter.submitList(state.list)
+        }
+    }
+
+    override fun handleEffect(effect: RealtimeTeleplayContract.Effect) {}
+
+    // =========================
+    // 点击筛选
+    // =========================
     override fun onChipClick(enum: LevelEnum, chipText: String) {
-        if (enum == LevelEnum.PARENT) {
-            category = chipText
-        } else if (enum == LevelEnum.CHILD) {
-            country = chipText
+        when (enum) {
+            LevelEnum.PARENT -> category = chipText
+            LevelEnum.CHILD -> country = chipText
         }
-        getTeleplayDataByCategoryWithCountry()
 
-    }
-
-
-
-    fun getTeleplayDataByCategoryWithCountry() {
-        mViewModel.getChildDataByTab("pc","teleplay","{\"category\":\""+category+"\",\"country\":\""+country+"\"}").observerKt {
-            if (it.cards.get(0).content.size > 0) {
-                requestSuccess()
-                mTeleplayAdapter.submitList(it.cards.get(0).content)
-            } else {
-                requestEmptyData()
-            }
-
-        }
+        sendEvent(
+            RealtimeTeleplayContract.Event.FilterChanged(category, country)
+        )
     }
 }

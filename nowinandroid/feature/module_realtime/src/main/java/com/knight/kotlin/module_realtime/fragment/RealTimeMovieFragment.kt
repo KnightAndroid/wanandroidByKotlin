@@ -1,12 +1,12 @@
 package com.knight.kotlin.module_realtime.fragment
 
-import android.graphics.Color
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.core.library_base.route.RouteFragment
+import com.knight.kotlin.library_base.fragment.BaseMviFragment
 import com.knight.kotlin.library_widget.ktx.init
 import com.knight.kotlin.module_realtime.adapter.HotRankCategoryAdapter
 import com.knight.kotlin.module_realtime.adapter.HotRankNovelMovieAdapter
+import com.knight.kotlin.module_realtime.contract.RealtimeMovieContract
 import com.knight.kotlin.module_realtime.databinding.RealtimeMovieFragmentBinding
 import com.knight.kotlin.module_realtime.enum.LevelEnum
 import com.knight.kotlin.module_realtime.ktx.handleAdapterClick
@@ -23,67 +23,127 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 @AndroidEntryPoint
 @Route(path = RouteFragment.RealTime.RealTimeMovieFragment)
-class RealTimeMovieFragment : BaseFragment<RealtimeMovieFragmentBinding, RealtimeMovieVm>(),HotRankCategoryAdapter.OnChipClickListener {
+class RealTimeMovieFragment :
+    BaseMviFragment<
+            RealtimeMovieFragmentBinding,
+            RealtimeMovieVm,
+            RealtimeMovieContract.Event,
+            RealtimeMovieContract.State,
+            RealtimeMovieContract.Effect>(),
+    HotRankCategoryAdapter.OnChipClickListener {
 
+    // =========================
+    // Adapter
+    // =========================
+    private val categoryAdapter by lazy {
+        HotRankCategoryAdapter(this, LevelEnum.PARENT)
+    }
 
-    private var category:String = "全部类型"
-    private var country:String = "全部地区"
+    private val countryAdapter by lazy {
+        HotRankCategoryAdapter(this, LevelEnum.CHILD)
+    }
 
-    private val mCategoryAdapter:HotRankCategoryAdapter by lazy { HotRankCategoryAdapter(this,LevelEnum.PARENT) }
-    private val mCountryAdapter:HotRankCategoryAdapter by lazy { HotRankCategoryAdapter(this,LevelEnum.CHILD) }
-    private val mMovieAdapter: HotRankNovelMovieAdapter by lazy { HotRankNovelMovieAdapter() }
+    private val movieAdapter by lazy {
+        HotRankNovelMovieAdapter()
+    }
 
-    override fun setThemeColor(isDarkMode: Boolean) {
+    // =========================
+    // 筛选条件（UI层持有）
+    // =========================
+    private var category: String = "全部类型"
+    private var country: String = "全部地区"
 
+    // =========================
+    // View 初始化
+    // =========================
+    override fun RealtimeMovieFragmentBinding.initView() {
+
+        rvMovieCategory.init(
+            LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false),
+            categoryAdapter,
+            false
+        )
+
+        rvMovieCountry.init(
+            LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false),
+            countryAdapter,
+            false
+        )
+
+        rvMovie.init(
+            LinearLayoutManager(requireActivity()),
+            movieAdapter,
+            false
+        )
+
+        handleAdapterClick(movieAdapter)
+
+        requestLoading(rvMovie)
     }
 
     override fun initObserver() {
 
     }
 
+    override fun setThemeColor(isDarkMode: Boolean) {}
+
+    // =========================
+    // 懒加载触发
+    // =========================
     override fun initRequestData() {
-        mViewModel.getChildDataByTab("pc","movie","{\"category\":\""+category+"\",\"country\":\""+country+"\"}").observerKt {
-           requestSuccess()
-           mCategoryAdapter.submitList(it.tag.get(0).content)
-           mCountryAdapter.submitList(it.tag.get(1).content)
-           mMovieAdapter.submitList(it.cards.get(0).content)
-        }
+        sendEvent(RealtimeMovieContract.Event.Init)
     }
 
     override fun reLoadData() {
-        getMovieDataByCategoryWithCountry()
+        sendEvent(
+            RealtimeMovieContract.Event.FilterChanged(category, country)
+        )
     }
 
-    override fun RealtimeMovieFragmentBinding.initView() {
-        requestLoading(rvMovie, Color.parseColor("#F84C48"))
-        rvMovieCategory.init(LinearLayoutManager(requireActivity(),LinearLayoutManager.HORIZONTAL, false),mCategoryAdapter,false)
-        rvMovieCountry.init(LinearLayoutManager(requireActivity(),LinearLayoutManager.HORIZONTAL, false),mCountryAdapter,false)
-        rvMovie.init(LinearLayoutManager(requireActivity()),mMovieAdapter,false)
-        handleAdapterClick(mMovieAdapter)
-    }
+    // =========================
+    // 渲染 UI（🔥核心）
+    // =========================
+    override fun renderState(state: RealtimeMovieContract.State) {
 
-    override fun onChipClick(enum: LevelEnum,chipText: String) {
-        if (enum == LevelEnum.PARENT) {
-            category = chipText
-        } else if (enum == LevelEnum.CHILD) {
-            country = chipText
+        // loading
+        if (state.isLoading) {
+            requestLoading(mBinding.rvMovie)
+            return
         }
-        getMovieDataByCategoryWithCountry()
 
+        // 分类（只初始化一次）
+        if (state.categoryList.isNotEmpty()) {
+            categoryAdapter.submitList(state.categoryList)
+        }
 
-    }
+        if (state.countryList.isNotEmpty()) {
+            countryAdapter.submitList(state.countryList)
+        }
 
-    fun getMovieDataByCategoryWithCountry() {
-        mViewModel.getChildDataByTab("pc","movie","{\"category\":\""+category+"\",\"country\":\""+country+"\"}").observerKt {
-            if (it.cards.get(0).content.size > 0) {
-                requestSuccess()
-                mMovieAdapter.submitList(it.cards.get(0).content)
-            } else {
-                requestEmptyData()
-            }
-
+        // 列表
+        if (state.isEmpty) {
+            requestEmptyData()
+        } else {
+            requestSuccess()
+            movieAdapter.submitList(state.movieList)
         }
     }
 
+    override fun handleEffect(effect: RealtimeMovieContract.Effect) {
+        // 暂无
+    }
 
+    // =========================
+    // 点击筛选
+    // =========================
+    override fun onChipClick(enum: LevelEnum, chipText: String) {
+        when (enum) {
+            LevelEnum.PARENT -> category = chipText
+            LevelEnum.CHILD -> country = chipText
+        }
+
+        sendEvent(
+            RealtimeMovieContract.Event.FilterChanged(category, country)
+        )
+    }
 }

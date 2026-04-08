@@ -30,7 +30,7 @@ import com.knight.kotlin.module_home.adapter.HomeNewsAdapter
 import com.knight.kotlin.module_home.databinding.HomeNewsActivityBinding
 import com.knight.kotlin.module_home.databinding.HomeNewsFootBinding
 import com.knight.kotlin.module_home.databinding.HomeNewsHeadBinding
-import com.knight.kotlin.module_home.entity.ZaoBaoData
+import com.knight.kotlin.module_home.entity.ZaoBaoBean
 import com.knight.kotlin.module_home.utils.FloatMenuManager
 import com.knight.kotlin.module_home.utils.FloatMenuManager.animateViewWidth
 import com.knight.kotlin.module_home.vm.HomeNewsVm
@@ -207,7 +207,7 @@ class HomeNewsActivity: BaseActivity<HomeNewsActivityBinding, HomeNewsVm>(), OnR
     /**
      * 初始化头像
      */
-    private fun initHeaderView(zaoBao: ZaoBaoData) {
+    private fun initHeaderView(zaoBao: ZaoBaoBean) {
         if (mBinding.includeNews.baseBodyRv.headerCount == 0 && mBinding.includeNews.baseBodyRv.footerCount == 0) {
             if (!::mNewsHeaderBinding.isInitialized) {
                 mNewsHeaderBinding =

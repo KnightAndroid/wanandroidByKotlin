@@ -1,13 +1,14 @@
 package com.knight.kotlin.module_realtime.fragment
 
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.core.library_base.route.RouteFragment
+import com.knight.kotlin.library_base.fragment.BaseMviFragment
 import com.knight.kotlin.library_widget.ktx.init
 import com.knight.kotlin.module_realtime.adapter.HotRankNovelMovieAdapter
+import com.knight.kotlin.module_realtime.contract.RealtimeChildNovelContract
 import com.knight.kotlin.module_realtime.databinding.RealtimeNovelChildFragmentBinding
 import com.knight.kotlin.module_realtime.ktx.handleAdapterClick
-import com.knight.kotlin.module_realtime.vm.RealTimeNovelVm
+import com.knight.kotlin.module_realtime.vm.RealTimeChildNovelVm
 import com.wyjson.router.annotation.Route
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -20,36 +21,79 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 @AndroidEntryPoint
 @Route(path = RouteFragment.RealTime.RealTimeNovelChildFragment)
-class RealTimeNovelChildFragment : BaseFragment<RealtimeNovelChildFragmentBinding, RealTimeNovelVm>(){
+class RealTimeNovelChildFragment :
+    BaseMviFragment<
+            RealtimeNovelChildFragmentBinding,
+            RealTimeChildNovelVm,
+            RealtimeChildNovelContract.Event,
+            RealtimeChildNovelContract.State,
+            RealtimeChildNovelContract.Effect>() {
 
-    private lateinit var category:String
-    private val mNovelChildAdapter: HotRankNovelMovieAdapter by lazy { HotRankNovelMovieAdapter() }
+    // =========================
+    // Adapter
+    // =========================
+    private val novelAdapter by lazy {
+        HotRankNovelMovieAdapter()
+    }
 
+    // =========================
+    // 参数
+    // =========================
+    private val category: String by lazy {
+        arguments?.getString("category").orEmpty()
+    }
 
-    override fun setThemeColor(isDarkMode: Boolean) {
+    // =========================
+    // 初始化
+    // =========================
+    override fun RealtimeNovelChildFragmentBinding.initView() {
+        rvNovelHotRank.init(
+            LinearLayoutManager(requireActivity()),
+            novelAdapter,
+            true
+        )
 
+        handleAdapterClick(novelAdapter)
+
+        requestLoading(rvNovelHotRank)
     }
 
     override fun initObserver() {
 
     }
 
-    override fun initRequestData() {
+    override fun setThemeColor(isDarkMode: Boolean) {}
 
-       mViewModel.getChildDataByTab("pc","novel","{\"category\":\""+category+"\"}").observerKt {
-           mNovelChildAdapter.submitList(it.cards.get(0).content)
-       }
+    // =========================
+    // 懒加载
+    // =========================
+    override fun initRequestData() {
+        sendEvent(RealtimeChildNovelContract.Event.Init(category))
     }
 
     override fun reLoadData() {
-
+        sendEvent(RealtimeChildNovelContract.Event.Init(category))
     }
 
-    override fun RealtimeNovelChildFragmentBinding.initView() {
-        category = arguments?.getString("category") ?:""
-        rvNovelHotRank.init(LinearLayoutManager(requireActivity()),mNovelChildAdapter,true)
-        handleAdapterClick(mNovelChildAdapter)
+    // =========================
+    // 渲染
+    // =========================
+    override fun renderState(state: RealtimeChildNovelContract.State) {
+
+        if (state.isLoading) {
+            requestLoading(mBinding.rvNovelHotRank)
+            return
+        }
+
+        if (state.isEmpty) {
+            requestEmptyData()
+        } else {
+            requestSuccess()
+            novelAdapter.submitList(state.list)
+        }
     }
 
-
+    override fun handleEffect(effect: RealtimeChildNovelContract.Effect) {
+        // 暂无
+    }
 }

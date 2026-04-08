@@ -3,7 +3,7 @@ package com.knight.kotlin.module_home.vm
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
 import com.core.library_base.vm.BaseViewModel
-import com.knight.kotlin.module_home.entity.ZaoBaoData
+import com.knight.kotlin.module_home.entity.ZaoBaoBean
 import com.knight.kotlin.module_home.repo.HomeNewsRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -22,7 +22,7 @@ class HomeNewsVm @Inject constructor(private val mRepo: HomeNewsRepo) : BaseView
     /**
      * 获取新闻
      */
-    fun getNews(): LiveData<ZaoBaoData> {
+    fun getNews(): LiveData<ZaoBaoBean> {
         return mRepo.getNews().asLiveData()
     }
 
