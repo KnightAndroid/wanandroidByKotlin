@@ -1,6 +1,5 @@
 package com.knight.kotlin.library_base.repository
 
-import android.util.Log
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
@@ -29,18 +28,24 @@ open class BaseRepository {
      * @param requestBlock 请求的整体逻辑
      * @return Flow<T>
      */
-    protected fun<T> request(requestBlock:suspend FlowCollector<T>.() -> Unit): Flow<T> {
-       return flow(block = requestBlock).flowOn(Dispatchers.IO).onStart {
-       }
-           .onEach {
-
-           }
-           .onCompletion {
-               //结束
-           }
-           .catch {
-               Log.d("sdsd",it.cause?.message + it.message)
-           }
+//    protected fun<T> request(requestBlock:suspend FlowCollector<T>.() -> Unit): Flow<T> {
+//       return flow(block = requestBlock).flowOn(Dispatchers.IO).onStart {
+//       }
+//           .onEach {
+//
+//           }
+//           .onCompletion {
+//               //结束
+//           }
+//           .catch {
+//               Log.d("sdsd",it.cause?.message + it.message)
+//           }
+//    }
+    protected fun <T> request(
+        requestBlock: suspend FlowCollector<T>.() -> Unit
+    ): Flow<T> {
+        return flow(requestBlock)
+            .flowOn(Dispatchers.IO)
     }
 
 

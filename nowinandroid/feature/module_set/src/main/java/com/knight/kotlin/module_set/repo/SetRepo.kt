@@ -7,7 +7,6 @@ import com.knight.kotlin.library_util.CacheFileUtils
 import com.knight.kotlin.module_set.api.SetApiService
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 /**
@@ -23,7 +22,7 @@ class SetRepo @Inject constructor(
     /**
      * 退出登录
      */
-    fun logout(): Flow<Unit> = flow {
+    fun logout(): Flow<Unit> = request {
         val response = api.logout()
         responseCodeExceptionHandler(response.code, response.msg)
         emit(Unit)

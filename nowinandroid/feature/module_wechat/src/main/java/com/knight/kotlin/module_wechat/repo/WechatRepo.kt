@@ -5,7 +5,6 @@ import com.knight.kotlin.library_network.model.responseCodeExceptionHandler
 import com.knight.kotlin.module_wechat.api.WechatApiService
 import com.knight.kotlin.module_wechat.entity.WechatArticleListEntity
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 /**
@@ -32,7 +31,7 @@ class WechatRepo @Inject constructor(
     fun getWechatArticle(
         cid: Int,
         page: Int
-    ): Flow<WechatArticleListEntity> = flow {
+    ): Flow<WechatArticleListEntity> = request {
         val resp = wechatApiService.getWechatArticle(cid, page)
         responseCodeExceptionHandler(resp.code, resp.msg)
         emit(resp.data)
@@ -43,7 +42,7 @@ class WechatRepo @Inject constructor(
      */
     fun collectArticle(
         articleId: Int
-    ): Flow<Unit> = flow {
+    ): Flow<Unit> = request {
         val resp = wechatApiService.collectArticle(articleId)
         responseCodeExceptionHandler(resp.code, resp.msg)
         emit(Unit)
@@ -54,7 +53,7 @@ class WechatRepo @Inject constructor(
      */
     fun unCollectArticle(
         articleId: Int
-    ): Flow<Unit> = flow {
+    ): Flow<Unit> = request {
         val resp = wechatApiService.unCollectArticle(articleId)
         responseCodeExceptionHandler(resp.code, resp.msg)
         emit(Unit)
@@ -67,7 +66,7 @@ class WechatRepo @Inject constructor(
         cid: Int,
         page: Int,
         keyword: String
-    ): Flow<WechatArticleListEntity> = flow {
+    ): Flow<WechatArticleListEntity> = request {
         val resp = wechatApiService.getWechatArticleByKeywords(cid, page, keyword)
         responseCodeExceptionHandler(resp.code, resp.msg)
         emit(resp.data)

@@ -34,7 +34,7 @@ class UtilsRepo @Inject constructor() : BaseRepository() {
 //    }
 
 
-    fun getUtils() : Flow<MutableList<UtilsEntity>> = flow {
+    fun getUtils() : Flow<MutableList<UtilsEntity>> = request {
         val response = mUtilsApi.getUtils()
         responseCodeExceptionHandler(response.code, response.msg)
         val data = response.data

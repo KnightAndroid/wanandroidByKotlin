@@ -2,9 +2,9 @@ package com.knight.kotlin.module_project.repo
 
 import com.knight.kotlin.library_base.repository.BaseRepository
 import com.knight.kotlin.library_network.model.responseCodeExceptionHandler
-import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_project.api.ProjectApi
 import com.knight.kotlin.module_project.entity.ProjectTypeBean
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 /**
@@ -12,21 +12,16 @@ import javax.inject.Inject
  * Time:2022/4/28 18:00
  * Description:ProjectRepo
  */
-class ProjectRepo @Inject constructor() : BaseRepository() {
-    @Inject
-    lateinit var mProjectApi: ProjectApi
+class ProjectRepo @Inject constructor(
+    private val api: ProjectApi
+) : BaseRepository() {
 
-    /**
-     * 获取项目标题列表
-     */
-    fun getProjectTitle() = request<MutableList<ProjectTypeBean>>({
-        mProjectApi.getProjectTtle().run {
-            responseCodeExceptionHandler(code, msg)
-            emit(data)
-        }
-    }){
-        it?.run {
-            toast(it)
-        }
+    fun getProjectTitle() :Flow<List<ProjectTypeBean>> = request {
+        val response = api.getProjectTtle()
+
+        // 👉 统一异常抛出
+        responseCodeExceptionHandler(response.code, response.msg)
+
+        emit(response.data ?: emptyList())
     }
 }

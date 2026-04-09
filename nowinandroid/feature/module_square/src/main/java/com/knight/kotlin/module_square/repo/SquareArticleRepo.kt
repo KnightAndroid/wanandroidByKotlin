@@ -5,7 +5,6 @@ import com.knight.kotlin.library_network.model.responseCodeExceptionHandler
 import com.knight.kotlin.module_square.api.SquareArticleApi
 import com.knight.kotlin.module_square.entity.SquareArticleListBean
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 /**
@@ -23,7 +22,7 @@ class SquareArticleRepo @Inject constructor(
     fun getArticleByTag(
         page: Int,
         keyword: String
-    ): Flow<SquareArticleListBean> = flow {
+    ): Flow<SquareArticleListBean> = request {
 
         val response = api.getArticlebyTag(page, keyword)
 
@@ -39,7 +38,7 @@ class SquareArticleRepo @Inject constructor(
      */
     fun collectArticle(
         collectArticleId: Int
-    ): Flow<Boolean> = flow {
+    ): Flow<Boolean> = request {
 
         val response = api.collectArticle(collectArticleId)
 
@@ -53,7 +52,7 @@ class SquareArticleRepo @Inject constructor(
      */
     fun unCollectArticle(
         unCollectArticleId: Int
-    ): Flow<Boolean> = flow {
+    ): Flow<Boolean> = request {
 
         val response = api.unCollectArticle(unCollectArticleId)
 

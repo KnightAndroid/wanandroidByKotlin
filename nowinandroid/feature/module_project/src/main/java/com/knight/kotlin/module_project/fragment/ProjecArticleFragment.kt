@@ -4,19 +4,19 @@ import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.core.library_base.annotation.EventBusRegister
 import com.core.library_base.event.MessageEvent
-import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.core.library_base.ktx.setOnClick
 import com.core.library_base.route.RouteFragment
-import com.knight.kotlin.library_base.utils.ArouteUtils
-import com.knight.kotlin.library_common.util.CacheUtils
 import com.core.library_common.util.ColorUtils
 import com.knight.kotlin.library_aop.loginintercept.LoginCheck
+import com.knight.kotlin.library_base.fragment.BaseMviFragment
+import com.knight.kotlin.library_base.utils.ArouteUtils
+import com.knight.kotlin.library_common.util.CacheUtils
 import com.knight.kotlin.library_widget.ktx.init
 import com.knight.kotlin.library_widget.ktx.setSafeOnItemChildClickListener
 import com.knight.kotlin.library_widget.ktx.setSafeOnItemClickListener
 import com.knight.kotlin.module_project.adapter.ProjectArticleAdapter
+import com.knight.kotlin.module_project.contract.ProjectArticleContract
 import com.knight.kotlin.module_project.databinding.ProjectArticleFragmentBinding
-import com.knight.kotlin.module_project.entity.ProjectArticleListBean
 import com.knight.kotlin.module_project.vm.ProjectArticleVm
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener
@@ -34,210 +34,150 @@ import org.greenrobot.eventbus.ThreadMode
 @EventBusRegister
 @AndroidEntryPoint
 @Route(path = RouteFragment.Project.ProjectArticleFragment)
-class ProjecArticleFragment: BaseFragment<ProjectArticleFragmentBinding, ProjectArticleVm>(),OnRefreshListener,OnLoadMoreListener {
+class ProjecArticleFragment : BaseMviFragment<
+        ProjectArticleFragmentBinding,
+        ProjectArticleVm,
+        ProjectArticleContract.Event,
+        ProjectArticleContract.State,
+        ProjectArticleContract.Effect>(),
+    OnRefreshListener,
+    OnLoadMoreListener {
 
+    private val adapter by lazy { ProjectArticleAdapter() }
 
-    //文章适配器列表
-    private val mProjectArticleAdapter:ProjectArticleAdapter by lazy { ProjectArticleAdapter()}
-
-    /**
-     * 页码
-     */
-    private var page:Int = 1
-
-    /**
-     * 项目类别
-     *
-     */
-    private var cid:Int = 0
-
-    /**
-     * 是否是新文章
-     *
-     */
+    private var cid = 0
     private var isNewProject = false
-
-    /**
-     *
-     * 选择点赞文章
-     */
-    private var selectItem = -1
 
     companion object {
         fun newInstance(cid: Int, isNewProject: Boolean): ProjecArticleFragment {
-            val projectViewpagerFragment: ProjecArticleFragment = ProjecArticleFragment()
-            val args = Bundle()
-            args.putInt("cid", cid)
-            args.putBoolean("isNewProject", isNewProject)
-            projectViewpagerFragment.setArguments(args)
-            return projectViewpagerFragment
+            return ProjecArticleFragment().apply {
+                arguments = Bundle().apply {
+                    putInt("cid", cid)
+                    putBoolean("isNewProject", isNewProject)
+                }
+            }
         }
     }
 
-    override fun setThemeColor(isDarkMode: Boolean) {
-
-    }
+    override fun setThemeColor(isDarkMode: Boolean) {}
 
     override fun ProjectArticleFragmentBinding.initView() {
         requestLoading(includeProject.baseFreshlayout)
+
         cid = arguments?.getInt("cid") ?: 0
-        isNewProject = arguments?.getBoolean("isNewProject") ?:false
-        if (isNewProject) page = 0 else page =1
+        isNewProject = arguments?.getBoolean("isNewProject") ?: false
+
+        mViewModel.init(cid, isNewProject)
+
         includeProject.baseFreshlayout.setOnRefreshListener(this@ProjecArticleFragment)
         includeProject.baseFreshlayout.setOnLoadMoreListener(this@ProjecArticleFragment)
-        includeProject.baseBodyRv.init(LinearLayoutManager(requireActivity()),mProjectArticleAdapter,true)
-        projectFloatBtn.backgroundTintList = ColorUtils.createColorStateList(CacheUtils.getThemeColor(), CacheUtils.getThemeColor())
-        initListener()
+
+        includeProject.baseBodyRv.init(
+            LinearLayoutManager(requireActivity()),
+            adapter,
+            true
+        )
+
+        projectFloatBtn.backgroundTintList =
+            ColorUtils.createColorStateList(
+                CacheUtils.getThemeColor(),
+                CacheUtils.getThemeColor()
+            )
+
         projectFloatBtn.setOnClick {
             includeProject.baseBodyRv.smoothScrollToPosition(0)
         }
+
+        initListener()
     }
 
     override fun initObserver() {
 
-
     }
 
     override fun initRequestData() {
-        if (isNewProject) {
-            mViewModel.getNewProjectArticle(page).observerKt {
-                setProjectArticle(it)
-            }
-        } else {
-            mViewModel.getProjectArticle(page, cid).observerKt {
-                setProjectArticle(it)
-            }
-        }
+        sendEvent(ProjectArticleContract.Event.Refresh)
     }
 
     override fun reLoadData() {
-        if (isNewProject) {
-            mViewModel.getNewProjectArticle(page).observerKt {
-                setProjectArticle(it)
-            }
+        sendEvent(ProjectArticleContract.Event.Refresh)
+    }
+
+    override fun renderState(state: ProjectArticleContract.State) {
+
+        if (state.isRefresh) {
+            mBinding.includeProject.baseFreshlayout.finishRefresh()
         } else {
-            mViewModel.getProjectArticle(page, cid).observerKt {
-                setProjectArticle(it)
+            mBinding.includeProject.baseFreshlayout.finishLoadMore()
+        }
+
+        if (state.list.isNotEmpty()) {
+            requestSuccess()
+            adapter.submitList(state.list.toMutableList())
+        }
+
+        mBinding.includeProject.baseFreshlayout.setEnableLoadMore(state.hasMore)
+    }
+
+    override fun handleEffect(effect: ProjectArticleContract.Effect) {
+        when (effect) {
+            is ProjectArticleContract.Effect.Toast -> {
+                // toast
             }
         }
     }
 
     override fun onRefresh(refreshLayout: RefreshLayout) {
-        mBinding.includeProject.baseFreshlayout.setEnableLoadMore(true)
-        if (isNewProject) {
-            page = 0
-            mViewModel.getNewProjectArticle(page).observerKt {
-                setProjectArticle(it)
-            }
-        } else {
-            page = 1
-            mViewModel.getProjectArticle(page, cid).observerKt {
-                setProjectArticle(it)
-            }
-        }
-
-
+        sendEvent(ProjectArticleContract.Event.Refresh)
     }
 
     override fun onLoadMore(refreshLayout: RefreshLayout) {
-        if (isNewProject) {
-            mViewModel.getNewProjectArticle(page).observerKt {
-                setProjectArticle(it)
-            }
-        } else {
-            mViewModel.getProjectArticle(page,cid).observerKt {
-                setProjectArticle(it)
-            }
-        }
+        sendEvent(ProjectArticleContract.Event.LoadMore)
     }
-
-    /**
-     *
-     * 设置项目文章列表数据
-     */
-    private fun setProjectArticle(data:ProjectArticleListBean) {
-        requestSuccess()
-        mBinding.includeProject.baseFreshlayout.finishLoadMore()
-        mBinding.includeProject.baseFreshlayout.finishRefresh()
-        if (data.datas.size > 0) {
-            if (data.curPage == 1) {
-                mProjectArticleAdapter.submitList(data.datas)
-            } else {
-                mProjectArticleAdapter.addAll(data.datas)
-            }
-
-            if (data.datas.size == 0) {
-                mBinding.includeProject.baseFreshlayout.setEnableLoadMore(false)
-            } else {
-                page++
-            }
-        } else {
-            mBinding.includeProject.baseFreshlayout.setEnableLoadMore(false)
-        }
-    }
-
 
     private fun initListener() {
-        mProjectArticleAdapter.run {
-
-            setSafeOnItemChildClickListener(com.core.library_base.R.id.base_article_collect) { adapter, view, position ->
-                selectItem = position
-                collectOrunCollect(items[position].collect,items[position].id)
-            }
-
-            setSafeOnItemClickListener { adapter, view, position ->
-                ArouteUtils.startWebArticle(items.get(position).link,items.get(position).title,
-                    items.get(position).id,items.get(position).collect,items.get(position).envelopePic,
-                    items.get(position).desc,items.get(position).chapterName,items[position].author,items[position].shareUser)
-            }
-
-
+        adapter.setSafeOnItemChildClickListener(
+            com.core.library_base.R.id.base_article_collect
+        ) { _, _, position ->
+            val item = adapter.items[position]
+            handleCollectClick(item.collect, item.id, position)
         }
-    }
 
-    /**
-     *
-     * 收藏文章成功
-     */
-    private fun collectArticleSuccess() {
-        mProjectArticleAdapter.items[selectItem].collect = true
-        mProjectArticleAdapter.notifyItemChanged(selectItem)
-    }
-
-    /**
-     *
-     * 取消收藏文章成功
-     */
-    private fun unCollectArticleSuccess() {
-        mProjectArticleAdapter.items[selectItem].collect = false
-        mProjectArticleAdapter.notifyItemChanged(selectItem)
+        adapter.setSafeOnItemClickListener { _, _, position ->
+            val item = adapter.items[position]
+            ArouteUtils.startWebArticle(
+                item.link,
+                item.title,
+                item.id,
+                item.collect,
+                item.envelopePic,
+                item.desc,
+                item.chapterName,
+                item.author,
+                item.shareUser
+            )
+        }
     }
 
     @LoginCheck
-    private fun collectOrunCollect(collect: Boolean, articleId: Int) {
+    private fun handleCollectClick(collect: Boolean, id: Int, position: Int) {
         if (collect) {
-            mViewModel.unCollectArticle(articleId).observerKt {
-                unCollectArticleSuccess()
-            }
+            sendEvent(ProjectArticleContract.Event.UnCollect(id, position))
         } else {
-            mViewModel.collectArticle(articleId).observerKt {
-                collectArticleSuccess()
-            }
+            sendEvent(ProjectArticleContract.Event.Collect(id, position))
         }
     }
-
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onMessageEvent(event: MessageEvent) {
         when (event.type) {
-            //收藏成功 分享文章成功 登录成功,登出成功
-            MessageEvent.MessageType.CollectSuccess, MessageEvent.MessageType.ShareArticleSuccess,
-            MessageEvent.MessageType.LoginSuccess, MessageEvent.MessageType.LogoutSuccess-> {
-                onRefresh(mBinding.includeProject.baseFreshlayout)
+            MessageEvent.MessageType.CollectSuccess,
+            MessageEvent.MessageType.ShareArticleSuccess,
+            MessageEvent.MessageType.LoginSuccess,
+            MessageEvent.MessageType.LogoutSuccess -> {
+                sendEvent(ProjectArticleContract.Event.Refresh)
             }
-
             else -> {}
         }
-
     }
 }

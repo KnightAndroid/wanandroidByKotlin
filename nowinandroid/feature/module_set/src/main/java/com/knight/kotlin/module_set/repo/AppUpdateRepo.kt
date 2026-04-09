@@ -25,7 +25,7 @@ class AppUpdateRepo @Inject constructor(
      * 2. 校验 code
      * 3. emit data
      */
-    fun checkAppUpdateRecord(): Flow<VersionRecordListEntity> = flow {
+    fun checkAppUpdateRecord(): Flow<VersionRecordListEntity> = request {
         val response = api.checkAppUpdateRecord()
         responseCodeExceptionHandler(response.code, response.msg)
         emit(response.data)

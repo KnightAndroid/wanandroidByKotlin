@@ -1,12 +1,12 @@
 package com.knight.kotlin.module_project.fragment
 
-import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.core.library_base.ktx.toHtml
 import com.core.library_base.route.RouteFragment
+import com.knight.kotlin.library_base.fragment.BaseMviFragment
 import com.knight.kotlin.library_util.ViewInitUtils
 import com.knight.kotlin.library_util.bindWechatViewPager2
+import com.knight.kotlin.module_project.contract.ProjectContract
 import com.knight.kotlin.module_project.databinding.ProjectActivityBinding
-import com.knight.kotlin.module_project.entity.ProjectTypeBean
 import com.knight.kotlin.module_project.vm.ProjectVm
 import com.wyjson.router.annotation.Route
 import dagger.hilt.android.AndroidEntryPoint
@@ -19,50 +19,83 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 @AndroidEntryPoint
 @Route(path = RouteFragment.Project.ProjectFragment)
-class ProjectFragment: BaseFragment<ProjectActivityBinding, ProjectVm>() {
+class ProjectFragment : BaseMviFragment<
+        ProjectActivityBinding,
+        ProjectVm,
+        ProjectContract.Event,
+        ProjectContract.State,
+        ProjectContract.Effect>() {
 
-    private val mFragments = mutableListOf<ProjecArticleFragment>()
-    private val mTitileDatas = mutableListOf<String>()
+    private val fragments = mutableListOf<ProjecArticleFragment>()
+    private val titles = mutableListOf<String>()
 
     override fun ProjectActivityBinding.initView() {
         requestLoading(projectViewPager)
     }
 
     override fun initObserver() {
+
     }
 
     override fun initRequestData() {
-        mViewModel.getProjectTitle().observerKt {
-            setProjectTypes(it)
-        }
+        sendEvent(ProjectContract.Event.LoadProjectTypes)
     }
 
-    override fun setThemeColor(isDarkMode: Boolean) {
-
-    }
+    override fun setThemeColor(isDarkMode: Boolean) {}
 
     override fun reLoadData() {
-        mViewModel.getProjectTitle()
+        sendEvent(ProjectContract.Event.Retry)
     }
 
-    private fun setProjectTypes(projectTypes:MutableList<ProjectTypeBean>) {
-        requestSuccess()
-        mFragments.clear()
-        mTitileDatas.clear()
-        val projectTypeBean = ProjectTypeBean()
-        projectTypeBean.name = "最新项目"
-        projectTypes.add(projectTypeBean)
-        mTitileDatas.add(projectTypeBean.name)
-        mFragments.add(ProjecArticleFragment.newInstance(0,true))
-        for (i in projectTypes.indices) {
-            mTitileDatas.add(projectTypes[i].name.toHtml().toString())
-            mFragments.add(ProjecArticleFragment.newInstance(projectTypes[i].id, false))
+    // ❗这里只做UI状态，不做ViewPager初始化
+    override fun renderState(state: ProjectContract.State) {
+        when {
+            state.isLoading -> requestLoading(mBinding.projectViewPager)
+            state.error != null -> requestFailure()
+            state.projectTypes.isNotEmpty() -> {
+                requestSuccess()
+            }
         }
-        ViewInitUtils.setViewPager2Init(requireActivity(),mBinding.projectViewPager,mFragments,
+    }
+
+    // ✅ ViewPager初始化只在 Effect 中做（关键）
+    override fun handleEffect(effect: ProjectContract.Effect) {
+        when (effect) {
+            is ProjectContract.Effect.ShowToast -> {
+                // toast
+            }
+
+            is ProjectContract.Effect.InitViewPager -> {
+                setupViewPager(effect.list)
+            }
+        }
+    }
+
+    private fun setupViewPager(list: List<com.knight.kotlin.module_project.entity.ProjectTypeBean>) {
+        fragments.clear()
+        titles.clear()
+
+        list.forEachIndexed { index, item ->
+            titles.add(item.name.toHtml().toString())
+            fragments.add(
+                ProjecArticleFragment.newInstance(
+                    item.id,
+                    index == 0
+                )
+            )
+        }
+
+        ViewInitUtils.setViewPager2Init(
+            requireActivity(),
+            mBinding.projectViewPager,
+            fragments,
             isOffscreenPageLimit = true,
             isUserInputEnabled = false
         )
-        mBinding.projectIndicator.bindWechatViewPager2(mBinding.projectViewPager,mTitileDatas)
 
+        mBinding.projectIndicator.bindWechatViewPager2(
+            mBinding.projectViewPager,
+            titles
+        )
     }
 }

@@ -5,7 +5,6 @@ import com.knight.kotlin.library_common.entity.AppThemeBean
 import com.knight.kotlin.library_network.model.responseCodeExceptionHandler
 import com.knight.kotlin.module_welcome.api.WelcomeApiService
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 /**
@@ -26,7 +25,7 @@ class WelcomeRepo @Inject constructor(
      * 2. 校验 code
      * 3. emit data
      */
-    fun getAppTheme(): Flow<AppThemeBean> = flow {
+    fun getAppTheme(): Flow<AppThemeBean> = request {
         val response = api.getAppTheme()
         responseCodeExceptionHandler(response.code, response.msg)
         val data = response.data
