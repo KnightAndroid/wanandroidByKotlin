@@ -1,7 +1,6 @@
 package com.knight.kotlin.library_common.config
-
-import com.baidu.location.BDLocation
 import com.knight.kotlin.library_common.entity.AppThemeBean
+import com.knight.kotlin.library_common.entity.LocationEntity
 import com.knight.kotlin.library_common.entity.UserInfoEntity
 import java.util.UUID
 
@@ -92,7 +91,7 @@ object Appconfig {
       *
       * 百度定位信息
        */
-     var location:BDLocation?=null
+     var location: LocationEntity?=null
 
      /**
       *

@@ -15,13 +15,7 @@ dependencies {
     implementation (libs.hilt.android)
     kapt (libs.hilt.compiler)
     //kapt Dependencies.JetPack.HILT_ANDROIDX
-
-    //百度地图
-    api (libs.baidu.map.location)
-    api (libs.baidu.map.allnavi)
-    api (libs.baidu.map.search)
-    api (libs.baidu.map.util)
-    api  (libs.work.manager)
+    api (libs.work.manager)
     api (libs.mmkv)
 
 

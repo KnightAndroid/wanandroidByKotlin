@@ -4,13 +4,13 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.os.Build
 import androidx.annotation.RequiresApi
-import com.baidu.location.BDLocation
 import com.core.library_base.route.RouteActivity
 import com.core.library_common.util.ColorUtils
 import com.hjq.permissions.XXPermissions
 import com.knight.kotlin.library_base.activity.BaseMviActivity
 import com.knight.kotlin.library_common.config.Appconfig
 import com.knight.kotlin.library_common.entity.AppThemeBean
+import com.knight.kotlin.library_common.entity.LocationEntity
 import com.knight.kotlin.library_common.util.CacheUtils
 import com.knight.kotlin.library_permiss.permission.PermissionLists
 import com.knight.kotlin.library_permiss.permission.base.IPermission
@@ -126,7 +126,7 @@ class WelcomeActivity :
         if (XXPermissions.isGrantedPermissions(this, permissions)) {
             LocationUtils.getLocation(object : OnceLocationListener {
                 @RequiresApi(Build.VERSION_CODES.O)
-                override fun onReceiveLocation(location: BDLocation?) {}
+                override fun onReceiveLocation(location: LocationEntity?) {}
             })
         }
     }

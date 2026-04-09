@@ -1,6 +1,5 @@
 package com.knight.kotlin.library_database.util
 
-import com.baidu.navisdk.ui.util.TipTool.toast
 import com.knight.kotlin.library_common.ktx.getUser
 import com.knight.kotlin.library_database.entity.HistoryReadRecordsEntity
 import com.knight.kotlin.library_database.entity.SearchHistroyKeywordEntity
@@ -53,7 +52,9 @@ object DataBaseUtils : CoroutineScope by CoroutineScope(Dispatchers.Main) {
             ?.onCompletion {
                 //结束
             }
-            ?.catch { toast(it.message ?: "") }
+            ?.catch {
+
+                }
             ?.collect()
     }
 

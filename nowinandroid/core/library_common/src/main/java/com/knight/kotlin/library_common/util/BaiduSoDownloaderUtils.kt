@@ -190,13 +190,14 @@ object BaiduSoDownloaderUtils {
 
 
     fun isSoDownloaded(context: Context): Boolean {
-        val abi = Build.SUPPORTED_ABIS.firstOrNull() ?: "armeabi-v7a"
-        val soDir = File(context.filesDir, "baidu_so/$abi")
-
-        for ((soName, _, _) in soFiles) {
-            val soFile = File(soDir, soName)
-            if (!soFile.exists()) return false
-        }
+//        暂注释
+//        val abi = Build.SUPPORTED_ABIS.firstOrNull() ?: "armeabi-v7a"
+//        val soDir = File(context.filesDir, "baidu_so/$abi")
+//
+//        for ((soName, _, _) in soFiles) {
+//            val soFile = File(soDir, soName)
+//            if (!soFile.exists()) return false
+//        }
         return true
     }
 }

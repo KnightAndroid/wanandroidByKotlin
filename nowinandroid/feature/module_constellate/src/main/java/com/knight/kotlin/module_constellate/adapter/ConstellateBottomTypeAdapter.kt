@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import android.widget.RelativeLayout
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
-import com.baidu.navisdk.ui.widget.bucket.BNBucketItem
 import com.chad.library.adapter4.BaseQuickAdapter
 import com.core.library_common.util.dp2px
 import com.knight.kotlin.module_constellate.R

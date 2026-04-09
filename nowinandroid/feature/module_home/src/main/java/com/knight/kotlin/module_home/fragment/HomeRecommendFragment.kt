@@ -32,7 +32,6 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
-import com.baidu.location.BDLocation
 import com.core.library_base.annotation.EventBusRegister
 import com.core.library_base.event.MessageEvent
 import com.core.library_base.ktx.fromJson
@@ -66,6 +65,7 @@ import com.knight.kotlin.library_base.ktx.updateText
 import com.knight.kotlin.library_base.utils.ArouteUtils
 import com.knight.kotlin.library_common.config.Appconfig
 import com.knight.kotlin.library_common.config.CacheKey
+import com.knight.kotlin.library_common.entity.LocationEntity
 import com.knight.kotlin.library_common.entity.UserInfoEntity
 import com.knight.kotlin.library_common.enum.BackgroundAnimationMode
 import com.knight.kotlin.library_common.enum.PollutantIndex
@@ -684,9 +684,9 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
     private fun requestOnceLocation() {
         LocationUtils.getLocation(object : OnceLocationListener {
             @RequiresApi(Build.VERSION_CODES.O)
-            override fun onReceiveLocation(location: BDLocation?) {
+            override fun onReceiveLocation(location: LocationEntity?) {
                 location?.let {
-                    if ((it.latitude != 4.9E-324 && it.longitude != 4.9E-324) && (it.latitude > 0 && it.longitude > 0)) {
+                    if ((it.lat != 4.9E-324 && it.lng != 4.9E-324) && (it.lat > 0 && it.lng > 0)) {
                         getDetailWeekWeather(it)
                     }
                 }
@@ -853,10 +853,10 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
      * 根据经纬度信息获取详细天气预告
      */
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun getDetailWeekWeather(location: BDLocation) {
+    private fun getDetailWeekWeather(location: LocationEntity) {
         showLoadingDialog()
         mBinding.homeRecommentMenu.homeTvLocation.text = location.city
-        val latLng = Coordtransform.BD09toWGS84(location.longitude, location.latitude)
+        val latLng = Coordtransform.BD09toWGS84(location.lng, location.lat)
         getWeather(latLng[1],latLng[0],location.province, location.city, location.district,true)
 
 
@@ -891,7 +891,7 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
         } else {
             observeSoDownloadStatus()
             getLocation()?.let {
-                if (it.latitude != 0.0 && it.longitude !=0.0 && (it.latitude != 4.9E-324 && it.longitude != 4.9E-324)) {
+                if (it.lat != 0.0 && it.lng !=0.0 && (it.lat != 4.9E-324 && it.lng != 4.9E-324)) {
                     getDetailWeekWeather(it)
                 }
             } ?: run{

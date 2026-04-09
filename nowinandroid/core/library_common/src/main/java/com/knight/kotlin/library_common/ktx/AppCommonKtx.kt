@@ -1,8 +1,8 @@
 package com.knight.kotlin.library_common.ktx
 
-import com.baidu.location.BDLocation
 import com.knight.kotlin.library_common.config.Appconfig
 import com.knight.kotlin.library_common.config.CacheKey
+import com.knight.kotlin.library_common.entity.LocationEntity
 import com.knight.kotlin.library_common.entity.UserInfoEntity
 import com.knight.kotlin.library_common.util.CacheUtils
 
@@ -32,9 +32,9 @@ fun getUser(): UserInfoEntity? {
  */
 fun getLatitude():Double {
     Appconfig.location?.let {
-        return it.latitude
+        return it.lat
     } ?:run {
-        return 4.9E-324
+        return 22.635886
     }
 
 
@@ -44,11 +44,11 @@ fun getLatitude():Double {
  *
  * 返回经纬度信息
  */
-fun getLocation(): BDLocation? {
+fun getLocation(): LocationEntity? {
     Appconfig.location ?.let {
         return it
     } ?:run {
-        Appconfig.location= CacheUtils.getDataInfo(CacheKey.CURRENTLOCATION, BDLocation::class.java)
+        Appconfig.location= CacheUtils.getDataInfo(CacheKey.CURRENTLOCATION, LocationEntity::class.java)
         return Appconfig.location
     }
 }
@@ -58,8 +58,9 @@ fun getLocation(): BDLocation? {
  */
 fun getLongitude():Double {
     Appconfig.location?.let {
-        return it.longitude
+        return it.lng
     } ?:run {
-        return 4.9E-324
+        return 114.062945
     }
 }
+

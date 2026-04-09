@@ -62,8 +62,6 @@ lottie = "2.8.0"
 slf4j = "1.7.21"
 windowx = "1.3.0"
 kotlinxSerializationJson = "1.7.3"
-baiduMapSdk = "9.6.6" #地图定位
-baiduNaviSdk = "7.6.6" #导航版本
 suncalc = "3.11" #日月日出日落月出月落 计算
 workManager = "2.10.2"
 recycleView = "1.4.0"
@@ -156,10 +154,6 @@ lottie = { group = "com.airbnb.android",name = "lottie",version.ref = "lottie"} 
 slf4j = {group= "org.slf4j",name = "slf4j-android",version.ref = "slf4j"}
 windowx = { group = "androidx.window",name = "window",version.ref = "windowx"}
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx",name = "kotlinx-serialization-json",version.ref = "kotlinxSerializationJson"} #kotlin序列化帮助类
-baidu-map-location = { group = "com.baidu.lbsyun",name = "BaiduMapSDK_Location",version.ref = "baiduMapSdk"}
-baidu-map-allnavi = { group = "com.baidu.lbsyun",name = "BaiduMapSDK_Map-AllNavi",version.ref = "baiduNaviSdk"}
-baidu-map-search = { group = "com.baidu.lbsyun",name = "BaiduMapSDK_Search",version.ref = "baiduNaviSdk"}
-baidu-map-util = { group = "com.baidu.lbsyun",name = "BaiduMapSDK_Util",version.ref = "baiduNaviSdk"}
 suncalc = { group = "org.shredzone.commons",name = "commons-suncalc",version.ref = "suncalc"} #https://github.com/shred/commons-suncalc
 media3-datasource = { group = "androidx.media3",name = "media3-datasource",version.ref = "exoplayer"} #https://github.com/androidx/media "1.6.1"版本 //播放音频
 media3-common-ktx = { group = "androidx.media3",name = "media3-common-ktx",version.ref = "exoplayer"}
