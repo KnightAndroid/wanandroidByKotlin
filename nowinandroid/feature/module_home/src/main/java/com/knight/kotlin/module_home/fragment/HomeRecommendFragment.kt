@@ -85,11 +85,11 @@ import com.knight.kotlin.library_scan.annoation.ScanStyle
 import com.knight.kotlin.library_scan.decode.ScanCodeConfig
 import com.knight.kotlin.library_util.Coordtransform
 import com.knight.kotlin.library_util.DateUtils
+import com.knight.kotlin.library_util.JsonUtils
 import com.knight.kotlin.library_util.ResourceProvider
 import com.knight.kotlin.library_util.SystemUtils
 import com.knight.kotlin.library_util.TimeUtils
 import com.knight.kotlin.library_util.ViewInitUtils
-import com.knight.kotlin.library_util.baidu.GeoCodeUtils
 import com.knight.kotlin.library_util.baidu.LocationUtils
 import com.knight.kotlin.library_util.baidu.OnceLocationListener
 import com.knight.kotlin.library_util.image.ImageLoader
@@ -124,6 +124,7 @@ import com.knight.kotlin.module_home.dialog.HomeCityGroupFragment
 import com.knight.kotlin.module_home.dialog.HomePushArticleFragment
 import com.knight.kotlin.module_home.dialog.HomeWeatherNewsFragment
 import com.knight.kotlin.module_home.entity.BannerBean
+import com.knight.kotlin.module_home.entity.CityLatLngBean
 import com.knight.kotlin.module_home.entity.EveryDayPushArticlesBean
 import com.knight.kotlin.module_home.entity.HomeArticleListBean
 import com.knight.kotlin.module_home.entity.PollutantBean
@@ -703,9 +704,8 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
         mBinding.homeRecommentMenu.weatherMainAqiProgress.setDrawStatus(ArcProgress.ArcProgressDrawStatus.NOTDRAW)
         mBinding.homeRecommentMenu.sunMoonControlView.setDrawStatus(SunMoonView.SunMoonDrawStatus.NOTDRAW)
         mBinding.homeRecommentMenu.homeTvLocation.text = city.city
-        val latLng = Coordtransform.BD09toWGS84(lng, lat)
         showLoadingDialog()
-        getWeather(latLng[1],latLng[0],city.province, city.city, city.city,false)
+        getWeather(lat,lng,city.province, city.city, city.city,false)
     }
 
 
@@ -1762,16 +1762,17 @@ class HomeRecommendFragment : BaseFragment<HomeRecommendFragmentBinding, HomeRec
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onChooseCity(data: CityBean) {
-        GeoCodeUtils.getGeocode(
-            city = data.city,
-            address = data.city,
-            onSuccess = { lat, lng ->
-                getDetailWeekWeatherByCity(data,lng,lat)
-            },
-            onFail = {
-
-            }
-        )
+        //这里进行城市经纬度转换
+        val type = object : TypeToken<List<CityLatLngBean>>() {}.type
+        val jsonData: String = JsonUtils.getJson(requireActivity(), "city_latlng.json")
+        val mDataList: MutableList<CityLatLngBean> =
+            GsonUtils.getList(jsonData, type)
+        val cityMap: Map<String, CityLatLngBean> =
+            mDataList.associateBy { it.city }
+        val result = cityMap[data.city]
+        result?.let {
+            getDetailWeekWeatherByCity(data,it.longitude,it.latitude)
+        }
     }
 
 }

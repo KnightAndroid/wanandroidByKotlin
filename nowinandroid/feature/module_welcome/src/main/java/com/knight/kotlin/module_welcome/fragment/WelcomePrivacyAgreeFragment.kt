@@ -99,11 +99,6 @@ class WelcomePrivacyAgreeFragment : BaseDialogFragment<WelcomePrivacyAgreeFragme
                                 "webUrl" to "file:android_asset/wanandroid_sharesdk_userprivacy.html",
                                 "webTitle" to "ShareSdk隐私政策")
                         }
-                        "百度地图Sdk隐私政策","Baidu MapSdk Policy"->{
-                            startPageWithParams(RouteActivity.Web.WebPager,
-                                "webUrl" to "file:android_asset/wanandroid_baidu_sdk_userprivacy.html",
-                                "webTitle" to "百度地图Sdk隐私政策")
-                        }
                     }
                 }
             })

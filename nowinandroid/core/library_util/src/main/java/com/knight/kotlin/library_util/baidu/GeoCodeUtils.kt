@@ -21,6 +21,7 @@ object GeoCodeUtils {
     ) {
 
        // https://nominatim.openstreetmap.org/search?q=%E5%8C%97%E4%BA%AC&format=json 后面用这个接口
+       // 这是国外接口 调不了
         // 保存回调
         onSuccessCallback = onSuccess
         onSuccessCallback?.invoke(22.635886,114.062945)

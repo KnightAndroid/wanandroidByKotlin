@@ -152,6 +152,7 @@
 
 若不能编译，打开AS -- **Settings** -- **Build,Execution,Deployment** -- **Build Tools** -- **Gradle** -- **Gradle JDK** 设置JDK 17
 
+本项目所有用到的接口稳定性不受保障，难免会遇到访问不了的情况。
 
 ## 更新日志
 
