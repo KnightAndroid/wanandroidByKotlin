@@ -1,6 +1,9 @@
 ## WanAndroid
 这是一个不断迭代，功能全面，简单易用的wanandroid APP
 
+**本项目所有用到的接口稳定性不受保障，难免会遇到访问不了的情况。**
+
+
 **Java MVP版：**~~[https://github.com/KnightAndroid/wanandroid](https://github.com/KnightAndroid/wanandroid)~~ 不再维护
 
 ## 前言
@@ -152,7 +155,7 @@
 
 若不能编译，打开AS -- **Settings** -- **Build,Execution,Deployment** -- **Build Tools** -- **Gradle** -- **Gradle JDK** 设置JDK 17
 
-本项目所有用到的接口稳定性不受保障，难免会遇到访问不了的情况。
+
 
 ## 更新日志
 

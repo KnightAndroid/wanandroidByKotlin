@@ -6,8 +6,8 @@ targetSdk = "36"
 
 
 #app 版本号
-versionCode = "17"
-versionName = "2.2.6"
+versionCode = "18"
+versionName = "2.2.7"
 
 agp = "8.13.0"
 kotlin = "2.2.20"

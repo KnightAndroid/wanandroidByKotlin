@@ -7,7 +7,7 @@ package com.knight.kotlin.library_network.config
  */
 object BaseUrlConfig {
     //wanandroid 访问链接
-    const val WANDROID_URL = "https://www.wanandroid.com/"
+    const val WANDROID_URL = "https://wanandroid.com/"
     //gitee 访问链接
     const val GITEE_RUL = "https://gitee.com/"
     //推荐视频 访问链接
