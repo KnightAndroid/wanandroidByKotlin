@@ -2,7 +2,6 @@ package com.knight.kotlin.module_navigate.repo
 
 import com.knight.kotlin.library_base.repository.BaseRepository
 import com.knight.kotlin.library_network.model.responseCodeExceptionHandler
-import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_navigate.api.HierachyArticleApi
 import com.knight.kotlin.module_navigate.entity.HierachyTabArticleListEntity
 import javax.inject.Inject
@@ -12,53 +11,37 @@ import javax.inject.Inject
  * Time:2022/5/6 16:05
  * Description:HierachyArticleRepository
  */
-class HierachyArticleRepository @Inject constructor(): BaseRepository() {
-    @Inject
-    lateinit var mHierachyArticleApi: HierachyArticleApi
-
+class HierachyArticleRepository @Inject constructor(
+    private val api: HierachyArticleApi
+) : BaseRepository() {
 
     /**
-     *
-     * 获取体系文章页码
+     * 获取体系文章
      */
-    fun getHierachyArticle(page:Int,cid:Int) = request<HierachyTabArticleListEntity> ({
-        mHierachyArticleApi.getHierachyArticle(page,cid).run {
-            responseCodeExceptionHandler(code, msg)
-            emit(data)
+    fun getHierachyArticle(page: Int, cid: Int) =
+        request<HierachyTabArticleListEntity> {
+            val res = api.getHierachyArticle(page, cid)
+            responseCodeExceptionHandler(res.code, res.msg)
+            emit(res.data)
         }
-    }){
-        it?.run {
-            toast(it)
-        }
-    }
 
     /**
-     *
      * 收藏文章
      */
-    fun collectArticle(collectArticleId:Int) = request<Any>({
-        mHierachyArticleApi.collectArticle(collectArticleId).run {
-            responseCodeExceptionHandler(code, msg)
-            emit(true)
+    fun collectArticle(id: Int) =
+        request<Unit> {
+            val res = api.collectArticle(id)
+            responseCodeExceptionHandler(res.code, res.msg)
+            emit(Unit)
         }
-    }){
-        it?.run {
-            toast(it)
-        }
-    }
 
     /**
-     * 取消文章点赞/收藏
-     *
+     * 取消收藏
      */
-    fun cancelCollectArticle(unCollectArticleId:Int) = request<Any> ({
-        mHierachyArticleApi.unCollectArticle(unCollectArticleId).run {
-            responseCodeExceptionHandler(code, msg)
-            emit(data)
+    fun cancelCollectArticle(id: Int) =
+        request<Unit> {
+            val res = api.unCollectArticle(id)
+            responseCodeExceptionHandler(res.code, res.msg)
+            emit(Unit)
         }
-    }){
-        it?.run {
-            toast(it)
-        }
-    }
 }
