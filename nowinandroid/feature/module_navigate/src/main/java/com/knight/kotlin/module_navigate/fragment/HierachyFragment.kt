@@ -1,12 +1,12 @@
 package com.knight.kotlin.module_navigate.fragment
 
-import android.view.View
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.knight.kotlin.library_base.fragment.BaseFragment
 import com.core.library_base.route.RouteFragment
+import com.knight.kotlin.library_base.fragment.BaseMviFragment
 import com.knight.kotlin.module_navigate.R
 import com.knight.kotlin.module_navigate.adapter.LeftBarAdapter
+import com.knight.kotlin.module_navigate.contract.HierachyContract
 import com.knight.kotlin.module_navigate.databinding.NavigateHierachyFragmentBinding
 import com.knight.kotlin.module_navigate.entity.HierachyListEntity
 import com.knight.kotlin.module_navigate.listener.CheckListener
@@ -23,140 +23,296 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 @AndroidEntryPoint
 @Route(path = RouteFragment.Navigate.HierachyFragment)
-class HierachyFragment : BaseFragment<NavigateHierachyFragmentBinding, HierachyVm>(),CheckListener {
-
-
-    private var mHierachyLeftBarAdapter: LeftBarAdapter? = null
-    private var mLinearLayoutManager: LinearLayoutManager? = null
-    private var mHierachyListEntities: List<HierachyListEntity>? = null
+class HierachyFragment :
+    BaseMviFragment<
+            NavigateHierachyFragmentBinding,
+            HierachyVm,
+            HierachyContract.Event,
+            HierachyContract.State,
+            HierachyContract.Effect>(),
+    CheckListener {
 
     /**
-     *
-     * 右边选择
+     * 左侧Adapter
      */
-    private var mTreeRightFragment: TreeRightFragment? = null
+    private val mHierachyLeftBarAdapter by lazy {
+
+        LeftBarAdapter(
+            requireActivity(),
+            mutableListOf(),
+            object : RvListener {
+
+                override fun onItemClick(
+                    id: Int,
+                    position: Int
+                ) {
+
+                    sendEvent(
+                        HierachyContract.Event.SelectLeftTab(
+                            position
+                        )
+                    )
+
+                    setChecked(position, true)
+                }
+            })
+    }
 
     /**
-     * 点击左边某一个具体的item的位置
-     *
+     * LayoutManager
+     */
+    private lateinit var mLinearLayoutManager: LinearLayoutManager
+
+    /**
+     * 数据
+     */
+    private var mHierachyListEntities:
+            List<HierachyListEntity> = emptyList()
+
+    /**
+     * 右侧Fragment
+     */
+    private var mTreeRightFragment:
+            TreeRightFragment? = null
+
+    /**
+     * 左侧点击位置
      */
     private var targetPosition = 0
+
+    /**
+     * 是否联动
+     */
     private var isMoved = false
-    override fun setThemeColor(isDarkMode: Boolean) {
+    private var hasCreateFragment = false
+    override fun setThemeColor(
+        isDarkMode: Boolean
+    ) {
 
     }
 
     override fun NavigateHierachyFragmentBinding.initView() {
-        requestLoading(hierachyLl)
-        mLinearLayoutManager = LinearLayoutManager(requireActivity())
-        hierachyLeftSidebar.layoutManager = mLinearLayoutManager
-        hierachyLeftSidebar.addItemDecoration(
-            DividerItemDecoration(
-                requireActivity(),
-                DividerItemDecoration.VERTICAL
+
+        mLinearLayoutManager =
+            LinearLayoutManager(requireActivity())
+
+        hierachyLeftSidebar.apply {
+
+            layoutManager = mLinearLayoutManager
+
+            adapter = mHierachyLeftBarAdapter
+
+            addItemDecoration(
+                DividerItemDecoration(
+                    requireActivity(),
+                    DividerItemDecoration.VERTICAL
+                )
             )
-        )
-    }
-
-    override fun initRequestData() {
-        mViewModel.getHierachyData().observerKt {
-            setHierachyData(it)
         }
-    }
 
-    override fun reLoadData() {
-        mViewModel.getHierachyData().observerKt {
-            setHierachyData(it)
-        }
+      //  createFragment()
     }
 
     override fun initObserver() {
 
     }
 
-    fun setHierachyData(datas:MutableList<HierachyListEntity>) {
-        requestSuccess()
-        mHierachyListEntities = datas
-        val list: MutableList<String> = ArrayList()
-        //左边名字
-        for (i in datas.indices) {
-            list.add(datas.get(i).name)
-        }
+    /**
+     * 初始化数据
+     */
+    override fun initRequestData() {
 
-        mHierachyLeftBarAdapter = LeftBarAdapter(requireActivity(),list,object: RvListener {
-            override fun onItemClick(id: Int, position: Int) {
-                mTreeRightFragment?.let {
-                    isMoved = true
-                    targetPosition = position
-                    setChecked(position,true)
-                }
-            }
-        })
-        mBinding.hierachyLeftSidebar.adapter = mHierachyLeftBarAdapter
-        createFragment()
+        sendEvent(
+            HierachyContract.Event.LoadData
+        )
+    }
+
+    override fun reLoadData() {
 
     }
 
-    private fun setChecked(position: Int, isLeft: Boolean) {
-        if (isLeft) {
-            mHierachyLeftBarAdapter?.setCheckedPosition(position)
-            //此处的位置需要根据每个分类的集合来进行计算
-            var count = 0
-            mHierachyListEntities?.let {
-                for (i in 0 until position) {
-                    count += it[i].children.size
-                }
-            }
-            count += position
-            mTreeRightFragment?.setData(count)
-            //凡是点击左边，将左边点击的位置作为当前的tag
-            ItemHeaderDecoration.currentTag = targetPosition.toString()
+    /**
+     * 状态渲染
+     */
+    override fun renderState(
+        state: HierachyContract.State
+    ) {
+
+        if (state.isLoading) {
+
+            requestLoading(
+                mBinding.hierachyLl
+            )
+
         } else {
-            if (isMoved) {
-                isMoved = false
-            } else {
-                mHierachyLeftBarAdapter?.setCheckedPosition(position)
+
+            requestSuccess()
+        }
+
+        if (state.list.isNotEmpty()) {
+
+            setHierachyData(
+                state.list
+            )
+            if (!hasCreateFragment) {
+
+                hasCreateFragment = true
+
+                createFragment()
+            }
+        }
+    }
+
+    /**
+     * Effect
+     */
+    override fun handleEffect(
+        effect: HierachyContract.Effect
+    ) {
+
+        when (effect) {
+
+            is HierachyContract.Effect.ShowToast -> {
+
+            }
+        }
+    }
+
+    /**
+     * 设置数据
+     */
+    private fun setHierachyData(
+        datas: List<HierachyListEntity>
+    ) {
+
+        mHierachyListEntities = datas
+
+        val leftList = datas.map {
+            it.name
+        }
+
+        /**
+         * 更新Adapter数据
+         *
+         * 因为 LeftBarAdapter 是自定义 RvAdapter
+         * 没有 setNewInstance()
+         */
+        mHierachyLeftBarAdapter.refreshData(leftList)
+    }
+
+    /**
+     * 设置选中
+     */
+    private fun setChecked(
+        position: Int,
+        isLeft: Boolean
+    ) {
+
+        if (isLeft) {
+
+            mHierachyLeftBarAdapter
+                .setCheckedPosition(position)
+
+            var count = 0
+
+            for (i in 0 until position) {
+
+                count +=
+                    mHierachyListEntities[i]
+                        .children.size
             }
 
-            //如果是滑动右边联动左边，则按照右边传过来的位置作为tag
-            ItemHeaderDecoration.currentTag = position.toString()
+            count += position
+
+            mTreeRightFragment?.setData(count)
+
+            ItemHeaderDecoration.currentTag =
+                targetPosition.toString()
+
+        } else {
+
+            if (isMoved) {
+
+                isMoved = false
+
+            } else {
+
+                mHierachyLeftBarAdapter
+                    .setCheckedPosition(position)
+            }
+
+            ItemHeaderDecoration.currentTag =
+                position.toString()
         }
+
         moveToCenter(position)
     }
 
     /**
-     *
-     * 将当前选中的item居中
-     * @param position 位置
+     * 移动到中间
      */
-    private fun moveToCenter(position: Int) {
-        //将点击的position转换为当前屏幕上可见的item的位置以便于计算距离顶部的高度，从而进行移动居中
-        val childAt: View? =
-            mBinding.hierachyLeftSidebar.getChildAt(position - (mLinearLayoutManager?.findFirstVisibleItemPosition() ?:0))
-        if (childAt != null) {
-            val y: Int = childAt.top - mBinding.hierachyLeftSidebar.getHeight() / 2
-            mBinding.hierachyLeftSidebar.smoothScrollBy(0, y)
+    private fun moveToCenter(
+        position: Int
+    ) {
+
+        val childAt =
+            mBinding.hierachyLeftSidebar.getChildAt(
+                position -
+                        mLinearLayoutManager
+                            .findFirstVisibleItemPosition()
+            )
+
+        childAt?.let {
+
+            val y =
+                it.top -
+                        mBinding.hierachyLeftSidebar.height / 2
+
+            mBinding.hierachyLeftSidebar
+                .smoothScrollBy(0, y)
         }
     }
 
-    override fun check(position: Int, isScroll: Boolean) {
+    /**
+     * 右侧联动
+     */
+    override fun check(
+        position: Int,
+        isScroll: Boolean
+    ) {
+
         setChecked(position, isScroll)
     }
-    fun createFragment() {
-        val fragmentTransaction = childFragmentManager.beginTransaction()
-        mTreeRightFragment =
-            childFragmentManager.findFragmentByTag("hierachyfragment") as TreeRightFragment?
-        if (mTreeRightFragment == null) {
-            mTreeRightFragment =TreeRightFragment.newInstance(false)
-            mTreeRightFragment?.let{
-                it.setListener(this)
-                fragmentTransaction.replace(R.id.hierachy_right_sidebar,it, "hierachyfragment")
-                fragmentTransaction.commitNowAllowingStateLoss()
-            }
 
+    /**
+     * 创建Fragment
+     */
+    private fun createFragment() {
 
+        val fragment =
+            childFragmentManager
+                .findFragmentByTag(
+                    "hierachyfragment"
+                ) as? TreeRightFragment
 
+        if (fragment != null) {
+
+            mTreeRightFragment = fragment
+
+            return
         }
-    }
 
+        mTreeRightFragment =
+            TreeRightFragment.newInstance(false)
+
+        mTreeRightFragment?.setListener(this)
+
+        childFragmentManager.beginTransaction()
+            .replace(
+                R.id.hierachy_right_sidebar,
+                mTreeRightFragment!!,
+                "hierachyfragment"
+            )
+            .commitNowAllowingStateLoss()
+    }
 }

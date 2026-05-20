@@ -42,4 +42,16 @@ abstract class RvAdapter<T> constructor(context: Context, list: List<T>, listene
     }
 
     protected abstract fun getHolder(view: View, viewType: Int): RvHolder<T>
+
+    /**
+     * 更新数据
+     */
+    fun refreshData(
+        list: List<T>
+    ) {
+
+        mlist = list
+
+        notifyDataSetChanged()
+    }
 }
