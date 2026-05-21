@@ -4,9 +4,11 @@ import android.view.View
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.core.library_base.route.RouteFragment
-import com.knight.kotlin.library_base.fragment.BaseFragment
+import com.knight.kotlin.library_base.fragment.BaseMviFragment
+import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_navigate.R
 import com.knight.kotlin.module_navigate.adapter.LeftBarAdapter
+import com.knight.kotlin.module_navigate.contract.NavigateContract
 import com.knight.kotlin.module_navigate.databinding.NavigateFragmentBinding
 import com.knight.kotlin.module_navigate.entity.NavigateListEntity
 import com.knight.kotlin.module_navigate.listener.CheckListener
@@ -24,34 +26,66 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 @AndroidEntryPoint
 @Route(path = RouteFragment.Navigate.NavigateFragment)
-class NavigateFragment : BaseFragment<NavigateFragmentBinding, NavigateVm>(),CheckListener{
-
-
-    private var mNavigateLeftBarAdapter: LeftBarAdapter? = null
-    private var mLinearLayoutManager: LinearLayoutManager? = null
-    private var mNavigateListEntities: List<NavigateListEntity>? = null
+class NavigateFragment :
+    BaseMviFragment<
+            NavigateFragmentBinding,
+            NavigateVm,
+            NavigateContract.Event,
+            NavigateContract.State,
+            NavigateContract.Effect>(),
+    CheckListener {
 
     /**
-     *
-     * 右边选择
+     * 左侧 Adapter
+     */
+    private var mNavigateLeftBarAdapter: LeftBarAdapter? = null
+
+    /**
+     * 左侧 LayoutManager
+     */
+    private lateinit var mLinearLayoutManager: LinearLayoutManager
+
+    /**
+     * 导航数据
+     */
+    private var mNavigateListEntities: List<NavigateListEntity> = emptyList()
+
+    /**
+     * 右侧 Fragment
      */
     private var mTreeRightFragment: TreeRightFragment? = null
 
     /**
-     * 点击左边某一个具体的item的位置
-     *
+     * 点击左边 item 的位置
      */
     private var targetPosition = 0
+
+    /**
+     * 是否正在联动滚动
+     */
     private var isMoved = false
+
     override fun setThemeColor(isDarkMode: Boolean) {
 
     }
 
     override fun NavigateFragmentBinding.initView() {
+
         requestLoading(navigateLlMain)
+
         mLinearLayoutManager = LinearLayoutManager(requireActivity())
-        navigateLeftSidebar.layoutManager = mLinearLayoutManager
-        navigateLeftSidebar.addItemDecoration(DividerItemDecoration(requireActivity(),DividerItemDecoration.VERTICAL))
+
+        navigateLeftSidebar.apply {
+
+            layoutManager = mLinearLayoutManager
+
+            addItemDecoration(
+                DividerItemDecoration(
+                    requireActivity(),
+                    DividerItemDecoration.VERTICAL
+                )
+            )
+        }
     }
 
     override fun initObserver() {
@@ -59,100 +93,220 @@ class NavigateFragment : BaseFragment<NavigateFragmentBinding, NavigateVm>(),Che
     }
 
     override fun initRequestData() {
-        mViewModel.getNavigateData().observerKt {
-            setNavigateData(it)
-        }
+        sendEvent(NavigateContract.Event.LoadData)
     }
 
     override fun reLoadData() {
-        mViewModel.getNavigateData().observerKt {
-            setNavigateData(it)
+        sendEvent(NavigateContract.Event.LoadData)
+    }
+
+    /**
+     * 渲染 State
+     */
+    override fun renderState(state: NavigateContract.State) {
+
+        when {
+
+            state.isLoading -> {
+                requestLoading(mBinding.navigateLlMain)
+            }
+
+            state.list.isNotEmpty() -> {
+
+                requestSuccess()
+
+                setNavigateData(
+                    state.list,
+                    state.currentPosition
+                )
+            }
         }
     }
 
+    /**
+     * 处理 Effect
+     */
+    override fun handleEffect(effect: NavigateContract.Effect) {
+
+        when (effect) {
+
+            is NavigateContract.Effect.ShowToast -> {
+                toast(effect.msg)
+            }
+        }
+    }
+
+    /**
+     * 右边联动左边
+     */
     override fun check(position: Int, isScroll: Boolean) {
         setChecked(position, isScroll)
     }
 
-    private fun setNavigateData(datas:MutableList<NavigateListEntity>) {
-        requestSuccess()
+    /**
+     * 设置导航数据
+     */
+    private fun setNavigateData(
+        datas: List<NavigateListEntity>,
+        currentPosition: Int
+    ) {
+
         mNavigateListEntities = datas
-        val list: MutableList<String> = ArrayList()
-        //左边名字
-        for (i in datas.indices) {
-            list.add(datas.get(i).name)
+
+        val leftTitles = datas.map {
+            it.name
         }
 
-        mNavigateLeftBarAdapter = LeftBarAdapter(requireActivity(),list,object:RvListener{
-            override fun onItemClick(id: Int, position: Int) {
-                mTreeRightFragment?.let {
-                    isMoved = true
-                    targetPosition = position
-                    setChecked(position,true)
-                }
-            }
-        })
-        mBinding.navigateLeftSidebar.adapter = mNavigateLeftBarAdapter
-        createFragment()
+        if (mNavigateLeftBarAdapter == null) {
 
+            mNavigateLeftBarAdapter = LeftBarAdapter(
+                requireActivity(),
+                leftTitles,
+                object : RvListener {
+
+                    override fun onItemClick(
+                        id: Int,
+                        position: Int
+                    ) {
+
+                        isMoved = true
+
+                        targetPosition = position
+
+                        sendEvent(
+                            NavigateContract.Event.SelectLeftTab(
+                                position
+                            )
+                        )
+
+                        setChecked(position, true)
+                    }
+                })
+
+            mBinding.navigateLeftSidebar.adapter =
+                mNavigateLeftBarAdapter
+
+        } else {
+
+            mNavigateLeftBarAdapter?.setCheckedPosition(
+                currentPosition
+            )
+        }
+
+        createFragment()
     }
 
-    private fun setChecked(position: Int, isLeft: Boolean) {
+    /**
+     * 设置选中状态
+     *
+     * @param position 位置
+     * @param isLeft 是否左边点击
+     */
+    private fun setChecked(
+        position: Int,
+        isLeft: Boolean
+    ) {
+
         if (isLeft) {
+
             mNavigateLeftBarAdapter?.setCheckedPosition(position)
-            //此处的位置需要根据每个分类的集合来进行计算
+
+            // 计算右边对应位置
             var count = 0
-            mNavigateListEntities?.let {
-                for (i in 0 until position) {
-                    count += it[i].articles.size
-                }
-            }
-            count += position
-            mTreeRightFragment?.setData(count)
-            //凡是点击左边，将左边点击的位置作为当前的tag
-            ItemHeaderDecoration.currentTag = targetPosition.toString()
-        } else {
-            if (isMoved) {
-                isMoved = false
-            } else {
-                mNavigateLeftBarAdapter?.setCheckedPosition(position)
+
+            for (i in 0 until position) {
+                count += mNavigateListEntities[i].articles.size
             }
 
-            //如果是滑动右边联动左边，则按照右边传过来的位置作为tag
-            ItemHeaderDecoration.currentTag = position.toString()
+            count += position
+
+            mTreeRightFragment?.setData(count)
+
+            // 左边点击
+            ItemHeaderDecoration.currentTag =
+                targetPosition.toString()
+
+        } else {
+
+            if (isMoved) {
+
+                isMoved = false
+
+            } else {
+
+                mNavigateLeftBarAdapter?.setCheckedPosition(
+                    position
+                )
+            }
+
+            // 右边滑动联动左边
+            ItemHeaderDecoration.currentTag =
+                position.toString()
         }
+
         moveToCenter(position)
     }
 
     /**
-     *
-     * 将当前选中的item居中
-     * @param position 位置
+     * 将当前选中的 item 移动到中间
      */
     private fun moveToCenter(position: Int) {
-        //将点击的position转换为当前屏幕上可见的item的位置以便于计算距离顶部的高度，从而进行移动居中
-        val childAt: View? =
-            mBinding.navigateLeftSidebar.getChildAt(position - (mLinearLayoutManager?.findFirstVisibleItemPosition() ?:0))
-        childAt?.let {
-            val y: Int = it.top - mBinding.navigateLeftSidebar.getHeight() / 2
-            mBinding.navigateLeftSidebar.smoothScrollBy(0, y)
+
+        val firstVisiblePosition =
+            mLinearLayoutManager.findFirstVisibleItemPosition()
+
+        val childIndex = position - firstVisiblePosition
+
+        if (childIndex < 0 ||
+            childIndex >= mBinding.navigateLeftSidebar.childCount
+        ) {
+            return
         }
+
+        val childView: View =
+            mBinding.navigateLeftSidebar.getChildAt(childIndex)
+                ?: return
+
+        val offset =
+            childView.top -
+                    mBinding.navigateLeftSidebar.height / 2
+
+        mBinding.navigateLeftSidebar.smoothScrollBy(
+            0,
+            offset
+        )
     }
 
-    fun createFragment() {
-        val fragmentTransaction = childFragmentManager.beginTransaction()
+    /**
+     * 创建右边 Fragment
+     */
+    private fun createFragment() {
+
+        val fragmentTransaction =
+            childFragmentManager.beginTransaction()
+
         mTreeRightFragment =
-            childFragmentManager.findFragmentByTag("navigatefragment") as TreeRightFragment?
+            childFragmentManager.findFragmentByTag(
+                "navigatefragment"
+            ) as? TreeRightFragment
+
         if (mTreeRightFragment == null) {
-            mTreeRightFragment =TreeRightFragment.newInstance(true)
-            mTreeRightFragment?.let{
+
+            mTreeRightFragment =
+                TreeRightFragment.newInstance(true)
+
+            mTreeRightFragment?.let {
+
                 it.setListener(this)
-                fragmentTransaction.replace(R.id.navigate_right_sidebar,it, "navigatefragment")
-                fragmentTransaction.commitNowAllowingStateLoss()
+
+                fragmentTransaction.replace(
+                    R.id.navigate_right_sidebar,
+                    it,
+                    "navigatefragment"
+                )
+
+                fragmentTransaction.commitAllowingStateLoss()
             }
-
-
-
         }
     }
 }

@@ -1,10 +1,7 @@
 package com.knight.kotlin.module_navigate.vm
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.asLiveData
-import com.core.library_base.vm.BaseViewModel
-import com.knight.kotlin.module_navigate.entity.HierachyListEntity
-import com.knight.kotlin.module_navigate.entity.NavigateListEntity
+import com.core.library_base.vm.BaseMviViewModel
+import com.knight.kotlin.module_navigate.contract.NavigateRightTreeContract
 import com.knight.kotlin.module_navigate.repo.NavigateTreeRightRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -15,17 +12,128 @@ import javax.inject.Inject
  * Description:NavigateRightTreeVm
  */
 @HiltViewModel
-class NavigateRightTreeVm @Inject constructor(private val mRepo: NavigateTreeRightRepository) : BaseViewModel() {
+class NavigateRightTreeVm @Inject constructor(
+    private val mRepo: NavigateTreeRightRepository
+) : BaseMviViewModel<
+        NavigateRightTreeContract.Event,
+        NavigateRightTreeContract.State,
+        NavigateRightTreeContract.Effect>() {
 
-    //获取导航数据
-    fun getTreeNavigateData(): LiveData<MutableList<NavigateListEntity>> {
-        return mRepo.getTreeNavigateData().asLiveData()
+    override fun initialState(): NavigateRightTreeContract.State {
+        return NavigateRightTreeContract.State()
     }
 
-    //获取体系数据
-    fun getTreeHierachyData():LiveData<MutableList<HierachyListEntity>> {
-        return mRepo.getTreeHierachyData().asLiveData()
+    override fun handleEvent(
+        event: NavigateRightTreeContract.Event
+    ) {
+
+        when (event) {
+
+            is NavigateRightTreeContract.Event.LoadData -> {
+
+                if (event.isNavigate) {
+
+                    getTreeNavigateData()
+
+                } else {
+
+                    getTreeHierachyData()
+                }
+            }
+        }
     }
 
+    /**
+     * 获取导航数据
+     */
+    private fun getTreeNavigateData() {
 
+        requestFlowMvi(
+
+            block = {
+                mRepo.getTreeNavigateData()
+            },
+
+            onStart = {
+
+                setState {
+                    copy(
+                        isLoading = true
+                    )
+                }
+            },
+
+            onEach = { data ->
+
+                setState {
+                    copy(
+                        isLoading = false,
+                        navigateList = data
+                    )
+                }
+            },
+
+            onError = {
+
+                setState {
+                    copy(
+                        isLoading = false
+                    )
+                }
+
+                setEffect {
+                    NavigateRightTreeContract.Effect.ShowToast(
+                        it.message ?: "加载失败"
+                    )
+                }
+            }
+        )
+    }
+
+    /**
+     * 获取体系数据
+     */
+    private fun getTreeHierachyData() {
+
+        requestFlowMvi(
+
+            block = {
+                mRepo.getTreeHierachyData()
+            },
+
+            onStart = {
+
+                setState {
+                    copy(
+                        isLoading = true
+                    )
+                }
+            },
+
+            onEach = { data ->
+
+                setState {
+                    copy(
+                        isLoading = false,
+                        hierachyList = data
+                    )
+                }
+            },
+
+            onError = {
+
+                setState {
+                    copy(
+                        isLoading = false
+                    )
+                }
+
+                setEffect {
+                    NavigateRightTreeContract.Effect.ShowToast(
+                        it.message ?: "加载失败"
+                    )
+                }
+            }
+        )
+    }
 }

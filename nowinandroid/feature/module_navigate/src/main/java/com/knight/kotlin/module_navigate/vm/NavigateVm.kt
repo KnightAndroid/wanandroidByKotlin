@@ -1,9 +1,7 @@
 package com.knight.kotlin.module_navigate.vm
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.asLiveData
-import com.core.library_base.vm.BaseViewModel
-import com.knight.kotlin.module_navigate.entity.NavigateListEntity
+import com.core.library_base.vm.BaseMviViewModel
+import com.knight.kotlin.module_navigate.contract.NavigateContract
 import com.knight.kotlin.module_navigate.repo.NavigateRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -14,10 +12,80 @@ import javax.inject.Inject
  * Description:NavigateVm
  */
 @HiltViewModel
-class NavigateVm @Inject constructor(private val mRepo: NavigateRepository) : BaseViewModel() {
+class NavigateVm @Inject constructor(
+    private val mRepo: NavigateRepository
+) : BaseMviViewModel<
+        NavigateContract.Event,
+        NavigateContract.State,
+        NavigateContract.Effect>() {
 
-    //获取导航数据
-    fun getNavigateData() : LiveData<MutableList<NavigateListEntity>> {
-        return mRepo.getNavigateData().asLiveData()
+    override fun initialState(): NavigateContract.State {
+        return NavigateContract.State()
+    }
+
+    override fun handleEvent(event: NavigateContract.Event) {
+
+        when (event) {
+
+            is NavigateContract.Event.LoadData -> {
+                getNavigateData()
+            }
+
+            is NavigateContract.Event.SelectLeftTab -> {
+
+                setState {
+                    copy(
+                        currentPosition = event.position
+                    )
+                }
+            }
+        }
+    }
+
+    /**
+     * 获取导航数据
+     */
+    private fun getNavigateData() {
+
+        requestFlowMvi(
+
+            block = {
+                mRepo.getNavigateData()
+            },
+
+            onStart = {
+
+                setState {
+                    copy(
+                        isLoading = true
+                    )
+                }
+            },
+
+            onEach = { data ->
+
+                setState {
+                    copy(
+                        isLoading = false,
+                        list = data
+                    )
+                }
+            },
+
+            onError = {
+
+                setState {
+                    copy(
+                        isLoading = false
+                    )
+                }
+
+                setEffect {
+                    NavigateContract.Effect.ShowToast(
+                        it.message ?: "加载失败"
+                    )
+                }
+            }
+        )
     }
 }
