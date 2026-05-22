@@ -1,9 +1,10 @@
 package com.knight.kotlin.module_navigate.activity
 
-import com.knight.kotlin.library_base.activity.BaseActivity
+import com.core.library_base.contact.EmptyContract
 import com.core.library_base.ktx.setOnClick
 import com.core.library_base.route.RouteActivity
-import com.core.library_base.vm.EmptyViewModel
+import com.core.library_base.vm.EmptyMviViewModel
+import com.knight.kotlin.library_base.activity.BaseMviActivity
 import com.knight.kotlin.module_navigate.R
 import com.knight.kotlin.module_navigate.databinding.NavigateHierachyDetailActivityBinding
 import com.knight.kotlin.module_navigate.fragment.HierachyTabArticleFragment
@@ -18,29 +19,52 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 @AndroidEntryPoint
 @Route(path = RouteActivity.Navigate.HierachyDetailActivity)
-class HierachyDetailActivity : BaseActivity<NavigateHierachyDetailActivityBinding, EmptyViewModel>(){
+class HierachyDetailActivity :
+    BaseMviActivity<
+            NavigateHierachyDetailActivityBinding,
+            EmptyMviViewModel,
+            EmptyContract.Event,
+            EmptyContract.State,
+            EmptyContract.Effect>() {
+
     @JvmField
     @Param(name = "cid")
     var cid = 0
 
-    private lateinit var mHierachyTabArticleFragment: HierachyTabArticleFragment
-
     @JvmField
     @Param(name = "titleName")
     var titleName: String = ""
+
+    private lateinit var mHierachyTabArticleFragment: HierachyTabArticleFragment
 
     override fun setThemeColor(isDarkMode: Boolean) {
 
     }
 
     override fun NavigateHierachyDetailActivityBinding.initView() {
-        title = titleName
-        includeHierachyToolbar.baseIvBack.setOnClick { finish() }
-        createFragment()
 
+        includeHierachyToolbar.title = titleName
+
+        includeHierachyToolbar.baseIvBack.setOnClick {
+            finish()
+        }
+
+        createFragment()
     }
 
     override fun initObserver() {
+
+    }
+
+    override fun initEvent() {
+
+    }
+
+    override fun renderState(state: EmptyContract.State) {
+
+    }
+
+    override fun handleEffect(effect: EmptyContract.Effect) {
 
     }
 
@@ -52,10 +76,19 @@ class HierachyDetailActivity : BaseActivity<NavigateHierachyDetailActivityBindin
 
     }
 
-    fun createFragment() {
-        val fragmentTransaction = supportFragmentManager.beginTransaction()
-        mHierachyTabArticleFragment = HierachyTabArticleFragment.newInstance(cid)
-        fragmentTransaction.add(R.id.hierachy_detail_fr, mHierachyTabArticleFragment)
-        fragmentTransaction.commit()
+    /**
+     * 创建 Fragment
+     */
+    private fun createFragment() {
+
+        mHierachyTabArticleFragment =
+            HierachyTabArticleFragment.newInstance(cid)
+
+        supportFragmentManager.beginTransaction()
+            .add(
+                R.id.hierachy_detail_fr,
+                mHierachyTabArticleFragment
+            )
+            .commit()
     }
 }

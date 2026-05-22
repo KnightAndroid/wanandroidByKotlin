@@ -1,10 +1,7 @@
 package com.knight.kotlin.module_mine.vm
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.asLiveData
-import com.core.library_base.vm.BaseViewModel
-import com.knight.kotlin.library_common.entity.UserInfoEntity
-import com.knight.kotlin.module_mine.entity.UserInfoMessageEntity
+import com.core.library_base.vm.BaseMviViewModel
+import com.knight.kotlin.module_mine.contract.MineContract
 import com.knight.kotlin.module_mine.repo.MineRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -15,19 +12,128 @@ import javax.inject.Inject
  * Description:MineViewModel
  */
 @HiltViewModel
-class MineViewModel @Inject constructor(private val mRepo:MineRepo) : BaseViewModel(){
+class MineViewModel @Inject constructor(
+    private val mRepo: MineRepo
+) : BaseMviViewModel<
+        MineContract.Event,
+        MineContract.State,
+        MineContract.Effect>() {
+
+    override fun initialState(): MineContract.State {
+        return MineContract.State()
+    }
+
+    override fun handleEvent(event: MineContract.Event) {
+        when (event) {
+
+            MineContract.Event.Init -> {
+                getUserInfoCoin()
+            }
+
+            MineContract.Event.RefreshUserInfo -> {
+                getUserInfoCoin()
+            }
+
+            is MineContract.Event.Login -> {
+                login(event.userName, event.passWord)
+            }
+
+            MineContract.Event.Logout -> {
+                setState {
+                    copy(
+                        isLogin = false,
+                        userInfo = null,
+                        userCoinInfo = null
+                    )
+                }
+            }
+        }
+    }
 
     /**
      * 获取用户金币
      */
-    fun getUserInfoCoin(failureCallBack:((String?) ->Unit) ?= null): LiveData<UserInfoMessageEntity> {
-        return mRepo.getUserInfoCoin(failureCallBack).asLiveData()
+    private fun getUserInfoCoin() {
+
+        requestFlowMvi(
+            block = {
+                mRepo.getUserInfoCoin()
+            },
+            onStart = {
+                setState {
+                    copy(isLoading = true)
+                }
+            },
+            onEach = { data ->
+
+                setState {
+                    copy(
+                        isLoading = false,
+                        userCoinInfo = data,
+                        isLogin = true
+
+                    )
+                }
+            },
+            onError = {
+
+                setState {
+                    copy(
+                        isLoading = false
+                    )
+                }
+            },
+            onCompletion = {
+                setState {
+                    copy(isLoading = false)
+                }
+            }
+        )
     }
 
     /**
      * 登录
      */
-    fun login(userName:String,passWord:String):LiveData<UserInfoEntity> {
-        return mRepo.login(userName, passWord).asLiveData()
+    private fun login(userName: String, passWord: String) {
+
+        requestFlowMvi(
+            block = {
+                mRepo.login(userName, passWord)
+            },
+            onStart = {
+                setState {
+                    copy(isLoading = true)
+                }
+            },
+            onEach = { userInfo ->
+
+                setState {
+                    copy(
+                        isLoading = false,
+                        userInfo = userInfo,
+                        isLogin = true
+                    )
+                }
+
+                setEffect {
+                    MineContract.Effect.LoginSuccess
+                }
+            },
+            onError = {
+
+                setState {
+                    copy(isLoading = false)
+                }
+
+                setEffect {
+                    MineContract.Effect.LoginFailure(it.message)
+                }
+            },
+            onCompletion = {
+                setState {
+                    copy(isLoading = false)
+                }
+            }
+        )
     }
 }
