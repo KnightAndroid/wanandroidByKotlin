@@ -4,16 +4,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.knight.kotlin.library_base.activity.BaseActivity
 import com.core.library_base.ktx.init
 import com.core.library_base.ktx.setOnClick
 import com.core.library_base.route.RouteActivity
+import com.knight.kotlin.library_base.activity.BaseMviActivity
+import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.library_widget.CountNumberView
 import com.knight.kotlin.module_mine.R
 import com.knight.kotlin.module_mine.adapter.MyCointsAdapter
+import com.knight.kotlin.module_mine.contract.MyDetailCoinsContract
 import com.knight.kotlin.module_mine.databinding.MineCoinsActivityBinding
 import com.knight.kotlin.module_mine.dialog.CoinsRuleDialog
-import com.knight.kotlin.module_mine.entity.MyDetailCoinListEntity
 import com.knight.kotlin.module_mine.vm.MyDetailCoinsViewModel
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener
@@ -27,90 +28,229 @@ import dagger.hilt.android.AndroidEntryPoint
  * Time:2022/5/11 9:40
  * Description:MyCoinsActivity
  */
+/**
+ * 我的积分明细
+ */
 @AndroidEntryPoint
 @Route(path = RouteActivity.Mine.MyPointsActivity)
-class MyCoinsActivity : BaseActivity<MineCoinsActivityBinding, MyDetailCoinsViewModel>(),OnRefreshListener,OnLoadMoreListener{
+class MyCoinsActivity :
+    BaseMviActivity<
+            MineCoinsActivityBinding,
+            MyDetailCoinsViewModel,
+            MyDetailCoinsContract.Event,
+            MyDetailCoinsContract.State,
+            MyDetailCoinsContract.Effect>(),
+    OnRefreshListener,
+    OnLoadMoreListener {
 
     @JvmField
     @Param(name = "userCoin")
     var userCoin = ""
-    private var page = 1
 
+    /**
+     * 头部View
+     */
+    private val userInfoCoinHeadView: View by lazy {
+        LayoutInflater.from(this)
+            .inflate(
+                R.layout.mine_coints_detail,
+                null
+            )
+    }
 
-    private val userInfoCoinHeadView: View by lazy{ LayoutInflater.from(this@MyCoinsActivity).inflate(R.layout.mine_coints_detail, null) }
-    private val mUserDetailCoinAdapter:MyCointsAdapter by lazy{MyCointsAdapter()}
+    /**
+     * Adapter
+     */
+    private val mUserDetailCoinAdapter by lazy {
+        MyCointsAdapter()
+    }
+
     override fun setThemeColor(isDarkMode: Boolean) {
 
     }
 
     override fun MineCoinsActivityBinding.initView() {
-        mBinding.includePointToolbar.baseIvBack.setOnClick { finish() }
-        mBinding.includePointToolbar.baseTvTitle.setText(getString(R.string.mine_coin_detail))
-        val tv_head_detailpoint = userInfoCoinHeadView.findViewById<CountNumberView>(R.id.tv_head_detailpoint)
-        val mine_ll_point_rule = userInfoCoinHeadView.findViewById<LinearLayout>(R.id.mine_ll_point_rule)
-        includeMineDetailpoint.baseBodyRv.init(LinearLayoutManager(this@MyCoinsActivity),mUserDetailCoinAdapter,true)
-        mine_ll_point_rule.setOnClick {
-            CoinsRuleDialog.newInstance().showAllowingStateLoss(supportFragmentManager,"coinRuleDialog")
+        title = getString(R.string.mine_coin_detail)
+        includePointToolbar.baseIvBack.setOnClick {
+            finish()
         }
-        tv_head_detailpoint.setTextColor(themeColor)
-        tv_head_detailpoint.showNumberWithAnimation(userCoin.toFloat(),CountNumberView.INTREGEX)
-        includeMineDetailpoint.baseFreshlayout.setOnRefreshListener(this@MyCoinsActivity)
-        includeMineDetailpoint.baseFreshlayout.setOnLoadMoreListener(this@MyCoinsActivity)
-        requestLoading(includeMineDetailpoint.baseFreshlayout)
 
+        includePointToolbar.baseTvTitle.setText(
+            R.string.mine_coin_detail
+        )
+
+        val tvHeadDetailPoint =
+            userInfoCoinHeadView.findViewById<CountNumberView>(
+                R.id.tv_head_detailpoint
+            )
+
+        val pointRuleLayout =
+            userInfoCoinHeadView.findViewById<LinearLayout>(
+                R.id.mine_ll_point_rule
+            )
+
+        includeMineDetailpoint.baseBodyRv.init(
+            LinearLayoutManager(this@MyCoinsActivity),
+            mUserDetailCoinAdapter,
+            true
+        )
+
+        pointRuleLayout.setOnClick {
+
+            CoinsRuleDialog.newInstance()
+                .showAllowingStateLoss(
+                    supportFragmentManager,
+                    "coinRuleDialog"
+                )
+        }
+
+        tvHeadDetailPoint.setTextColor(themeColor)
+
+        tvHeadDetailPoint.showNumberWithAnimation(
+            userCoin.toFloatOrNull() ?: 0f,
+            CountNumberView.INTREGEX
+        )
+
+        includeMineDetailpoint.baseFreshlayout
+            .setOnRefreshListener(this@MyCoinsActivity)
+
+        includeMineDetailpoint.baseFreshlayout
+            .setOnLoadMoreListener(this@MyCoinsActivity)
+
+        requestLoading(
+            includeMineDetailpoint.baseFreshlayout
+        )
     }
 
     override fun initObserver() {
+
     }
 
-    override fun initRequestData() {
-        mViewModel.getMyDetailCoin(page).observerKt {
-            setUserDetailCoin(it)
-        }
-    }
-
-    override fun reLoadData() {
-        mViewModel.getMyDetailCoin(page).observerKt {
-            setUserDetailCoin(it)
-        }
-    }
-
-    override fun onRefresh(refreshLayout: RefreshLayout) {
-        page = 1
-        mViewModel.getMyDetailCoin(page).observerKt {
-            setUserDetailCoin(it)
-        }
-        mBinding.includeMineDetailpoint.baseFreshlayout.setEnableLoadMore(true)
-    }
-
-    override fun onLoadMore(refreshLayout: RefreshLayout) {
-        mViewModel.getMyDetailCoin(page).observerKt {
-            setUserDetailCoin(it)
-        }
-    }
-
-
-    /***
-     *
-     * 设置我的积分明细
+    /**
+     * 首次请求
      */
-    private fun setUserDetailCoin(data:MyDetailCoinListEntity) {
-        requestSuccess()
-        mBinding.includeMineDetailpoint.baseFreshlayout.finishLoadMore()
-        mBinding.includeMineDetailpoint.baseFreshlayout.finishRefresh()
-        if (data.datas.size > 0) {
-            if (page == 1) {
-                mUserDetailCoinAdapter.submitList(data.datas)
-                if (mBinding.includeMineDetailpoint.baseBodyRv.headerCount == 0) {
-                    mBinding.includeMineDetailpoint.baseBodyRv.addHeaderView(userInfoCoinHeadView)
-                }
-            } else {
-                mUserDetailCoinAdapter.addAll(data.datas)
-            }
-            page ++
+    override fun initRequestData() {
 
-        } else {
-            mBinding.includeMineDetailpoint.baseFreshlayout.setEnableLoadMore(false)
+        mViewModel.setEvent(
+            MyDetailCoinsContract.Event.LoadData
+        )
+    }
+
+    /**
+     * LoadSir重试
+     */
+    override fun reLoadData() {
+
+        mViewModel.setEvent(
+            MyDetailCoinsContract.Event.LoadData
+        )
+    }
+
+    /**
+     * State渲染
+     */
+    override fun renderState(
+        state: MyDetailCoinsContract.State
+    ) {
+
+        if (state.isLoading) {
+            return
         }
+
+        requestSuccess()
+
+        mBinding.includeMineDetailpoint
+            .baseFreshlayout
+            .finishRefresh()
+
+        mBinding.includeMineDetailpoint
+            .baseFreshlayout
+            .finishLoadMore()
+
+        state.coinData?.let { data ->
+
+            if (data.datas.isNotEmpty()) {
+
+                /**
+                 * 第一页
+                 */
+                if (state.page == 2) {
+
+                    mUserDetailCoinAdapter.submitList(
+                        data.datas
+                    )
+
+                    if (mBinding.includeMineDetailpoint
+                            .baseBodyRv.headerCount == 0
+                    ) {
+
+                        mBinding.includeMineDetailpoint
+                            .baseBodyRv
+                            .addHeaderView(
+                                userInfoCoinHeadView
+                            )
+                    }
+
+                } else {
+
+                    /**
+                     * 加载更多
+                     */
+                    mUserDetailCoinAdapter.addAll(
+                        data.datas
+                    )
+                }
+            }
+
+            mBinding.includeMineDetailpoint
+                .baseFreshlayout
+                .setEnableLoadMore(
+                    !state.noMoreData
+                )
+        }
+    }
+
+    /**
+     * Effect处理
+     */
+    override fun handleEffect(
+        effect: MyDetailCoinsContract.Effect
+    ) {
+
+        when (effect) {
+
+            is MyDetailCoinsContract.Effect.ShowToast -> {
+
+                toast(effect.msg)
+            }
+        }
+    }
+
+    /**
+     * 下拉刷新
+     */
+    override fun onRefresh(
+        refreshLayout: RefreshLayout
+    ) {
+
+        mBinding.includeMineDetailpoint
+            .baseFreshlayout
+            .setEnableLoadMore(true)
+
+        mViewModel.setEvent(
+            MyDetailCoinsContract.Event.Refresh
+        )
+    }
+
+    /**
+     * 上拉加载更多
+     */
+    override fun onLoadMore(
+        refreshLayout: RefreshLayout
+    ) {
+
+        mViewModel.setEvent(
+            MyDetailCoinsContract.Event.LoadMore
+        )
     }
 }

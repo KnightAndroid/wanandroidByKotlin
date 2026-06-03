@@ -1,9 +1,7 @@
 package com.knight.kotlin.module_mine.vm
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.asLiveData
-import com.core.library_base.vm.BaseViewModel
-import com.knight.kotlin.module_mine.entity.MyDetailCoinListEntity
+import com.core.library_base.vm.BaseMviViewModel
+import com.knight.kotlin.module_mine.contract.MyDetailCoinsContract
 import com.knight.kotlin.module_mine.repo.MyDetailCoinRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -14,12 +12,92 @@ import javax.inject.Inject
  * Description:MyDetailCoinsViewModel
  */
 @HiltViewModel
-class MyDetailCoinsViewModel @Inject constructor(private val mRepo: MyDetailCoinRepo) : BaseViewModel() {
+class MyDetailCoinsViewModel @Inject constructor(
+    private val mRepo: MyDetailCoinRepo
+) : BaseMviViewModel<
+        MyDetailCoinsContract.Event,
+        MyDetailCoinsContract.State,
+        MyDetailCoinsContract.Effect>() {
 
-    /**
-     * 获取积分明细
-     */
-    fun getMyDetailCoin(page:Int): LiveData<MyDetailCoinListEntity> {
-        return mRepo.getMyDetailCoin(page).asLiveData()
+    override fun initialState() =
+        MyDetailCoinsContract.State()
+
+    override fun handleEvent(
+        event: MyDetailCoinsContract.Event
+    ) {
+
+        when (event) {
+
+            MyDetailCoinsContract.Event.LoadData -> {
+                requestCoinList(1)
+            }
+
+            MyDetailCoinsContract.Event.Refresh -> {
+                requestCoinList(1)
+            }
+
+            MyDetailCoinsContract.Event.LoadMore -> {
+                requestCoinList(currentState.page)
+            }
+        }
+    }
+
+    private fun requestCoinList(
+        page: Int
+    ) {
+
+        requestFlowMvi(
+
+            block = {
+                mRepo.getMyDetailCoin(page)
+            },
+
+            onStart = {
+
+                if (page == 1) {
+
+                    setState {
+                        copy(
+                            isLoading = true
+                        )
+                    }
+                }
+            },
+
+            onEach = { result ->
+
+                val noMoreData =
+                    result.datas.isEmpty()
+
+                setState {
+
+                    copy(
+                        isLoading = false,
+                        page = if (noMoreData) {
+                            page
+                        } else {
+                            page + 1
+                        },
+                        coinData = result,
+                        noMoreData = noMoreData
+                    )
+                }
+            },
+
+            onError = {
+
+                setState {
+                    copy(
+                        isLoading = false
+                    )
+                }
+
+                setEffect {
+                    MyDetailCoinsContract.Effect.ShowToast(
+                        it.message ?: "加载失败"
+                    )
+                }
+            }
+        )
     }
 }

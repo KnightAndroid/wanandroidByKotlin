@@ -2,7 +2,6 @@ package com.knight.kotlin.module_mine.repo
 
 import com.knight.kotlin.library_base.repository.BaseRepository
 import com.knight.kotlin.library_network.model.responseCodeExceptionHandler
-import com.knight.kotlin.library_util.toast
 import com.knight.kotlin.module_mine.api.MyCollectArticleService
 import com.knight.kotlin.module_mine.entity.MyCollectArticleListEntity
 import javax.inject.Inject
@@ -12,42 +11,44 @@ import javax.inject.Inject
  * Time:2022/5/13 10:35
  * Description:MyCollectArticleRepo
  */
-class MyCollectArticleRepo @Inject constructor() : BaseRepository() {
-
-
-    @Inject
-    lateinit var mMineApiService: MyCollectArticleService
-
-
-    /***
-     * 获取自己收藏文章列表
-     *
-     */
-    fun getMyCollectArticles(page:Int) = request<MyCollectArticleListEntity>({
-        mMineApiService.getMyCollectArticles(page).run {
-            responseCodeExceptionHandler(code, msg)
-            emit(data)
-        }
-    }){
-        it?.run {
-            toast(it)
-        }
-    }
-
+/**
+ * 我的收藏文章
+ */
+class MyCollectArticleRepo @Inject constructor(
+    private val api: MyCollectArticleService
+) : BaseRepository() {
 
     /**
-     * 取消文章点赞/收藏
-     *
+     * 获取收藏文章列表
      */
-    fun cancelCollectArticle(unCollectArticleId:Int) = request<Any> ({
-        mMineApiService.unCollectArticle(unCollectArticleId).run {
-            responseCodeExceptionHandler(code, msg)
-            emit(true)
-        }
-    }){
-        it?.run {
-            toast(it)
-        }
+    fun getMyCollectArticles(
+        page: Int
+    ) = request<MyCollectArticleListEntity> {
+
+        val res = api.getMyCollectArticles(page)
+
+        responseCodeExceptionHandler(
+            res.code,
+            res.msg
+        )
+
+        emit(res.data)
     }
 
+    /**
+     * 取消收藏
+     */
+    fun cancelCollectArticle(
+        articleId: Int
+    ) = request<Boolean> {
+
+        val res = api.unCollectArticle(articleId)
+
+        responseCodeExceptionHandler(
+            res.code,
+            res.msg
+        )
+
+        emit(true)
+    }
 }
