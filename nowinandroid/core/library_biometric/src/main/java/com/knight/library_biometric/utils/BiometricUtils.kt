@@ -1,28 +1,19 @@
 package com.knight.library_biometric.utils
 
-import android.app.Activity
 import android.app.KeyguardManager
 import android.content.Context
-import android.hardware.fingerprint.FingerprintManager
 import android.os.Build
-import androidx.annotation.RequiresApi
+import androidx.biometric.BiometricManager
 import androidx.fragment.app.FragmentActivity
 
 /**
- *
- * @ProjectName:    wanandroid
- * @Package:        com.knight.library_biometric.utils
- * @ClassName:      BiometricUtils
- * @Description:    java类作用描述
- * @Author:         knight
- * @CreateDate:     2022/3/24 10:15 上午
- * @UpdateUser:     更新者
- * @UpdateDate:     2022/3/24 10:15 上午
- * @UpdateRemark:   更新说明
- * @Version:        1.0
+ * 生物识别工具类。
+ * 使用 androidx.biometric.BiometricManager 替代原有的 FingerprintManager，
+ * 后者从 Android 12 (API 31) 起已被系统移除，导致在 compileSdk 31+ 下
+ * 出现 "Unresolved reference" 编译错误。
  */
-
 object BiometricUtils {
+
     fun isAboveApiP(): Boolean {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.P
     }
@@ -32,85 +23,61 @@ object BiometricUtils {
     }
 
     /**
-     * Whether the device support biometric.
-     * @return
+     * 设备是否支持生物识别，且已登记指纹，且已设置锁屏。
      */
     fun isBiometricPromptEnable(activity: FragmentActivity): Boolean {
-        return (isAboveApiM()
-                && isHardwareDetected(activity)
-                && hasEnrolledFingerprints(activity)
-                && isKeyguardSecure(activity))
+        return canAuthenticate(activity) && isKeyguardSecure(activity)
     }
 
     /**
-     * 确定是否至少有一个指纹登记
-     * @param activity
-     * @return
+     * 使用 androidx.biometric.BiometricManager 检测是否可以进行生物识别。
+     * 这是跨所有 API 级别的官方兼容方案。
      */
-    fun hasEnrolledFingerprints(activity: Activity): Boolean {
-        return if (isAboveApiP()) {
-            //TODO 这是Api23的判断方法，也许以后有针对Api28的判断方法
-            val manager = activity.getSystemService(
-                FingerprintManager::class.java
+    fun canAuthenticate(activity: FragmentActivity): Boolean {
+        return try {
+            val result = BiometricManager.from(activity).canAuthenticate(
+                BiometricManager.Authenticators.BIOMETRIC_STRONG
             )
-            manager != null && manager.hasEnrolledFingerprints()
-        } else if (isAboveApiM()) {
-            AbovehasEnrolledFingerprints(activity)
-        } else {
+            result == BiometricManager.BIOMETRIC_SUCCESS
+        } catch (e: Exception) {
+            e.printStackTrace()
             false
         }
     }
 
     /**
-     *
-     * 用来判断系统硬件是否支持指纹识别
-     * @param activity
-     * @return
+     * 是否存在至少一个已登记的指纹。
+     * androidx.biometric 内部已经封装了这个检测，canAuthenticate 返回 SUCCESS
+     * 就意味着硬件存在且有已登记的生物特征。
      */
-    fun isHardwareDetected(activity: Activity): Boolean {
-        return if (isAboveApiP()) {
-            //TODO 这是Api23的判断方法，也许以后有针对Api28的判断方法
-            val fm = activity.getSystemService(
-                FingerprintManager::class.java
+    fun hasEnrolledFingerprints(activity: FragmentActivity): Boolean {
+        return canAuthenticate(activity)
+    }
+
+    /**
+     * 硬件是否支持生物识别。
+     * androidx.biometric 的 canAuthenticate 会同时检测硬件、已登记特征和安全设置。
+     */
+    fun isHardwareDetected(activity: FragmentActivity): Boolean {
+        return try {
+            val result = BiometricManager.from(activity).canAuthenticate(
+                BiometricManager.Authenticators.BIOMETRIC_STRONG
             )
-            fm != null && fm.isHardwareDetected
-        } else if (isAboveApiM()) {
-            AboveisHardwareDetected(activity)
-        } else {
+            // BIOMETRIC_ERROR_NONE_ENROLLED 表示硬件存在但未登记，此时硬件是存在的
+            result != BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE &&
+                    result != BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE
+        } catch (e: Exception) {
+            e.printStackTrace()
             false
         }
     }
 
     /**
-     *
-     * 这个方法是判断系统有没有设置锁屏
-     * @param activity
-     * @return
+     * 系统是否设置了锁屏。
      */
-    fun isKeyguardSecure(activity: Activity): Boolean {
-        val keyguardManager = activity.getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
+    fun isKeyguardSecure(activity: Context): Boolean {
+        val keyguardManager =
+            activity.getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
         return keyguardManager.isKeyguardSecure
-    }
-
-    /**
-     *
-     * 高于23判断硬件是否支持
-     * @param activity
-     * @return
-     */
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    fun AboveisHardwareDetected(activity: Activity): Boolean {
-        return activity.getSystemService(FingerprintManager::class.java).isHardwareDetected
-    }
-
-    /**
-     *
-     * 高于23判断
-     * @param activity
-     * @return
-     */
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    fun AbovehasEnrolledFingerprints(activity: Activity): Boolean {
-        return activity.getSystemService(FingerprintManager::class.java).hasEnrolledFingerprints()
     }
 }

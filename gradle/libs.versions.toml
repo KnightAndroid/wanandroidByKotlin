@@ -1,8 +1,8 @@
 [versions] #版本
-compileSdk = "36"
-buildTool = "36.0.0"
-minSdk = "23"
-targetSdk = "36"
+compileSdk = "37"
+buildTool = "37.0.0"
+minSdk = "24"
+targetSdk = "37"
 
 
 #app 版本号
@@ -68,7 +68,7 @@ recycleView = "1.4.0"
 viewpager2 = "1.1.0"
 wechatSdkAndroid = "+"
 androidJUnitRunner = "androidx.test.runner.AndroidJUnitRunner"
-
+biometric = "1.4.0-beta01"
 
 
 
@@ -161,6 +161,7 @@ work-manager = { group = "androidx.work",name = "work-runtime-ktx",version.ref =
 recycleview = { group = "androidx.recyclerview",name = "recyclerview",version.ref = "recycleView"}
 viewpager2 = { group = "androidx.viewpager2",name = "viewpager2",version.ref = "viewpager2"}
 wechat-sdk-android = { group = "com.tencent.mm.opensdk",name = "wechat-sdk-android",version.ref = "wechatSdkAndroid"}
+androidx-biometric = { group = "androidx.biometric",name = "biometric",version.ref = "biometric"}
 
 
 

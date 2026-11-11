@@ -12,6 +12,7 @@ dependencies {
     implementation project(path: ':nowinandroid:core:library_base')
     implementation (libs.hilt.android)
     kapt (libs.hilt.compiler)
+    implementation(libs.androidx.biometric)
     //kapt Dependencies.JetPack.HILT_ANDROIDX
 
 }

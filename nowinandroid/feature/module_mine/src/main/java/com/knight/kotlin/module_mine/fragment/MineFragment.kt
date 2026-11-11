@@ -246,6 +246,11 @@ class MineFragment :
 
             MineContract.Effect.LoginSuccess -> {
 
+                EventBusUtils.postEvent(
+                    MessageEvent(
+                        MessageEvent.MessageType.LoginSuccess
+                    )
+                )
             }
 
             is MineContract.Effect.LoginFailure -> {
@@ -302,6 +307,10 @@ class MineFragment :
             ColorUtils.getRandColorCode()
         )
 
+        // 清除退出登录时设置在 src 上的默认头像前景图，
+        // 否则会遮住下面的 background 彩色圆
+        mBinding.mineIvHead.setImageDrawable(null)
+
         mBinding.mineIvHead.background =
             gradientDrawable
 
@@ -340,15 +349,21 @@ class MineFragment :
             userInfo
         )
 
-        EventBusUtils.postEvent(
-            MessageEvent(
-                MessageEvent.MessageType.LoginSuccess
-            )
-        )
+        // 清除退出登录时设置在 src 上的默认头像前景图
+        mBinding.mineIvHead.setImageDrawable(null)
 
-        sendEvent(
-            MineContract.Event.RefreshUserInfo
-        )
+        // 登录成功后先显示首字母和初始颜色，金币接口返回后 setUserInfoCoin 会再更新
+        val gradientDrawable = GradientDrawable().apply {
+            shape = GradientDrawable.OVAL
+            setColor(ColorUtils.getRandColorCode())
+        }
+        mBinding.mineIvHead.background = gradientDrawable
+
+        mBinding.mineTvUserabbr.text =
+            userInfo.username.substring(0, 1)
+
+        mBinding.mineTvUsername.text =
+            userInfo.username
     }
 
     override fun reLoadData() {

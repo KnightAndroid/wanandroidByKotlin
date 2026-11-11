@@ -7,59 +7,37 @@ import java.lang.ref.WeakReference
 import javax.crypto.Cipher
 
 /**
- *
- * @ProjectName:    wanandroid
- * @Package:        com.knight.library_biometric
- * @ClassName:      BiometricPromptManager
- * @Description:    java类作用描述
- * @Author:         knight
- * @CreateDate:     2022/3/24 10:27 上午
- * @UpdateUser:     更新者
- * @UpdateDate:     2022/3/24 10:27 上午
- * @UpdateRemark:   更新说明
- * @Version:        1.0
+ * 生物识别（指纹/面容等）管理入口。
+ * 内部统一使用 androidx.biometric 实现，兼容所有 API 级别。
  */
-
-class BiometricPromptManager constructor(builder:Builder) {
+class BiometricPromptManager constructor(builder: Builder) {
     private var mImpl: IBiometricPromptImpl? = null
+
     init {
-        if (BiometricUtils.isAboveApiP()) {
-
-            mImpl = BiometricPromptApiP(builder)
-
-        } else if (BiometricUtils.isAboveApiM()) {
-
-            mImpl = BiometricPromptApiM(builder.mActivity.get() as FragmentActivity)
-
-
-        }
-
+        // 统一使用 androidx.biometric 的兼容实现，替代原本
+        // 针对 API 23-29 (FingerprintManager) 和 API 28+
+        // (android.hardware.biometrics.BiometricPrompt) 的两套原生方案
+        mImpl = BiometricPromptApi(builder)
     }
-
-
 
     interface OnBiometricIdentifyCallback {
         /**
-         *
          * 使用密码
          */
         fun onUsePassword()
 
         /**
-         *
          * 成功
          * @param cipher
          */
         fun onSucceeded(cipher: Cipher?)
 
         /**
-         *
          * 失败
          */
         fun onFailed()
 
         /**
-         *
          * 错误
          * @param code
          * @param reason
@@ -67,12 +45,10 @@ class BiometricPromptManager constructor(builder:Builder) {
         fun onError(code: Int, reason: String?)
 
         /**
-         *
          * 取消
          */
         fun onCancel()
     }
-
 
     fun authenticate(loginFlg: Boolean, callback: OnBiometricIdentifyCallback) {
         mImpl?.authenticate(loginFlg, CancellationSignal(), callback)
@@ -85,7 +61,6 @@ class BiometricPromptManager constructor(builder:Builder) {
         // TODO: 2019/1/7
         //        mImpl.authenticate(cancel, callback);
     }
-
 
     class Builder constructor(activty: WeakReference<FragmentActivity>) {
         //标题
@@ -117,7 +92,5 @@ class BiometricPromptManager constructor(builder:Builder) {
         fun build(): BiometricPromptManager {
             return BiometricPromptManager(this)
         }
-
-
     }
 }
