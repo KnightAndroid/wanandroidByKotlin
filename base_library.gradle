@@ -1,5 +1,4 @@
 //********* Base library 模块的公共脚本配置 **********
-
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
