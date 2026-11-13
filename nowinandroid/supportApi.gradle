@@ -27,15 +27,10 @@ ext.includeWithApi = { String moduleName ->
     // 每次编译删除之前的文件
     deleteDir(targetDir)
     //复制.api文件到新的路径
-    copy() {
-        from originDir
-        into targetDir
-        exclude '**/build/'
-        exclude '**/res/'
-        include '**/*.api'
-        include '**/*.kapi'
-        include 'api.gradle'
-    }
+    // 注意：这里不用 Gradle 的 copy{}，因为它在复制完成后会调用 chmod 设置
+    // 文件权限，在 Windows 上会抛 "Could not set file mode ... does not exist"
+    // 导致配置阶段直接失败。改用普通文件 IO 复制，不涉及权限设置。
+    copyApiFiles(originDir, targetDir)
 
     def build = new File(targetDir + "/api.gradle")
     if (build.exists()) {
@@ -78,6 +73,45 @@ private void deleteDir(String targetDir) {
     targetFiles.exclude "*.iml"
     targetFiles.each { File file ->
         file.delete()
+    }
+}
+
+/**
+ * 复制 api 模块所需的源文件：.api、.kapi、api.gradle
+ * 排除 build 目录与 res 目录，等价于原来 copy{} 中的 exclude 规则
+ */
+private void copyApiFiles(String originDir, String targetDir) {
+    File origin = new File(originDir)
+    if (!origin.exists()) {
+        return
+    }
+    String originPath = origin.absolutePath
+    origin.eachFileRecurse { File file ->
+        if (!file.isFile()) {
+            return
+        }
+        String relative = file.absolutePath.substring(originPath.length()).replace('\\', '/')
+        if (relative.startsWith('/')) {
+            relative = relative.substring(1)
+        }
+        if (relative.startsWith('build/') || relative.contains('/build/')) {
+            return
+        }
+        if (relative.startsWith('res/') || relative.contains('/res/')) {
+            return
+        }
+        boolean apiFile = file.name.endsWith('.api') ||
+                file.name.endsWith('.kapi') ||
+                file.name == 'api.gradle'
+        if (!apiFile) {
+            return
+        }
+        File target = new File(targetDir, relative)
+        target.parentFile.mkdirs()
+        if (target.exists()) {
+            target.delete()
+        }
+        target.bytes = file.bytes
     }
 }
 
